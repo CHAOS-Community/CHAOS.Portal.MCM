@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Geckon.MCM.Module")]
+[assembly: AssemblyTitle("Geckon.MCM.Data.Linq")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Geckon.MCM.Module")]
+[assembly: AssemblyProduct("Geckon.MCM.Data.Linq")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("25f93d33-0f20-448f-bbd5-53c238a1f025")]
+[assembly: Guid("4c2d8f62-76db-462e-a26c-54b0786c14b5")]
 
 // Version information for an assembly consists of the following four values:
 //

@@ -1,8 +1,45 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{5D078BDF-7A54-4FED-9545-B619D25E357E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{25DAADDC-2457-4AB6-AB9C-A5A502E55F88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F0CF42D1-62E1-4537-83C4-109BC7B7A8D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geckon.MCM.Module.Standard", "src\app\Geckon.MCM.Module.Standard\Geckon.MCM.Module.Standard.csproj", "{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geckon.MCM.Module.Standard.Test", "src\test\Geckon.MCM.Module.Standard.Test\Geckon.MCM.Module.Standard.Test.csproj", "{32FBED13-A6F2-4C48-948B-98FCEF550DBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geckon.MCM.Data.Linq", "src\app\Geckon.MCM.Data.Linq\Geckon.MCM.Data.Linq.csproj", "{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32FBED13-A6F2-4C48-948B-98FCEF550DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32FBED13-A6F2-4C48-948B-98FCEF550DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32FBED13-A6F2-4C48-948B-98FCEF550DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32FBED13-A6F2-4C48-948B-98FCEF550DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD} = {5D078BDF-7A54-4FED-9545-B619D25E357E}
+		{30ED23D8-60D9-4F98-AAB5-C177171A6B6E} = {5D078BDF-7A54-4FED-9545-B619D25E357E}
+		{5D078BDF-7A54-4FED-9545-B619D25E357E} = {25DAADDC-2457-4AB6-AB9C-A5A502E55F88}
+		{F0CF42D1-62E1-4537-83C4-109BC7B7A8D6} = {25DAADDC-2457-4AB6-AB9C-A5A502E55F88}
+		{32FBED13-A6F2-4C48-948B-98FCEF550DBF} = {F0CF42D1-62E1-4537-83C4-109BC7B7A8D6}
 	EndGlobalSection
 EndGlobal
