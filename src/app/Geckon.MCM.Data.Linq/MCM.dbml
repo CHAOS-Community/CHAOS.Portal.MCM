@@ -287,4 +287,10 @@
     <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
     <ElementType IdRef="ID1" />
   </Function>
+  <Function Name="dbo.ObjectType_Update" Method="ObjectType_Update">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
 </Database>

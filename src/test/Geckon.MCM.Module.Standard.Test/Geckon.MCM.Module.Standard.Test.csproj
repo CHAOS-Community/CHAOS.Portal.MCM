@@ -37,6 +37,7 @@
     <Reference Include="Geckon.Portal.Core">
       <HintPath>..\..\..\lib\Geckon.Portal.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Geckon.Portal.Core.Exception, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Geckon.Portal.Core.Standard">
       <HintPath>..\..\..\lib\Geckon.Portal.Core.Standard.dll</HintPath>
     </Reference>

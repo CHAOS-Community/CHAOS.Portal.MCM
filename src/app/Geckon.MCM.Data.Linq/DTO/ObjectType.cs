@@ -1,4 +1,5 @@
-﻿using Geckon.Serialization.Xml;
+﻿using System.Collections.Generic;
+using Geckon.Serialization.Xml;
 
 namespace Geckon.MCM.Data.Linq.DTO
 {
@@ -24,6 +25,17 @@ namespace Geckon.MCM.Data.Linq.DTO
             objectType.Value = obj.Value;
 
             return objectType;
+        }
+
+        public static IEnumerable<ObjectType> Create( IEnumerable<Linq.ObjectType> objects )
+        {
+            if( objects == null )
+                yield break;
+
+            foreach( Linq.ObjectType objectType in objects )
+            {
+                yield return Create( objectType );
+            }
         }
 
         #endregion
