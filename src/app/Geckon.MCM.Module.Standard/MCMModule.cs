@@ -300,8 +300,6 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
-        // TODO: FormatCategory
-        // TODO: Format
 
         #endregion
     }
