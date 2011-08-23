@@ -364,6 +364,13 @@ namespace Geckon.MCM.Data.Linq
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, value, systemPermission);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObjectType_Delete")]
+		public int ObjectType_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Value", DbType="VarChar(255)")] string value, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, value, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccessPoint")]

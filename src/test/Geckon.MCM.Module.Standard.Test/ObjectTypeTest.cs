@@ -59,5 +59,23 @@ namespace Geckon.MCM.Module.Standard.Test
 
             Assert.AreEqual(-100, result.Value);
         }
+
+        [Test]
+        public void Should_Delete_ObjectType()
+        {
+            ScalarResult result = MCMModule.ObjectType_Delete(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()),
+                                                               AssetObjectType.ID );
+
+            Assert.AreEqual(1, result.Value);
+        }
+
+        [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+        public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Delete_ObjectType()
+        {
+            ScalarResult result = MCMModule.ObjectType_Delete(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()),
+                                                               AssetObjectType.ID);
+
+            Assert.AreEqual(-100, result.Value);
+        }
     }
 }
