@@ -192,7 +192,7 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
-        #region ObjectRelationType
+        #region FolderType
 
         [Datatype("FolderType", "Get")]
         public IEnumerable<FolderType> FolderType_Get(CallContext callContext, int? id, string name)
@@ -246,7 +246,60 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
-        // TODO: FormatType
+        #region FormatType
+
+        [Datatype("FormatType", "Get")]
+        public IEnumerable<FormatType> FormatType_Get(CallContext callContext, int? id, string name)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                return db.FormatType_Get(id, name).ToList();
+            }
+        }
+
+        [Datatype("FormatType", "Create")]
+        public FormatType FormatType_Create(CallContext callContext, string name)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.FormatType_Create(name, callContext.User.SystemPermission);
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+
+                return db.FormatType_Get(result, null).First();
+            }
+        }
+
+        [Datatype("FormatType", "Update")]
+        public ScalarResult FormatType_Update(CallContext callContext, int? id, string name)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.FormatType_Update( id, name, callContext.User.SystemPermission );
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+
+                return new ScalarResult(result);
+            }
+        }
+
+        [Datatype("FormatType", "Delete")]
+        public ScalarResult FormatType_Delete(CallContext callContext, int? id)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.FormatType_Delete(id, callContext.User.SystemPermission);
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+
+                return new ScalarResult(result);
+            }
+        }
+
+        #endregion
         // TODO: FormatCategory
         // TODO: Format
 

@@ -14,6 +14,7 @@ namespace Geckon.MCM.Module.Standard.Test
         public Language Afrikaans { get; set; }
         public ObjectRelationType ObjectContains { get; set; }
         public FolderType FolderType { get; set; }
+        public FormatType FormatType { get; set; }
 
         #endregion
 
@@ -33,6 +34,7 @@ namespace Geckon.MCM.Module.Standard.Test
                 Afrikaans       = (from l in db.Languages where l.CountryName == "South Africa" select l).First();
                 ObjectContains  = (from or in db.ObjectRelationTypes where or.Value == "Contains" select or ).First();
                 FolderType      = (from ft in db.FolderTypes where ft.Name == "Folder" select ft ).First();
+                FormatType      = (from ft in db.FormatTypes where ft.Value == "Video" select  ft ).First();
             }
         }
     }

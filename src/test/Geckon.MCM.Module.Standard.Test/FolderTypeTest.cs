@@ -47,7 +47,7 @@ namespace Geckon.MCM.Module.Standard.Test
 
         [Test]
         public void Should_Update_FolderType()
-        {
+       { 
             ScalarResult result = MCMModule.FolderType_Update(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), FolderType.ID, "name");
 
             Assert.AreEqual(1, result.Value);

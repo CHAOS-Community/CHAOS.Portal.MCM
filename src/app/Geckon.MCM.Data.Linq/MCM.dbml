@@ -169,7 +169,7 @@
     </Type>
   </Table>
   <Table Name="dbo.FormatType" Member="FormatTypes">
-    <Type Name="FormatType">
+    <Type Name="FormatType" Id="ID5">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Value" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="FormatType_FormatCategory" Member="FormatCategories" ThisKey="ID" OtherKey="FormatTypeID" Type="FormatCategory" />
@@ -367,5 +367,26 @@
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.FormatType_Create" Method="FormatType_Create">
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.FormatType_Delete" Method="FormatType_Delete">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.FormatType_Update" Method="FormatType_Update">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.FormatType_Get" Method="FormatType_Get">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID5" />
   </Function>
 </Database>
