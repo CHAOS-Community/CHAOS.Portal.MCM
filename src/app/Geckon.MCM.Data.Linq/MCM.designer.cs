@@ -371,6 +371,90 @@ namespace Geckon.MCM.Data.Linq
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, value, systemPermission);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Get")]
+		public ISingleResult<Language> Language_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CountryName", DbType="VarChar(255)")] string countryName)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, name, languageCode, countryName);
+			return ((ISingleResult<Language>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Create")]
+		public int Language_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CountryName", DbType="VarChar(255)")] string countryName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, languageCode, countryName, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Delete")]
+		public int Language_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Update")]
+		public int Language_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CountryName", DbType="VarChar(255)")] string countryName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, name, languageCode, countryName, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObjectRelationType_Get")]
+		public ISingleResult<ObjectRelationType> ObjectRelationType_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Value", DbType="VarChar(255)")] string value)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, value);
+			return ((ISingleResult<ObjectRelationType>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObjectRelationType_Create")]
+		public int ObjectRelationType_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Value", DbType="VarChar(255)")] string value, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), value, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObjectRelationType_Delete")]
+		public int ObjectRelationType_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.ObjectRelationType_Update")]
+		public int ObjectRelationType_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Value", DbType="VarChar(255)")] string value, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, value, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.FolderType_Get")]
+		public ISingleResult<FolderType> FolderType_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, name);
+			return ((ISingleResult<FolderType>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.FolderType_Delete")]
+		public int FolderType_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.FolderType_Create")]
+		public int FolderType_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.FolderType_Update")]
+		public int FolderType_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, name, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccessPoint")]

@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DTO\ObjectType.cs" />
     <Compile Include="MCM.cs">
       <DependentUpon>MCM.dbml</DependentUpon>
     </Compile>
@@ -79,6 +78,9 @@
     <None Include="MCM.dbml.layout">
       <DependentUpon>MCM.dbml</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

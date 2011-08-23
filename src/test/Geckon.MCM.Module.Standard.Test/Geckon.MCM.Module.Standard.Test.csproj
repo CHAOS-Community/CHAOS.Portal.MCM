@@ -61,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
+    <Compile Include="FolderTypeTest.cs" />
+    <Compile Include="ObjectRealtionsTypeTest.cs" />
+    <Compile Include="LanguageTest.cs" />
     <Compile Include="ObjectTypeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

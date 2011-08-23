@@ -7,7 +7,6 @@ using Geckon.Portal.Core;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Core.Standard.Module;
 using Geckon.Portal.Data.Dto;
-using ObjectType = Geckon.MCM.Data.Linq.DTO.ObjectType;
 
 namespace Geckon.MCM.Module.Standard
 {
@@ -16,7 +15,7 @@ namespace Geckon.MCM.Module.Standard
         #region Properties
 
         private String ConnectionString { get; set; }
-        public MCMDataContext DefaultMCMDataContext { get { return new MCMDataContext(ConnectionString); } }
+        public Data.Linq.MCMDataContext DefaultMCMDataContext { get { return new Data.Linq.MCMDataContext(ConnectionString); } }
 
         #endregion
         #region Construction
@@ -41,7 +40,7 @@ namespace Geckon.MCM.Module.Standard
                 if( result == -100 )
                     throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to create an Object Type" );
 
-                return ObjectType.Create( db.ObjectType_Get( result, null ).First() );
+                return db.ObjectType_Get( result, null ).First();
             }
         }
 
@@ -50,9 +49,9 @@ namespace Geckon.MCM.Module.Standard
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                IEnumerable<Data.Linq.ObjectType> results = db.ObjectType_Get( null, null );
+                IEnumerable<ObjectType> results = db.ObjectType_Get( null, null );
 
-                return ObjectType.Create( results ).ToList();
+                return results.ToList();
             }
         }
 
@@ -85,6 +84,171 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
+        #region Language
+
+        [Datatype("Language","Get")]
+        public IEnumerable<Language> Language_Get( CallContext callContext, int? id, string name, string languageCode, string countryName )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                return db.Language_Get( id, name, languageCode, countryName ).ToList();
+            }
+        }
+
+        [Datatype("Language", "Create")]
+        public Language Language_Create( CallContext callContext, string name, string languageCode, string countryName )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.Language_Create( name, languageCode, countryName, callContext.User.SystemPermission );
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+
+                return db.Language_Get( result, null, null, null ).First();
+            }
+        }
+
+        [Datatype("Language", "Update")]
+        public ScalarResult Language_Update(CallContext callContext, int? id, string name, string languageCode, string countryName)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.Language_Update( id, name, languageCode, countryName, callContext.User.SystemPermission );
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+
+                return new ScalarResult( result );
+            }
+        }
+
+        [Datatype("Language", "Delete")]
+        public ScalarResult Language_Delete(CallContext callContext, int? id )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.Language_Delete( id, callContext.User.SystemPermission );
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+
+                return new ScalarResult( result );
+            }
+        }
+
+        #endregion
+        #region ObjectRelationType
+
+        [Datatype("ObjectRelationType", "Get")]
+        public IEnumerable<ObjectRelationType> ObjectRelationType_Get(CallContext callContext, int? id, string value)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                return db.ObjectRelationType_Get(id, value).ToList();
+            }
+        }
+
+        [Datatype("ObjectRelationType", "Create")]
+        public ObjectRelationType ObjectRelationType_Create(CallContext callContext, string value)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.ObjectRelationType_Create(value, callContext.User.SystemPermission);
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+
+                return db.ObjectRelationType_Get(result, null).First();
+            }
+        }
+
+        [Datatype("ObjectRelationType", "Update")]
+        public ScalarResult ObjectRelationType_Update(CallContext callContext, int? id, string value)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.ObjectRelationType_Update(id, value, callContext.User.SystemPermission);
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+
+                return new ScalarResult( result );
+            }
+        }
+
+        [Datatype("ObjectRelationType", "Delete")]
+        public ScalarResult ObjectRelationType_Delete(CallContext callContext, int? id)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.ObjectRelationType_Delete(id, callContext.User.SystemPermission);
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+
+                return new ScalarResult( result );
+            }
+        }
+
+        #endregion
+        #region ObjectRelationType
+
+        [Datatype("FolderType", "Get")]
+        public IEnumerable<FolderType> FolderType_Get(CallContext callContext, int? id, string name)
+        {
+            using (MCMDataContext db = DefaultMCMDataContext)
+            {
+                return db.FolderType_Get(id, name).ToList();
+            }
+        }
+
+        [Datatype("FolderType", "Create")]
+        public FolderType FolderType_Create(CallContext callContext, string name)
+        {
+            using (MCMDataContext db = DefaultMCMDataContext)
+            {
+                int result = db.FolderType_Create(name, callContext.User.SystemPermission);
+
+                if (result == -100)
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+
+                return db.FolderType_Get(result, null).First();
+            }
+        }
+
+        [Datatype("FolderType", "Update")]
+        public ScalarResult FolderType_Update(CallContext callContext, int? id, string name)
+        {
+            using (MCMDataContext db = DefaultMCMDataContext)
+            {
+                int result = db.FolderType_Update(id, name, callContext.User.SystemPermission);
+
+                if (result == -100)
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+
+                return new ScalarResult(result);
+            }
+        }
+
+        [Datatype("FolderType", "Delete")]
+        public ScalarResult FolderType_Delete(CallContext callContext, int? id)
+        {
+            using (MCMDataContext db = DefaultMCMDataContext)
+            {
+                int result = db.FolderType_Delete(id, callContext.User.SystemPermission);
+
+                if (result == -100)
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+
+                return new ScalarResult(result);
+            }
+        }
+
+        #endregion
+        // TODO: FormatType
+        // TODO: FormatCategory
+        // TODO: Format
 
         #endregion
     }

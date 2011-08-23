@@ -6,7 +6,6 @@ using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data.Dto;
 using Geckon.Portal.Extensions.Standard.Test;
 using NUnit.Framework;
-using ObjectType = Geckon.MCM.Data.Linq.DTO.ObjectType;
 
 namespace Geckon.MCM.Module.Standard.Test
 {

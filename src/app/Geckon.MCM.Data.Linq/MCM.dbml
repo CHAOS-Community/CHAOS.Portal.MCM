@@ -138,7 +138,7 @@
     </Type>
   </Table>
   <Table Name="dbo.FolderType" Member="FolderTypes">
-    <Type Name="FolderType">
+    <Type Name="FolderType" Id="ID4">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
@@ -176,7 +176,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Language" Member="Languages">
-    <Type Name="Language">
+    <Type Name="Language" Id="ID2">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="LanguageCode" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
@@ -268,7 +268,7 @@
     </Type>
   </Table>
   <Table Name="dbo.ObjectRelationType" Member="ObjectRelationTypes">
-    <Type Name="ObjectRelationType">
+    <Type Name="ObjectRelationType" Id="ID3">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Value" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Association Name="ObjectRelationType_Object_Object_Join" Member="Object_Object_Joins" ThisKey="ID" OtherKey="ObjectRelationTypeID" Type="Object_Object_Join" />
@@ -296,6 +296,75 @@
   <Function Name="dbo.ObjectType_Delete" Method="ObjectType_Delete">
     <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
     <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Language_Get" Method="Language_Get">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="LanguageCode" Parameter="languageCode" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="CountryName" Parameter="countryName" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID2" />
+  </Function>
+  <Function Name="dbo.Language_Create" Method="Language_Create">
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="LanguageCode" Parameter="languageCode" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="CountryName" Parameter="countryName" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Language_Delete" Method="Language_Delete">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Language_Update" Method="Language_Update">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="LanguageCode" Parameter="languageCode" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="CountryName" Parameter="countryName" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.ObjectRelationType_Get" Method="ObjectRelationType_Get">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID3" />
+  </Function>
+  <Function Name="dbo.ObjectRelationType_Create" Method="ObjectRelationType_Create">
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.ObjectRelationType_Delete" Method="ObjectRelationType_Delete">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.ObjectRelationType_Update" Method="ObjectRelationType_Update">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.FolderType_Get" Method="FolderType_Get">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <ElementType IdRef="ID4" />
+  </Function>
+  <Function Name="dbo.FolderType_Delete" Method="FolderType_Delete">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.FolderType_Create" Method="FolderType_Create">
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
+    <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.FolderType_Update" Method="FolderType_Update">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
   </Function>
