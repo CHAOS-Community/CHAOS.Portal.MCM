@@ -300,6 +300,17 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
+        #region FormatCategory
+
+
+
+        #endregion
+        #region Format
+
+        //[Datatype("Format","Get")]
+        //public IEnumerable<Format> Format_Get( CallContext callContext,  )
+
+        #endregion
 
         #endregion
     }
