@@ -103,22 +103,6 @@
       <Association Name="Object_File" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Folder" Member="Folders">
-    <Type Name="Folder">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ParentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="FolderTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="SubscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="Title" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Folder_Folder" Member="Folders" ThisKey="ID" OtherKey="ParentID" Type="Folder" />
-      <Association Name="Folder_Folder_Group_Join" Member="Folder_Group_Joins" ThisKey="ID" OtherKey="FolderID" Type="Folder_Group_Join" />
-      <Association Name="Folder_Folder_User_Join" Member="Folder_User_Joins" ThisKey="ID" OtherKey="FolderID" Type="Folder_User_Join" />
-      <Association Name="Folder_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="FolderID" Type="Object_Folder_Join" />
-      <Association Name="Folder_Folder" Member="Folder1" ThisKey="ParentID" OtherKey="ID" Type="Folder" IsForeignKey="true" />
-      <Association Name="FolderType_Folder" Member="FolderType" ThisKey="FolderTypeID" OtherKey="ID" Type="FolderType" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Folder_Group_Join" Member="Folder_Group_Joins">
     <Type Name="Folder_Group_Join">
       <Column Name="FolderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -251,8 +235,8 @@
       <Column Name="FolderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="IsShortcut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Folder_Object_Folder_Join" Member="Folder" ThisKey="FolderID" OtherKey="ID" Type="Folder" IsForeignKey="true" />
       <Association Name="Object_Object_Folder_Join" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
+      <Association Name="Folder_Object_Folder_Join" Member="Folder" ThisKey="FolderID" OtherKey="ID" Type="Folder" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Object_Object_Join" Member="Object_Object_Joins">
@@ -272,6 +256,22 @@
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Value" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Association Name="ObjectRelationType_Object_Object_Join" Member="Object_Object_Joins" ThisKey="ID" OtherKey="ObjectRelationTypeID" Type="Object_Object_Join" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Folder" Member="Folders">
+    <Type Name="Folder">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ParentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FolderTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SubscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Folder_Folder_Group_Join" Member="Folder_Group_Joins" ThisKey="ID" OtherKey="FolderID" Type="Folder_Group_Join" />
+      <Association Name="Folder_Folder_User_Join" Member="Folder_User_Joins" ThisKey="ID" OtherKey="FolderID" Type="Folder_User_Join" />
+      <Association Name="Folder_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="FolderID" Type="Object_Folder_Join" />
+      <Association Name="Folder_Folder" Member="Folders" ThisKey="ID" OtherKey="ParentID" Type="Folder" />
+      <Association Name="Folder_Folder" Member="Folder1" ThisKey="ParentID" OtherKey="ID" Type="Folder" IsForeignKey="true" />
+      <Association Name="FolderType_Folder" Member="FolderType" ThisKey="FolderTypeID" OtherKey="ID" Type="FolderType" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.PopulateDefaultData" Method="PopulateDefaultData">

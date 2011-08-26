@@ -6,7 +6,7 @@ using Geckon.MCM.Data.Linq;
 using Geckon.Portal.Core;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Core.Standard.Module;
-using Geckon.Portal.Data.Dto;
+using Geckon.Portal.Data;
 
 namespace Geckon.MCM.Module.Standard
 {
@@ -15,7 +15,7 @@ namespace Geckon.MCM.Module.Standard
         #region Properties
 
         private String ConnectionString { get; set; }
-        public Data.Linq.MCMDataContext DefaultMCMDataContext { get { return new Data.Linq.MCMDataContext(ConnectionString); } }
+        public Data.Linq.MCMDataContext DefaultMCMDataContext { get { return new MCMDataContext(ConnectionString); } }
 
         #endregion
         #region Construction
@@ -56,7 +56,7 @@ namespace Geckon.MCM.Module.Standard
         }
 
         [Datatype("ObjectType","Update")]
-        public ScalarResult ObjectType_Update( CallContext callContext, int id, string newName )
+        public ScalarResult ObjectType_Update(  CallContext callContext, int id, string newName )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
@@ -302,13 +302,25 @@ namespace Geckon.MCM.Module.Standard
         #endregion
         #region FormatCategory
 
-
+        //[Datatype("FormatCategory","Get")]
 
         #endregion
         #region Format
 
         //[Datatype("Format","Get")]
         //public IEnumerable<Format> Format_Get( CallContext callContext,  )
+
+        #endregion
+        #region Folder
+
+        [Datatype("Folder","Get")]
+        public IEnumerable<Folder> Folder_Get( CallContext callContext, int? id, int? folderTypeID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                return db.Folder_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID );
+            }
+        }
 
         #endregion
 

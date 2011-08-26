@@ -57,9 +57,6 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertFile(File instance);
     partial void UpdateFile(File instance);
     partial void DeleteFile(File instance);
-    partial void InsertFolder(Folder instance);
-    partial void UpdateFolder(Folder instance);
-    partial void DeleteFolder(Folder instance);
     partial void InsertFolder_Group_Join(Folder_Group_Join instance);
     partial void UpdateFolder_Group_Join(Folder_Group_Join instance);
     partial void DeleteFolder_Group_Join(Folder_Group_Join instance);
@@ -105,6 +102,9 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertObjectRelationType(ObjectRelationType instance);
     partial void UpdateObjectRelationType(ObjectRelationType instance);
     partial void DeleteObjectRelationType(ObjectRelationType instance);
+    partial void InsertFolder(Folder instance);
+    partial void UpdateFolder(Folder instance);
+    partial void DeleteFolder(Folder instance);
     #endregion
 		
 		public MCMDataContext() : 
@@ -206,14 +206,6 @@ namespace Geckon.MCM.Data.Linq
 			get
 			{
 				return this.GetTable<File>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Folder> Folders
-		{
-			get
-			{
-				return this.GetTable<Folder>();
 			}
 		}
 		
@@ -334,6 +326,14 @@ namespace Geckon.MCM.Data.Linq
 			get
 			{
 				return this.GetTable<ObjectRelationType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Folder> Folders
+		{
+			get
+			{
+				return this.GetTable<Folder>();
 			}
 		}
 		
@@ -2693,382 +2693,6 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this.SendPropertyChanging();
 			entity.File1 = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Folder")]
-	public partial class Folder : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _ParentID;
-		
-		private int _FolderTypeID;
-		
-		private System.Guid _SubscriptionGUID;
-		
-		private string _Title;
-		
-		private System.DateTime _DateCreated;
-		
-		private EntitySet<Folder> _Folders;
-		
-		private EntitySet<Folder_Group_Join> _Folder_Group_Joins;
-		
-		private EntitySet<Folder_User_Join> _Folder_User_Joins;
-		
-		private EntitySet<Object_Folder_Join> _Object_Folder_Joins;
-		
-		private EntityRef<Folder> _Folder1;
-		
-		private EntityRef<FolderType> _FolderType;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnParentIDChanging(int value);
-    partial void OnParentIDChanged();
-    partial void OnFolderTypeIDChanging(int value);
-    partial void OnFolderTypeIDChanged();
-    partial void OnSubscriptionGUIDChanging(System.Guid value);
-    partial void OnSubscriptionGUIDChanged();
-    partial void OnTitleChanging(string value);
-    partial void OnTitleChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    #endregion
-		
-		public Folder()
-		{
-			this._Folders = new EntitySet<Folder>(new Action<Folder>(this.attach_Folders), new Action<Folder>(this.detach_Folders));
-			this._Folder_Group_Joins = new EntitySet<Folder_Group_Join>(new Action<Folder_Group_Join>(this.attach_Folder_Group_Joins), new Action<Folder_Group_Join>(this.detach_Folder_Group_Joins));
-			this._Folder_User_Joins = new EntitySet<Folder_User_Join>(new Action<Folder_User_Join>(this.attach_Folder_User_Joins), new Action<Folder_User_Join>(this.detach_Folder_User_Joins));
-			this._Object_Folder_Joins = new EntitySet<Object_Folder_Join>(new Action<Object_Folder_Join>(this.attach_Object_Folder_Joins), new Action<Object_Folder_Join>(this.detach_Object_Folder_Joins));
-			this._Folder1 = default(EntityRef<Folder>);
-			this._FolderType = default(EntityRef<FolderType>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentID", DbType="Int NOT NULL")]
-		public int ParentID
-		{
-			get
-			{
-				return this._ParentID;
-			}
-			set
-			{
-				if ((this._ParentID != value))
-				{
-					if (this._Folder1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnParentIDChanging(value);
-					this.SendPropertyChanging();
-					this._ParentID = value;
-					this.SendPropertyChanged("ParentID");
-					this.OnParentIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FolderTypeID", DbType="Int NOT NULL")]
-		public int FolderTypeID
-		{
-			get
-			{
-				return this._FolderTypeID;
-			}
-			set
-			{
-				if ((this._FolderTypeID != value))
-				{
-					if (this._FolderType.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFolderTypeIDChanging(value);
-					this.SendPropertyChanging();
-					this._FolderTypeID = value;
-					this.SendPropertyChanged("FolderTypeID");
-					this.OnFolderTypeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriptionGUID", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SubscriptionGUID
-		{
-			get
-			{
-				return this._SubscriptionGUID;
-			}
-			set
-			{
-				if ((this._SubscriptionGUID != value))
-				{
-					this.OnSubscriptionGUIDChanging(value);
-					this.SendPropertyChanging();
-					this._SubscriptionGUID = value;
-					this.SendPropertyChanged("SubscriptionGUID");
-					this.OnSubscriptionGUIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Title
-		{
-			get
-			{
-				return this._Title;
-			}
-			set
-			{
-				if ((this._Title != value))
-				{
-					this.OnTitleChanging(value);
-					this.SendPropertyChanging();
-					this._Title = value;
-					this.SendPropertyChanged("Title");
-					this.OnTitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="SmallDateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder", Storage="_Folders", ThisKey="ID", OtherKey="ParentID")]
-		public EntitySet<Folder> Folders
-		{
-			get
-			{
-				return this._Folders;
-			}
-			set
-			{
-				this._Folders.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder_Group_Join", Storage="_Folder_Group_Joins", ThisKey="ID", OtherKey="FolderID")]
-		public EntitySet<Folder_Group_Join> Folder_Group_Joins
-		{
-			get
-			{
-				return this._Folder_Group_Joins;
-			}
-			set
-			{
-				this._Folder_Group_Joins.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder_User_Join", Storage="_Folder_User_Joins", ThisKey="ID", OtherKey="FolderID")]
-		public EntitySet<Folder_User_Join> Folder_User_Joins
-		{
-			get
-			{
-				return this._Folder_User_Joins;
-			}
-			set
-			{
-				this._Folder_User_Joins.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Object_Folder_Join", Storage="_Object_Folder_Joins", ThisKey="ID", OtherKey="FolderID")]
-		public EntitySet<Object_Folder_Join> Object_Folder_Joins
-		{
-			get
-			{
-				return this._Object_Folder_Joins;
-			}
-			set
-			{
-				this._Object_Folder_Joins.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder", Storage="_Folder1", ThisKey="ParentID", OtherKey="ID", IsForeignKey=true)]
-		public Folder Folder1
-		{
-			get
-			{
-				return this._Folder1.Entity;
-			}
-			set
-			{
-				Folder previousValue = this._Folder1.Entity;
-				if (((previousValue != value) 
-							|| (this._Folder1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Folder1.Entity = null;
-						previousValue.Folders.Remove(this);
-					}
-					this._Folder1.Entity = value;
-					if ((value != null))
-					{
-						value.Folders.Add(this);
-						this._ParentID = value.ID;
-					}
-					else
-					{
-						this._ParentID = default(int);
-					}
-					this.SendPropertyChanged("Folder1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FolderType_Folder", Storage="_FolderType", ThisKey="FolderTypeID", OtherKey="ID", IsForeignKey=true)]
-		public FolderType FolderType
-		{
-			get
-			{
-				return this._FolderType.Entity;
-			}
-			set
-			{
-				FolderType previousValue = this._FolderType.Entity;
-				if (((previousValue != value) 
-							|| (this._FolderType.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._FolderType.Entity = null;
-						previousValue.Folders.Remove(this);
-					}
-					this._FolderType.Entity = value;
-					if ((value != null))
-					{
-						value.Folders.Add(this);
-						this._FolderTypeID = value.ID;
-					}
-					else
-					{
-						this._FolderTypeID = default(int);
-					}
-					this.SendPropertyChanged("FolderType");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Folders(Folder entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder1 = this;
-		}
-		
-		private void detach_Folders(Folder entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder1 = null;
-		}
-		
-		private void attach_Folder_Group_Joins(Folder_Group_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder = this;
-		}
-		
-		private void detach_Folder_Group_Joins(Folder_Group_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder = null;
-		}
-		
-		private void attach_Folder_User_Joins(Folder_User_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder = this;
-		}
-		
-		private void detach_Folder_User_Joins(Folder_User_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder = null;
-		}
-		
-		private void attach_Object_Folder_Joins(Object_Folder_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder = this;
-		}
-		
-		private void detach_Object_Folder_Joins(Object_Folder_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder = null;
 		}
 	}
 	
@@ -5648,9 +5272,9 @@ namespace Geckon.MCM.Data.Linq
 		
 		private System.DateTime _DateCreated;
 		
-		private EntityRef<Folder> _Folder;
-		
 		private EntityRef<Object> _Object;
+		
+		private EntityRef<Folder> _Folder;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -5668,8 +5292,8 @@ namespace Geckon.MCM.Data.Linq
 		
 		public Object_Folder_Join()
 		{
-			this._Folder = default(EntityRef<Folder>);
 			this._Object = default(EntityRef<Object>);
+			this._Folder = default(EntityRef<Folder>);
 			OnCreated();
 		}
 		
@@ -5761,40 +5385,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Object_Folder_Join", Storage="_Folder", ThisKey="FolderID", OtherKey="ID", IsForeignKey=true)]
-		public Folder Folder
-		{
-			get
-			{
-				return this._Folder.Entity;
-			}
-			set
-			{
-				Folder previousValue = this._Folder.Entity;
-				if (((previousValue != value) 
-							|| (this._Folder.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Folder.Entity = null;
-						previousValue.Object_Folder_Joins.Remove(this);
-					}
-					this._Folder.Entity = value;
-					if ((value != null))
-					{
-						value.Object_Folder_Joins.Add(this);
-						this._FolderID = value.ID;
-					}
-					else
-					{
-						this._FolderID = default(int);
-					}
-					this.SendPropertyChanged("Folder");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Object_Folder_Join", Storage="_Object", ThisKey="ObjectID", OtherKey="ID", IsForeignKey=true)]
 		public Object Object
 		{
@@ -5825,6 +5415,40 @@ namespace Geckon.MCM.Data.Linq
 						this._ObjectID = default(int);
 					}
 					this.SendPropertyChanged("Object");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Object_Folder_Join", Storage="_Folder", ThisKey="FolderID", OtherKey="ID", IsForeignKey=true)]
+		public Folder Folder
+		{
+			get
+			{
+				return this._Folder.Entity;
+			}
+			set
+			{
+				Folder previousValue = this._Folder.Entity;
+				if (((previousValue != value) 
+							|| (this._Folder.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Folder.Entity = null;
+						previousValue.Object_Folder_Joins.Remove(this);
+					}
+					this._Folder.Entity = value;
+					if ((value != null))
+					{
+						value.Object_Folder_Joins.Add(this);
+						this._FolderID = value.ID;
+					}
+					else
+					{
+						this._FolderID = default(int);
+					}
+					this.SendPropertyChanged("Folder");
 				}
 			}
 		}
@@ -6242,6 +5866,382 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this.SendPropertyChanging();
 			entity.ObjectRelationType = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Folder")]
+	public partial class Folder : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<int> _ParentID;
+		
+		private int _FolderTypeID;
+		
+		private System.Guid _SubscriptionGUID;
+		
+		private string _Title;
+		
+		private System.DateTime _DateCreated;
+		
+		private EntitySet<Folder_Group_Join> _Folder_Group_Joins;
+		
+		private EntitySet<Folder_User_Join> _Folder_User_Joins;
+		
+		private EntitySet<Object_Folder_Join> _Object_Folder_Joins;
+		
+		private EntitySet<Folder> _Folders;
+		
+		private EntityRef<Folder> _Folder1;
+		
+		private EntityRef<FolderType> _FolderType;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnParentIDChanging(System.Nullable<int> value);
+    partial void OnParentIDChanged();
+    partial void OnFolderTypeIDChanging(int value);
+    partial void OnFolderTypeIDChanged();
+    partial void OnSubscriptionGUIDChanging(System.Guid value);
+    partial void OnSubscriptionGUIDChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    #endregion
+		
+		public Folder()
+		{
+			this._Folder_Group_Joins = new EntitySet<Folder_Group_Join>(new Action<Folder_Group_Join>(this.attach_Folder_Group_Joins), new Action<Folder_Group_Join>(this.detach_Folder_Group_Joins));
+			this._Folder_User_Joins = new EntitySet<Folder_User_Join>(new Action<Folder_User_Join>(this.attach_Folder_User_Joins), new Action<Folder_User_Join>(this.detach_Folder_User_Joins));
+			this._Object_Folder_Joins = new EntitySet<Object_Folder_Join>(new Action<Object_Folder_Join>(this.attach_Object_Folder_Joins), new Action<Object_Folder_Join>(this.detach_Object_Folder_Joins));
+			this._Folders = new EntitySet<Folder>(new Action<Folder>(this.attach_Folders), new Action<Folder>(this.detach_Folders));
+			this._Folder1 = default(EntityRef<Folder>);
+			this._FolderType = default(EntityRef<FolderType>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentID", DbType="Int")]
+		public System.Nullable<int> ParentID
+		{
+			get
+			{
+				return this._ParentID;
+			}
+			set
+			{
+				if ((this._ParentID != value))
+				{
+					if (this._Folder1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnParentIDChanging(value);
+					this.SendPropertyChanging();
+					this._ParentID = value;
+					this.SendPropertyChanged("ParentID");
+					this.OnParentIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FolderTypeID", DbType="Int NOT NULL")]
+		public int FolderTypeID
+		{
+			get
+			{
+				return this._FolderTypeID;
+			}
+			set
+			{
+				if ((this._FolderTypeID != value))
+				{
+					if (this._FolderType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFolderTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._FolderTypeID = value;
+					this.SendPropertyChanged("FolderTypeID");
+					this.OnFolderTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriptionGUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SubscriptionGUID
+		{
+			get
+			{
+				return this._SubscriptionGUID;
+			}
+			set
+			{
+				if ((this._SubscriptionGUID != value))
+				{
+					this.OnSubscriptionGUIDChanging(value);
+					this.SendPropertyChanging();
+					this._SubscriptionGUID = value;
+					this.SendPropertyChanged("SubscriptionGUID");
+					this.OnSubscriptionGUIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="SmallDateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder_Group_Join", Storage="_Folder_Group_Joins", ThisKey="ID", OtherKey="FolderID")]
+		public EntitySet<Folder_Group_Join> Folder_Group_Joins
+		{
+			get
+			{
+				return this._Folder_Group_Joins;
+			}
+			set
+			{
+				this._Folder_Group_Joins.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder_User_Join", Storage="_Folder_User_Joins", ThisKey="ID", OtherKey="FolderID")]
+		public EntitySet<Folder_User_Join> Folder_User_Joins
+		{
+			get
+			{
+				return this._Folder_User_Joins;
+			}
+			set
+			{
+				this._Folder_User_Joins.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Object_Folder_Join", Storage="_Object_Folder_Joins", ThisKey="ID", OtherKey="FolderID")]
+		public EntitySet<Object_Folder_Join> Object_Folder_Joins
+		{
+			get
+			{
+				return this._Object_Folder_Joins;
+			}
+			set
+			{
+				this._Object_Folder_Joins.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder", Storage="_Folders", ThisKey="ID", OtherKey="ParentID")]
+		public EntitySet<Folder> Folders
+		{
+			get
+			{
+				return this._Folders;
+			}
+			set
+			{
+				this._Folders.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder", Storage="_Folder1", ThisKey="ParentID", OtherKey="ID", IsForeignKey=true)]
+		public Folder Folder1
+		{
+			get
+			{
+				return this._Folder1.Entity;
+			}
+			set
+			{
+				Folder previousValue = this._Folder1.Entity;
+				if (((previousValue != value) 
+							|| (this._Folder1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Folder1.Entity = null;
+						previousValue.Folders.Remove(this);
+					}
+					this._Folder1.Entity = value;
+					if ((value != null))
+					{
+						value.Folders.Add(this);
+						this._ParentID = value.ID;
+					}
+					else
+					{
+						this._ParentID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Folder1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FolderType_Folder", Storage="_FolderType", ThisKey="FolderTypeID", OtherKey="ID", IsForeignKey=true)]
+		public FolderType FolderType
+		{
+			get
+			{
+				return this._FolderType.Entity;
+			}
+			set
+			{
+				FolderType previousValue = this._FolderType.Entity;
+				if (((previousValue != value) 
+							|| (this._FolderType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FolderType.Entity = null;
+						previousValue.Folders.Remove(this);
+					}
+					this._FolderType.Entity = value;
+					if ((value != null))
+					{
+						value.Folders.Add(this);
+						this._FolderTypeID = value.ID;
+					}
+					else
+					{
+						this._FolderTypeID = default(int);
+					}
+					this.SendPropertyChanged("FolderType");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Folder_Group_Joins(Folder_Group_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder = this;
+		}
+		
+		private void detach_Folder_Group_Joins(Folder_Group_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder = null;
+		}
+		
+		private void attach_Folder_User_Joins(Folder_User_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder = this;
+		}
+		
+		private void detach_Folder_User_Joins(Folder_User_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder = null;
+		}
+		
+		private void attach_Object_Folder_Joins(Object_Folder_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder = this;
+		}
+		
+		private void detach_Object_Folder_Joins(Object_Folder_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder = null;
+		}
+		
+		private void attach_Folders(Folder entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder1 = this;
+		}
+		
+		private void detach_Folders(Folder entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder1 = null;
 		}
 	}
 }
