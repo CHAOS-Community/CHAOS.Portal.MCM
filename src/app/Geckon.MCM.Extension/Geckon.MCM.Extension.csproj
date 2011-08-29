@@ -47,6 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Folder\FolderExtension.cs" />
+    <Compile Include="FolderType\FolderTypeExtension.cs" />
+    <Compile Include="FormatType\FormatTypeExtension.cs" />
+    <Compile Include="Language\LanguageExtension.cs" />
+    <Compile Include="ObjectRelationType\ObjectRelationTypeExtension.cs" />
     <Compile Include="ObjectType\ObjectTypeExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

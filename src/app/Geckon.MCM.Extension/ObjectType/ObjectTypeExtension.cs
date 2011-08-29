@@ -11,17 +11,27 @@ namespace Geckon.MCM.Extension.ObjectType
             
         }
 
-        public void Create( string sessionID, string value )
+        #endregion
+        #region CREATE
+
+        public void Create(string sessionID, string value)
         {
 
         }
 
-        public void Update( string sessionID, int id, string newValue )
+        #endregion
+        #region UPDATE
+
+
+        public void Update(string sessionID, int id, string newValue)
         {
 
         }
 
-        public void Delete( string sessionID, int id )
+        #endregion
+        #region DELETE
+
+        public void Delete(string sessionID, int id)
         {
 
         }

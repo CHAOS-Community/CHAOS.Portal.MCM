@@ -43,6 +43,72 @@ namespace Geckon.MCM.Data.Linq
 
     }
 
+    [Document("Geckon.MCM.Data.Linq.DTO.FormatType")]
+    public partial class FormatType : XmlSerialize
+    {
+        #region Properties
+
+        [Element("ID")]
+        public int pID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
+
+        [Element("Value")]
+        public string pValue
+        {
+            get { return Value; }
+            set { Value = value; }
+        }
+
+        #endregion
+    }
+
+    [Document("Geckon.MCM.Data.Linq.DTO.FolderType")]
+    public partial class FolderType : XmlSerialize
+    {
+        #region Properties
+
+        [Element("ID")]
+        public int pID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
+
+        [Element("Name")]
+        public string pName
+        {
+            get { return Name; }
+            set { Name = value; }
+        }
+
+        #endregion
+    }
+
+    [Document("Geckon.MCM.Data.Linq.DTO.ObjectRelationType")]
+    public partial class ObjectRelationType : XmlSerialize
+    {
+        #region Properties
+
+        [Element("ID")]
+        public int pID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
+
+        [Element("Value")]
+        public string pValue
+        {
+            get { return Value; }
+            set { Value = value; }
+        }
+
+        #endregion
+    }
+
     [Document("Geckon.MCM.Data.Linq.DTO.Folder")]
     public partial class Folder : XmlSerialize
     {
