@@ -337,6 +337,14 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
+		public System.Data.Linq.Table<FolderInfo> FolderInfos
+		{
+			get
+			{
+				return this.GetTable<FolderInfo>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PopulateDefaultData")]
 		public int PopulateDefaultData()
 		{
@@ -6242,6 +6250,141 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this.SendPropertyChanging();
 			entity.Folder1 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FolderInfo")]
+	public partial class FolderInfo
+	{
+		
+		private int _ID;
+		
+		private System.Nullable<int> _ParentID;
+		
+		private int _FolderTypeID;
+		
+		private System.Guid _SubscriptionGUID;
+		
+		private string _Title;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.Nullable<int> _NumberOfSubFolders;
+		
+		public FolderInfo()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentID", DbType="Int")]
+		public System.Nullable<int> ParentID
+		{
+			get
+			{
+				return this._ParentID;
+			}
+			set
+			{
+				if ((this._ParentID != value))
+				{
+					this._ParentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FolderTypeID", DbType="Int NOT NULL")]
+		public int FolderTypeID
+		{
+			get
+			{
+				return this._FolderTypeID;
+			}
+			set
+			{
+				if ((this._FolderTypeID != value))
+				{
+					this._FolderTypeID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriptionGUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SubscriptionGUID
+		{
+			get
+			{
+				return this._SubscriptionGUID;
+			}
+			set
+			{
+				if ((this._SubscriptionGUID != value))
+				{
+					this._SubscriptionGUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this._Title = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="SmallDateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_NumberOfSubFolders", DbType="Int")]
+		public System.Nullable<int> NumberOfSubFolders
+		{
+			get
+			{
+				return this._NumberOfSubFolders;
+			}
+			set
+			{
+				if ((this._NumberOfSubFolders != value))
+				{
+					this._NumberOfSubFolders = value;
+				}
+			}
 		}
 	}
 }

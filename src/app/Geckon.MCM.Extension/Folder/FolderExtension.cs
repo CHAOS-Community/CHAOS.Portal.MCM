@@ -6,7 +6,7 @@ namespace Geckon.MCM.Extension.Folder
     {
         #region GET
 
-        public void Get( string sessionID, int? id, int? folderTypeID )
+        public void Get( string sessionID, int? id, int? folderTypeID, int? parentID )
         {
             
         }
@@ -22,20 +22,19 @@ namespace Geckon.MCM.Extension.Folder
         //#endregion
         //#region UPDATE
 
-
         //public void Update( string sessionID, int id, string newValue)
         //{
 
         //}
 
         //#endregion
-        //#region DELETE
+        #region DELETE
 
-        //public void Delete( string sessionID, int id)
-        //{
+        public void Delete( string sessionID, int id )
+        {
 
-        //}
+        }
 
-        //#endregion
+        #endregion
     }
 }

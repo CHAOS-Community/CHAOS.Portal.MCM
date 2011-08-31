@@ -9,9 +9,9 @@ namespace Geckon.MCM.Data.Linq
 {
     public partial class MCMDataContext
     {
-        #region Folder_Get
+        #region Folder
 
-        public IList<Folder> Folder_Get(IList<Guid> groupGUIDs, Guid userGUID )
+        public IEnumerable<FolderInfo> Folder_Get( List<Guid> groupGUIDs, Guid userGUID, int? id, int? folderTypeID, int? parentID )
         {
             DataTable groupGUIDsTable = new DataTable();
             groupGUIDsTable.Columns.Add( "GUID", typeof( Guid ) );
@@ -21,7 +21,7 @@ namespace Geckon.MCM.Data.Linq
 
             using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
             {
-                SqlCommand cmd = new SqlCommand( "Folder_Get", conn );
+                SqlCommand cmd = new SqlCommand( "FolderInfo_Get", conn );
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 SqlParameter p = cmd.Parameters.AddWithValue( "@GroupGUIDs", groupGUIDsTable );
@@ -31,16 +31,57 @@ namespace Geckon.MCM.Data.Linq
                 p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
                 p.SqlDbType = SqlDbType.UniqueIdentifier;
 
+                p = cmd.Parameters.AddWithValue( "@FolderID", id );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@FolderTypeID", folderTypeID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@ParentID", parentID );
+                p.SqlDbType = SqlDbType.Int;
+
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
 
-                return Translate<Folder>(reader).ToList();
+                return Translate<FolderInfo>(reader).ToList();
             }
         }
 
+        public int Folder_Delete( List<Guid> groupGUIDs, Guid userGUID, int id )
+        {
+            DataTable groupGUIDsTable = new DataTable();
+            groupGUIDsTable.Columns.Add( "GUID", typeof( Guid ) );
+
+            foreach( Guid guid in groupGUIDs )
+                groupGUIDsTable.Rows.Add( guid );
+
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Folder_Delete", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue( "@GroupGUIDs", groupGUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName  = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@ID", id );
+                p.SqlDbType = SqlDbType.Int;
+                
+                SqlParameter rv = cmd.Parameters.Add( new SqlParameter("@ReturnValue",SqlDbType.Int) );
+                rv.Direction = ParameterDirection.ReturnValue; 
+
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+
+                return (int) rv.Value;
+            }
+        }
 
         #endregion
-
     }
 
     [Document("Geckon.MCM.Data.Linq.DTO.FormatType")]
@@ -109,8 +150,8 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Document("Geckon.MCM.Data.Linq.DTO.Folder")]
-    public partial class Folder : XmlSerialize
+    [Document("Geckon.MCM.Data.Linq.DTO.FolderInfo")]
+    public partial class FolderInfo : XmlSerialize
     {
         #region Properties
 
@@ -154,6 +195,13 @@ namespace Geckon.MCM.Data.Linq
         {
             get { return DateCreated; }
             set { DateCreated = value; }
+        }
+
+        [Element("NumberOfSubFolders")]
+        public int? pNumberOfSubFolders
+        {
+            get { return NumberOfSubFolders; }
+            set { NumberOfSubFolders = value; }
         }
 
         #endregion

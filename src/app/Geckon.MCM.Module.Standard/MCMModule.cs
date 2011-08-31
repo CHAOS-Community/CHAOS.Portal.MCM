@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Data.Linq;
 using Geckon.Portal.Core;
 using Geckon.Portal.Core.Standard.Extension;
@@ -314,11 +315,28 @@ namespace Geckon.MCM.Module.Standard
         #region Folder
 
         [Datatype("Folder","Get")]
-        public IEnumerable<Folder> Folder_Get( CallContext callContext, int? id, int? folderTypeID )
+        public IEnumerable<FolderInfo> Folder_Get( CallContext callContext, int? id, int? folderTypeID, int? parentID )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                return db.Folder_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID );
+                return db.Folder_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, id, folderTypeID, parentID );
+            }
+        }
+
+        [Datatype("Folder","Delete")]
+        public ScalarResult Folder_Delete( CallContext callContext, int id )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.Folder_Delete( callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, id );
+
+                if( result == -50 )
+                    throw new FolderNotEmptyException( "You cannot delete non empty folder" );
+ 
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete the folder" );
+
+                return new ScalarResult( result );
             }
         }
 

@@ -70,6 +70,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Geckon.MCM.Core.Exception\Geckon.MCM.Core.Exception.csproj">
+      <Project>{4E125648-0FA1-4FD3-AB15-343468DE471D}</Project>
+      <Name>Geckon.MCM.Core.Exception</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\Geckon.MCM.Data.Linq\Geckon.MCM.Data.Linq.csproj">
       <Project>{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}</Project>
       <Name>Geckon.MCM.Data.Linq</Name>

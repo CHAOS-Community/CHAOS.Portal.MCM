@@ -274,6 +274,17 @@
       <Association Name="FolderType_Folder" Member="FolderType" ThisKey="FolderTypeID" OtherKey="ID" Type="FolderType" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="dbo.FolderInfo" Member="FolderInfos">
+    <Type Name="FolderInfo">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ParentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FolderTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SubscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="NumberOfSubFolders" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.PopulateDefaultData" Method="PopulateDefaultData">
     <Return Type="System.Int32" />
   </Function>

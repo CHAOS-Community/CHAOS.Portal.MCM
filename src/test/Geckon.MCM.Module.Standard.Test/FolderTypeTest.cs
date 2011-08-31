@@ -34,7 +34,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Delete_FolderType()
         {
-            ScalarResult result = MCMModule.FolderType_Delete(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), FolderType.ID);
+            ScalarResult result = MCMModule.FolderType_Delete(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), FolderTestType.ID);
 
             Assert.AreEqual(1, result.Value);
         }
