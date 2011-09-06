@@ -125,7 +125,54 @@ namespace Geckon.MCM.Data.Linq
             }
         }
 
-        #endregion
+        public int Folder_Create(List<Guid> groupGUIDs, Guid userGUID, Guid? subscriptionGUID, int? subscriptionPermission, string title, int? parentID, int folderTypeID )
+        {
+            DataTable groupGUIDsTable = new DataTable();
+            groupGUIDsTable.Columns.Add( "GUID", typeof( Guid ) );
+
+            foreach( Guid guid in groupGUIDs )
+                groupGUIDsTable.Rows.Add( guid );
+
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Folder_Create", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue( "@GroupGUIDs", groupGUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName  = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@SubscriptionGUID", subscriptionGUID );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@Title", title );
+                p.SqlDbType = SqlDbType.VarChar;
+                p.Size      = 255;
+
+                p = cmd.Parameters.AddWithValue( "@ParentID", parentID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@FolderTypeID", folderTypeID );
+                p.SqlDbType = SqlDbType.Int;
+                
+                p = cmd.Parameters.AddWithValue( "@SubscriptionPermission", subscriptionPermission );
+                p.SqlDbType = SqlDbType.Int;
+
+                SqlParameter rv = cmd.Parameters.Add( new SqlParameter("@ReturnValue",SqlDbType.Int) );
+                rv.Direction = ParameterDirection.ReturnValue; 
+
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+
+                return (int) rv.Value;
+            }
+        }
+
+        #endregion        
     }
 
     [Document("Geckon.MCM.Data.Linq.DTO.FormatType")]

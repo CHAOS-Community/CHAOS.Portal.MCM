@@ -66,16 +66,40 @@ namespace Geckon.MCM.Module.Standard.Test
         public void Should_Throw_InsufficientPermissionsExcention_On_Update_Folder()
         {
             MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()), EmptyFolder.ID, null, TopFolder.ID, null );
-
-
         }
 
         [Test]
         public void Should_Move_Folder()
         {
-            MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), EmptyFolder.ID, null, TopFolder.ID, null);
+            ScalarResult result = MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), EmptyFolder.ID, null, TopFolder.ID, null);
 
+            Assert.Greater((int)result.Value, 0);
+        }
 
+        [Test]
+        public void Should_Create_Folder()
+        {
+            FolderInfo folder = MCMModule.Folder_Create(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), SubscriptionInfo.GUID.ToString(), "hellooo", TopFolder.ID, FolderType.ID);
+
+            Assert.AreEqual( "hellooo", folder.Title );
+            Assert.AreEqual( TopFolder.ID, folder.ParentID );
+            Assert.AreEqual( FolderType.ID, folder.FolderTypeID );
+        }
+
+        [Test]
+        public void Should_Create_TopFolder()
+        {
+            FolderInfo folder = MCMModule.Folder_Create(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), SubscriptionInfo.GUID.ToString(), "hellooo", null, FolderType.ID);
+
+            Assert.AreEqual("hellooo", folder.Title);
+            Assert.IsNull(folder.ParentID);
+            Assert.AreEqual(FolderType.ID, folder.FolderTypeID);
+        }
+
+        [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+        public void Should_Throw_InsufficientPermissionsExcention_On_Create_Folder()
+        {
+            MCMModule.Folder_Create(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()),null, "not allowed", TopFolder.ID, FolderType.ID);
         }
     }
 }

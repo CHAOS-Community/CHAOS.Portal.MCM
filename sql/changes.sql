@@ -127,3 +127,67 @@ BEGIN
 END
 
 GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.06
+--				This SP is used to create folders
+-- =============================================
+ALTER PROCEDURE [dbo].[Folder_Create]
+	@GroupGUIDs				GUIDList READONLY,
+	@UserGUID				uniqueidentifier,
+	@SubscriptionGUID		uniqueidentifier	= null,
+	@Title					varchar(255),
+	@ParentID				int					= null,
+	@FolderTypeID			int,
+	@SubscriptionPermission	int					= null
+AS
+BEGIN
+
+	DECLARE	@RequiredPermission	int
+	
+	-- If SubscriptionGUID is NOT NULL ParentID must be null, ELSE SubscriptionGUID is inherited from the parent
+	IF( @SubscriptionGUID IS NULL AND @ParentID IS NULL AND @SubscriptionPermission IS NULL )
+		RETURN -10
+	
+	IF( @ParentID IS NULL )
+	BEGIN
+		-- If ParentID is null, check permission on subscription
+		SET @RequiredPermission = dbo.GetPermissionForAction( 'Subscription', 'CREATE TOPFOLDER' )
+		
+		IF( @RequiredPermission & @SubscriptionPermission <> @RequiredPermission )
+			RETURN -100
+	END
+	ELSE
+	BEGIN
+		-- Check Create permission to ParentID
+		SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'CREATE' )
+		
+		IF( @RequiredPermission & dbo.Folder_FindHighestUserPermission( @UserGUID,@GroupGUIDs,@ParentID ) <> @RequiredPermission )
+			RETURN -100
+	END
+
+	IF( @SubscriptionGUID IS NULL AND @ParentID IS NOT NULL )
+		SELECT	@SubscriptionGUID = SubscriptionGUID 
+		  FROM	Folder
+		 WHERE	Folder.ID = @ParentID
+	
+	BEGIN TRANSACTION Create_Folder
+	
+	INSERT INTO	[Folder] ([ParentID] ,[FolderTypeID] ,[SubscriptionGUID] ,[Title] ,[DateCreated])
+         VALUES (@ParentID ,@FolderTypeID ,@SubscriptionGUID ,@Title ,GETDATE())
+    
+    DECLARE @FolderID INT
+    SET @FolderID = @@IDENTITY       
+    
+    INSERT INTO [Folder_User_Join] ([FolderID],[UserGUID],[Permission],[DateCreated])
+         VALUES	(@FolderID,@UserGUID,0x7FFFFFFF,GETDATE())
+        
+    IF( @@ERROR = 0 )
+		COMMIT TRANSACTION Create_Folder
+	ELSE
+		ROLLBACK TRANSACTION Create_Folder
+
+	RETURN @FolderID
+END
+GO

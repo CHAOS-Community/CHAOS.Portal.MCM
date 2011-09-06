@@ -357,6 +357,39 @@ namespace Geckon.MCM.Module.Standard
             }
         }
 
+        [Datatype("Folder", "Create")]
+        public FolderInfo Folder_Create( CallContext callContext, string subscriptionGUID, string title, int? parentID, int folderTypeID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                Guid? subGUID       = null;
+                int?  subPermission = 0;
+
+                if( !string.IsNullOrEmpty( subscriptionGUID ) )
+                {
+                    SubscriptionInfo subscription = callContext.Subscriptions.FirstOrDefault( sub => sub.GUID.CompareTo( Guid.Parse( subscriptionGUID ) ) == 0 );
+
+                    subGUID       = subscription.GUID;
+                    subPermission = subscription.Permission;
+                }
+
+                int result = db.Folder_Create( callContext.Groups.Select( group => group.GUID ).ToList(), 
+                                               callContext.User.GUID,
+                                               subGUID,
+                                               subPermission,
+                                               title, 
+                                               parentID, 
+                                               folderTypeID);
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to Create the folder" );
+
+                FolderInfo folder = Folder_Get( callContext, result, null, null ).First();
+
+                return folder;
+            }
+        }
+
         #endregion
 
         #endregion
