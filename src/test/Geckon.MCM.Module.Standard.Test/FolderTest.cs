@@ -53,5 +53,29 @@ namespace Geckon.MCM.Module.Standard.Test
         {
             MCMModule.Folder_Delete(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()), EmptyFolder.ID);
         }
+
+        [Test]
+        public void Should_Update_Folder()
+        {
+            ScalarResult result = MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), EmptyFolder.ID, "hellooo", null, null );
+
+            Assert.Greater( (int) result.Value, 0 );
+        }
+
+        [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+        public void Should_Throw_InsufficientPermissionsExcention_On_Update_Folder()
+        {
+            MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()), EmptyFolder.ID, null, TopFolder.ID, null );
+
+
+        }
+
+        [Test]
+        public void Should_Move_Folder()
+        {
+            MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), EmptyFolder.ID, null, TopFolder.ID, null);
+
+
+        }
     }
 }

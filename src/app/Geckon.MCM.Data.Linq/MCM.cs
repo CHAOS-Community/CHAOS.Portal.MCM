@@ -81,6 +81,50 @@ namespace Geckon.MCM.Data.Linq
             }
         }
 
+        public int Folder_Update( List<Guid> groupGUIDs, Guid userGUID, int id, string newTitle, int? newParentID, int? newFolderTypeID )
+        {
+            DataTable groupGUIDsTable = new DataTable();
+            groupGUIDsTable.Columns.Add( "GUID", typeof( Guid ) );
+
+            foreach( Guid guid in groupGUIDs )
+                groupGUIDsTable.Rows.Add( guid );
+
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Folder_Update", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue( "@GroupGUIDs", groupGUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName  = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@ID", id );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@NewTitle", newTitle );
+                p.SqlDbType = SqlDbType.VarChar;
+                p.Size      = 255;
+
+                p = cmd.Parameters.AddWithValue( "@NewParentID", newParentID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@NewFolderTypeID", newFolderTypeID );
+                p.SqlDbType = SqlDbType.Int;
+                
+                SqlParameter rv = cmd.Parameters.Add( new SqlParameter("@ReturnValue",SqlDbType.Int) );
+                rv.Direction = ParameterDirection.ReturnValue; 
+
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+
+                return (int) rv.Value;
+            }
+        }
+
         #endregion
     }
 

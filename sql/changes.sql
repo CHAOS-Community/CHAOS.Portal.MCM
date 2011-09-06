@@ -45,3 +45,85 @@ BEGIN
 	
 END
 GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.08.26
+--				This SP is used to get a FolderInfo, if no search criteria are given it will find the top most folders
+-- =============================================
+ALTER PROCEDURE [dbo].[FolderInfo_Get] 
+	@GroupGUIDs		GUIDList READONLY,
+	@UserGUID		uniqueidentifier,
+	@FolderID		int = null,
+	@FolderTypeID	int = null,
+	@ParentID		int = null
+AS
+BEGIN
+
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'GET' )
+	
+	IF( @FolderID IS NULL AND @ParentID IS NULL )
+	BEGIN
+		SELECT	*
+		  FROM	FolderInfo
+		 WHERE  dbo.Folder_IsFolderHighestLevel(@UserGUID,@GroupGUIDs,FolderInfo.ID) = 1 AND
+				dbo.[Folder_FindHighestUserPermission] (@UserGUID,@GroupGUIDs,FolderInfo.ID) & @RequiredPermission = @RequiredPermission AND
+				( @FolderTypeID IS NULL OR @FolderTypeID = FolderInfo.FolderTypeID )
+	END
+	ELSE
+	BEGIN
+		SELECT	*
+		  FROM	FolderInfo
+		 WHERE  dbo.[Folder_FindHighestUserPermission] (@UserGUID,@GroupGUIDs,FolderInfo.ID) & @RequiredPermission = @RequiredPermission AND
+				( @FolderID IS NULL OR @FolderID = FolderInfo.ID ) AND
+				( @FolderTypeID IS NULL OR @FolderTypeID = FolderInfo.FolderTypeID ) AND
+				( @ParentID IS NULL OR @ParentID = FolderInfo.ParentID )
+	END
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.06
+--				This SP is used to update a folder
+-- =============================================
+ALTER PROCEDURE [dbo].[Folder_Update]
+	@GroupGUIDs			GUIDList READONLY,
+	@UserGUID			uniqueidentifier,
+	@ID					int,
+	@NewTitle			varchar(255) = null,
+	@NewParentID		int          = null,
+	@NewFolderTypeID	int			 = null
+AS
+BEGIN
+
+	if( @NewTitle IS NULL AND @NewFolderTypeID IS NULL AND @NewParentID IS NULL )
+		RETURN -10
+
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = 0
+	
+	-- OR with general UPDATE permission if applies
+	if( @NewTitle IS NOT NULL OR @NewFolderTypeID IS NOT NULL )
+		SET @RequiredPermission = @RequiredPermission | dbo.GetPermissionForAction( 'Folder', 'UPDATE' )
+	
+	-- OR with MOVE permission if applies
+	if( @NewParentID IS NOT NULL )
+		SET @RequiredPermission = @RequiredPermission | dbo.GetPermissionForAction( 'Folder', 'MOVE' )
+	
+	IF( dbo.[Folder_FindHighestUserPermission]( @UserGUID,@GroupGUIDs,@ID ) & @RequiredPermission <> @RequiredPermission ) 
+		RETURN -100
+
+	UPDATE	Folder
+	   SET	[ParentID] = @NewParentID
+			,[FolderTypeID] = ISNULL(@NewFolderTypeID,[FolderTypeID])
+			,[Title] = ISNULL(@NewTitle,[Title])
+	 WHERE	Folder.ID = @ID
+
+	RETURN @@ROWCOUNT
+	
+END
+
+GO

@@ -340,6 +340,23 @@ namespace Geckon.MCM.Module.Standard
             }
         }
 
+        [Datatype("Folder","Update")]
+        public ScalarResult Folder_Update( CallContext callContext, int folderID, string newTitle, int? newParentID, int? newFolderTypeID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.Folder_Update( callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, folderID, newTitle, newParentID, newFolderTypeID );
+
+                if( result == -10 )
+                    throw new Portal.Core.Exception.InvalidProtocolException( "The parameters to update cant all be null" );
+
+                if( result == -100 )
+                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to update the folder" );
+
+                return new ScalarResult( result );
+            }
+        }
+
         #endregion
 
         #endregion
