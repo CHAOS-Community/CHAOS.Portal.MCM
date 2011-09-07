@@ -89,7 +89,7 @@ GO
 -- Create date: 2011.09.06
 --				This SP is used to update a folder
 -- =============================================
-ALTER PROCEDURE [dbo].[Folder_Update]
+CREATE PROCEDURE [dbo].[Folder_Update]
 	@GroupGUIDs			GUIDList READONLY,
 	@UserGUID			uniqueidentifier,
 	@ID					int,
@@ -133,7 +133,7 @@ GO
 -- Create date: 2011.09.06
 --				This SP is used to create folders
 -- =============================================
-ALTER PROCEDURE [dbo].[Folder_Create]
+CREATE PROCEDURE [dbo].[Folder_Create]
 	@GroupGUIDs				GUIDList READONLY,
 	@UserGUID				uniqueidentifier,
 	@SubscriptionGUID		uniqueidentifier	= null,

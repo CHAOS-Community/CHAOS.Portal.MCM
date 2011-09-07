@@ -12,22 +12,22 @@ namespace Geckon.MCM.Extension.Folder
         }
 
         #endregion
-        //#region CREATE
+        #region CREATE
 
-        //public void Create( string sessionID, string value )
-        //{
+        public void Create( string sessionID, string subscriptionGUID, string title, int? parentID, int folderTypeID )
+        {
 
-        //}
+        }
 
-        //#endregion
-        //#region UPDATE
+        #endregion
+        #region UPDATE
 
-        //public void Update( string sessionID, int id, string newValue)
-        //{
+        public void Update( string sessionID, int folderID, string newTitle, int? newParentID, int? newFolderTypeID )
+        {
 
-        //}
+        }
 
-        //#endregion
+        #endregion
         #region DELETE
 
         public void Delete( string sessionID, int id )
