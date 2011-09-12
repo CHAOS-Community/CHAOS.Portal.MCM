@@ -179,7 +179,7 @@ namespace Geckon.MCM.Module.Standard
         }
 
         [Datatype("ObjectRelationType", "Delete")]
-        public ScalarResult ObjectRelationType_Delete(CallContext callContext, int? id)
+        public ScalarResult ObjectRelationType_Delete( CallContext callContext, int? id )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {

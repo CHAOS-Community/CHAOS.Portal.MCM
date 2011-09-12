@@ -241,7 +241,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Document("Geckon.MCM.Data.Linq.DTO.FolderInfo")]
+    [Document("Geckon.MCM.Data.Linq.DTO.Folder")]
     public partial class FolderInfo : XmlSerialize
     {
         #region Properties
