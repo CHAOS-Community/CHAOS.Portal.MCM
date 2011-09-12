@@ -4,7 +4,7 @@ namespace Geckon.MCM.Extension.ObjectRelationType
 {
     public class ObjectRelationTypeExtension : AExtension
     {
-        public void Get( string sessionID, int? id, string value )
+        public void Get( string sessionID, int id, string value )
         {
         }
 
@@ -12,12 +12,12 @@ namespace Geckon.MCM.Extension.ObjectRelationType
         {
         }
 
-        public void Update( string sessionID, int? id, string value )
+        public void Update( string sessionID, int id, string newValue )
         {
            
         }
 
-        public void Delete( string sessionID, int? id )
+        public void Delete( string sessionID, int id )
         {
         }
     }

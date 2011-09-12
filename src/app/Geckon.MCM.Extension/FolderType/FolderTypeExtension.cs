@@ -12,12 +12,12 @@ namespace Geckon.MCM.Extension.FolderType
         {
         }
 
-        public void Update( string sessionID, int? id, string name)
+        public void Update( string sessionID, int id, string newName)
         {
 
         }
 
-        public void Delete( string sessionID, int? id)
+        public void Delete( string sessionID, int id)
         {
         }
     }

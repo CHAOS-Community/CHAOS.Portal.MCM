@@ -14,7 +14,7 @@ namespace Geckon.MCM.Extension.Language
 
         }
 
-        public void Update( string sessionID, int? id, string name, string languageCode, string countryName )
+        public void Update( string sessionID, int id, string newName, string newLanguageCode, string newCountryName )
         {
 
         }
