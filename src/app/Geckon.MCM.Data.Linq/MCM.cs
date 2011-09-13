@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using Geckon.Serialization.Xml;
+using Geckon.Serialization;
+using Geckon.Portal.Data.Result.Standard;
 
 namespace Geckon.MCM.Data.Linq
 {
@@ -175,19 +176,19 @@ namespace Geckon.MCM.Data.Linq
         #endregion        
     }
 
-    [Document("Geckon.MCM.Data.Linq.DTO.FormatType")]
-    public partial class FormatType : XmlSerialize
+    [Serialize("Geckon.MCM.Data.Linq.DTO.FormatType")]
+    public partial class FormatType : Result
     {
         #region Properties
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
             set { ID = value; }
         }
 
-        [Element("Value")]
+        [Serialize("Value")]
         public string pValue
         {
             get { return Value; }
@@ -197,19 +198,19 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Document("Geckon.MCM.Data.Linq.DTO.FolderType")]
-    public partial class FolderType : XmlSerialize
+    [Serialize("Geckon.MCM.Data.Linq.DTO.FolderType")]
+    public partial class FolderType : Result
     {
         #region Properties
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
             set { ID = value; }
         }
 
-        [Element("Name")]
+        [Serialize("Name")]
         public string pName
         {
             get { return Name; }
@@ -219,19 +220,19 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Document("Geckon.MCM.Data.Linq.DTO.ObjectRelationType")]
-    public partial class ObjectRelationType : XmlSerialize
+    [Serialize("Geckon.MCM.Data.Linq.DTO.ObjectRelationType")]
+    public partial class ObjectRelationType : Result
     {
         #region Properties
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
             set { ID = value; }
         }
 
-        [Element("Value")]
+        [Serialize("Value")]
         public string pValue
         {
             get { return Value; }
@@ -241,54 +242,54 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Document("Geckon.MCM.Data.Linq.DTO.Folder")]
-    public partial class FolderInfo : XmlSerialize
+    [Serialize("Geckon.MCM.Data.Linq.DTO.Folder")]
+    public partial class FolderInfo : Result
     {
         #region Properties
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
             set { ID = value; }
         }
 
-        [Element("ParentID")]
+        [Serialize("ParentID")]
         public int? pParentID
         {
             get { return ParentID; }
             set { ParentID = value; }
         }
 
-        [Element("FolderTypeID")]
+        [Serialize("FolderTypeID")]
         public int pFolderTypeID
         {
             get { return FolderTypeID; }
             set { FolderTypeID = value; }
         }
 
-        [Element("SubscriptionGUID")]
+        [Serialize("SubscriptionGUID")]
         public Guid pSubscriptionGUID
         {
             get { return SubscriptionGUID; }
             set { SubscriptionGUID = value; }
         }
 
-        [Element("Title")]
+        [Serialize("Title")]
         public string pTitle
         {
             get { return Title; }
             set { Title = value; }
         }
 
-        [Element("DateCreated")]
+        [Serialize("DateCreated")]
         public DateTime pDateCreated
         {
             get { return DateCreated; }
             set { DateCreated = value; }
         }
 
-        [Element("NumberOfSubFolders")]
+        [Serialize("NumberOfSubFolders")]
         public int? pNumberOfSubFolders
         {
             get { return NumberOfSubFolders; }
@@ -298,18 +299,18 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Document("Geckon.MCM.Data.Linq.DTO.ObjectType")]
-    public partial class ObjectType : XmlSerialize
+    [Serialize("Geckon.MCM.Data.Linq.DTO.ObjectType")]
+    public partial class ObjectType : Result
     {
         #region Properties
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
         }
 
-        [Element("Value")]
+        [Serialize("Value")]
         public string pValue
         {
             get { return Value; }
@@ -318,30 +319,30 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Document("Geckon.MCM.Data.Linq.Language")]
-    public partial class Language : XmlSerialize
+    [Serialize("Geckon.MCM.Data.Linq.Language")]
+    public partial class Language : Result
     {
         #region Properties
 
-        [Element("ID")]
+        [Serialize("ID")]
         public int pID
         {
             get { return ID; }
         }
 
-        [Element("Name")]
+        [Serialize("Name")]
         public string pName
         {
             get { return Name; }
         }
 
-        [Element("LanguageCode")]
+        [Serialize("LanguageCode")]
         public string pLanguageCode
         {
             get { return LanguageCode; }
         }
 
-        [Element("CountryName")]
+        [Serialize("CountryName")]
         public string pCountryName
         {
             get { return CountryName; }

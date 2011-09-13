@@ -34,6 +34,9 @@
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
+    <Reference Include="Geckon.Portal.Data">
+      <HintPath>..\..\..\lib\Geckon.Portal.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
