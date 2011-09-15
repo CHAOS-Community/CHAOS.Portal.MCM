@@ -174,9 +174,8 @@ namespace Geckon.MCM.Data.Linq
         }
 
         #endregion        
-    }
+    }       
 
-    [Serialize("Geckon.MCM.Data.Linq.DTO.FormatType")]
     public partial class FormatType : Result
     {
         #region Properties
@@ -198,7 +197,6 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Serialize("Geckon.MCM.Data.Linq.DTO.FolderType")]
     public partial class FolderType : Result
     {
         #region Properties
@@ -220,7 +218,6 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Serialize("Geckon.MCM.Data.Linq.DTO.ObjectRelationType")]
     public partial class ObjectRelationType : Result
     {
         #region Properties
@@ -242,7 +239,6 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Serialize("Geckon.MCM.Data.Linq.DTO.Folder")]
     public partial class FolderInfo : Result
     {
         #region Properties
@@ -299,7 +295,6 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Serialize("Geckon.MCM.Data.Linq.DTO.ObjectType")]
     public partial class ObjectType : Result
     {
         #region Properties
@@ -319,7 +314,6 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    [Serialize("Geckon.MCM.Data.Linq.Language")]
     public partial class Language : Result
     {
         #region Properties
