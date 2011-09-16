@@ -11,6 +11,7 @@ namespace Geckon.MCM.Module.Standard.Test
 
         public MCMModule MCMModule { get; set; }
         public ObjectType AssetObjectType { get; set; }
+        public ObjectType DemoObjectType { get; set; }
         public Language Afrikaans { get; set; }
         public ObjectRelationType ObjectContains { get; set; }
         public FolderType FolderType { get; set; }
@@ -18,6 +19,7 @@ namespace Geckon.MCM.Module.Standard.Test
         public FormatType FormatType { get; set; }
         public FolderInfo TopFolder { get; set; }
         public FolderInfo EmptyFolder { get; set; }
+        public Object     Object { get; set; }
 
         #endregion
 
@@ -33,7 +35,8 @@ namespace Geckon.MCM.Module.Standard.Test
             {
                 db.PopulateDefaultData();
 
-                AssetObjectType = (from o in db.ObjectTypes where o.ID == 1 select o).First();
+                AssetObjectType = (from o in db.ObjectTypes where o.Value == "Asset" select o).First();
+                DemoObjectType  = (from o in db.ObjectTypes where o.Value == "demo" select o).First();
                 Afrikaans       = (from l in db.Languages where l.CountryName == "South Africa" select l).First();
                 ObjectContains  = (from or in db.ObjectRelationTypes where or.Value == "Contains" select or ).First();
                 FolderType      = (from ft in db.FolderTypes where ft.Name == "Folder" select ft ).First();
@@ -41,6 +44,7 @@ namespace Geckon.MCM.Module.Standard.Test
                 FormatType      = (from ft in db.FormatTypes where ft.Value == "Video" select  ft ).First();
                 TopFolder       = (from f in db.FolderInfos where f.Title == "Geckon" select f ).First();
                 EmptyFolder     = (from f in db.FolderInfos where f.Title == "sub Test" select f).First();
+                Object          = (from o in db.Objects where o.GUID.ToString() == "0876EBF6-E30F-4A43-9B6E-F8A479F38427" select o ).First();
             }
         }
     }

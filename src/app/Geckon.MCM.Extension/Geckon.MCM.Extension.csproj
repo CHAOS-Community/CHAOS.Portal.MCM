@@ -53,6 +53,7 @@
     <Compile Include="Language\LanguageExtension.cs" />
     <Compile Include="ObjectRelationType\ObjectRelationTypeExtension.cs" />
     <Compile Include="ObjectType\ObjectTypeExtension.cs" />
+    <Compile Include="Object\ObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

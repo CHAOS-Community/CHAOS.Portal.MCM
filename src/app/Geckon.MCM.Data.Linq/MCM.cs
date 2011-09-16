@@ -174,6 +174,93 @@ namespace Geckon.MCM.Data.Linq
         }
 
         #endregion        
+        #region Object
+
+        public IEnumerable<Object> Object_Get( List<Guid> groupGUIDs, Guid userGUID, List<Guid> GUIDs, int? objectID, int? folderID )
+        {
+            DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
+            DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
+
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Object_Get", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue( "@GroupGUIDs", groupGUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName  = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@GUIDs", GUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName  = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue( "@ObjectID", objectID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@FolderID", folderID );
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                
+                return Translate<Object>( reader ).ToList();
+            }
+        }
+
+        public int Object_Create( List<Guid> groupGUIDs, Guid userGUID, Guid? guid, int objectTypeID, int folderID )
+        {
+            DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
+
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Object_Create", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue( "@GroupGUIDs", groupGUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName  = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@GUID", guid );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@ObjectTypeID", objectTypeID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@FolderID", folderID );
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+                
+                SqlParameter rv = cmd.Parameters.Add(new SqlParameter("@ReturnValue", SqlDbType.Int));
+                rv.Direction = ParameterDirection.ReturnValue; 
+                
+                cmd.ExecuteNonQuery();
+
+                return (int) rv.Value;
+            }
+        }
+
+        private DataTable ConvertToDataTable( List<Guid> guids )
+        {
+            DataTable groupGUIDsTable = new DataTable();
+            groupGUIDsTable.Columns.Add( "GUID", typeof( Guid ) );
+
+            if( guids == null )
+                return groupGUIDsTable;
+
+            foreach( Guid guid in guids )
+                groupGUIDsTable.Rows.Add( guid );
+
+            return groupGUIDsTable;
+        }
+
+        #endregion
     }       
 
     public partial class FormatType : Result
@@ -340,6 +427,58 @@ namespace Geckon.MCM.Data.Linq
         public string pCountryName
         {
             get { return CountryName; }
+        }
+
+        #endregion
+    }
+
+    public partial class Object : Result
+    {
+        #region Properties
+
+        [Serialize("GUID")]
+        public Guid pGUID
+        {
+            get { return GUID; }
+            set { GUID = value; }
+        }
+
+        [Serialize("ObjectTypeID")]
+        public int pObjectTypeID
+        {
+            get { return ObjectTypeID; }
+            set { ObjectTypeID = value; }
+        }
+
+        [Serialize("DateCreated")]
+        public DateTime pDateCreated
+        {
+            get { return DateCreated; }
+            set { DateCreated = value; }
+        }
+
+        /// <summary>
+        /// This property is used to Serialize Metadata relations
+        /// </summary>
+        [Serialize("Metadatas")]
+        public IList<Metadata> pMetadata{ get; set; }
+
+        /// <summary>
+        /// This property is used to Serialize File relations
+        /// </summary>
+        [Serialize("Files")]
+        public IList<File> pFiles { get; set; }
+
+        #endregion
+        #region Construction
+
+        public void Include( bool includeMetadata, bool includeFiles )
+        {
+            if( includeMetadata )  
+                pMetadata = Metadatas.ToList();
+
+            if( includeFiles )
+                pFiles    = Files.ToList();
         }
 
         #endregion

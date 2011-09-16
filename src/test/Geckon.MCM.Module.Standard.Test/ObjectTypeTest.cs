@@ -63,7 +63,7 @@ namespace Geckon.MCM.Module.Standard.Test
         public void Should_Delete_ObjectType()
         {
             ScalarResult result = MCMModule.ObjectType_Delete(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()),
-                                                               AssetObjectType.ID );
+                                                               DemoObjectType.ID );
 
             Assert.AreEqual(1, result.Value);
         }

@@ -8,6 +8,7 @@ using Geckon.Portal.Core;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Core.Standard.Module;
 using Geckon.Portal.Data;
+using Object = Geckon.MCM.Data.Linq.Object;
 
 namespace Geckon.MCM.Module.Standard
 {
@@ -387,6 +388,29 @@ namespace Geckon.MCM.Module.Standard
                 FolderInfo folder = Folder_Get( callContext, result, null, null ).First();
 
                 return folder;
+            }
+        }
+
+        #endregion
+        #region Object
+
+        [Datatype("Object","Get")]
+        public IEnumerable<Object> Object_Get( CallContext callContext, IList<string> guids, int? folderID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, guids.Select( guid => Guid.Parse( guid ) ).ToList() , null, folderID ).ToList();
+            }
+        }
+
+        [Datatype("Object","Create")]
+        public Object Object_Create( CallContext callContext, string guid, int objectTypeID, int folderID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int objectID = db.Object_Create( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( guid ), objectTypeID, folderID );
+
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, objectID, folderID ).First();
             }
         }
 
