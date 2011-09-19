@@ -16,7 +16,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE	@RequiredPermission	int
-	SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'GET_OBJECT' )
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'GET_OBJECTS' )
 
 	SELECT	o.*
 	  FROM	[Object] as o INNER JOIN
@@ -43,7 +43,7 @@ AS
 BEGIN
 	
 	DECLARE	@RequiredPermission	int
-	SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'CREATE_OBJECT' )
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'CREATE_UPDATE_OBJECTS' )
 
 	IF( @RequiredPermission & dbo.Folder_FindHighestUserPermission( @UserGUID,@GroupGUIDs,@FolderID ) <> @RequiredPermission )
 			RETURN -100
@@ -69,5 +69,49 @@ BEGIN
 		 
 	RETURN @ObjectID
 
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.19
+--				This SP is used to delete objects
+-- =============================================
+CREATE PROCEDURE Object_Delete
+	@GroupGUIDs		GUIDList Readonly,
+	@UserGUID		uniqueidentifier,
+	@GUID			uniqueidentifier,
+	@FolderID		int
+AS
+BEGIN
+	
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'DELETE_OBJECTS' )
+	
+	IF( @RequiredPermission & dbo.Folder_FindHighestUserPermission( @UserGUID,@GroupGUIDs,@FolderID ) <> @RequiredPermission )
+			RETURN -100
+	
+	BEGIN TRANSACTION
+	
+	DECLARE	@ObjectID INT
+	SELECT @ObjectID = ID FROM [Object] WHERE [GUID] = @GUID
+	
+	DELETE
+	  FROM	Object_Folder_Join
+	 WHERE	FolderID = @FolderID AND
+			ObjectID = @ObjectID
+			
+	-- Delete object, this should be changed when links are implemented	
+	DELETE
+	  FROM	[Object]
+	 WHERE	ID = @ObjectID
+	
+	IF( @@ERROR <> 0 )
+		ROLLBACK TRANSACTION
+	ELSE
+		COMMIT TRANSACTION
+	
+	RETURN 1
+	
 END
 GO

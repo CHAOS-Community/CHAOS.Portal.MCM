@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Data.Linq;
 using Geckon.Portal.Core;
+using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Core.Standard.Module;
 using Geckon.Portal.Data;
@@ -411,6 +412,20 @@ namespace Geckon.MCM.Module.Standard
                 int objectID = db.Object_Create( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( guid ), objectTypeID, folderID );
 
                 return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, objectID, folderID ).First();
+            }
+        }
+
+        [Datatype("Object", "Delete")]
+        public ScalarResult Object_Delete( CallContext callContext, string guid, int folderID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.Object_Delete( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( guid ), folderID );
+
+                if( result == -100 )
+                    throw new InsufficientPermissionsExcention( "User does not have permissions to delete object" );
+
+                return new ScalarResult( result );
             }
         }
 

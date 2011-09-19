@@ -246,6 +246,39 @@ namespace Geckon.MCM.Data.Linq
             }
         }
 
+        public int Object_Delete( List<Guid> groupGUIDs, Guid userGUID, Guid? guid, int folderID )
+        {
+            DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
+
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Object_Delete", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue( "@GroupGUIDs", groupGUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName  = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@GUID", guid );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@FolderID", folderID );
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+                
+                SqlParameter rv = cmd.Parameters.Add(new SqlParameter("@ReturnValue", SqlDbType.Int));
+                rv.Direction = ParameterDirection.ReturnValue; 
+                
+                cmd.ExecuteNonQuery();
+
+                return (int) rv.Value;
+            }
+        }
+
         private DataTable ConvertToDataTable( List<Guid> guids )
         {
             DataTable groupGUIDsTable = new DataTable();
