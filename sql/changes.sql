@@ -115,3 +115,72 @@ BEGIN
 	
 END
 GO
+
+
+ALTER PROCEDURE [dbo].[Folder_Update]
+	@GroupGUIDs			GUIDList READONLY,
+	@UserGUID			uniqueidentifier,
+	@ID					int,
+	@NewTitle			varchar(255) = null,
+	@NewParentID		int          = null,
+	@NewFolderTypeID	int			 = null
+AS
+BEGIN
+
+	if( @NewTitle IS NULL AND @NewFolderTypeID IS NULL AND @NewParentID IS NULL )
+		RETURN -10
+
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = 0
+	
+	-- OR with general UPDATE permission if applies
+	if( @NewTitle IS NOT NULL OR @NewFolderTypeID IS NOT NULL )
+		SET @RequiredPermission = @RequiredPermission | dbo.GetPermissionForAction( 'Folder', 'UPDATE' )
+	
+	-- OR with MOVE permission if applies
+	if( @NewParentID IS NOT NULL )
+		SET @RequiredPermission = @RequiredPermission | dbo.GetPermissionForAction( 'Folder', 'MOVE_FOLDER' )
+	
+	IF( dbo.[Folder_FindHighestUserPermission]( @UserGUID,@GroupGUIDs,@ID ) & @RequiredPermission <> @RequiredPermission ) 
+		RETURN -100
+
+	UPDATE	Folder
+	   SET	[ParentID] = @NewParentID
+			,[FolderTypeID] = ISNULL(@NewFolderTypeID,[FolderTypeID])
+			,[Title] = ISNULL(@NewTitle,[Title])
+	 WHERE	Folder.ID = @ID
+
+	RETURN @@ROWCOUNT
+	
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.20
+--				This SP is used to move objects into new folders
+-- =============================================
+CREATE PROCEDURE Object_Folder_Join_Update
+	@GroupGUIDs		GUIDList READONLY,
+	@UserGUID		uniqueidentifier,
+	@ObjectID		int,
+	@FolderID		int,
+	@NewFolderID	int
+AS
+BEGIN
+	
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'CREATE_UPDATE_OBJECTS' )
+	
+	IF( dbo.[Folder_FindHighestUserPermission]( @UserGUID,@GroupGUIDs,@FolderID ) & @RequiredPermission <> @RequiredPermission ) 
+		RETURN -100
+	
+	UPDATE	Object_Folder_Join
+	   SET	FolderID = @NewFolderID
+	 WHERE	ObjectID = @ObjectID AND
+			FolderID = @FolderID
+			
+	RETURN @@ROWCOUNT
+	
+END
+GO
