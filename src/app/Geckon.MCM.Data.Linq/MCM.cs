@@ -412,6 +412,13 @@ namespace Geckon.MCM.Data.Linq
             set { NumberOfSubFolders = value; }
         }
 
+        [Serialize("NumberOfObjects")]
+        public int? pNumberOfObjects
+        {
+            get { return NumberOfObjects; }
+            set { NumberOfObjects = value; }
+        }
+
         #endregion
     }
 

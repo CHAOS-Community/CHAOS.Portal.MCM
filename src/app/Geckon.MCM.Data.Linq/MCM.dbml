@@ -283,6 +283,7 @@
       <Column Name="Title" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
       <Column Name="NumberOfSubFolders" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NumberOfObjects" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
   <Function Name="dbo.PopulateDefaultData" Method="PopulateDefaultData">

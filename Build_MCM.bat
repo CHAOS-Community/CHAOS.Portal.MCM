@@ -1,17 +1,21 @@
 @echo off
 
 rem Needed to update variable in loop
-REM setlocal enabledelayedexpansion
+setlocal enabledelayedexpansion
 
-echo Getting list of files
+for %%i in (.\bin\MCMExtension\*.dll) do (set files=!files!%%~i )
 
-REM for %%i in (.\bin\AnyCPU\*.dll) do (set files=!files!%%~i )
+echo Merging MCMExtension
 
-REM echo Merging files
-REM %files%
+tools\ILMerge\ILMerge.exe /out:build\Geckon.MCM.Extension.dll /lib:C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /lib:lib\ %files%
 
-mkdir build
-Tools\ILMerge\ILMerge.exe /out:build\Geckon.MCM.Module.dll /lib:"c:\Program Files (x86)\Microsoft ASP.NET\ASP.NET MVC 3\Assemblies" /lib:C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /lib:lib\ src\app\Geckon.MCM.Data.Linq\bin\Debug\Geckon.MCM.Data.Linq.dll src\app\Geckon.MCM.Module.Standard\bin\Debug\Geckon.MCM.Module.Standard.dll src\app\Geckon.MCM.Core.Exception\bin\Debug\Geckon.MCM.Core.Exception.dll
+set files=
+
+for %%i in (.\bin\MCMModule\*.dll) do (set files=!files!%%~i )
+
+echo Merging MCMModule
+
+tools\ILMerge\ILMerge.exe /out:build\Geckon.MCM.Module.dll /lib:C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /lib:lib\ %files%
 
 echo Done
 
