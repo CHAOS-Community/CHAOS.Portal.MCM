@@ -396,11 +396,11 @@ namespace Geckon.MCM.Module.Standard
         #region Object
 
         [Datatype("Object","Get")]
-        public IEnumerable<Object> Object_Get( CallContext callContext, IList<string> guids, int? folderID )
+        public IEnumerable<Object> Object_Get( CallContext callContext, int? folderTypeID, int? parentFolderID )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, guids.Select( guid => Guid.Parse( guid ) ).ToList() , null, folderID ).ToList();
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null , null, parentFolderID ).ToList();
             }
         }
 

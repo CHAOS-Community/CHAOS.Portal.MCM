@@ -6,7 +6,7 @@ namespace Geckon.MCM.Extension.Object
     {
         #region GET
 
-        public void Get( string sessionID, int? id, int? folderTypeID, int? parentID )
+        public void Get( string sessionID, int? folderTypeID, int? parentFolderID )
         {
             
         }
