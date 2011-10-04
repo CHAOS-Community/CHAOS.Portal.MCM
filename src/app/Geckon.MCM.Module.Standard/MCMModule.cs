@@ -430,6 +430,20 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
+        #region Metadata
+
+        [Datatype("Metadata","Set")]
+        public ScalarResult Metadata_Set( CallContext callContext, string objectGUID, string metadataSchemaGUID, int languageID, string metadataXML )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( objectGUID ), Guid.Parse( metadataSchemaGUID ), languageID, metadataXML, false );
+
+                return new ScalarResult( result );
+            }
+        }
+
+        #endregion
 
         #endregion
     }

@@ -9,17 +9,18 @@ namespace Geckon.MCM.Module.Standard.Test
     {
         #region Properties
 
-        public MCMModule MCMModule { get; set; }
-        public ObjectType AssetObjectType { get; set; }
-        public ObjectType DemoObjectType { get; set; }
-        public Language Afrikaans { get; set; }
+        public MCMModule          MCMModule { get; set; }
+        public ObjectType         AssetObjectType { get; set; }
+        public ObjectType         DemoObjectType { get; set; }
+        public Language           Afrikaans { get; set; }
         public ObjectRelationType ObjectContains { get; set; }
-        public FolderType FolderType { get; set; }
-        public FolderType FolderTestType { get; set; }
-        public FormatType FormatType { get; set; }
-        public FolderInfo TopFolder { get; set; }
-        public FolderInfo EmptyFolder { get; set; }
-        public Object     Object { get; set; }
+        public FolderType         FolderType { get; set; }
+        public FolderType         FolderTestType { get; set; }
+        public FormatType         FormatType { get; set; }
+        public FolderInfo         TopFolder { get; set; }
+        public FolderInfo         EmptyFolder { get; set; }
+        public Object             Object { get; set; }
+        public MetadataSchema     MetadataSchema { get; set; }
 
         #endregion
 
@@ -45,6 +46,7 @@ namespace Geckon.MCM.Module.Standard.Test
                 TopFolder       = (from f in db.FolderInfos where f.Title == "Geckon" select f ).First();
                 EmptyFolder     = (from f in db.FolderInfos where f.Title == "sub Test" select f).First();
                 Object          = (from o in db.Objects where o.GUID.ToString() == "0876EBF6-E30F-4A43-9B6E-F8A479F38427" select o ).First();
+                MetadataSchema  = (from ms in db.MetadataSchemas where ms.name == "demo" select ms ).First();
             }
         }
     }

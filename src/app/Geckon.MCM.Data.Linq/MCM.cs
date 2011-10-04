@@ -294,6 +294,51 @@ namespace Geckon.MCM.Data.Linq
         }
 
         #endregion
+        #region Metadata
+
+        public int Metadata_Set( List<Guid> groupGUIDs, Guid userGUID, Guid objectGUID, Guid metadataSchemaGUID, int languageID, string metadataXML, bool lockMetadata )
+        {
+            DataTable groupGUIDsTable = ConvertToDataTable(groupGUIDs);
+
+            using (SqlConnection conn = new SqlConnection(Connection.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("Metadata_Set", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue("@GroupGUIDs", groupGUIDsTable);
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue("@UserGUID", userGUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@ObjectGUID", objectGUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@MetadataSchemaGUID", metadataSchemaGUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@LanguageID", languageID);
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue("@MetadataXML", metadataXML);
+                p.SqlDbType = SqlDbType.Xml;
+
+                p = cmd.Parameters.AddWithValue("@Lock", lockMetadata);
+                p.SqlDbType = SqlDbType.Bit;
+
+                conn.Open();
+
+                SqlParameter rv = cmd.Parameters.Add(new SqlParameter("@ReturnValue", SqlDbType.Int));
+                rv.Direction = ParameterDirection.ReturnValue;
+
+                cmd.ExecuteNonQuery();
+
+                return (int)rv.Value;
+            }
+        }
+
+        #endregion
     }       
 
     public partial class FormatType : Result
@@ -520,6 +565,15 @@ namespace Geckon.MCM.Data.Linq
             if( includeFiles )
                 pFiles    = Files.ToList();
         }
+
+        #endregion
+    }
+
+    public partial class Metadata : Result
+    {
+        #region Properties
+
+
 
         #endregion
     }

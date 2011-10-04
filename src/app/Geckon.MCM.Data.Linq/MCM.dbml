@@ -168,22 +168,6 @@
       <Association Name="Language_Metadata" Member="Metadatas" ThisKey="ID" OtherKey="LanguageID" Type="Metadata" />
     </Type>
   </Table>
-  <Table Name="dbo.Metadata" Member="Metadatas">
-    <Type Name="Metadata">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="LanguageID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="MetadataSchemaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MetadataXml" Type="System.Xml.Linq.XElement" DbType="Xml NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="DateModified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="DateLocked" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="LockUserID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Language_Metadata" Member="Language" ThisKey="LanguageID" OtherKey="ID" Type="Language" IsForeignKey="true" />
-      <Association Name="MetadataSchema_Metadata" Member="MetadataSchema" ThisKey="MetadataSchemaID" OtherKey="ID" Type="MetadataSchema" IsForeignKey="true" />
-      <Association Name="Object_Metadata" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.MetadataSchema" Member="MetadataSchemas">
     <Type Name="MetadataSchema">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -191,9 +175,9 @@
       <Column Name="name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="SchemaXml" Type="System.Xml.Linq.XElement" DbType="Xml NOT NULL" CanBeNull="false" UpdateCheck="Never" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Association Name="MetadataSchema_Metadata" Member="Metadatas" ThisKey="ID" OtherKey="MetadataSchemaID" Type="Metadata" />
       <Association Name="MetadataSchema_MetadataSchema_Group_Join" Member="MetadataSchema_Group_Joins" ThisKey="ID" OtherKey="MetadataSchemaID" Type="MetadataSchema_Group_Join" />
       <Association Name="MetadataSchema_MetadataSchema_User_Join" Member="MetadataSchema_User_Joins" ThisKey="ID" OtherKey="MetadataSchemaID" Type="MetadataSchema_User_Join" />
+      <Association Name="MetadataSchema_Metadata" Member="Metadatas" ThisKey="ID" OtherKey="MetadataSchemaID" Type="Metadata" />
     </Type>
   </Table>
   <Table Name="dbo.MetadataSchema_Group_Join" Member="MetadataSchema_Group_Joins">
@@ -222,10 +206,10 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
       <Association Name="Object_AccessPoint_Object_Join" Member="AccessPoint_Object_Joins" ThisKey="ID" OtherKey="ObjectID" Type="AccessPoint_Object_Join" />
       <Association Name="Object_File" Member="Files" ThisKey="ID" OtherKey="ObjectID" Type="File" />
-      <Association Name="Object_Metadata" Member="Metadatas" ThisKey="ID" OtherKey="ObjectID" Type="Metadata" />
       <Association Name="Object_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="ObjectID" Type="Object_Folder_Join" />
       <Association Name="Object_Object_Object_Join" Member="Object_Object_Joins" ThisKey="ID" OtherKey="ObjectID1" Type="Object_Object_Join" />
       <Association Name="Object_Object_Object_Join1" Member="Object_Object_Joins1" ThisKey="ID" OtherKey="ObjectID2" Type="Object_Object_Join" />
+      <Association Name="Object_Metadata" Member="Metadatas" ThisKey="ID" OtherKey="ObjectID" Type="Metadata" />
       <Association Name="ObjectType_Object" Member="ObjectType" ThisKey="ObjectTypeID" OtherKey="ID" Type="ObjectType" IsForeignKey="true" />
     </Type>
   </Table>
@@ -284,6 +268,22 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
       <Column Name="NumberOfSubFolders" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="NumberOfObjects" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Metadata" Member="Metadatas">
+    <Type Name="Metadata">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LanguageID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MetadataSchemaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MetadataXml" Type="System.Xml.Linq.XElement" DbType="Xml NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateModified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateLocked" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LockUserGUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="Language_Metadata" Member="Language" ThisKey="LanguageID" OtherKey="ID" Type="Language" IsForeignKey="true" />
+      <Association Name="MetadataSchema_Metadata" Member="MetadataSchema" ThisKey="MetadataSchemaID" OtherKey="ID" Type="MetadataSchema" IsForeignKey="true" />
+      <Association Name="Object_Metadata" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.PopulateDefaultData" Method="PopulateDefaultData">

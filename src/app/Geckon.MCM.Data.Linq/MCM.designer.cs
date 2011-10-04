@@ -78,9 +78,6 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertLanguage(Language instance);
     partial void UpdateLanguage(Language instance);
     partial void DeleteLanguage(Language instance);
-    partial void InsertMetadata(Metadata instance);
-    partial void UpdateMetadata(Metadata instance);
-    partial void DeleteMetadata(Metadata instance);
     partial void InsertMetadataSchema(MetadataSchema instance);
     partial void UpdateMetadataSchema(MetadataSchema instance);
     partial void DeleteMetadataSchema(MetadataSchema instance);
@@ -105,6 +102,9 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertFolder(Folder instance);
     partial void UpdateFolder(Folder instance);
     partial void DeleteFolder(Folder instance);
+    partial void InsertMetadata(Metadata instance);
+    partial void UpdateMetadata(Metadata instance);
+    partial void DeleteMetadata(Metadata instance);
     #endregion
 		
 		public MCMDataContext() : 
@@ -265,14 +265,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		public System.Data.Linq.Table<Metadata> Metadatas
-		{
-			get
-			{
-				return this.GetTable<Metadata>();
-			}
-		}
-		
 		public System.Data.Linq.Table<MetadataSchema> MetadataSchemas
 		{
 			get
@@ -342,6 +334,14 @@ namespace Geckon.MCM.Data.Linq
 			get
 			{
 				return this.GetTable<FolderInfo>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Metadata> Metadatas
+		{
+			get
+			{
+				return this.GetTable<Metadata>();
 			}
 		}
 		
@@ -3954,383 +3954,6 @@ namespace Geckon.MCM.Data.Linq
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Metadata")]
-	public partial class Metadata : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _ObjectID;
-		
-		private System.Nullable<int> _LanguageID;
-		
-		private int _MetadataSchemaID;
-		
-		private System.Xml.Linq.XElement _MetadataXml;
-		
-		private System.DateTime _DateCreated;
-		
-		private System.DateTime _DateModified;
-		
-		private System.DateTime _DateLocked;
-		
-		private System.Nullable<int> _LockUserID;
-		
-		private EntityRef<Language> _Language;
-		
-		private EntityRef<MetadataSchema> _MetadataSchema;
-		
-		private EntityRef<Object> _Object;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnObjectIDChanging(int value);
-    partial void OnObjectIDChanged();
-    partial void OnLanguageIDChanging(System.Nullable<int> value);
-    partial void OnLanguageIDChanged();
-    partial void OnMetadataSchemaIDChanging(int value);
-    partial void OnMetadataSchemaIDChanged();
-    partial void OnMetadataXmlChanging(System.Xml.Linq.XElement value);
-    partial void OnMetadataXmlChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    partial void OnDateModifiedChanging(System.DateTime value);
-    partial void OnDateModifiedChanged();
-    partial void OnDateLockedChanging(System.DateTime value);
-    partial void OnDateLockedChanged();
-    partial void OnLockUserIDChanging(System.Nullable<int> value);
-    partial void OnLockUserIDChanged();
-    #endregion
-		
-		public Metadata()
-		{
-			this._Language = default(EntityRef<Language>);
-			this._MetadataSchema = default(EntityRef<MetadataSchema>);
-			this._Object = default(EntityRef<Object>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ObjectID", DbType="Int NOT NULL")]
-		public int ObjectID
-		{
-			get
-			{
-				return this._ObjectID;
-			}
-			set
-			{
-				if ((this._ObjectID != value))
-				{
-					if (this._Object.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnObjectIDChanging(value);
-					this.SendPropertyChanging();
-					this._ObjectID = value;
-					this.SendPropertyChanged("ObjectID");
-					this.OnObjectIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LanguageID", DbType="Int")]
-		public System.Nullable<int> LanguageID
-		{
-			get
-			{
-				return this._LanguageID;
-			}
-			set
-			{
-				if ((this._LanguageID != value))
-				{
-					if (this._Language.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnLanguageIDChanging(value);
-					this.SendPropertyChanging();
-					this._LanguageID = value;
-					this.SendPropertyChanged("LanguageID");
-					this.OnLanguageIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetadataSchemaID", DbType="Int NOT NULL")]
-		public int MetadataSchemaID
-		{
-			get
-			{
-				return this._MetadataSchemaID;
-			}
-			set
-			{
-				if ((this._MetadataSchemaID != value))
-				{
-					if (this._MetadataSchema.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMetadataSchemaIDChanging(value);
-					this.SendPropertyChanging();
-					this._MetadataSchemaID = value;
-					this.SendPropertyChanged("MetadataSchemaID");
-					this.OnMetadataSchemaIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetadataXml", DbType="Xml NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public System.Xml.Linq.XElement MetadataXml
-		{
-			get
-			{
-				return this._MetadataXml;
-			}
-			set
-			{
-				if ((this._MetadataXml != value))
-				{
-					this.OnMetadataXmlChanging(value);
-					this.SendPropertyChanging();
-					this._MetadataXml = value;
-					this.SendPropertyChanged("MetadataXml");
-					this.OnMetadataXmlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateModified", DbType="DateTime NOT NULL")]
-		public System.DateTime DateModified
-		{
-			get
-			{
-				return this._DateModified;
-			}
-			set
-			{
-				if ((this._DateModified != value))
-				{
-					this.OnDateModifiedChanging(value);
-					this.SendPropertyChanging();
-					this._DateModified = value;
-					this.SendPropertyChanged("DateModified");
-					this.OnDateModifiedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateLocked", DbType="DateTime NOT NULL")]
-		public System.DateTime DateLocked
-		{
-			get
-			{
-				return this._DateLocked;
-			}
-			set
-			{
-				if ((this._DateLocked != value))
-				{
-					this.OnDateLockedChanging(value);
-					this.SendPropertyChanging();
-					this._DateLocked = value;
-					this.SendPropertyChanged("DateLocked");
-					this.OnDateLockedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockUserID", DbType="Int")]
-		public System.Nullable<int> LockUserID
-		{
-			get
-			{
-				return this._LockUserID;
-			}
-			set
-			{
-				if ((this._LockUserID != value))
-				{
-					this.OnLockUserIDChanging(value);
-					this.SendPropertyChanging();
-					this._LockUserID = value;
-					this.SendPropertyChanged("LockUserID");
-					this.OnLockUserIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Language_Metadata", Storage="_Language", ThisKey="LanguageID", OtherKey="ID", IsForeignKey=true)]
-		public Language Language
-		{
-			get
-			{
-				return this._Language.Entity;
-			}
-			set
-			{
-				Language previousValue = this._Language.Entity;
-				if (((previousValue != value) 
-							|| (this._Language.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Language.Entity = null;
-						previousValue.Metadatas.Remove(this);
-					}
-					this._Language.Entity = value;
-					if ((value != null))
-					{
-						value.Metadatas.Add(this);
-						this._LanguageID = value.ID;
-					}
-					else
-					{
-						this._LanguageID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Language");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MetadataSchema_Metadata", Storage="_MetadataSchema", ThisKey="MetadataSchemaID", OtherKey="ID", IsForeignKey=true)]
-		public MetadataSchema MetadataSchema
-		{
-			get
-			{
-				return this._MetadataSchema.Entity;
-			}
-			set
-			{
-				MetadataSchema previousValue = this._MetadataSchema.Entity;
-				if (((previousValue != value) 
-							|| (this._MetadataSchema.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._MetadataSchema.Entity = null;
-						previousValue.Metadatas.Remove(this);
-					}
-					this._MetadataSchema.Entity = value;
-					if ((value != null))
-					{
-						value.Metadatas.Add(this);
-						this._MetadataSchemaID = value.ID;
-					}
-					else
-					{
-						this._MetadataSchemaID = default(int);
-					}
-					this.SendPropertyChanged("MetadataSchema");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Metadata", Storage="_Object", ThisKey="ObjectID", OtherKey="ID", IsForeignKey=true)]
-		public Object Object
-		{
-			get
-			{
-				return this._Object.Entity;
-			}
-			set
-			{
-				Object previousValue = this._Object.Entity;
-				if (((previousValue != value) 
-							|| (this._Object.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Object.Entity = null;
-						previousValue.Metadatas.Remove(this);
-					}
-					this._Object.Entity = value;
-					if ((value != null))
-					{
-						value.Metadatas.Add(this);
-						this._ObjectID = value.ID;
-					}
-					else
-					{
-						this._ObjectID = default(int);
-					}
-					this.SendPropertyChanged("Object");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MetadataSchema")]
 	public partial class MetadataSchema : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4347,11 +3970,11 @@ namespace Geckon.MCM.Data.Linq
 		
 		private System.DateTime _DateCreated;
 		
-		private EntitySet<Metadata> _Metadatas;
-		
 		private EntitySet<MetadataSchema_Group_Join> _MetadataSchema_Group_Joins;
 		
 		private EntitySet<MetadataSchema_User_Join> _MetadataSchema_User_Joins;
+		
+		private EntitySet<Metadata> _Metadatas;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -4371,9 +3994,9 @@ namespace Geckon.MCM.Data.Linq
 		
 		public MetadataSchema()
 		{
-			this._Metadatas = new EntitySet<Metadata>(new Action<Metadata>(this.attach_Metadatas), new Action<Metadata>(this.detach_Metadatas));
 			this._MetadataSchema_Group_Joins = new EntitySet<MetadataSchema_Group_Join>(new Action<MetadataSchema_Group_Join>(this.attach_MetadataSchema_Group_Joins), new Action<MetadataSchema_Group_Join>(this.detach_MetadataSchema_Group_Joins));
 			this._MetadataSchema_User_Joins = new EntitySet<MetadataSchema_User_Join>(new Action<MetadataSchema_User_Join>(this.attach_MetadataSchema_User_Joins), new Action<MetadataSchema_User_Join>(this.detach_MetadataSchema_User_Joins));
+			this._Metadatas = new EntitySet<Metadata>(new Action<Metadata>(this.attach_Metadatas), new Action<Metadata>(this.detach_Metadatas));
 			OnCreated();
 		}
 		
@@ -4477,19 +4100,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MetadataSchema_Metadata", Storage="_Metadatas", ThisKey="ID", OtherKey="MetadataSchemaID")]
-		public EntitySet<Metadata> Metadatas
-		{
-			get
-			{
-				return this._Metadatas;
-			}
-			set
-			{
-				this._Metadatas.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MetadataSchema_MetadataSchema_Group_Join", Storage="_MetadataSchema_Group_Joins", ThisKey="ID", OtherKey="MetadataSchemaID")]
 		public EntitySet<MetadataSchema_Group_Join> MetadataSchema_Group_Joins
 		{
@@ -4516,6 +4126,19 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MetadataSchema_Metadata", Storage="_Metadatas", ThisKey="ID", OtherKey="MetadataSchemaID")]
+		public EntitySet<Metadata> Metadatas
+		{
+			get
+			{
+				return this._Metadatas;
+			}
+			set
+			{
+				this._Metadatas.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -4534,18 +4157,6 @@ namespace Geckon.MCM.Data.Linq
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Metadatas(Metadata entity)
-		{
-			this.SendPropertyChanging();
-			entity.MetadataSchema = this;
-		}
-		
-		private void detach_Metadatas(Metadata entity)
-		{
-			this.SendPropertyChanging();
-			entity.MetadataSchema = null;
 		}
 		
 		private void attach_MetadataSchema_Group_Joins(MetadataSchema_Group_Join entity)
@@ -4567,6 +4178,18 @@ namespace Geckon.MCM.Data.Linq
 		}
 		
 		private void detach_MetadataSchema_User_Joins(MetadataSchema_User_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.MetadataSchema = null;
+		}
+		
+		private void attach_Metadatas(Metadata entity)
+		{
+			this.SendPropertyChanging();
+			entity.MetadataSchema = this;
+		}
+		
+		private void detach_Metadatas(Metadata entity)
 		{
 			this.SendPropertyChanging();
 			entity.MetadataSchema = null;
@@ -4941,13 +4564,13 @@ namespace Geckon.MCM.Data.Linq
 		
 		private EntitySet<File> _Files;
 		
-		private EntitySet<Metadata> _Metadatas;
-		
 		private EntitySet<Object_Folder_Join> _Object_Folder_Joins;
 		
 		private EntitySet<Object_Object_Join> _Object_Object_Joins;
 		
 		private EntitySet<Object_Object_Join> _Object_Object_Joins1;
+		
+		private EntitySet<Metadata> _Metadatas;
 		
 		private EntityRef<ObjectType> _ObjectType;
 		
@@ -4969,10 +4592,10 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this._AccessPoint_Object_Joins = new EntitySet<AccessPoint_Object_Join>(new Action<AccessPoint_Object_Join>(this.attach_AccessPoint_Object_Joins), new Action<AccessPoint_Object_Join>(this.detach_AccessPoint_Object_Joins));
 			this._Files = new EntitySet<File>(new Action<File>(this.attach_Files), new Action<File>(this.detach_Files));
-			this._Metadatas = new EntitySet<Metadata>(new Action<Metadata>(this.attach_Metadatas), new Action<Metadata>(this.detach_Metadatas));
 			this._Object_Folder_Joins = new EntitySet<Object_Folder_Join>(new Action<Object_Folder_Join>(this.attach_Object_Folder_Joins), new Action<Object_Folder_Join>(this.detach_Object_Folder_Joins));
 			this._Object_Object_Joins = new EntitySet<Object_Object_Join>(new Action<Object_Object_Join>(this.attach_Object_Object_Joins), new Action<Object_Object_Join>(this.detach_Object_Object_Joins));
 			this._Object_Object_Joins1 = new EntitySet<Object_Object_Join>(new Action<Object_Object_Join>(this.attach_Object_Object_Joins1), new Action<Object_Object_Join>(this.detach_Object_Object_Joins1));
+			this._Metadatas = new EntitySet<Metadata>(new Action<Metadata>(this.attach_Metadatas), new Action<Metadata>(this.detach_Metadatas));
 			this._ObjectType = default(EntityRef<ObjectType>);
 			OnCreated();
 		}
@@ -5087,19 +4710,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Metadata", Storage="_Metadatas", ThisKey="ID", OtherKey="ObjectID")]
-		public EntitySet<Metadata> Metadatas
-		{
-			get
-			{
-				return this._Metadatas;
-			}
-			set
-			{
-				this._Metadatas.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Object_Folder_Join", Storage="_Object_Folder_Joins", ThisKey="ID", OtherKey="ObjectID")]
 		public EntitySet<Object_Folder_Join> Object_Folder_Joins
 		{
@@ -5136,6 +4746,19 @@ namespace Geckon.MCM.Data.Linq
 			set
 			{
 				this._Object_Object_Joins1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Metadata", Storage="_Metadatas", ThisKey="ID", OtherKey="ObjectID")]
+		public EntitySet<Metadata> Metadatas
+		{
+			get
+			{
+				return this._Metadatas;
+			}
+			set
+			{
+				this._Metadatas.Assign(value);
 			}
 		}
 		
@@ -5217,18 +4840,6 @@ namespace Geckon.MCM.Data.Linq
 			entity.Object = null;
 		}
 		
-		private void attach_Metadatas(Metadata entity)
-		{
-			this.SendPropertyChanging();
-			entity.Object = this;
-		}
-		
-		private void detach_Metadatas(Metadata entity)
-		{
-			this.SendPropertyChanging();
-			entity.Object = null;
-		}
-		
 		private void attach_Object_Folder_Joins(Object_Folder_Join entity)
 		{
 			this.SendPropertyChanging();
@@ -5263,6 +4874,18 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this.SendPropertyChanging();
 			entity.Object1 = null;
+		}
+		
+		private void attach_Metadatas(Metadata entity)
+		{
+			this.SendPropertyChanging();
+			entity.Object = this;
+		}
+		
+		private void detach_Metadatas(Metadata entity)
+		{
+			this.SendPropertyChanging();
+			entity.Object = null;
 		}
 	}
 	
@@ -6402,6 +6025,383 @@ namespace Geckon.MCM.Data.Linq
 				{
 					this._NumberOfObjects = value;
 				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Metadata")]
+	public partial class Metadata : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _ObjectID;
+		
+		private System.Nullable<int> _LanguageID;
+		
+		private int _MetadataSchemaID;
+		
+		private System.Xml.Linq.XElement _MetadataXml;
+		
+		private System.DateTime _DateCreated;
+		
+		private System.DateTime _DateModified;
+		
+		private System.Nullable<System.DateTime> _DateLocked;
+		
+		private System.Nullable<System.Guid> _LockUserGUID;
+		
+		private EntityRef<Language> _Language;
+		
+		private EntityRef<MetadataSchema> _MetadataSchema;
+		
+		private EntityRef<Object> _Object;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnObjectIDChanging(int value);
+    partial void OnObjectIDChanged();
+    partial void OnLanguageIDChanging(System.Nullable<int> value);
+    partial void OnLanguageIDChanged();
+    partial void OnMetadataSchemaIDChanging(int value);
+    partial void OnMetadataSchemaIDChanged();
+    partial void OnMetadataXmlChanging(System.Xml.Linq.XElement value);
+    partial void OnMetadataXmlChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    partial void OnDateModifiedChanging(System.DateTime value);
+    partial void OnDateModifiedChanged();
+    partial void OnDateLockedChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateLockedChanged();
+    partial void OnLockUserGUIDChanging(System.Nullable<System.Guid> value);
+    partial void OnLockUserGUIDChanged();
+    #endregion
+		
+		public Metadata()
+		{
+			this._Language = default(EntityRef<Language>);
+			this._MetadataSchema = default(EntityRef<MetadataSchema>);
+			this._Object = default(EntityRef<Object>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ObjectID", DbType="Int NOT NULL")]
+		public int ObjectID
+		{
+			get
+			{
+				return this._ObjectID;
+			}
+			set
+			{
+				if ((this._ObjectID != value))
+				{
+					if (this._Object.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnObjectIDChanging(value);
+					this.SendPropertyChanging();
+					this._ObjectID = value;
+					this.SendPropertyChanged("ObjectID");
+					this.OnObjectIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LanguageID", DbType="Int")]
+		public System.Nullable<int> LanguageID
+		{
+			get
+			{
+				return this._LanguageID;
+			}
+			set
+			{
+				if ((this._LanguageID != value))
+				{
+					if (this._Language.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnLanguageIDChanging(value);
+					this.SendPropertyChanging();
+					this._LanguageID = value;
+					this.SendPropertyChanged("LanguageID");
+					this.OnLanguageIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetadataSchemaID", DbType="Int NOT NULL")]
+		public int MetadataSchemaID
+		{
+			get
+			{
+				return this._MetadataSchemaID;
+			}
+			set
+			{
+				if ((this._MetadataSchemaID != value))
+				{
+					if (this._MetadataSchema.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMetadataSchemaIDChanging(value);
+					this.SendPropertyChanging();
+					this._MetadataSchemaID = value;
+					this.SendPropertyChanged("MetadataSchemaID");
+					this.OnMetadataSchemaIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MetadataXml", DbType="Xml NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public System.Xml.Linq.XElement MetadataXml
+		{
+			get
+			{
+				return this._MetadataXml;
+			}
+			set
+			{
+				if ((this._MetadataXml != value))
+				{
+					this.OnMetadataXmlChanging(value);
+					this.SendPropertyChanging();
+					this._MetadataXml = value;
+					this.SendPropertyChanged("MetadataXml");
+					this.OnMetadataXmlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="DateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateModified", DbType="DateTime NOT NULL")]
+		public System.DateTime DateModified
+		{
+			get
+			{
+				return this._DateModified;
+			}
+			set
+			{
+				if ((this._DateModified != value))
+				{
+					this.OnDateModifiedChanging(value);
+					this.SendPropertyChanging();
+					this._DateModified = value;
+					this.SendPropertyChanged("DateModified");
+					this.OnDateModifiedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateLocked", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateLocked
+		{
+			get
+			{
+				return this._DateLocked;
+			}
+			set
+			{
+				if ((this._DateLocked != value))
+				{
+					this.OnDateLockedChanging(value);
+					this.SendPropertyChanging();
+					this._DateLocked = value;
+					this.SendPropertyChanged("DateLocked");
+					this.OnDateLockedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LockUserGUID", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> LockUserGUID
+		{
+			get
+			{
+				return this._LockUserGUID;
+			}
+			set
+			{
+				if ((this._LockUserGUID != value))
+				{
+					this.OnLockUserGUIDChanging(value);
+					this.SendPropertyChanging();
+					this._LockUserGUID = value;
+					this.SendPropertyChanged("LockUserGUID");
+					this.OnLockUserGUIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Language_Metadata", Storage="_Language", ThisKey="LanguageID", OtherKey="ID", IsForeignKey=true)]
+		public Language Language
+		{
+			get
+			{
+				return this._Language.Entity;
+			}
+			set
+			{
+				Language previousValue = this._Language.Entity;
+				if (((previousValue != value) 
+							|| (this._Language.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Language.Entity = null;
+						previousValue.Metadatas.Remove(this);
+					}
+					this._Language.Entity = value;
+					if ((value != null))
+					{
+						value.Metadatas.Add(this);
+						this._LanguageID = value.ID;
+					}
+					else
+					{
+						this._LanguageID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Language");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MetadataSchema_Metadata", Storage="_MetadataSchema", ThisKey="MetadataSchemaID", OtherKey="ID", IsForeignKey=true)]
+		public MetadataSchema MetadataSchema
+		{
+			get
+			{
+				return this._MetadataSchema.Entity;
+			}
+			set
+			{
+				MetadataSchema previousValue = this._MetadataSchema.Entity;
+				if (((previousValue != value) 
+							|| (this._MetadataSchema.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._MetadataSchema.Entity = null;
+						previousValue.Metadatas.Remove(this);
+					}
+					this._MetadataSchema.Entity = value;
+					if ((value != null))
+					{
+						value.Metadatas.Add(this);
+						this._MetadataSchemaID = value.ID;
+					}
+					else
+					{
+						this._MetadataSchemaID = default(int);
+					}
+					this.SendPropertyChanged("MetadataSchema");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Metadata", Storage="_Object", ThisKey="ObjectID", OtherKey="ID", IsForeignKey=true)]
+		public Object Object
+		{
+			get
+			{
+				return this._Object.Entity;
+			}
+			set
+			{
+				Object previousValue = this._Object.Entity;
+				if (((previousValue != value) 
+							|| (this._Object.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Object.Entity = null;
+						previousValue.Metadatas.Remove(this);
+					}
+					this._Object.Entity = value;
+					if ((value != null))
+					{
+						value.Metadatas.Add(this);
+						this._ObjectID = value.ID;
+					}
+					else
+					{
+						this._ObjectID = default(int);
+					}
+					this.SendPropertyChanged("Object");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
