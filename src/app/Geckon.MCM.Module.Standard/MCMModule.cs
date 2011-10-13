@@ -443,6 +443,15 @@ namespace Geckon.MCM.Module.Standard
             }
         }
 
+        [Datatype("Metadata", "Get")]
+        public IEnumerable<Metadata> Metadata_Get( CallContext callContext, string objectGUID, string metadataSchemaGUID, int? languageID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                return db.Metadata_Get( Guid.Parse( objectGUID ), metadataSchemaGUID == null ? (Guid?) null : Guid.Parse( metadataSchemaGUID ), languageID ).ToList();
+            }
+        }
+
         #endregion
 
         #endregion

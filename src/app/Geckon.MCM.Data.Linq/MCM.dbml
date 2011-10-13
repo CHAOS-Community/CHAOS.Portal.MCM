@@ -271,7 +271,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Metadata" Member="Metadatas">
-    <Type Name="Metadata">
+    <Type Name="Metadata" Id="ID6">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="LanguageID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -400,5 +400,11 @@
     <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
     <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
     <ElementType IdRef="ID5" />
+  </Function>
+  <Function Name="dbo.Metadata_Get" Method="Metadata_Get">
+    <Parameter Name="ObjectGUID" Parameter="objectGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="MetadataSchemaGUID" Parameter="metadataSchemaGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="LanguageID" Parameter="languageID" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID6" />
   </Function>
 </Database>
