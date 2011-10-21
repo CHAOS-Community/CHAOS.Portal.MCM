@@ -17,7 +17,7 @@ namespace Geckon.MCM.Module.Standard.Test
             IList<string> guids = new List<string>();
             guids.Add( Object.GUID.ToString() );
 
-            IEnumerable<Object> objectz = MCMModule.Object_Get( new CallContext( new MockCache(),new MockSolr(), AdminSession.SessionID.ToString() ), null, TopFolder.ID );
+            IEnumerable<Object> objectz = MCMModule.Object_Get( new CallContext( new MockCache(),new MockSolr(), AdminSession.SessionID.ToString() ), true, false, null, TopFolder.ID, 0, 10 );
 
             Assert.Greater( objectz.Count(), 0 );
         }

@@ -10,6 +10,7 @@ using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Core.Standard.Module;
 using Geckon.Portal.Data;
 using Object = Geckon.MCM.Data.Linq.Object;
+using Geckon.Portal.Core.Standard;
 
 namespace Geckon.MCM.Module.Standard
 {
@@ -396,11 +397,11 @@ namespace Geckon.MCM.Module.Standard
         #region Object
 
         [Datatype("Object","Get")]
-        public IEnumerable<Object> Object_Get( CallContext callContext, int? folderTypeID, int? parentFolderID )
+        public IEnumerable<Object> Object_Get( CallContext callContext, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null , null, parentFolderID ).ToList();
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, includeMetadata, includeFiles, null, objectTypeID, folderID, pageIndex, pageSize );
             }
         }
 
@@ -411,7 +412,7 @@ namespace Geckon.MCM.Module.Standard
             {
                 int objectID = db.Object_Create( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( guid ), objectTypeID, folderID );
 
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, objectID, folderID ).First();
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, objectID, null, null, 0, 1 ).First();
             }
         }
 

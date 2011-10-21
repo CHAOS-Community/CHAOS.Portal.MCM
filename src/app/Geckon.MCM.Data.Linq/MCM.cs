@@ -5,6 +5,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using Geckon.Serialization;
 using Geckon.Portal.Data.Result.Standard;
+using System.Data.Linq;
+using System.Xml.Linq;
 
 namespace Geckon.MCM.Data.Linq
 {
@@ -176,7 +178,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion        
         #region Object
 
-        public IEnumerable<Object> Object_Get( List<Guid> groupGUIDs, Guid userGUID, List<Guid> GUIDs, int? objectID, int? folderID )
+        public IEnumerable<Object> Object_Get( List<Guid> groupGUIDs, Guid userGUID, List<Guid> GUIDs, bool includeMetadata, bool includeFiles, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
             DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
@@ -193,20 +195,63 @@ namespace Geckon.MCM.Data.Linq
                 p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
                 p.SqlDbType = SqlDbType.UniqueIdentifier;
 
+                p = cmd.Parameters.AddWithValue( "@IncludeMetadata", includeMetadata );
+                p.SqlDbType = SqlDbType.Bit;
+
+                p = cmd.Parameters.AddWithValue( "@IncludeFiles", includeFiles );
+                p.SqlDbType = SqlDbType.Bit;
+
                 p = cmd.Parameters.AddWithValue( "@GUIDs", GUIDsTable );
                 p.SqlDbType = SqlDbType.Structured;
-                p.TypeName  = "GUIDList";
+                p.TypeName = "GUIDList";
 
                 p = cmd.Parameters.AddWithValue( "@ObjectID", objectID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@ObjectTypeID", objectTypeID );
                 p.SqlDbType = SqlDbType.Int;
 
                 p = cmd.Parameters.AddWithValue( "@FolderID", folderID );
                 p.SqlDbType = SqlDbType.Int;
 
+                p = cmd.Parameters.AddWithValue( "@PageIndex", pageIndex );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@PageSize", pageSize );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@TotalCount", int.MaxValue );
+                p.Direction = ParameterDirection.Output;
+                p.SqlDbType = SqlDbType.Int;
+
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-                
-                return Translate<Object>( reader ).ToList();
+
+                IMultipleResults results = Translate( reader );
+                IEnumerable<Object> objects = results.GetResult<Object>().ToList();
+
+                if( includeMetadata )
+                {
+                    IEnumerable<Metadata> metadatas = results.GetResult<Metadata>();
+
+                    foreach( Object o in objects )
+                    {
+                        o.pMetadata = (from m in metadatas where m.pObjectID == o.ID select m).ToList();
+                    }
+                }
+
+                if( includeFiles )
+                {
+                    reader.NextResult();
+                    IEnumerable<File> files = results.GetResult<File>();
+                    
+                    foreach( Object o in objects )
+                    {
+                        o.pFiles = (from f in files where f.ObjectID == o.ID select f).ToList();
+                    }
+                }
+
+                return objects;
             }
         }
 
@@ -546,13 +591,13 @@ namespace Geckon.MCM.Data.Linq
         /// This property is used to Serialize Metadata relations
         /// </summary>
         [Serialize("Metadatas")]
-        public IList<Metadata> pMetadata{ get; set; }
+        public IEnumerable<Metadata> pMetadata{ get; set; }
 
         /// <summary>
         /// This property is used to Serialize File relations
         /// </summary>
         [Serialize("Files")]
-        public IList<File> pFiles { get; set; }
+        public IEnumerable<File> pFiles { get; set; }
 
         #endregion
         #region Construction
@@ -573,7 +618,87 @@ namespace Geckon.MCM.Data.Linq
     {
         #region Properties
 
+        public int pObjectID
+        {
+            get
+            {
+                return ObjectID;
+            }
+            set
+            {
+                ObjectID = value;
+            }
+        }
 
+        [Serialize("LanguageID")]
+        public int? pLanguageID
+        {
+            get
+            {
+                return LanguageID;
+            }
+            set
+            {
+                LanguageID = value;
+            }
+        }
+
+        [Serialize("MetadataSchemaID")]
+        public int pMetadataSchemaID
+        {
+            get
+            {
+                return MetadataSchemaID;
+            }
+            set
+            {
+                MetadataSchemaID = value;
+            }
+        }
+
+        [Serialization.XML.SerializeXML(false, true)]
+        [Serialize("MetadataXml")]
+        public string pMetadataXml
+        {
+            get
+            {
+                return MetadataXml.ToString( SaveOptions.DisableFormatting );
+            }
+            set
+            {
+                MetadataXml = XElement.Parse(value);
+            }
+        }
+
+        [Serialize("DateCreated")]
+        public DateTime pDateCreated
+        {
+            get
+            {
+                return DateCreated;
+            }
+            set
+            {
+                DateCreated = value;
+            }
+        }
+
+        [Serialize("DateModified")]
+        public DateTime pDateModified
+        {
+            get
+            {
+                return DateModified;
+            }
+            set
+            {
+                DateModified = value;
+            }
+        }
+
+  //      public System.Nullable<System.DateTime> pDateLocked;
+
+    //    public Guid pLockUserGUID;
 
         #endregion
     }

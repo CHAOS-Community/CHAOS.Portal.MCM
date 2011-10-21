@@ -6,7 +6,7 @@ namespace Geckon.MCM.Extension.ObjectType
     {
         #region GET
 
-        public void Get( string sessionID )
+        public void Get( CallContext callContext )
         {
             
         }
@@ -14,7 +14,7 @@ namespace Geckon.MCM.Extension.ObjectType
         #endregion
         #region CREATE
 
-        public void Create(string sessionID, string value)
+        public void Create( CallContext callContext, string value)
         {
 
         }
@@ -23,7 +23,7 @@ namespace Geckon.MCM.Extension.ObjectType
         #region UPDATE
 
 
-        public void Update(string sessionID, int id, string newValue)
+        public void Update( CallContext callContext, int id, string newValue)
         {
 
         }
@@ -31,7 +31,7 @@ namespace Geckon.MCM.Extension.ObjectType
         #endregion
         #region DELETE
 
-        public void Delete(string sessionID, int id)
+        public void Delete( CallContext callContext, int id)
         {
 
         }

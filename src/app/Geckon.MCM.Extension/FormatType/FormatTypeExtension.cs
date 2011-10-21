@@ -4,20 +4,20 @@ namespace Geckon.MCM.Extension.FormatType
 {
     public class FormatTypeExtension : AExtension
     {
-        public void Get(string sessionID, int? id, string name)
+        public void Get( CallContext callContext, int? id, string name)
         {
         }
 
-        public void Create(string sessionID, string name)
+        public void Create( CallContext callContext, string name)
         {
         }
 
-        public void Update( string sessionID, int id, string newName )
+        public void Update( CallContext callContext, int id, string newName )
         {
 
         }
 
-        public void Delete(string sessionID, int id)
+        public void Delete( CallContext callContext, int id)
         {
         }
     }

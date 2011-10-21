@@ -6,7 +6,7 @@ namespace Geckon.MCM.Extension.Metadata
     {
         #region GET
 
-        public void Get( string sessionID, string objectGUID, string metadataSchemaGUID, int languageID )
+        public void Get( CallContext callContext, string objectGUID, string metadataSchemaGUID, int languageID )
         {
             
         }
@@ -14,7 +14,7 @@ namespace Geckon.MCM.Extension.Metadata
         #endregion
         #region SET
 
-        public void Set( string sessionID, string objectGUID, string metadataSchemaGUID, int? languageID, string metadataXML )
+        public void Set( CallContext callContext, string objectGUID, string metadataSchemaGUID, int? languageID, string metadataXML )
         {
             
         }
