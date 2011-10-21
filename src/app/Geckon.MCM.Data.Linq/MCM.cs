@@ -600,18 +600,6 @@ namespace Geckon.MCM.Data.Linq
         public IEnumerable<File> pFiles { get; set; }
 
         #endregion
-        #region Construction
-
-        public void Include( bool includeMetadata, bool includeFiles )
-        {
-            if( includeMetadata )  
-                pMetadata = Metadatas.ToList();
-
-            if( includeFiles )
-                pFiles    = Files.ToList();
-        }
-
-        #endregion
     }
 
     public partial class Metadata : Result
