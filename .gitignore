@@ -1,6 +1,6 @@
-
-*.suo
 bin
+*.suo
+!/bin
 obj
 _ReSharper.Geckon.MCM
 *.user
