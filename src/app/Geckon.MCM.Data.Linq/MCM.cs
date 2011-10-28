@@ -232,7 +232,7 @@ namespace Geckon.MCM.Data.Linq
 
                 if( includeMetadata )
                 {
-                    IEnumerable<Metadata> metadatas = results.GetResult<Metadata>();
+                    IEnumerable<Metadata> metadatas = results.GetResult<Metadata>().ToList();
 
                     foreach( Object o in objects )
                     {
@@ -242,8 +242,7 @@ namespace Geckon.MCM.Data.Linq
 
                 if( includeFiles )
                 {
-                    reader.NextResult();
-                    IEnumerable<File> files = results.GetResult<File>();
+                    IEnumerable<File> files = results.GetResult<File>().ToList();
                     
                     foreach( Object o in objects )
                     {
