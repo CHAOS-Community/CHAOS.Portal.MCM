@@ -17,7 +17,7 @@ namespace Geckon.MCM.Module.Standard.Test
             IList<string> guids = new List<string>();
             guids.Add( Object.GUID.ToString() );
 
-            IEnumerable<Object> objectz = MCMModule.Object_Get( new CallContext( new MockCache(),new MockSolr(), AdminSession.SessionID.ToString() ), true, false, null, TopFolder.ID, 0, 10 );
+            IEnumerable<Object> objectz = MCMModule.Object_Get( AdminCallContext, null, true, false, null, TopFolder.ID, 0, 10 );
 
             Assert.Greater( objectz.Count(), 0 );
         }
@@ -27,7 +27,7 @@ namespace Geckon.MCM.Module.Standard.Test
         {
             System.Guid guid = System.Guid.NewGuid();
 
-            Object objectz = MCMModule.Object_Create( new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString() ), guid.ToString(), AssetObjectType.ID, TopFolder.ID );
+            Object objectz = MCMModule.Object_Create( AdminCallContext, guid.ToString(), AssetObjectType.ID, TopFolder.ID );
 
             Assert.AreEqual( guid.ToString(), objectz.GUID.ToString() );
         }
@@ -35,7 +35,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Delete_Object()
         {
-            ScalarResult result = MCMModule.Object_Delete( new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString() ), Object.GUID.ToString(), TopFolder.ID );
+            ScalarResult result = MCMModule.Object_Delete( AdminCallContext, Object.GUID.ToString(), TopFolder.ID );
 
             Assert.AreEqual( 1, result.Value );
         }

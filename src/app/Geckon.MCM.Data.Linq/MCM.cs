@@ -7,6 +7,7 @@ using Geckon.Serialization;
 using Geckon.Portal.Data.Result.Standard;
 using System.Data.Linq;
 using System.Xml.Linq;
+using Geckon.Portal.Core.Index;
 
 namespace Geckon.MCM.Data.Linq
 {
@@ -178,7 +179,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion        
         #region Object
 
-        public IEnumerable<Object> Object_Get( List<Guid> groupGUIDs, Guid userGUID, List<Guid> GUIDs, bool includeMetadata, bool includeFiles, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
             DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
@@ -323,7 +324,7 @@ namespace Geckon.MCM.Data.Linq
             }
         }
 
-        private DataTable ConvertToDataTable( List<Guid> guids )
+        private DataTable ConvertToDataTable( IEnumerable<Guid> guids )
         {
             DataTable groupGUIDsTable = new DataTable();
             groupGUIDsTable.Columns.Add( "GUID", typeof( Guid ) );
@@ -561,7 +562,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion
     }
 
-    public partial class Object : Result
+    public partial class Object : Result, IIndexable
     {
         #region Properties
 
@@ -596,7 +597,19 @@ namespace Geckon.MCM.Data.Linq
         /// This property is used to Serialize File relations
         /// </summary>
         [Serialize("Files")]
-        public IEnumerable<File> pFiles { get; set; }
+        public IEnumerable<File> pFiles { get; set; }     
+
+        #endregion
+        #region Business Logic
+
+        public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
+        {
+            yield return new KeyValuePair<string, string>( "guid", pGUID.ToString() );
+            yield return new KeyValuePair<string, string>( "objecttypeid",pObjectTypeID.ToString() );
+            yield return new KeyValuePair<string, string>( "datecreated", pDateCreated.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+            
+            // TODO: Implement Metadata XML converter
+        }
 
         #endregion
     }

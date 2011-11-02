@@ -14,13 +14,13 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Get_FormatTypeTest()
         {
-            Assert.Greater( MCMModule.FormatType_Get( new CallContext( new MockCache(), new MockSolr(), Session.SessionID.ToString() ), null, null ).Count(),0 );
+            Assert.Greater( MCMModule.FormatType_Get( AnonCallContext, null, null ).Count(),0 );
         }
 
         [Test]
         public void Should_Create_FormatType()
         {
-            FormatType FormatType = MCMModule.FormatType_Create(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), "name");
+            FormatType FormatType = MCMModule.FormatType_Create( AdminCallContext, "name");
 
             Assert.AreEqual("name", FormatType.Value);
         }
@@ -28,13 +28,13 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
         public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Create_FormatType()
         {
-            MCMModule.FormatType_Create(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()), "name");
+            MCMModule.FormatType_Create( AnonCallContext, "name");
         }
 
         [Test]
         public void Should_Delete_FormatType()
         {
-            ScalarResult result = MCMModule.FormatType_Delete(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), FormatType.ID);
+            ScalarResult result = MCMModule.FormatType_Delete( AdminCallContext, FormatType.ID);
 
             Assert.AreEqual(1, result.Value);
         }
@@ -42,13 +42,13 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
         public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Delete_FormatType()
         {
-            Assert.AreNotEqual(-100, MCMModule.FormatType_Delete(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()), FormatType.ID));
+            Assert.AreNotEqual(-100, MCMModule.FormatType_Delete( AnonCallContext, FormatType.ID));
         }
 
         [Test]
         public void Should_Update_FormatType()
        { 
-            ScalarResult result = MCMModule.FormatType_Update(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), FormatType.ID, "name");
+            ScalarResult result = MCMModule.FormatType_Update( AdminCallContext, FormatType.ID, "name");
 
             Assert.AreEqual(1, result.Value);
         }
@@ -56,7 +56,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
         public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Update_FormatType()
         {
-            Assert.AreNotEqual(-100, MCMModule.FormatType_Update(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()), FormatType.ID, "name"));
+            Assert.AreNotEqual(-100, MCMModule.FormatType_Update( AnonCallContext, FormatType.ID, "name"));
         }
     }
 }

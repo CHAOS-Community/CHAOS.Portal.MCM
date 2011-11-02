@@ -13,7 +13,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Set_Metadata()
         {
-            var result = MCMModule.Metadata_Set( new CallContext( new MockCache(), new MockSolr(), AdminSession.SessionID.ToString() ), Object.GUID.ToString(), MetadataSchema.GUID.ToString(), Afrikaans.ID, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>" ) ;
+            var result = MCMModule.Metadata_Set( AdminCallContext, Object.GUID.ToString(), MetadataSchema.GUID.ToString(), Afrikaans.ID, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>" ) ;
 
             Assert.AreEqual(1, result.Value);
         }
@@ -21,7 +21,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Get_Metadata()
         {
-            IEnumerable<Metadata> metadatas = MCMModule.Metadata_Get( new CallContext( new MockCache(), new MockSolr(), AdminSession.SessionID.ToString() ), "0876EBF6-E30F-4A43-9B6E-F8A479F38427", null, null );
+            IEnumerable<Metadata> metadatas = MCMModule.Metadata_Get( AdminCallContext, "0876EBF6-E30F-4A43-9B6E-F8A479F38427", null, null );
 
             Assert.Greater(metadatas.Count(),0);
         }

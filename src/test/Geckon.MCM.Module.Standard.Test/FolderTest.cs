@@ -16,7 +16,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Get_TopFolders()
         {
-            IEnumerable<FolderInfo> folders = MCMModule.Folder_Get( new CallContext( new MockCache(),new MockSolr(), AdminSession.SessionID.ToString()),null, null,null );
+            IEnumerable<FolderInfo> folders = MCMModule.Folder_Get( AdminCallContext,null, null,null );
 
             Assert.Greater( folders.Count(), 0 );
         }
@@ -24,7 +24,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Get_SubFolders()
         {
-            IEnumerable<FolderInfo> folders = MCMModule.Folder_Get(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), null, null, TopFolder.ID);
+            IEnumerable<FolderInfo> folders = MCMModule.Folder_Get( AdminCallContext, null, null, TopFolder.ID);
 
             foreach( FolderInfo folderInfo in folders )
             {
@@ -37,7 +37,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Delete_Folder()
         {
-            ScalarResult result = MCMModule.Folder_Delete( new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), EmptyFolder.ID );
+            ScalarResult result = MCMModule.Folder_Delete( AdminCallContext, EmptyFolder.ID );
 
             Assert.Greater( (int) result.Value, 0 );
         }
@@ -45,19 +45,19 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test, ExpectedException(typeof(FolderNotEmptyException))]
         public void Should_Throw_FolderNotEmptyException_On_Delete_Folder()
         {
-            MCMModule.Folder_Delete(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), TopFolder.ID);
+            MCMModule.Folder_Delete( AdminCallContext, TopFolder.ID);
         }
 
         [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
         public void Should_Throw_InsufficientPermissionsExcention_On_Delete_Folder()
         {
-            MCMModule.Folder_Delete(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()), EmptyFolder.ID);
+            MCMModule.Folder_Delete( AnonCallContext, EmptyFolder.ID);
         }
 
         [Test]
         public void Should_Update_Folder()
         {
-            ScalarResult result = MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), EmptyFolder.ID, "hellooo", null, null );
+            ScalarResult result = MCMModule.Folder_Update( AdminCallContext, EmptyFolder.ID, "hellooo", null, null );
 
             Assert.Greater( (int) result.Value, 0 );
         }
@@ -65,13 +65,13 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
         public void Should_Throw_InsufficientPermissionsExcention_On_Update_Folder()
         {
-            MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()), EmptyFolder.ID, null, TopFolder.ID, null );
+            MCMModule.Folder_Update( AnonCallContext, EmptyFolder.ID, null, TopFolder.ID, null );
         }
 
         [Test]
         public void Should_Move_Folder()
         {
-            ScalarResult result = MCMModule.Folder_Update(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), EmptyFolder.ID, null, TopFolder.ID, null);
+            ScalarResult result = MCMModule.Folder_Update( AdminCallContext, EmptyFolder.ID, null, TopFolder.ID, null);
 
             Assert.Greater((int)result.Value, 0);
         }
@@ -79,7 +79,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Create_Folder()
         {
-            FolderInfo folder = MCMModule.Folder_Create(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), SubscriptionInfo.GUID.ToString(), "hellooo", TopFolder.ID, FolderType.ID);
+            FolderInfo folder = MCMModule.Folder_Create( AdminCallContext, SubscriptionInfo.GUID.ToString(), "hellooo", TopFolder.ID, FolderType.ID);
 
             Assert.AreEqual( "hellooo", folder.Title );
             Assert.AreEqual( TopFolder.ID, folder.ParentID );
@@ -89,7 +89,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Create_TopFolder()
         {
-            FolderInfo folder = MCMModule.Folder_Create(new CallContext(new MockCache(), new MockSolr(), AdminSession.SessionID.ToString()), SubscriptionInfo.GUID.ToString(), "hellooo", null, FolderType.ID);
+            FolderInfo folder = MCMModule.Folder_Create( AdminCallContext, SubscriptionInfo.GUID.ToString(), "hellooo", null, FolderType.ID);
 
             Assert.AreEqual("hellooo", folder.Title);
             Assert.IsNull(folder.ParentID);
@@ -99,7 +99,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
         public void Should_Throw_InsufficientPermissionsExcention_On_Create_Folder()
         {
-            MCMModule.Folder_Create(new CallContext(new MockCache(), new MockSolr(), Session.SessionID.ToString()),null, "not allowed", TopFolder.ID, FolderType.ID);
+            MCMModule.Folder_Create( AnonCallContext,null, "not allowed", TopFolder.ID, FolderType.ID);
         }
     }
 }

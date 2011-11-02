@@ -4,13 +4,13 @@ using System.Linq;
 using System.Xml.Linq;
 using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Data.Linq;
-using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Core.Standard.Module;
 using Geckon.Portal.Data;
 using Object = Geckon.MCM.Data.Linq.Object;
 using Geckon.Portal.Core.Standard;
+using Geckon.Portal.Core.Index;
 
 namespace Geckon.MCM.Module.Standard
 {
@@ -397,11 +397,13 @@ namespace Geckon.MCM.Module.Standard
         #region Object
 
         [Datatype("Object","Get")]
-        public IEnumerable<Object> Object_Get( CallContext callContext, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public IEnumerable<Object> Object_Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
+            IEnumerable<Guid> resultPage = callContext.IndexManager.GetIndex<MCMModule>().Get( query ).Select( result => ( (GuidResult) result ).Guid );
+
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, includeMetadata, includeFiles, null, objectTypeID, folderID, pageIndex, pageSize );
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, resultPage, includeMetadata, includeFiles, null, objectTypeID, folderID, pageIndex, pageSize );
             }
         }
 
@@ -439,6 +441,8 @@ namespace Geckon.MCM.Module.Standard
             using( MCMDataContext db = DefaultMCMDataContext )
             {
                 int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( objectGUID ), Guid.Parse( metadataSchemaGUID ), languageID, metadataXML, false );
+                
+                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ Guid.Parse( objectGUID ) }, true, false, null, null, null, 0, 1 ).First() );
 
                 return new ScalarResult( result );
             }

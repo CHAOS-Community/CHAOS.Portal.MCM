@@ -1,4 +1,5 @@
 ﻿using Geckon.Portal.Core.Standard.Extension;
+using Geckon.Portal.Core.Index;
 
 namespace Geckon.MCM.Extension.Object
 {
@@ -6,7 +7,7 @@ namespace Geckon.MCM.Extension.Object
     {
         #region GET
 
-        public void Get( CallContext callContext, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public void Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             
         }

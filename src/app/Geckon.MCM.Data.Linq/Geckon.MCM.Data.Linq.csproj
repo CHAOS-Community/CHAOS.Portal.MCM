@@ -34,6 +34,9 @@
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
+    <Reference Include="Geckon.Portal.Core">
+      <HintPath>..\..\..\lib\Geckon.Portal.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Geckon.Portal.Data">
       <HintPath>..\..\..\lib\Geckon.Portal.Data.dll</HintPath>
     </Reference>
