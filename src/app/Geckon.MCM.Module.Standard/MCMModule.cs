@@ -91,34 +91,34 @@ namespace Geckon.MCM.Module.Standard
         #region Language
 
         [Datatype("Language","Get")]
-        public IEnumerable<Language> Language_Get( CallContext callContext, int? id, string name, string languageCode, string countryName )
+        public IEnumerable<Language> Language_Get( CallContext callContext, string name, string languageCode )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                return db.Language_Get( id, name, languageCode, countryName ).ToList();
+                return db.Language_Get( name, languageCode ).ToList();
             }
         }
 
         [Datatype("Language", "Create")]
-        public Language Language_Create( CallContext callContext, string name, string languageCode, string countryName )
+        public Language Language_Create( CallContext callContext, string name, string languageCode )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                int result = db.Language_Create( name, languageCode, countryName, callContext.User.SystemPermission );
+                int result = db.Language_Create( name, languageCode, callContext.User.SystemPermission );
 
                 if( result == -100 )
                     throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
 
-                return db.Language_Get( result, null, null, null ).First();
+                return db.Language_Get( name, languageCode ).First();
             }
         }
 
         [Datatype("Language", "Update")]
-        public ScalarResult Language_Update(CallContext callContext, int? id, string name, string languageCode, string countryName)
+        public ScalarResult Language_Update( CallContext callContext, string languageCode, string newName )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                int result = db.Language_Update( id, name, languageCode, countryName, callContext.User.SystemPermission );
+                int result = db.Language_Update( newName, languageCode, callContext.User.SystemPermission );
 
                 if( result == -100 )
                     throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
@@ -128,11 +128,11 @@ namespace Geckon.MCM.Module.Standard
         }
 
         [Datatype("Language", "Delete")]
-        public ScalarResult Language_Delete(CallContext callContext, int? id )
+        public ScalarResult Language_Delete( CallContext callContext, string languageCode )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                int result = db.Language_Delete( id, callContext.User.SystemPermission );
+                int result = db.Language_Delete( languageCode, callContext.User.SystemPermission );
 
                 if( result == -100 )
                     throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
@@ -436,11 +436,11 @@ namespace Geckon.MCM.Module.Standard
         #region Metadata
 
         [Datatype("Metadata","Set")]
-        public ScalarResult Metadata_Set( CallContext callContext, string objectGUID, string metadataSchemaGUID, int languageID, string metadataXML )
+        public ScalarResult Metadata_Set( CallContext callContext, string objectGUID, string metadataSchemaGUID, string languageCode, string metadataXML )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( objectGUID ), Guid.Parse( metadataSchemaGUID ), languageID, metadataXML, false );
+                int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( objectGUID ), Guid.Parse( metadataSchemaGUID ), languageCode, metadataXML, false );
                 
                 callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ Guid.Parse( objectGUID ) }, true, false, null, null, null, 0, 1 ).First() );
 
@@ -449,11 +449,11 @@ namespace Geckon.MCM.Module.Standard
         }
 
         [Datatype("Metadata", "Get")]
-        public IEnumerable<Metadata> Metadata_Get( CallContext callContext, string objectGUID, string metadataSchemaGUID, int? languageID )
+        public IEnumerable<Metadata> Metadata_Get( CallContext callContext, string objectGUID, string metadataSchemaGUID, string languageCode )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                return db.Metadata_Get( Guid.Parse( objectGUID ), metadataSchemaGUID == null ? (Guid?) null : Guid.Parse( metadataSchemaGUID ), languageID ).ToList();
+                return db.Metadata_Get( Guid.Parse( objectGUID ), metadataSchemaGUID == null ? (Guid?) null : Guid.Parse( metadataSchemaGUID ), languageCode ).ToList();
             }
         }
 

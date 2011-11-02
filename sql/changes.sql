@@ -152,6 +152,105 @@ BEGIN
 END
 GO
 
+DROP TABLE [dbo].[Language]
+GO
+
+CREATE TABLE [dbo].[Language](
+	[LanguageCode] [varchar](10) NOT NULL,
+	[Name] [varchar](255) NOT NULL,
+ CONSTRAINT [PK_Language_1] PRIMARY KEY CLUSTERED 
+(
+	[LanguageCode] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+USE [MCM]
+GO
+
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Metadata_Language]') AND parent_object_id = OBJECT_ID(N'[dbo].[Metadata]'))
+ALTER TABLE [dbo].[Metadata] DROP CONSTRAINT [FK_Metadata_Language]
+GO
+
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Metadata_MetadataSchema]') AND parent_object_id = OBJECT_ID(N'[dbo].[Metadata]'))
+ALTER TABLE [dbo].[Metadata] DROP CONSTRAINT [FK_Metadata_MetadataSchema]
+GO
+
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Metadata_Object]') AND parent_object_id = OBJECT_ID(N'[dbo].[Metadata]'))
+ALTER TABLE [dbo].[Metadata] DROP CONSTRAINT [FK_Metadata_Object]
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_Metadata_DateCreated]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[Metadata] DROP CONSTRAINT [DF_Metadata_DateCreated]
+END
+
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_Metadata_DateModified]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[Metadata] DROP CONSTRAINT [DF_Metadata_DateModified]
+END
+
+GO
+
+USE [MCM]
+GO
+
+/****** Object:  Table [dbo].[Metadata]    Script Date: 11/02/2011 15:36:57 ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Metadata]') AND type in (N'U'))
+DROP TABLE [dbo].[Metadata]
+GO
+
+CREATE TABLE [dbo].[Metadata](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[ObjectID] [int] NOT NULL,
+	[LanguageCode] [varchar](10) NULL,
+	[MetadataSchemaID] [int] NOT NULL,
+	[MetadataXml] [xml] NOT NULL,
+	[DateCreated] [datetime] NOT NULL,
+	[DateModified] [datetime] NOT NULL,
+	[DateLocked] [datetime] NULL,
+	[LockUserGUID] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Metadata] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Metadata]  WITH CHECK ADD  CONSTRAINT [FK_Metadata_Language] FOREIGN KEY([LanguageCode])
+REFERENCES [dbo].[Language] ([LanguageCode])
+GO
+
+ALTER TABLE [dbo].[Metadata] CHECK CONSTRAINT [FK_Metadata_Language]
+GO
+
+ALTER TABLE [dbo].[Metadata]  WITH CHECK ADD  CONSTRAINT [FK_Metadata_MetadataSchema] FOREIGN KEY([MetadataSchemaID])
+REFERENCES [dbo].[MetadataSchema] ([ID])
+GO
+
+ALTER TABLE [dbo].[Metadata] CHECK CONSTRAINT [FK_Metadata_MetadataSchema]
+GO
+
+ALTER TABLE [dbo].[Metadata]  WITH CHECK ADD  CONSTRAINT [FK_Metadata_Object] FOREIGN KEY([ObjectID])
+REFERENCES [dbo].[Object] ([ID])
+GO
+
+ALTER TABLE [dbo].[Metadata] CHECK CONSTRAINT [FK_Metadata_Object]
+GO
+
+ALTER TABLE [dbo].[Metadata] ADD  CONSTRAINT [DF_Metadata_DateCreated]  DEFAULT (getdate()) FOR [DateCreated]
+GO
+
+ALTER TABLE [dbo].[Metadata] ADD  CONSTRAINT [DF_Metadata_DateModified]  DEFAULT (getdate()) FOR [DateModified]
+GO
+
 -- =============================================
 -- Author:		Jesper Fyhr	Knudsen
 -- Create date: 2010.08.17
@@ -197,7 +296,6 @@ AS
 		DBCC CHECKIDENT ("Format", RESEED,0)
 		DBCC CHECKIDENT ("FormatCategory", RESEED,0)
 		DBCC CHECKIDENT ("FormatType", RESEED,0)
-		DBCC CHECKIDENT ("[Language]", RESEED,0)
 		DBCC CHECKIDENT ("Metadata", RESEED,0)
 		DBCC CHECKIDENT ("MetadataSchema", RESEED,0)
 		DBCC CHECKIDENT ("Object", RESEED,0)
@@ -247,190 +345,120 @@ AS
  </xs:element>
 
  </xs:schema>',GETDATE())
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Afrikaans','af-ZA','South Africa')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Albanian','sq-AL','Albania')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-DZ','Algeria')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-BH','Bahrain')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-EG','Egypt')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-IQ','Iraq')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-JO','Jordan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-KW','Kuwait')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-LB','Lebanon')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-LY','Libya')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-MA','Morocco')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-OM','Oman')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-QA','Qatar')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-SA','Saudi Arabia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-SY','Syria')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-TN','Tunisia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-AE','United Arab Emirates')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Arabic','ar-YE','Yemen')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Armenian','hy-AM','Armenia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Cyrillic','az-AZ-Cyrl','Azerbaijan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Latin','az-AZ-Latn','Azerbaijan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Basque','eu-ES','Basque')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Belarusian','be-BY','Belarus')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Bulgarian','bg-BG','Bulgaria')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Catalan','ca-ES','Catalan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Chinese','zh-HK','Hong Kong SAR')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Chinese','zh-MO','Macau SAR')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Chinese','zh-CN','China')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Chinese','zh-CHS','Chinese (Simplified)')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Chinese','zh-SG','Singapore')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Chinese','zh-TW','Taiwan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Croatian','hr-HR','Croatia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Czech','cs-CZ','Czech Republic')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Danish','da-DK','Denmark')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Dhivehi','div-MV','Maldives')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Dutch','nl-BE','Belgium')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Dutch','nl-NL','The Netherlands')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-AU','Australia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-BZ','Belize')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-CA','Canada')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-CB','Caribbean')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-IE','Ireland')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-JM','Jamaica')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-NZ','New Zealand')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-PH','Philippines')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-ZA','South Africa')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-TT','Trinidad and Tobago')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-GB','United Kingdom')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-US','United States')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('English','en-ZW','Zimbabwe')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Estonian','et-EE','Estonia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Faroese','fo-FO','Faroe Islands')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Farsi','fa-IR','Iran')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Finnish','fi-FI','Finland')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('French','fr-BE','Belgium')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('French','fr-CA','Canada')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('French','fr-FR','France')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('French','fr-LU','Luxembourg')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('French','fr-MC','Monaco')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('French','fr-CH','Switzerland')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Galician','gl-ES','Galician')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Georgian','ka-GE','Georgia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('German','de-AT','Austria')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('German','de-DE','Germany')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('German','de-LI','Liechtenstein')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('German','de-LU','Luxembourg')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('German','de-CH','Switzerland')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Greek','el-GR','Greece')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Gujarati','gu-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Hebrew','he-IL','Israel')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Hindi','hi-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Hungarian','hu-HU','Hungary')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Icelandic','is-IS','Iceland')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Indonesian','id-ID','Indonesia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Italian','it-IT','Italy')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Italian','it-CH','Switzerland')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Japanese','ja-JP','Japan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Kannada','kn-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Kazakh','kk-KZ','Kazakhstan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Konkani','kok-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Korean','ko-KR','Korea')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Kyrgyz','ky-KZ','Kazakhstan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Latvian','lv-LV','Latvia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Lithuanian','lt-LT','Lithuania')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Macedonian','mk-MK','FYROM')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Malay','ms-BN','Brunei')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Malay','ms-MY','Malaysia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Marathi','mr-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Mongolian','mn-MN','Mongolia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Bokml','nb-NO','Norway')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Nynorsk','nn-NO','Norway')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Polish','pl-PL','Polish - Poland')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Portuguese','pt-BR','Brazil')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Portuguese','pt-PT','Portugal')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Punjabi','pa-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Romanian','ro-RO','Romania')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Russian','ru-RU','Russia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Sanskrit','sa-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Cyrillic','sr-SP-Cyrl','Serbia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Latin','sr-SP-Latn','Serbia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Slovak','sk-SK','Slovakia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Slovenian','sl-SI','Slovenia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-AR','Argentina')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-BO','Bolivia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-CL','Chile')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-CO','Colombia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-CR','Costa Rica')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-DO','Dominican Republic')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-EC','Ecuador')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-SV','El Salvador')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-GT','Guatemala')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-HN','Honduras')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-MX','Mexico')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-NI','Nicaragua')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-PA','Panama')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-PY','Paraguay')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-PE','Peru')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-PR','Puerto Rico')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-ES','Spain')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-UY','Uruguay')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Spanish','es-VE','Venezuela')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Swahili','sw-KE','Kenya')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Swedish','sv-FI','Finland')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Swedish','sv-SE','Sweden')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Syriac','syr-SY','Syria')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Tamil','ta-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Tatar','tt-RU','Russia')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Telugu','te-IN','India')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Thai','th-TH','Thailand')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Turkish','tr-TR','Turkey')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Ukrainian','uk-UA','Ukraine')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Urdu','ur-PK','Pakistan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Cyrillic','uz-UZ-Cyrl','Uzbekistan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Latin','uz-UZ-Latn','Uzbekistan')
-		INSERT INTO [Language]([Name],[LanguageCode],[CountryName])VALUES('Vietnamese','vi-VN','Vietnam')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Afrikaans','af')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Albanian','sq')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Arabic','ar')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Armenian','hy')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Basque','eu')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Belarusian','be')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Bulgarian','bg')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Catalan','ca')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Chinese','zh')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Croatian','hr')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Czech','cs')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Danish','da')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Dhivehi','div')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Dutch','nl')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('English','en')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Estonian','et')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Faroese','fo')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Farsi','fa')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Finnish','fi')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('French','fr')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Galician','gl')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Georgian','ka')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('German','de')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Greek','el')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Gujarati','gu')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Hebrew','he')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Hindi','hi')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Hungarian','hu')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Icelandic','is')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Indonesian','id')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Italian','it')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Japanese','ja')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Kannada','kn')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Kazakh','kk')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Konkani','kok')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Korean','ko')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Kyrgyz','ky')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Latvian','lv')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Lithuanian','lt')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Macedonian','mk')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Malay','ms')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Marathi','mr')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Mongolian','mn')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Bokml','nb')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Nynorsk','nn')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Polish','pl')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Portuguese','pt')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Punjabi','pa')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Romanian','ro')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Russian','ru')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Sanskrit','sa')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Slovak','sk')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Slovenian','sl')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Spanish','es')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Swahili','sw')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Swedish','sv')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Syriac','syr')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Tamil','ta')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Tatar','tt')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Telugu','te')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Thai','th')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Turkish','tr')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Ukrainian','uk')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Urdu','ur')
+		INSERT INTO [Language]([Name],[LanguageCode])VALUES('Vietnamese','vi')
 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@ObjectID,2,1,'<demo><title>title</title><abstract>abstract</abstract><description>description</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@ObjectID,'en',1,'<demo><title>title</title><abstract>abstract</abstract><description>description</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		-----------------------------> INSERT TEST OBJECTS <-------------------------------------------------------------------------------------------------------------------->
 		DECLARE @TestOjectID INT
 		
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38428',@ObjectTypeID,GETDATE()) SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My second title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My second title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 		
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38429',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 3. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 3. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 		
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38430',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 4. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 4. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38431',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 5. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 5. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38432',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 6. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 6. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38433',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 7. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 7. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38434',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 8. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 8. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38435',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 9. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 9. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38436',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 10. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 10. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38437',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 11. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 11. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		INSERT INTO [Object] ([GUID],[ObjectTypeID],[DateCreated]) VALUES ('0876EBF6-E30F-4A43-9B6E-F8A479F38438',@ObjectTypeID,GETDATE())SET  @TestOjectID = @@IDENTITY
 		INSERT INTO [Object_Folder_Join]([ObjectID],[FolderID],[IsShortcut],[DateCreated]) VALUES (@TestOjectID,@TopFolderID,0,GETDATE()) 
-		INSERT INTO [Metadata]([ObjectID],[LanguageID],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,2,1,'<demo><title>My 12. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
+		INSERT INTO [Metadata]([ObjectID],[LanguageCode],[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])VALUES(@TestOjectID,'en',1,'<demo><title>My 12. title</title><abstract>This is a short descripton about the content</abstract><description>The long long long and exiting description about the content</description></demo>',GETDATE(),GETDATE(),null,null)
 
 		
 
@@ -509,4 +537,200 @@ BEGIN
 		  FROM	[File]
 		 WHERE	[File].ObjectID IN ( SELECT pr.ObjectID FROM @PagedResults as pr )
 
+END
+GO 
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.10.13
+--				This SP is used to get metadatas
+-- =============================================
+ALTER PROCEDURE [dbo].[Metadata_Get]
+	@ObjectGUID			uniqueidentifier,
+	@MetadataSchemaGUID uniqueidentifier = NULL,
+	@LanguageCode		varchar(10)      = NULL
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	DECLARE @ObjectID INT
+	SELECT	@ObjectID = ID
+	  FROM	[Object]
+	 WHERE	[GUID] = @ObjectGUID
+
+	DECLARE @MetadataSchemaID INT
+	SELECT	@MetadataSchemaID = ID
+	  FROM	MetadataSchema
+	 WHERE	MetadataSchema.[GUID] = @MetadataSchemaGUID
+
+	SELECT	*
+	  FROM	Metadata
+	 WHERE	Metadata.ObjectID = @ObjectID AND
+			( @MetadataSchemaGUID IS NULL OR @MetadataSchemaID = Metadata.MetadataSchemaID ) AND
+			( @LanguageCode IS NULL OR @LanguageCode = Metadata.LanguageCode )
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.08.23
+--				This SP Creates a language
+-- =============================================
+ALTER PROCEDURE [dbo].[Language_Create]
+	@Name				varchar(255),
+	@LanguageCode		varchar(10),
+	@SystemPermission	int
+AS
+BEGIN
+	
+	DECLARE @RequiredPermission INT
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'System', 'Manage Type' )
+
+	IF( @RequiredPermission & @SystemPermission <> @RequiredPermission )
+		RETURN -100
+	
+	INSERT INTO [Language] ([Name],[LanguageCode])
+         VALUES	(@Name, @LanguageCode)
+
+	RETURN @@IDENTITY
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.08.23
+--				This SP is used to get Languages
+-- =============================================
+ALTER PROCEDURE [dbo].[Language_Get]
+	@Name			varchar(255)	= null,
+	@LanguageCode	varchar(10)		= null
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+    SELECT	*
+      FROM	[Language]
+     WHERE	(@Name IS NULL OR Name = @Name) AND
+			(@LanguageCode IS NULL OR LanguageCode = @LanguageCode)
+	
+END
+GO
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.08.23
+--				This SP Updates a language
+-- =============================================
+ALTER PROCEDURE [dbo].[Language_Update]
+	@Name				varchar(255),
+	@LanguageCode		varchar(10),
+	@SystemPermission	int
+AS
+BEGIN
+	
+	DECLARE @RequiredPermission INT
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'System', 'Manage Type' )
+
+	IF( @RequiredPermission & @SystemPermission <> @RequiredPermission )
+		RETURN -100
+	
+	UPDATE	[Language]
+	   SET	[Name] = @Name
+	 WHERE	LanguageCode = @LanguageCode
+
+	RETURN @@ROWCOUNT
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.08.23
+--				This SP Deletes a language
+-- =============================================
+ALTER PROCEDURE [dbo].[Language_Delete]
+	@LanguageCode		varchar(10),
+	@SystemPermission	int
+AS
+BEGIN
+	
+	DECLARE @RequiredPermission INT
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'System', 'Manage Type' )
+
+	IF( @RequiredPermission & @SystemPermission <> @RequiredPermission )
+		RETURN -100
+	
+	DELETE	[Language]
+	 WHERE	LanguageCode = @LanguageCode
+
+	RETURN @@ROWCOUNT
+
+END
+GO
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.10.04
+--				This SP creates or updates metadata
+-- =============================================
+ALTER PROCEDURE [dbo].[Metadata_Set]
+	@GroupGUIDs		    GUIDList Readonly,
+	@UserGUID		    uniqueidentifier,
+	@ObjectGUID			uniqueidentifier,
+	@MetadataSchemaGUID uniqueidentifier,
+	@LanguageCode		varchar(10),
+	@MetadataXML		xml,
+	@Lock				bit = NULL
+AS
+BEGIN
+	
+	DECLARE @ObjectID         INT
+	DECLARE @MetadataSchemaID INT
+	
+	SELECT	@ObjectID = ID
+	  FROM	[Object]
+	 WHERE	[GUID] = @ObjectGUID
+	 
+	SELECT	@MetadataSchemaID = ID
+	  FROM	MetadataSchema
+	 WHERE	[GUID] = @MetadataSchemaGUID
+	
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Metadata', 'CREATE_UPDATE_OBJECTS' )
+
+	IF( @RequiredPermission & dbo.Object_FindHighestUserPermission( @UserGUID,@GroupGUIDs,@ObjectID ) <> @RequiredPermission )
+			RETURN -100
+	
+	IF EXISTS( SELECT ID FROM Metadata WHERE ObjectID = @ObjectID AND MetadataSchemaID = @MetadataSchemaID AND LanguageCode = @LanguageCode )
+	BEGIN
+	
+		DECLARE @DateLocked	DATETIME
+		DECLARE @LockUserGUID UNIQUEIDENTIFIER
+	
+		SELECT	@DateLocked = GETDATE(),
+				@LockUserGUID = @UserGUID
+		 WHERE	@Lock = 1
+	
+		UPDATE [Metadata]
+		   SET [MetadataXml]  = @MetadataXML,
+		       [DateModified] = GETDATE(),
+		       [DateLocked]   = ISNULL(@DateLocked,[DateLocked]),
+		       [LockUserGUID] = ISNULL(@LockUserGUID,[LockUserGUID])
+		WHERE  ObjectID         = @ObjectID AND 
+			   MetadataSchemaID = @MetadataSchemaID AND 
+			   LanguageCode     = @LanguageCode
+	
+		RETURN @@ROWCOUNT
+	
+	END
+	ELSE 
+	BEGIN
+			
+		INSERT INTO [Metadata]([ObjectID],LanguageCode,[MetadataSchemaID],[MetadataXml],[DateCreated],[DateModified],[DateLocked],[LockUserGUID])
+			 VALUES (@ObjectID,@LanguageCode,@MetadataSchemaID,@MetadataXML,GETDATE(),GETDATE(),null,null )
+
+		RETURN @@ROWCOUNT
+		
+	END
 END

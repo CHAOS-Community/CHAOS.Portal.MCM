@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using Geckon.Common.Extensions;
 using Geckon.MCM.Data.Linq;
-using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Extensions.Standard.Test;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -13,7 +11,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Set_Metadata()
         {
-            var result = MCMModule.Metadata_Set( AdminCallContext, Object.GUID.ToString(), MetadataSchema.GUID.ToString(), Afrikaans.ID, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>" ) ;
+            var result = MCMModule.Metadata_Set( AdminCallContext, Object.GUID.ToString(), MetadataSchema.GUID.ToString(), Afrikaans.LanguageCode, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>" ) ;
 
             Assert.AreEqual(1, result.Value);
         }

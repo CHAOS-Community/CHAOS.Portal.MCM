@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Extensions.Standard.Test;
 using NUnit.Framework;
 using Object = Geckon.MCM.Data.Linq.Object;
 
@@ -38,6 +36,14 @@ namespace Geckon.MCM.Module.Standard.Test
             ScalarResult result = MCMModule.Object_Delete( AdminCallContext, Object.GUID.ToString(), TopFolder.ID );
 
             Assert.AreEqual( 1, result.Value );
+        }
+
+        [Test]
+        public void Should_Get_Index_Fields_From_Object()
+        {
+            Object obje = MCMModule.Object_Get( AdminCallContext, null, true, false, null, TopFolder.ID, 0, 10 ).First();
+
+            Assert.AreEqual( "title\r\nabstract\r\ndescription\r\n", obje.GetIndexableFields().Where( field => field.Key == "1_en_all" ).First().Value );
         }
     }
 }

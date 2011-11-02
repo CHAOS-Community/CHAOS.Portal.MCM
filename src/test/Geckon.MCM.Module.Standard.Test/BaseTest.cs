@@ -38,7 +38,7 @@ namespace Geckon.MCM.Module.Standard.Test
 
                 AssetObjectType = (from o in db.ObjectTypes where o.Value == "Asset" select o).First();
                 DemoObjectType  = (from o in db.ObjectTypes where o.Value == "demo" select o).First();
-                Afrikaans       = (from l in db.Languages where l.CountryName == "South Africa" select l).First();
+                Afrikaans       = (from l in db.Languages where l.LanguageCode == "af" select l).First();
                 ObjectContains  = (from or in db.ObjectRelationTypes where or.Value == "Contains" select or ).First();
                 FolderType      = (from ft in db.FolderTypes where ft.Name == "Folder" select ft ).First();
                 FolderTestType  = (from ft in db.FolderTypes where ft.Name == "TEST" select ft ).First();

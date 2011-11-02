@@ -75,9 +75,6 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertFormatType(FormatType instance);
     partial void UpdateFormatType(FormatType instance);
     partial void DeleteFormatType(FormatType instance);
-    partial void InsertLanguage(Language instance);
-    partial void UpdateLanguage(Language instance);
-    partial void DeleteLanguage(Language instance);
     partial void InsertMetadataSchema(MetadataSchema instance);
     partial void UpdateMetadataSchema(MetadataSchema instance);
     partial void DeleteMetadataSchema(MetadataSchema instance);
@@ -105,6 +102,9 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertMetadata(Metadata instance);
     partial void UpdateMetadata(Metadata instance);
     partial void DeleteMetadata(Metadata instance);
+    partial void InsertLanguage(Language instance);
+    partial void UpdateLanguage(Language instance);
+    partial void DeleteLanguage(Language instance);
     #endregion
 		
 		public MCMDataContext() : 
@@ -257,14 +257,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		public System.Data.Linq.Table<Language> Languages
-		{
-			get
-			{
-				return this.GetTable<Language>();
-			}
-		}
-		
 		public System.Data.Linq.Table<MetadataSchema> MetadataSchemas
 		{
 			get
@@ -345,6 +337,14 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
+		public System.Data.Linq.Table<Language> Languages
+		{
+			get
+			{
+				return this.GetTable<Language>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PopulateDefaultData")]
 		public int PopulateDefaultData()
 		{
@@ -377,34 +377,6 @@ namespace Geckon.MCM.Data.Linq
 		public int ObjectType_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Value", DbType="VarChar(255)")] string value, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, value, systemPermission);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Get")]
-		public ISingleResult<Language> Language_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CountryName", DbType="VarChar(255)")] string countryName)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, name, languageCode, countryName);
-			return ((ISingleResult<Language>)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Create")]
-		public int Language_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CountryName", DbType="VarChar(255)")] string countryName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, languageCode, countryName, systemPermission);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Delete")]
-		public int Language_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, systemPermission);
-			return ((int)(result.ReturnValue));
-		}
-		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Update")]
-		public int Language_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ID", DbType="Int")] System.Nullable<int> iD, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CountryName", DbType="VarChar(255)")] string countryName, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
-		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), iD, name, languageCode, countryName, systemPermission);
 			return ((int)(result.ReturnValue));
 		}
 		
@@ -493,10 +465,38 @@ namespace Geckon.MCM.Data.Linq
 		}
 		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Metadata_Get")]
-		public ISingleResult<Metadata> Metadata_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ObjectGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> objectGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="MetadataSchemaGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> metadataSchemaGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageID", DbType="Int")] System.Nullable<int> languageID)
+		public ISingleResult<Metadata> Metadata_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ObjectGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> objectGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="MetadataSchemaGUID", DbType="UniqueIdentifier")] System.Nullable<System.Guid> metadataSchemaGUID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode)
 		{
-			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), objectGUID, metadataSchemaGUID, languageID);
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), objectGUID, metadataSchemaGUID, languageCode);
 			return ((ISingleResult<Metadata>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Get")]
+		public ISingleResult<Language> Language_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, languageCode);
+			return ((ISingleResult<Language>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Update")]
+		public int Language_Update([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, languageCode, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Create")]
+		public int Language_Create([global::System.Data.Linq.Mapping.ParameterAttribute(Name="Name", DbType="VarChar(255)")] string name, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), name, languageCode, systemPermission);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Language_Delete")]
+		public int Language_Delete([global::System.Data.Linq.Mapping.ParameterAttribute(Name="LanguageCode", DbType="VarChar(10)")] string languageCode, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="SystemPermission", DbType="Int")] System.Nullable<int> systemPermission)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), languageCode, systemPermission);
+			return ((int)(result.ReturnValue));
 		}
 	}
 	
@@ -3799,168 +3799,6 @@ namespace Geckon.MCM.Data.Linq
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Language")]
-	public partial class Language : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private string _Name;
-		
-		private string _LanguageCode;
-		
-		private string _CountryName;
-		
-		private EntitySet<Metadata> _Metadatas;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnLanguageCodeChanging(string value);
-    partial void OnLanguageCodeChanged();
-    partial void OnCountryNameChanging(string value);
-    partial void OnCountryNameChanged();
-    #endregion
-		
-		public Language()
-		{
-			this._Metadatas = new EntitySet<Metadata>(new Action<Metadata>(this.attach_Metadatas), new Action<Metadata>(this.detach_Metadatas));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LanguageCode", DbType="VarChar(10) NOT NULL", CanBeNull=false)]
-		public string LanguageCode
-		{
-			get
-			{
-				return this._LanguageCode;
-			}
-			set
-			{
-				if ((this._LanguageCode != value))
-				{
-					this.OnLanguageCodeChanging(value);
-					this.SendPropertyChanging();
-					this._LanguageCode = value;
-					this.SendPropertyChanged("LanguageCode");
-					this.OnLanguageCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CountryName", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string CountryName
-		{
-			get
-			{
-				return this._CountryName;
-			}
-			set
-			{
-				if ((this._CountryName != value))
-				{
-					this.OnCountryNameChanging(value);
-					this.SendPropertyChanging();
-					this._CountryName = value;
-					this.SendPropertyChanged("CountryName");
-					this.OnCountryNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Language_Metadata", Storage="_Metadatas", ThisKey="ID", OtherKey="LanguageID")]
-		public EntitySet<Metadata> Metadatas
-		{
-			get
-			{
-				return this._Metadatas;
-			}
-			set
-			{
-				this._Metadatas.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Metadatas(Metadata entity)
-		{
-			this.SendPropertyChanging();
-			entity.Language = this;
-		}
-		
-		private void detach_Metadatas(Metadata entity)
-		{
-			this.SendPropertyChanging();
-			entity.Language = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.MetadataSchema")]
 	public partial class MetadataSchema : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6046,7 +5884,7 @@ namespace Geckon.MCM.Data.Linq
 		
 		private int _ObjectID;
 		
-		private System.Nullable<int> _LanguageID;
+		private string _LanguageCode;
 		
 		private int _MetadataSchemaID;
 		
@@ -6060,11 +5898,11 @@ namespace Geckon.MCM.Data.Linq
 		
 		private System.Nullable<System.Guid> _LockUserGUID;
 		
-		private EntityRef<Language> _Language;
-		
 		private EntityRef<MetadataSchema> _MetadataSchema;
 		
 		private EntityRef<Object> _Object;
+		
+		private EntityRef<Language> _Language;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -6074,8 +5912,8 @@ namespace Geckon.MCM.Data.Linq
     partial void OnIDChanged();
     partial void OnObjectIDChanging(int value);
     partial void OnObjectIDChanged();
-    partial void OnLanguageIDChanging(System.Nullable<int> value);
-    partial void OnLanguageIDChanged();
+    partial void OnLanguageCodeChanging(string value);
+    partial void OnLanguageCodeChanged();
     partial void OnMetadataSchemaIDChanging(int value);
     partial void OnMetadataSchemaIDChanged();
     partial void OnMetadataXmlChanging(System.Xml.Linq.XElement value);
@@ -6092,9 +5930,9 @@ namespace Geckon.MCM.Data.Linq
 		
 		public Metadata()
 		{
-			this._Language = default(EntityRef<Language>);
 			this._MetadataSchema = default(EntityRef<MetadataSchema>);
 			this._Object = default(EntityRef<Object>);
+			this._Language = default(EntityRef<Language>);
 			OnCreated();
 		}
 		
@@ -6142,26 +5980,26 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LanguageID", DbType="Int")]
-		public System.Nullable<int> LanguageID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LanguageCode", DbType="VarChar(10)")]
+		public string LanguageCode
 		{
 			get
 			{
-				return this._LanguageID;
+				return this._LanguageCode;
 			}
 			set
 			{
-				if ((this._LanguageID != value))
+				if ((this._LanguageCode != value))
 				{
 					if (this._Language.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnLanguageIDChanging(value);
+					this.OnLanguageCodeChanging(value);
 					this.SendPropertyChanging();
-					this._LanguageID = value;
-					this.SendPropertyChanged("LanguageID");
-					this.OnLanguageIDChanged();
+					this._LanguageCode = value;
+					this.SendPropertyChanged("LanguageCode");
+					this.OnLanguageCodeChanged();
 				}
 			}
 		}
@@ -6290,40 +6128,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Language_Metadata", Storage="_Language", ThisKey="LanguageID", OtherKey="ID", IsForeignKey=true)]
-		public Language Language
-		{
-			get
-			{
-				return this._Language.Entity;
-			}
-			set
-			{
-				Language previousValue = this._Language.Entity;
-				if (((previousValue != value) 
-							|| (this._Language.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Language.Entity = null;
-						previousValue.Metadatas.Remove(this);
-					}
-					this._Language.Entity = value;
-					if ((value != null))
-					{
-						value.Metadatas.Add(this);
-						this._LanguageID = value.ID;
-					}
-					else
-					{
-						this._LanguageID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Language");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="MetadataSchema_Metadata", Storage="_MetadataSchema", ThisKey="MetadataSchemaID", OtherKey="ID", IsForeignKey=true)]
 		public MetadataSchema MetadataSchema
 		{
@@ -6392,6 +6196,40 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Language_Metadata", Storage="_Language", ThisKey="LanguageCode", OtherKey="LanguageCode", IsForeignKey=true)]
+		public Language Language
+		{
+			get
+			{
+				return this._Language.Entity;
+			}
+			set
+			{
+				Language previousValue = this._Language.Entity;
+				if (((previousValue != value) 
+							|| (this._Language.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Language.Entity = null;
+						previousValue.Metadatas.Remove(this);
+					}
+					this._Language.Entity = value;
+					if ((value != null))
+					{
+						value.Metadatas.Add(this);
+						this._LanguageCode = value.LanguageCode;
+					}
+					else
+					{
+						this._LanguageCode = default(string);
+					}
+					this.SendPropertyChanged("Language");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -6410,6 +6248,120 @@ namespace Geckon.MCM.Data.Linq
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Language")]
+	public partial class Language : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _LanguageCode;
+		
+		private string _Name;
+		
+		private EntitySet<Metadata> _Metadatas;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnLanguageCodeChanging(string value);
+    partial void OnLanguageCodeChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public Language()
+		{
+			this._Metadatas = new EntitySet<Metadata>(new Action<Metadata>(this.attach_Metadatas), new Action<Metadata>(this.detach_Metadatas));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LanguageCode", DbType="VarChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string LanguageCode
+		{
+			get
+			{
+				return this._LanguageCode;
+			}
+			set
+			{
+				if ((this._LanguageCode != value))
+				{
+					this.OnLanguageCodeChanging(value);
+					this.SendPropertyChanging();
+					this._LanguageCode = value;
+					this.SendPropertyChanged("LanguageCode");
+					this.OnLanguageCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Language_Metadata", Storage="_Metadatas", ThisKey="LanguageCode", OtherKey="LanguageCode")]
+		public EntitySet<Metadata> Metadatas
+		{
+			get
+			{
+				return this._Metadatas;
+			}
+			set
+			{
+				this._Metadatas.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Metadatas(Metadata entity)
+		{
+			this.SendPropertyChanging();
+			entity.Language = this;
+		}
+		
+		private void detach_Metadatas(Metadata entity)
+		{
+			this.SendPropertyChanging();
+			entity.Language = null;
 		}
 	}
 }

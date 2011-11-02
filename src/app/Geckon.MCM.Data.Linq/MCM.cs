@@ -8,6 +8,7 @@ using Geckon.Portal.Data.Result.Standard;
 using System.Data.Linq;
 using System.Xml.Linq;
 using Geckon.Portal.Core.Index;
+using System.Text;
 
 namespace Geckon.MCM.Data.Linq
 {
@@ -341,7 +342,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion
         #region Metadata
 
-        public int Metadata_Set( List<Guid> groupGUIDs, Guid userGUID, Guid objectGUID, Guid metadataSchemaGUID, int languageID, string metadataXML, bool lockMetadata )
+        public int Metadata_Set( List<Guid> groupGUIDs, Guid userGUID, Guid objectGUID, Guid metadataSchemaGUID, string languageCode, string metadataXML, bool lockMetadata )
         {
             DataTable groupGUIDsTable = ConvertToDataTable(groupGUIDs);
 
@@ -363,8 +364,8 @@ namespace Geckon.MCM.Data.Linq
                 p = cmd.Parameters.AddWithValue("@MetadataSchemaGUID", metadataSchemaGUID);
                 p.SqlDbType = SqlDbType.UniqueIdentifier;
 
-                p = cmd.Parameters.AddWithValue("@LanguageID", languageID);
-                p.SqlDbType = SqlDbType.Int;
+                p = cmd.Parameters.AddWithValue("@LanguageCode", languageCode);
+                p.SqlDbType = SqlDbType.VarChar;
 
                 p = cmd.Parameters.AddWithValue("@MetadataXML", metadataXML);
                 p.SqlDbType = SqlDbType.Xml;
@@ -535,12 +536,6 @@ namespace Geckon.MCM.Data.Linq
     {
         #region Properties
 
-        [Serialize("ID")]
-        public int pID
-        {
-            get { return ID; }
-        }
-
         [Serialize("Name")]
         public string pName
         {
@@ -551,12 +546,6 @@ namespace Geckon.MCM.Data.Linq
         public string pLanguageCode
         {
             get { return LanguageCode; }
-        }
-
-        [Serialize("CountryName")]
-        public string pCountryName
-        {
-            get { return CountryName; }
         }
 
         #endregion
@@ -609,6 +598,25 @@ namespace Geckon.MCM.Data.Linq
             yield return new KeyValuePair<string, string>( "datecreated", pDateCreated.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
             
             // TODO: Implement Metadata XML converter
+
+            // Convert to all field
+            foreach( Metadata metadata in pMetadata )
+            {
+                yield return new KeyValuePair<string, string>( string.Format( "{0}_{1}_all", metadata.ID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXml ) );
+            }
+        }
+
+        private string GetXmlContent( XElement xml )
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach( XElement node in xml.Descendants() )
+            {
+                if( !node.HasElements )
+                    sb.AppendLine( node.Value );
+            }
+
+            return sb.ToString();
         }
 
         #endregion
@@ -630,16 +638,16 @@ namespace Geckon.MCM.Data.Linq
             }
         }
 
-        [Serialize("LanguageID")]
-        public int? pLanguageID
+        [Serialize("LanguageCode")]
+        public string pLanguageCode
         {
             get
             {
-                return LanguageID;
+                return LanguageCode;
             }
             set
             {
-                LanguageID = value;
+                LanguageCode = value;
             }
         }
 
