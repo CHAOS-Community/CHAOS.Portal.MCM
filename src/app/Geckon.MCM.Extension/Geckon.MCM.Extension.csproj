@@ -35,11 +35,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
-    <Reference Include="Geckon.Portal.Core">
+    <Reference Include="Geckon.Portal.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\Geckon.Portal.Core.dll</HintPath>
     </Reference>
     <Reference Include="Geckon.Portal.Core.Standard">
       <HintPath>..\..\..\lib\Geckon.Portal.Core.Standard.dll</HintPath>
+    </Reference>
+    <Reference Include="Geckon.Portal.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Geckon.Portal.Data.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,6 +65,13 @@
     <Compile Include="ObjectType\ObjectTypeExtension.cs" />
     <Compile Include="Object\ObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\TestExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Geckon.MCM.Data.Linq\Geckon.MCM.Data.Linq.csproj">
+      <Project>{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}</Project>
+      <Name>Geckon.MCM.Data.Linq</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

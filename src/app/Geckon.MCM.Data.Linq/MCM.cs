@@ -602,7 +602,7 @@ namespace Geckon.MCM.Data.Linq
             // Convert to all field
             foreach( Metadata metadata in pMetadata )
             {
-                yield return new KeyValuePair<string, string>( string.Format( "{0}_{1}_all", metadata.ID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXml ) );
+                yield return new KeyValuePair<string, string>( string.Format( "{0}_{1}_all", metadata.MetadataSchemaID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXml ) );
             }
         }
 

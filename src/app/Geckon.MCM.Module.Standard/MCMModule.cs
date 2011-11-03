@@ -399,7 +399,17 @@ namespace Geckon.MCM.Module.Standard
         [Datatype("Object","Get")]
         public IEnumerable<Object> Object_Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
-            IEnumerable<Guid> resultPage = callContext.IndexManager.GetIndex<MCMModule>().Get( query ).Results.Select( result => ( (GuidResult) result ).Guid );
+            IEnumerable<Guid> resultPage = null;
+
+            // TODO: Replace parameters with query
+            if( query != null )
+            {
+                resultPage = callContext.IndexManager.GetIndex<MCMModule>().Get( query ).Results.Select( result => ( (GuidResult) result ).Guid );
+
+                // if solr doesnt return anything there is no need to continue, so just return an empty list
+                if( resultPage.Count() == 0 )
+                    return new List<Object>();
+            }
 
             using( MCMDataContext db = DefaultMCMDataContext )
             {
@@ -458,7 +468,27 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
+        #region Test
 
+        [Datatype("Test","ReIndex")]
+        public ScalarResult Test_ReIndex( CallContext callContext, int folderID )
+        {
+            Geckon.Index.Solr.Solr<GuidResult> index = ( Geckon.Index.Solr.Solr<GuidResult> )callContext.IndexManager.GetIndex<MCMModule>();
+
+            index.RemoveAll(false); 
+            //index.Set( Object_Get( callContext, new Geckon.Index.Solr.SolrQuery("*:*",null), true, false, null, null, 0, int.MaxValue ).Select( obj => (IIndexable) obj ) );
+
+            foreach( Object obj in Object_Get( callContext, null, true, false, null, folderID, 0, int.MaxValue ) )
+            {
+                index.Set( obj, false );
+            }
+
+            index.Commit();
+
+            return new ScalarResult(1);
+        }
+
+        #endregion
         #endregion
     }
 }
