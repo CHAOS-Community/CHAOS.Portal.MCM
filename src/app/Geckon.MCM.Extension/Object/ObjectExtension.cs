@@ -1,5 +1,5 @@
 ﻿using Geckon.Portal.Core.Standard.Extension;
-using Geckon.Portal.Core.Index;
+using Geckon.Index;
 
 namespace Geckon.MCM.Extension.Object
 {

@@ -10,7 +10,7 @@ using Geckon.Portal.Core.Standard.Module;
 using Geckon.Portal.Data;
 using Object = Geckon.MCM.Data.Linq.Object;
 using Geckon.Portal.Core.Standard;
-using Geckon.Portal.Core.Index;
+using Geckon.Index;
 
 namespace Geckon.MCM.Module.Standard
 {
@@ -399,7 +399,7 @@ namespace Geckon.MCM.Module.Standard
         [Datatype("Object","Get")]
         public IEnumerable<Object> Object_Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
-            IEnumerable<Guid> resultPage = callContext.IndexManager.GetIndex<MCMModule>().Get( query ).Select( result => ( (GuidResult) result ).Guid );
+            IEnumerable<Guid> resultPage = callContext.IndexManager.GetIndex<MCMModule>().Get( query ).Results.Select( result => ( (GuidResult) result ).Guid );
 
             using( MCMDataContext db = DefaultMCMDataContext )
             {

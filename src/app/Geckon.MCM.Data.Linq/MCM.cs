@@ -7,7 +7,7 @@ using Geckon.Serialization;
 using Geckon.Portal.Data.Result.Standard;
 using System.Data.Linq;
 using System.Xml.Linq;
-using Geckon.Portal.Core.Index;
+using Geckon.Index;
 using System.Text;
 
 namespace Geckon.MCM.Data.Linq
