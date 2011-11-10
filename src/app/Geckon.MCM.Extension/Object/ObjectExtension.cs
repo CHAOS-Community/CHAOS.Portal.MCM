@@ -7,7 +7,7 @@ namespace Geckon.MCM.Extension.Object
     {
         #region GET
 
-        public void Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public void Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID )
         {
             
         }

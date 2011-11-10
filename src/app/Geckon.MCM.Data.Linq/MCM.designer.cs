@@ -498,6 +498,13 @@ namespace Geckon.MCM.Data.Linq
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), languageCode, systemPermission);
 			return ((int)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.Folder_Get")]
+		public ISingleResult<Folder> Folder_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="ObjectID", DbType="Int")] System.Nullable<int> objectID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="IncludeFolderTree", DbType="Bit")] System.Nullable<bool> includeFolderTree)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), objectID, includeFolderTree);
+			return ((ISingleResult<Folder>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccessPoint")]

@@ -15,7 +15,7 @@ namespace Geckon.MCM.Module.Standard.Test
             IList<string> guids = new List<string>();
             guids.Add( Object.GUID.ToString() );
 
-            IEnumerable<Object> objectz = MCMModule.Object_Get( AdminCallContext, null, true, false, null, TopFolder.ID, 0, 10 );
+            IEnumerable<Object> objectz = MCMModule.Object_Get( AdminCallContext, null, true, false, null, TopFolder.ID );
 
             Assert.Greater( objectz.Count(), 0 );
         }
@@ -41,7 +41,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Get_Index_Fields_From_Object()
         {
-            Object obje = MCMModule.Object_Get( AdminCallContext, null, true, false, null, TopFolder.ID, 0, 10 ).First();
+            Object obje = MCMModule.Object_Get( AdminCallContext, null, true, false, null, TopFolder.ID ).First();
 
             Assert.AreEqual( "title\r\nabstract\r\ndescription\r\n", obje.GetIndexableFields().Where( field => field.Key == "1_en_all" ).First().Value );
         }

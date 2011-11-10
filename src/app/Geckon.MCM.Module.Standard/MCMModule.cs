@@ -397,23 +397,41 @@ namespace Geckon.MCM.Module.Standard
         #region Object
 
         [Datatype("Object","Get")]
-        public IEnumerable<Object> Object_Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public IEnumerable<Object> Object_Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID )
         {
             IEnumerable<Guid> resultPage = null;
 
-            // TODO: Replace parameters with query
-            if( query != null )
-            {
-                resultPage = callContext.IndexManager.GetIndex<MCMModule>().Get( query ).Results.Select( result => ( (GuidResult) result ).Guid );
-
-                // if solr doesnt return anything there is no need to continue, so just return an empty list
-                if( resultPage.Count() == 0 )
-                    return new List<Object>();
-            }
-
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, resultPage, includeMetadata, includeFiles, null, objectTypeID, folderID, pageIndex, pageSize );
+                // TODO: Replace parameters with query
+                if( query != null )
+                {
+                    //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
+                    IList<Folder> folders = db.Folder_Get_DirectFolderAssociations( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, 0x1 ).ToList();
+
+                    //TODO: Refactor building of queries
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder( query.Query );
+                    sb.Append( "(" );
+                    for( int i = 0; i < folders.Count(); i++ )
+                    {
+                        sb.Append( string.Format( "FolderTree:{0}", folders[i].ID ) );
+
+                        if( i+1 < folders.Count() )
+                            sb.Append( " OR " );
+                    }
+
+                    sb.Append( ")" );
+
+                    query.Query = sb.ToString();
+
+                    resultPage = callContext.IndexManager.GetIndex<MCMModule>().Get( query ).Results.Select( result => ( (GuidResult) result ).Guid );
+
+                    // if solr doesnt return anything there is no need to continue, so just return an empty list
+                    if( resultPage.Count() == 0 )
+                        return new List<Object>();
+                }
+
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, resultPage, includeMetadata, includeFiles, false, null, objectTypeID, folderID, 0, int.MaxValue );
             }
         }
 
@@ -424,7 +442,7 @@ namespace Geckon.MCM.Module.Standard
             {
                 int objectID = db.Object_Create( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( guid ), objectTypeID, folderID );
 
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, objectID, null, null, 0, 1 ).First();
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, objectID, null, null, 0, 1 ).First();
             }
         }
 
@@ -452,7 +470,7 @@ namespace Geckon.MCM.Module.Standard
             {
                 int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( objectGUID ), Guid.Parse( metadataSchemaGUID ), languageCode, metadataXML, false );
                 
-                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ Guid.Parse( objectGUID ) }, true, false, null, null, null, 0, 1 ).First() );
+                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ Guid.Parse( objectGUID ) }, true, false, false, null, null, null, 0, 1 ).First() );
 
                 return new ScalarResult( result );
             }
@@ -476,14 +494,11 @@ namespace Geckon.MCM.Module.Standard
             Geckon.Index.Solr.Solr<GuidResult> index = ( Geckon.Index.Solr.Solr<GuidResult> )callContext.IndexManager.GetIndex<MCMModule>();
 
             index.RemoveAll(false); 
-            //index.Set( Object_Get( callContext, new Geckon.Index.Solr.SolrQuery("*:*",null), true, false, null, null, 0, int.MaxValue ).Select( obj => (IIndexable) obj ) );
 
-            foreach( Object obj in Object_Get( callContext, null, true, false, null, folderID, 0, int.MaxValue ) )
+            using( MCMDataContext db = DefaultMCMDataContext )
             {
-                index.Set( obj, false );
+                index.Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, true, false, true, null, null, null, 0, int.MaxValue ).Select( obj => (IIndexable) obj ), true );
             }
-
-            index.Commit();
 
             return new ScalarResult(1);
         }

@@ -52,6 +52,36 @@ namespace Geckon.MCM.Data.Linq
             }
         }
 
+        public IEnumerable<Folder> Folder_Get_DirectFolderAssociations( List<Guid> groupGUIDs, Guid userGUID, int requiredPermissions )
+        {
+            DataTable groupGUIDsTable = new DataTable();
+            groupGUIDsTable.Columns.Add( "GUID", typeof( Guid ) );
+
+            foreach( Guid guid in groupGUIDs )
+                groupGUIDsTable.Rows.Add( guid );
+
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Folder_Get_DirectFolderAssociations", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue( "@GroupGUIDs", groupGUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName  = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue( "@UserGUID", userGUID );
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue( "@RequiredPermission", requiredPermissions );
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                return Translate<Folder>(reader).ToList();
+            }
+        }
+
         public int Folder_Delete( List<Guid> groupGUIDs, Guid userGUID, int id )
         {
             DataTable groupGUIDsTable = new DataTable();
@@ -180,7 +210,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion        
         #region Object
 
-        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
             DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
@@ -249,6 +279,15 @@ namespace Geckon.MCM.Data.Linq
                     foreach( Object o in objects )
                     {
                         o.pFiles = (from f in files where f.ObjectID == o.ID select f).ToList();
+                    }
+                }
+                
+                if( includeFolders )
+                {
+                    foreach( Object o in objects )
+                    {
+                        o.Folders    = Folder_Get(o.ID, false).ToList();
+                        o.FolderTree = Folder_Get(o.ID, true).ToList();
                     }
                 }
 
@@ -586,23 +625,36 @@ namespace Geckon.MCM.Data.Linq
         /// This property is used to Serialize File relations
         /// </summary>
         [Serialize("Files")]
-        public IEnumerable<File> pFiles { get; set; }     
+        public IEnumerable<File> pFiles { get; set; }
+
+        public IEnumerable<Folder> Folders { get; set; }
+        public IEnumerable<Folder> FolderTree { get; set; }
 
         #endregion
         #region Business Logic
 
         public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
         {
-            yield return new KeyValuePair<string, string>( "guid", pGUID.ToString() );
-            yield return new KeyValuePair<string, string>( "objecttypeid",pObjectTypeID.ToString() );
-            yield return new KeyValuePair<string, string>( "datecreated", pDateCreated.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-            
+            yield return new KeyValuePair<string, string>( "GUID", pGUID.ToString() );
+            yield return new KeyValuePair<string, string>( "ObjectTypeID",pObjectTypeID.ToString() );
+            yield return new KeyValuePair<string, string>( "DateCreated", pDateCreated.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+
+            foreach (Folder folder in Folders)
+            {
+                yield return new KeyValuePair<string, string>("FolderID", folder.ID.ToString());
+            }
+
+            foreach (Folder folder in FolderTree)
+            {
+                yield return new KeyValuePair<string, string>("FolderTree", folder.ID.ToString());
+            }
+
             // TODO: Implement Metadata XML converter
 
             // Convert to all field
             foreach( Metadata metadata in pMetadata )
             {
-                yield return new KeyValuePair<string, string>( string.Format( "{0}_{1}_all", metadata.MetadataSchemaID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXml ) );
+                yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXml ) );
             }
         }
 

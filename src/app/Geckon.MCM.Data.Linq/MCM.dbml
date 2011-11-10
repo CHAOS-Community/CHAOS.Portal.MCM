@@ -234,7 +234,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Folder" Member="Folders">
-    <Type Name="Folder">
+    <Type Name="Folder" Id="ID7">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ParentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FolderTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -399,5 +399,10 @@
     <Parameter Name="LanguageCode" Parameter="languageCode" Type="System.String" DbType="VarChar(10)" />
     <Parameter Name="SystemPermission" Parameter="systemPermission" Type="System.Int32" DbType="Int" />
     <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.Folder_Get" Method="Folder_Get">
+    <Parameter Name="ObjectID" Parameter="objectID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="IncludeFolderTree" Parameter="includeFolderTree" Type="System.Boolean" DbType="Bit" />
+    <ElementType IdRef="ID7" />
   </Function>
 </Database>

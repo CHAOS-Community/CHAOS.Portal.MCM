@@ -734,3 +734,146 @@ BEGIN
 		
 	END
 END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.11.04
+--				This Table function returns the parent folder chain
+-- =============================================
+CREATE FUNCTION GetParentFolders
+(
+	@FolderID int
+)
+RETURNS 
+@Folders TABLE
+(
+	FolderID int
+)
+AS
+BEGIN
+	DECLARE @ParentID INT
+
+	SELECT	@ParentID = ParentID
+	  FROM	Folder
+	 WHERE	ID = @FolderID
+
+	INSERT INTO @Folders VALUES (@FolderID)
+
+	WHILE( @ParentID IS NOT NULL )
+	BEGIN
+
+		INSERT INTO @Folders VALUES(@ParentID)
+
+		SELECT	@ParentID = ParentID 
+		  FROM	Folder
+		 WHERE  ID = @ParentID
+
+	END
+	
+	RETURN
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.11.04
+--				This SP return folders associated with an Object and the option of returning all parent folders too
+-- =============================================
+CREATE PROCEDURE Folder_Get
+	@ObjectID			int,
+	@IncludeFolderTree	bit
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	IF( @IncludeFolderTree = 1 )
+	BEGIN
+	
+		DECLARE @Folders TABLE
+		(
+			FolderID int
+		)
+
+		DECLARE @FolderID INT	 
+		DECLARE Iterator CURSOR
+			FOR SELECT	[Folder].[ID]
+				  FROM	[Folder] INNER JOIN Object_Folder_Join ON
+								 Folder.ID = Object_Folder_Join.FolderID
+				 WHERE	Object_Folder_Join.ObjectID = @ObjectID
+			
+			OPEN Iterator
+			
+			FETCH NEXT FROM Iterator
+				INTO @FolderID
+			
+		WHILE( @@FETCH_STATUS = 0 )
+		BEGIN
+
+			INSERT INTO @Folders
+				 SELECT FolderID FROM dbo.GetParentFolders( @FolderID )
+			     
+			FETCH NEXT FROM Iterator
+				INTO @FolderID
+		END
+			
+		SELECT	[Folder].[ID]
+		  FROM	[Folder]
+		 WHERE	ID IN (SELECT FolderID FROM @Folders)
+		 
+		 CLOSE Iterator;
+		 DEALLOCATE Iterator;
+	
+	END
+	ELSE
+	BEGIN
+	
+		SELECT	[Folder].[ID]
+		  FROM	[Folder] INNER JOIN Object_Folder_Join ON
+						 Folder.ID = Object_Folder_Join.FolderID
+		 WHERE	Object_Folder_Join.ObjectID = @ObjectID
+
+	END
+	
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.10.11
+--				This SP is used to get folders by direct association from user and groups
+-- =============================================
+ALTER PROCEDURE [dbo].[Folder_Get_DirectFolderAssociations]
+	@GroupGUIDs			GUIDList Readonly,
+	@UserGUID			uniqueidentifier,
+	@RequiredPermission	int
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+    SELECT [Folder].*
+      FROM [Folder] 
+            LEFT OUTER JOIN [Folder_User_Join]  ON [Folder].ID = [Folder_User_Join].FolderID
+            LEFT OUTER JOIN [Folder_Group_Join] ON [Folder].ID = [Folder_Group_Join].FolderID
+     WHERE	( [Folder_User_Join].UserGUID = @UserGUID OR 
+              [Folder_Group_Join].GroupGUID IN ( SELECT [GUID] FROM @GroupGUIDs ) ) AND
+			( [Folder_User_Join].Permission  & @RequiredPermission = @RequiredPermission OR
+			  [Folder_Group_Join].Permission & @RequiredPermission = @RequiredPermission )
+	
+	-- Test which is faster
+    --SELECT [Folder].*
+    --  FROM [Folder] 
+    --        INNER JOIN [Folder_User_Join]  ON [Folder].ID = [Folder_User_Join].FolderID
+    -- WHERE [Folder_User_Join].UserGUID = @UserGUID AND
+    --       [Folder_User_Join].Permission & @RequiredPermission = @RequiredPermission
+    --UNION ALL
+    --SELECT [Folder].*
+    --  FROM [Folder] 
+    --        INNER JOIN [Folder_Group_Join] ON [Folder].ID = [Folder_Group_Join].FolderID
+    -- WHERE [Folder_Group_Join].GroupGUID IN ( SELECT [GUID] FROM @GroupGUIDs ) AND
+    --       [Folder_Group_Join].Permission & @RequiredPermission = @RequiredPermission
+     
+
+END
