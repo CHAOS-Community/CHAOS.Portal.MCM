@@ -11,6 +11,7 @@ using Geckon.Portal.Data;
 using Object = Geckon.MCM.Data.Linq.Object;
 using Geckon.Portal.Core.Standard;
 using Geckon.Index;
+using Geckon.Portal.Data.Result;
 
 namespace Geckon.MCM.Module.Standard
 {
@@ -396,43 +397,46 @@ namespace Geckon.MCM.Module.Standard
         #endregion
         #region Object
 
-        [Datatype("Object","Get")]
-        public IEnumerable<Object> Object_Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles, int? objectTypeID, int? folderID )
+        [Datatype("Object", "Get")]
+        public IPagedResult<IResult> Object_Get(CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles )
         {
-            IEnumerable<Guid> resultPage = null;
-
-            using( MCMDataContext db = DefaultMCMDataContext )
+            using (MCMDataContext db = DefaultMCMDataContext)
             {
-                // TODO: Replace parameters with query
-                if( query != null )
+                IEnumerable<Guid> resultPage = null;
+
+                if (query != null)
                 {
                     //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
-                    IList<Folder> folders = db.Folder_Get_DirectFolderAssociations( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, 0x1 ).ToList();
+                    IList<Folder> folders = db.Folder_Get_DirectFolderAssociations(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, 0x1).ToList();
 
                     //TODO: Refactor building of queries
-                    System.Text.StringBuilder sb = new System.Text.StringBuilder( query.Query );
-                    sb.Append( "(" );
-                    for( int i = 0; i < folders.Count(); i++ )
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder(query.Query);
+                    sb.Append(" AND (");
+                    for (int i = 0; i < folders.Count(); i++)
                     {
-                        sb.Append( string.Format( "FolderTree:{0}", folders[i].ID ) );
+                        sb.Append(string.Format("FolderTree:{0}", folders[i].ID));
 
-                        if( i+1 < folders.Count() )
-                            sb.Append( " OR " );
+                        if (i + 1 < folders.Count())
+                            sb.Append(" OR ");
                     }
 
-                    sb.Append( ")" );
+                    sb.Append(")");
 
                     query.Query = sb.ToString();
 
-                    resultPage = callContext.IndexManager.GetIndex<MCMModule>().Get( query ).Results.Select( result => ( (GuidResult) result ).Guid );
+                    IPagedResult<IIndexResult> indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get(query);
+                    
+                    resultPage = indexResult.Results.Select( result => ((GuidResult)result ).Guid );
 
                     // if solr doesnt return anything there is no need to continue, so just return an empty list
-                    if( resultPage.Count() == 0 )
-                        return new List<Object>();
-                }
+                    if (resultPage.Count() == 0)
+                        return new Geckon.Index.Standard.PagedResult<IResult>(0, 0, new List<Object>());
 
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, resultPage, includeMetadata, includeFiles, false, null, objectTypeID, folderID, 0, int.MaxValue );
+                    return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, resultPage, includeMetadata, includeFiles, false, null, null, null, 0, int.MaxValue));
+                }
             }
+
+            throw new NotImplementedException( "No implmentation for Object Get without solr parameters" );
         }
 
         [Datatype("Object","Create")]
