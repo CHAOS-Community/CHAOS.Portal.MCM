@@ -3,7 +3,7 @@
 -- Create date: 2011.10.13
 --				This SP is used to get metadatas
 -- =============================================
-CREATE PROCEDURE Metadata_Get
+ALTER PROCEDURE Metadata_Get
 	@ObjectGUID			uniqueidentifier,
 	@MetadataSchemaGUID uniqueidentifier = NULL,
 	@LanguageID			int              = NULL
@@ -166,9 +166,6 @@ CREATE TABLE [dbo].[Language](
 
 GO
 
-USE [MCM]
-GO
-
 IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_Metadata_Language]') AND parent_object_id = OBJECT_ID(N'[dbo].[Metadata]'))
 ALTER TABLE [dbo].[Metadata] DROP CONSTRAINT [FK_Metadata_Language]
 GO
@@ -193,9 +190,6 @@ BEGIN
 ALTER TABLE [dbo].[Metadata] DROP CONSTRAINT [DF_Metadata_DateModified]
 END
 
-GO
-
-USE [MCM]
 GO
 
 /****** Object:  Table [dbo].[Metadata]    Script Date: 11/02/2011 15:36:57 ******/
@@ -845,6 +839,116 @@ GO
 --				This SP is used to get folders by direct association from user and groups
 -- =============================================
 ALTER PROCEDURE [dbo].[Folder_Get_DirectFolderAssociations]
+	@GroupGUIDs			GUIDList Readonly,
+	@UserGUID			uniqueidentifier,
+	@RequiredPermission	int
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+    SELECT [Folder].*
+      FROM [Folder] 
+            LEFT OUTER JOIN [Folder_User_Join]  ON [Folder].ID = [Folder_User_Join].FolderID
+            LEFT OUTER JOIN [Folder_Group_Join] ON [Folder].ID = [Folder_Group_Join].FolderID
+     WHERE	( [Folder_User_Join].UserGUID = @UserGUID OR 
+              [Folder_Group_Join].GroupGUID IN ( SELECT [GUID] FROM @GroupGUIDs ) ) AND
+			( [Folder_User_Join].Permission  & @RequiredPermission = @RequiredPermission OR
+			  [Folder_Group_Join].Permission & @RequiredPermission = @RequiredPermission )
+	
+	-- Test which is faster
+    --SELECT [Folder].*
+    --  FROM [Folder] 
+    --        INNER JOIN [Folder_User_Join]  ON [Folder].ID = [Folder_User_Join].FolderID
+    -- WHERE [Folder_User_Join].UserGUID = @UserGUID AND
+    --       [Folder_User_Join].Permission & @RequiredPermission = @RequiredPermission
+    --UNION ALL
+    --SELECT [Folder].*
+    --  FROM [Folder] 
+    --        INNER JOIN [Folder_Group_Join] ON [Folder].ID = [Folder_Group_Join].FolderID
+    -- WHERE [Folder_Group_Join].GroupGUID IN ( SELECT [GUID] FROM @GroupGUIDs ) AND
+    --       [Folder_Group_Join].Permission & @RequiredPermission = @RequiredPermission
+     
+
+END
+GO 
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.16
+--				This SP is used to Get Objects
+-- =============================================
+ALTER PROCEDURE [dbo].[Object_Get]
+	@GUIDs				GUIDList Readonly,
+	@GroupGUIDs			GUIDList Readonly,
+	@UserGUID			uniqueidentifier,
+	@IncludeMetadata	bit,
+	@IncludeFiles		bit,
+	@ObjectID			int					= null,
+	@ObjectTypeID		int					= null,
+	@FolderID			int					= null,
+	@PageIndex			int					= 0,
+	@PageSize			int					= 10,
+	@TotalCount			int	output
+	
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'GET_OBJECTS' )
+
+	IF( @PageIndex IS NULL )
+		SET @PageIndex = 0
+		
+	IF( @PageSize IS NULL )
+		SET @PageSize = 10;
+
+	DECLARE @PagedResults AS TABLE (
+		[RowNumber]		int,
+		[TotalCount]	int,
+	    [ObjectID]		int
+	);
+
+	WITH ObjectsRN AS
+	(
+		SELECT	ROW_NUMBER() OVER(ORDER BY o.[GUID], o.[GUID]) AS RowNumber,
+				COUNT(*) OVER() AS TotalCount,
+				o.ID
+		 FROM	[Object] as o INNER JOIN
+				Object_Folder_Join ON o.ID = Object_Folder_Join.ObjectID
+		 WHERE	( @FolderID IS NULL OR Object_Folder_Join.FolderID = @FolderID ) AND
+				( @ObjectTypeID IS NULL OR o.ObjectTypeID = @ObjectTypeID ) AND
+				( ( SELECT COUNT(*) FROM @GUIDs as g ) = 0 OR o.[GUID] in ( SELECT g.[GUID] FROM @GUIDs as g ) ) AND
+				( @ObjectID IS NULL OR o.ID = @ObjectID ) AND
+				dbo.[Folder_FindHighestUserPermission]( @UserGUID,@GroupGUIDs,Object_Folder_Join.FolderID ) & @RequiredPermission = @RequiredPermission
+	)
+
+	INSERT INTO	@PagedResults
+		 SELECT	* 
+		   FROM	ObjectsRN
+		  WHERE RowNumber BETWEEN (@PageIndex)     * @PageSize + 1 
+					          AND (@PageIndex + 1) * @PageSize
+
+	SELECT	*
+	  FROM	[Object]
+	 WHERE	ID in ( SELECT pr.ObjectID FROM @PagedResults as pr )
+	 
+	 if( @IncludeMetadata = 1 )
+		SELECT	*
+		  FROM	Metadata
+		 WHERE	Metadata.ObjectID IN ( SELECT pr.ObjectID FROM @PagedResults as pr )
+		 
+	 if( @IncludeFiles = 1 )
+		 SELECT	*
+		  FROM	[File]
+		 WHERE	[File].ObjectID IN ( SELECT pr.ObjectID FROM @PagedResults as pr )
+
+END
+GO
+
+CREATE PROCEDURE [dbo].[Folder_Get_DirectFolderAssociations]
 	@GroupGUIDs			GUIDList Readonly,
 	@UserGUID			uniqueidentifier,
 	@RequiredPermission	int
