@@ -210,7 +210,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion        
         #region Object
 
-        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders, int? objectID, int? objectTypeID, int? folderID )
         {
             DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
             DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
@@ -244,16 +244,6 @@ namespace Geckon.MCM.Data.Linq
                 p.SqlDbType = SqlDbType.Int;
 
                 p = cmd.Parameters.AddWithValue( "@FolderID", folderID );
-                p.SqlDbType = SqlDbType.Int;
-
-                p = cmd.Parameters.AddWithValue( "@PageIndex", pageIndex );
-                p.SqlDbType = SqlDbType.Int;
-
-                p = cmd.Parameters.AddWithValue( "@PageSize", pageSize );
-                p.SqlDbType = SqlDbType.Int;
-
-                p = cmd.Parameters.AddWithValue( "@TotalCount", int.MaxValue );
-                p.Direction = ParameterDirection.Output;
                 p.SqlDbType = SqlDbType.Int;
 
                 conn.Open();

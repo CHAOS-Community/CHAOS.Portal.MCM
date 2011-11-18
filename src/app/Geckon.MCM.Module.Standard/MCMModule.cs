@@ -432,7 +432,7 @@ namespace Geckon.MCM.Module.Standard
                     if (resultPage.Count() == 0)
                         return new Geckon.Index.Standard.PagedResult<IResult>(0, 0, new List<Object>());
 
-                    return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, resultPage, includeMetadata, includeFiles, false, null, null, null, 0, int.MaxValue));
+                    return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, resultPage, includeMetadata, includeFiles, false, null, null, null ));
                 }
             }
 
@@ -446,7 +446,7 @@ namespace Geckon.MCM.Module.Standard
             {
                 int objectID = db.Object_Create( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( guid ), objectTypeID, folderID );
 
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, objectID, null, null, 0, 1 ).First();
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, objectID, null, null ).First();
             }
         }
 
@@ -474,7 +474,7 @@ namespace Geckon.MCM.Module.Standard
             {
                 int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( objectGUID ), Guid.Parse( metadataSchemaGUID ), languageCode, metadataXML, false );
                 
-                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ Guid.Parse( objectGUID ) }, true, false, false, null, null, null, 0, 1 ).First() );
+                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ Guid.Parse( objectGUID ) }, true, false, false, null, null, null ).First() );
 
                 return new ScalarResult( result );
             }
@@ -501,7 +501,7 @@ namespace Geckon.MCM.Module.Standard
 
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                index.Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, true, false, true, null, null, null, 0, int.MaxValue ).Select( obj => (IIndexable) obj ), true );
+                index.Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, true, false, true, null, null, null ).Select( obj => (IIndexable) obj ), true );
             }
 
             return new ScalarResult(1);
