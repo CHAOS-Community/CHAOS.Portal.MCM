@@ -210,7 +210,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion        
         #region Object
 
-        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders, int? objectID, int? objectTypeID, int? folderID )
+        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
             DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
@@ -245,6 +245,71 @@ namespace Geckon.MCM.Data.Linq
 
                 p = cmd.Parameters.AddWithValue( "@FolderID", folderID );
                 p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@PageIndex", pageIndex );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@PageSize", pageSize );
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                IMultipleResults results = Translate( reader );
+                IEnumerable<Object> objects = results.GetResult<Object>().ToList();
+
+                if( includeMetadata )
+                {
+                    IEnumerable<Metadata> metadatas = results.GetResult<Metadata>().ToList();
+
+                    foreach( Object o in objects )
+                    {
+                        o.pMetadata = (from m in metadatas where m.pObjectID == o.ID select m).ToList();
+                    }
+                }
+
+                if( includeFiles )
+                {
+                    IEnumerable<File> files = results.GetResult<File>().ToList();
+                    
+                    foreach( Object o in objects )
+                    {
+                        o.pFiles = (from f in files where f.ObjectID == o.ID select f).ToList();
+                    }
+                }
+                
+                if( includeFolders )
+                {
+                    foreach( Object o in objects )
+                    {
+                        o.Folders    = Folder_Get(o.ID, false).ToList();
+                        o.FolderTree = Folder_Get(o.ID, true).ToList();
+                    }
+                }
+
+                return objects;
+            }
+        }
+
+        // TODO: This can be reused!
+        public IEnumerable<Object> Object_Get( IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders )
+        {
+            DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
+
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Object_GetByGUIDs", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue("@IncludeMetadata", includeMetadata);
+                p.SqlDbType = SqlDbType.Bit;
+
+                p = cmd.Parameters.AddWithValue( "@IncludeFiles", includeFiles );
+                p.SqlDbType = SqlDbType.Bit;
+
+                p = cmd.Parameters.AddWithValue( "@GUIDs", GUIDsTable );
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName = "GUIDList";
 
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();

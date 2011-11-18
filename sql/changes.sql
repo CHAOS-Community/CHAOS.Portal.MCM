@@ -229,3 +229,133 @@ BEGIN
 END
 GO
 
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.16
+--				This SP is used to Get Objects
+-- =============================================
+CREATE PROCEDURE [dbo].[Object_GetByGUIDs]
+	@GUIDs				GUIDList Readonly,
+	@IncludeMetadata	bit,
+	@IncludeFiles		bit
+	
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+	
+	DECLARE @Results AS TABLE (
+	    [ObjectID]		int
+	);
+	INSERT INTO @Results
+		SELECT	[Object].ID
+		  FROM	@GUIDs as g INNER JOIN
+					[Object] ON g.GUID = [Object].GUID
+		
+	SELECT	*
+	  FROM	[Object]
+	 WHERE	ID in (SELECT g.ObjectID FROM @Results as g)--( SELECT pr.ObjectID FROM @PagedResults as pr )
+	 
+	 if( @IncludeMetadata = 1 )
+		SELECT	*
+		  FROM	Metadata
+		 WHERE	Metadata.ObjectID IN (SELECT g.ObjectID FROM @Results as g)-- ( SELECT pr.ObjectID FROM @PagedResults as pr )
+		 
+	 if( @IncludeFiles = 1 )
+		 SELECT	*
+		  FROM	[File]
+		 WHERE	[File].ObjectID IN (SELECT g.ObjectID FROM @Results as g)-- ( SELECT pr.ObjectID FROM @PagedResults as pr )
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.09.16
+--				This SP is used to Get Objects
+-- =============================================
+ALTER PROCEDURE [dbo].[Object_Get]
+	@GUIDs				GUIDList Readonly,
+	@GroupGUIDs			GUIDList Readonly,
+	@UserGUID			uniqueidentifier,
+	@IncludeMetadata	bit,
+	@IncludeFiles		bit,
+	@ObjectID			int					= null,
+	@ObjectTypeID		int					= null,
+	@FolderID			int					= null,
+	@PageIndex			int					= 0,
+	@PageSize			int					= 10
+	--@TotalCount			int	output
+	
+AS
+BEGIN
+
+	SET NOCOUNT ON;
+
+	IF( @PageIndex IS NULL )
+		SET @PageIndex = 0
+		
+	IF( @PageSize IS NULL )
+		SET @PageSize = 10;
+
+	DECLARE @PagedResults AS TABLE (
+		[RowNumber]		int,
+	    [ObjectID]		int
+	);
+	
+	IF EXISTS( SELECT * FROM @GUIDs )	
+	BEGIN
+		WITH ObjectsRN AS
+		(
+			SELECT	ROW_NUMBER() OVER(ORDER BY [Object].[GUID]) AS RowNumber, 
+					[Object].ID
+			  FROM	@GUIDs as g LEFT OUTER JOIN
+						[Object] ON g.GUID = [Object].GUID
+			 WHERE	( @ObjectID IS NULL OR [Object].ID = @ObjectID )
+		)
+			
+		INSERT INTO	@PagedResults
+			 SELECT	* 
+			   FROM	ObjectsRN
+			  WHERE RowNumber BETWEEN (@PageIndex)     * @PageSize + 1 
+								  AND (@PageIndex + 1) * @PageSize
+	END
+	ELSE
+	BEGIN
+		DECLARE	@RequiredPermission	int
+		SET @RequiredPermission = dbo.GetPermissionForAction( 'Folder', 'GET_OBJECTS' );
+	 
+		WITH ObjectsRN AS
+		(
+			SELECT	ROW_NUMBER() OVER(ORDER BY [Object].[GUID]) AS RowNumber, 
+					[Object].ID
+			  FROM	[Object] INNER JOIN Object_Folder_Join
+					ON [Object].ID = Object_Folder_Join.ObjectID
+			 WHERE	( @ObjectID IS NULL OR [Object].ID = @ObjectID ) AND
+					( @FolderID IS NULL OR Object_Folder_Join.FolderID = @FolderID ) AND
+					( @ObjectTypeID IS NULL OR [Object].ObjectTypeID = @ObjectTypeID ) AND
+					dbo.[Folder_FindHighestUserPermission]( @UserGUID,@GroupGUIDs,Object_Folder_Join.FolderID ) & @RequiredPermission = @RequiredPermission
+		)
+			
+		INSERT INTO	@PagedResults
+			 SELECT	* 
+			   FROM	ObjectsRN
+			  WHERE RowNumber BETWEEN (@PageIndex)     * @PageSize + 1 
+								  AND (@PageIndex + 1) * @PageSize
+	END
+
+	SELECT	*
+	  FROM	[Object]
+	 WHERE	ID in (SELECT g.ObjectID FROM @PagedResults as g)
+	 
+	 if( @IncludeMetadata = 1 )
+		SELECT	*
+		  FROM	Metadata
+		 WHERE	Metadata.ObjectID IN (SELECT g.ObjectID FROM @PagedResults as g)
+		 
+	 if( @IncludeFiles = 1 )
+		 SELECT	*
+		  FROM	[File]
+		 WHERE	[File].ObjectID IN (SELECT g.ObjectID FROM @PagedResults as g)
+
+END
