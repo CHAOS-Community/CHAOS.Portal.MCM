@@ -7,7 +7,7 @@ namespace Geckon.MCM.Extension.Test
     {
         #region Test
 
-        public void ReIndex( CallContext callContext, int folderID )
+        public void ReIndex( CallContext callContext, int? folderID )
         {
         }
 

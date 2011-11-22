@@ -345,6 +345,14 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
+		public System.Data.Linq.Table<FileInfo> FileInfos
+		{
+			get
+			{
+				return this.GetTable<FileInfo>();
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.PopulateDefaultData")]
 		public int PopulateDefaultData()
 		{
@@ -6369,6 +6377,213 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this.SendPropertyChanging();
 			entity.Language = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.FileInfo")]
+	public partial class FileInfo
+	{
+		
+		private int _ID;
+		
+		private System.Nullable<int> _ParentID;
+		
+		private int _ObjectID;
+		
+		private string _Filename;
+		
+		private string _OriginalFilename;
+		
+		private string _Token;
+		
+		private string _URL;
+		
+		private int _FormatID;
+		
+		private string _Format;
+		
+		private string _FormatCategory;
+		
+		private string _FormatType;
+		
+		public FileInfo()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ParentID", DbType="Int")]
+		public System.Nullable<int> ParentID
+		{
+			get
+			{
+				return this._ParentID;
+			}
+			set
+			{
+				if ((this._ParentID != value))
+				{
+					this._ParentID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ObjectID", DbType="Int NOT NULL")]
+		public int ObjectID
+		{
+			get
+			{
+				return this._ObjectID;
+			}
+			set
+			{
+				if ((this._ObjectID != value))
+				{
+					this._ObjectID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Filename", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Filename
+		{
+			get
+			{
+				return this._Filename;
+			}
+			set
+			{
+				if ((this._Filename != value))
+				{
+					this._Filename = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OriginalFilename", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string OriginalFilename
+		{
+			get
+			{
+				return this._OriginalFilename;
+			}
+			set
+			{
+				if ((this._OriginalFilename != value))
+				{
+					this._OriginalFilename = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Token", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Token
+		{
+			get
+			{
+				return this._Token;
+			}
+			set
+			{
+				if ((this._Token != value))
+				{
+					this._Token = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_URL", DbType="VarChar(MAX)")]
+		public string URL
+		{
+			get
+			{
+				return this._URL;
+			}
+			set
+			{
+				if ((this._URL != value))
+				{
+					this._URL = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormatID", DbType="Int NOT NULL")]
+		public int FormatID
+		{
+			get
+			{
+				return this._FormatID;
+			}
+			set
+			{
+				if ((this._FormatID != value))
+				{
+					this._FormatID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Format", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Format
+		{
+			get
+			{
+				return this._Format;
+			}
+			set
+			{
+				if ((this._Format != value))
+				{
+					this._Format = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormatCategory", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string FormatCategory
+		{
+			get
+			{
+				return this._FormatCategory;
+			}
+			set
+			{
+				if ((this._FormatCategory != value))
+				{
+					this._FormatCategory = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormatType", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string FormatType
+		{
+			get
+			{
+				return this._FormatType;
+			}
+			set
+			{
+				if ((this._FormatType != value))
+				{
+					this._FormatType = value;
+				}
+			}
 		}
 	}
 }

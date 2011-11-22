@@ -284,6 +284,21 @@
       <Association Name="Language_Metadata" Member="Metadatas" ThisKey="LanguageCode" OtherKey="LanguageCode" Type="Metadata" />
     </Type>
   </Table>
+  <Table Name="dbo.FileInfo" Member="FileInfos">
+    <Type Name="FileInfo">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ParentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Filename" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="OriginalFilename" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Token" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="URL" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="FormatID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Format" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FormatCategory" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FormatType" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
   <Function Name="dbo.PopulateDefaultData" Method="PopulateDefaultData">
     <Return Type="System.Int32" />
   </Function>

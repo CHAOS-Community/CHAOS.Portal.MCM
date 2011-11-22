@@ -493,7 +493,7 @@ namespace Geckon.MCM.Module.Standard
         #region Test
 
         [Datatype("Test","ReIndex")]
-        public ScalarResult Test_ReIndex( CallContext callContext, int folderID )
+        public ScalarResult Test_ReIndex( CallContext callContext, int? folderID )
         {
             Geckon.Index.Solr.Solr<GuidResult> index = ( Geckon.Index.Solr.Solr<GuidResult> )callContext.IndexManager.GetIndex<MCMModule>();
 
@@ -506,7 +506,7 @@ namespace Geckon.MCM.Module.Standard
                 // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
                 using( MCMDataContext db = DefaultMCMDataContext )
                 {
-                    var itemsToInsert = db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, true, false, true, null, null, null, i, pageSize ).Select( obj => (IIndexable) obj ).ToList();
+                    var itemsToInsert = db.Object_Get( true, false, true, null, null, folderID, i, pageSize ).Select( obj => (IIndexable) obj ).ToList();
                     index.Set( itemsToInsert, true );
 
                     if( itemsToInsert.Count() != pageSize )

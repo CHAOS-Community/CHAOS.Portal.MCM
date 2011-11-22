@@ -270,7 +270,74 @@ namespace Geckon.MCM.Data.Linq
 
                 if( includeFiles )
                 {
-                    IEnumerable<File> files = results.GetResult<File>().ToList();
+                    IEnumerable<FileInfo> files = results.GetResult<FileInfo>().ToList();
+                    
+                    foreach( Object o in objects )
+                    {
+                        o.pFiles = (from f in files where f.ObjectID == o.ID select f).ToList();
+                    }
+                }
+                
+                if( includeFolders )
+                {
+                    foreach( Object o in objects )
+                    {
+                        o.Folders    = Folder_Get(o.ID, false).ToList();
+                        o.FolderTree = Folder_Get(o.ID, true).ToList();
+                    }
+                }
+
+                return objects;
+            }
+        }
+
+        public IEnumerable<Object> Object_Get( bool includeMetadata, bool includeFiles, bool includeFolders, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        {
+            using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
+            {
+                SqlCommand cmd = new SqlCommand( "Object_GetAllWithPaging", conn );
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue("@IncludeMetadata", includeMetadata);
+                p.SqlDbType = SqlDbType.Bit;
+
+                p = cmd.Parameters.AddWithValue( "@IncludeFiles", includeFiles );
+                p.SqlDbType = SqlDbType.Bit;
+
+                p = cmd.Parameters.AddWithValue( "@ObjectID", objectID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@ObjectTypeID", objectTypeID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@FolderID", folderID );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@PageIndex", pageIndex );
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue( "@PageSize", pageSize );
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                IMultipleResults results = Translate( reader );
+                IEnumerable<Object> objects = results.GetResult<Object>().ToList();
+
+                if( includeMetadata )
+                {
+                    IEnumerable<Metadata> metadatas = results.GetResult<Metadata>().ToList();
+
+                    foreach( Object o in objects )
+                    {
+                        o.pMetadata = (from m in metadatas where m.pObjectID == o.ID select m).ToList();
+                    }
+                }
+
+                if( includeFiles )
+                {
+                    IEnumerable<FileInfo> files = results.GetResult<FileInfo>().ToList();
                     
                     foreach( Object o in objects )
                     {
@@ -329,7 +396,7 @@ namespace Geckon.MCM.Data.Linq
 
                 if( includeFiles )
                 {
-                    IEnumerable<File> files = results.GetResult<File>().ToList();
+                    IEnumerable<FileInfo> files = results.GetResult<FileInfo>().ToList();
                     
                     foreach( Object o in objects )
                     {
@@ -466,6 +533,57 @@ namespace Geckon.MCM.Data.Linq
 
                 p = cmd.Parameters.AddWithValue("@Lock", lockMetadata);
                 p.SqlDbType = SqlDbType.Bit;
+
+                conn.Open();
+
+                SqlParameter rv = cmd.Parameters.Add(new SqlParameter("@ReturnValue", SqlDbType.Int));
+                rv.Direction = ParameterDirection.ReturnValue;
+
+                cmd.ExecuteNonQuery();
+
+                return (int)rv.Value;
+            }
+        }
+
+        #endregion
+        #region File
+
+        public int File_Create(List<Guid> groupGUIDs, Guid userGUID, Guid objectGUID, int? parentFileID, int formatID, int destinationID, string filename, string originalFilename, string folderPath )
+        {
+            DataTable groupGUIDsTable = ConvertToDataTable(groupGUIDs);
+
+            using (SqlConnection conn = new SqlConnection(Connection.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("File_Create", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue("@GroupGUIDs", groupGUIDsTable);
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue("@UserGUID", userGUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@ObjectGUID", objectGUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@ParentFileID", parentFileID);
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue("@FormatID", formatID);
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue("@DestinationID", destinationID);
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue("@Filename", filename);
+                p.SqlDbType = SqlDbType.VarChar;
+
+                p = cmd.Parameters.AddWithValue("@OriginalFilename", originalFilename);
+                p.SqlDbType = SqlDbType.VarChar;
+
+                p = cmd.Parameters.AddWithValue("@FolderPath", folderPath);
+                p.SqlDbType = SqlDbType.VarChar;
 
                 conn.Open();
 
@@ -680,7 +798,7 @@ namespace Geckon.MCM.Data.Linq
         /// This property is used to Serialize File relations
         /// </summary>
         [Serialize("Files")]
-        public IEnumerable<File> pFiles { get; set; }
+        public IEnumerable<FileInfo> pFiles { get; set; }
 
         public IEnumerable<Folder> Folders { get; set; }
         public IEnumerable<Folder> FolderTree { get; set; }
@@ -724,6 +842,89 @@ namespace Geckon.MCM.Data.Linq
             }
 
             return sb.ToString();
+        }
+
+        #endregion
+    }
+
+    public partial class FileInfo : Result
+    {
+        #region Properties
+
+        [Serialize("ID")]
+        public int pID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
+
+        [Serialize("ParentID")]
+        public int? pParentID
+        {
+            get { return ParentID; }
+            set { ParentID = value; }
+        }
+
+        public int pObjectID
+        {
+            get { return ObjectID; }
+            set { ObjectID = value; }
+        }
+
+        [Serialize("Filename")]
+        public string pFilename
+        {
+            get { return Filename; }
+            set { Filename = value; }
+        }
+
+        [Serialize("OriginalFilename")]
+        public string pOriginalFilename
+        {
+            get { return OriginalFilename; }
+            set { OriginalFilename = value; }
+        }
+
+        [Serialize("Token")]
+        public string pToken
+        {
+            get { return Token; }
+            set { Token = value; }
+        }
+
+        [Serialize("URL")]
+        public string pURL
+        {
+            get { return URL; }
+            set { URL = value; }
+        }
+
+        [Serialize("FormatID")]
+        public int pFormatID
+        {
+            get { return FormatID; }
+            set { FormatID = value; }
+        }
+
+        [Serialize("Format")]
+        public string pFormat
+        {
+            get { return Format; }
+            set { Format = value; }
+        }
+
+        [Serialize("FormatCategory")]
+        public string pFormatCategory
+        {
+            get { return FormatCategory; }
+            set { FormatCategory = value; }
+        }
+
+        [Serialize("FormatType")]
+        public string pFormatType
+        {
+            get { return FormatType; }
+            set { FormatType = value; }
         }
 
         #endregion
