@@ -160,7 +160,7 @@
     </Type>
   </Table>
   <Table Name="dbo.MetadataSchema" Member="MetadataSchemas">
-    <Type Name="MetadataSchema">
+    <Type Name="MetadataSchema" Id="ID7">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
@@ -234,7 +234,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Folder" Member="Folders">
-    <Type Name="Folder" Id="ID7">
+    <Type Name="Folder" Id="ID6">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ParentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="FolderTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -261,24 +261,8 @@
       <Column Name="NumberOfObjects" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Metadata" Member="Metadatas">
-    <Type Name="Metadata" Id="ID5">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="LanguageCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="MetadataSchemaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="MetadataXml" Type="System.Xml.Linq.XElement" DbType="Xml NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="DateModified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="DateLocked" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="LockUserGUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Association Name="MetadataSchema_Metadata" Member="MetadataSchema" ThisKey="MetadataSchemaID" OtherKey="ID" Type="MetadataSchema" IsForeignKey="true" />
-      <Association Name="Object_Metadata" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
-      <Association Name="Language_Metadata" Member="Language" ThisKey="LanguageCode" OtherKey="LanguageCode" Type="Language" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Language" Member="Languages">
-    <Type Name="Language" Id="ID6">
+    <Type Name="Language" Id="ID5">
       <Column Name="LanguageCode" Type="System.String" DbType="VarChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Association Name="Language_Metadata" Member="Metadatas" ThisKey="LanguageCode" OtherKey="LanguageCode" Type="Metadata" />
@@ -297,6 +281,22 @@
       <Column Name="Format" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="FormatCategory" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="FormatType" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Metadata" Member="Metadatas">
+    <Type Name="Metadata" Id="ID8">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LanguageCode" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="MetadataSchemaID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="MetadataXml" Type="System.Xml.Linq.XElement" DbType="Xml NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateModified" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="DateLocked" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LockUserGUID" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Association Name="Language_Metadata" Member="Language" ThisKey="LanguageCode" OtherKey="LanguageCode" Type="Language" IsForeignKey="true" />
+      <Association Name="MetadataSchema_Metadata" Member="MetadataSchema" ThisKey="MetadataSchemaID" OtherKey="ID" Type="MetadataSchema" IsForeignKey="true" />
+      <Association Name="Object_Metadata" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.PopulateDefaultData" Method="PopulateDefaultData">
@@ -387,16 +387,10 @@
     <Parameter Name="Value" Parameter="value" Type="System.String" DbType="VarChar(255)" />
     <ElementType IdRef="ID4" />
   </Function>
-  <Function Name="dbo.Metadata_Get" Method="Metadata_Get">
-    <Parameter Name="ObjectGUID" Parameter="objectGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="MetadataSchemaGUID" Parameter="metadataSchemaGUID" Type="System.Guid" DbType="UniqueIdentifier" />
-    <Parameter Name="LanguageCode" Parameter="languageCode" Type="System.String" DbType="VarChar(10)" />
-    <ElementType IdRef="ID5" />
-  </Function>
   <Function Name="dbo.Language_Get" Method="Language_Get">
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
     <Parameter Name="LanguageCode" Parameter="languageCode" Type="System.String" DbType="VarChar(10)" />
-    <ElementType IdRef="ID6" />
+    <ElementType IdRef="ID5" />
   </Function>
   <Function Name="dbo.Language_Update" Method="Language_Update">
     <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(255)" />
@@ -418,6 +412,16 @@
   <Function Name="dbo.Folder_Get" Method="Folder_Get">
     <Parameter Name="ObjectID" Parameter="objectID" Type="System.Int32" DbType="Int" />
     <Parameter Name="IncludeFolderTree" Parameter="includeFolderTree" Type="System.Boolean" DbType="Bit" />
+    <ElementType IdRef="ID6" />
+  </Function>
+  <Function Name="dbo.MetadataSchema_Get" Method="MetadataSchema_Get">
+    <Parameter Name="ID" Parameter="iD" Type="System.Int32" DbType="Int" />
     <ElementType IdRef="ID7" />
+  </Function>
+  <Function Name="dbo.Metadata_Get" Method="Metadata_Get">
+    <Parameter Name="ObjectGUID" Parameter="objectGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="MetadataSchemaGUID" Parameter="metadataSchemaGUID" Type="System.Guid" DbType="UniqueIdentifier" />
+    <Parameter Name="LanguageCode" Parameter="languageCode" Type="System.String" DbType="VarChar(10)" />
+    <ElementType IdRef="ID8" />
   </Function>
 </Database>

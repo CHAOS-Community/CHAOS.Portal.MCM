@@ -64,6 +64,7 @@
     <Compile Include="FolderTest.cs" />
     <Compile Include="FormatTypeTest.cs" />
     <Compile Include="FolderTypeTest.cs" />
+    <Compile Include="MetadataSchemaTest.cs" />
     <Compile Include="MetadataTest.cs" />
     <Compile Include="ObjectRealtionsTypeTest.cs" />
     <Compile Include="LanguageTest.cs" />

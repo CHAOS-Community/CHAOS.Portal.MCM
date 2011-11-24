@@ -468,13 +468,13 @@ namespace Geckon.MCM.Module.Standard
         #region Metadata
 
         [Datatype("Metadata","Set")]
-        public ScalarResult Metadata_Set( CallContext callContext, string objectGUID, string metadataSchemaGUID, string languageCode, string metadataXML )
+        public ScalarResult Metadata_Set( CallContext callContext, Guid objectGUID, int metadataSchemaID, string languageCode, string metadataXML )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( objectGUID ), Guid.Parse( metadataSchemaGUID ), languageCode, metadataXML, false );
+                int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, objectGUID, metadataSchemaID, languageCode, metadataXML, false );
                 
-                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ Guid.Parse( objectGUID ) }, true, false, false, null, null, null, 0, 1 ).First() );
+                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ objectGUID }, true, false, false, null, null, null, 0, 1 ).First() );
 
                 return new ScalarResult( result );
             }
@@ -486,6 +486,18 @@ namespace Geckon.MCM.Module.Standard
             using( MCMDataContext db = DefaultMCMDataContext )
             {
                 return db.Metadata_Get( Guid.Parse( objectGUID ), metadataSchemaGUID == null ? (Guid?) null : Guid.Parse( metadataSchemaGUID ), languageCode ).ToList();
+            }
+        }
+
+        #endregion
+        #region MetadataSchema
+
+        [Datatype("MetadataSchema", "Get")]
+        public IEnumerable<MetadataSchema> MetadataSchema_Get(CallContext callContext, int? ID)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                return db.MetadataSchema_Get( ID ).ToList();
             }
         }
 

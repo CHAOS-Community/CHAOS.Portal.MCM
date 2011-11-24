@@ -503,7 +503,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion
         #region Metadata
 
-        public int Metadata_Set( List<Guid> groupGUIDs, Guid userGUID, Guid objectGUID, Guid metadataSchemaGUID, string languageCode, string metadataXML, bool lockMetadata )
+        public int Metadata_Set( List<Guid> groupGUIDs, Guid userGUID, Guid objectGUID, int metadataSchemaID, string languageCode, string metadataXML, bool lockMetadata )
         {
             DataTable groupGUIDsTable = ConvertToDataTable(groupGUIDs);
 
@@ -522,8 +522,8 @@ namespace Geckon.MCM.Data.Linq
                 p = cmd.Parameters.AddWithValue("@ObjectGUID", objectGUID);
                 p.SqlDbType = SqlDbType.UniqueIdentifier;
 
-                p = cmd.Parameters.AddWithValue("@MetadataSchemaGUID", metadataSchemaGUID);
-                p.SqlDbType = SqlDbType.UniqueIdentifier;
+                p = cmd.Parameters.AddWithValue("@MetadataSchemaID", metadataSchemaID);
+                p.SqlDbType = SqlDbType.Int;
 
                 p = cmd.Parameters.AddWithValue("@LanguageCode", languageCode);
                 p.SqlDbType = SqlDbType.VarChar;
@@ -973,8 +973,8 @@ namespace Geckon.MCM.Data.Linq
         }
 
         [Serialization.XML.SerializeXML(false, true)]
-        [Serialize("MetadataXml")]
-        public string pMetadataXml
+        [Serialize("MetadataXML")]
+        public string pMetadataXML
         {
             get
             {
@@ -1015,6 +1015,49 @@ namespace Geckon.MCM.Data.Linq
   //      public System.Nullable<System.DateTime> pDateLocked;
 
     //    public Guid pLockUserGUID;
+
+        #endregion
+    }
+
+    public partial class MetadataSchema : Result
+    {
+        #region Properties
+
+        [Serialize("ID")]
+        public int pID
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
+        
+        // TODO: Either remove GUID or ID
+        public Guid pGUID
+        {
+            get { return GUID; }
+            set { GUID = value; }
+        }
+
+        [Serialize("Name")]
+        public string pName
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        [Serialization.XML.SerializeXML(false, true)]
+        [Serialize("SchemaXML")]
+        public XElement pSchemaXML
+        {
+            get { return SchemaXml; }
+            set { SchemaXml = value; }
+        }
+
+        [Serialize("DateCreated")]
+        public DateTime pDateCreated
+        {
+            get { return DateCreated; }
+            set { DateCreated = value; }
+        }
 
         #endregion
     }
