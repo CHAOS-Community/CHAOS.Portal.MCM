@@ -1,2 +1,3 @@
+-50     Illegal action
 -100	Permission
 -200	ObjectRelationAlreadExist

@@ -440,22 +440,25 @@ namespace Geckon.MCM.Module.Standard
         }
 
         [Datatype("Object","Create")]
-        public Object Object_Create( CallContext callContext, string guid, int objectTypeID, int folderID )
+        public Object Object_Create( CallContext callContext, Guid? GUID, int objectTypeID, int folderID )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                int objectID = db.Object_Create( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( guid ), objectTypeID, folderID );
+                int result = db.Object_Create(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, GUID, objectTypeID, folderID);
 
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, objectID, null, null, 0, 1 ).First();
+                if( result == -100 )
+                    throw new InsufficientPermissionsExcention( "User does not have permissions to delete object" );
+
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, result, null, null, 0, 1 ).First();
             }
         }
 
         [Datatype("Object", "Delete")]
-        public ScalarResult Object_Delete( CallContext callContext, string guid, int folderID )
+        public ScalarResult Object_Delete( CallContext callContext, Guid GUID, int folderID )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                int result = db.Object_Delete( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, Guid.Parse( guid ), folderID );
+                int result = db.Object_Delete( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, GUID, folderID );
 
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have permissions to delete object" );
@@ -532,6 +535,7 @@ namespace Geckon.MCM.Module.Standard
         #endregion
         #region ObjectRelation
 
+        [Datatype("ObjectRelation", "Create")]
         public ScalarResult ObjectRelation_Create( CallContext callContext, Guid object1GUID, Guid object2GUID, int objectRelationTypeID, int? sequence )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
@@ -553,6 +557,7 @@ namespace Geckon.MCM.Module.Standard
             }
         }
 
+        [Datatype("ObjectRelation", "Delete")]
         public ScalarResult ObjectRelation_Delete( CallContext callContext, Guid object1GUID, Guid object2GUID, int objectRelationTypeID )
         {
             using( MCMDataContext db = DefaultMCMDataContext )

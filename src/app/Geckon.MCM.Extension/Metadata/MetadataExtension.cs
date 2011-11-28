@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Mvc;
 using Geckon.Portal.Core.Standard.Extension;
 
 namespace Geckon.MCM.Extension.Metadata
@@ -15,6 +16,9 @@ namespace Geckon.MCM.Extension.Metadata
         //#endregion
         #region SET
 
+        [ValidateInput(false)]
+        [HttpGet]
+        [HttpPost]
         public void Set( CallContext callContext, Guid objectGUID, int metadataSchemaID, string languageCode, string metadataXML )
         {
             

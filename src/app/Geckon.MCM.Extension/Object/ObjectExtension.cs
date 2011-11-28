@@ -1,17 +1,17 @@
-﻿using Geckon.Portal.Core.Standard.Extension;
+﻿using System;
+using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Index;
 
 namespace Geckon.MCM.Extension.Object
 {
     public class ObjectExtension : AExtension
     {
-        #region GET
-
         public void Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles )
         {
             
         }
 
-        #endregion
+        public void Delete( CallContext callContext, Guid GUID, int folderID ){}
+        public void Create( CallContext callContext, Guid? GUID, int objectTypeID, int folderID ){}
     }
 }
