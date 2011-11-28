@@ -530,6 +530,48 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
+        #region ObjectRelation
+
+        public ScalarResult ObjectRelation_Create( CallContext callContext, Guid object1GUID, Guid object2GUID, int objectRelationTypeID, int? sequence )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.ObjectRelation_Create( callContext.Groups.Select( group => group.GUID ).ToList(),
+                                                       callContext.User.GUID,
+                                                       object1GUID,
+                                                       object2GUID,
+                                                       objectRelationTypeID,
+                                                       sequence );
+
+                if( result == -100 )
+                    throw new InsufficientPermissionsExcention( "The user do not have permission to create object relations" );
+
+                if( result == -200 )
+                    throw new ObjectRelationAlreadyExistException( "The object relation already exists" );
+
+                return new ScalarResult(result);
+            }
+        }
+
+        public ScalarResult ObjectRelation_Delete( CallContext callContext, Guid object1GUID, Guid object2GUID, int objectRelationTypeID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.ObjectRelation_Delete( callContext.Groups.Select( group => group.GUID ).ToList(),
+                                                       callContext.User.GUID,
+                                                       object1GUID,
+                                                       object2GUID,
+                                                       objectRelationTypeID );
+
+                if( result == -100 )
+                    throw new InsufficientPermissionsExcention( "The user do not have permission to delete object relations" );
+
+                return new ScalarResult( result );
+            }
+        }
+
+        #endregion
+
         #endregion
     }
 }

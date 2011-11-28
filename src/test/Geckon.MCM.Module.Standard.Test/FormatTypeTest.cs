@@ -34,7 +34,8 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Delete_FormatType()
         {
-            ScalarResult result = MCMModule.FormatType_Delete( AdminCallContext, FormatType.ID);
+            FormatType testType = MCMModule.FormatType_Create( AdminCallContext, "unitTest" );
+            ScalarResult result = MCMModule.FormatType_Delete( AdminCallContext, testType.ID);
 
             Assert.AreEqual(1, result.Value);
         }

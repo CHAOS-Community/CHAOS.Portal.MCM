@@ -66,6 +66,7 @@
     <Compile Include="MetadataSchema\MetadataSchemaExtension.cs" />
     <Compile Include="Metadata\MetadataExtension.cs" />
     <Compile Include="ObjectRelationType\ObjectRelationTypeExtension.cs" />
+    <Compile Include="ObjectRelation\ObjectRelationExtension.cs" />
     <Compile Include="ObjectType\ObjectTypeExtension.cs" />
     <Compile Include="Object\ObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

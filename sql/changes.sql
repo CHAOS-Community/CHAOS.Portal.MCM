@@ -84,6 +84,8 @@ GO
 --				This SP is used to create a relation between two objects
 -- =============================================
 CREATE PROCEDURE ObjectRelation_Create
+	@GroupGUIDs				GUIDList Readonly,
+	@UserGUID				uniqueidentifier,
 	@Object1GUID			uniqueidentifier,
 	@Object2GUID			uniqueidentifier,
 	@ObjectRelationTypeID	int,
@@ -102,9 +104,64 @@ BEGIN
 	  FROM	[Object]
 	 WHERE	[GUID] = @Object2GUID
 
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Metadata', 'CREATE_UPDATE_OBJECTS' )
+
+	IF( @RequiredPermission & dbo.Object_FindHighestUserPermission( @UserGUID,@GroupGUIDs,@Object1ID ) <> @RequiredPermission )
+			RETURN -100
+
+	IF EXISTS( SELECT ObjectID1 
+	             FROM [Object_Object_Join]
+	            WHERE ObjectID1 = @Object1ID AND 
+					  ObjectID2 = @Object2ID AND
+			          ObjectRelationTypeID = @ObjectRelationTypeID  )
+		RETURN -200
+
 	INSERT INTO [Object_Object_Join] ([ObjectID1],[ObjectID2],[ObjectRelationTypeID],[Sequence],[DateCreated])
 		 VALUES (@Object1ID,@Object2ID,@ObjectRelationTypeID,@Sequence,GETDATE())
 		 
+	RETURN @@ROWCOUNT
+
+END
+GO
+
+-- =============================================
+-- Author:		Jesper Fyhr Knudsen
+-- Create date: 2011.11.28
+--				This SP is used to Delete an ObjectRelation
+-- =============================================
+CREATE PROCEDURE ObjectRelation_Delete
+	@GroupGUIDs				GUIDList Readonly,
+	@UserGUID				uniqueidentifier,
+	@Object1GUID			uniqueidentifier,
+	@Object2GUID			uniqueidentifier,
+	@ObjectRelationTypeID	int
+AS
+BEGIN
+
+	DECLARE @Object1ID INT
+	DECLARE @Object2ID INT
+	
+	SELECT	@Object1ID = ID
+	  FROM	[Object]
+	 WHERE	[GUID] = @Object1GUID
+
+	SELECT	@Object2ID = ID
+	  FROM	[Object]
+	 WHERE	[GUID] = @Object2GUID
+
+	DECLARE	@RequiredPermission	int
+	SET @RequiredPermission = dbo.GetPermissionForAction( 'Metadata', 'CREATE_UPDATE_OBJECTS' )
+
+	IF( @RequiredPermission & dbo.Object_FindHighestUserPermission( @UserGUID,@GroupGUIDs,@Object1ID ) <> @RequiredPermission )
+			RETURN -100
+
+	DELETE
+	  FROM	Object_Object_Join
+	 WHERE	ObjectID1 = @Object1ID AND 
+			ObjectID2 = @Object2ID AND
+			ObjectRelationTypeID = @ObjectRelationTypeID
+			
 	RETURN @@ROWCOUNT
 
 END

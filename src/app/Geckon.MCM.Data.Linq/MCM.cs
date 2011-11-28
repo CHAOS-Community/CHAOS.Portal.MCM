@@ -597,6 +597,84 @@ namespace Geckon.MCM.Data.Linq
         }
 
         #endregion
+        #region ObjectRelation
+
+        public int ObjectRelation_Create( List<Guid> groupGUIDs, Guid userGUID, Guid object1GUID, Guid object2GUID, int objectRelationTypeID, int? sequence )
+        {
+            DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
+
+            using (SqlConnection conn = new SqlConnection(Connection.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("ObjectRelation_Create", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue("@GroupGUIDs", groupGUIDsTable);
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue("@UserGUID", userGUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@Object1GUID", object1GUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@Object2GUID", object2GUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@ObjectRelationTypeID", objectRelationTypeID);
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue("@Sequence", sequence);
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+
+                SqlParameter rv = cmd.Parameters.Add(new SqlParameter("@ReturnValue", SqlDbType.Int));
+                rv.Direction = ParameterDirection.ReturnValue;
+
+                cmd.ExecuteNonQuery();
+
+                return (int)rv.Value;
+            }
+        }
+
+        public int ObjectRelation_Delete( List<Guid> groupGUIDs, Guid userGUID, Guid object1GUID, Guid object2GUID, int objectRelationTypeID )
+        {
+            DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
+
+            using (SqlConnection conn = new SqlConnection(Connection.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("ObjectRelation_Delete", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue("@GroupGUIDs", groupGUIDsTable);
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue("@UserGUID", userGUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@Object1GUID", object1GUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@Object2GUID", object2GUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@ObjectRelationTypeID", objectRelationTypeID);
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+
+                SqlParameter rv = cmd.Parameters.Add(new SqlParameter("@ReturnValue", SqlDbType.Int));
+                rv.Direction = ParameterDirection.ReturnValue;
+
+                cmd.ExecuteNonQuery();
+
+                return (int)rv.Value;
+            }
+        }
+
+        #endregion
     }       
 
     public partial class FormatType : Result

@@ -68,6 +68,7 @@
     <Compile Include="MetadataTest.cs" />
     <Compile Include="ObjectRealtionsTypeTest.cs" />
     <Compile Include="LanguageTest.cs" />
+    <Compile Include="ObjectRelationTest.cs" />
     <Compile Include="ObjectTest.cs" />
     <Compile Include="ObjectTypeTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

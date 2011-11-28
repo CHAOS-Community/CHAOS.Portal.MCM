@@ -1,0 +1,2 @@
+-100	Permission
+-200	ObjectRelationAlreadExist
