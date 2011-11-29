@@ -16,6 +16,7 @@ namespace Geckon.MCM.Extension.Metadata
         //#endregion
         #region SET
 
+        [ValidateInput(false)]
         [HttpPost]
         public void Set( CallContext callContext, Guid objectGUID, int metadataSchemaID, string languageCode, string metadataXML )
         {

@@ -1,4 +1,7 @@
-﻿using Geckon.MCM.Core.Exception;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Geckon.MCM.Core.Exception;
+using Geckon.MCM.Data.Linq;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -19,6 +22,19 @@ namespace Geckon.MCM.Module.Standard.Test
         {
             MCMModule.ObjectRelation_Create( AdminCallContext, Object1.GUID, Object2.GUID, ObjectContains.ID, null );
             MCMModule.ObjectRelation_Create( AdminCallContext, Object1.GUID, Object2.GUID, ObjectContains.ID, null );
+        }
+
+        [Test]
+        public void Should_Get_ObjectRelations()
+        {
+            MCMModule.ObjectRelation_Create(AdminCallContext, Object1.GUID, Object2.GUID, ObjectContains.ID, null);
+
+            using( MCMDataContext db = MCMModule.DefaultMCMDataContext )
+            {
+                IList<Object> objects = db.Object_Get( false, false, false, true, Object1.ID, null, null, 0, 10).ToList();
+
+                Assert.AreEqual( Object2.GUID, objects.First().ObjectRealtions[0].Object2GUID );
+            }
         }
 
         [Test]

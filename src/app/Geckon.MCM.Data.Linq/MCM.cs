@@ -210,7 +210,7 @@ namespace Geckon.MCM.Data.Linq
         #endregion        
         #region Object
 
-        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public IEnumerable<Object> Object_Get( IEnumerable<Guid> groupGUIDs, Guid userGUID, IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders, bool includeObjectRelations, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             DataTable groupGUIDsTable = ConvertToDataTable( groupGUIDs );
             DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
@@ -233,6 +233,9 @@ namespace Geckon.MCM.Data.Linq
                 p = cmd.Parameters.AddWithValue( "@IncludeFiles", includeFiles );
                 p.SqlDbType = SqlDbType.Bit;
 
+                p = cmd.Parameters.AddWithValue("@IncludeObjectRelations", includeObjectRelations);
+                p.SqlDbType = SqlDbType.Bit;
+
                 p = cmd.Parameters.AddWithValue( "@GUIDs", GUIDsTable );
                 p.SqlDbType = SqlDbType.Structured;
                 p.TypeName = "GUIDList";
@@ -271,19 +274,29 @@ namespace Geckon.MCM.Data.Linq
                 if( includeFiles )
                 {
                     IEnumerable<FileInfo> files = results.GetResult<FileInfo>().ToList();
-                    
+
                     foreach( Object o in objects )
                     {
                         o.pFiles = (from f in files where f.ObjectID == o.ID select f).ToList();
                     }
                 }
-                
+
+                if( includeObjectRelations )
+                {
+                    IEnumerable<Object_Object_Join> objectRelations = results.GetResult<Object_Object_Join>().ToList();
+
+                    foreach( Object o in objects )
+                    {
+                        o.ObjectRealtions = ( from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or ).ToList();
+                    }
+                }
+
                 if( includeFolders )
                 {
                     foreach( Object o in objects )
                     {
-                        o.Folders    = Folder_Get(o.ID, false).ToList();
-                        o.FolderTree = Folder_Get(o.ID, true).ToList();
+                        o.Folders    = Folder_Get( o.ID, false ).ToList();
+                        o.FolderTree = Folder_Get( o.ID, true ).ToList();
                     }
                 }
 
@@ -291,7 +304,7 @@ namespace Geckon.MCM.Data.Linq
             }
         }
 
-        public IEnumerable<Object> Object_Get( bool includeMetadata, bool includeFiles, bool includeFolders, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public IEnumerable<Object> Object_Get( bool includeMetadata, bool includeFiles, bool includeFolders, bool includeObjectRelations, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
             {
@@ -302,6 +315,9 @@ namespace Geckon.MCM.Data.Linq
                 p.SqlDbType = SqlDbType.Bit;
 
                 p = cmd.Parameters.AddWithValue( "@IncludeFiles", includeFiles );
+                p.SqlDbType = SqlDbType.Bit;
+
+                p = cmd.Parameters.AddWithValue("@IncludeObjectRelations", includeObjectRelations);
                 p.SqlDbType = SqlDbType.Bit;
 
                 p = cmd.Parameters.AddWithValue( "@ObjectID", objectID );
@@ -338,19 +354,29 @@ namespace Geckon.MCM.Data.Linq
                 if( includeFiles )
                 {
                     IEnumerable<FileInfo> files = results.GetResult<FileInfo>().ToList();
-                    
+
                     foreach( Object o in objects )
                     {
                         o.pFiles = (from f in files where f.ObjectID == o.ID select f).ToList();
                     }
                 }
-                
+
+                if( includeObjectRelations )
+                {
+                    IEnumerable<Object_Object_Join> objectRelations = results.GetResult<Object_Object_Join>().ToList();
+
+                    foreach( Object o in objects )
+                    {
+                        o.ObjectRealtions = ( from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or ).ToList();
+                    }
+                }
+
                 if( includeFolders )
                 {
                     foreach( Object o in objects )
                     {
-                        o.Folders    = Folder_Get(o.ID, false).ToList();
-                        o.FolderTree = Folder_Get(o.ID, true).ToList();
+                        o.Folders    = Folder_Get( o.ID, false ).ToList();
+                        o.FolderTree = Folder_Get( o.ID, true ).ToList();
                     }
                 }
 
@@ -359,7 +385,7 @@ namespace Geckon.MCM.Data.Linq
         }
 
         // TODO: This can be reused!
-        public IEnumerable<Object> Object_Get( IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders )
+        public IEnumerable<Object> Object_Get( IEnumerable<Guid> GUIDs, bool includeMetadata, bool includeFiles, bool includeFolders, bool includeObjectRelations )
         {
             DataTable GUIDsTable      = ConvertToDataTable( GUIDs );
 
@@ -374,6 +400,9 @@ namespace Geckon.MCM.Data.Linq
                 p = cmd.Parameters.AddWithValue( "@IncludeFiles", includeFiles );
                 p.SqlDbType = SqlDbType.Bit;
 
+                p = cmd.Parameters.AddWithValue("@IncludeObjectRelations", includeObjectRelations);
+                p.SqlDbType = SqlDbType.Bit;
+
                 p = cmd.Parameters.AddWithValue( "@GUIDs", GUIDsTable );
                 p.SqlDbType = SqlDbType.Structured;
                 p.TypeName = "GUIDList";
@@ -397,19 +426,29 @@ namespace Geckon.MCM.Data.Linq
                 if( includeFiles )
                 {
                     IEnumerable<FileInfo> files = results.GetResult<FileInfo>().ToList();
-                    
+
                     foreach( Object o in objects )
                     {
                         o.pFiles = (from f in files where f.ObjectID == o.ID select f).ToList();
                     }
                 }
-                
+
+                if( includeObjectRelations )
+                {
+                    IEnumerable<Object_Object_Join> objectRelations = results.GetResult<Object_Object_Join>().ToList();
+
+                    foreach( Object o in objects )
+                    {
+                        o.ObjectRealtions = ( from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or ).ToList();
+                    }
+                }
+
                 if( includeFolders )
                 {
                     foreach( Object o in objects )
                     {
-                        o.Folders    = Folder_Get(o.ID, false).ToList();
-                        o.FolderTree = Folder_Get(o.ID, true).ToList();
+                        o.Folders    = Folder_Get( o.ID, false ).ToList();
+                        o.FolderTree = Folder_Get( o.ID, true ).ToList();
                     }
                 }
 
@@ -878,6 +917,9 @@ namespace Geckon.MCM.Data.Linq
         [Serialize("Files")]
         public IEnumerable<FileInfo> pFiles { get; set; }
 
+        [Serialize("ObjectRelations")]
+        public List<Object_Object_Join> ObjectRealtions { get; set; }
+
         public IEnumerable<Folder> Folders { get; set; }
         public IEnumerable<Folder> FolderTree { get; set; }
 
@@ -1137,6 +1179,48 @@ namespace Geckon.MCM.Data.Linq
             set { DateCreated = value; }
         }
 
+        #endregion
+    }
+
+    public partial class Object_Object_Join : Result
+    {
+        #region Properties
+
+        [Serialize("Object1GUID")]
+        public Guid pObject1GUID
+        {
+            get { return Object1GUID; }
+            set { Object1GUID = value; }
+        }
+
+        [Serialize("Object2GUID")]
+        public Guid pObject2GUID
+        {
+            get { return Object2GUID; }
+            set { Object2GUID = value; }
+        }
+
+        [Serialize("ObjectRelationTypeID")]
+        public int pObjectRelationTypeID
+        {
+            get { return ObjectRelationTypeID; }
+            set { ObjectRelationTypeID = value; }
+        }
+
+        [Serialize("Sequence")]
+        public int? pSequence
+        {
+            get { return Sequence; }
+            set { Sequence = value; }
+        }
+
+        [Serialize("DateCreated")]
+        public DateTime pDateCreated
+        {
+            get { return DateCreated; }
+            set { DateCreated = value; }
+        }
+    
         #endregion
     }
 }

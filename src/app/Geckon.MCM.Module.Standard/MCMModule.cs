@@ -398,7 +398,7 @@ namespace Geckon.MCM.Module.Standard
         #region Object
 
         [Datatype("Object", "Get")]
-        public IPagedResult<IResult> Object_Get(CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles )
+        public IPagedResult<IResult> Object_Get(CallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations)
         {
             using (MCMDataContext db = DefaultMCMDataContext)
             {
@@ -424,7 +424,7 @@ namespace Geckon.MCM.Module.Standard
 
                     query.Query = sb.ToString();
 
-                    IPagedResult<IIndexResult> indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get(query);
+                    IPagedResult<IIndexResult> indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get( query );
                     
                     resultPage = indexResult.Results.Select( result => ((GuidResult)result ).Guid );
 
@@ -432,7 +432,7 @@ namespace Geckon.MCM.Module.Standard
                     if (resultPage.Count() == 0)
                         return new Geckon.Index.Standard.PagedResult<IResult>(0, 0, new List<Object>());
 
-                    return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get( resultPage, includeMetadata, includeFiles, false ));
+                    return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get( resultPage, includeMetadata ?? false, includeFiles?? false, false, includeObjectRelations?? false ));
                 }
             }
 
@@ -449,7 +449,7 @@ namespace Geckon.MCM.Module.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have permissions to delete object" );
 
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, result, null, null, 0, 1 ).First();
+                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, false, result, null, null, 0, 1 ).First();
             }
         }
 
@@ -477,7 +477,7 @@ namespace Geckon.MCM.Module.Standard
             {
                 int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, objectGUID, metadataSchemaID, languageCode, metadataXML, false );
                 
-                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ objectGUID }, true, false, false, null, null, null, 0, 1 ).First() );
+                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ objectGUID }, true, false, false, false, null, null, null, 0, 1 ).First() );
 
                 return new ScalarResult( result );
             }
@@ -521,7 +521,7 @@ namespace Geckon.MCM.Module.Standard
                 // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
                 using( MCMDataContext db = DefaultMCMDataContext )
                 {
-                    var itemsToInsert = db.Object_Get( true, false, true, null, null, folderID, i, pageSize ).Select( obj => (IIndexable) obj ).ToList();
+                    var itemsToInsert = db.Object_Get( true, false, true, true, null, null, folderID, i, pageSize ).Select( obj => (IIndexable) obj ).ToList();
                     index.Set( itemsToInsert, true );
 
                     if( itemsToInsert.Count() != pageSize )

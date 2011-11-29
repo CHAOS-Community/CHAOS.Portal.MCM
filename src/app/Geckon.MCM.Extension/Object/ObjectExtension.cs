@@ -6,7 +6,7 @@ namespace Geckon.MCM.Extension.Object
 {
     public class ObjectExtension : AExtension
     {
-        public void Get( CallContext callContext, IQuery query, bool includeMetadata, bool includeFiles )
+        public void Get(CallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations )
         {
             
         }

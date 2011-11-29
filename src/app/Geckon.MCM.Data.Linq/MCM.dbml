@@ -198,9 +198,9 @@
       <Association Name="Object_AccessPoint_Object_Join" Member="AccessPoint_Object_Joins" ThisKey="ID" OtherKey="ObjectID" Type="AccessPoint_Object_Join" />
       <Association Name="Object_File" Member="Files" ThisKey="ID" OtherKey="ObjectID" Type="File" />
       <Association Name="Object_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="ObjectID" Type="Object_Folder_Join" />
-      <Association Name="Object_Object_Object_Join" Member="Object_Object_Joins" ThisKey="ID" OtherKey="ObjectID1" Type="Object_Object_Join" />
-      <Association Name="Object_Object_Object_Join1" Member="Object_Object_Joins1" ThisKey="ID" OtherKey="ObjectID2" Type="Object_Object_Join" />
       <Association Name="Object_Metadata" Member="Metadatas" ThisKey="ID" OtherKey="ObjectID" Type="Metadata" />
+      <Association Name="Object_Object_Object_Join" Member="Object_Object_Joins" ThisKey="GUID" OtherKey="Object1GUID" Type="Object_Object_Join" />
+      <Association Name="Object_Object_Object_Join1" Member="Object_Object_Joins1" ThisKey="GUID" OtherKey="Object2GUID" Type="Object_Object_Join" />
       <Association Name="ObjectType_Object" Member="ObjectType" ThisKey="ObjectTypeID" OtherKey="ID" Type="ObjectType" IsForeignKey="true" />
     </Type>
   </Table>
@@ -212,18 +212,6 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
       <Association Name="Object_Object_Folder_Join" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
       <Association Name="Folder_Object_Folder_Join" Member="Folder" ThisKey="FolderID" OtherKey="ID" Type="Folder" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Object_Object_Join" Member="Object_Object_Joins">
-    <Type Name="Object_Object_Join">
-      <Column Name="ObjectID1" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ObjectID2" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="ObjectRelationTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Sequence" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Object_Object_Object_Join" Member="Object" ThisKey="ObjectID1" OtherKey="ID" Type="Object" IsForeignKey="true" />
-      <Association Name="Object_Object_Object_Join1" Member="Object1" ThisKey="ObjectID2" OtherKey="ID" Type="Object" IsForeignKey="true" />
-      <Association Name="ObjectRelationType_Object_Object_Join" Member="ObjectRelationType" ThisKey="ObjectRelationTypeID" OtherKey="ID" Type="ObjectRelationType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ObjectRelationType" Member="ObjectRelationTypes">
@@ -297,6 +285,18 @@
       <Association Name="Language_Metadata" Member="Language" ThisKey="LanguageCode" OtherKey="LanguageCode" Type="Language" IsForeignKey="true" />
       <Association Name="MetadataSchema_Metadata" Member="MetadataSchema" ThisKey="MetadataSchemaID" OtherKey="ID" Type="MetadataSchema" IsForeignKey="true" />
       <Association Name="Object_Metadata" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Object_Object_Join" Member="Object_Object_Joins">
+    <Type Name="Object_Object_Join">
+      <Column Name="Object1GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Object2GUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ObjectRelationTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Sequence" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Object_Object_Object_Join" Member="Object" ThisKey="Object1GUID" OtherKey="GUID" Type="Object" IsForeignKey="true" />
+      <Association Name="Object_Object_Object_Join1" Member="Object1" ThisKey="Object2GUID" OtherKey="GUID" Type="Object" IsForeignKey="true" />
+      <Association Name="ObjectRelationType_Object_Object_Join" Member="ObjectRelationType" ThisKey="ObjectRelationTypeID" OtherKey="ID" Type="ObjectRelationType" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.PopulateDefaultData" Method="PopulateDefaultData">
