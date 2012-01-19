@@ -70,8 +70,8 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
       <Association Name="Conversion_AccessPoint" Member="AccessPoint" ThisKey="ID" OtherKey="ID" Type="AccessPoint" Cardinality="One" />
       <Association Name="Destination_Conversion" Member="Destination" ThisKey="DestinationID" OtherKey="ID" Type="Destination" IsForeignKey="true" />
-      <Association Name="Format_Conversion" Member="Format" ThisKey="FormatID" OtherKey="ID" Type="Format" IsForeignKey="true" />
       <Association Name="FormatCategory_Conversion" Member="FormatCategory" ThisKey="FormatCategoryID" OtherKey="ID" Type="FormatCategory" IsForeignKey="true" />
+      <Association Name="Format_Conversion" Member="Format" ThisKey="FormatID" OtherKey="ID" Type="Format" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Destination" Member="Destinations">
@@ -86,7 +86,7 @@
     </Type>
   </Table>
   <Table Name="dbo.[File]" Member="Files">
-    <Type Name="File">
+    <Type Name="File" Id="ID9">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="ParentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -99,8 +99,8 @@
       <Association Name="File_File" Member="Files" ThisKey="ID" OtherKey="ParentID" Type="File" />
       <Association Name="Destination_File" Member="Destination" ThisKey="DestinationID" OtherKey="ID" Type="Destination" IsForeignKey="true" />
       <Association Name="File_File" Member="File1" ThisKey="ParentID" OtherKey="ID" Type="File" IsForeignKey="true" />
-      <Association Name="Format_File" Member="Format" ThisKey="FormatID" OtherKey="ID" Type="Format" IsForeignKey="true" />
       <Association Name="Object_File" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
+      <Association Name="Format_File" Member="Format" ThisKey="FormatID" OtherKey="ID" Type="Format" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Folder_Group_Join" Member="Folder_Group_Joins">
@@ -127,19 +127,6 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
       <Column Name="DateCreated" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="FolderType_Folder" Member="Folders" ThisKey="ID" OtherKey="FolderTypeID" Type="Folder" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Format" Member="Formats">
-    <Type Name="Format">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="FormatCategoryID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="FormatXml" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="MimeType" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
-      <Column Name="FileExtension" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
-      <Association Name="Format_Conversion" Member="Conversions" ThisKey="ID" OtherKey="FormatID" Type="Conversion" />
-      <Association Name="Format_File" Member="Files" ThisKey="ID" OtherKey="FormatID" Type="File" />
-      <Association Name="FormatCategory_Format" Member="FormatCategory" ThisKey="FormatCategoryID" OtherKey="ID" Type="FormatCategory" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.FormatCategory" Member="FormatCategories">
@@ -197,21 +184,11 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
       <Association Name="Object_AccessPoint_Object_Join" Member="AccessPoint_Object_Joins" ThisKey="ID" OtherKey="ObjectID" Type="AccessPoint_Object_Join" />
       <Association Name="Object_File" Member="Files" ThisKey="ID" OtherKey="ObjectID" Type="File" />
-      <Association Name="Object_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="ObjectID" Type="Object_Folder_Join" />
       <Association Name="Object_Metadata" Member="Metadatas" ThisKey="ID" OtherKey="ObjectID" Type="Metadata" />
       <Association Name="Object_Object_Object_Join" Member="Object_Object_Joins" ThisKey="GUID" OtherKey="Object1GUID" Type="Object_Object_Join" />
       <Association Name="Object_Object_Object_Join1" Member="Object_Object_Joins1" ThisKey="GUID" OtherKey="Object2GUID" Type="Object_Object_Join" />
+      <Association Name="Object_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="ObjectID" Type="Object_Folder_Join" />
       <Association Name="ObjectType_Object" Member="ObjectType" ThisKey="ObjectTypeID" OtherKey="ID" Type="ObjectType" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Object_Folder_Join" Member="Object_Folder_Joins">
-    <Type Name="Object_Folder_Join">
-      <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="FolderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="IsShortcut" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
-      <Association Name="Object_Object_Folder_Join" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
-      <Association Name="Folder_Object_Folder_Join" Member="Folder" ThisKey="FolderID" OtherKey="ID" Type="Folder" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ObjectRelationType" Member="ObjectRelationTypes">
@@ -231,8 +208,8 @@
       <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
       <Association Name="Folder_Folder_Group_Join" Member="Folder_Group_Joins" ThisKey="ID" OtherKey="FolderID" Type="Folder_Group_Join" />
       <Association Name="Folder_Folder_User_Join" Member="Folder_User_Joins" ThisKey="ID" OtherKey="FolderID" Type="Folder_User_Join" />
-      <Association Name="Folder_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="FolderID" Type="Object_Folder_Join" />
       <Association Name="Folder_Folder" Member="Folders" ThisKey="ID" OtherKey="ParentID" Type="Folder" />
+      <Association Name="Folder_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="FolderID" Type="Object_Folder_Join" />
       <Association Name="Folder_Folder" Member="Folder1" ThisKey="ParentID" OtherKey="ID" Type="Folder" IsForeignKey="true" />
       <Association Name="FolderType_Folder" Member="FolderType" ThisKey="FolderTypeID" OtherKey="ID" Type="FolderType" IsForeignKey="true" />
     </Type>
@@ -297,6 +274,47 @@
       <Association Name="Object_Object_Object_Join" Member="Object" ThisKey="Object1GUID" OtherKey="GUID" Type="Object" IsForeignKey="true" />
       <Association Name="Object_Object_Object_Join1" Member="Object1" ThisKey="Object2GUID" OtherKey="GUID" Type="Object" IsForeignKey="true" />
       <Association Name="ObjectRelationType_Object_Object_Join" Member="ObjectRelationType" ThisKey="ObjectRelationTypeID" OtherKey="ID" Type="ObjectRelationType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Format" Member="Formats">
+    <Type Name="Format">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FormatCategoryID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="FormatXml" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="MimeType" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Association Name="Format_Conversion" Member="Conversions" ThisKey="ID" OtherKey="FormatID" Type="Conversion" />
+      <Association Name="Format_File" Member="Files" ThisKey="ID" OtherKey="FormatID" Type="File" />
+      <Association Name="FormatCategory_Format" Member="FormatCategory" ThisKey="FormatCategoryID" OtherKey="ID" Type="FormatCategory" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DestinationInfo" Member="DestinationInfos">
+    <Type Name="DestinationInfo" Id="ID10">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SubscriptionGUID" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Column Name="BasePath" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="StringFormat" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Token" Type="System.String" DbType="VarChar(255) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ObjectFolderType" Member="ObjectFolderTypes">
+    <Type Name="ObjectFolderType">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="ObjectFolderType_Object_Folder_Join" Member="Object_Folder_Joins" ThisKey="ID" OtherKey="ObjectFolderTypeID" Type="Object_Folder_Join" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Object_Folder_Join" Member="Object_Folder_Joins">
+    <Type Name="Object_Folder_Join">
+      <Column Name="ObjectID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="FolderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ObjectFolderTypeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DateCreated" Type="System.DateTime" DbType="SmallDateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Folder_Object_Folder_Join" Member="Folder" ThisKey="FolderID" OtherKey="ID" Type="Folder" IsForeignKey="true" />
+      <Association Name="Object_Object_Folder_Join" Member="Object" ThisKey="ObjectID" OtherKey="ID" Type="Object" IsForeignKey="true" />
+      <Association Name="ObjectFolderType_Object_Folder_Join" Member="ObjectFolderType" ThisKey="ObjectFolderTypeID" OtherKey="ID" Type="ObjectFolderType" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.PopulateDefaultData" Method="PopulateDefaultData">
@@ -423,5 +441,13 @@
     <Parameter Name="MetadataSchemaGUID" Parameter="metadataSchemaGUID" Type="System.Guid" DbType="UniqueIdentifier" />
     <Parameter Name="LanguageCode" Parameter="languageCode" Type="System.String" DbType="VarChar(10)" />
     <ElementType IdRef="ID8" />
+  </Function>
+  <Function Name="dbo.File_Get" Method="File_Get">
+    <Parameter Name="FileID" Parameter="fileID" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID9" />
+  </Function>
+  <Function Name="dbo.DestinationInfo_Get" Method="DestinationInfo_Get">
+    <Parameter Name="DestinationID" Parameter="destinationID" Type="System.Int32" DbType="Int" />
+    <ElementType IdRef="ID10" />
   </Function>
 </Database>

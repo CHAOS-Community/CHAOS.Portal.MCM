@@ -304,7 +304,7 @@ namespace Geckon.MCM.Data.Linq
             }
         }
 
-        public IEnumerable<Object> Object_Get( bool includeMetadata, bool includeFiles, bool includeFolders, bool includeObjectRelations, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
+        public IEnumerable<Object> Object_Get( bool includeMetadata, bool includeFiles, bool includeFolders, bool includeObjectRelations, bool includeRelatedObjects, int? objectID, int? objectTypeID, int? folderID, int pageIndex, int pageSize )
         {
             using( SqlConnection conn = new SqlConnection( Connection.ConnectionString ) )
             {
@@ -368,6 +368,14 @@ namespace Geckon.MCM.Data.Linq
                     foreach( Object o in objects )
                     {
                         o.ObjectRealtions = ( from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or ).ToList();
+                    }
+                }
+
+                if( includeRelatedObjects )
+                {
+                    foreach( Object o in objects )
+                    {
+                        o.RelatedObjects = Object_Get( o.ObjectRealtions.Where( obj => !obj.Object2GUID.Equals( o.GUID ) ).Select( obj => obj.Object2GUID ), true, false, false, false ).ToList();
                     }
                 }
 
@@ -522,6 +530,42 @@ namespace Geckon.MCM.Data.Linq
                 cmd.ExecuteNonQuery();
 
                 return (int) rv.Value;
+            }
+        }
+
+        public int Object_PutInFolder( List<Guid> groupGUIDs, Guid userGUID, Guid guid, int folderID, int objectFolderTypeID )
+        {
+            DataTable groupGUIDsTable = ConvertToDataTable(groupGUIDs);
+
+            using (SqlConnection conn = new SqlConnection(Connection.ConnectionString))
+            {
+                SqlCommand cmd = new SqlCommand("ObjectFolder_Create", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter p = cmd.Parameters.AddWithValue("@GroupGUIDs", groupGUIDsTable);
+                p.SqlDbType = SqlDbType.Structured;
+                p.TypeName = "GUIDList";
+
+                p = cmd.Parameters.AddWithValue("@UserGUID", userGUID);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@ObjectGUID", guid);
+                p.SqlDbType = SqlDbType.UniqueIdentifier;
+
+                p = cmd.Parameters.AddWithValue("@FolderID", folderID);
+                p.SqlDbType = SqlDbType.Int;
+
+                p = cmd.Parameters.AddWithValue("@ObjectFolderID", objectFolderTypeID);
+                p.SqlDbType = SqlDbType.Int;
+
+                conn.Open();
+
+                SqlParameter rv = cmd.Parameters.Add(new SqlParameter("@ReturnValue", SqlDbType.Int));
+                rv.Direction = ParameterDirection.ReturnValue;
+
+                cmd.ExecuteNonQuery();
+
+                return (int)rv.Value;
             }
         }
 
@@ -922,6 +966,7 @@ namespace Geckon.MCM.Data.Linq
 
         public IEnumerable<Folder> Folders { get; set; }
         public IEnumerable<Folder> FolderTree { get; set; }
+        public List<Object> RelatedObjects { get; set; }
 
         #endregion
         #region Business Logic
@@ -932,23 +977,35 @@ namespace Geckon.MCM.Data.Linq
             yield return new KeyValuePair<string, string>( "ObjectTypeID",pObjectTypeID.ToString() );
             yield return new KeyValuePair<string, string>( "DateCreated", pDateCreated.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 
-            foreach (Folder folder in Folders)
-            {
-                yield return new KeyValuePair<string, string>("FolderID", folder.ID.ToString());
-            }
+            if( Folders != null)
+                foreach (Folder folder in Folders)
+                {
+                    yield return new KeyValuePair<string, string>("FolderID", folder.ID.ToString());
+                }
 
-            foreach (Folder folder in FolderTree)
-            {
-                yield return new KeyValuePair<string, string>("FolderTree", folder.ID.ToString());
-            }
+            if( FolderTree != null)
+                foreach (Folder folder in FolderTree)
+                {
+                    yield return new KeyValuePair<string, string>("FolderTree", folder.ID.ToString());
+                }
 
             // TODO: Implement Metadata XML converter
 
             // Convert to all field
-            foreach( Metadata metadata in pMetadata )
-            {
-                yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXml ) );
-            }
+            if( pMetadata != null)
+                foreach( Metadata metadata in pMetadata )
+                {
+                    yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXml ) );
+                }
+
+            if( RelatedObjects != null)
+                foreach( Object obj in RelatedObjects )
+                {
+                    foreach( Metadata relatedMetadata in obj.pMetadata )
+                    {
+                        yield return new KeyValuePair<string, string>( string.Format( "rm{0}_{1}_all", relatedMetadata.MetadataSchemaID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXml ) );
+                    }
+                }
         }
 
         private string GetXmlContent( XElement xml )

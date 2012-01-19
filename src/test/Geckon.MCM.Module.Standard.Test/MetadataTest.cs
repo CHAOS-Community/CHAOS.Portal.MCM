@@ -19,7 +19,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Get_Metadata()
         {
-            IEnumerable<Metadata> metadatas = MCMModule.Metadata_Get( AdminCallContext, "0876EBF6-E30F-4A43-9B6E-F8A479F38427", null, null );
+            IEnumerable<Metadata> metadatas = MCMModule.Metadata_Get( AdminCallContext, Object1.GUID.ToString(), null, null );
 
             Assert.Greater(metadatas.Count(),0);
         }

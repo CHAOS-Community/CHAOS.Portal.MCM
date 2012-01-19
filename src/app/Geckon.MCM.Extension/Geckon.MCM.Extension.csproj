@@ -35,16 +35,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
-    <Reference Include="Geckon.Portal.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Geckon.Portal.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Geckon.Portal.Core.Standard">
-      <HintPath>..\..\..\lib\Geckon.Portal.Core.Standard.dll</HintPath>
-    </Reference>
-    <Reference Include="Geckon.Portal.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Geckon.Portal.Data.dll</HintPath>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\lib\Portal.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

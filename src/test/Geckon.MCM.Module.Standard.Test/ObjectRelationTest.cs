@@ -31,9 +31,11 @@ namespace Geckon.MCM.Module.Standard.Test
 
             using( MCMDataContext db = MCMModule.DefaultMCMDataContext )
             {
-                IList<Object> objects = db.Object_Get( false, false, false, true, Object1.ID, null, null, 0, 10).ToList();
+                IList<Object> objects = db.Object_Get( true, false, false, true, true, Object1.ID, null, null, 0, 10).ToList();
 
                 Assert.AreEqual( Object2.GUID, objects.First().ObjectRealtions[0].Object2GUID );
+                Assert.AreEqual( Object2.GUID, objects.First().RelatedObjects[0].GUID );
+                Assert.Greater( objects.Select( obj => obj.GetIndexableFields().Where( field => field.Key == "rm1_en_all").Select( field => field ) ).Count(), 0 );
             }
         }
 

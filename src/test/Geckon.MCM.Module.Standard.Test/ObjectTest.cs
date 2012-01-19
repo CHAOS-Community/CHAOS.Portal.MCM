@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Data;
 using NUnit.Framework;
 using Object = Geckon.MCM.Data.Linq.Object;
@@ -36,6 +37,20 @@ namespace Geckon.MCM.Module.Standard.Test
             ScalarResult result = MCMModule.Object_Delete( AdminCallContext, Object1.GUID, TopFolder.ID );
 
             Assert.AreEqual( 1, result.Value );
+        }
+
+        [Test]
+        public void Should_Put_Object_In_Folder()
+        {
+            ScalarResult result = MCMModule.Object_PutInFolder( AdminCallContext, Object1.GUID, EmptyFolder.ID, ObjectFolderLink.ID );
+
+            Assert.AreEqual(1, result.Value);
+        }
+
+        [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+        public void Should_Not_Put_Object_In_Folder_With_Insufficient_Permissions()
+        {
+            MCMModule.Object_PutInFolder(AnonCallContext, Object1.GUID, EmptyFolder.ID, ObjectFolderLink.ID);
         }
 
         //[Test]

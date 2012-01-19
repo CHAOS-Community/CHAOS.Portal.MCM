@@ -22,7 +22,7 @@ namespace Geckon.MCM.Extension.Folder
         #endregion
         #region UPDATE
 
-        public void Update( CallContext callContext, int folderID, string newTitle, int? newParentID, int? newFolderTypeID )
+        public void Update( CallContext callContext, int id, string newTitle, int? newFolderTypeID )
         {
 
         }

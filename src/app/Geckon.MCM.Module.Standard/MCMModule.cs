@@ -345,17 +345,17 @@ namespace Geckon.MCM.Module.Standard
         }
 
         [Datatype("Folder","Update")]
-        public ScalarResult Folder_Update( CallContext callContext, int id, string newTitle, int? newParentID, int? newFolderTypeID )
+        public ScalarResult Folder_Update( CallContext callContext, int id, string newTitle, int? newFolderTypeID )
         {
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                int result = db.Folder_Update( callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, id, newTitle, newParentID, newFolderTypeID );
+                int result = db.Folder_Update( callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, id, newTitle, null, newFolderTypeID );
 
                 if( result == -10 )
-                    throw new Portal.Core.Exception.InvalidProtocolException( "The parameters to update cant all be null" );
+                    throw new InvalidProtocolException( "The parameters to update cant all be null" );
 
                 if( result == -100 )
-                    throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to update the folder" );
+                    throw new InsufficientPermissionsExcention( "User does not have permission to update the folder" );
 
                 return new ScalarResult( result );
             }
@@ -407,7 +407,7 @@ namespace Geckon.MCM.Module.Standard
                 if (query != null)
                 {
                     //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
-                    IList<Folder> folders = db.Folder_Get_DirectFolderAssociations(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, 0x1).ToList();
+                    IList<Folder> folders = db.Folder_Get_DirectFolderAssociations( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, 0x1 ).ToList();
 
                     //TODO: Refactor building of queries
                     System.Text.StringBuilder sb = new System.Text.StringBuilder(query.Query);
@@ -449,7 +449,11 @@ namespace Geckon.MCM.Module.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have permissions to delete object" );
 
-                return db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, false, result, null, null, 0, 1 ).First();
+                IEnumerable<Object> newObject = db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, false, result, null, null, 0, 1 );
+
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), newObject );
+
+                return newObject.First();
             }
         }
 
@@ -462,6 +466,24 @@ namespace Geckon.MCM.Module.Standard
 
                 if( result == -100 )
                     throw new InsufficientPermissionsExcention( "User does not have permissions to delete object" );
+
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ GUID }, true, false, true, true ) );
+
+                return new ScalarResult( result );
+            }
+        }
+
+        [Datatype("Object", "PutInFolder")]
+        public ScalarResult Object_PutInFolder(CallContext callContext, Guid GUID, int folderID, int objectFolderTypeID)
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.Object_PutInFolder( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, GUID, folderID, objectFolderTypeID );
+
+                if( result == -100 )
+                    throw new InsufficientPermissionsExcention( "User does not have permissions to put object into folder" );
+
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ GUID }, true, false, true, true ) );
 
                 return new ScalarResult( result );
             }
@@ -477,7 +499,7 @@ namespace Geckon.MCM.Module.Standard
             {
                 int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, objectGUID, metadataSchemaID, languageCode, metadataXML, false );
                 
-                callContext.IndexManager.GetIndex<MCMModule>().Set( db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ objectGUID }, true, false, false, false, null, null, null, 0, 1 ).First() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ objectGUID }, true, false, false, false, null, null, null, 0, 1 ) );
 
                 return new ScalarResult( result );
             }
@@ -510,7 +532,7 @@ namespace Geckon.MCM.Module.Standard
         [Datatype("Test","ReIndex")]
         public ScalarResult Test_ReIndex( CallContext callContext, int? folderID )
         {
-            Geckon.Index.Solr.Solr<GuidResult> index = ( Geckon.Index.Solr.Solr<GuidResult> )callContext.IndexManager.GetIndex<MCMModule>();
+            Index.Solr.Solr<GuidResult> index = ( Index.Solr.Solr<GuidResult> )callContext.IndexManager.GetIndex<MCMModule>();
 
             index.RemoveAll(false);
 
@@ -521,7 +543,7 @@ namespace Geckon.MCM.Module.Standard
                 // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
                 using( MCMDataContext db = DefaultMCMDataContext )
                 {
-                    var itemsToInsert = db.Object_Get( true, false, true, true, null, null, folderID, i, pageSize ).Select( obj => (IIndexable) obj ).ToList();
+                    var itemsToInsert = db.Object_Get( true, false, true, true, true, null, null, folderID, i, pageSize ).Select( obj => (IIndexable) obj ).ToList();
                     index.Set( itemsToInsert, true );
 
                     if( itemsToInsert.Count() != pageSize )
@@ -576,6 +598,40 @@ namespace Geckon.MCM.Module.Standard
         }
 
         #endregion
+        #region Files
+
+        [Datatype("File","Create")]
+        public File File_Create( CallContext callContext, Guid objectGUID, int? parentFileID, int formatID, int destinationID, string filename, string originalFilename, string folderPath )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                int result = db.File_Create( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, objectGUID, parentFileID, formatID, destinationID, filename, originalFilename, folderPath );
+
+                if( result == -100 )
+                    throw new InsufficientPermissionsExcention( "User does not have permissions to create a file for this object" );
+
+                return db.File_Get( result ).First();
+            }
+        }
+
+        #endregion
+        #region Destination
+
+        [Datatype("Destination","Get")]
+        public IEnumerable<DestinationInfo> Destination_Get( CallContext callContext, int destinationID )
+        {
+            using( MCMDataContext db = DefaultMCMDataContext )
+            {
+                return db.DestinationInfo_Get( destinationID ).ToList();
+            }
+        }
+
+        #endregion
+        
+        private void PutObjectInIndex(IIndex index, IEnumerable<Object> newObject)
+        {
+            index.Set(newObject);
+        }
 
         #endregion
     }

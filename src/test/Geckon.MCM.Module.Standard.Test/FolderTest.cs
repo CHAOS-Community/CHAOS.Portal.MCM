@@ -3,9 +3,7 @@ using System.Linq;
 using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Data.Linq;
 using Geckon.Portal.Core.Exception;
-using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Extensions.Standard.Test;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -57,7 +55,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Update_Folder()
         {
-            ScalarResult result = MCMModule.Folder_Update( AdminCallContext, EmptyFolder.ID, "hellooo", null, null );
+            ScalarResult result = MCMModule.Folder_Update( AdminCallContext, EmptyFolder.ID, "hellooo", null );
 
             Assert.Greater( (int) result.Value, 0 );
         }
@@ -65,13 +63,14 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
         public void Should_Throw_InsufficientPermissionsExcention_On_Update_Folder()
         {
-            MCMModule.Folder_Update( AnonCallContext, EmptyFolder.ID, null, TopFolder.ID, null );
+            MCMModule.Folder_Update( AnonCallContext, EmptyFolder.ID, "new", null );
         }
 
         [Test]
         public void Should_Move_Folder()
         {
-            ScalarResult result = MCMModule.Folder_Update( AdminCallContext, EmptyFolder.ID, null, TopFolder.ID, null);
+            Assert.Fail("Not implemented yet");
+            ScalarResult result = MCMModule.Folder_Update( AdminCallContext, EmptyFolder.ID, null, null);
 
             Assert.Greater((int)result.Value, 0);
         }

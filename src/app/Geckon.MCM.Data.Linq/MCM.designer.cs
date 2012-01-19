@@ -66,9 +66,6 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertFolderType(FolderType instance);
     partial void UpdateFolderType(FolderType instance);
     partial void DeleteFolderType(FolderType instance);
-    partial void InsertFormat(Format instance);
-    partial void UpdateFormat(Format instance);
-    partial void DeleteFormat(Format instance);
     partial void InsertFormatCategory(FormatCategory instance);
     partial void UpdateFormatCategory(FormatCategory instance);
     partial void DeleteFormatCategory(FormatCategory instance);
@@ -87,9 +84,6 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertObject(Object instance);
     partial void UpdateObject(Object instance);
     partial void DeleteObject(Object instance);
-    partial void InsertObject_Folder_Join(Object_Folder_Join instance);
-    partial void UpdateObject_Folder_Join(Object_Folder_Join instance);
-    partial void DeleteObject_Folder_Join(Object_Folder_Join instance);
     partial void InsertObjectRelationType(ObjectRelationType instance);
     partial void UpdateObjectRelationType(ObjectRelationType instance);
     partial void DeleteObjectRelationType(ObjectRelationType instance);
@@ -105,6 +99,15 @@ namespace Geckon.MCM.Data.Linq
     partial void InsertObject_Object_Join(Object_Object_Join instance);
     partial void UpdateObject_Object_Join(Object_Object_Join instance);
     partial void DeleteObject_Object_Join(Object_Object_Join instance);
+    partial void InsertFormat(Format instance);
+    partial void UpdateFormat(Format instance);
+    partial void DeleteFormat(Format instance);
+    partial void InsertObjectFolderType(ObjectFolderType instance);
+    partial void UpdateObjectFolderType(ObjectFolderType instance);
+    partial void DeleteObjectFolderType(ObjectFolderType instance);
+    partial void InsertObject_Folder_Join(Object_Folder_Join instance);
+    partial void UpdateObject_Folder_Join(Object_Folder_Join instance);
+    partial void DeleteObject_Folder_Join(Object_Folder_Join instance);
     #endregion
 		
 		public MCMDataContext() : 
@@ -233,14 +236,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		public System.Data.Linq.Table<Format> Formats
-		{
-			get
-			{
-				return this.GetTable<Format>();
-			}
-		}
-		
 		public System.Data.Linq.Table<FormatCategory> FormatCategories
 		{
 			get
@@ -286,14 +281,6 @@ namespace Geckon.MCM.Data.Linq
 			get
 			{
 				return this.GetTable<Object>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Object_Folder_Join> Object_Folder_Joins
-		{
-			get
-			{
-				return this.GetTable<Object_Folder_Join>();
 			}
 		}
 		
@@ -350,6 +337,38 @@ namespace Geckon.MCM.Data.Linq
 			get
 			{
 				return this.GetTable<Object_Object_Join>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Format> Formats
+		{
+			get
+			{
+				return this.GetTable<Format>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DestinationInfo> DestinationInfos
+		{
+			get
+			{
+				return this.GetTable<DestinationInfo>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ObjectFolderType> ObjectFolderTypes
+		{
+			get
+			{
+				return this.GetTable<ObjectFolderType>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Object_Folder_Join> Object_Folder_Joins
+		{
+			get
+			{
+				return this.GetTable<Object_Folder_Join>();
 			}
 		}
 		
@@ -519,6 +538,20 @@ namespace Geckon.MCM.Data.Linq
 		{
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), objectGUID, metadataSchemaGUID, languageCode);
 			return ((ISingleResult<Metadata>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.File_Get")]
+		public ISingleResult<File> File_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="FileID", DbType="Int")] System.Nullable<int> fileID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), fileID);
+			return ((ISingleResult<File>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.DestinationInfo_Get")]
+		public ISingleResult<DestinationInfo> DestinationInfo_Get([global::System.Data.Linq.Mapping.ParameterAttribute(Name="DestinationID", DbType="Int")] System.Nullable<int> destinationID)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), destinationID);
+			return ((ISingleResult<DestinationInfo>)(result.ReturnValue));
 		}
 	}
 	
@@ -1754,9 +1787,9 @@ namespace Geckon.MCM.Data.Linq
 		
 		private EntityRef<Destination> _Destination;
 		
-		private EntityRef<Format> _Format;
-		
 		private EntityRef<FormatCategory> _FormatCategory;
+		
+		private EntityRef<Format> _Format;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1780,8 +1813,8 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this._AccessPoint = default(EntityRef<AccessPoint>);
 			this._Destination = default(EntityRef<Destination>);
-			this._Format = default(EntityRef<Format>);
 			this._FormatCategory = default(EntityRef<FormatCategory>);
+			this._Format = default(EntityRef<Format>);
 			OnCreated();
 		}
 		
@@ -1980,40 +2013,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Format_Conversion", Storage="_Format", ThisKey="FormatID", OtherKey="ID", IsForeignKey=true)]
-		public Format Format
-		{
-			get
-			{
-				return this._Format.Entity;
-			}
-			set
-			{
-				Format previousValue = this._Format.Entity;
-				if (((previousValue != value) 
-							|| (this._Format.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Format.Entity = null;
-						previousValue.Conversions.Remove(this);
-					}
-					this._Format.Entity = value;
-					if ((value != null))
-					{
-						value.Conversions.Add(this);
-						this._FormatID = value.ID;
-					}
-					else
-					{
-						this._FormatID = default(int);
-					}
-					this.SendPropertyChanged("Format");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FormatCategory_Conversion", Storage="_FormatCategory", ThisKey="FormatCategoryID", OtherKey="ID", IsForeignKey=true)]
 		public FormatCategory FormatCategory
 		{
@@ -2044,6 +2043,40 @@ namespace Geckon.MCM.Data.Linq
 						this._FormatCategoryID = default(int);
 					}
 					this.SendPropertyChanged("FormatCategory");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Format_Conversion", Storage="_Format", ThisKey="FormatID", OtherKey="ID", IsForeignKey=true)]
+		public Format Format
+		{
+			get
+			{
+				return this._Format.Entity;
+			}
+			set
+			{
+				Format previousValue = this._Format.Entity;
+				if (((previousValue != value) 
+							|| (this._Format.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Format.Entity = null;
+						previousValue.Conversions.Remove(this);
+					}
+					this._Format.Entity = value;
+					if ((value != null))
+					{
+						value.Conversions.Add(this);
+						this._FormatID = value.ID;
+					}
+					else
+					{
+						this._FormatID = default(int);
+					}
+					this.SendPropertyChanged("Format");
 				}
 			}
 		}
@@ -2317,9 +2350,9 @@ namespace Geckon.MCM.Data.Linq
 		
 		private EntityRef<File> _File1;
 		
-		private EntityRef<Format> _Format;
-		
 		private EntityRef<Object> _Object;
+		
+		private EntityRef<Format> _Format;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -2350,8 +2383,8 @@ namespace Geckon.MCM.Data.Linq
 			this._Files = new EntitySet<File>(new Action<File>(this.attach_Files), new Action<File>(this.detach_Files));
 			this._Destination = default(EntityRef<Destination>);
 			this._File1 = default(EntityRef<File>);
-			this._Format = default(EntityRef<Format>);
 			this._Object = default(EntityRef<Object>);
+			this._Format = default(EntityRef<Format>);
 			OnCreated();
 		}
 		
@@ -2632,40 +2665,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Format_File", Storage="_Format", ThisKey="FormatID", OtherKey="ID", IsForeignKey=true)]
-		public Format Format
-		{
-			get
-			{
-				return this._Format.Entity;
-			}
-			set
-			{
-				Format previousValue = this._Format.Entity;
-				if (((previousValue != value) 
-							|| (this._Format.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Format.Entity = null;
-						previousValue.Files.Remove(this);
-					}
-					this._Format.Entity = value;
-					if ((value != null))
-					{
-						value.Files.Add(this);
-						this._FormatID = value.ID;
-					}
-					else
-					{
-						this._FormatID = default(int);
-					}
-					this.SendPropertyChanged("Format");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_File", Storage="_Object", ThisKey="ObjectID", OtherKey="ID", IsForeignKey=true)]
 		public Object Object
 		{
@@ -2696,6 +2695,40 @@ namespace Geckon.MCM.Data.Linq
 						this._ObjectID = default(int);
 					}
 					this.SendPropertyChanged("Object");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Format_File", Storage="_Format", ThisKey="FormatID", OtherKey="ID", IsForeignKey=true)]
+		public Format Format
+		{
+			get
+			{
+				return this._Format.Entity;
+			}
+			set
+			{
+				Format previousValue = this._Format.Entity;
+				if (((previousValue != value) 
+							|| (this._Format.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Format.Entity = null;
+						previousValue.Files.Remove(this);
+					}
+					this._Format.Entity = value;
+					if ((value != null))
+					{
+						value.Files.Add(this);
+						this._FormatID = value.ID;
+					}
+					else
+					{
+						this._FormatID = default(int);
+					}
+					this.SendPropertyChanged("Format");
 				}
 			}
 		}
@@ -3218,285 +3251,6 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this.SendPropertyChanging();
 			entity.FolderType = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Format")]
-	public partial class Format : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private int _FormatCategoryID;
-		
-		private string _Name;
-		
-		private System.Xml.Linq.XElement _FormatXml;
-		
-		private string _MimeType;
-		
-		private string _FileExtension;
-		
-		private EntitySet<Conversion> _Conversions;
-		
-		private EntitySet<File> _Files;
-		
-		private EntityRef<FormatCategory> _FormatCategory;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnFormatCategoryIDChanging(int value);
-    partial void OnFormatCategoryIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
-    partial void OnFormatXmlChanging(System.Xml.Linq.XElement value);
-    partial void OnFormatXmlChanged();
-    partial void OnMimeTypeChanging(string value);
-    partial void OnMimeTypeChanged();
-    partial void OnFileExtensionChanging(string value);
-    partial void OnFileExtensionChanged();
-    #endregion
-		
-		public Format()
-		{
-			this._Conversions = new EntitySet<Conversion>(new Action<Conversion>(this.attach_Conversions), new Action<Conversion>(this.detach_Conversions));
-			this._Files = new EntitySet<File>(new Action<File>(this.attach_Files), new Action<File>(this.detach_Files));
-			this._FormatCategory = default(EntityRef<FormatCategory>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
-		{
-			get
-			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormatCategoryID", DbType="Int NOT NULL")]
-		public int FormatCategoryID
-		{
-			get
-			{
-				return this._FormatCategoryID;
-			}
-			set
-			{
-				if ((this._FormatCategoryID != value))
-				{
-					if (this._FormatCategory.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFormatCategoryIDChanging(value);
-					this.SendPropertyChanging();
-					this._FormatCategoryID = value;
-					this.SendPropertyChanged("FormatCategoryID");
-					this.OnFormatCategoryIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string Name
-		{
-			get
-			{
-				return this._Name;
-			}
-			set
-			{
-				if ((this._Name != value))
-				{
-					this.OnNameChanging(value);
-					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormatXml", DbType="Xml", UpdateCheck=UpdateCheck.Never)]
-		public System.Xml.Linq.XElement FormatXml
-		{
-			get
-			{
-				return this._FormatXml;
-			}
-			set
-			{
-				if ((this._FormatXml != value))
-				{
-					this.OnFormatXmlChanging(value);
-					this.SendPropertyChanging();
-					this._FormatXml = value;
-					this.SendPropertyChanged("FormatXml");
-					this.OnFormatXmlChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MimeType", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string MimeType
-		{
-			get
-			{
-				return this._MimeType;
-			}
-			set
-			{
-				if ((this._MimeType != value))
-				{
-					this.OnMimeTypeChanging(value);
-					this.SendPropertyChanging();
-					this._MimeType = value;
-					this.SendPropertyChanged("MimeType");
-					this.OnMimeTypeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FileExtension", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
-		public string FileExtension
-		{
-			get
-			{
-				return this._FileExtension;
-			}
-			set
-			{
-				if ((this._FileExtension != value))
-				{
-					this.OnFileExtensionChanging(value);
-					this.SendPropertyChanging();
-					this._FileExtension = value;
-					this.SendPropertyChanged("FileExtension");
-					this.OnFileExtensionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Format_Conversion", Storage="_Conversions", ThisKey="ID", OtherKey="FormatID")]
-		public EntitySet<Conversion> Conversions
-		{
-			get
-			{
-				return this._Conversions;
-			}
-			set
-			{
-				this._Conversions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Format_File", Storage="_Files", ThisKey="ID", OtherKey="FormatID")]
-		public EntitySet<File> Files
-		{
-			get
-			{
-				return this._Files;
-			}
-			set
-			{
-				this._Files.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FormatCategory_Format", Storage="_FormatCategory", ThisKey="FormatCategoryID", OtherKey="ID", IsForeignKey=true)]
-		public FormatCategory FormatCategory
-		{
-			get
-			{
-				return this._FormatCategory.Entity;
-			}
-			set
-			{
-				FormatCategory previousValue = this._FormatCategory.Entity;
-				if (((previousValue != value) 
-							|| (this._FormatCategory.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._FormatCategory.Entity = null;
-						previousValue.Formats.Remove(this);
-					}
-					this._FormatCategory.Entity = value;
-					if ((value != null))
-					{
-						value.Formats.Add(this);
-						this._FormatCategoryID = value.ID;
-					}
-					else
-					{
-						this._FormatCategoryID = default(int);
-					}
-					this.SendPropertyChanged("FormatCategory");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Conversions(Conversion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Format = this;
-		}
-		
-		private void detach_Conversions(Conversion entity)
-		{
-			this.SendPropertyChanging();
-			entity.Format = null;
-		}
-		
-		private void attach_Files(File entity)
-		{
-			this.SendPropertyChanging();
-			entity.Format = this;
-		}
-		
-		private void detach_Files(File entity)
-		{
-			this.SendPropertyChanging();
-			entity.Format = null;
 		}
 	}
 	
@@ -4431,13 +4185,13 @@ namespace Geckon.MCM.Data.Linq
 		
 		private EntitySet<File> _Files;
 		
-		private EntitySet<Object_Folder_Join> _Object_Folder_Joins;
-		
 		private EntitySet<Metadata> _Metadatas;
 		
 		private EntitySet<Object_Object_Join> _Object_Object_Joins;
 		
 		private EntitySet<Object_Object_Join> _Object_Object_Joins1;
+		
+		private EntitySet<Object_Folder_Join> _Object_Folder_Joins;
 		
 		private EntityRef<ObjectType> _ObjectType;
 		
@@ -4459,10 +4213,10 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this._AccessPoint_Object_Joins = new EntitySet<AccessPoint_Object_Join>(new Action<AccessPoint_Object_Join>(this.attach_AccessPoint_Object_Joins), new Action<AccessPoint_Object_Join>(this.detach_AccessPoint_Object_Joins));
 			this._Files = new EntitySet<File>(new Action<File>(this.attach_Files), new Action<File>(this.detach_Files));
-			this._Object_Folder_Joins = new EntitySet<Object_Folder_Join>(new Action<Object_Folder_Join>(this.attach_Object_Folder_Joins), new Action<Object_Folder_Join>(this.detach_Object_Folder_Joins));
 			this._Metadatas = new EntitySet<Metadata>(new Action<Metadata>(this.attach_Metadatas), new Action<Metadata>(this.detach_Metadatas));
 			this._Object_Object_Joins = new EntitySet<Object_Object_Join>(new Action<Object_Object_Join>(this.attach_Object_Object_Joins), new Action<Object_Object_Join>(this.detach_Object_Object_Joins));
 			this._Object_Object_Joins1 = new EntitySet<Object_Object_Join>(new Action<Object_Object_Join>(this.attach_Object_Object_Joins1), new Action<Object_Object_Join>(this.detach_Object_Object_Joins1));
+			this._Object_Folder_Joins = new EntitySet<Object_Folder_Join>(new Action<Object_Folder_Join>(this.attach_Object_Folder_Joins), new Action<Object_Folder_Join>(this.detach_Object_Folder_Joins));
 			this._ObjectType = default(EntityRef<ObjectType>);
 			OnCreated();
 		}
@@ -4577,19 +4331,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Object_Folder_Join", Storage="_Object_Folder_Joins", ThisKey="ID", OtherKey="ObjectID")]
-		public EntitySet<Object_Folder_Join> Object_Folder_Joins
-		{
-			get
-			{
-				return this._Object_Folder_Joins;
-			}
-			set
-			{
-				this._Object_Folder_Joins.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Metadata", Storage="_Metadatas", ThisKey="ID", OtherKey="ObjectID")]
 		public EntitySet<Metadata> Metadatas
 		{
@@ -4626,6 +4367,19 @@ namespace Geckon.MCM.Data.Linq
 			set
 			{
 				this._Object_Object_Joins1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Object_Folder_Join", Storage="_Object_Folder_Joins", ThisKey="ID", OtherKey="ObjectID")]
+		public EntitySet<Object_Folder_Join> Object_Folder_Joins
+		{
+			get
+			{
+				return this._Object_Folder_Joins;
+			}
+			set
+			{
+				this._Object_Folder_Joins.Assign(value);
 			}
 		}
 		
@@ -4707,18 +4461,6 @@ namespace Geckon.MCM.Data.Linq
 			entity.Object = null;
 		}
 		
-		private void attach_Object_Folder_Joins(Object_Folder_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Object = this;
-		}
-		
-		private void detach_Object_Folder_Joins(Object_Folder_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Object = null;
-		}
-		
 		private void attach_Metadatas(Metadata entity)
 		{
 			this.SendPropertyChanging();
@@ -4754,221 +4496,17 @@ namespace Geckon.MCM.Data.Linq
 			this.SendPropertyChanging();
 			entity.Object1 = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Object_Folder_Join")]
-	public partial class Object_Folder_Join : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ObjectID;
-		
-		private int _FolderID;
-		
-		private bool _IsShortcut;
-		
-		private System.DateTime _DateCreated;
-		
-		private EntityRef<Object> _Object;
-		
-		private EntityRef<Folder> _Folder;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnObjectIDChanging(int value);
-    partial void OnObjectIDChanged();
-    partial void OnFolderIDChanging(int value);
-    partial void OnFolderIDChanged();
-    partial void OnIsShortcutChanging(bool value);
-    partial void OnIsShortcutChanged();
-    partial void OnDateCreatedChanging(System.DateTime value);
-    partial void OnDateCreatedChanged();
-    #endregion
-		
-		public Object_Folder_Join()
+		private void attach_Object_Folder_Joins(Object_Folder_Join entity)
 		{
-			this._Object = default(EntityRef<Object>);
-			this._Folder = default(EntityRef<Folder>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Object = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ObjectID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int ObjectID
+		private void detach_Object_Folder_Joins(Object_Folder_Join entity)
 		{
-			get
-			{
-				return this._ObjectID;
-			}
-			set
-			{
-				if ((this._ObjectID != value))
-				{
-					if (this._Object.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnObjectIDChanging(value);
-					this.SendPropertyChanging();
-					this._ObjectID = value;
-					this.SendPropertyChanged("ObjectID");
-					this.OnObjectIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FolderID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int FolderID
-		{
-			get
-			{
-				return this._FolderID;
-			}
-			set
-			{
-				if ((this._FolderID != value))
-				{
-					if (this._Folder.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnFolderIDChanging(value);
-					this.SendPropertyChanging();
-					this._FolderID = value;
-					this.SendPropertyChanged("FolderID");
-					this.OnFolderIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsShortcut", DbType="Bit NOT NULL")]
-		public bool IsShortcut
-		{
-			get
-			{
-				return this._IsShortcut;
-			}
-			set
-			{
-				if ((this._IsShortcut != value))
-				{
-					this.OnIsShortcutChanging(value);
-					this.SendPropertyChanging();
-					this._IsShortcut = value;
-					this.SendPropertyChanged("IsShortcut");
-					this.OnIsShortcutChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="SmallDateTime NOT NULL")]
-		public System.DateTime DateCreated
-		{
-			get
-			{
-				return this._DateCreated;
-			}
-			set
-			{
-				if ((this._DateCreated != value))
-				{
-					this.OnDateCreatedChanging(value);
-					this.SendPropertyChanging();
-					this._DateCreated = value;
-					this.SendPropertyChanged("DateCreated");
-					this.OnDateCreatedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Object_Folder_Join", Storage="_Object", ThisKey="ObjectID", OtherKey="ID", IsForeignKey=true)]
-		public Object Object
-		{
-			get
-			{
-				return this._Object.Entity;
-			}
-			set
-			{
-				Object previousValue = this._Object.Entity;
-				if (((previousValue != value) 
-							|| (this._Object.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Object.Entity = null;
-						previousValue.Object_Folder_Joins.Remove(this);
-					}
-					this._Object.Entity = value;
-					if ((value != null))
-					{
-						value.Object_Folder_Joins.Add(this);
-						this._ObjectID = value.ID;
-					}
-					else
-					{
-						this._ObjectID = default(int);
-					}
-					this.SendPropertyChanged("Object");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Object_Folder_Join", Storage="_Folder", ThisKey="FolderID", OtherKey="ID", IsForeignKey=true)]
-		public Folder Folder
-		{
-			get
-			{
-				return this._Folder.Entity;
-			}
-			set
-			{
-				Folder previousValue = this._Folder.Entity;
-				if (((previousValue != value) 
-							|| (this._Folder.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Folder.Entity = null;
-						previousValue.Object_Folder_Joins.Remove(this);
-					}
-					this._Folder.Entity = value;
-					if ((value != null))
-					{
-						value.Object_Folder_Joins.Add(this);
-						this._FolderID = value.ID;
-					}
-					else
-					{
-						this._FolderID = default(int);
-					}
-					this.SendPropertyChanged("Folder");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Object = null;
 		}
 	}
 	
@@ -5108,9 +4646,9 @@ namespace Geckon.MCM.Data.Linq
 		
 		private EntitySet<Folder_User_Join> _Folder_User_Joins;
 		
-		private EntitySet<Object_Folder_Join> _Object_Folder_Joins;
-		
 		private EntitySet<Folder> _Folders;
+		
+		private EntitySet<Object_Folder_Join> _Object_Folder_Joins;
 		
 		private EntityRef<Folder> _Folder1;
 		
@@ -5138,8 +4676,8 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this._Folder_Group_Joins = new EntitySet<Folder_Group_Join>(new Action<Folder_Group_Join>(this.attach_Folder_Group_Joins), new Action<Folder_Group_Join>(this.detach_Folder_Group_Joins));
 			this._Folder_User_Joins = new EntitySet<Folder_User_Join>(new Action<Folder_User_Join>(this.attach_Folder_User_Joins), new Action<Folder_User_Join>(this.detach_Folder_User_Joins));
-			this._Object_Folder_Joins = new EntitySet<Object_Folder_Join>(new Action<Object_Folder_Join>(this.attach_Object_Folder_Joins), new Action<Object_Folder_Join>(this.detach_Object_Folder_Joins));
 			this._Folders = new EntitySet<Folder>(new Action<Folder>(this.attach_Folders), new Action<Folder>(this.detach_Folders));
+			this._Object_Folder_Joins = new EntitySet<Object_Folder_Join>(new Action<Object_Folder_Join>(this.attach_Object_Folder_Joins), new Action<Object_Folder_Join>(this.detach_Object_Folder_Joins));
 			this._Folder1 = default(EntityRef<Folder>);
 			this._FolderType = default(EntityRef<FolderType>);
 			OnCreated();
@@ -5299,19 +4837,6 @@ namespace Geckon.MCM.Data.Linq
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Object_Folder_Join", Storage="_Object_Folder_Joins", ThisKey="ID", OtherKey="FolderID")]
-		public EntitySet<Object_Folder_Join> Object_Folder_Joins
-		{
-			get
-			{
-				return this._Object_Folder_Joins;
-			}
-			set
-			{
-				this._Object_Folder_Joins.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Folder", Storage="_Folders", ThisKey="ID", OtherKey="ParentID")]
 		public EntitySet<Folder> Folders
 		{
@@ -5322,6 +4847,19 @@ namespace Geckon.MCM.Data.Linq
 			set
 			{
 				this._Folders.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Object_Folder_Join", Storage="_Object_Folder_Joins", ThisKey="ID", OtherKey="FolderID")]
+		public EntitySet<Object_Folder_Join> Object_Folder_Joins
+		{
+			get
+			{
+				return this._Object_Folder_Joins;
+			}
+			set
+			{
+				this._Object_Folder_Joins.Assign(value);
 			}
 		}
 		
@@ -5437,18 +4975,6 @@ namespace Geckon.MCM.Data.Linq
 			entity.Folder = null;
 		}
 		
-		private void attach_Object_Folder_Joins(Object_Folder_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder = this;
-		}
-		
-		private void detach_Object_Folder_Joins(Object_Folder_Join entity)
-		{
-			this.SendPropertyChanging();
-			entity.Folder = null;
-		}
-		
 		private void attach_Folders(Folder entity)
 		{
 			this.SendPropertyChanging();
@@ -5459,6 +4985,18 @@ namespace Geckon.MCM.Data.Linq
 		{
 			this.SendPropertyChanging();
 			entity.Folder1 = null;
+		}
+		
+		private void attach_Object_Folder_Joins(Object_Folder_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder = this;
+		}
+		
+		private void detach_Object_Folder_Joins(Object_Folder_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.Folder = null;
 		}
 	}
 	
@@ -6569,6 +6107,767 @@ namespace Geckon.MCM.Data.Linq
 						this._ObjectRelationTypeID = default(int);
 					}
 					this.SendPropertyChanged("ObjectRelationType");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Format")]
+	public partial class Format : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private int _FormatCategoryID;
+		
+		private string _Name;
+		
+		private System.Xml.Linq.XElement _FormatXml;
+		
+		private string _MimeType;
+		
+		private EntitySet<Conversion> _Conversions;
+		
+		private EntitySet<File> _Files;
+		
+		private EntityRef<FormatCategory> _FormatCategory;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnFormatCategoryIDChanging(int value);
+    partial void OnFormatCategoryIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    partial void OnFormatXmlChanging(System.Xml.Linq.XElement value);
+    partial void OnFormatXmlChanged();
+    partial void OnMimeTypeChanging(string value);
+    partial void OnMimeTypeChanged();
+    #endregion
+		
+		public Format()
+		{
+			this._Conversions = new EntitySet<Conversion>(new Action<Conversion>(this.attach_Conversions), new Action<Conversion>(this.detach_Conversions));
+			this._Files = new EntitySet<File>(new Action<File>(this.attach_Files), new Action<File>(this.detach_Files));
+			this._FormatCategory = default(EntityRef<FormatCategory>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormatCategoryID", DbType="Int NOT NULL")]
+		public int FormatCategoryID
+		{
+			get
+			{
+				return this._FormatCategoryID;
+			}
+			set
+			{
+				if ((this._FormatCategoryID != value))
+				{
+					if (this._FormatCategory.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFormatCategoryIDChanging(value);
+					this.SendPropertyChanging();
+					this._FormatCategoryID = value;
+					this.SendPropertyChanged("FormatCategoryID");
+					this.OnFormatCategoryIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FormatXml", DbType="Xml", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
+		public System.Xml.Linq.XElement FormatXml
+		{
+			get
+			{
+				return this._FormatXml;
+			}
+			set
+			{
+				if ((this._FormatXml != value))
+				{
+					this.OnFormatXmlChanging(value);
+					this.SendPropertyChanging();
+					this._FormatXml = value;
+					this.SendPropertyChanged("FormatXml");
+					this.OnFormatXmlChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MimeType", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string MimeType
+		{
+			get
+			{
+				return this._MimeType;
+			}
+			set
+			{
+				if ((this._MimeType != value))
+				{
+					this.OnMimeTypeChanging(value);
+					this.SendPropertyChanging();
+					this._MimeType = value;
+					this.SendPropertyChanged("MimeType");
+					this.OnMimeTypeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Format_Conversion", Storage="_Conversions", ThisKey="ID", OtherKey="FormatID")]
+		public EntitySet<Conversion> Conversions
+		{
+			get
+			{
+				return this._Conversions;
+			}
+			set
+			{
+				this._Conversions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Format_File", Storage="_Files", ThisKey="ID", OtherKey="FormatID")]
+		public EntitySet<File> Files
+		{
+			get
+			{
+				return this._Files;
+			}
+			set
+			{
+				this._Files.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="FormatCategory_Format", Storage="_FormatCategory", ThisKey="FormatCategoryID", OtherKey="ID", IsForeignKey=true)]
+		public FormatCategory FormatCategory
+		{
+			get
+			{
+				return this._FormatCategory.Entity;
+			}
+			set
+			{
+				FormatCategory previousValue = this._FormatCategory.Entity;
+				if (((previousValue != value) 
+							|| (this._FormatCategory.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._FormatCategory.Entity = null;
+						previousValue.Formats.Remove(this);
+					}
+					this._FormatCategory.Entity = value;
+					if ((value != null))
+					{
+						value.Formats.Add(this);
+						this._FormatCategoryID = value.ID;
+					}
+					else
+					{
+						this._FormatCategoryID = default(int);
+					}
+					this.SendPropertyChanged("FormatCategory");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Conversions(Conversion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Format = this;
+		}
+		
+		private void detach_Conversions(Conversion entity)
+		{
+			this.SendPropertyChanging();
+			entity.Format = null;
+		}
+		
+		private void attach_Files(File entity)
+		{
+			this.SendPropertyChanging();
+			entity.Format = this;
+		}
+		
+		private void detach_Files(File entity)
+		{
+			this.SendPropertyChanging();
+			entity.Format = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DestinationInfo")]
+	public partial class DestinationInfo
+	{
+		
+		private int _ID;
+		
+		private System.Guid _SubscriptionGUID;
+		
+		private string _Title;
+		
+		private System.DateTime _DateCreated;
+		
+		private string _BasePath;
+		
+		private string _StringFormat;
+		
+		private string _Token;
+		
+		public DestinationInfo()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", DbType="Int NOT NULL")]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this._ID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubscriptionGUID", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SubscriptionGUID
+		{
+			get
+			{
+				return this._SubscriptionGUID;
+			}
+			set
+			{
+				if ((this._SubscriptionGUID != value))
+				{
+					this._SubscriptionGUID = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this._Title = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="SmallDateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this._DateCreated = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BasePath", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string BasePath
+		{
+			get
+			{
+				return this._BasePath;
+			}
+			set
+			{
+				if ((this._BasePath != value))
+				{
+					this._BasePath = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StringFormat", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string StringFormat
+		{
+			get
+			{
+				return this._StringFormat;
+			}
+			set
+			{
+				if ((this._StringFormat != value))
+				{
+					this._StringFormat = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Token", DbType="VarChar(255) NOT NULL", CanBeNull=false)]
+		public string Token
+		{
+			get
+			{
+				return this._Token;
+			}
+			set
+			{
+				if ((this._Token != value))
+				{
+					this._Token = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ObjectFolderType")]
+	public partial class ObjectFolderType : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _Name;
+		
+		private EntitySet<Object_Folder_Join> _Object_Folder_Joins;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
+    #endregion
+		
+		public ObjectFolderType()
+		{
+			this._Object_Folder_Joins = new EntitySet<Object_Folder_Join>(new Action<Object_Folder_Join>(this.attach_Object_Folder_Joins), new Action<Object_Folder_Join>(this.detach_Object_Folder_Joins));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string Name
+		{
+			get
+			{
+				return this._Name;
+			}
+			set
+			{
+				if ((this._Name != value))
+				{
+					this.OnNameChanging(value);
+					this.SendPropertyChanging();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ObjectFolderType_Object_Folder_Join", Storage="_Object_Folder_Joins", ThisKey="ID", OtherKey="ObjectFolderTypeID")]
+		public EntitySet<Object_Folder_Join> Object_Folder_Joins
+		{
+			get
+			{
+				return this._Object_Folder_Joins;
+			}
+			set
+			{
+				this._Object_Folder_Joins.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Object_Folder_Joins(Object_Folder_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.ObjectFolderType = this;
+		}
+		
+		private void detach_Object_Folder_Joins(Object_Folder_Join entity)
+		{
+			this.SendPropertyChanging();
+			entity.ObjectFolderType = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Object_Folder_Join")]
+	public partial class Object_Folder_Join : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ObjectID;
+		
+		private int _FolderID;
+		
+		private int _ObjectFolderTypeID;
+		
+		private System.DateTime _DateCreated;
+		
+		private EntityRef<Folder> _Folder;
+		
+		private EntityRef<Object> _Object;
+		
+		private EntityRef<ObjectFolderType> _ObjectFolderType;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnObjectIDChanging(int value);
+    partial void OnObjectIDChanged();
+    partial void OnFolderIDChanging(int value);
+    partial void OnFolderIDChanged();
+    partial void OnObjectFolderTypeIDChanging(int value);
+    partial void OnObjectFolderTypeIDChanged();
+    partial void OnDateCreatedChanging(System.DateTime value);
+    partial void OnDateCreatedChanged();
+    #endregion
+		
+		public Object_Folder_Join()
+		{
+			this._Folder = default(EntityRef<Folder>);
+			this._Object = default(EntityRef<Object>);
+			this._ObjectFolderType = default(EntityRef<ObjectFolderType>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ObjectID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int ObjectID
+		{
+			get
+			{
+				return this._ObjectID;
+			}
+			set
+			{
+				if ((this._ObjectID != value))
+				{
+					if (this._Object.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnObjectIDChanging(value);
+					this.SendPropertyChanging();
+					this._ObjectID = value;
+					this.SendPropertyChanged("ObjectID");
+					this.OnObjectIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FolderID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int FolderID
+		{
+			get
+			{
+				return this._FolderID;
+			}
+			set
+			{
+				if ((this._FolderID != value))
+				{
+					if (this._Folder.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnFolderIDChanging(value);
+					this.SendPropertyChanging();
+					this._FolderID = value;
+					this.SendPropertyChanged("FolderID");
+					this.OnFolderIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ObjectFolderTypeID", DbType="Int NOT NULL")]
+		public int ObjectFolderTypeID
+		{
+			get
+			{
+				return this._ObjectFolderTypeID;
+			}
+			set
+			{
+				if ((this._ObjectFolderTypeID != value))
+				{
+					if (this._ObjectFolderType.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnObjectFolderTypeIDChanging(value);
+					this.SendPropertyChanging();
+					this._ObjectFolderTypeID = value;
+					this.SendPropertyChanged("ObjectFolderTypeID");
+					this.OnObjectFolderTypeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateCreated", DbType="SmallDateTime NOT NULL")]
+		public System.DateTime DateCreated
+		{
+			get
+			{
+				return this._DateCreated;
+			}
+			set
+			{
+				if ((this._DateCreated != value))
+				{
+					this.OnDateCreatedChanging(value);
+					this.SendPropertyChanging();
+					this._DateCreated = value;
+					this.SendPropertyChanged("DateCreated");
+					this.OnDateCreatedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Folder_Object_Folder_Join", Storage="_Folder", ThisKey="FolderID", OtherKey="ID", IsForeignKey=true)]
+		public Folder Folder
+		{
+			get
+			{
+				return this._Folder.Entity;
+			}
+			set
+			{
+				Folder previousValue = this._Folder.Entity;
+				if (((previousValue != value) 
+							|| (this._Folder.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Folder.Entity = null;
+						previousValue.Object_Folder_Joins.Remove(this);
+					}
+					this._Folder.Entity = value;
+					if ((value != null))
+					{
+						value.Object_Folder_Joins.Add(this);
+						this._FolderID = value.ID;
+					}
+					else
+					{
+						this._FolderID = default(int);
+					}
+					this.SendPropertyChanged("Folder");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Object_Object_Folder_Join", Storage="_Object", ThisKey="ObjectID", OtherKey="ID", IsForeignKey=true)]
+		public Object Object
+		{
+			get
+			{
+				return this._Object.Entity;
+			}
+			set
+			{
+				Object previousValue = this._Object.Entity;
+				if (((previousValue != value) 
+							|| (this._Object.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Object.Entity = null;
+						previousValue.Object_Folder_Joins.Remove(this);
+					}
+					this._Object.Entity = value;
+					if ((value != null))
+					{
+						value.Object_Folder_Joins.Add(this);
+						this._ObjectID = value.ID;
+					}
+					else
+					{
+						this._ObjectID = default(int);
+					}
+					this.SendPropertyChanged("Object");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="ObjectFolderType_Object_Folder_Join", Storage="_ObjectFolderType", ThisKey="ObjectFolderTypeID", OtherKey="ID", IsForeignKey=true)]
+		public ObjectFolderType ObjectFolderType
+		{
+			get
+			{
+				return this._ObjectFolderType.Entity;
+			}
+			set
+			{
+				ObjectFolderType previousValue = this._ObjectFolderType.Entity;
+				if (((previousValue != value) 
+							|| (this._ObjectFolderType.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._ObjectFolderType.Entity = null;
+						previousValue.Object_Folder_Joins.Remove(this);
+					}
+					this._ObjectFolderType.Entity = value;
+					if ((value != null))
+					{
+						value.Object_Folder_Joins.Add(this);
+						this._ObjectFolderTypeID = value.ID;
+					}
+					else
+					{
+						this._ObjectFolderTypeID = default(int);
+					}
+					this.SendPropertyChanged("ObjectFolderType");
 				}
 			}
 		}

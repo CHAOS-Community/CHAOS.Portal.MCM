@@ -34,21 +34,14 @@
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
-    <Reference Include="Geckon.Portal.Core">
-      <HintPath>..\..\..\lib\Geckon.Portal.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Geckon.Portal.Core.Exception, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Geckon.Portal.Core.Standard">
-      <HintPath>..\..\..\lib\Geckon.Portal.Core.Standard.dll</HintPath>
-    </Reference>
-    <Reference Include="Geckon.Portal.Data">
-      <HintPath>..\..\..\lib\Geckon.Portal.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="Geckon.Portal.Extensions.Standard.Test">
-      <HintPath>..\..\..\lib\Geckon.Portal.Extensions.Standard.Test.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\lib\Portal.dll</HintPath>
+    </Reference>
+    <Reference Include="PortalTest">
+      <HintPath>..\..\..\lib\PortalTest.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseTest.cs" />
+    <Compile Include="DestinationInfoTest.cs" />
+    <Compile Include="FileTest.cs" />
     <Compile Include="FolderTest.cs" />
     <Compile Include="FormatTypeTest.cs" />
     <Compile Include="FolderTypeTest.cs" />

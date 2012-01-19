@@ -2,9 +2,7 @@
 using System.Linq;
 using Geckon.MCM.Data.Linq;
 using Geckon.Portal.Core.Exception;
-using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Data;
-using Geckon.Portal.Extensions.Standard.Test;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
