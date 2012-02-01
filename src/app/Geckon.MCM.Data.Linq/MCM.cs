@@ -47,7 +47,7 @@ namespace Geckon.MCM.Data.Linq
 
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
-
+				
                 return Translate<FolderInfo>(reader).ToList();
             }
         }

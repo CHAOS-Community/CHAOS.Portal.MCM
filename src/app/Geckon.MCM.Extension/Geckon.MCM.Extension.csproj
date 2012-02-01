@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="File\FileExtension.cs" />
     <Compile Include="Folder\FolderExtension.cs" />
     <Compile Include="FolderType\FolderTypeExtension.cs" />
     <Compile Include="FormatType\FormatTypeExtension.cs" />

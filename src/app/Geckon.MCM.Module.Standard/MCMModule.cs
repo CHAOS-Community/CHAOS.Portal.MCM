@@ -12,6 +12,7 @@ using Object = Geckon.MCM.Data.Linq.Object;
 using Geckon.Portal.Core.Standard;
 using Geckon.Index;
 using Geckon.Portal.Data.Result;
+using Folder = Geckon.MCM.Module.Standard.Rights.Folder;
 
 namespace Geckon.MCM.Module.Standard
 {
@@ -20,7 +21,7 @@ namespace Geckon.MCM.Module.Standard
         #region Properties
 
         private String ConnectionString { get; set; }
-        public Data.Linq.MCMDataContext DefaultMCMDataContext { get { return new MCMDataContext(ConnectionString); } }
+        public MCMDataContext DefaultMCMDataContext { get { return new MCMDataContext(ConnectionString); } }
 
         #endregion
         #region Construction
@@ -407,7 +408,7 @@ namespace Geckon.MCM.Module.Standard
                 if (query != null)
                 {
                     //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
-                    IList<Folder> folders = db.Folder_Get_DirectFolderAssociations( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, 0x1 ).ToList();
+                    IList<Data.Linq.Folder> folders = db.Folder_Get_DirectFolderAssociations( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, 0x1 ).ToList();
 
                     //TODO: Refactor building of queries
                     System.Text.StringBuilder sb = new System.Text.StringBuilder(query.Query);
@@ -628,9 +629,9 @@ namespace Geckon.MCM.Module.Standard
 
         #endregion
         
-        private void PutObjectInIndex(IIndex index, IEnumerable<Object> newObject)
+        private void PutObjectInIndex( IIndex index, IEnumerable<Object> newObject )
         {
-            index.Set(newObject);
+            index.Set( newObject );
         }
 
         #endregion

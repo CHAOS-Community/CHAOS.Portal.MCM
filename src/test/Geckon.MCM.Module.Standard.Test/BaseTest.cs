@@ -39,7 +39,7 @@ namespace Geckon.MCM.Module.Standard.Test
 
             using( MCMDataContext db = new MCMDataContext( "Data Source=192.168.56.101;Initial Catalog=MCM;Persist Security Info=True;User ID=sa;Password=GECKONpbvu7000" ) )
             {
-                db.PopulateDefaultData();
+               db.PopulateDefaultData();
 
                 AssetObjectType  = (from o in db.ObjectTypes where o.Value == "Asset" select o).First();
                 DemoObjectType   = (from o in db.ObjectTypes where o.Value == "demo" select o).First();
