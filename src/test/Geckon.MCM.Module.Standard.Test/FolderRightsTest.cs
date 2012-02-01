@@ -12,6 +12,7 @@ namespace Geckon.MCM.Module.Standard.Test
     public class FolderRightsTest
     {
 		Guid UserGuid = new Guid( "321a5b56-67e1-4a02-ab12-f04cb9d2d90c" );
+		IList<Guid> GroupGuids = new List<Guid>();
         PermissionManager topFolder;
 		IList<int> directFolderIDs;
 
@@ -20,6 +21,8 @@ namespace Geckon.MCM.Module.Standard.Test
 			directFolderIDs = new List<int>();
             topFolder = new PermissionManager();
 
+			GroupGuids.Add( new Guid( "421a5b56-67e1-4a02-ab12-f04cb9d2d90c" ) );
+
             foreach( Folder folder in LoadFolders( new DirectoryInfo( "C:\\" ) ).GetSubFolders() )
             {
                 topFolder.Add( folder );
@@ -27,9 +30,11 @@ namespace Geckon.MCM.Module.Standard.Test
 
 			topFolder.GetFolder(1).AddUser(UserGuid, (int)FolderPermissions.Read);
 			topFolder.GetFolder(3).AddUser(UserGuid, (int)FolderPermissions.Read);
+			topFolder.GetFolder(5).AddUser(GroupGuids.First(), (int)FolderPermissions.Read);
 			topFolder.GetFolder(1784).AddUser(UserGuid, (int)FolderPermissions.Read);
 			directFolderIDs.Add(1);
 			directFolderIDs.Add(3);
+			directFolderIDs.Add(5);
 			directFolderIDs.Add(1784);
         }
 
@@ -59,9 +64,9 @@ namespace Geckon.MCM.Module.Standard.Test
 		[Test]
 		public void Should_Find_Users_TopFolders()
 		{
-			foreach( Folder folder in topFolder.GetTopFolders( UserGuid, directFolderIDs ) )
+			foreach( Folder folder in topFolder.GetTopFolders( UserGuid, GroupGuids, directFolderIDs ) )
 			{
-				if( folder.ID != 1 && folder.ID != 1784 )
+				if( folder.ID != 1 && folder.ID != 1784 && folder.ID != 5 )
 					Assert.Fail();
 			}
 		}

@@ -54,7 +54,7 @@ namespace Geckon.MCM.Module.Standard.Rights
             return FolderIndex[ id ];
         }
 
-		public IEnumerable<Folder> GetTopFolders( Guid userGuid, IEnumerable<int> directFolderIDs )
+		public IEnumerable<Folder> GetTopFolders( Guid userGuid, IEnumerable<Guid> groupGuids, IEnumerable<int> directFolderIDs )
 		{
 			IList<Folder> folders = new List<Folder>();
 
@@ -65,32 +65,23 @@ namespace Geckon.MCM.Module.Standard.Rights
 				if( folder.ParentFolder != null && folders.Contains( folder.ParentFolder ) )
 					folders.Remove( folder );
 
-		    	if( IsTopFolder( folder.ParentFolder, userGuid, (int) FolderPermissions.Read ) )
+		    	if( IsTopFolder( folder.ParentFolder, userGuid, groupGuids, (int) FolderPermissions.Read ) )
 					folders.Add( folder );
 		    }
 
 			return folders;
 		}
 
-    	private bool IsTopFolder( Folder folder, Guid userGuid, int permissions )
+    	private bool IsTopFolder( Folder folder, Guid userGuid, IEnumerable<Guid> groupGuids, int permissions )
     	{
     		if( folder.ParentFolder == null )
 				return true;
 
-			if( folder.DoesUserHavePersmission( userGuid, permissions ) )
+			if( folder.DoesUserOrGroupHavePersmission( userGuid, groupGuids, permissions ) )
 				return false;
 			
-			return IsTopFolder( folder.ParentFolder, userGuid, permissions );
+			return IsTopFolder( folder.ParentFolder, userGuid, groupGuids, permissions );
     	}
-
-    	//0-[X]-0-X
-		// \0-0
-		//   \0-0-0
-		//     \[X]-0
-
-		//Iterate through all X's (direct permissions)
-		//Navigate to through parents, until Parent == null (Save original ID)
-		//Navigate to through parents, until Parent.Permission == READ (Remove original ID)
 
         #endregion
     }

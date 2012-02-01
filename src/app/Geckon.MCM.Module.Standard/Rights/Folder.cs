@@ -65,10 +65,13 @@ namespace Geckon.MCM.Module.Standard.Rights
 			UserPermissions[ permission ].Add( userGUID );
         }
 
-		public bool DoesUserHavePersmission( Guid userGUID, int permission )
+		public bool DoesUserOrGroupHavePersmission( Guid userGUID, IEnumerable<Guid> groupGUIDs, int permission )
 		{
 		    if( UserPermissions.ContainsKey( permission ) )
 		        return UserPermissions[ permission ].Where( guid => guid.Equals( userGUID ) ).FirstOrDefault() != null;
+
+			if( GroupPermissions.ContainsKey( permission ) )
+				return GroupPermissions[ permission ].Where( guid => groupGUIDs.Contains( guid ) ).FirstOrDefault( ) != null;
 
 			return false;
 		}
