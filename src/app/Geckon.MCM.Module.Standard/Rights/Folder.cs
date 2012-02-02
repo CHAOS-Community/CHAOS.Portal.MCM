@@ -12,8 +12,8 @@ namespace Geckon.MCM.Module.Standard.Rights
 		public Folder         ParentFolder { get; private set; }
         private IList<Folder> SubFolders { get; set; }
 
-		private IDictionary<int, IList<Guid>> GroupPermissions { get; set; }
-		private IDictionary<int, IList<Guid>> UserPermissions { get; set; }
+		private IDictionary<Guid, FolderPermissions> GroupPermissions { get; set; }
+		private IDictionary<Guid, FolderPermissions> UserPermissions { get; set; }
 
         #endregion
         #region Construction
@@ -27,8 +27,8 @@ namespace Geckon.MCM.Module.Standard.Rights
         {
             ID               = id;
             SubFolders       = new List<Folder>();
-			GroupPermissions = new Dictionary<int, IList<Guid>>();
-			UserPermissions  = new Dictionary<int, IList<Guid>>();
+			GroupPermissions = new Dictionary<Guid, FolderPermissions>();
+			UserPermissions  = new Dictionary<Guid, FolderPermissions>();
         }
 
         #endregion
@@ -49,31 +49,39 @@ namespace Geckon.MCM.Module.Standard.Rights
             SubFolders.Add( folder );
         }
 
-		public virtual void AddGroup( Guid groupGUID, int permission )
+		public virtual void AddGroup( Guid groupGUID, FolderPermissions permission )
         {
-            if( !GroupPermissions.ContainsKey( permission ) )
-				GroupPermissions.Add(permission, new List<Guid>());
-
-			GroupPermissions[ permission ].Add( groupGUID );
+			GroupPermissions.Add( groupGUID, permission );
         }
 
-		public virtual void AddUser( Guid userGUID, int permission )
+		public virtual void AddUser( Guid userGUID, FolderPermissions permission )
         {
-            if( !UserPermissions.ContainsKey( permission ) )
-				UserPermissions.Add(permission, new List<Guid>());
-
-			UserPermissions[ permission ].Add( userGUID );
+			UserPermissions.Add( userGUID, permission );
         }
 
-		public bool DoesUserOrGroupHavePersmission( Guid userGUID, IEnumerable<Guid> groupGUIDs, int permission )
+		public bool DoesUserOrGroupHavePersmission( Guid userGUID, IEnumerable<Guid> groupGUIDs, FolderPermissions permission )
 		{
-		    if( UserPermissions.ContainsKey( permission ) )
-		        return UserPermissions[ permission ].Where( guid => guid.Equals( userGUID ) ).FirstOrDefault() != null;
+		    return DoesUserOrGroupHavePersmission( userGUID, groupGUIDs, permission, true );
+		}
 
-			if( GroupPermissions.ContainsKey( permission ) )
-				return GroupPermissions[ permission ].Where( guid => groupGUIDs.Contains( guid ) ).FirstOrDefault( ) != null;
+		public bool DoesUserOrGroupHavePersmission( Guid userGUID, IEnumerable<Guid> groupGUIDs, FolderPermissions permission, bool recursive )
+		{
+			if( UserPermissions.ContainsKey( userGUID ) && ( UserPermissions[ userGUID ] & permission ) == permission )
+		        return true;
 
-			return false;
+			foreach( Guid groupGUID in groupGUIDs )
+			{
+				if( GroupPermissions.ContainsKey( groupGUID ) && ( GroupPermissions[ groupGUID ] & permission ) == permission )
+					return true;
+			}
+
+			if( !recursive )
+				return false;
+
+			if( ParentFolder == null )
+				return false;
+
+			return ParentFolder.DoesUserOrGroupHavePersmission( userGUID, groupGUIDs, permission );
 		}
 
         public int Count()
@@ -116,6 +124,5 @@ namespace Geckon.MCM.Module.Standard.Rights
         }
 
         #endregion
-
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Xml.Linq;
 using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Data.Linq;
+using Geckon.MCM.Module.Standard.Rights;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Core.Standard.Module;
@@ -21,6 +23,9 @@ namespace Geckon.MCM.Module.Standard
         #region Properties
 
         private String ConnectionString { get; set; }
+		private Timer Timer { get; set; }
+		private PermissionManager PermissionManager { get; set; }
+
         public MCMDataContext DefaultMCMDataContext { get { return new MCMDataContext(ConnectionString); } }
 
         #endregion
@@ -28,11 +33,21 @@ namespace Geckon.MCM.Module.Standard
 
         public override void Init( XElement config )
         {
-            ConnectionString = config.Attribute( "ConnectionString" ).Value;
+            ConnectionString  = config.Attribute( "ConnectionString" ).Value;
+			PermissionManager = new PermissionManager();
+			Timer             = new Timer( SynchronizeFolders, null, new TimeSpan( 0, 0, 0 ), new TimeSpan( 0, 0, 1 ) );
         }
 
-        #endregion
+    	#endregion
         #region Business Logic
+
+		private void SynchronizeFolders( object state )
+    	{
+    		using( MCMDataContext db = DefaultMCMDataContext )
+            {
+			//	db.Folders
+            }
+    	}
 
         #region ObjectType
 

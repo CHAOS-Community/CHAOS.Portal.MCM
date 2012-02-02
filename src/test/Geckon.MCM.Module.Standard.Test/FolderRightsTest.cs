@@ -28,10 +28,32 @@ namespace Geckon.MCM.Module.Standard.Test
                 topFolder.Add( folder );
             }
 
-			topFolder.GetFolder(1).AddUser(UserGuid, (int)FolderPermissions.Read);
-			topFolder.GetFolder(3).AddUser(UserGuid, (int)FolderPermissions.Read);
-			topFolder.GetFolder(5).AddUser(GroupGuids.First(), (int)FolderPermissions.Read);
-			topFolder.GetFolder(1784).AddUser(UserGuid, (int)FolderPermissions.Read);
+			Random rand = new Random(1337);
+
+        	for( int i = 1; i < 30000; i++ )
+        	{
+				int id = rand.Next( 1, 30000 );
+        		topFolder.GetFolder( id ).AddUser( Guid.NewGuid(), FolderPermissions.Read );
+        	}
+
+			for( int i = 0; i < 5000; i++ )
+        	{
+        		int id = rand.Next(1, 30000);
+				topFolder.GetFolder( id ).AddGroup( Guid.NewGuid(), FolderPermissions.Read );
+        	}
+
+			//for (int i = 1; i < 35000; i++)
+			//{
+			//    topFolder.GetFolder(i).AddUser(UserGuid, FolderPermissions.Read);
+			//    directFolderIDs.Add(i);
+			//}
+
+			topFolder.GetFolder(1).AddUser(UserGuid, FolderPermissions.Read);
+			topFolder.GetFolder(3).AddUser(UserGuid, FolderPermissions.Read);
+			topFolder.GetFolder(5).AddGroup(GroupGuids.First(), FolderPermissions.Read);
+			topFolder.GetFolder(55).AddGroup(GroupGuids.First(), FolderPermissions.Read);
+			topFolder.GetFolder(1784).AddUser(UserGuid, FolderPermissions.Read);
+
 			directFolderIDs.Add(1);
 			directFolderIDs.Add(3);
 			directFolderIDs.Add(5);
@@ -55,7 +77,7 @@ namespace Geckon.MCM.Module.Standard.Test
             Assert.IsNotNull( folder );
         }
 		
-        [Test, ExpectedException(typeof(KeyNotFoundException))]
+        [Test, ExpectedException( typeof( KeyNotFoundException ) )]
         public void Should_Throw_KeyNotFoundException_If_ID_Is_Not_Found()
         {
             topFolder.GetFolder( 100000 );
@@ -64,11 +86,34 @@ namespace Geckon.MCM.Module.Standard.Test
 		[Test]
 		public void Should_Find_Users_TopFolders()
 		{
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+
 			foreach( Folder folder in topFolder.GetTopFolders( UserGuid, GroupGuids, directFolderIDs ) )
 			{
-				if( folder.ID != 1 && folder.ID != 1784 && folder.ID != 5 )
+				if (!new[] { 1, 5, 1784 }.Contains(folder.ID))
 					Assert.Fail();
 			}
+
+			Console.WriteLine( "{0}ms",sw.ElapsedMilliseconds );
+		}
+
+		[Test]
+		public void Should_Check_If_User_Has_Permissions()
+		{
+			Assert.IsTrue( topFolder.GetFolder( 5 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
+		}
+
+		[Test]
+		public void Should_Check_If_User_Has_Inherited_Permissions()
+		{
+			Assert.IsTrue( topFolder.GetFolder( 4 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
+		}
+
+		[Test]
+		public void Should_Return_False_If_User_Doesnt_Have_Permission()
+		{
+			Assert.IsFalse( topFolder.GetFolder( 48 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
 		}
 
         private int index = 0;

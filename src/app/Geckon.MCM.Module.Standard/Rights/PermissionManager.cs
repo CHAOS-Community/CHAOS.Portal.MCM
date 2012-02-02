@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Geckon.MCM.Module.Standard.Rights
 {
@@ -58,26 +59,26 @@ namespace Geckon.MCM.Module.Standard.Rights
 		{
 			IList<Folder> folders = new List<Folder>();
 
-		    foreach( int directFolderID in directFolderIDs )
-		    {
-		        Folder folder = FolderIndex[ directFolderID ];
+			foreach( int directFolderID in directFolderIDs )
+			{
+				Folder folder = FolderIndex[ directFolderID ];
 
 				if( folder.ParentFolder != null && folders.Contains( folder.ParentFolder ) )
 					folders.Remove( folder );
 
-		    	if( IsTopFolder( folder.ParentFolder, userGuid, groupGuids, (int) FolderPermissions.Read ) )
+				if( IsTopFolder( folder.ParentFolder, userGuid, groupGuids, FolderPermissions.Read ) )
 					folders.Add( folder );
-		    }
+			}
 
 			return folders;
 		}
 
-    	private bool IsTopFolder( Folder folder, Guid userGuid, IEnumerable<Guid> groupGuids, int permissions )
+    	private bool IsTopFolder( Folder folder, Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermissions permissions )
     	{
     		if( folder.ParentFolder == null )
 				return true;
 
-			if( folder.DoesUserOrGroupHavePersmission( userGuid, groupGuids, permissions ) )
+			if( folder.DoesUserOrGroupHavePersmission( userGuid, groupGuids, permissions, false ) )
 				return false;
 			
 			return IsTopFolder( folder.ParentFolder, userGuid, groupGuids, permissions );

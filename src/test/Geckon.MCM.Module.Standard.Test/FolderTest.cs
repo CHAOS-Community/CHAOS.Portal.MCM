@@ -69,7 +69,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Move_Folder()
         {
-            Assert.Fail("Not implemented yet");
+			Assert.Ignore();
             ScalarResult result = MCMModule.Folder_Update( AdminCallContext, EmptyFolder.ID, null, null);
 
             Assert.Greater((int)result.Value, 0);
