@@ -14,11 +14,9 @@ namespace Geckon.MCM.Module.Standard.Test
 		Guid UserGuid = new Guid( "321a5b56-67e1-4a02-ab12-f04cb9d2d90c" );
 		IList<Guid> GroupGuids = new List<Guid>();
         PermissionManager topFolder;
-		//IList<int> directFolderIDs;
 
         public FolderRightsTest()
         {
-			//directFolderIDs = new List<int>();
             topFolder = new PermissionManager();
 
 			GroupGuids.Add( new Guid( "421a5b56-67e1-4a02-ab12-f04cb9d2d90c" ) );
@@ -42,22 +40,11 @@ namespace Geckon.MCM.Module.Standard.Test
 				topFolder.GetFolder( id ).AddGroup( Guid.NewGuid(), FolderPermissions.Read );
         	}
 
-			//for (int i = 1; i < 35000; i++)
-			//{
-			//    topFolder.GetFolder(i).AddUser(UserGuid, FolderPermissions.Read);
-			//    directFolderIDs.AddFolder(i);
-			//}
-
 			topFolder.AddUser( 1, UserGuid, FolderPermissions.Read);
 			topFolder.AddUser( 3, UserGuid, FolderPermissions.Read);
 			topFolder.AddGroup( 5, GroupGuids.First(), FolderPermissions.Read);
 			topFolder.AddGroup( 55, GroupGuids.First(), FolderPermissions.Read);
 			topFolder.AddUser( 1784, UserGuid, FolderPermissions.Read);
-
-			//directFolderIDs.Add(1);
-			//directFolderIDs.Add(3);
-			//directFolderIDs.Add(5);
-			//directFolderIDs.Add(1784);
         }
 
         [Test]

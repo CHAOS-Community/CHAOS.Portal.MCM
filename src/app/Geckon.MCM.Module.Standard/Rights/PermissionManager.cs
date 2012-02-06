@@ -9,10 +9,10 @@ namespace Geckon.MCM.Module.Standard.Rights
     {
         #region Properties
 
-        private IDictionary< int, Folder >               FolderIndex { get; set; }
+        private IDictionary< int, Folder >         FolderIndex { get; set; }
 		private IDictionary< Guid, IList<Folder> > UserFolderIndex { get; set; }
 		private IDictionary< Guid, IList<Folder> > GroupFolderIndex { get; set; }
-		private IList< Folder >                          Folders     { get; set; }
+		private IList< Folder >                    Folders     { get; set; }
 
         #endregion
         #region Constructors
@@ -28,15 +28,11 @@ namespace Geckon.MCM.Module.Standard.Rights
         #endregion
         #region Business Logic
 
-		// FOLDERS ARE NOT ADDED CORRECTLY AS TOPFOLDERS !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-		// TODO: Add Folder to TopFolders
 		public void AddFolder( Folder folder )
 		{
 			AddFolder( null, folder );
 		}
 
-		// TODO: Add Folder to Folder by ID
 		public void AddFolder( int? parentFolderID, Folder folder )
 		{
 			if( parentFolderID.HasValue )
@@ -56,31 +52,6 @@ namespace Geckon.MCM.Module.Standard.Rights
 				FolderIndex.Add( subFolder.ID, subFolder );
 			}
 		}
-
-
-		//public void AddFolder( Folder folder )
-		//{
-		//    AddFolder( folder.ID, folder );
-		//}
-
-		//public void AddFolder( int folderID, Folder folder)
-		//{
-		//    Folders.Add( folder );
-		//    FolderIndex.Add( folder.ID, folder );
-
-		//    foreach( Folder subFolder in folder.GetSubFolders( true ) )
-		//    {
-		//        FolderIndex.Add( subFolder.ID, subFolder );
-		//    }
-		//}
-
-		//public void AddFolder( int folderID, int? parentID )
-		//{
-		//    if( parentID.HasValue )
-		//        AddFolder( new Folder( folderID, FolderIndex[ parentID.Value ] ) );
-		//    else
-		//        AddFolder( new Folder( folderID ) );
-		//}
 
 		public void AddUser( int folderID, Guid userGUID, FolderPermissions permissions )
 		{
