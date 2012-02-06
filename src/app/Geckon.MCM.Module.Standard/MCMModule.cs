@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Data.Linq;
 using Geckon.MCM.Module.Standard.Rights;
+using Geckon.Portal.Core;
 using Geckon.Portal.Core.Exception;
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Portal.Core.Standard.Module;
@@ -35,7 +36,8 @@ namespace Geckon.MCM.Module.Standard
         {
             ConnectionString  = config.Attribute( "ConnectionString" ).Value;
 			PermissionManager = new PermissionManager();
-			Timer             = new Timer( SynchronizeFolders, null, new TimeSpan( 0, 0, 0 ), new TimeSpan( 0, 0, 1 ) );
+			Timer             = new Timer( SynchronizeFolders, null, 0, 1000 );
+			//SynchronizeFolders( null );
         }
 
     	#endregion
@@ -44,8 +46,28 @@ namespace Geckon.MCM.Module.Standard
 		private void SynchronizeFolders( object state )
     	{
     		using( MCMDataContext db = DefaultMCMDataContext )
-            {
-			//	db.Folders
+    		{
+				PermissionManager pm = new PermissionManager();
+
+				foreach( Data.Linq.Folder folder in db.Folders )
+            	{
+					pm.AddFolder(folder.ParentID, new Folder(folder.ID));
+            	}
+
+            	foreach( var folderUserJoin in db.Folder_User_Joins )
+            	{
+					pm.AddUser(folderUserJoin.FolderID, folderUserJoin.UserGUID, (FolderPermissions)BitConverter.ToInt32(folderUserJoin.Permission.ToArray(), 0));
+            	}
+
+				foreach( var folderGroupJoin in db.Folder_Group_Joins )
+            	{
+					pm.AddGroup(folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions)BitConverter.ToInt32(folderGroupJoin.Permission.ToArray(), 0));
+            	}
+
+				lock( PermissionManager )
+    			{
+					PermissionManager = pm;
+    			}
             }
     	}
 
@@ -337,9 +359,26 @@ namespace Geckon.MCM.Module.Standard
         [Datatype("Folder","Get")]
         public IEnumerable<FolderInfo> Folder_Get( CallContext callContext, int? id, int? folderTypeID, int? parentID )
         {
+        	IEnumerable<int> folderIDs = new List<int>();
+
+			if( !parentID.HasValue && !id.HasValue )
+				folderIDs = PermissionManager.GetFolders( callContext.User.GUID, callContext.Groups.Select( group => group.GUID ).ToList() ).Select( folder => folder.ID );
+
+			if( parentID.HasValue )
+				folderIDs = PermissionManager.GetFolders( callContext.User.GUID, callContext.Groups.Select( group => group.GUID ).ToList(), parentID.Value ).Select( folder => folder.ID );
+
+			if( id.HasValue )
+			{
+				Folder folder = PermissionManager.GetFolder( id.Value );
+
+				if( folder.DoesUserOrGroupHavePersmission( callContext.User.GUID, callContext.Groups.Select( group => group.GUID ).ToList(), FolderPermissions.Read, true ) )
+					((List<int>) folderIDs).Add(folder.ID);
+			}
+
             using( MCMDataContext db = DefaultMCMDataContext )
             {
-                return db.Folder_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, id, folderTypeID, parentID );
+             //   return db.Folder_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, id, folderTypeID, parentID );
+				return (from fi in db.FolderInfos where folderIDs.Contains(fi.ID) select fi).ToList();
             }
         }
 
@@ -404,9 +443,15 @@ namespace Geckon.MCM.Module.Standard
                 if( result == -100 )
                     throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to Create the folder" );
 
-                FolderInfo folder = Folder_Get( callContext, result, null, null ).First();
+            	return db.Folder_Get( callContext.Groups.Select(group => group.GUID).ToList(),
+            	                      callContext.User.GUID, 
+							          result, 
+							          null, 
+							          null ).First();
 
-                return folder;
+            //    FolderInfo folder = Folder_Get( callContext, result, null, null ).First();
+
+             //   return folder;
             }
         }
 

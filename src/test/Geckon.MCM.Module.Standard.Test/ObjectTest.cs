@@ -14,7 +14,7 @@ namespace Geckon.MCM.Module.Standard.Test
         //public void Should_Get_Object()
         //{
         //    IList<string> guids = new List<string>();
-        //    guids.Add( Object1.GUID.ToString() );
+        //    guids.AddFolder( Object1.GUID.ToString() );
 
         //    IEnumerable<Object1> objectz = MCMModule.Object_Get( AdminCallContext, null, true, false, null, TopFolder.ID );
 

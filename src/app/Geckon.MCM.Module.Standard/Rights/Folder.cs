@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Geckon.MCM.Data.Linq;
 
 namespace Geckon.MCM.Module.Standard.Rights
 {
@@ -8,12 +9,13 @@ namespace Geckon.MCM.Module.Standard.Rights
     {
         #region Properties
 
-        public  int           ID { get; set; }
-		public Folder         ParentFolder { get; private set; }
+		public Folder         ParentFolder { get; set; }
+		public int            ID { get; set; }
         private IList<Folder> SubFolders { get; set; }
 
 		private IDictionary<Guid, FolderPermissions> GroupPermissions { get; set; }
 		private IDictionary<Guid, FolderPermissions> UserPermissions { get; set; }
+
 
         #endregion
         #region Construction
@@ -108,21 +110,17 @@ namespace Geckon.MCM.Module.Standard.Rights
             if( !isRecursive )
                 return SubFolders;
 
-            IList<Folder> tmpFolders = new List<Folder>();
+            List<Folder> tmpFolders = new List<Folder>();
 
             foreach( Folder subFolder in SubFolders )
             {
-                tmpFolders.Add( subFolder );
-
-                foreach( Folder folder in subFolder.GetSubFolders( true ) )
-                {
-                    tmpFolders.Add( folder );
-                }
+            	tmpFolders.Add( subFolder );
+            	tmpFolders.AddRange( subFolder.GetSubFolders( true ) );
             }
 
-            return tmpFolders;
+        	return tmpFolders;
         }
 
         #endregion
-    }
+	}
 }

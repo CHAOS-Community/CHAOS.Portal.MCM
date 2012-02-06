@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Data.Linq;
 using Geckon.Portal.Core.Exception;
@@ -22,6 +23,7 @@ namespace Geckon.MCM.Module.Standard.Test
         [Test]
         public void Should_Get_SubFolders()
         {
+			Thread.Sleep( 1000 );
             IEnumerable<FolderInfo> folders = MCMModule.Folder_Get( AdminCallContext, null, null, TopFolder.ID);
 
             foreach( FolderInfo folderInfo in folders )

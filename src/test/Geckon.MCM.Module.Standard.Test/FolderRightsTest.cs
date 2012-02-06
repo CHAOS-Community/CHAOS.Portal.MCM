@@ -14,18 +14,18 @@ namespace Geckon.MCM.Module.Standard.Test
 		Guid UserGuid = new Guid( "321a5b56-67e1-4a02-ab12-f04cb9d2d90c" );
 		IList<Guid> GroupGuids = new List<Guid>();
         PermissionManager topFolder;
-		IList<int> directFolderIDs;
+		//IList<int> directFolderIDs;
 
         public FolderRightsTest()
         {
-			directFolderIDs = new List<int>();
+			//directFolderIDs = new List<int>();
             topFolder = new PermissionManager();
 
 			GroupGuids.Add( new Guid( "421a5b56-67e1-4a02-ab12-f04cb9d2d90c" ) );
 
             foreach( Folder folder in LoadFolders( new DirectoryInfo( "C:\\" ) ).GetSubFolders() )
             {
-                topFolder.Add( folder );
+                topFolder.AddFolder( folder );
             }
 
 			Random rand = new Random(1337);
@@ -45,19 +45,19 @@ namespace Geckon.MCM.Module.Standard.Test
 			//for (int i = 1; i < 35000; i++)
 			//{
 			//    topFolder.GetFolder(i).AddUser(UserGuid, FolderPermissions.Read);
-			//    directFolderIDs.Add(i);
+			//    directFolderIDs.AddFolder(i);
 			//}
 
-			topFolder.GetFolder(1).AddUser(UserGuid, FolderPermissions.Read);
-			topFolder.GetFolder(3).AddUser(UserGuid, FolderPermissions.Read);
-			topFolder.GetFolder(5).AddGroup(GroupGuids.First(), FolderPermissions.Read);
-			topFolder.GetFolder(55).AddGroup(GroupGuids.First(), FolderPermissions.Read);
-			topFolder.GetFolder(1784).AddUser(UserGuid, FolderPermissions.Read);
+			topFolder.AddUser( 1, UserGuid, FolderPermissions.Read);
+			topFolder.AddUser( 3, UserGuid, FolderPermissions.Read);
+			topFolder.AddGroup( 5, GroupGuids.First(), FolderPermissions.Read);
+			topFolder.AddGroup( 55, GroupGuids.First(), FolderPermissions.Read);
+			topFolder.AddUser( 1784, UserGuid, FolderPermissions.Read);
 
-			directFolderIDs.Add(1);
-			directFolderIDs.Add(3);
-			directFolderIDs.Add(5);
-			directFolderIDs.Add(1784);
+			//directFolderIDs.Add(1);
+			//directFolderIDs.Add(3);
+			//directFolderIDs.Add(5);
+			//directFolderIDs.Add(1784);
         }
 
         [Test]
@@ -89,13 +89,35 @@ namespace Geckon.MCM.Module.Standard.Test
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
-			foreach( Folder folder in topFolder.GetTopFolders( UserGuid, GroupGuids, directFolderIDs ) )
+			foreach( Folder folder in topFolder.GetFolders( UserGuid, GroupGuids ) )
 			{
-				if (!new[] { 1, 5, 1784 }.Contains(folder.ID))
+				if (!new[] { 1, 5, 1784, 55 }.Contains(folder.ID))
 					Assert.Fail();
 			}
 
 			Console.WriteLine( "{0}ms",sw.ElapsedMilliseconds );
+		}
+
+		[Test]
+		public void Should_Get_SubFolders()
+		{
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+
+			Assert.AreEqual( 24, topFolder.GetFolders( UserGuid, GroupGuids, 5 ).Count() );
+
+			Console.WriteLine("{0}ms", sw.ElapsedMilliseconds);
+		}
+
+		[Test]
+		public void Should_Not_Return_Folders_Without_Permission()
+		{
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+
+			Assert.AreEqual( 0, topFolder.GetFolders( UserGuid, GroupGuids, 48 ).Count() );
+
+			Console.WriteLine("{0}ms", sw.ElapsedMilliseconds);
 		}
 
 		[Test]
