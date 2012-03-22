@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using CHAOS.MCM.Data.DTO;
+using CHAOS.Portal.Data.DTO;
 using Geckon.Portal.Core.Exception;
-using Geckon.Portal.Data;
 using NUnit.Framework;
-using Object = Geckon.MCM.Data.Linq.Object;
 
 namespace Geckon.MCM.Module.Standard.Test
 {
@@ -21,37 +19,37 @@ namespace Geckon.MCM.Module.Standard.Test
         //    Assert.Greater( objectz.Count(), 0 );
         //}
 
-        [Test]
-        public void Should_Create_Object()
-        {
-            System.Guid guid = System.Guid.NewGuid();
+		//[Test]
+		//public void Should_Create_Object()
+		//{
+		//    System.Guid guid = System.Guid.NewGuid();
 
-            Object objectz = MCMModule.Object_Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
+		//    Object objectz = MCMModule.Object_Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
 
-            Assert.AreEqual( guid.ToString(), objectz.GUID.ToString() );
-        }
+		//    Assert.AreEqual( guid.ToString(), objectz.GUID.ToString() );
+		//}
         
-        [Test]
-        public void Should_Delete_Object()
-        {
-            ScalarResult result = MCMModule.Object_Delete( AdminCallContext, Object1.GUID, TopFolder.ID );
+		//[Test]
+		//public void Should_Delete_Object()
+		//{
+		//    ScalarResult result = MCMModule.Object_Delete( AdminCallContext, Object1.GUID, TopFolder.ID );
 
-            Assert.AreEqual( 1, result.Value );
-        }
+		//    Assert.AreEqual( 1, result.Value );
+		//}
 
-        [Test]
-        public void Should_Put_Object_In_Folder()
-        {
-            ScalarResult result = MCMModule.Object_PutInFolder( AdminCallContext, Object1.GUID, EmptyFolder.ID, ObjectFolderLink.ID );
+		//[Test]
+		//public void Should_Put_Object_In_Folder()
+		//{
+		//    ScalarResult result = MCMModule.Object_PutInFolder( AdminCallContext, Object1.GUID, EmptyFolder.ID, ObjectFolderLink.ID );
 
-            Assert.AreEqual(1, result.Value);
-        }
+		//    Assert.AreEqual(1, result.Value);
+		//}
 
-        [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
-        public void Should_Not_Put_Object_In_Folder_With_Insufficient_Permissions()
-        {
-            MCMModule.Object_PutInFolder(AnonCallContext, Object1.GUID, EmptyFolder.ID, ObjectFolderLink.ID);
-        }
+		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//public void Should_Not_Put_Object_In_Folder_With_Insufficient_Permissions()
+		//{
+		//    MCMModule.Object_PutInFolder(AnonCallContext, Object1.GUID, EmptyFolder.ID, ObjectFolderLink.ID);
+		//}
 
         //[Test]
         //public void Should_Get_Index_Fields_From_Object()

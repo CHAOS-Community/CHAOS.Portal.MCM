@@ -34,6 +34,9 @@
     <Reference Include="geckon">
       <HintPath>..\..\..\lib\geckon.dll</HintPath>
     </Reference>
+    <Reference Include="Membase">
+      <HintPath>..\..\..\lib\Membase.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
     </Reference>
@@ -45,6 +48,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -70,13 +74,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\CHAOS.MCM.Data.DTO\CHAOS.MCM.Data.DTO.csproj">
+      <Project>{663E2831-9B22-49B8-BA6D-26395E3D285C}</Project>
+      <Name>CHAOS.MCM.Data.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\app\CHAOS.MCM.Data.EF\CHAOS.MCM.Data.EF.csproj">
+      <Project>{DF345249-3E02-470B-BD17-CAE1F1716B8F}</Project>
+      <Name>CHAOS.MCM.Data.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\Geckon.MCM.Core.Exception\Geckon.MCM.Core.Exception.csproj">
       <Project>{4E125648-0FA1-4FD3-AB15-343468DE471D}</Project>
       <Name>Geckon.MCM.Core.Exception</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\Geckon.MCM.Data.Linq\Geckon.MCM.Data.Linq.csproj">
-      <Project>{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}</Project>
-      <Name>Geckon.MCM.Data.Linq</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\app\Geckon.MCM.Module.Standard\Geckon.MCM.Module.Standard.csproj">
       <Project>{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD}</Project>

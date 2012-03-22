@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
@@ -55,13 +56,13 @@
     <Compile Include="Rights\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CHAOS.MCM.Data.EF\CHAOS.MCM.Data.EF.csproj">
+      <Project>{DF345249-3E02-470B-BD17-CAE1F1716B8F}</Project>
+      <Name>CHAOS.MCM.Data.EF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Geckon.MCM.Core.Exception\Geckon.MCM.Core.Exception.csproj">
       <Project>{4E125648-0FA1-4FD3-AB15-343468DE471D}</Project>
       <Name>Geckon.MCM.Core.Exception</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Geckon.MCM.Data.Linq\Geckon.MCM.Data.Linq.csproj">
-      <Project>{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}</Project>
-      <Name>Geckon.MCM.Data.Linq</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
