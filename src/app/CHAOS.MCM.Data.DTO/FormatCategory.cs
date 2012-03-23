@@ -4,7 +4,7 @@ using Geckon.Serialization;
 
 namespace CHAOS.MCM.Data.DTO
 {
-	public class FormatType : Result
+	public class FormatCategory : Result
 	{
 		#region Properties
 
@@ -17,7 +17,7 @@ namespace CHAOS.MCM.Data.DTO
 		#endregion
 		#region Constructor
 
-		public FormatType( uint id, string name )
+		public FormatCategory(uint id, string name)
 		{
 			ID   = id;
 			Name = name;

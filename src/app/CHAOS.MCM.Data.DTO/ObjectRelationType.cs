@@ -1,4 +1,5 @@
-﻿using Geckon.Portal.Data.Result.Standard;
+﻿using System;
+using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 
 namespace CHAOS.MCM.Data.DTO
@@ -8,10 +9,24 @@ namespace CHAOS.MCM.Data.DTO
 		#region Properties
 
 		[Serialize("ID")]
-		public int ID{ get; set; }
+		public uint ID { get; set; }
 
-		[Serialize("Value")]
-		public string Value{ get; set; }
+		[Serialize("Name")]
+		public string Name { get; set; }
+
+		#endregion
+		#region Constructors
+
+		public ObjectRelationType( uint id, string name )
+		{
+			ID   = id;
+			Name = name;
+		}
+
+		public ObjectRelationType()
+		{
+			
+		}
 
 		#endregion
 	}

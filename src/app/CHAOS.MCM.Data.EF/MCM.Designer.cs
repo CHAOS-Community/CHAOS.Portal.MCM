@@ -25,7 +25,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Destination_ID_AccessProvider_DestinationID", "Destination", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Destination), "AccessProvider", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessProvider), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Destination_ID_Conversion_DestinationID", "Destination", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Destination), "Conversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Conversion), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Format_ID_Conversion_FormatID", "Format", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Format), "Conversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Conversion), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatCategory_ID_Conversion_FormatCategoryID", "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatCategory), "Conversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Conversion), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Destination_ID_File_DestinationID", "Destination", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Destination), "File", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.File), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_File_ID_File_ParentID", "File", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(CHAOS.MCM.Data.EF.File), "File1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.File), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Format_ID_File_FormatID", "Format", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Format), "File", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.File), true)]
@@ -34,14 +33,22 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Folder_User_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Folder_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Folder_User_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Object_Folder_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FolderType_ID_Folder_FolderTypeID", "FolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FolderType), "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Folder), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatCategory_ID_Format_FormatCategoryID", "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatCategory), "Format", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Format), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatType_ID_FormatCategory_FormatTypeID", "FormatType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatType), "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.FormatCategory), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Language_LanguageCode_Metadata_LanguageCode", "Language", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(CHAOS.MCM.Data.EF.Language), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MS_GUID_MS_Group_Join_MSGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "MetadataSchema_Group_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.MetadataSchema_Group_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MS_GUID_MS_User_Join_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "MetadataSchema_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.MetadataSchema_User_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectFolderType), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID", "ObjectRelationType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectRelationType), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "AccessPoint_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_Object_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_File_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "File", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.File), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object1GUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object2GUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectType_ID_Object_ObjectTypeID", "ObjectType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectType), "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatCategory_ID_Conversion_FormatCategoryID", "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatCategory), "Conversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Conversion), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatCategory_ID_Format_FormatCategoryID", "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatCategory), "Format", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Format), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatType_ID_FormatCategory_FormatTypeID", "FormatType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatType), "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.FormatCategory), true)]
 
 #endregion
 
@@ -304,38 +311,6 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<FormatCategory> FormatCategory
-        {
-            get
-            {
-                if ((_FormatCategory == null))
-                {
-                    _FormatCategory = base.CreateObjectSet<FormatCategory>("FormatCategory");
-                }
-                return _FormatCategory;
-            }
-        }
-        private ObjectSet<FormatCategory> _FormatCategory;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<FormatType> FormatType
-        {
-            get
-            {
-                if ((_FormatType == null))
-                {
-                    _FormatType = base.CreateObjectSet<FormatType>("FormatType");
-                }
-                return _FormatType;
-            }
-        }
-        private ObjectSet<FormatType> _FormatType;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Language> Language
         {
             get
@@ -556,6 +531,54 @@ namespace CHAOS.MCM.Data.EF
             }
         }
         private ObjectSet<FolderInfo> _FolderInfo;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Object> Object
+        {
+            get
+            {
+                if ((_Object == null))
+                {
+                    _Object = base.CreateObjectSet<Object>("Object");
+                }
+                return _Object;
+            }
+        }
+        private ObjectSet<Object> _Object;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FormatCategory> FormatCategory
+        {
+            get
+            {
+                if ((_FormatCategory == null))
+                {
+                    _FormatCategory = base.CreateObjectSet<FormatCategory>("FormatCategory");
+                }
+                return _FormatCategory;
+            }
+        }
+        private ObjectSet<FormatCategory> _FormatCategory;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FormatType> FormatType
+        {
+            get
+            {
+                if ((_FormatType == null))
+                {
+                    _FormatType = base.CreateObjectSet<FormatType>("FormatType");
+                }
+                return _FormatType;
+            }
+        }
+        private ObjectSet<FormatType> _FormatType;
 
         #endregion
         #region AddTo Methods
@@ -662,22 +685,6 @@ namespace CHAOS.MCM.Data.EF
         public void AddToFormat(Format format)
         {
             base.AddObject("Format", format);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the FormatCategory EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToFormatCategory(FormatCategory formatCategory)
-        {
-            base.AddObject("FormatCategory", formatCategory);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the FormatType EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToFormatType(FormatType formatType)
-        {
-            base.AddObject("FormatType", formatType);
         }
     
         /// <summary>
@@ -791,6 +798,30 @@ namespace CHAOS.MCM.Data.EF
         {
             base.AddObject("FolderInfo", folderInfo);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Object EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToObject(Object @object)
+        {
+            base.AddObject("Object", @object);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FormatCategory EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFormatCategory(FormatCategory formatCategory)
+        {
+            base.AddObject("FormatCategory", formatCategory);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FormatType EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFormatType(FormatType formatType)
+        {
+            base.AddObject("FormatType", formatType);
+        }
 
         #endregion
         #region Function Imports
@@ -862,8 +893,7 @@ namespace CHAOS.MCM.Data.EF
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="systemPermission">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> FolderType_Create(global::System.String name, Nullable<global::System.Int32> systemPermission)
+        public ObjectResult<Nullable<global::System.Int32>> FolderType_Create(global::System.String name)
         {
             ObjectParameter nameParameter;
             if (name != null)
@@ -875,17 +905,7 @@ namespace CHAOS.MCM.Data.EF
                 nameParameter = new ObjectParameter("Name", typeof(global::System.String));
             }
     
-            ObjectParameter systemPermissionParameter;
-            if (systemPermission.HasValue)
-            {
-                systemPermissionParameter = new ObjectParameter("SystemPermission", systemPermission);
-            }
-            else
-            {
-                systemPermissionParameter = new ObjectParameter("SystemPermission", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("FolderType_Create", nameParameter, systemPermissionParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("FolderType_Create", nameParameter);
         }
     
         /// <summary>
@@ -894,6 +914,854 @@ namespace CHAOS.MCM.Data.EF
         public int PreTest()
         {
             return base.ExecuteFunction("PreTest");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="tableIdentifier">No Metadata Documentation available.</param>
+        /// <param name="permission">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="description">No Metadata Documentation available.</param>
+        public int Permission_Create(global::System.String tableIdentifier, Nullable<global::System.Int32> permission, global::System.String name, global::System.String description)
+        {
+            ObjectParameter tableIdentifierParameter;
+            if (tableIdentifier != null)
+            {
+                tableIdentifierParameter = new ObjectParameter("TableIdentifier", tableIdentifier);
+            }
+            else
+            {
+                tableIdentifierParameter = new ObjectParameter("TableIdentifier", typeof(global::System.String));
+            }
+    
+            ObjectParameter permissionParameter;
+            if (permission.HasValue)
+            {
+                permissionParameter = new ObjectParameter("Permission", permission);
+            }
+            else
+            {
+                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter descriptionParameter;
+            if (description != null)
+            {
+                descriptionParameter = new ObjectParameter("Description", description);
+            }
+            else
+            {
+                descriptionParameter = new ObjectParameter("Description", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("Permission_Create", tableIdentifierParameter, permissionParameter, nameParameter, descriptionParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<FolderType> FolderType_Get(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FolderType>("FolderType_Get", iDParameter, nameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<FolderType> FolderType_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FolderType>("FolderType_Get", mergeOption, iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        public ObjectResult<Folder> Folder_Get(Nullable<global::System.Int32> iD)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Folder>("Folder_Get", iDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        public ObjectResult<Folder> Folder_Get(Nullable<global::System.Int32> iD, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Folder>("Folder_Get", mergeOption, iDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> ObjectType_Create(global::System.String name)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectType_Create", nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<ObjectType> ObjectType_Get(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ObjectType>("ObjectType_Get", iDParameter, nameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<ObjectType> ObjectType_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ObjectType>("ObjectType_Get", mergeOption, iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> ObjectRelationType_Create(global::System.String name)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectRelationType_Create", nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<ObjectRelationType> ObjectRelationType_Get(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ObjectRelationType>("ObjectRelationType_Get", iDParameter, nameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<ObjectRelationType> ObjectRelationType_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ObjectRelationType>("ObjectRelationType_Get", mergeOption, iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> FormatType_Create(global::System.String name)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("FormatType_Create", nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<FormatType> FormatType_Get(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FormatType>("FormatType_Get", iDParameter, nameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<FormatType> FormatType_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FormatType>("FormatType_Get", mergeOption, iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Format> Format_Get(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Format>("Format_Get", iDParameter, nameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Format> Format_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Format>("Format_Get", mergeOption, iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="formatCategoryID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="formatXML">No Metadata Documentation available.</param>
+        /// <param name="mimeType">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Format_Create(Nullable<global::System.Int32> formatCategoryID, global::System.String name, global::System.String formatXML, global::System.String mimeType)
+        {
+            ObjectParameter formatCategoryIDParameter;
+            if (formatCategoryID.HasValue)
+            {
+                formatCategoryIDParameter = new ObjectParameter("FormatCategoryID", formatCategoryID);
+            }
+            else
+            {
+                formatCategoryIDParameter = new ObjectParameter("FormatCategoryID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter formatXMLParameter;
+            if (formatXML != null)
+            {
+                formatXMLParameter = new ObjectParameter("FormatXML", formatXML);
+            }
+            else
+            {
+                formatXMLParameter = new ObjectParameter("FormatXML", typeof(global::System.String));
+            }
+    
+            ObjectParameter mimeTypeParameter;
+            if (mimeType != null)
+            {
+                mimeTypeParameter = new ObjectParameter("MimeType", mimeType);
+            }
+            else
+            {
+                mimeTypeParameter = new ObjectParameter("MimeType", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Format_Create", formatCategoryIDParameter, nameParameter, formatXMLParameter, mimeTypeParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<FormatCategory> FormatCategory_Get(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FormatCategory>("FormatCategory_Get", iDParameter, nameParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<FormatCategory> FormatCategory_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FormatCategory>("FormatCategory_Get", mergeOption, iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="formatTypeID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> FormatCategory_Create(Nullable<global::System.Int32> formatTypeID, global::System.String name)
+        {
+            ObjectParameter formatTypeIDParameter;
+            if (formatTypeID.HasValue)
+            {
+                formatTypeIDParameter = new ObjectParameter("FormatTypeID", formatTypeID);
+            }
+            else
+            {
+                formatTypeIDParameter = new ObjectParameter("FormatTypeID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("FormatCategory_Create", formatTypeIDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="subscriptionGUID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Destination_Create(global::System.Byte[] subscriptionGUID, global::System.String name)
+        {
+            ObjectParameter subscriptionGUIDParameter;
+            if (subscriptionGUID != null)
+            {
+                subscriptionGUIDParameter = new ObjectParameter("SubscriptionGUID", subscriptionGUID);
+            }
+            else
+            {
+                subscriptionGUIDParameter = new ObjectParameter("SubscriptionGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Destination_Create", subscriptionGUIDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="destinationID">No Metadata Documentation available.</param>
+        public ObjectResult<DestinationInfo> DestinationInfo_Get(Nullable<global::System.Int32> destinationID)
+        {
+            ObjectParameter destinationIDParameter;
+            if (destinationID.HasValue)
+            {
+                destinationIDParameter = new ObjectParameter("DestinationID", destinationID);
+            }
+            else
+            {
+                destinationIDParameter = new ObjectParameter("DestinationID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<DestinationInfo>("DestinationInfo_Get", destinationIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="destinationID">No Metadata Documentation available.</param>
+        public ObjectResult<DestinationInfo> DestinationInfo_Get(Nullable<global::System.Int32> destinationID, MergeOption mergeOption)
+        {
+            ObjectParameter destinationIDParameter;
+            if (destinationID.HasValue)
+            {
+                destinationIDParameter = new ObjectParameter("DestinationID", destinationID);
+            }
+            else
+            {
+                destinationIDParameter = new ObjectParameter("DestinationID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<DestinationInfo>("DestinationInfo_Get", mergeOption, destinationIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="destinationID">No Metadata Documentation available.</param>
+        /// <param name="basePath">No Metadata Documentation available.</param>
+        /// <param name="stringFormat">No Metadata Documentation available.</param>
+        /// <param name="token">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> AccessProvider_Create(Nullable<global::System.Int32> destinationID, global::System.String basePath, global::System.String stringFormat, global::System.String token)
+        {
+            ObjectParameter destinationIDParameter;
+            if (destinationID.HasValue)
+            {
+                destinationIDParameter = new ObjectParameter("DestinationID", destinationID);
+            }
+            else
+            {
+                destinationIDParameter = new ObjectParameter("DestinationID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter basePathParameter;
+            if (basePath != null)
+            {
+                basePathParameter = new ObjectParameter("BasePath", basePath);
+            }
+            else
+            {
+                basePathParameter = new ObjectParameter("BasePath", typeof(global::System.String));
+            }
+    
+            ObjectParameter stringFormatParameter;
+            if (stringFormat != null)
+            {
+                stringFormatParameter = new ObjectParameter("StringFormat", stringFormat);
+            }
+            else
+            {
+                stringFormatParameter = new ObjectParameter("StringFormat", typeof(global::System.String));
+            }
+    
+            ObjectParameter tokenParameter;
+            if (token != null)
+            {
+                tokenParameter = new ObjectParameter("Token", token);
+            }
+            else
+            {
+                tokenParameter = new ObjectParameter("Token", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("AccessProvider_Create", destinationIDParameter, basePathParameter, stringFormatParameter, tokenParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="schemaXML">No Metadata Documentation available.</param>
+        public int MetadataSchema_Create(global::System.Byte[] gUID, global::System.String name, global::System.String schemaXML)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter schemaXMLParameter;
+            if (schemaXML != null)
+            {
+                schemaXMLParameter = new ObjectParameter("SchemaXML", schemaXML);
+            }
+            else
+            {
+                schemaXMLParameter = new ObjectParameter("SchemaXML", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("MetadataSchema_Create", gUIDParameter, nameParameter, schemaXMLParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] gUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", gUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] gUID, MergeOption mergeOption)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", mergeOption, gUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="objectTypeID">No Metadata Documentation available.</param>
+        /// <param name="folderID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Object_Create(global::System.Byte[] gUID, Nullable<global::System.Int32> objectTypeID, Nullable<global::System.Int32> folderID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter objectTypeIDParameter;
+            if (objectTypeID.HasValue)
+            {
+                objectTypeIDParameter = new ObjectParameter("ObjectTypeID", objectTypeID);
+            }
+            else
+            {
+                objectTypeIDParameter = new ObjectParameter("ObjectTypeID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter folderIDParameter;
+            if (folderID.HasValue)
+            {
+                folderIDParameter = new ObjectParameter("FolderID", folderID);
+            }
+            else
+            {
+                folderIDParameter = new ObjectParameter("FolderID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Create", gUIDParameter, objectTypeIDParameter, folderIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> ObjectFolderType_Create(global::System.String name)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectFolderType_Create", nameParameter);
         }
 
         #endregion
@@ -1523,6 +2391,44 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<AccessPoint>("MCMModel.FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object")]
+        public Object Object
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Object> ObjectReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Object>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object", value);
                 }
             }
         }
@@ -3100,6 +4006,44 @@ namespace CHAOS.MCM.Data.EF
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_File_ObjectGUID", "Object")]
+        public Object Object
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_File_ObjectGUID", "Object").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_File_ObjectGUID", "Object").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Object> ObjectReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_File_ObjectGUID", "Object");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Object>("MCMModel.FK_Object_GUID_File_ObjectGUID", "Object", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -3454,15 +4398,13 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="folderTypeID">Initial value of the FolderTypeID property.</param>
-        /// <param name="subscriptionGUID">Initial value of the SubscriptionGUID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
-        public static Folder CreateFolder(global::System.Int64 id, global::System.Int64 folderTypeID, global::System.Guid subscriptionGUID, global::System.String name, global::System.DateTime dateCreated)
+        public static Folder CreateFolder(global::System.Int64 id, global::System.Int64 folderTypeID, global::System.String name, global::System.DateTime dateCreated)
         {
             Folder folder = new Folder();
             folder.ID = id;
             folder.FolderTypeID = folderTypeID;
-            folder.SubscriptionGUID = subscriptionGUID;
             folder.Name = name;
             folder.DateCreated = dateCreated;
             return folder;
@@ -3549,9 +4491,9 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Guid SubscriptionGUID
+        public Nullable<global::System.Guid> SubscriptionGUID
         {
             get
             {
@@ -3566,8 +4508,8 @@ namespace CHAOS.MCM.Data.EF
                 OnSubscriptionGUIDChanged();
             }
         }
-        private global::System.Guid _SubscriptionGUID;
-        partial void OnSubscriptionGUIDChanging(global::System.Guid value);
+        private Nullable<global::System.Guid> _SubscriptionGUID;
+        partial void OnSubscriptionGUIDChanging(Nullable<global::System.Guid> value);
         partial void OnSubscriptionGUIDChanged();
     
         /// <summary>
@@ -4775,13 +5717,13 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="formatTypeID">Initial value of the FormatTypeID property.</param>
-        /// <param name="value">Initial value of the Value property.</param>
-        public static FormatCategory CreateFormatCategory(global::System.Int64 id, global::System.Int64 formatTypeID, global::System.String value)
+        /// <param name="name">Initial value of the Name property.</param>
+        public static FormatCategory CreateFormatCategory(global::System.Int64 id, global::System.Int64 formatTypeID, global::System.String name)
         {
             FormatCategory formatCategory = new FormatCategory();
             formatCategory.ID = id;
             formatCategory.FormatTypeID = formatTypeID;
-            formatCategory.Value = value;
+            formatCategory.Name = name;
             return formatCategory;
         }
 
@@ -4844,24 +5786,24 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Value
+        public global::System.String Name
         {
             get
             {
-                return _Value;
+                return _Name;
             }
             set
             {
-                OnValueChanging(value);
-                ReportPropertyChanging("Value");
-                _Value = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Value");
-                OnValueChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.String _Value;
-        partial void OnValueChanging(global::System.String value);
-        partial void OnValueChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
 
         #endregion
     
@@ -4966,12 +5908,12 @@ namespace CHAOS.MCM.Data.EF
         /// Create a new FormatType object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
-        /// <param name="value">Initial value of the Value property.</param>
-        public static FormatType CreateFormatType(global::System.Int64 id, global::System.String value)
+        /// <param name="name">Initial value of the Name property.</param>
+        public static FormatType CreateFormatType(global::System.Int64 id, global::System.String name)
         {
             FormatType formatType = new FormatType();
             formatType.ID = id;
-            formatType.Value = value;
+            formatType.Name = name;
             return formatType;
         }
 
@@ -5010,24 +5952,24 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Value
+        public global::System.String Name
         {
             get
             {
-                return _Value;
+                return _Name;
             }
             set
             {
-                OnValueChanging(value);
-                ReportPropertyChanging("Value");
-                _Value = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("Value");
-                OnValueChanged();
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
             }
         }
-        private global::System.String _Value;
-        partial void OnValueChanging(global::System.String value);
-        partial void OnValueChanged();
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
 
         #endregion
     
@@ -5446,6 +6388,44 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<MetadataSchema>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "MetadataSchema", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Object")]
+        public Object Object
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Object").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Object").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Object> ObjectReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Object");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Object>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Object", value);
                 }
             }
         }
@@ -6012,6 +6992,286 @@ namespace CHAOS.MCM.Data.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Object")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Object : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Object object.
+        /// </summary>
+        /// <param name="gUID">Initial value of the GUID property.</param>
+        /// <param name="objectTypeID">Initial value of the ObjectTypeID property.</param>
+        /// <param name="dateCreated">Initial value of the DateCreated property.</param>
+        public static Object CreateObject(global::System.Guid gUID, global::System.Int64 objectTypeID, global::System.DateTime dateCreated)
+        {
+            Object @object = new Object();
+            @object.GUID = gUID;
+            @object.ObjectTypeID = objectTypeID;
+            @object.DateCreated = dateCreated;
+            return @object;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Guid GUID
+        {
+            get
+            {
+                return _GUID;
+            }
+            set
+            {
+                if (_GUID != value)
+                {
+                    OnGUIDChanging(value);
+                    ReportPropertyChanging("GUID");
+                    _GUID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("GUID");
+                    OnGUIDChanged();
+                }
+            }
+        }
+        private global::System.Guid _GUID;
+        partial void OnGUIDChanging(global::System.Guid value);
+        partial void OnGUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ObjectTypeID
+        {
+            get
+            {
+                return _ObjectTypeID;
+            }
+            set
+            {
+                OnObjectTypeIDChanging(value);
+                ReportPropertyChanging("ObjectTypeID");
+                _ObjectTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ObjectTypeID");
+                OnObjectTypeIDChanged();
+            }
+        }
+        private global::System.Int64 _ObjectTypeID;
+        partial void OnObjectTypeIDChanging(global::System.Int64 value);
+        partial void OnObjectTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateCreated
+        {
+            get
+            {
+                return _DateCreated;
+            }
+            set
+            {
+                OnDateCreatedChanging(value);
+                ReportPropertyChanging("DateCreated");
+                _DateCreated = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateCreated");
+                OnDateCreatedChanged();
+            }
+        }
+        private global::System.DateTime _DateCreated;
+        partial void OnDateCreatedChanging(global::System.DateTime value);
+        partial void OnDateCreatedChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join")]
+        public EntityCollection<AccessPoint_Object_Join> AccessPoint_Object_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_File_ObjectGUID", "File")]
+        public EntityCollection<File> File
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<File>("MCMModel.FK_Object_GUID_File_ObjectGUID", "File");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<File>("MCMModel.FK_Object_GUID_File_ObjectGUID", "File", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Metadata")]
+        public EntityCollection<Metadata> Metadata
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join")]
+        public EntityCollection<Object_Folder_Join> Object_Folder_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Object_Folder_Join>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object_Folder_Join>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object1GUID", "Object_Object_Join")]
+        public EntityCollection<Object_Object_Join> Object_Object_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Object_Object_Join>("MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID", "Object_Object_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object_Object_Join>("MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID", "Object_Object_Join", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object2GUID", "Object_Object_Join")]
+        public EntityCollection<Object_Object_Join> Object_Object_Join1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Object_Object_Join>("MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID", "Object_Object_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object_Object_Join>("MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID", "Object_Object_Join", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_ObjectType_ID_Object_ObjectTypeID", "ObjectType")]
+        public ObjectType ObjectType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectType>("MCMModel.FK_ObjectType_ID_Object_ObjectTypeID", "ObjectType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectType>("MCMModel.FK_ObjectType_ID_Object_ObjectTypeID", "ObjectType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<ObjectType> ObjectTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectType>("MCMModel.FK_ObjectType_ID_Object_ObjectTypeID", "ObjectType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ObjectType>("MCMModel.FK_ObjectType_ID_Object_ObjectTypeID", "ObjectType", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Object_Folder_Join")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -6220,6 +7480,44 @@ namespace CHAOS.MCM.Data.EF
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object")]
+        public Object Object
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Object> ObjectReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -6420,6 +7718,82 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ObjectRelationType>("MCMModel.FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID", "ObjectRelationType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object1GUID", "Object")]
+        public Object Object
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID", "Object").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID", "Object").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Object> ObjectReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID", "Object");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID", "Object", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object2GUID", "Object")]
+        public Object Object1
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID", "Object").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID", "Object").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Object> Object1Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID", "Object");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID", "Object", value);
                 }
             }
         }
@@ -6718,6 +8092,31 @@ namespace CHAOS.MCM.Data.EF
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_ObjectType_ID_Object_ObjectTypeID", "Object")]
+        public EntityCollection<Object> Object
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Object>("MCMModel.FK_ObjectType_ID_Object_ObjectTypeID", "Object");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object>("MCMModel.FK_ObjectType_ID_Object_ObjectTypeID", "Object", value);
+                }
+            }
+        }
+
+        #endregion
     }
     
     /// <summary>

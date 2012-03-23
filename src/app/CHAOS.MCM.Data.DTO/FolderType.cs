@@ -1,15 +1,29 @@
-﻿using Geckon.Portal.Data.Result.Standard;
+﻿using System;
+using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 
-public class FolderType : Result
+namespace CHAOS.MCM.Data.DTO
 {
-	#region Properties
+	public class FolderType : Result
+	{
+		public FolderType( uint id, string name, DateTime dateCreated )
+		{
+			ID   = id;
+			Name = name;
+			DateCreated = dateCreated;
+		}
 
-	[Serialize("ID")]
-	public int ID{ get; set; }
+		#region Properties
 
-	[Serialize("Name")]
-	public string Name{ get; set; }
+		[Serialize("ID")]
+		public uint ID{ get; set; }
 
-	#endregion
+		[Serialize("Name")]
+		public string Name{ get; set; }
+
+		[Serialize("DateCreated")]
+		public DateTime DateCreated { get; set; }
+
+		#endregion
+	}
 }

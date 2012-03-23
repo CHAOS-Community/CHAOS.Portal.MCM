@@ -11,10 +11,7 @@ namespace CHAOS.MCM.Data.DTO
 	{
 		#region Properties
 
-		[Serialize("ID")]
-		public int ID { get; set; }
-
-		// TODO: Either remove GUID or ID
+		[Serialize("GUID")]
 		public UUID GUID { get; set; }
 
 		[Serialize("Name")]
@@ -22,10 +19,26 @@ namespace CHAOS.MCM.Data.DTO
 
 		[SerializeXML(false, true)]
 		[Serialize("SchemaXML")]
-		public XElement SchemaXML { get; set; }
+		public XDocument SchemaXML { get; set; }
 
 		[Serialize("DateCreated")]
 		public DateTime DateCreated { get; set; }
+
+		#endregion
+		#region Constructors
+
+		public MetadataSchema( Guid guid, string name, string schemaXML, DateTime dateCreated)
+		{
+			GUID        = new UUID( guid.ToByteArray() );
+			Name        = name;
+			SchemaXML   = XDocument.Parse( schemaXML );
+			DateCreated = dateCreated;
+		}
+
+		public MetadataSchema()
+		{
+			
+		}
 
 		#endregion
 	}
