@@ -8,7 +8,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//[Test]
 		//public void Create_File()
 		//{
-		//    File file = MCMModule.File_Create( AdminCallContext, Object1.GUID, null, Format.ID, Destination.ID, "filename", "originalfilename", "/1/2/3/" );
+		//    File file = MCMModule.File_Create(AdminCallContext, Object1.GUID, null, Format.ID, DestinationInfo.ID, "filename", "originalfilename", "/1/2/3/");
 
 		//    Assert.AreEqual( "filename", file.Filename );
 		//}

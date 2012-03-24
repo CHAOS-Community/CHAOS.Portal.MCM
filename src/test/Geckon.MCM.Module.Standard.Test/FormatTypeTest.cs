@@ -9,11 +9,11 @@ namespace Geckon.MCM.Module.Standard.Test
     [TestFixture]
     public class FormatTypeTest : BaseTest
     {
-	   // [Test]
-	   // public void Should_Get_FormatTypeTest()
-	   // {
-	   //     Assert.Greater( MCMModule.FormatType_Get( AnonCallContext, null, null ).Count(),0 );
-	   // }
+		[Test]
+		public void Should_Get_FormatTypeTest()
+		{
+			Assert.Greater( MCMModule.FormatType_Get(AnonCallContext, null, null).Count(), 0 );
+		}
 
 	   // [Test]
 	   // public void Should_Create_FormatType()

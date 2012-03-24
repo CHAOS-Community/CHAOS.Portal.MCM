@@ -1,5 +1,4 @@
-﻿using CHAOS.Portal.Data.DTO;
-using Geckon.Portal.Core.Exception;
+﻿using Geckon.Common.Extensions;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -7,11 +6,11 @@ namespace Geckon.MCM.Module.Standard.Test
     [TestFixture]
     public class FolderTypeTest : BaseTest
     {
-	   // [Test]
-	   // public void Should_Get_FolderType()
-	   // {
-	   //     Assert.Greater( MCMModule.FolderType_Get( AnonCallContext, null, null ).Count(),0 );
-	   // }
+		[Test]
+		public void Should_Get_FolderType()
+		{
+			Assert.Greater( MCMModule.FolderType_Get(AnonCallContext, null, null).Count(), 0 );
+		}
 
 	   // [Test]
 	   // public void Should_Create_FolderType()

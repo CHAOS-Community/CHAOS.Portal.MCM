@@ -33,15 +33,12 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Folder_User_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Folder_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Folder_User_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Object_Folder_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FolderType_ID_Folder_FolderTypeID", "FolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FolderType), "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Folder), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_Language_LanguageCode_Metadata_LanguageCode", "Language", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(CHAOS.MCM.Data.EF.Language), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MS_GUID_MS_Group_Join_MSGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "MetadataSchema_Group_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.MetadataSchema_Group_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MS_GUID_MS_User_Join_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "MetadataSchema_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.MetadataSchema_User_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectFolderType), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID", "ObjectRelationType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectRelationType), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "AccessPoint_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_File_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "File", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.File), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object1GUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object2GUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
@@ -49,6 +46,9 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatCategory_ID_Conversion_FormatCategoryID", "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatCategory), "Conversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Conversion), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatCategory_ID_Format_FormatCategoryID", "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatCategory), "Format", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Format), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatType_ID_FormatCategory_FormatTypeID", "FormatType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FormatType), "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.FormatCategory), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Language_LanguageCode_Metadata_LanguageCode", "Language", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(CHAOS.MCM.Data.EF.Language), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
 
 #endregion
 
@@ -327,22 +327,6 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Metadata> Metadata
-        {
-            get
-            {
-                if ((_Metadata == null))
-                {
-                    _Metadata = base.CreateObjectSet<Metadata>("Metadata");
-                }
-                return _Metadata;
-            }
-        }
-        private ObjectSet<Metadata> _Metadata;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<MetadataSchema> MetadataSchema
         {
             get
@@ -579,6 +563,22 @@ namespace CHAOS.MCM.Data.EF
             }
         }
         private ObjectSet<FormatType> _FormatType;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Metadata> Metadata
+        {
+            get
+            {
+                if ((_Metadata == null))
+                {
+                    _Metadata = base.CreateObjectSet<Metadata>("Metadata");
+                }
+                return _Metadata;
+            }
+        }
+        private ObjectSet<Metadata> _Metadata;
 
         #endregion
         #region AddTo Methods
@@ -693,14 +693,6 @@ namespace CHAOS.MCM.Data.EF
         public void AddToLanguage(Language language)
         {
             base.AddObject("Language", language);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToMetadata(Metadata metadata)
-        {
-            base.AddObject("Metadata", metadata);
         }
     
         /// <summary>
@@ -822,6 +814,14 @@ namespace CHAOS.MCM.Data.EF
         {
             base.AddObject("FormatType", formatType);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToMetadata(Metadata metadata)
+        {
+            base.AddObject("Metadata", metadata);
+        }
 
         #endregion
         #region Function Imports
@@ -829,13 +829,24 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
         /// <param name="subscriptionGUID">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
         /// <param name="parentID">No Metadata Documentation available.</param>
         /// <param name="folderTypeID">No Metadata Documentation available.</param>
         /// <param name="subscriptionPermission">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> Folder_Create(global::System.Byte[] subscriptionGUID, global::System.String name, Nullable<global::System.Int32> parentID, Nullable<global::System.Int32> folderTypeID, Nullable<global::System.Int32> subscriptionPermission)
+        public ObjectResult<Nullable<global::System.Int32>> Folder_Create(global::System.Byte[] userGUID, global::System.Byte[] subscriptionGUID, global::System.String name, Nullable<global::System.Int32> parentID, Nullable<global::System.Int32> folderTypeID, Nullable<global::System.Int32> subscriptionPermission)
         {
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
             ObjectParameter subscriptionGUIDParameter;
             if (subscriptionGUID != null)
             {
@@ -886,7 +897,7 @@ namespace CHAOS.MCM.Data.EF
                 subscriptionPermissionParameter = new ObjectParameter("SubscriptionPermission", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_Create", subscriptionGUIDParameter, nameParameter, parentIDParameter, folderTypeIDParameter, subscriptionPermissionParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_Create", userGUIDParameter, subscriptionGUIDParameter, nameParameter, parentIDParameter, folderTypeIDParameter, subscriptionPermissionParameter);
         }
     
         /// <summary>
@@ -1762,6 +1773,375 @@ namespace CHAOS.MCM.Data.EF
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectFolderType_Create", nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
+        /// <param name="languageCode">No Metadata Documentation available.</param>
+        /// <param name="metadataXML">No Metadata Documentation available.</param>
+        /// <param name="editingUserGUID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Metadata_Set(global::System.Byte[] gUID, global::System.Byte[] objectGUID, global::System.Byte[] metadataSchemaGUID, global::System.String languageCode, global::System.String metadataXML, global::System.Byte[] editingUserGUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter metadataSchemaGUIDParameter;
+            if (metadataSchemaGUID != null)
+            {
+                metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", metadataSchemaGUID);
+            }
+            else
+            {
+                metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter languageCodeParameter;
+            if (languageCode != null)
+            {
+                languageCodeParameter = new ObjectParameter("LanguageCode", languageCode);
+            }
+            else
+            {
+                languageCodeParameter = new ObjectParameter("LanguageCode", typeof(global::System.String));
+            }
+    
+            ObjectParameter metadataXMLParameter;
+            if (metadataXML != null)
+            {
+                metadataXMLParameter = new ObjectParameter("MetadataXML", metadataXML);
+            }
+            else
+            {
+                metadataXMLParameter = new ObjectParameter("MetadataXML", typeof(global::System.String));
+            }
+    
+            ObjectParameter editingUserGUIDParameter;
+            if (editingUserGUID != null)
+            {
+                editingUserGUIDParameter = new ObjectParameter("EditingUserGUID", editingUserGUID);
+            }
+            else
+            {
+                editingUserGUIDParameter = new ObjectParameter("EditingUserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Metadata_Set", gUIDParameter, objectGUIDParameter, metadataSchemaGUIDParameter, languageCodeParameter, metadataXMLParameter, editingUserGUIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="languageCode">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Language_Create(global::System.String name, global::System.String languageCode)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter languageCodeParameter;
+            if (languageCode != null)
+            {
+                languageCodeParameter = new ObjectParameter("LanguageCode", languageCode);
+            }
+            else
+            {
+                languageCodeParameter = new ObjectParameter("LanguageCode", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Language_Create", nameParameter, languageCodeParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="languageCode">No Metadata Documentation available.</param>
+        public ObjectResult<Language> Language_Get(global::System.String name, global::System.String languageCode)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter languageCodeParameter;
+            if (languageCode != null)
+            {
+                languageCodeParameter = new ObjectParameter("LanguageCode", languageCode);
+            }
+            else
+            {
+                languageCodeParameter = new ObjectParameter("LanguageCode", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Language>("Language_Get", nameParameter, languageCodeParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="languageCode">No Metadata Documentation available.</param>
+        public ObjectResult<Language> Language_Get(global::System.String name, global::System.String languageCode, MergeOption mergeOption)
+        {
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter languageCodeParameter;
+            if (languageCode != null)
+            {
+                languageCodeParameter = new ObjectParameter("LanguageCode", languageCode);
+            }
+            else
+            {
+                languageCodeParameter = new ObjectParameter("LanguageCode", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Language>("Language_Get", mergeOption, nameParameter, languageCodeParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="parentFileID">No Metadata Documentation available.</param>
+        /// <param name="formatID">No Metadata Documentation available.</param>
+        /// <param name="destinationID">No Metadata Documentation available.</param>
+        /// <param name="filename">No Metadata Documentation available.</param>
+        /// <param name="originalFilename">No Metadata Documentation available.</param>
+        /// <param name="folderPath">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> File_Create(global::System.Byte[] objectGUID, Nullable<global::System.Int32> parentFileID, Nullable<global::System.Int32> formatID, Nullable<global::System.Int32> destinationID, global::System.String filename, global::System.String originalFilename, global::System.String folderPath)
+        {
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter parentFileIDParameter;
+            if (parentFileID.HasValue)
+            {
+                parentFileIDParameter = new ObjectParameter("ParentFileID", parentFileID);
+            }
+            else
+            {
+                parentFileIDParameter = new ObjectParameter("ParentFileID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter formatIDParameter;
+            if (formatID.HasValue)
+            {
+                formatIDParameter = new ObjectParameter("FormatID", formatID);
+            }
+            else
+            {
+                formatIDParameter = new ObjectParameter("FormatID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter destinationIDParameter;
+            if (destinationID.HasValue)
+            {
+                destinationIDParameter = new ObjectParameter("DestinationID", destinationID);
+            }
+            else
+            {
+                destinationIDParameter = new ObjectParameter("DestinationID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter filenameParameter;
+            if (filename != null)
+            {
+                filenameParameter = new ObjectParameter("Filename", filename);
+            }
+            else
+            {
+                filenameParameter = new ObjectParameter("Filename", typeof(global::System.String));
+            }
+    
+            ObjectParameter originalFilenameParameter;
+            if (originalFilename != null)
+            {
+                originalFilenameParameter = new ObjectParameter("OriginalFilename", originalFilename);
+            }
+            else
+            {
+                originalFilenameParameter = new ObjectParameter("OriginalFilename", typeof(global::System.String));
+            }
+    
+            ObjectParameter folderPathParameter;
+            if (folderPath != null)
+            {
+                folderPathParameter = new ObjectParameter("FolderPath", folderPath);
+            }
+            else
+            {
+                folderPathParameter = new ObjectParameter("FolderPath", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("File_Create", objectGUIDParameter, parentFileIDParameter, formatIDParameter, destinationIDParameter, filenameParameter, originalFilenameParameter, folderPathParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="fileID">No Metadata Documentation available.</param>
+        public ObjectResult<File> File_Get(Nullable<global::System.Int32> fileID)
+        {
+            ObjectParameter fileIDParameter;
+            if (fileID.HasValue)
+            {
+                fileIDParameter = new ObjectParameter("FileID", fileID);
+            }
+            else
+            {
+                fileIDParameter = new ObjectParameter("FileID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<File>("File_Get", fileIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="fileID">No Metadata Documentation available.</param>
+        public ObjectResult<File> File_Get(Nullable<global::System.Int32> fileID, MergeOption mergeOption)
+        {
+            ObjectParameter fileIDParameter;
+            if (fileID.HasValue)
+            {
+                fileIDParameter = new ObjectParameter("FileID", fileID);
+            }
+            else
+            {
+                fileIDParameter = new ObjectParameter("FileID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<File>("File_Get", mergeOption, fileIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="requiredPermission">No Metadata Documentation available.</param>
+        public ObjectResult<Folder> Folder_Get_DirectFolderAssociations(global::System.String groupGUIDs, global::System.Byte[] userGUID, Nullable<global::System.Int32> requiredPermission)
+        {
+            ObjectParameter groupGUIDsParameter;
+            if (groupGUIDs != null)
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", groupGUIDs);
+            }
+            else
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", typeof(global::System.String));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter requiredPermissionParameter;
+            if (requiredPermission.HasValue)
+            {
+                requiredPermissionParameter = new ObjectParameter("RequiredPermission", requiredPermission);
+            }
+            else
+            {
+                requiredPermissionParameter = new ObjectParameter("RequiredPermission", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Folder>("Folder_Get_DirectFolderAssociations", groupGUIDsParameter, userGUIDParameter, requiredPermissionParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="requiredPermission">No Metadata Documentation available.</param>
+        public ObjectResult<Folder> Folder_Get_DirectFolderAssociations(global::System.String groupGUIDs, global::System.Byte[] userGUID, Nullable<global::System.Int32> requiredPermission, MergeOption mergeOption)
+        {
+            ObjectParameter groupGUIDsParameter;
+            if (groupGUIDs != null)
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", groupGUIDs);
+            }
+            else
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", typeof(global::System.String));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter requiredPermissionParameter;
+            if (requiredPermission.HasValue)
+            {
+                requiredPermissionParameter = new ObjectParameter("RequiredPermission", requiredPermission);
+            }
+            else
+            {
+                requiredPermissionParameter = new ObjectParameter("RequiredPermission", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Folder>("Folder_Get_DirectFolderAssociations", mergeOption, groupGUIDsParameter, userGUIDParameter, requiredPermissionParameter);
         }
 
         #endregion
@@ -6119,16 +6499,16 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
-        /// <param name="metadataSchemaUGID">Initial value of the MetadataSchemaUGID property.</param>
+        /// <param name="metadataSchemaGUID">Initial value of the MetadataSchemaGUID property.</param>
         /// <param name="metadataXML">Initial value of the MetadataXML property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         /// <param name="editingUserGUID">Initial value of the EditingUserGUID property.</param>
-        public static Metadata CreateMetadata(global::System.Guid gUID, global::System.Guid objectGUID, global::System.Guid metadataSchemaUGID, global::System.String metadataXML, global::System.DateTime dateCreated, global::System.Guid editingUserGUID)
+        public static Metadata CreateMetadata(global::System.Guid gUID, global::System.Guid objectGUID, global::System.Guid metadataSchemaGUID, global::System.String metadataXML, global::System.DateTime dateCreated, global::System.Guid editingUserGUID)
         {
             Metadata metadata = new Metadata();
             metadata.GUID = gUID;
             metadata.ObjectGUID = objectGUID;
-            metadata.MetadataSchemaUGID = metadataSchemaUGID;
+            metadata.MetadataSchemaGUID = metadataSchemaGUID;
             metadata.MetadataXML = metadataXML;
             metadata.DateCreated = dateCreated;
             metadata.EditingUserGUID = editingUserGUID;
@@ -6218,24 +6598,24 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Guid MetadataSchemaUGID
+        public global::System.Guid MetadataSchemaGUID
         {
             get
             {
-                return _MetadataSchemaUGID;
+                return _MetadataSchemaGUID;
             }
             set
             {
-                OnMetadataSchemaUGIDChanging(value);
-                ReportPropertyChanging("MetadataSchemaUGID");
-                _MetadataSchemaUGID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MetadataSchemaUGID");
-                OnMetadataSchemaUGIDChanged();
+                OnMetadataSchemaGUIDChanging(value);
+                ReportPropertyChanging("MetadataSchemaGUID");
+                _MetadataSchemaGUID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MetadataSchemaGUID");
+                OnMetadataSchemaGUIDChanged();
             }
         }
-        private global::System.Guid _MetadataSchemaUGID;
-        partial void OnMetadataSchemaUGIDChanging(global::System.Guid value);
-        partial void OnMetadataSchemaUGIDChanged();
+        private global::System.Guid _MetadataSchemaGUID;
+        partial void OnMetadataSchemaGUIDChanging(global::System.Guid value);
+        partial void OnMetadataSchemaGUIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6572,28 +6952,6 @@ namespace CHAOS.MCM.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata")]
-        public EntityCollection<Metadata> Metadata
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_MS_GUID_MS_Group_Join_MSGUID", "MetadataSchema_Group_Join")]
         public EntityCollection<MetadataSchema_Group_Join> MetadataSchema_Group_Join
         {
@@ -6628,6 +6986,28 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<MetadataSchema_User_Join>("MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID", "MetadataSchema_User_Join", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata")]
+        public EntityCollection<Metadata> Metadata
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata", value);
                 }
             }
         }
@@ -7146,28 +7526,6 @@ namespace CHAOS.MCM.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Metadata")]
-        public EntityCollection<Metadata> Metadata
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join")]
         public EntityCollection<Object_Folder_Join> Object_Folder_Join
         {
@@ -7262,6 +7620,28 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ObjectType>("MCMModel.FK_ObjectType_ID_Object_ObjectTypeID", "ObjectType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Metadata")]
+        public EntityCollection<Metadata> Metadata
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata", value);
                 }
             }
         }

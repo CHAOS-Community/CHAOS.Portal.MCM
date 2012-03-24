@@ -30,13 +30,13 @@ namespace Geckon.MCM.Module.Standard.Test
 
         	for( int i = 1; i < 30000; i++ )
         	{
-				int id = rand.Next( 1, 30000 );
+				uint id = (uint) rand.Next( 1, 30000 );
         		topFolder.GetFolder( id ).AddUser( Guid.NewGuid(), FolderPermissions.Read );
         	}
 
 			for( int i = 0; i < 5000; i++ )
         	{
-        		int id = rand.Next(1, 30000);
+        		uint id = (uint) rand.Next(1, 30000);
 				topFolder.GetFolder( id ).AddGroup( Guid.NewGuid(), FolderPermissions.Read );
         	}
 
@@ -52,7 +52,7 @@ namespace Geckon.MCM.Module.Standard.Test
         {
             int indexCount  = topFolder.Count();
             int actualCount = topFolder.GetFolders().Aggregate( 0, ( total, next ) => total + next.Count() ) + topFolder.GetFolders().Count();
-
+			
             Assert.AreEqual( actualCount, indexCount );
         }
 
@@ -78,7 +78,7 @@ namespace Geckon.MCM.Module.Standard.Test
 
 			foreach( Folder folder in topFolder.GetFolders( UserGuid, GroupGuids ) )
 			{
-				if (!new[] { 1, 5, 1784, 55 }.Contains(folder.ID))
+				if (!new uint[] { 1, 5, 1784, 55 }.Contains(folder.ID))
 					Assert.Fail();
 			}
 
@@ -125,7 +125,7 @@ namespace Geckon.MCM.Module.Standard.Test
 			Assert.IsFalse( topFolder.GetFolder( 48 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
 		}
 
-        private int index = 0;
+        private uint index = 0;
 
         private Folder LoadFolders( DirectoryInfo dir )
         {

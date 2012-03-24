@@ -1,4 +1,5 @@
-﻿using Geckon.Portal.Data.Result.Standard;
+﻿using System;
+using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 
 namespace CHAOS.MCM.Data.DTO
@@ -12,6 +13,20 @@ namespace CHAOS.MCM.Data.DTO
 
 		[Serialize("LanguageCode")]
 		public string LanguageCode{ get; set; }
+
+		#endregion
+		#region Construction
+
+		public Language(string name, string languageCode)
+		{
+			Name         = name;
+			LanguageCode = languageCode;
+		}
+
+		public Language()
+		{
+				
+		}
 
 		#endregion
 	}

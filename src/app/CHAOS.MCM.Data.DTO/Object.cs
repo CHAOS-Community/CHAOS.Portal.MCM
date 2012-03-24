@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Geckon;
@@ -17,7 +18,7 @@ namespace CHAOS.MCM.Data.DTO
 		public UUID GUID { get; set; }
 
 		[Serialize("ObjectTypeID" )]
-		public int ObjectTypeID { get; set; }
+		public uint ObjectTypeID { get; set; }
 
 		[Serialize("DateCreated" )]
 		public DateTime DateCreated { get; set; }
@@ -26,7 +27,7 @@ namespace CHAOS.MCM.Data.DTO
 		/// This property is used to Serialize Metadata relations
 		/// </summary>
 		[Serialize("Metadatas" )]
-		public IEnumerable<Metadata> Metadata { get; set; }
+		public IEnumerable<Metadata> Metadatas { get; set; }
 
 		/// <summary>
 		/// This property is used to Serialize File relations
@@ -35,11 +36,30 @@ namespace CHAOS.MCM.Data.DTO
 		public IEnumerable<FileInfo> Files { get; set; }
 
 		[Serialize("ObjectRelations" )]
-		public List<ObjectObjectJoin> ObjectRealtions { get; set; }
+		public List<Object_Object_Join> ObjectRealtions { get; set; }
 
 		public IEnumerable<Folder> Folders { get; set; }
 		public IEnumerable<Folder> FolderTree { get; set; }
 		public List<Object> RelatedObjects { get; set; }
+
+		#endregion
+		#region Constructor
+
+		public Object( Guid guid, uint objectTypeID, DateTime dateCreated, IEnumerable<Metadata> metadatas, IEnumerable<FileInfo> fileInfos, IEnumerable<Object_Object_Join> objectObjectJoins )
+		{
+			GUID         = new UUID( guid.ToByteArray() );
+			ObjectTypeID = objectTypeID;
+			DateCreated  = dateCreated;
+
+			Metadatas       = metadatas.ToList();
+			Files           = fileInfos.ToList();
+			ObjectRealtions = objectObjectJoins.ToList();
+		}
+
+		public Object()
+		{
+			
+		}
 
 		#endregion
 		#region Business Logic
@@ -65,18 +85,18 @@ namespace CHAOS.MCM.Data.DTO
 			// TODO: Implement Metadata XML converter
 
 			// Convert to all field
-			if( Metadata != null )
-				foreach( Metadata metadata in Metadata )
+			if( Metadatas != null )
+				foreach( Metadata metadata in Metadatas )
 				{
-					yield return new KeyValuePair<string, string>(string.Format("m{0}_{1}_all", metadata.MetadataSchemaID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
+					yield return new KeyValuePair<string, string>(string.Format("m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
 
 			if( RelatedObjects != null )
 				foreach( Object obj in RelatedObjects )
 				{
-					foreach( Metadata relatedMetadata in obj.Metadata )
+					foreach( Metadata relatedMetadata in obj.Metadatas )
 					{
-						yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXML.Root ) );
+						yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXML.Root ) );
 					}
 				}
 		}

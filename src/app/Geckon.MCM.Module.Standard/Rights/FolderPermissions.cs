@@ -3,11 +3,12 @@
 namespace Geckon.MCM.Module.Standard.Rights
 {
 	[Flags]
-	public enum FolderPermissions : int
+	public enum FolderPermissions : uint
 	{
 		None  = 0,
 		Read  = 1 << 1,
 		Write = 1 << 2,
-		All   = Read | Write
+		CreateUpdateObjects = 1 << 3,
+		All   = Read | Write | CreateUpdateObjects
 	}
 }

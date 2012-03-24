@@ -24,13 +24,13 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    MCMModule.ObjectType_Create( AnonCallContext, "MyObjectType" );
 		//}
 
-		//[Test]
-		//public void Should_Get_All_ObjectTypes()
-		//{
-		//    IEnumerable<ObjectType> objects = MCMModule.ObjectType_Get( AdminCallContext );
+		[Test]
+		public void Should_Get_All_ObjectTypes()
+		{
+			IEnumerable<ObjectType> objects = MCMModule.ObjectType_Get(AdminCallContext);
 
-		//    Assert.Greater( objects.ToList().Count, 0 );
-		//}
+			Assert.Greater(objects.ToList().Count, 0);
+		}
 
 		//[Test]
 		//public void Should_Update_ObjectType()

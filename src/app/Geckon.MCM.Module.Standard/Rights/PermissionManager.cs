@@ -8,7 +8,7 @@ namespace Geckon.MCM.Module.Standard.Rights
     {
         #region Properties
 
-        private IDictionary< int, Folder >         FolderIndex { get; set; }
+        private IDictionary< uint, Folder >         FolderIndex { get; set; }
 		private IDictionary< Guid, IList<Folder> > UserFolderIndex { get; set; }
 		private IDictionary< Guid, IList<Folder> > GroupFolderIndex { get; set; }
 		private IList< Folder >                    Folders     { get; set; }
@@ -18,7 +18,7 @@ namespace Geckon.MCM.Module.Standard.Rights
 
         public PermissionManager( )
         {
-            FolderIndex      = new Dictionary< int, Folder >();
+            FolderIndex      = new Dictionary< uint, Folder >();
             Folders          = new List<Folder>();
 			UserFolderIndex  = new Dictionary<Guid, IList<Folder>>();
 			GroupFolderIndex = new Dictionary<Guid, IList<Folder>>();
@@ -32,7 +32,7 @@ namespace Geckon.MCM.Module.Standard.Rights
 			AddFolder( null, folder );
 		}
 
-		public void AddFolder( int? parentFolderID, Folder folder )
+		public void AddFolder( uint? parentFolderID, Folder folder )
 		{
 			if( parentFolderID.HasValue )
 			{
@@ -52,7 +52,7 @@ namespace Geckon.MCM.Module.Standard.Rights
 			}
 		}
 
-		public void AddUser( int folderID, Guid userGUID, FolderPermissions permissions )
+		public void AddUser( uint folderID, Guid userGUID, FolderPermissions permissions )
 		{
 			if( !UserFolderIndex.ContainsKey( userGUID ) )
 				UserFolderIndex.Add( userGUID, new List<Folder>() );
@@ -61,7 +61,7 @@ namespace Geckon.MCM.Module.Standard.Rights
 			FolderIndex[ folderID ].AddUser( userGUID, permissions );
 		}
 
-		public void AddGroup( int folderID, Guid groupGUID, FolderPermissions permissions )
+		public void AddGroup( uint folderID, Guid groupGUID, FolderPermissions permissions )
 		{
 			if( !GroupFolderIndex.ContainsKey( groupGUID ) )
 				GroupFolderIndex.Add( groupGUID, new List<Folder>() );
@@ -93,7 +93,7 @@ namespace Geckon.MCM.Module.Standard.Rights
 			return GetTopFolders( userGuid, groupGuids, directFolders );
 		}
 
-		public IEnumerable<Folder> GetFolders( Guid userGuid, IEnumerable<Guid> groupGuids, int parentFolderID )
+		public IEnumerable<Folder> GetFolders( Guid userGuid, IEnumerable<Guid> groupGuids, uint parentFolderID )
 		{
 			List<Folder> directFolders = new List<Folder>();
 
@@ -116,7 +116,7 @@ namespace Geckon.MCM.Module.Standard.Rights
 			}
 		}
 
-        public Folder GetFolder( int id )
+        public Folder GetFolder( uint id )
         {
             return FolderIndex[ id ];
         }

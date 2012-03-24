@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CHAOS.MCM.Data.EF
 {
-	public static class ExensionMethods
+	public static class ExtensionMethods
 	{
 		#region DestinationInfo
 
@@ -21,6 +21,47 @@ namespace CHAOS.MCM.Data.EF
 												   destinationInfo.StringFormat,
 												   destinationInfo.Token, 
 												   destinationInfo.DateCreated );
+		}
+
+		#endregion
+		//#region File
+
+		//public static IEnumerable<DTO.File> ToDTO( this IEnumerable<File> files )
+		//{
+		//    return files.Select( item => ToDTO( item ) );
+		//}
+
+		//public static DTO.File ToDTO( this File file )
+		//{
+		//    return new DTO.File( (uint) file.ID, 
+		//                             (uint?) file.ParentID, 
+		//                             file.ObjectGUID, 
+		//                             file.Filename,
+		//                             file.OriginalFilename, 
+		//                             (uint) file.FormatID );
+		//}
+
+		//#endregion
+		#region FileInfo
+
+		public static IEnumerable<DTO.FileInfo> ToDTO( this IEnumerable<FileInfo> fileInfos )
+		{
+			return fileInfos.Select( item => ToDTO( item ) );
+		}
+
+		public static DTO.FileInfo ToDTO( this FileInfo fileInfo )
+		{
+			return new DTO.FileInfo( (uint) fileInfo.ID, 
+								     (uint?) fileInfo.ParentID, 
+									 fileInfo.ObjectGUID, 
+									 fileInfo.Filename, 
+									 fileInfo.OriginalFilename, 
+									 fileInfo.Token, 
+									 fileInfo.URL,
+									 (uint) fileInfo.FormatID, 
+									 fileInfo.Format, 
+									 fileInfo.FormatCategory, 
+									 fileInfo.FormatType );
 		}
 
 		#endregion
@@ -89,7 +130,33 @@ namespace CHAOS.MCM.Data.EF
 		}
 
 		#endregion
+		#region Language
+
+		public static IEnumerable<DTO.Language> ToDTO( this IEnumerable<Language> languages )
+		{
+			return languages.Select( item => ToDTO( item ) );
+		}
+
+		public static DTO.Language ToDTO( this Language language )
+		{
+			return new DTO.Language( language.Name, language.LanguageCode );
+		}
+
+		#endregion
 		#region Metadata
+
+		public static IEnumerable<DTO.Metadata> ToDTO( this IEnumerable<Metadata> metadatas )
+		{
+			return metadatas.Select( item => ToDTO( item ) );
+		}
+
+		public static DTO.Metadata ToDTO( this Metadata metadata )
+		{
+			return new DTO.Metadata( metadata.GUID, metadata.ObjectGUID, metadata.LanguageCode, metadata.MetadataSchemaGUID, metadata.MetadataXML, metadata.DateCreated );
+		}
+
+		#endregion
+		#region MetadataSchema
 
 		public static IEnumerable<DTO.MetadataSchema> ToDTO( this IEnumerable<MetadataSchema> metadataSchemata )
 		{
@@ -99,6 +166,19 @@ namespace CHAOS.MCM.Data.EF
 		public static DTO.MetadataSchema ToDTO( this MetadataSchema metadataSchema )
 		{
 			return new DTO.MetadataSchema( metadataSchema.GUID, metadataSchema.Name, metadataSchema.SchemaXML, metadataSchema.DateCreated );
+		}
+
+		#endregion
+		#region Object
+
+		public static IEnumerable<DTO.Object> ToDTO( this IEnumerable<Object> objects )
+		{
+			return objects.Select( item => ToDTO( item ) );
+		}
+
+		public static DTO.Object ToDTO( this Object obj )
+		{
+			return new DTO.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDTO(), obj.pFiles.ToDTO(), obj.ObjectRealtions.ToDTO() );
 		}
 
 		#endregion
@@ -112,6 +192,19 @@ namespace CHAOS.MCM.Data.EF
 		public static DTO.ObjectType ToDTO( this ObjectType objectType )
 		{
 			return new DTO.ObjectType( (uint) objectType.ID, objectType.Name );
+		}
+
+		#endregion
+		#region Object_Object_Join
+
+		public static IEnumerable<DTO.Object_Object_Join> ToDTO( this IEnumerable<Object_Object_Join> objectRelations )
+		{
+			return objectRelations.Select( item => ToDTO( item ) );
+		}
+
+		public static DTO.Object_Object_Join ToDTO( this Object_Object_Join objectRelation )
+		{
+			return new DTO.Object_Object_Join( objectRelation.Object1GUID, objectRelation.Object2GUID, (uint) objectRelation.ObjectRelationTypeID, objectRelation.Sequence, objectRelation.DateCreated );
 		}
 
 		#endregion

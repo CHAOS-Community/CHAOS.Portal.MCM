@@ -361,7 +361,7 @@
           <Property Name="GUID" Type="guid" Nullable="false" />
           <Property Name="ObjectGUID" Type="guid" Nullable="false" />
           <Property Name="LanguageCode" Type="varchar" MaxLength="10" />
-          <Property Name="MetadataSchemaUGID" Type="guid" Nullable="false" />
+          <Property Name="MetadataSchemaGUID" Type="guid" Nullable="false" />
           <Property Name="MetadataXML" Type="text" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="EditingUserGUID" Type="guid" Nullable="false" />
@@ -761,7 +761,7 @@
               <PropertyRef Name="GUID" />
             </Principal>
             <Dependent Role="Metadata">
-              <PropertyRef Name="MetadataSchemaUGID" />
+              <PropertyRef Name="MetadataSchemaGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -939,6 +939,7 @@
           <Parameter Name="SystemPermission" Type="int" Mode="In" />
         </Function>
         <Function Name="Folder_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
           <Parameter Name="SubscriptionGUID" Type="binary" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="ParentID" Type="int" Mode="In" />
@@ -1001,11 +1002,9 @@
         <Function Name="Language_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="LanguageCode" Type="varchar" Mode="In" />
-          <Parameter Name="SystemPermission" Type="int" Mode="In" />
         </Function>
         <Function Name="Language_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="LanguageCode" Type="varchar" Mode="In" />
-          <Parameter Name="SystemPermission" Type="int" Mode="In" />
         </Function>
         <Function Name="Language_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="Name" Type="varchar" Mode="In" />
@@ -1014,7 +1013,6 @@
         <Function Name="Language_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="LanguageCode" Type="varchar" Mode="In" />
-          <Parameter Name="SystemPermission" Type="int" Mode="In" />
         </Function>
         <Function Name="MetadataSchema_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
@@ -1030,8 +1028,9 @@
           <Parameter Name="LanguageCode" Type="varchar" Mode="In" />
         </Function>
         <Function Name="Metadata_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
           <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
-          <Parameter Name="MetadataSchemaGUID" Type="int" Mode="In" />
+          <Parameter Name="MetadataSchemaGUID" Type="binary" Mode="In" />
           <Parameter Name="LanguageCode" Type="varchar" Mode="In" />
           <Parameter Name="MetadataXML" Type="text" Mode="In" />
           <Parameter Name="EditingUserGUID" Type="binary" Mode="In" />
@@ -1059,16 +1058,12 @@
           <Parameter Name="Name" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ObjectRelation_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
-          <Parameter Name="GroupGUIDs" Type="varchar" Mode="In" />
-          <Parameter Name="UserGUID" Type="binary" Mode="In" />
           <Parameter Name="Object1GUID" Type="binary" Mode="In" />
           <Parameter Name="Object2GUID" Type="binary" Mode="In" />
           <Parameter Name="ObjectRelationTypeID" Type="int" Mode="In" />
           <Parameter Name="Sequence" Type="int" Mode="In" />
         </Function>
         <Function Name="ObjectRelation_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
-          <Parameter Name="GroupGUIDs" Type="varchar" Mode="In" />
-          <Parameter Name="UserGUID" Type="binary" Mode="In" />
           <Parameter Name="Object1GUID" Type="binary" Mode="In" />
           <Parameter Name="Object2GUID" Type="binary" Mode="In" />
           <Parameter Name="ObjectRelationTypeID" Type="int" Mode="In" />
@@ -1134,7 +1129,6 @@
           <EntitySet Name="FolderType" EntityType="MCMModel.FolderType" />
           <EntitySet Name="Format" EntityType="MCMModel.Format" />
           <EntitySet Name="Language" EntityType="MCMModel.Language" />
-          <EntitySet Name="Metadata" EntityType="MCMModel.Metadata" />
           <EntitySet Name="MetadataSchema" EntityType="MCMModel.MetadataSchema" />
           <EntitySet Name="MetadataSchema_Group_Join" EntityType="MCMModel.MetadataSchema_Group_Join" />
           <EntitySet Name="MetadataSchema_User_Join" EntityType="MCMModel.MetadataSchema_User_Join" />
@@ -1204,14 +1198,6 @@
             <End Role="FolderType" EntitySet="FolderType" />
             <End Role="Folder" EntitySet="Folder" />
           </AssociationSet>
-          <AssociationSet Name="FK_Language_LanguageCode_Metadata_LanguageCode" Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode">
-            <End Role="Language" EntitySet="Language" />
-            <End Role="Metadata" EntitySet="Metadata" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" Association="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
-            <End Role="MetadataSchema" EntitySet="MetadataSchema" />
-            <End Role="Metadata" EntitySet="Metadata" />
-          </AssociationSet>
           <AssociationSet Name="FK_MS_GUID_MS_Group_Join_MSGUID" Association="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID">
             <End Role="MetadataSchema" EntitySet="MetadataSchema" />
             <End Role="MetadataSchema_Group_Join" EntitySet="MetadataSchema_Group_Join" />
@@ -1232,6 +1218,7 @@
           <EntitySet Name="FileInfo" EntityType="MCMModel.FileInfo" />
           <EntitySet Name="FolderInfo" EntityType="MCMModel.FolderInfo" />
           <FunctionImport Name="Folder_Create" ReturnType="Collection(Int32)">
+            <Parameter Name="UserGUID" Mode="In" Type="Binary" />
             <Parameter Name="SubscriptionGUID" Mode="In" Type="Binary" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="ParentID" Mode="In" Type="Int32" />
@@ -1256,10 +1243,6 @@
           <AssociationSet Name="FK_Object_GUID_File_ObjectGUID" Association="MCMModel.FK_Object_GUID_File_ObjectGUID">
             <End Role="Object" EntitySet="Object" />
             <End Role="File" EntitySet="File" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Object_GUID_Metadata_ObjectGUID" Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID">
-            <End Role="Object" EntitySet="Object" />
-            <End Role="Metadata" EntitySet="Metadata" />
           </AssociationSet>
           <AssociationSet Name="FK_Object_GUID_Object_Folder_Join_ObjectGUID" Association="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID">
             <End Role="Object" EntitySet="Object" />
@@ -1364,7 +1347,53 @@
             <Parameter Name="FolderID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ObjectFolderType_Create" ReturnType="Collection(Int32)">
+          <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Metadata_Set" ReturnType="Collection(Int32)">
+            <Parameter Name="GUID" Mode="In" Type="Binary" />
+            <Parameter Name="ObjectGUID" Mode="In" Type="Binary" />
+            <Parameter Name="MetadataSchemaGUID" Mode="In" Type="Binary" />
+            <Parameter Name="LanguageCode" Mode="In" Type="String" />
+            <Parameter Name="MetadataXML" Mode="In" Type="String" />
+            <Parameter Name="EditingUserGUID" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="Language_Create" ReturnType="Collection(Int32)">
             <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="LanguageCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Language_Get" EntitySet="Language" ReturnType="Collection(MCMModel.Language)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="LanguageCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Metadata" EntityType="MCMModel.Metadata" />
+          <AssociationSet Name="FK_Language_LanguageCode_Metadata_LanguageCode" Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode">
+            <End Role="Language" EntitySet="Language" />
+            <End Role="Metadata" EntitySet="Metadata" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" Association="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
+            <End Role="MetadataSchema" EntitySet="MetadataSchema" />
+            <End Role="Metadata" EntitySet="Metadata" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_GUID_Metadata_ObjectGUID" Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="Metadata" EntitySet="Metadata" />
+          </AssociationSet>
+          <FunctionImport Name="File_Create" ReturnType="Collection(Int32)">
+            <Parameter Name="ObjectGUID" Mode="In" Type="Binary" />
+            <Parameter Name="ParentFileID" Mode="In" Type="Int32" />
+            <Parameter Name="FormatID" Mode="In" Type="Int32" />
+            <Parameter Name="DestinationID" Mode="In" Type="Int32" />
+            <Parameter Name="Filename" Mode="In" Type="String" />
+            <Parameter Name="OriginalFilename" Mode="In" Type="String" />
+            <Parameter Name="FolderPath" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="File_Get" EntitySet="File" ReturnType="Collection(MCMModel.File)">
+          <Parameter Name="FileID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Folder_Get_DirectFolderAssociations" EntitySet="Folder" ReturnType="Collection(MCMModel.Folder)">
+            <Parameter Name="GroupGUIDs" Mode="In" Type="String" />
+            <Parameter Name="UserGUID" Mode="In" Type="Binary" />
+            <Parameter Name="RequiredPermission" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="AccessPoint">
@@ -1543,22 +1572,6 @@
           <Property Name="Name" Type="String" />
           <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" FromRole="Language" ToRole="Metadata" />
         </EntityType>
-        <EntityType Name="Metadata">
-          <Key>
-            <PropertyRef Name="GUID" />
-            <PropertyRef Name="DateCreated" />
-          </Key>
-          <Property Name="GUID" Type="Guid" Nullable="false" />
-          <Property Name="ObjectGUID" Type="Guid" Nullable="false" />
-          <Property Name="LanguageCode" Type="String" />
-          <Property Name="MetadataSchemaUGID" Type="Guid" Nullable="false" />
-          <Property Name="MetadataXML" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <Property Name="EditingUserGUID" Type="Guid" Nullable="false" />
-          <NavigationProperty Name="Language" Relationship="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" FromRole="Metadata" ToRole="Language" />
-          <NavigationProperty Name="MetadataSchema" Relationship="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" FromRole="Metadata" ToRole="MetadataSchema" />
-          <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" FromRole="Metadata" ToRole="Object" />
-        </EntityType>
         <EntityType Name="MetadataSchema">
           <Key>
             <PropertyRef Name="GUID" />
@@ -1567,9 +1580,9 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="SchemaXML" Type="String" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" FromRole="MetadataSchema" ToRole="Metadata" />
           <NavigationProperty Name="MetadataSchema_Group_Join" Relationship="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID" FromRole="MetadataSchema" ToRole="MetadataSchema_Group_Join" />
           <NavigationProperty Name="MetadataSchema_User_Join" Relationship="MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" FromRole="MetadataSchema" ToRole="MetadataSchema_User_Join" />
+          <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" FromRole="MetadataSchema" ToRole="Metadata" />
         </EntityType>
         <EntityType Name="MetadataSchema_Group_Join">
           <Key>
@@ -1834,30 +1847,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Language_LanguageCode_Metadata_LanguageCode">
-          <End Role="Language" Type="MCMModel.Language" Multiplicity="0..1" />
-          <End Role="Metadata" Type="MCMModel.Metadata" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Language">
-              <PropertyRef Name="LanguageCode" />
-            </Principal>
-            <Dependent Role="Metadata">
-              <PropertyRef Name="LanguageCode" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
-          <End Role="MetadataSchema" Type="MCMModel.MetadataSchema" Multiplicity="1" />
-          <End Role="Metadata" Type="MCMModel.Metadata" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MetadataSchema">
-              <PropertyRef Name="GUID" />
-            </Principal>
-            <Dependent Role="Metadata">
-              <PropertyRef Name="MetadataSchemaUGID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MS_GUID_MS_Group_Join_MSGUID">
           <End Role="MetadataSchema" Type="MCMModel.MetadataSchema" Multiplicity="1" />
           <End Role="MetadataSchema_Group_Join" Type="MCMModel.MetadataSchema_Group_Join" Multiplicity="*" />
@@ -1974,11 +1963,11 @@
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
           <NavigationProperty Name="AccessPoint_Object_Join" Relationship="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" FromRole="Object" ToRole="AccessPoint_Object_Join" />
           <NavigationProperty Name="File" Relationship="MCMModel.FK_Object_GUID_File_ObjectGUID" FromRole="Object" ToRole="File" />
-          <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" FromRole="Object" ToRole="Metadata" />
           <NavigationProperty Name="Object_Folder_Join" Relationship="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID" FromRole="Object" ToRole="Object_Folder_Join" />
           <NavigationProperty Name="Object_Object_Join" Relationship="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID" FromRole="Object" ToRole="Object_Object_Join" />
           <NavigationProperty Name="Object_Object_Join1" Relationship="MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID" FromRole="Object" ToRole="Object_Object_Join" />
           <NavigationProperty Name="ObjectType" Relationship="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" FromRole="Object" ToRole="ObjectType" />
+          <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" FromRole="Object" ToRole="Metadata" />
         </EntityType>
         <Association Name="FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID">
           <End Type="MCMModel.Object" Role="Object" Multiplicity="1" />
@@ -2000,18 +1989,6 @@
               <PropertyRef Name="GUID" />
             </Principal>
             <Dependent Role="File">
-              <PropertyRef Name="ObjectGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Object_GUID_Metadata_ObjectGUID">
-          <End Type="MCMModel.Object" Role="Object" Multiplicity="1" />
-          <End Type="MCMModel.Metadata" Role="Metadata" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Object">
-              <PropertyRef Name="GUID" />
-            </Principal>
-            <Dependent Role="Metadata">
               <PropertyRef Name="ObjectGUID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2119,6 +2096,58 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Metadata">
+          <Key>
+            <PropertyRef Name="GUID" />
+            <PropertyRef Name="DateCreated" />
+          </Key>
+          <Property Type="Guid" Name="GUID" Nullable="false" />
+          <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
+          <Property Type="String" Name="LanguageCode" />
+          <Property Type="Guid" Name="MetadataSchemaGUID" Nullable="false" />
+          <Property Type="String" Name="MetadataXML" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="Guid" Name="EditingUserGUID" Nullable="false" />
+          <NavigationProperty Name="Language" Relationship="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" FromRole="Metadata" ToRole="Language" />
+          <NavigationProperty Name="MetadataSchema" Relationship="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" FromRole="Metadata" ToRole="MetadataSchema" />
+          <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" FromRole="Metadata" ToRole="Object" />
+        </EntityType>
+        <Association Name="FK_Language_LanguageCode_Metadata_LanguageCode">
+          <End Type="MCMModel.Language" Role="Language" Multiplicity="0..1" />
+          <End Type="MCMModel.Metadata" Role="Metadata" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Language">
+              <PropertyRef Name="LanguageCode" />
+            </Principal>
+            <Dependent Role="Metadata">
+              <PropertyRef Name="LanguageCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
+          <End Type="MCMModel.MetadataSchema" Role="MetadataSchema" Multiplicity="1" />
+          <End Type="MCMModel.Metadata" Role="Metadata" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetadataSchema">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Metadata">
+              <PropertyRef Name="MetadataSchemaGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_GUID_Metadata_ObjectGUID">
+          <End Type="MCMModel.Object" Role="Object" Multiplicity="1" />
+          <End Type="MCMModel.Metadata" Role="Metadata" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="Metadata">
+              <PropertyRef Name="ObjectGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2219,15 +2248,6 @@
           <EntitySetMapping Name="Language"><EntityTypeMapping TypeName="MCMModel.Language"><MappingFragment StoreEntitySet="Language">
             <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
             <ScalarProperty Name="Name" ColumnName="Name" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="Metadata"><EntityTypeMapping TypeName="MCMModel.Metadata"><MappingFragment StoreEntitySet="Metadata">
-            <ScalarProperty Name="GUID" ColumnName="GUID" />
-            <ScalarProperty Name="ObjectGUID" ColumnName="ObjectGUID" />
-            <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
-            <ScalarProperty Name="MetadataSchemaUGID" ColumnName="MetadataSchemaUGID" />
-            <ScalarProperty Name="MetadataXML" ColumnName="MetadataXML" />
-            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-            <ScalarProperty Name="EditingUserGUID" ColumnName="EditingUserGUID" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="MetadataSchema"><EntityTypeMapping TypeName="MCMModel.MetadataSchema"><MappingFragment StoreEntitySet="MetadataSchema">
             <ScalarProperty Name="GUID" ColumnName="GUID" />
@@ -2371,6 +2391,25 @@
           <FunctionImportMapping FunctionImportName="MetadataSchema_Get" FunctionName="MCMModel.Store.MetadataSchema_Get" />
           <FunctionImportMapping FunctionImportName="Object_Create" FunctionName="MCMModel.Store.Object_Create" />
           <FunctionImportMapping FunctionImportName="ObjectFolderType_Create" FunctionName="MCMModel.Store.ObjectFolderType_Create" />
+          <FunctionImportMapping FunctionImportName="Metadata_Set" FunctionName="MCMModel.Store.Metadata_Set" />
+          <FunctionImportMapping FunctionImportName="Language_Create" FunctionName="MCMModel.Store.Language_Create" />
+          <FunctionImportMapping FunctionImportName="Language_Get" FunctionName="MCMModel.Store.Language_Get" />
+          <EntitySetMapping Name="Metadata">
+            <EntityTypeMapping TypeName="MCMModel.Metadata">
+              <MappingFragment StoreEntitySet="Metadata">
+                <ScalarProperty Name="EditingUserGUID" ColumnName="EditingUserGUID" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="MetadataXML" ColumnName="MetadataXML" />
+                <ScalarProperty Name="MetadataSchemaGUID" ColumnName="MetadataSchemaGUID" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="ObjectGUID" ColumnName="ObjectGUID" />
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="File_Create" FunctionName="MCMModel.Store.File_Create" />
+          <FunctionImportMapping FunctionImportName="File_Get" FunctionName="MCMModel.Store.File_Get" />
+          <FunctionImportMapping FunctionImportName="Folder_Get_DirectFolderAssociations" FunctionName="MCMModel.Store.Folder_Get_DirectFolderAssociations" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2406,7 +2445,6 @@
         <EntityTypeShape EntityType="MCMModel.FolderType" Width="1.5" PointX="0.75" PointY="4.625" Height="1.7879850260416745" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.Format" Width="1.5" PointX="7.75" PointY="8.75" Height="2.5571907552083388" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.Language" Width="1.5" PointX="0.75" PointY="13.125" Height="1.5956835937500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="MCMModel.Metadata" Width="1.5" PointX="3" PointY="14.5" Height="2.7494921874999978" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.MetadataSchema" Width="1.5" PointX="0.75" PointY="15.625" Height="2.3648893229166692" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.MetadataSchema_Group_Join" Width="1.5" PointX="3" PointY="18" Height="1.9802864583333388" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.MetadataSchema_User_Join" Width="1.5" PointX="3" PointY="20.75" Height="1.9802864583333388" IsExpanded="true" />
@@ -2424,22 +2462,22 @@
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" ManuallyRouted="false">
           <ConnectorPoint PointX="11.29687375" PointY="19.307190755208332" />
-          <ConnectorPoint PointX="11.29687375" PointY="21.153595377604169" />
-          <ConnectorPoint PointX="11.822919166666667" PointY="21.153595377604169" />
-          <ConnectorPoint PointX="11.989585833333335" PointY="21.153595377604169" />
-          <ConnectorPoint PointX="13" PointY="21.153595377604169" />
+          <ConnectorPoint PointX="11.29687375" PointY="21.406125546875003" />
+          <ConnectorPoint PointX="11.822919166666667" PointY="21.406125546875003" />
+          <ConnectorPoint PointX="11.989585833333335" PointY="21.406125546875003" />
+          <ConnectorPoint PointX="13" PointY="21.406125546875003" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_AccessPoint_AccessPoint_User_Join" ManuallyRouted="false">
           <ConnectorPoint PointX="11.9062525" PointY="20.317555338541666" />
-          <ConnectorPoint PointX="11.9062525" PointY="23.990143229166666" />
-          <ConnectorPoint PointX="13" PointY="23.990143229166666" />
+          <ConnectorPoint PointX="11.9062525" PointY="24.255768229166666" />
+          <ConnectorPoint PointX="13" PointY="24.255768229166666" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_AccessPoint_GUID_Conversion_AccessPointGUID" ManuallyRouted="false">
           <ConnectorPoint PointX="11.90625" PointY="16.75" />
-          <ConnectorPoint PointX="11.90625" PointY="12.652176054611443" />
-          <ConnectorPoint PointX="12.666666666666666" PointY="12.652176054611443" />
-          <ConnectorPoint PointX="12.833333333333334" PointY="12.652176054611443" />
-          <ConnectorPoint PointX="13" PointY="12.652176054611443" />
+          <ConnectorPoint PointX="11.90625" PointY="12.616166513652861" />
+          <ConnectorPoint PointX="12.666666666666666" PointY="12.616166513652861" />
+          <ConnectorPoint PointX="12.833333333333334" PointY="12.616166513652861" />
+          <ConnectorPoint PointX="13" PointY="12.616166513652861" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Destination_ID_AccessProvider_DestinationID" ManuallyRouted="false">
           <ConnectorPoint PointX="9.25" PointY="14.057444661458334" />
@@ -2447,10 +2485,12 @@
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Destination_ID_Conversion_DestinationID" ManuallyRouted="false">
           <ConnectorPoint PointX="8.4687475" PointY="12.875" />
-          <ConnectorPoint PointX="8.4687475" PointY="12.544835527305722" />
-          <ConnectorPoint PointX="12.666666666666666" PointY="12.544835527305722" />
-          <ConnectorPoint PointX="12.833333333333334" PointY="12.544835527305722" />
-          <ConnectorPoint PointX="13" PointY="12.544835527305722" />
+          <ConnectorPoint PointX="8.4687475" PointY="12.58491401365286" />
+          <ConnectorPoint PointX="9.4567526530138064" PointY="12.58491401365286" />
+          <ConnectorPoint PointX="9.6234193196804743" PointY="12.58491401365286" />
+          <ConnectorPoint PointX="12.666666666666666" PointY="12.58491401365286" />
+          <ConnectorPoint PointX="12.833333333333334" PointY="12.58491401365286" />
+          <ConnectorPoint PointX="13" PointY="12.58491401365286" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Format_ID_Conversion_FormatID" ManuallyRouted="false">
           <ConnectorPoint PointX="9.25" PointY="10.487076459151757" />
@@ -2479,6 +2519,8 @@
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Folder_ID_Folder_Group_Join_FolderID" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="4.5526432291666659" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="4.552643229166665" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="4.5526432291666659" />
           <ConnectorPoint PointX="5.25" PointY="4.5526432291666659" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Folder_ID_Folder_ParentID" ManuallyRouted="false">
@@ -2489,64 +2531,57 @@
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Folder_ID_Folder_User_Join_FolderID" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="6.5381982421875" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="6.5381982421874989" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="6.5381982421875" />
           <ConnectorPoint PointX="5.25" PointY="6.5381982421875" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="5.6644811718750026" />
-          <ConnectorPoint PointX="8.25" PointY="5.6644811718750026" />
+          <ConnectorPoint PointX="4.5" PointY="5.9580656575520869" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="5.9580656575520861" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="5.9580656575520869" />
+          <ConnectorPoint PointX="8.25" PointY="5.9580656575520869" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_FolderType_ID_Folder_FolderTypeID" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="5.5189925130208373" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="5.5189925130208364" />
-          <ConnectorPoint PointX="2.7083333333333335" PointY="5.5189925130208373" />
           <ConnectorPoint PointX="3" PointY="5.5189925130208373" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="13.891591296875" />
-          <ConnectorPoint PointX="2.5416666666666665" PointY="13.891591296875" />
-          <ConnectorPoint PointX="2.7083333333333335" PointY="13.891591296875" />
-          <ConnectorPoint PointX="3.09375" PointY="13.891591296875" />
-          <ConnectorPoint PointX="3.09375" PointY="14.5" />
-        </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="16.533396809895834" />
-          <ConnectorPoint PointX="3" PointY="16.533396809895834" />
-        </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.5" PointY="17.989889322916667" />
-          <ConnectorPoint PointX="1.5" PointY="18.990143229166669" />
-          <ConnectorPoint PointX="1.8229191666666667" PointY="18.990143229166669" />
-          <ConnectorPoint PointX="1.9895858333333332" PointY="18.990143229166669" />
-          <ConnectorPoint PointX="3" PointY="18.990143229166669" />
+          <ConnectorPoint PointX="2.25" PointY="16.807444661458334" />
+          <ConnectorPoint PointX="3.75" PointY="16.807444661458334" />
+          <ConnectorPoint PointX="3.75" PointY="18" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" ManuallyRouted="false">
-          <ConnectorPoint PointX="1.9062525" PointY="17.989889322916667" />
-          <ConnectorPoint PointX="1.9062525" PointY="21.740143229166669" />
+          <ConnectorPoint PointX="1.5" PointY="17.989889322916667" />
+          <ConnectorPoint PointX="1.5" PointY="21.740143229166669" />
           <ConnectorPoint PointX="3" PointY="21.740143229166669" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID" ManuallyRouted="false">
           <ConnectorPoint PointX="7.15625" PointY="2.345683593749996" />
-          <ConnectorPoint PointX="7.15625" PointY="5.4473813151041739" />
-          <ConnectorPoint PointX="8.25" PointY="5.4473813151041739" />
+          <ConnectorPoint PointX="7.15625" PointY="5.4613610579427156" />
+          <ConnectorPoint PointX="8.25" PointY="5.4613610579427156" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID" ManuallyRouted="false">
-          <ConnectorPoint PointX="12.25" PointY="2.547841796874998" />
-          <ConnectorPoint PointX="12.541666666666666" PointY="2.5478417968749976" />
-          <ConnectorPoint PointX="12.708333333333334" PointY="2.547841796874998" />
-          <ConnectorPoint PointX="13" PointY="2.547841796874998" />
+          <ConnectorPoint PointX="12.25" PointY="2.9288435872395819" />
+          <ConnectorPoint PointX="12.541666666666666" PointY="2.9288435872395815" />
+          <ConnectorPoint PointX="12.708333333333334" PointY="2.9288435872395819" />
+          <ConnectorPoint PointX="13" PointY="2.9288435872395819" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.DestinationInfo" Width="1.5" PointX="0.75" PointY="8.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="MCMModel.FileInfo" Width="1.5" PointX="13.75" PointY="4.75" Height="3.1340950520833246" />
         <EntityTypeShape EntityType="MCMModel.FolderInfo" Width="1.5" PointX="12.75" PointY="8.75" Height="2.5571907552083246" />
         <EntityTypeShape EntityType="MCMModel.Object" Width="1.5" PointX="3" PointY="0.75" Height="2.9417936197916674" />
         <AssociationConnector Association="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="1.7699147636217951" />
-          <ConnectorPoint PointX="5.75" PointY="1.7699147636217951" />
-          <ConnectorPoint PointX="5.75" PointY="2.595683593749996" />
-          <ConnectorPoint PointX="7.072916666666667" PointY="2.5956835937499956" />
-          <ConnectorPoint PointX="7.239583333333333" PointY="2.595683593749996" />
-          <ConnectorPoint PointX="10.5" PointY="2.595683593749996" />
-          <ConnectorPoint PointX="10.5" PointY="4.5" />
+          <ConnectorPoint PointX="4.5" PointY="2.2208968098958337" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="2.2208968098958333" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="2.2208968098958337" />
+          <ConnectorPoint PointX="5.5" PointY="2.2208968098958337" />
+          <ConnectorPoint PointX="5.5" PointY="2.736308593749996" />
+          <ConnectorPoint PointX="7.072916666666667" PointY="2.7363085937499956" />
+          <ConnectorPoint PointX="7.239583333333333" PointY="2.736308593749996" />
+          <ConnectorPoint PointX="10.25" PointY="2.736308593749996" />
+          <ConnectorPoint PointX="10.25" PointY="4.5" />
+          <ConnectorPoint PointX="10.416666666666666" PointY="4.4999999999999991" />
+          <ConnectorPoint PointX="10.583333333333334" PointY="4.5" />
           <ConnectorPoint PointX="13.5" PointY="4.5" />
           <ConnectorPoint PointX="13.5" PointY="8.5" />
           <ConnectorPoint PointX="14.5" PointY="8.5" />
@@ -2557,46 +2592,40 @@
           <ConnectorPoint PointX="13.75" PointY="19.875" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_File_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="2.9295828826121797" />
-          <ConnectorPoint PointX="6" PointY="2.9295828826121797" />
-          <ConnectorPoint PointX="6" PointY="2.845683593749996" />
-          <ConnectorPoint PointX="7.072916666666667" PointY="2.8456835937499956" />
-          <ConnectorPoint PointX="7.239583333333333" PointY="2.845683593749996" />
-          <ConnectorPoint PointX="8.9166666666666661" PointY="2.8456835937499956" />
-          <ConnectorPoint PointX="9.0833333333333339" PointY="2.845683593749996" />
-          <ConnectorPoint PointX="10.25" PointY="2.845683593749996" />
-          <ConnectorPoint PointX="10.25" PointY="7.875" />
+          <ConnectorPoint PointX="4.5" PointY="1.5336860727163462" />
+          <ConnectorPoint PointX="5.75" PointY="1.5336860727163462" />
+          <ConnectorPoint PointX="5.75" PointY="2.595683593749996" />
+          <ConnectorPoint PointX="7.072916666666667" PointY="2.5956835937499956" />
+          <ConnectorPoint PointX="7.239583333333333" PointY="2.595683593749996" />
+          <ConnectorPoint PointX="10.5" PointY="2.595683593749996" />
+          <ConnectorPoint PointX="10.5" PointY="7.875" />
           <ConnectorPoint PointX="10.75" PointY="7.875" />
           <ConnectorPoint PointX="10.75" PointY="8.25" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" >
-          <ConnectorPoint PointX="3" PointY="3.6917936197916674" />
-          <ConnectorPoint PointX="2.625" PointY="4.0667936197916674" />
-          <ConnectorPoint PointX="2.625" PointY="14.123847153846153" />
-          <ConnectorPoint PointX="3.0011528461538459" PointY="14.5" />
-        </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="2.720683593749996" />
-          <ConnectorPoint PointX="7.072916666666667" PointY="2.7206835937499956" />
-          <ConnectorPoint PointX="7.239583333333333" PointY="2.720683593749996" />
-          <ConnectorPoint PointX="9" PointY="2.720683593749996" />
+          <ConnectorPoint PointX="4.5" PointY="2.961904296874998" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="2.9619042968749976" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="2.961904296874998" />
+          <ConnectorPoint PointX="7.072916666666667" PointY="2.9619042968749976" />
+          <ConnectorPoint PointX="7.239583333333333" PointY="2.961904296874998" />
+          <ConnectorPoint PointX="9" PointY="2.961904296874998" />
           <ConnectorPoint PointX="9" PointY="4.5" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID" >
-          <ConnectorPoint PointX="3.75" PointY="0.75" />
-          <ConnectorPoint PointX="3.75" PointY="0.5" />
-          <ConnectorPoint PointX="4.0729186666666672" PointY="0.49999999999999944" />
-          <ConnectorPoint PointX="4.2395853333333333" PointY="0.5" />
+          <ConnectorPoint PointX="3.49121025" PointY="0.75" />
+          <ConnectorPoint PointX="3.49121025" PointY="0.5" />
           <ConnectorPoint PointX="12.625" PointY="0.5" />
-          <ConnectorPoint PointX="12.625" PointY="3.3337682760416589" />
-          <ConnectorPoint PointX="13" PointY="3.3337682760416589" />
+          <ConnectorPoint PointX="12.625" PointY="3.5242691712239509" />
+          <ConnectorPoint PointX="13" PointY="3.5242691712239509" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID" >
-          <ConnectorPoint PointX="4.156252" PointY="0.75" />
-          <ConnectorPoint PointX="4.156252" PointY="0.25" />
-          <ConnectorPoint PointX="12.75" PointY="0.25" />
-          <ConnectorPoint PointX="12.75" PointY="1.9926688984375054" />
-          <ConnectorPoint PointX="13" PointY="1.9926688984375054" />
+          <ConnectorPoint PointX="4.0268571249999994" PointY="0.75" />
+          <ConnectorPoint PointX="4.0268571249999994" PointY="0.484375" />
+          <ConnectorPoint PointX="12.5" PointY="0.484375" />
+          <ConnectorPoint PointX="12.5" PointY="2.1831697936197973" />
+          <ConnectorPoint PointX="12.541666666666666" PointY="2.1831697936197969" />
+          <ConnectorPoint PointX="12.708333333333334" PointY="2.1831697936197973" />
+          <ConnectorPoint PointX="13" PointY="2.1831697936197973" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" >
           <ConnectorPoint PointX="2.25" PointY="2.047841796875" />
@@ -2621,7 +2650,30 @@
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_FormatType_ID_FormatCategory_FormatTypeID" >
           <ConnectorPoint PointX="4.75" PointY="12.422841796874998" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="12.422841796874998" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="12.422841796874998" />
           <ConnectorPoint PointX="5.5" PointY="12.422841796874998" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MCMModel.Metadata" Width="1.5" PointX="5.25" PointY="15.125" Height="2.9417936197916674" />
+        <AssociationConnector Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" >
+          <ConnectorPoint PointX="2.25" PointY="14.102885742187505" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="14.102885742187505" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="14.102885742187505" />
+          <ConnectorPoint PointX="5.34375" PointY="14.102885742187505" />
+          <ConnectorPoint PointX="5.34375" PointY="15.125" />
+        </AssociationConnector>
+        <AssociationConnector Association="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" >
+          <ConnectorPoint PointX="2.25" PointY="16.153722330729167" />
+          <ConnectorPoint PointX="5.25" PointY="16.153722330729167" />
+        </AssociationConnector>
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" >
+          <ConnectorPoint PointX="4.5" PointY="1.8247001484375054" />
+          <ConnectorPoint PointX="5" PointY="1.8247001484375054" />
+          <ConnectorPoint PointX="5" PointY="14.75" />
+          <ConnectorPoint PointX="5.260416666666667" PointY="14.75" />
+          <ConnectorPoint PointX="5.427083333333333" PointY="14.75" />
+          <ConnectorPoint PointX="6.078127" PointY="14.75" />
+          <ConnectorPoint PointX="6.078127" PointY="15.125" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

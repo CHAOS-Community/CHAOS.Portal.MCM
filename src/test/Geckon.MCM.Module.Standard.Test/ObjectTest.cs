@@ -1,4 +1,5 @@
-﻿using CHAOS.MCM.Data.DTO;
+﻿using System.Collections.Generic;
+using CHAOS.MCM.Data.DTO;
 using CHAOS.Portal.Data.DTO;
 using Geckon.Portal.Core.Exception;
 using NUnit.Framework;
@@ -8,27 +9,16 @@ namespace Geckon.MCM.Module.Standard.Test
     [TestFixture]
     public class ObjectTest : BaseTest
     {
-        //[Test]
-        //public void Should_Get_Object()
-        //{
-        //    IList<string> guids = new List<string>();
-        //    guids.AddFolder( Object1.GUID.ToString() );
+		[Test]
+		public void Should_Create_Object()
+		{
+			System.Guid guid = System.Guid.NewGuid();
 
-        //    IEnumerable<Object1> objectz = MCMModule.Object_Get( AdminCallContext, null, true, false, null, TopFolder.ID );
+			Object objectz = MCMModule.Object_Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
 
-        //    Assert.Greater( objectz.Count(), 0 );
-        //}
-
-		//[Test]
-		//public void Should_Create_Object()
-		//{
-		//    System.Guid guid = System.Guid.NewGuid();
-
-		//    Object objectz = MCMModule.Object_Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
-
-		//    Assert.AreEqual( guid.ToString(), objectz.GUID.ToString() );
-		//}
-        
+			Assert.AreEqual( guid.ToUUID().ToString(), objectz.GUID.ToString() );
+		}
+         
 		//[Test]
 		//public void Should_Delete_Object()
 		//{

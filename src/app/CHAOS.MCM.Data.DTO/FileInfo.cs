@@ -1,4 +1,6 @@
-﻿using Geckon.Portal.Data.Result.Standard;
+﻿using System;
+using Geckon;
+using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 
 namespace CHAOS.MCM.Data.DTO
@@ -8,12 +10,12 @@ namespace CHAOS.MCM.Data.DTO
 		#region Properties
 
 		[Serialize("ID")]
-		public int ID { get; set; }
+		public uint ID { get; set; }
 
 		[Serialize("ParentID")]
-		public int? ParentID { get; set; }
+		public uint? ParentID { get; set; }
 
-		public int ObjectID { get; set; }
+		public UUID ObjectGUID { get; set; }
 
 		[Serialize("Filename")]
 		public string Filename { get; set; }
@@ -28,7 +30,7 @@ namespace CHAOS.MCM.Data.DTO
 		public string URL { get; set; }
 
 		[Serialize("FormatID")]
-		public int FormatID { get; set; }
+		public uint FormatID { get; set; }
 
 		[Serialize("Format")]
 		public string Format { get; set; }
@@ -38,6 +40,29 @@ namespace CHAOS.MCM.Data.DTO
 
 		[Serialize("FormatType")]
 		public string FormatType { get; set; }
+
+		#endregion
+		#region Constructor
+
+		public FileInfo( uint id, uint? parentID, Guid objectGUID, string filename, string originalFilename, string token, string url, uint formatID, string format, string formatCategory, string formatType)
+		{
+			ID               = id;
+			ParentID         = parentID;
+			ObjectGUID       = new UUID( objectGUID.ToByteArray() );
+			Filename         = filename;
+			OriginalFilename = originalFilename;
+			Token			 = token;
+			URL				 = url;
+			FormatID	     = formatID;
+			Format           = format;
+			FormatCategory   = formatCategory;
+			FormatType       = formatType;
+		}
+
+		public FileInfo()
+		{
+			
+		}
 
 		#endregion
 	}

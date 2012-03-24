@@ -8,7 +8,7 @@ namespace Geckon.MCM.Module.Standard.Rights
         #region Properties
 
 		public Folder         ParentFolder { get; set; }
-		public int            ID { get; set; }
+		public uint            ID { get; set; }
         private IList<Folder> SubFolders { get; set; }
 
 		private IDictionary<Guid, FolderPermissions> GroupPermissions { get; set; }
@@ -18,12 +18,12 @@ namespace Geckon.MCM.Module.Standard.Rights
         #endregion
         #region Construction
 
-        public Folder( int id, Folder parentFolder ) : this( id )
+        public Folder( uint id, Folder parentFolder ) : this( id )
         {
             ParentFolder = parentFolder;
         }
 
-        public Folder( int id )
+        public Folder( uint id )
         {
             ID               = id;
             SubFolders       = new List<Folder>();

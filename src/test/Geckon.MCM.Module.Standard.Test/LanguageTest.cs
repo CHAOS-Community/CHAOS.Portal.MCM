@@ -1,5 +1,6 @@
 ﻿using CHAOS.MCM.Data.DTO;
 using CHAOS.Portal.Data.DTO;
+using Geckon.Common.Extensions;
 using Geckon.Portal.Core.Exception;
 using NUnit.Framework;
 
@@ -8,11 +9,11 @@ namespace Geckon.MCM.Module.Standard.Test
     [TestFixture]
     public class LanguageTest : BaseTest
     {
-		//[Test]
-		//public void Should_Get_Language()
-		//{
-		//    Assert.Greater( MCMModule.Language_Get( AnonCallContext, null, null).Count(),0 );
-		//}
+		[Test]
+		public void Should_Get_Language()
+		{
+			Assert.Greater( MCMModule.Language_Get(AnonCallContext, null, null).Count(), 0 );
+		}
 
 		//[Test]
 		//public void Should_Create_Language()

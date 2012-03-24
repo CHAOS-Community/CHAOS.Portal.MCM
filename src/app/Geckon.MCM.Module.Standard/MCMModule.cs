@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
 using CHAOS.MCM.Data.EF;
-using CHAOS.Portal.Data.DTO;
+using Geckon;
 using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Module.Standard.Rights;
 using Geckon.Portal.Core.Exception;
@@ -16,7 +16,7 @@ using Geckon.Index;
 using Geckon.Portal.Data.Result;
 using Folder = Geckon.MCM.Module.Standard.Rights.Folder;
 
-namespace Geckon.MCM.Module.Standard
+namespace CHAOS.MCM.Module.Standard
 {
     public class MCMModule : AModule
     {
@@ -35,8 +35,8 @@ namespace Geckon.MCM.Module.Standard
         {
             ConnectionString  = config.Attribute( "ConnectionString" ).Value;
 			PermissionManager = new PermissionManager();
-			Timer             = new Timer( SynchronizeFolders, null, 0, 1000 );
-			//SynchronizeFolders( null );
+			//Timer             = new Timer( SynchronizeFolders, null, 0, 1000 );
+			SynchronizeFolders( null );
         }
 
     	#endregion
@@ -46,31 +46,31 @@ namespace Geckon.MCM.Module.Standard
     	{
     		using( MCMEntities db = DefaultMCMEntities )
     		{
-				//PermissionManager pm = new PermissionManager();
+				PermissionManager pm = new PermissionManager();
 
-				//foreach( Data.Linq.Folder folder in db.Folders )
-				//{
-				//    pm.AddFolder(folder.ParentID, new Folder(folder.ID));
-				//}
+				foreach( Data.EF.Folder folder in db.Folder )
+				{
+					pm.AddFolder( (uint?) folder.ParentID, new Folder( (uint) folder.ID ) );
+				}
 
-				//foreach( var folderUserJoin in db.Folder_User_Joins )
-				//{
-				//    pm.AddUser(folderUserJoin.FolderID, folderUserJoin.UserGUID, (FolderPermissions)BitConverter.ToInt32(folderUserJoin.Permission.ToArray(), 0));
-				//}
+				foreach( var folderUserJoin in db.Folder_User_Join )
+				{
+					pm.AddUser( (uint) folderUserJoin.FolderID, folderUserJoin.UserGUID, (FolderPermissions) folderUserJoin.Permission );
+				}
 
-				//foreach( var folderGroupJoin in db.Folder_Group_Joins )
-				//{
-				//    pm.AddGroup(folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions)BitConverter.ToInt32(folderGroupJoin.Permission.ToArray(), 0));
-				//}
+				foreach( var folderGroupJoin in db.Folder_Group_Join )
+				{
+					pm.AddGroup( (uint) folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions) folderGroupJoin.Permission );
+				}
 
-				//lock( PermissionManager )
-				//{
-				//    PermissionManager = pm;
-				//}
+				lock (PermissionManager)
+				{
+					PermissionManager = pm;
+				}
             }
     	}
 
-		//#region ObjectType
+		#region ObjectType
 
 		//[Datatype("ObjectType","Create")]
 		//public ObjectType ObjectType_Create( CallContext callContext, string value  )
@@ -86,16 +86,14 @@ namespace Geckon.MCM.Module.Standard
 		//    }
 		//}
 
-		//[Datatype("ObjectType", "Get")]
-		//public IEnumerable<ObjectType> ObjectType_Get( CallContext callContext )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        IEnumerable<ObjectType> results = db.ObjectType_Get( null, null );
-
-		//        return results.ToList();
-		//    }
-		//}
+		[Datatype("ObjectType", "Get")]
+		public IEnumerable<Data.DTO.ObjectType> ObjectType_Get(CallContext callContext)
+		{
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				return db.ObjectType_Get( null, null ).ToDTO().ToList();
+			}
+		}
 
 		//[Datatype("ObjectType","Update")]
 		//public ScalarResult ObjectType_Update(  CallContext callContext, int id, string newName )
@@ -125,17 +123,17 @@ namespace Geckon.MCM.Module.Standard
 		//    }
 		//}
 
-		//#endregion
-		//#region Language
+		#endregion
+		#region Language
 
-		//[Datatype("Language","Get")]
-		//public IEnumerable<Language> Language_Get( CallContext callContext, string name, string languageCode )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        return db.Language_Get( name, languageCode ).ToList();
-		//    }
-		//}
+		[Datatype("Language", "Get")]
+		public IEnumerable<Data.DTO.Language> Language_Get(CallContext callContext, string name, string languageCode)
+		{
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				return db.Language_Get(name, languageCode).ToDTO().ToList();
+			}
+		}
 
 		//[Datatype("Language", "Create")]
 		//public Language Language_Create( CallContext callContext, string name, string languageCode )
@@ -179,17 +177,17 @@ namespace Geckon.MCM.Module.Standard
 		//    }
 		//}
 
-		//#endregion
-		//#region ObjectRelationType
+		#endregion
+		#region ObjectRelationType
 
-		//[Datatype("ObjectRelationType", "Get")]
-		//public IEnumerable<ObjectRelationType> ObjectRelationType_Get(CallContext callContext, int? id, string value)
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        return db.ObjectRelationType_Get(id, value).ToList();
-		//    }
-		//}
+		[Datatype("ObjectRelationType", "Get")]
+		public IEnumerable<Data.DTO.ObjectRelationType> ObjectRelationType_Get( CallContext callContext, int? id, string value )
+		{
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				return db.ObjectRelationType_Get( id, value ).ToDTO().ToList();
+			}
+		}
 
 		//[Datatype("ObjectRelationType", "Create")]
 		//public ObjectRelationType ObjectRelationType_Create(CallContext callContext, string value)
@@ -233,17 +231,17 @@ namespace Geckon.MCM.Module.Standard
 		//    }
 		//}
 
-		//#endregion
-		//#region FolderType
+		#endregion
+		#region FolderType
 
-		//[Datatype("FolderType", "Get")]
-		//public IEnumerable<FolderType> FolderType_Get(CallContext callContext, int? id, string name)
-		//{
-		//    using (MCMEntities db = DefaultMCMEntities)
-		//    {
-		//        return db.FolderType_Get(id, name).ToList();
-		//    }
-		//}
+		[Datatype("FolderType", "Get")]
+		public IEnumerable<Data.DTO.FolderType> FolderType_Get( CallContext callContext, int? id, string name )
+		{
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				return db.FolderType_Get(id, name).ToDTO().ToList();
+			}
+		}
 
 		//[Datatype("FolderType", "Create")]
 		//public FolderType FolderType_Create(CallContext callContext, string name)
@@ -287,17 +285,17 @@ namespace Geckon.MCM.Module.Standard
 		//    }
 		//}
 
-		//#endregion
-		//#region FormatType
+		#endregion
+		#region FormatType
 
-		//[Datatype("FormatType", "Get")]
-		//public IEnumerable<FormatType> FormatType_Get(CallContext callContext, int? id, string name)
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        return db.FormatType_Get(id, name).ToList();
-		//    }
-		//}
+		[Datatype("FormatType", "Get")]
+		public IEnumerable<Data.DTO.FormatType> FormatType_Get( CallContext callContext, int? id, string name )
+		{
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				return db.FormatType_Get( id, name ).ToDTO().ToList();
+			}
+		}
 
 		//[Datatype("FormatType", "Create")]
 		//public FormatType FormatType_Create(CallContext callContext, string name)
@@ -341,7 +339,7 @@ namespace Geckon.MCM.Module.Standard
 		//    }
 		//}
 
-		//#endregion
+		#endregion
 		//#region FormatCategory
 
 		////[Datatype("FormatCategory","Get")]
@@ -457,65 +455,70 @@ namespace Geckon.MCM.Module.Standard
 		//#endregion
 		//#region Object
 
-		//[Datatype("Object", "Get")]
-		//public IPagedResult<IResult> Object_Get(CallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations)
-		//{
-		//    using (MCMEntities db = DefaultMCMEntities)
-		//    {
-		//        IEnumerable<Guid> resultPage = null;
+		[Datatype("Object", "Get")]
+		public IPagedResult<IResult> Object_Get(CallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations)
+		{
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				IEnumerable<Guid> resultPage = null;
 
-		//        if (query != null)
-		//        {
-		//            //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
-		//            IList<Data.Linq.Folder> folders = db.Folder_Get_DirectFolderAssociations( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, 0x1 ).ToList();
+				if (query != null)
+				{
+					//TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
+					IList<Data.EF.Folder> folders = db.Folder_Get_DirectFolderAssociations( String.Join( ",", callContext.Groups.Select(group => group.GUID ) ), callContext.User.GUID.ToByteArray(), 0x1).ToList();
 
-		//            //TODO: Refactor building of queries
-		//            System.Text.StringBuilder sb = new System.Text.StringBuilder(query.Query);
-		//            sb.Append(" AND (");
-		//            for (int i = 0; i < folders.Count(); i++)
-		//            {
-		//                sb.Append(string.Format("FolderTree:{0}", folders[i].ID));
+					//TODO: Refactor building of queries
+					System.Text.StringBuilder sb = new System.Text.StringBuilder(query.Query);
+					sb.Append(" AND (");
+					for (int i = 0; i < folders.Count(); i++)
+					{
+						sb.Append(string.Format("FolderTree:{0}", folders[i].ID));
 
-		//                if (i + 1 < folders.Count())
-		//                    sb.Append(" OR ");
-		//            }
+						if (i + 1 < folders.Count())
+							sb.Append(" OR ");
+					}
 
-		//            sb.Append(")");
+					sb.Append(")");
 
-		//            query.Query = sb.ToString();
+					query.Query = sb.ToString();
 
-		//            IPagedResult<IIndexResult> indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get( query );
-                    
-		//            resultPage = indexResult.Results.Select( result => ((GuidResult)result ).Guid );
+					IPagedResult<IIndexResult> indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get(query);
 
-		//            // if solr doesnt return anything there is no need to continue, so just return an empty list
-		//            if (resultPage.Count() == 0)
-		//                return new Geckon.Index.Standard.PagedResult<IResult>(0, 0, new List<Object>());
+					resultPage = indexResult.Results.Select(result => ((GuidResult)result).Guid);
 
-		//            return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get( resultPage, includeMetadata ?? false, includeFiles?? false, false, includeObjectRelations?? false ));
-		//        }
-		//    }
+					// if solr doesnt return anything there is no need to continue, so just return an empty list
+					if (resultPage.Count() == 0)
+						return new Geckon.Index.Standard.PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
 
-		//    throw new NotImplementedException( "No implmentation for Object Get without solr parameters" );
-		//}
+					return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get( resultPage, includeMetadata ?? false, includeFiles ?? false, false, includeObjectRelations ?? false ).ToDTO() );
+				}
+			}
 
-		//[Datatype("Object","Create")]
-		//public Object Object_Create( CallContext callContext, Guid? GUID, int objectTypeID, int folderID )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.Object_Create(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, GUID, objectTypeID, folderID);
+			throw new NotImplementedException("No implmentation for Object Get without solr parameters");
+		}
 
-		//        if( result == -100 )
-		//            throw new InsufficientPermissionsExcention( "User does not have permissions to delete object" );
+		[Datatype("Object","Create")]
+		public Data.DTO.Object Object_Create( CallContext callContext, Guid? GUID, uint objectTypeID, uint folderID )
+		{
+		    using( MCMEntities db = DefaultMCMEntities )
+		    {
+				if( !PermissionManager.GetFolder( folderID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
+					throw new InsufficientPermissionsExcention( "User does not have permissions to create object" );
 
-		//        IEnumerable<Object> newObject = db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, null, false, false, false, false, result, null, null, 0, 1 );
+				Guid guid = GUID.HasValue ? GUID.Value : Guid.NewGuid();
 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), newObject );
+		        int result = db.Object_Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
 
-		//        return newObject.First();
-		//    }
-		//}
+				if( result == -200 )
+					throw new UnhandledException("Unhandled exception, Object_Create was rolled back");
+
+		        IEnumerable<Data.DTO.Object> newObject = db.Object_Get( new[]{guid}, false, false, false, false ).ToDTO();
+
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), newObject );
+
+		        return newObject.First();
+		    }
+		}
 
 		//[Datatype("Object", "Delete")]
 		//public ScalarResult Object_Delete( CallContext callContext, Guid GUID, int folderID )
@@ -575,18 +578,18 @@ namespace Geckon.MCM.Module.Standard
 		//}
 
 		//#endregion
-		//#region MetadataSchema
+		#region MetadataSchema
 
-		//[Datatype("MetadataSchema", "Get")]
-		//public IEnumerable<MetadataSchema> MetadataSchema_Get(CallContext callContext, int? ID)
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        return db.MetadataSchema_Get( ID ).ToList();
-		//    }
-		//}
+		[Datatype("MetadataSchema", "Get")]
+		public IEnumerable<Data.DTO.MetadataSchema> MetadataSchema_Get(CallContext callContext, UUID metadataSchemaGUID )
+		{
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				return db.MetadataSchema_Get( metadataSchemaGUID == null ? null : metadataSchemaGUID.ToByteArray() ).ToDTO().ToList();
+			}
+		}
 
-		//#endregion
+		#endregion
 		//#region Test
 
 		//[Datatype("Test","ReIndex")]
@@ -660,38 +663,39 @@ namespace Geckon.MCM.Module.Standard
 		//#endregion
 		//#region Files
 
-		//[Datatype("File","Create")]
-		//public File File_Create( CallContext callContext, Guid objectGUID, int? parentFileID, int formatID, int destinationID, string filename, string originalFilename, string folderPath )
+		//[Datatype("File", "Create")]
+		//public File File_Create( CallContext callContext, UUID objectGUID, int? parentFileID, int formatID, int destinationID, string filename, string originalFilename, string folderPath )
 		//{
 		//    using( MCMEntities db = DefaultMCMEntities )
 		//    {
-		//        int result = db.File_Create( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, objectGUID, parentFileID, formatID, destinationID, filename, originalFilename, folderPath );
+		//        // TODO: Check if user has 'Folder', 'CREATE_UPDATE_OBJECTS permission 
+		//        // throw new InsufficientPermissionsExcention("User does not have permissions to create a file for this object");
 
-		//        if( result == -100 )
-		//            throw new InsufficientPermissionsExcention( "User does not have permissions to create a file for this object" );
+		//        int id = db.File_Create( objectGUID.ToByteArray(), parentFileID, formatID, destinationID, filename, originalFilename, folderPath ).First().Value;
 
-		//        return db.File_Get( result ).First();
+
+		//        return db.File_Get( id ).First().ToDTO();
 		//    }
 		//}
 
 		//#endregion
-		//#region Destination
+		#region Destination
 
-		//[Datatype("Destination","Get")]
-		//public IEnumerable<DestinationInfo> Destination_Get( CallContext callContext, int destinationID )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        return db.DestinationInfo_Get( destinationID ).ToList();
-		//    }
-		//}
+		[Datatype("Destination", "Get")]
+		public IEnumerable<Data.DTO.DestinationInfo> Destination_Get(CallContext callContext, uint destinationID )
+		{
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				return db.DestinationInfo_Get( (int?) destinationID ).ToDTO().ToList();
+			}
+		}
 
-		//#endregion
-        
-		//private void PutObjectInIndex( IIndex index, IEnumerable<Object> newObject )
-		//{
-		//    index.Set( newObject );
-		//}
+		#endregion
+
+		private void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
+		{
+			index.Set( newObject );
+		}
 
 		//#endregion
     }
