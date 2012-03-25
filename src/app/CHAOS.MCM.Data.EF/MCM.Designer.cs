@@ -487,38 +487,6 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<FileInfo> FileInfo
-        {
-            get
-            {
-                if ((_FileInfo == null))
-                {
-                    _FileInfo = base.CreateObjectSet<FileInfo>("FileInfo");
-                }
-                return _FileInfo;
-            }
-        }
-        private ObjectSet<FileInfo> _FileInfo;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<FolderInfo> FolderInfo
-        {
-            get
-            {
-                if ((_FolderInfo == null))
-                {
-                    _FolderInfo = base.CreateObjectSet<FolderInfo>("FolderInfo");
-                }
-                return _FolderInfo;
-            }
-        }
-        private ObjectSet<FolderInfo> _FolderInfo;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Object> Object
         {
             get
@@ -567,6 +535,22 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<FolderInfo> FolderInfo
+        {
+            get
+            {
+                if ((_FolderInfo == null))
+                {
+                    _FolderInfo = base.CreateObjectSet<FolderInfo>("FolderInfo");
+                }
+                return _FolderInfo;
+            }
+        }
+        private ObjectSet<FolderInfo> _FolderInfo;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<Metadata> Metadata
         {
             get
@@ -579,6 +563,22 @@ namespace CHAOS.MCM.Data.EF
             }
         }
         private ObjectSet<Metadata> _Metadata;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FileInfo> FileInfo
+        {
+            get
+            {
+                if ((_FileInfo == null))
+                {
+                    _FileInfo = base.CreateObjectSet<FileInfo>("FileInfo");
+                }
+                return _FileInfo;
+            }
+        }
+        private ObjectSet<FileInfo> _FileInfo;
 
         #endregion
         #region AddTo Methods
@@ -776,22 +776,6 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FileInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToFileInfo(FileInfo fileInfo)
-        {
-            base.AddObject("FileInfo", fileInfo);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the FolderInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToFolderInfo(FolderInfo folderInfo)
-        {
-            base.AddObject("FolderInfo", folderInfo);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Object EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToObject(Object @object)
@@ -816,11 +800,27 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the FolderInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFolderInfo(FolderInfo folderInfo)
+        {
+            base.AddObject("FolderInfo", folderInfo);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMetadata(Metadata metadata)
         {
             base.AddObject("Metadata", metadata);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FileInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFileInfo(FileInfo fileInfo)
+        {
+            base.AddObject("FileInfo", fileInfo);
         }
 
         #endregion
@@ -1043,7 +1043,8 @@ namespace CHAOS.MCM.Data.EF
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="iD">No Metadata Documentation available.</param>
-        public ObjectResult<Folder> Folder_Get(Nullable<global::System.Int32> iD)
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        public ObjectResult<Folder> Folder_Get(Nullable<global::System.Int32> iD, global::System.Byte[] objectGUID)
         {
             ObjectParameter iDParameter;
             if (iD.HasValue)
@@ -1055,14 +1056,25 @@ namespace CHAOS.MCM.Data.EF
                 iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<Folder>("Folder_Get", iDParameter);
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Folder>("Folder_Get", iDParameter, objectGUIDParameter);
         }
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
         /// <param name="iD">No Metadata Documentation available.</param>
-        public ObjectResult<Folder> Folder_Get(Nullable<global::System.Int32> iD, MergeOption mergeOption)
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        public ObjectResult<Folder> Folder_Get(Nullable<global::System.Int32> iD, global::System.Byte[] objectGUID, MergeOption mergeOption)
         {
             ObjectParameter iDParameter;
             if (iD.HasValue)
@@ -1074,7 +1086,17 @@ namespace CHAOS.MCM.Data.EF
                 iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<Folder>("Folder_Get", mergeOption, iDParameter);
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Folder>("Folder_Get", mergeOption, iDParameter, objectGUIDParameter);
         }
     
         /// <summary>
@@ -5480,15 +5502,13 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="folderTypeID">Initial value of the FolderTypeID property.</param>
-        /// <param name="subscriptionGUID">Initial value of the SubscriptionGUID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
-        public static FolderInfo CreateFolderInfo(global::System.Int64 id, global::System.Int64 folderTypeID, global::System.Guid subscriptionGUID, global::System.String name, global::System.DateTime dateCreated)
+        public static FolderInfo CreateFolderInfo(global::System.Int64 id, global::System.Int64 folderTypeID, global::System.String name, global::System.DateTime dateCreated)
         {
             FolderInfo folderInfo = new FolderInfo();
             folderInfo.ID = id;
             folderInfo.FolderTypeID = folderTypeID;
-            folderInfo.SubscriptionGUID = subscriptionGUID;
             folderInfo.Name = name;
             folderInfo.DateCreated = dateCreated;
             return folderInfo;
@@ -5578,9 +5598,9 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Guid SubscriptionGUID
+        public Nullable<global::System.Guid> SubscriptionGUID
         {
             get
             {
@@ -5588,18 +5608,15 @@ namespace CHAOS.MCM.Data.EF
             }
             set
             {
-                if (_SubscriptionGUID != value)
-                {
-                    OnSubscriptionGUIDChanging(value);
-                    ReportPropertyChanging("SubscriptionGUID");
-                    _SubscriptionGUID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("SubscriptionGUID");
-                    OnSubscriptionGUIDChanged();
-                }
+                OnSubscriptionGUIDChanging(value);
+                ReportPropertyChanging("SubscriptionGUID");
+                _SubscriptionGUID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SubscriptionGUID");
+                OnSubscriptionGUIDChanged();
             }
         }
-        private global::System.Guid _SubscriptionGUID;
-        partial void OnSubscriptionGUIDChanging(global::System.Guid value);
+        private Nullable<global::System.Guid> _SubscriptionGUID;
+        partial void OnSubscriptionGUIDChanging(Nullable<global::System.Guid> value);
         partial void OnSubscriptionGUIDChanged();
     
         /// <summary>

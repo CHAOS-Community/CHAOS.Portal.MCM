@@ -91,6 +91,19 @@ namespace CHAOS.MCM.Data.EF
 		}
 
 		#endregion
+		#region FolderInfo
+
+		public static IEnumerable<DTO.FolderInfo> ToDTO( this IEnumerable<FolderInfo> folders )
+		{
+			return folders.Select( item => ToDTO( item ) );
+		}
+
+		public static DTO.FolderInfo ToDTO( this FolderInfo folder )
+		{
+			return new DTO.FolderInfo( (uint) folder.ID, (uint) folder.FolderTypeID, (uint?) folder.ParentID, folder.SubscriptionGUID, folder.Name, folder.DateCreated, folder.NumberOfSubFolders, folder.NumberOfObjects );
+		}
+
+		#endregion
 		#region FormatType
 
 		public static IEnumerable<DTO.FormatType> ToDTO( this IEnumerable<FormatType> formatTypes )

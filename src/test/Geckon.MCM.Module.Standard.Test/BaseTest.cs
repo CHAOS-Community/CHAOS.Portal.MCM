@@ -47,9 +47,6 @@ namespace Geckon.MCM.Module.Standard.Test
         {
             base.SetUp();
 
-			MCMModule = new MCMModule();
-			MCMModule.Init(XElement.Parse("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=192.168.56.104;User Id=root;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>"));
-
 			using( MCMEntities db = new MCMEntities() )
 			{
 				db.PreTest();
@@ -76,8 +73,8 @@ namespace Geckon.MCM.Module.Standard.Test
 				Afrikaans       = db.Language_Get( null, "af" ).First().ToDTO();
 				FolderType      = db.FolderType_Get( folderTypeID, null ).First().ToDTO();
 				FolderTestType  = db.FolderType_Get( folderTestTypeID, null ).First().ToDTO();
-				TopFolder       = db.Folder_Get( topFolderID ).First().ToDTO();
-				EmptyFolder     = db.Folder_Get( emptyFolderID ).First().ToDTO();
+				TopFolder       = db.Folder_Get( topFolderID, null ).First().ToDTO();
+				EmptyFolder     = db.Folder_Get( emptyFolderID, null ).First().ToDTO();
 				AssetObjectType = db.ObjectType_Get( assetObjectTypeID, null ).First().ToDTO();
 				DemoObjectType  = db.ObjectType_Get( demoObjectTypeID, null ).First().ToDTO();
 				ObjectContains  = db.ObjectRelationType_Get( objectContainsID, null ).First().ToDTO();
@@ -88,6 +85,9 @@ namespace Geckon.MCM.Module.Standard.Test
 				MetadataSchema  = db.MetadataSchema_Get( new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray() ).First().ToDTO();
 				Object1         = db.Object_Get( new[]{ new UUID("bb738610-7443-11e1-89cc-08002723312d").ToGuid() }, true, true, true, true ).First().ToDTO();
 				Object2         = db.Object_Get( new[]{ new UUID("d7207ba4-7443-11e1-89cc-08002723312d").ToGuid() }, true, true, true, true ).First().ToDTO();
+
+				MCMModule = new MCMModule();
+				MCMModule.Init(XElement.Parse("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=192.168.56.104;User Id=root;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>"));
 			}
 
 			//using( MCMDataContext db = new MCMDataContext( "Data Source=192.168.56.101;Initial Catalog=MCM;Persist Security Info=True;User ID=sa;Password=GECKONpbvu7000" ) )

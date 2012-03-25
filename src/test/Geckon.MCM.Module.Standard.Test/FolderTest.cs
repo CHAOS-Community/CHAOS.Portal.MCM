@@ -12,27 +12,27 @@ namespace Geckon.MCM.Module.Standard.Test
     [TestFixture]
     public class FolderTest : BaseTest
     {
-		//[Test]
-		//public void Should_Get_TopFolders()
-		//{
-		//    IEnumerable<FolderInfo> folders = MCMModule.Folder_Get( AdminCallContext,null, null,null );
+		[Test]
+		public void Should_Get_TopFolders()
+		{
+			IEnumerable<FolderInfo> folders = MCMModule.Folder_Get(AdminCallContext, null, null, null);
 
-		//    Assert.Greater( folders.Count(), 0 );
-		//}
+			Assert.Greater(folders.Count(), 0);
+		}
 
-		//[Test]
-		//public void Should_Get_SubFolders()
-		//{
-		//    Thread.Sleep( 1000 );
-		//    IEnumerable<FolderInfo> folders = MCMModule.Folder_Get( AdminCallContext, null, null, TopFolder.ID);
+		[Test]
+		public void Should_Get_SubFolders()
+		{
+		    Thread.Sleep( 1000 );
+		    IEnumerable<FolderInfo> folders = MCMModule.Folder_Get( AdminCallContext, null, null, TopFolder.ID);
 
-		//    foreach( FolderInfo folderInfo in folders )
-		//    {
-		//        Assert.AreEqual( TopFolder.ID, folderInfo.ParentID );
-		//    }
+		    foreach( FolderInfo folderInfo in folders )
+		    {
+		        Assert.AreEqual( TopFolder.ID, folderInfo.ParentID );
+		    }
 
-		//    Assert.Greater(folders.Count(), 0);
-		//}
+		    Assert.Greater(folders.Count(), 0);
+		}
 
 		//[Test]
 		//public void Should_Delete_Folder()

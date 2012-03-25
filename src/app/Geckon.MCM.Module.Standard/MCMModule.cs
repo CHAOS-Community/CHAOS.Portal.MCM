@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
 using CHAOS.MCM.Data.EF;
+using CHAOS.Portal.Data.DTO;
 using Geckon;
 using Geckon.MCM.Core.Exception;
 using Geckon.MCM.Module.Standard.Rights;
@@ -35,12 +36,14 @@ namespace CHAOS.MCM.Module.Standard
         {
             ConnectionString  = config.Attribute( "ConnectionString" ).Value;
 			PermissionManager = new PermissionManager();
-			//Timer             = new Timer( SynchronizeFolders, null, 0, 1000 );
+			Timer = new Timer( SynchronizeFolders, null, 1000, 1000 );
 			SynchronizeFolders( null );
         }
 
     	#endregion
-      //  #region Business Logic
+        #region Business Logic
+
+		private object _SyncLock = new object();
 
 		private void SynchronizeFolders( object state )
     	{
@@ -63,11 +66,11 @@ namespace CHAOS.MCM.Module.Standard
 					pm.AddGroup( (uint) folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions) folderGroupJoin.Permission );
 				}
 
-				lock (PermissionManager)
+				lock (_SyncLock)
 				{
 					PermissionManager = pm;
 				}
-            }
+			}
     	}
 
 		#region ObjectType
@@ -351,33 +354,32 @@ namespace CHAOS.MCM.Module.Standard
 		////public IEnumerable<Format> Format_Get( CallContext callContext,  )
 
 		//#endregion
-		//#region Folder
+		#region Folder
 
-		//[Datatype("Folder","Get")]
-		//public IEnumerable<FolderInfo> Folder_Get( CallContext callContext, int? id, int? folderTypeID, int? parentID )
-		//{
-		//    IEnumerable<int> folderIDs = new List<int>();
+		[Datatype("Folder", "Get")]
+		public IEnumerable<Data.DTO.FolderInfo> Folder_Get(CallContext callContext, uint? id, uint? folderTypeID, uint? parentID)
+		{
+			IList<long> folderIDs = new List<long>();
 
-		//    if( !parentID.HasValue && !id.HasValue )
-		//        folderIDs = PermissionManager.GetFolders( callContext.User.GUID, callContext.Groups.Select( group => group.GUID ).ToList() ).Select( folder => folder.ID );
+			if( !parentID.HasValue && !id.HasValue )
+				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() ).Select( folder => (long) folder.ID ).ToList();
 
-		//    if( parentID.HasValue )
-		//        folderIDs = PermissionManager.GetFolders( callContext.User.GUID, callContext.Groups.Select( group => group.GUID ).ToList(), parentID.Value ).Select( folder => folder.ID );
+			if( parentID.HasValue )
+				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), parentID.Value).Select(folder => (long) folder.ID).ToList();
 
-		//    if( id.HasValue )
-		//    {
-		//        Folder folder = PermissionManager.GetFolder( id.Value );
+			if (id.HasValue)
+			{
+				Folder folder = PermissionManager.GetFolder( id.Value );
 
-		//        if( folder.DoesUserOrGroupHavePersmission( callContext.User.GUID, callContext.Groups.Select( group => group.GUID ).ToList(), FolderPermissions.Read, true ) )
-		//            ((List<int>) folderIDs).Add(folder.ID);
-		//    }
+				if( folder.DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), FolderPermissions.Read, true ) )
+					folderIDs.Add( folder.ID );
+			}
 
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//     //   return db.Folder_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, id, folderTypeID, parentID );
-		//        return (from fi in db.FolderInfos where folderIDs.Contains(fi.ID) select fi).ToList();
-		//    }
-		//}
+			using( MCMEntities db = DefaultMCMEntities )
+			{
+				return db.FolderInfo.Where( fi => folderIDs.Contains<long>( fi.ID ) ).ToDTO().ToList();
+			}
+		}
 
 		//[Datatype("Folder","Delete")]
 		//public ScalarResult Folder_Delete( CallContext callContext, int id )
@@ -452,8 +454,8 @@ namespace CHAOS.MCM.Module.Standard
 		//    }
 		//}
 
-		//#endregion
-		//#region Object
+		#endregion
+		#region Object
 
 		[Datatype("Object", "Get")]
 		public IPagedResult<IResult> Object_Get(CallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations)
@@ -552,21 +554,36 @@ namespace CHAOS.MCM.Module.Standard
 		//    }
 		//}
 
-		//#endregion
-		//#region Metadata
+		#endregion
+		#region Metadata
 
-		//[Datatype("Metadata","Set")]
-		//public ScalarResult Metadata_Set( CallContext callContext, Guid objectGUID, int metadataSchemaID, string languageCode, string metadataXML )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.Metadata_Set( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, objectGUID, metadataSchemaID, languageCode, metadataXML, false );
+		[Datatype("Metadata","Set")]
+		public ScalarResult Metadata_Set( CallContext callContext, UUID objectGUID, UUID metadataSchemaGUID, string languageCode, string metadataXML )
+		{
+		    using( MCMEntities db = DefaultMCMEntities )
+		    {
+		    	bool doesUserHavePermission = false;
+
+				// TODO: Refactor Permission check
+				foreach( Data.EF.Folder folder in db.Folder_Get(null, objectGUID.ToByteArray()) )
+				{
+					if( PermissionManager.GetFolder( (uint) folder.ID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
+					{
+						doesUserHavePermission = true;
+						continue;
+					}
+				}
+
+				if( !doesUserHavePermission )
+					throw new InsufficientPermissionsExcention( "User does not have permissions to create object" );
+
+		        int result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
                 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, new []{ objectGUID }, true, false, false, false, null, null, null, 0, 1 ) );
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ objectGUID.ToGuid() }, true, true, true, true ).ToDTO() );
 
-		//        return new ScalarResult( result );
-		//    }
-		//}
+		        return new ScalarResult( result );
+		    }
+		}
 
 		//[Datatype("Metadata", "Get")]
 		//public IEnumerable<Metadata> Metadata_Get( CallContext callContext, string objectGUID, string metadataSchemaGUID, string languageCode )
@@ -577,7 +594,7 @@ namespace CHAOS.MCM.Module.Standard
 		//    }
 		//}
 
-		//#endregion
+		#endregion
 		#region MetadataSchema
 
 		[Datatype("MetadataSchema", "Get")]
@@ -697,6 +714,6 @@ namespace CHAOS.MCM.Module.Standard
 			index.Set( newObject );
 		}
 
-		//#endregion
+		#endregion
     }
 }
