@@ -428,7 +428,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="uint" Nullable="false" />
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
         </EntityType>
         <EntityType Name="ObjectRelationType">
@@ -1036,6 +1036,7 @@
           <Parameter Name="EditingUserGUID" Type="binary" Mode="In" />
         </Function>
         <Function Name="ObjectFolderType_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
         </Function>
         <Function Name="ObjectFolder_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
@@ -1096,6 +1097,15 @@
           <Parameter Name="ObjectGUID" Type="int" Mode="In" />
           <Parameter Name="FolderID" Type="int" Mode="In" />
           <Parameter Name="NewFolderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Object_GetByFolderID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="FolderID" Type="int" Mode="In" />
+          <Parameter Name="IncludeMetadata" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeFiles" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeObjectRelations" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeFolders" Type="tinyint" Mode="In" />
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
         </Function>
         <Function Name="Object_GetByGUIDs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUIDs" Type="varchar" Mode="In" />
@@ -1346,7 +1356,8 @@
             <Parameter Name="FolderID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ObjectFolderType_Create" ReturnType="Collection(Int32)">
-          <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Metadata_Set" ReturnType="Collection(Int32)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />

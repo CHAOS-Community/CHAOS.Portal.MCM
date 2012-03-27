@@ -191,7 +191,7 @@ namespace CHAOS.MCM.Data.EF
 
 		public static DTO.Object ToDTO( this Object obj )
 		{
-			return new DTO.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDTO(), obj.pFiles.ToDTO(), obj.ObjectRealtions.ToDTO() );
+			return new DTO.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDTO(), obj.pFiles.ToDTO(), obj.ObjectRealtions.ToDTO(), obj.Folders.ToDTO() );
 		}
 
 		#endregion

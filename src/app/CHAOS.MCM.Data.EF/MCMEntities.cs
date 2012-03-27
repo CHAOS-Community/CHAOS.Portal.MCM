@@ -10,7 +10,7 @@ namespace CHAOS.MCM.Data.EF
 {
 	public partial class MCMEntities
 	{
-		public IEnumerable<Object> Object_Get( IEnumerable<Guid> guids, bool includeMetadata, bool includeFiles, bool includeFolders, bool includeObjectRelations )
+		public IEnumerable<Object> Object_Get( IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations )
 		{
 			using( MySqlConnection conn = new MySqlConnection( "server=192.168.56.104;User Id=root;password=GECKONpbvu7000;Persist Security Info=True;database=MCM" ) )
 			using( MySqlCommand comm = new MySqlCommand("Object_GetByGUIDs", conn ) )
@@ -96,9 +96,119 @@ namespace CHAOS.MCM.Data.EF
 			}		
 		}
 
-		private string ConvertToDBList(IEnumerable<Guid> guids)
+		public IEnumerable<Object> Object_Get( uint? folderID, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, uint pageIndex, uint pageSize )
 		{
-			return String.Join( ",", guids.Select( item => item.ToUUID().ToString().Replace("-","") ) );
+			using( MySqlConnection conn = new MySqlConnection( "server=192.168.56.104;User Id=root;password=GECKONpbvu7000;Persist Security Info=True;database=MCM" ) )
+			using( MySqlCommand comm = new MySqlCommand("Object_GetByFolderID", conn ) )
+			{
+				comm.CommandType = CommandType.StoredProcedure;
+
+				var param = comm.CreateParameter();
+				param.DbType        = DbType.UInt32;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "FolderID";
+				param.Value         = folderID;
+				comm.Parameters.Add( param );
+
+				param = comm.CreateParameter();
+				param.DbType        = DbType.Boolean;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "IncludeMetadata";
+				param.Value         = includeMetadata;
+				comm.Parameters.Add( param );
+
+				param = comm.CreateParameter();
+				param.DbType        = DbType.Boolean;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "IncludeFiles";
+				param.Value         = includeFiles;
+				comm.Parameters.Add( param );
+
+				param = comm.CreateParameter();
+				param.DbType        = DbType.Boolean;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "IncludeObjectRelations";
+				param.Value         = includeObjectRelations;
+				comm.Parameters.Add( param );
+
+				param = comm.CreateParameter();
+				param.DbType        = DbType.Boolean;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "IncludeFolders";
+				param.Value         = includeFolders;
+				comm.Parameters.Add( param );
+
+				param = comm.CreateParameter();
+				param.DbType        = DbType.UInt32;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "PageIndex";
+				param.Value         = pageIndex;
+				comm.Parameters.Add( param );
+
+				param = comm.CreateParameter();
+				param.DbType        = DbType.UInt32;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "PageSize";
+				param.Value         = pageSize;
+				comm.Parameters.Add( param );
+
+				conn.Open();
+
+				IEnumerable<Object> objects;
+
+				using( DbDataReader reader = comm.ExecuteReader( CommandBehavior.SequentialAccess ) )
+				{
+					objects = Translate<Object>( reader ).ToList();
+
+					if( includeMetadata )
+					{
+						reader.NextResult();
+						IEnumerable<Metadata> metadatas = Translate<Metadata>(reader).ToList();
+
+						foreach( Object o in objects )
+						{
+							o.pMetadatas = (from m in metadatas where m.ObjectGUID == o.GUID select m ).ToList();
+						}
+					}
+
+					if( includeFiles )
+					{
+						reader.NextResult();
+						IEnumerable<FileInfo> files = Translate<FileInfo>(reader).ToList();
+
+						foreach( Object o in objects )
+						{
+							o.pFiles = (from f in files where f.ObjectGUID == o.GUID select f).ToList();
+						}
+					}
+
+					if( includeObjectRelations )
+					{
+						reader.NextResult();
+						IEnumerable<Object_Object_Join> objectRelations = Translate<Object_Object_Join>(reader).ToList();
+
+						foreach( Object o in objects )
+						{
+							o.ObjectRealtions = (from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or).ToList();
+						}
+					}
+
+					if( includeFolders )
+					{
+						foreach( Object o in objects )
+						{
+							o.Folders = Folder_Get( null, o.GUID.ToByteArray() ).ToList();
+						}
+					}
+
+					return objects;
+				}	
+			}		
+		}
+
+		private string ConvertToDBList(IEnumerable<UUID> guids)
+		{
+			return String.Join( ",", guids.Select( item => item.ToString().Replace("-","") ) );
 		}
 	}
 }

@@ -38,14 +38,14 @@ namespace CHAOS.MCM.Data.DTO
 		[Serialize("ObjectRelations" )]
 		public List<Object_Object_Join> ObjectRealtions { get; set; }
 
-		public IEnumerable<Folder> Folders { get; set; }
-		public IEnumerable<Folder> FolderTree { get; set; }
+		public IList<Folder> Folders { get; set; }
+		public IList<uint> FolderTree { get; set; }
 		public List<Object> RelatedObjects { get; set; }
 
 		#endregion
 		#region Constructor
 
-		public Object( Guid guid, uint objectTypeID, DateTime dateCreated, IEnumerable<Metadata> metadatas, IEnumerable<FileInfo> fileInfos, IEnumerable<Object_Object_Join> objectObjectJoins )
+		public Object(Guid guid, uint objectTypeID, DateTime dateCreated, IEnumerable<Metadata> metadatas, IEnumerable<FileInfo> fileInfos, IEnumerable<Object_Object_Join> objectObjectJoins, IEnumerable<Folder> folders ) 
 		{
 			GUID         = new UUID( guid.ToByteArray() );
 			ObjectTypeID = objectTypeID;
@@ -54,6 +54,7 @@ namespace CHAOS.MCM.Data.DTO
 			Metadatas       = metadatas.ToList();
 			Files           = fileInfos.ToList();
 			ObjectRealtions = objectObjectJoins.ToList();
+			Folders         = folders.ToList();
 		}
 
 		public Object()
@@ -77,9 +78,9 @@ namespace CHAOS.MCM.Data.DTO
 				}
 
 			if( FolderTree != null )
-				foreach( Folder folder in FolderTree )
+				foreach( uint folderID in FolderTree )
 				{
-					yield return new KeyValuePair<string, string>("FolderTree", folder.ID.ToString( ) );
+					yield return new KeyValuePair<string, string>("FolderTree", folderID.ToString() );
 				}
 
 			// TODO: Implement Metadata XML converter
@@ -88,7 +89,7 @@ namespace CHAOS.MCM.Data.DTO
 			if( Metadatas != null )
 				foreach( Metadata metadata in Metadatas )
 				{
-					yield return new KeyValuePair<string, string>(string.Format("m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
+					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
 
 			if( RelatedObjects != null )
@@ -96,7 +97,7 @@ namespace CHAOS.MCM.Data.DTO
 				{
 					foreach( Metadata relatedMetadata in obj.Metadatas )
 					{
-						yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXML.Root ) );
+						yield return new KeyValuePair<string, string>( string.Format( "rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXML.Root ) );
 					}
 				}
 		}

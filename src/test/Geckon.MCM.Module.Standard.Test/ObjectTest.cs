@@ -12,11 +12,11 @@ namespace Geckon.MCM.Module.Standard.Test
 		[Test]
 		public void Should_Create_Object()
 		{
-			System.Guid guid = System.Guid.NewGuid();
+			UUID guid = new UUID();
 
 			Object objectz = MCMModule.Object_Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
 
-			Assert.AreEqual( guid.ToUUID().ToString(), objectz.GUID.ToString() );
+			Assert.AreEqual( guid.ToString(), objectz.GUID.ToString() );
 		}
          
 		//[Test]

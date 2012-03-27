@@ -2,7 +2,7 @@
 using Geckon.Portal.Core.Standard.Extension;
 using Geckon.Index;
 
-namespace Geckon.MCM.Extension.Object
+namespace CHAOS.MCM.Extension.Object
 {
     public class ObjectExtension : AExtension
     {
@@ -11,8 +11,8 @@ namespace Geckon.MCM.Extension.Object
             
         }
 
-        public void Delete( CallContext callContext, Guid GUID, int folderID ){}
-        public void Create( CallContext callContext, Guid? GUID, int objectTypeID, int folderID ){}
-        public void PutInFolder( CallContext callContext, Guid GUID, int folderID, int objectFolderTypeID ) {}
+		//public void Delete( CallContext callContext, Guid GUID, int folderID ){}
+		//public void Create( CallContext callContext, Guid? GUID, int objectTypeID, int folderID ){}
+		//public void PutInFolder( CallContext callContext, Guid GUID, int folderID, int objectFolderTypeID ) {}
     }
 }

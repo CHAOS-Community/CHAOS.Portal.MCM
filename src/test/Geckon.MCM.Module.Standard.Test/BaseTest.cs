@@ -15,6 +15,7 @@ using FormatCategory     = CHAOS.MCM.Data.DTO.FormatCategory;
 using DestinationInfo    = CHAOS.MCM.Data.DTO.DestinationInfo;
 using MetadataSchema     = CHAOS.MCM.Data.DTO.MetadataSchema;
 using Object             = CHAOS.MCM.Data.DTO.Object;
+using CHAOS.Portal.Data.DTO;
 
 namespace Geckon.MCM.Module.Standard.Test
 {
@@ -63,7 +64,7 @@ namespace Geckon.MCM.Module.Standard.Test
 				int formatID		     = db.Format_Create( formatCategoryID, "H.264 vb:896 ab:128", null, "video/mp4" ).First().Value;
 				int destinationID	     = db.Destination_Create( SubscriptionInfo.GUID.ToByteArray(), "CHAOS Source" ).First().Value;
 				int accessProvider       = db.AccessProvider_Create( destinationID, "http://example.com", "{BASE_PATH}{FOLDER_PATH}{FILENAME}", "HTTP Download" ).First().Value;
-				int objectFolderTypeID   = db.ObjectFolderType_Create( "Physical" ).First().Value;
+				int objectFolderTypeID   = db.ObjectFolderType_Create( 1, "Physical" ).First().Value;
 				int languageResult       = db.Language_Create( "Afrikaans", "af" ).First().Value;
 				int metadataSchemaResult = db.MetadataSchema_Create( new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />" );
 				int object1Result        = db.Object_Create( new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID ).First().Value;
@@ -83,33 +84,14 @@ namespace Geckon.MCM.Module.Standard.Test
 				Format          = db.Format_Get( formatID, null ).First().ToDTO();
 				DestinationInfo = db.DestinationInfo_Get( destinationID ).First().ToDTO();
 				MetadataSchema  = db.MetadataSchema_Get( new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray() ).First().ToDTO();
-				Object1         = db.Object_Get( new[]{ new UUID("bb738610-7443-11e1-89cc-08002723312d").ToGuid() }, true, true, true, true ).First().ToDTO();
-				Object2         = db.Object_Get( new[]{ new UUID("d7207ba4-7443-11e1-89cc-08002723312d").ToGuid() }, true, true, true, true ).First().ToDTO();
+				Object1         = db.Object_Get( new[]{ new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true ).First().ToDTO();
+				Object2         = db.Object_Get( new[]{ new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true ).First().ToDTO();
 
 				MCMModule = new MCMModule();
 				MCMModule.Init(XElement.Parse("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=192.168.56.104;User Id=root;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>"));
 			}
 
-			//using( MCMDataContext db = new MCMDataContext( "Data Source=192.168.56.101;Initial Catalog=MCM;Persist Security Info=True;User ID=sa;Password=GECKONpbvu7000" ) )
-			//{
-			//   db.PopulateDefaultData();
-
-			//    AssetObjectType  = (from o in db.ObjectTypes where o.Value == "Asset" select o).First();
-			//    DemoObjectType   = (from o in db.ObjectTypes where o.Value == "demo" select o).First();
-			//    Afrikaans        = (from l in db.Languages where l.LanguageCode == "af" select l).First();
-			//    ObjectContains   = (from or in db.ObjectRelationTypes where or.Value == "Contains" select or ).First();
-			//    FolderType       = (from ft in db.FolderTypes where ft.Name == "Folder" select ft ).First();
-			//    FolderTestType   = (from ft in db.FolderTypes where ft.Name == "TEST" select ft ).First();
-			//    FormatType       = (from ft in db.FormatTypes where ft.Value == "Video" select  ft ).First();
-			//    TopFolder        = (from f in db.FolderInfos where f.Title == "Geckon" select f ).First();
-			//    EmptyFolder      = (from f in db.FolderInfos where f.Title == "Private" select f).First();
-			//    Object1          = (from o in db.Objects where o.GUID.ToString() == "0876EBF6-E30F-4A43-9B6E-F8A479F38428" select o ).First();
-			//    Object2          = (from o in db.Objects where o.GUID.ToString() == "0876EBF6-E30F-4A43-9B6E-F8A479F38433" select o ).First();
-			//    MetadataSchema   = (from ms in db.MetadataSchemas where ms.name == "demo" select ms ).First();
-			//    Format           = (from f in db.Formats where f.Name == "Unknown format" select f).First();
-			//    Destination      = (from d in db.Destinations where d.Title == "DMB Source"  select d).First();
-			//    ObjectFolderLink = (from oft in db.ObjectFolderTypes where oft.Name == "Link" select oft).First();
-			//}
+			MCMModule.Test_ReIndex(AdminCallContext, 1);
         }
 
 		//[Test]

@@ -1781,9 +1781,20 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> ObjectFolderType_Create(global::System.String name)
+        public ObjectResult<Nullable<global::System.Int32>> ObjectFolderType_Create(Nullable<global::System.Int32> iD, global::System.String name)
         {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
             ObjectParameter nameParameter;
             if (name != null)
             {
@@ -1794,7 +1805,7 @@ namespace CHAOS.MCM.Data.EF
                 nameParameter = new ObjectParameter("Name", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectFolderType_Create", nameParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectFolderType_Create", iDParameter, nameParameter);
         }
     
         /// <summary>

@@ -163,5 +163,28 @@ namespace Geckon.MCM.Module.Standard.Rights
     	}
 
         #endregion
-	}
+
+    	public IEnumerable<uint> GetParentFolders( IEnumerable<uint> folderIDs )
+    	{
+			IList<uint> returnedIDs = new List<uint>();
+
+    		foreach( uint folderID in folderIDs )
+    		{
+				if( returnedIDs.Contains( folderID ) )
+					continue;
+
+				returnedIDs.Add( folderID );
+				yield return folderID;
+
+				for( Folder currentFolder = FolderIndex[ folderID ]; currentFolder.ParentFolder != null; currentFolder = currentFolder.ParentFolder )
+    			{
+					if( returnedIDs.Contains( currentFolder.ID ) )
+						continue;
+
+					returnedIDs.Add( currentFolder.ID );
+					yield return currentFolder.ParentFolder.ID;
+    			}
+    		}
+    	}
+    }
 }

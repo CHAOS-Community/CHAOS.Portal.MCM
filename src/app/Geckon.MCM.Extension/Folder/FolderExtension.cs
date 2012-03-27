@@ -6,7 +6,7 @@ namespace Geckon.MCM.Extension.Folder
     {
         #region GET
 
-        public void Get( CallContext callContext, int? id, int? folderTypeID, int? parentID )
+        public void Get( CallContext callContext, uint? id, uint? folderTypeID, uint? parentID )
         {
             
         }
@@ -14,7 +14,7 @@ namespace Geckon.MCM.Extension.Folder
         #endregion
         #region CREATE
 
-        public void Create( CallContext callContext, string subscriptionGUID, string title, int? parentID, int folderTypeID )
+        public void Create( CallContext callContext, string subscriptionGUID, string title, uint? parentID, uint folderTypeID )
         {
 
         }
@@ -22,7 +22,7 @@ namespace Geckon.MCM.Extension.Folder
         #endregion
         #region UPDATE
 
-        public void Update( CallContext callContext, int id, string newTitle, int? newFolderTypeID )
+        public void Update( CallContext callContext, uint id, string newTitle, int? newFolderTypeID )
         {
 
         }
@@ -30,7 +30,7 @@ namespace Geckon.MCM.Extension.Folder
         #endregion
         #region DELETE
 
-        public void Delete( CallContext callContext, int id )
+        public void Delete( CallContext callContext, uint id )
         {
 
         }

@@ -8,8 +8,8 @@
     <ProjectGuid>{BB5CE1D8-84D5-4B75-82F7-5F85DC98B694}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Geckon.MCM.Extension</RootNamespace>
-    <AssemblyName>Geckon.MCM.Extension</AssemblyName>
+    <RootNamespace>CHAOS.MCM.Extension</RootNamespace>
+    <AssemblyName>CHAOS.MCM.Extension</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -64,12 +64,6 @@
     <Compile Include="Object\ObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestExtension.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Geckon.MCM.Data.Linq\Geckon.MCM.Data.Linq.csproj">
-      <Project>{30ED23D8-60D9-4F98-AAB5-C177171A6B6E}</Project>
-      <Name>Geckon.MCM.Data.Linq</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

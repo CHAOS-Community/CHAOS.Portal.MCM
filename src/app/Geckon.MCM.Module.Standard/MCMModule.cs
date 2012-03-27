@@ -16,6 +16,7 @@ using Geckon.Portal.Core.Standard;
 using Geckon.Index;
 using Geckon.Portal.Data.Result;
 using Folder = Geckon.MCM.Module.Standard.Rights.Folder;
+using Object = CHAOS.MCM.Data.DTO.Object;
 
 namespace CHAOS.MCM.Module.Standard
 {
@@ -462,7 +463,7 @@ namespace CHAOS.MCM.Module.Standard
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
-				IEnumerable<Guid> resultPage = null;
+				IEnumerable<UUID> resultPage = null;
 
 				if (query != null)
 				{
@@ -486,13 +487,13 @@ namespace CHAOS.MCM.Module.Standard
 
 					IPagedResult<IIndexResult> indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get(query);
 
-					resultPage = indexResult.Results.Select(result => ((GuidResult)result).Guid);
+					resultPage = indexResult.Results.Select(result => ((UUIDResult)result).Guid);
 
 					// if solr doesnt return anything there is no need to continue, so just return an empty list
 					if (resultPage.Count() == 0)
 						return new Geckon.Index.Standard.PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
-
-					return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get( resultPage, includeMetadata ?? false, includeFiles ?? false, false, includeObjectRelations ?? false ).ToDTO() );
+					
+					return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false).ToDTO().ToList());
 				}
 			}
 
@@ -500,21 +501,21 @@ namespace CHAOS.MCM.Module.Standard
 		}
 
 		[Datatype("Object","Create")]
-		public Data.DTO.Object Object_Create( CallContext callContext, Guid? GUID, uint objectTypeID, uint folderID )
+		public Data.DTO.Object Object_Create( CallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
 		{
 		    using( MCMEntities db = DefaultMCMEntities )
 		    {
 				if( !PermissionManager.GetFolder( folderID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
 					throw new InsufficientPermissionsExcention( "User does not have permissions to create object" );
 
-				Guid guid = GUID.HasValue ? GUID.Value : Guid.NewGuid();
+				UUID guid = GUID ?? new UUID();
 
 		        int result = db.Object_Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
 
 				if( result == -200 )
 					throw new UnhandledException("Unhandled exception, Object_Create was rolled back");
 
-		        IEnumerable<Data.DTO.Object> newObject = db.Object_Get( new[]{guid}, false, false, false, false ).ToDTO();
+		        IEnumerable<Object> newObject = db.Object_Get( new[]{guid}, false, false, false ).ToDTO();
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), newObject );
 
@@ -579,7 +580,7 @@ namespace CHAOS.MCM.Module.Standard
 
 		        int result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
                 
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ objectGUID.ToGuid() }, true, true, true, true ).ToDTO() );
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ objectGUID }, true, true, true ).ToDTO() );
 
 		        return new ScalarResult( result );
 		    }
@@ -607,34 +608,40 @@ namespace CHAOS.MCM.Module.Standard
 		}
 
 		#endregion
-		//#region Test
+		#region Test
 
-		//[Datatype("Test","ReIndex")]
-		//public ScalarResult Test_ReIndex( CallContext callContext, int? folderID )
-		//{
-		//    Index.Solr.Solr<GuidResult> index = ( Index.Solr.Solr<GuidResult> )callContext.IndexManager.GetIndex<MCMModule>();
+		[Datatype("Test","ReIndex")]
+		public ScalarResult Test_ReIndex( CallContext callContext, uint? folderID )
+		{
+			//Geckon.Index.Solr.Solr<GuidResult> index = ( Geckon.Index.Solr.Solr<GuidResult> )callContext.IndexManager.GetIndex<MCMModule>();
 
-		//    index.RemoveAll(false);
+			//index.RemoveAll(false);
 
-		//    int pageSize = 5000;
+		    uint pageSize = 5000;
 
-		//    for (int i = 0; true; i++)
-		//    {
-		//        // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
-		//        using( MCMEntities db = DefaultMCMEntities )
-		//        {
-		//            var itemsToInsert = db.Object_Get( true, false, true, true, true, null, null, folderID, i, pageSize ).Select( obj => (IIndexable) obj ).ToList();
-		//            index.Set( itemsToInsert, true );
+		    for( uint i = 0;; i++ )
+		    {
+		        // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
+		        using( MCMEntities db = DefaultMCMEntities )
+		        {
+		            var objects = db.Object_Get( folderID, false, false, false, false, i, pageSize ).ToDTO().ToList();
+					
+					foreach( Object o in objects )
+					{
+						o.FolderTree = PermissionManager.GetParentFolders( o.Folders.Select( item => item.ID ) ).ToList();
+					}
 
-		//            if( itemsToInsert.Count() != pageSize )
-		//                break;
-		//        }
-		//    }
+				//	index.Set( objects.Select( obj => (IIndexable) obj ), true );
 
-		//    return new ScalarResult(1);
-		//}
+		            if( objects.Count() != pageSize )
+		                break;
+		        }
+		    }
 
-		//#endregion
+		    return new ScalarResult(1);
+		}
+
+		#endregion
 		//#region ObjectRelation
 
 		//[Datatype("ObjectRelation", "Create")]
