@@ -6,7 +6,7 @@ namespace CHAOS.MCM.Extension.Test
     {
         #region Test
 
-        public void ReIndex( CallContext callContext, uint? folderID )
+        public void ReIndex( CallContext callContext, uint? folderID, bool? clearIndex )
         {
         }
 

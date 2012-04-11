@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Geckon.MCM.Module.Standard.Rights;
@@ -21,10 +22,12 @@ namespace Geckon.MCM.Module.Standard.Test
 
 			GroupGuids.Add( new Guid( "421a5b56-67e1-4a02-ab12-f04cb9d2d90c" ) );
 
-            foreach( Folder folder in LoadFolders( new DirectoryInfo( "C:\\" ) ).GetSubFolders() )
-            {
-                topFolder.AddFolder( folder );
-            }
+            topFolder.AddFolder( LoadFolders( new DirectoryInfo( "C:\\" ) ) );
+
+            //foreach( Folder folder in LoadFolders( new DirectoryInfo( "C:\\" ) ).GetSubFolders() )
+            //{
+            //    topFolder.AddFolder( folder );
+            //}
 
 			Random rand = new Random(1337);
 
@@ -91,7 +94,7 @@ namespace Geckon.MCM.Module.Standard.Test
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
-			Assert.AreEqual( 24, topFolder.GetFolders( UserGuid, GroupGuids, 5 ).Count() );
+			Assert.AreEqual( 2, topFolder.GetFolders( UserGuid, GroupGuids, 1 ).Count() );
 
 			Console.WriteLine("{0}ms", sw.ElapsedMilliseconds);
 		}
@@ -116,7 +119,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		[Test]
 		public void Should_Check_If_User_Has_Inherited_Permissions()
 		{
-			Assert.IsTrue( topFolder.GetFolder( 4 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
+			Assert.IsTrue( topFolder.GetFolder( 2 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
 		}
 
 		[Test]
@@ -124,6 +127,16 @@ namespace Geckon.MCM.Module.Standard.Test
 		{
 			Assert.IsFalse( topFolder.GetFolder( 48 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
 		}
+
+        [Test]
+        public void Should_Get_Folder_Ancestors()
+        {
+            var folders = topFolder.GetParentFolders(new uint[] { 2 }).ToList();
+
+            Assert.AreEqual( 2, folders[0] );
+            Assert.AreEqual( 1, folders[1] );
+            Assert.AreEqual( 0, folders[2] );
+        }
 
         private uint index = 0;
 

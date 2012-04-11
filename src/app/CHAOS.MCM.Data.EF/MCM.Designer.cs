@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -581,6 +582,7 @@ namespace CHAOS.MCM.Data.EF
         private ObjectSet<FileInfo> _FileInfo;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -824,6 +826,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Function Imports
     
         /// <summary>
@@ -2176,13 +2179,106 @@ namespace CHAOS.MCM.Data.EF
     
             return base.ExecuteFunction<Folder>("Folder_Get_DirectFolderAssociations", mergeOption, groupGUIDsParameter, userGUIDParameter, requiredPermissionParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="object1GUID">No Metadata Documentation available.</param>
+        /// <param name="object2GUID">No Metadata Documentation available.</param>
+        /// <param name="objectRelationTypeID">No Metadata Documentation available.</param>
+        /// <param name="sequence">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> ObjectRelation_Create(global::System.Byte[] object1GUID, global::System.Byte[] object2GUID, Nullable<global::System.Int32> objectRelationTypeID, Nullable<global::System.Int32> sequence)
+        {
+            ObjectParameter object1GUIDParameter;
+            if (object1GUID != null)
+            {
+                object1GUIDParameter = new ObjectParameter("Object1GUID", object1GUID);
+            }
+            else
+            {
+                object1GUIDParameter = new ObjectParameter("Object1GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter object2GUIDParameter;
+            if (object2GUID != null)
+            {
+                object2GUIDParameter = new ObjectParameter("Object2GUID", object2GUID);
+            }
+            else
+            {
+                object2GUIDParameter = new ObjectParameter("Object2GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter objectRelationTypeIDParameter;
+            if (objectRelationTypeID.HasValue)
+            {
+                objectRelationTypeIDParameter = new ObjectParameter("ObjectRelationTypeID", objectRelationTypeID);
+            }
+            else
+            {
+                objectRelationTypeIDParameter = new ObjectParameter("ObjectRelationTypeID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter sequenceParameter;
+            if (sequence.HasValue)
+            {
+                sequenceParameter = new ObjectParameter("Sequence", sequence);
+            }
+            else
+            {
+                sequenceParameter = new ObjectParameter("Sequence", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectRelation_Create", object1GUIDParameter, object2GUIDParameter, objectRelationTypeIDParameter, sequenceParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="object1GUID">No Metadata Documentation available.</param>
+        /// <param name="object2GUID">No Metadata Documentation available.</param>
+        /// <param name="objectRelationTypeID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> ObjectRelation_Delete(global::System.Byte[] object1GUID, global::System.Byte[] object2GUID, Nullable<global::System.Int32> objectRelationTypeID)
+        {
+            ObjectParameter object1GUIDParameter;
+            if (object1GUID != null)
+            {
+                object1GUIDParameter = new ObjectParameter("Object1GUID", object1GUID);
+            }
+            else
+            {
+                object1GUIDParameter = new ObjectParameter("Object1GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter object2GUIDParameter;
+            if (object2GUID != null)
+            {
+                object2GUIDParameter = new ObjectParameter("Object2GUID", object2GUID);
+            }
+            else
+            {
+                object2GUIDParameter = new ObjectParameter("Object2GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter objectRelationTypeIDParameter;
+            if (objectRelationTypeID.HasValue)
+            {
+                objectRelationTypeIDParameter = new ObjectParameter("ObjectRelationTypeID", objectRelationTypeID);
+            }
+            else
+            {
+                objectRelationTypeIDParameter = new ObjectParameter("ObjectRelationTypeID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectRelation_Delete", object1GUIDParameter, object2GUIDParameter, objectRelationTypeIDParameter);
+        }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -2213,6 +2309,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2315,6 +2412,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2407,6 +2505,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2437,6 +2536,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2542,6 +2642,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2584,6 +2685,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2614,6 +2716,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2767,6 +2870,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateModifiedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2847,6 +2951,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2877,6 +2982,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2982,6 +3088,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3024,6 +3131,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3058,6 +3166,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3208,6 +3317,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnTokenChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3250,6 +3360,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3284,6 +3395,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3434,6 +3546,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3590,6 +3703,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3620,6 +3734,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3722,6 +3837,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3792,6 +3908,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3828,6 +3945,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4020,6 +4138,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnTokenChanged();
 
         #endregion
+
     
     }
     
@@ -4059,6 +4178,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4281,6 +4401,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4459,6 +4580,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -4499,6 +4621,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4793,6 +4916,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnFormatTypeChanged();
 
         #endregion
+
     
     }
     
@@ -4824,6 +4948,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4974,6 +5099,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -5142,6 +5268,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5172,6 +5299,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5277,6 +5405,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -5319,6 +5448,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5349,6 +5479,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5454,6 +5585,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -5496,6 +5628,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5526,6 +5659,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5733,6 +5867,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnNumberOfObjectsChanged();
 
         #endregion
+
     
     }
     
@@ -5762,6 +5897,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -5840,6 +5976,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -5866,6 +6003,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -5896,6 +6034,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6022,6 +6161,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnMimeTypeChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6108,6 +6248,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6136,6 +6277,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6214,6 +6356,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6300,6 +6443,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6326,6 +6470,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6380,6 +6525,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6406,6 +6552,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6430,6 +6577,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6484,6 +6632,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6510,6 +6659,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6544,6 +6694,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6721,6 +6872,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnEditingUserGUIDChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -6839,6 +6991,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -6869,6 +7022,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -6971,6 +7125,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -7041,6 +7196,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -7071,6 +7227,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7176,6 +7333,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -7218,6 +7376,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -7248,6 +7407,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7353,6 +7513,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -7395,6 +7556,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -7423,6 +7585,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7501,6 +7664,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -7675,6 +7839,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -7705,6 +7870,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -7810,6 +7976,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -7928,6 +8095,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -7960,6 +8128,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8089,6 +8258,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDateCreatedChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -8207,6 +8377,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -8233,6 +8404,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8287,6 +8459,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -8313,6 +8486,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -8339,6 +8513,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8393,6 +8568,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -8419,6 +8595,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -8445,6 +8622,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8499,6 +8677,7 @@ namespace CHAOS.MCM.Data.EF
         partial void OnNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -8525,6 +8704,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -8553,6 +8733,7 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -8658,9 +8839,11 @@ namespace CHAOS.MCM.Data.EF
         partial void OnDescriptionChanged();
 
         #endregion
+
     
     }
 
     #endregion
+
     
 }

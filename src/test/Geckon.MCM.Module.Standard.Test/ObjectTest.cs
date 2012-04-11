@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
-using CHAOS.MCM.Data.DTO;
+using System.Linq;
+using CHAOS.MCM.Data.EF;
 using CHAOS.Portal.Data.DTO;
 using Geckon.Portal.Core.Exception;
 using NUnit.Framework;
+using Object = CHAOS.MCM.Data.DTO.Object;
 
 namespace Geckon.MCM.Module.Standard.Test
 {
@@ -18,6 +20,19 @@ namespace Geckon.MCM.Module.Standard.Test
 
 			Assert.AreEqual( guid.ToString(), objectz.GUID.ToString() );
 		}
+
+        [Test]
+        public void Should_Get_Objects_ByFolderID()
+        {
+            using( MCMEntities db = new MCMEntities() )
+            {
+                var list = db.Object_Get( null, true, true, false, true, 0, 10 ).ToList();
+
+                Assert.AreEqual( 1, list[0].Folders.First().FolderID );
+                Assert.AreEqual( 3, list[1].Folders.First().FolderID );
+                Assert.AreEqual( 1, list[2].Folders.First().FolderID );
+            }
+        }
          
 		//[Test]
 		//public void Should_Delete_Object()

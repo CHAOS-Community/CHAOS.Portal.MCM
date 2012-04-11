@@ -10,8 +10,8 @@ namespace CHAOS.MCM.Data.EF
 		public IEnumerable<FileInfo> pFiles { get; set; }
 		public IEnumerable<Object_Object_Join> ObjectRealtions { get; set; }
 		public IEnumerable<Object_Object_Join> RelatedObjects { get; set; }
-		public IEnumerable<Folder> Folders { get; set; }
-		public IEnumerable<Folder> FolderTree { get; set; }
+        public IEnumerable<Object_Folder_Join> Folders { get; set; }
+        public IEnumerable<Object_Folder_Join> FolderTree { get; set; }
 
 		#endregion
 		#region Constructor
@@ -22,8 +22,8 @@ namespace CHAOS.MCM.Data.EF
 			pFiles     = new List<FileInfo>();
 			ObjectRealtions = new List<Object_Object_Join>();
 			RelatedObjects = new List<Object_Object_Join>();
-			Folders = new List<Folder>();
-			FolderTree = new List<Folder>();
+            Folders = new List<Object_Folder_Join>();
+            FolderTree = new List<Object_Folder_Join>();
 		}
 
 		#endregion

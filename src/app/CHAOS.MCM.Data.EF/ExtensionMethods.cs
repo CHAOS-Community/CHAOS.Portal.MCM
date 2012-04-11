@@ -80,6 +80,19 @@ namespace CHAOS.MCM.Data.EF
 		#endregion
 		#region Folder
 
+        public static IEnumerable<DTO.Object_Folder_Join> ToDTO(this IEnumerable<Object_Folder_Join> folders)
+		{
+			return folders.Select( item => ToDTO( item ) );
+		}
+
+        public static DTO.Object_Folder_Join ToDTO(this Object_Folder_Join folder)
+		{
+			return new DTO.Object_Folder_Join( (uint) folder.FolderID, folder.ObjectGUID, (uint) folder.ObjectFolderTypeID, folder.DateCreated );
+		}
+
+		#endregion
+		#region Folder
+
 		public static IEnumerable<DTO.Folder> ToDTO( this IEnumerable<Folder> folders )
 		{
 			return folders.Select( item => ToDTO( item ) );

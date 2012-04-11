@@ -84,7 +84,10 @@ namespace Geckon.MCM.Module.Standard.Rights
 		public IEnumerable<Folder> GetFolders( Guid userGuid, IEnumerable<Guid> groupGuids )
 		{
 			// Generate list of folders the user has direct permissions to
-			List<Folder> directFolders = UserFolderIndex[ userGuid ].ToList();
+			List<Folder> directFolders = new List<Folder>();
+
+            if( UserFolderIndex.ContainsKey( userGuid ) )
+                directFolders = UserFolderIndex[ userGuid ].ToList();
 
 			foreach( Guid groupGuid in groupGuids )
 			{
@@ -176,13 +179,13 @@ namespace Geckon.MCM.Module.Standard.Rights
 				returnedIDs.Add( folderID );
 				yield return folderID;
 
-				for( Folder currentFolder = FolderIndex[ folderID ]; currentFolder.ParentFolder != null; currentFolder = currentFolder.ParentFolder )
+				for( Folder currentFolder = FolderIndex[ folderID ].ParentFolder; currentFolder != null; currentFolder = currentFolder.ParentFolder )
     			{
 					if( returnedIDs.Contains( currentFolder.ID ) )
 						continue;
 
 					returnedIDs.Add( currentFolder.ID );
-					yield return currentFolder.ParentFolder.ID;
+					yield return currentFolder.ID;
     			}
     		}
     	}

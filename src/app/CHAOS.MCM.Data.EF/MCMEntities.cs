@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Geckon;
 using MySql.Data.MySqlClient;
 
@@ -10,9 +12,14 @@ namespace CHAOS.MCM.Data.EF
 {
 	public partial class MCMEntities
 	{
+	    private string ConnectionString
+	    {
+	        get { return (Connection as System.Data.EntityClient.EntityConnection).StoreConnection.ConnectionString; }
+	    }
+
 		public IEnumerable<Object> Object_Get( IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations )
 		{
-			using( MySqlConnection conn = new MySqlConnection( "server=192.168.56.104;User Id=root;password=GECKONpbvu7000;Persist Security Info=True;database=MCM" ) )
+			using( MySqlConnection conn = new MySqlConnection( ConnectionString ) )
 			using( MySqlCommand comm = new MySqlCommand("Object_GetByGUIDs", conn ) )
 			{
 				comm.CommandType = CommandType.StoredProcedure;
@@ -98,7 +105,7 @@ namespace CHAOS.MCM.Data.EF
 
 		public IEnumerable<Object> Object_Get( uint? folderID, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, uint pageIndex, uint pageSize )
 		{
-			using( MySqlConnection conn = new MySqlConnection( "server=192.168.56.104;User Id=root;password=GECKONpbvu7000;Persist Security Info=True;database=MCM" ) )
+			using( MySqlConnection conn = new MySqlConnection( ConnectionString ) )
 			using( MySqlCommand comm = new MySqlCommand("Object_GetByFolderID", conn ) )
 			{
 				comm.CommandType = CommandType.StoredProcedure;
@@ -195,9 +202,12 @@ namespace CHAOS.MCM.Data.EF
 
 					if( includeFolders )
 					{
+                        reader.NextResult();
+                        IEnumerable<Object_Folder_Join> folders = Translate<Object_Folder_Join>(reader).ToList();
+
 						foreach( Object o in objects )
 						{
-							o.Folders = Folder_Get( null, o.GUID.ToByteArray() ).ToList();
+							o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
 						}
 					}
 

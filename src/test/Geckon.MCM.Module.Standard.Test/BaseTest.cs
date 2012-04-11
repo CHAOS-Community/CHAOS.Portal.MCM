@@ -56,6 +56,7 @@ namespace Geckon.MCM.Module.Standard.Test
 				int folderTestTypeID     = db.FolderType_Create("TEST").First().Value;
 				int topFolderID          = db.Folder_Create( UserAdministrator.GUID.ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "top folder", null, folderTypeID, 0 ).First().Value;
 				int emptyFolderID        = db.Folder_Create( UserAdministrator.GUID.ToByteArray(),null, "empty folder", topFolderID, folderTypeID, 0 ).First().Value;
+                int subFolderID          = db.Folder_Create( UserAdministrator.GUID.ToByteArray(),null, "sub folder", emptyFolderID, folderTypeID, 0 ).First().Value;
 				int assetObjectTypeID    = db.ObjectType_Create( "Asset" ).First().Value;
 				int demoObjectTypeID     = db.ObjectType_Create( "Demo" ).First().Value;
 				int objectContainsID     = db.ObjectRelationType_Create( "Contains" ).First().Value;
@@ -69,6 +70,7 @@ namespace Geckon.MCM.Module.Standard.Test
 				int metadataSchemaResult = db.MetadataSchema_Create( new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />" );
 				int object1Result        = db.Object_Create( new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID ).First().Value;
 				int object2Result        = db.Object_Create( new UUID("d7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID ).First().Value;
+                int object3Result        = db.Object_Create( new UUID("c7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, subFolderID ).First().Value;
 				int metadataResult       = db.Metadata_Set( new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
 				
 				Afrikaans       = db.Language_Get( null, "af" ).First().ToDTO();
@@ -88,10 +90,8 @@ namespace Geckon.MCM.Module.Standard.Test
 				Object2         = db.Object_Get( new[]{ new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true ).First().ToDTO();
 
 				MCMModule = new MCMModule();
-				MCMModule.Init(XElement.Parse("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=192.168.56.104;User Id=root;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>"));
+                MCMModule.Init(XElement.Parse("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>"));
 			}
-
-			MCMModule.Test_ReIndex(AdminCallContext, 1);
         }
 
 		//[Test]

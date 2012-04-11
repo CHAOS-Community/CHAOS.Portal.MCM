@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Geckon;
 using Geckon.Portal.Core.Standard.Extension;
 
-namespace Geckon.MCM.Extension.ObjectRelation
+namespace CHAOS.MCM.Extension.ObjectRelation
 {
     public class ObjectRelationExtension : AExtension
     {
-        public void Create( CallContext callContext, Guid object1GUID, Guid object2GUID, int objectRelationTypeID, int? sequence )
+        public void Create( CallContext callContext, UUID object1GUID, UUID object2GUID, int objectRelationTypeID, int? sequence )
         {
             
         }
 
-        public void Delete( CallContext callContext, Guid object1GUID, Guid object2GUID, int objectRelationTypeID )
+        public void Delete( CallContext callContext, UUID object1GUID, UUID object2GUID, int objectRelationTypeID )
         {
             
         }

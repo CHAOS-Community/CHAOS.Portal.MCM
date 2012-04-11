@@ -896,6 +896,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AccessPoint_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="SubscriptionGuid" Type="binary" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="DateCreated" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="AccessPoint_Object_Join_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="AccessPointGUID" Type="binary" Mode="In" />
+          <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="DateCreated" Type="datetime" Mode="In" />
+          <Parameter Name="DateModified" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="AccessProvider_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="DestinationID" Type="int" Mode="In" />
           <Parameter Name="BasePath" Type="varchar" Mode="In" />
@@ -1407,6 +1421,17 @@
             <End Role="Object" EntitySet="Object" />
             <End Role="Metadata" EntitySet="Metadata" />
           </AssociationSet>
+          <FunctionImport Name="ObjectRelation_Create" ReturnType="Collection(Int32)">
+            <Parameter Name="Object1GUID" Mode="In" Type="Binary" />
+            <Parameter Name="Object2GUID" Mode="In" Type="Binary" />
+            <Parameter Name="ObjectRelationTypeID" Mode="In" Type="Int32" />
+            <Parameter Name="Sequence" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ObjectRelation_Delete" ReturnType="Collection(Int32)">
+            <Parameter Name="Object1GUID" Mode="In" Type="Binary" />
+            <Parameter Name="Object2GUID" Mode="In" Type="Binary" />
+            <Parameter Name="ObjectRelationTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">
           <Key>
@@ -2421,6 +2446,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ObjectRelation_Create" FunctionName="MCMModel.Store.ObjectRelation_Create" />
+          <FunctionImportMapping FunctionImportName="ObjectRelation_Delete" FunctionName="MCMModel.Store.ObjectRelation_Delete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

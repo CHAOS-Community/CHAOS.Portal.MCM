@@ -15,8 +15,10 @@ using Geckon.Portal.Data;
 using Geckon.Portal.Core.Standard;
 using Geckon.Index;
 using Geckon.Portal.Data.Result;
+using Geckon.Portal.Data.Result.Standard;
 using Folder = Geckon.MCM.Module.Standard.Rights.Folder;
 using Object = CHAOS.MCM.Data.DTO.Object;
+using Geckon.Serialization;
 
 namespace CHAOS.MCM.Module.Standard
 {
@@ -465,14 +467,16 @@ namespace CHAOS.MCM.Module.Standard
 			{
 				IEnumerable<UUID> resultPage = null;
 
-				if (query != null)
+				if( query != null )
 				{
 					//TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
-					IList<Data.EF.Folder> folders = db.Folder_Get_DirectFolderAssociations( String.Join( ",", callContext.Groups.Select(group => group.GUID ) ), callContext.User.GUID.ToByteArray(), 0x1).ToList();
+
+                    IList<Folder> folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ) ).ToList();
 
 					//TODO: Refactor building of queries
 					System.Text.StringBuilder sb = new System.Text.StringBuilder(query.Query);
 					sb.Append(" AND (");
+
 					for (int i = 0; i < folders.Count(); i++)
 					{
 						sb.Append(string.Format("FolderTree:{0}", folders[i].ID));
@@ -501,7 +505,7 @@ namespace CHAOS.MCM.Module.Standard
 		}
 
 		[Datatype("Object","Create")]
-		public Data.DTO.Object Object_Create( CallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
+		public Object Object_Create( CallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
 		{
 		    using( MCMEntities db = DefaultMCMEntities )
 		    {
@@ -611,27 +615,28 @@ namespace CHAOS.MCM.Module.Standard
 		#region Test
 
 		[Datatype("Test","ReIndex")]
-		public ScalarResult Test_ReIndex( CallContext callContext, uint? folderID )
+		public ScalarResult Test_ReIndex( CallContext callContext, uint? folderID, bool? clearIndex )
 		{
-			//Geckon.Index.Solr.Solr<GuidResult> index = ( Geckon.Index.Solr.Solr<GuidResult> )callContext.IndexManager.GetIndex<MCMModule>();
+            Geckon.Index.Solr.Solr<UUIDResult> index = ( Geckon.Index.Solr.Solr<UUIDResult> )callContext.IndexManager.GetIndex<MCMModule>();
 
-			//index.RemoveAll(false);
+            if( clearIndex.HasValue && clearIndex.Value )
+                index.RemoveAll(false);
 
-		    uint pageSize = 5000;
+		    uint pageSize = 1000;
 
 		    for( uint i = 0;; i++ )
 		    {
 		        // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
 		        using( MCMEntities db = DefaultMCMEntities )
 		        {
-		            var objects = db.Object_Get( folderID, false, false, false, false, i, pageSize ).ToDTO().ToList();
+		            var objects = db.Object_Get( folderID, true, false, false, true, i, pageSize ).ToDTO().ToList();
 					
 					foreach( Object o in objects )
 					{
-						o.FolderTree = PermissionManager.GetParentFolders( o.Folders.Select( item => item.ID ) ).ToList();
+						o.FolderTree = PermissionManager.GetParentFolders( o.Folders.Select( item => item.FolderID ) ).ToList();
 					}
 
-				//	index.Set( objects.Select( obj => (IIndexable) obj ), true );
+					index.Set( objects.Select( obj => (IIndexable) obj ), true );
 
 		            if( objects.Count() != pageSize )
 		                break;
@@ -642,49 +647,50 @@ namespace CHAOS.MCM.Module.Standard
 		}
 
 		#endregion
-		//#region ObjectRelation
+		#region ObjectRelation
 
-		//[Datatype("ObjectRelation", "Create")]
-		//public ScalarResult ObjectRelation_Create( CallContext callContext, Guid object1GUID, Guid object2GUID, int objectRelationTypeID, int? sequence )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.ObjectRelation_Create( callContext.Groups.Select( group => group.GUID ).ToList(),
-		//                                               callContext.User.GUID,
-		//                                               object1GUID,
-		//                                               object2GUID,
-		//                                               objectRelationTypeID,
-		//                                               sequence );
+		[Datatype("ObjectRelation", "Create")]
+		public ScalarResult ObjectRelation_Create( CallContext callContext, UUID object1GUID, UUID object2GUID, uint objectRelationTypeID, int? sequence )
+		{
+		    using( MCMEntities db = DefaultMCMEntities )
+		    {
+		        int? result = db.ObjectRelation_Create( object1GUID.ToByteArray(),
+		                                                object2GUID.ToByteArray(),
+		                                                (int?) objectRelationTypeID,
+		                                                sequence ).First();
+                if( !result.HasValue )
+                    throw new UnhandledException( "No result was returned from the database when calling ObjectRelation_Create" );
 
-		//        if( result == -100 )
-		//            throw new InsufficientPermissionsExcention( "The user do not have permission to create object relations" );
+		        if( result == -100 )
+		            throw new InsufficientPermissionsExcention( "The user do not have permission to create object relations" );
 
-		//        if( result == -200 )
-		//            throw new ObjectRelationAlreadyExistException( "The object relation already exists" );
+		        if( result == -200 )
+		            throw new ObjectRelationAlreadyExistException( "The object relation already exists" );
 
-		//        return new ScalarResult(result);
-		//    }
-		//}
+		        return new ScalarResult( result.Value );
+		    }
+		}
 
-		//[Datatype("ObjectRelation", "Delete")]
-		//public ScalarResult ObjectRelation_Delete( CallContext callContext, Guid object1GUID, Guid object2GUID, int objectRelationTypeID )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.ObjectRelation_Delete( callContext.Groups.Select( group => group.GUID ).ToList(),
-		//                                               callContext.User.GUID,
-		//                                               object1GUID,
-		//                                               object2GUID,
-		//                                               objectRelationTypeID );
+        [Datatype("ObjectRelation", "Delete")]
+        public ScalarResult ObjectRelation_Delete( CallContext callContext, UUID object1GUID, UUID object2GUID, uint objectRelationTypeID )
+        {
+            using( MCMEntities db = DefaultMCMEntities )
+            {
+                int? result = db.ObjectRelation_Delete( object1GUID.ToByteArray(),
+                                                        object2GUID.ToByteArray(),
+                                                        (int) objectRelationTypeID ).First();
 
-		//        if( result == -100 )
-		//            throw new InsufficientPermissionsExcention( "The user do not have permission to delete object relations" );
+                if( !result.HasValue )
+                    throw new UnhandledException( "ObjectRelation Delete failed on the database" );
 
-		//        return new ScalarResult( result );
-		//    }
-		//}
+                if( result == -100 )
+                    throw new InsufficientPermissionsExcention( "The user do not have permission to delete object relations" );
 
-		//#endregion
+                return new ScalarResult( result.Value );
+            }
+        }
+
+		#endregion
 		//#region Files
 
 		//[Datatype("File", "Create")]
