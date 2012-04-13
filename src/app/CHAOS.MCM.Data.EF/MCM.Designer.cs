@@ -552,22 +552,6 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Metadata> Metadata
-        {
-            get
-            {
-                if ((_Metadata == null))
-                {
-                    _Metadata = base.CreateObjectSet<Metadata>("Metadata");
-                }
-                return _Metadata;
-            }
-        }
-        private ObjectSet<Metadata> _Metadata;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<FileInfo> FileInfo
         {
             get
@@ -580,6 +564,22 @@ namespace CHAOS.MCM.Data.EF
             }
         }
         private ObjectSet<FileInfo> _FileInfo;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Metadata> Metadata
+        {
+            get
+            {
+                if ((_Metadata == null))
+                {
+                    _Metadata = base.CreateObjectSet<Metadata>("Metadata");
+                }
+                return _Metadata;
+            }
+        }
+        private ObjectSet<Metadata> _Metadata;
 
         #endregion
 
@@ -810,19 +810,19 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToMetadata(Metadata metadata)
-        {
-            base.AddObject("Metadata", metadata);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the FileInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFileInfo(FileInfo fileInfo)
         {
             base.AddObject("FileInfo", fileInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToMetadata(Metadata metadata)
+        {
+            base.AddObject("Metadata", metadata);
         }
 
         #endregion
@@ -1818,9 +1818,10 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="objectGUID">No Metadata Documentation available.</param>
         /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
         /// <param name="languageCode">No Metadata Documentation available.</param>
+        /// <param name="revisionID">No Metadata Documentation available.</param>
         /// <param name="metadataXML">No Metadata Documentation available.</param>
         /// <param name="editingUserGUID">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> Metadata_Set(global::System.Byte[] gUID, global::System.Byte[] objectGUID, global::System.Byte[] metadataSchemaGUID, global::System.String languageCode, global::System.String metadataXML, global::System.Byte[] editingUserGUID)
+        public ObjectResult<Nullable<global::System.Int32>> Metadata_Set(global::System.Byte[] gUID, global::System.Byte[] objectGUID, global::System.Byte[] metadataSchemaGUID, global::System.String languageCode, Nullable<global::System.Int32> revisionID, global::System.String metadataXML, global::System.Byte[] editingUserGUID)
         {
             ObjectParameter gUIDParameter;
             if (gUID != null)
@@ -1862,6 +1863,16 @@ namespace CHAOS.MCM.Data.EF
                 languageCodeParameter = new ObjectParameter("LanguageCode", typeof(global::System.String));
             }
     
+            ObjectParameter revisionIDParameter;
+            if (revisionID.HasValue)
+            {
+                revisionIDParameter = new ObjectParameter("RevisionID", revisionID);
+            }
+            else
+            {
+                revisionIDParameter = new ObjectParameter("RevisionID", typeof(global::System.Int32));
+            }
+    
             ObjectParameter metadataXMLParameter;
             if (metadataXML != null)
             {
@@ -1882,7 +1893,7 @@ namespace CHAOS.MCM.Data.EF
                 editingUserGUIDParameter = new ObjectParameter("EditingUserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("Metadata_Set", gUIDParameter, objectGUIDParameter, metadataSchemaGUIDParameter, languageCodeParameter, metadataXMLParameter, editingUserGUIDParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Metadata_Set", gUIDParameter, objectGUIDParameter, metadataSchemaGUIDParameter, languageCodeParameter, revisionIDParameter, metadataXMLParameter, editingUserGUIDParameter);
         }
     
         /// <summary>
@@ -6678,15 +6689,17 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
         /// <param name="metadataSchemaGUID">Initial value of the MetadataSchemaGUID property.</param>
+        /// <param name="revisionID">Initial value of the RevisionID property.</param>
         /// <param name="metadataXML">Initial value of the MetadataXML property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         /// <param name="editingUserGUID">Initial value of the EditingUserGUID property.</param>
-        public static Metadata CreateMetadata(global::System.Guid gUID, global::System.Guid objectGUID, global::System.Guid metadataSchemaGUID, global::System.String metadataXML, global::System.DateTime dateCreated, global::System.Guid editingUserGUID)
+        public static Metadata CreateMetadata(global::System.Guid gUID, global::System.Guid objectGUID, global::System.Guid metadataSchemaGUID, global::System.Int64 revisionID, global::System.String metadataXML, global::System.DateTime dateCreated, global::System.Guid editingUserGUID)
         {
             Metadata metadata = new Metadata();
             metadata.GUID = gUID;
             metadata.ObjectGUID = objectGUID;
             metadata.MetadataSchemaGUID = metadataSchemaGUID;
+            metadata.RevisionID = revisionID;
             metadata.MetadataXML = metadataXML;
             metadata.DateCreated = dateCreated;
             metadata.EditingUserGUID = editingUserGUID;
@@ -6795,6 +6808,30 @@ namespace CHAOS.MCM.Data.EF
         private global::System.Guid _MetadataSchemaGUID;
         partial void OnMetadataSchemaGUIDChanging(global::System.Guid value);
         partial void OnMetadataSchemaGUIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 RevisionID
+        {
+            get
+            {
+                return _RevisionID;
+            }
+            set
+            {
+                OnRevisionIDChanging(value);
+                ReportPropertyChanging("RevisionID");
+                _RevisionID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RevisionID");
+                OnRevisionIDChanged();
+            }
+        }
+        private global::System.Int64 _RevisionID;
+        partial void OnRevisionIDChanging(global::System.Int64 value);
+        partial void OnRevisionIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

@@ -563,7 +563,7 @@ namespace CHAOS.MCM.Module.Standard
 		#region Metadata
 
 		[Datatype("Metadata","Set")]
-		public ScalarResult Metadata_Set( CallContext callContext, UUID objectGUID, UUID metadataSchemaGUID, string languageCode, string metadataXML )
+		public ScalarResult Metadata_Set( CallContext callContext, UUID objectGUID, UUID metadataSchemaGUID, string languageCode, uint? revisionID, string metadataXML )
 		{
 		    using( MCMEntities db = DefaultMCMEntities )
 		    {
@@ -582,8 +582,17 @@ namespace CHAOS.MCM.Module.Standard
 				if( !doesUserHavePermission )
 					throw new InsufficientPermissionsExcention( "User does not have permissions to create object" );
 
-		        int result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
+		        int result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
                 
+                if( result == -300 )
+                    throw new InvalidRevisionException( "RevisionID is too old, set metadata with the latest revisionID." );
+
+                if( result == -350 )
+                    throw new InvalidRevisionException( "RevisionID can only be null if there is no metadata already on the object" );
+
+                if( result == -200 )
+                    throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
+
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ objectGUID }, true, true, true ).ToDTO() );
 
 		        return new ScalarResult( result );

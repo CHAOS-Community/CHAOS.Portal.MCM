@@ -22,6 +22,9 @@ namespace CHAOS.MCM.Data.DTO
 		[Serialize("MetadataSchemaGUID")]
 		public UUID MetadataSchemaGUID { get; set; }
 
+        [Serialize]
+        public uint RevisionID { get; set; }
+
 		[SerializeXML(false, true)]
 		[Serialize("MetadataXML")]
 		public XDocument MetadataXML { get; set; }
@@ -32,7 +35,7 @@ namespace CHAOS.MCM.Data.DTO
 		#endregion
 		#region Constructor
 
-		public Metadata( Guid guid, Guid objectGUID, string languageCode, Guid metadataSchemaGUID, string metadataXML, DateTime dateCreated )
+		public Metadata( Guid guid, Guid objectGUID, string languageCode, Guid metadataSchemaGUID, uint revisionID, string metadataXML, DateTime dateCreated )
 		{
 			GUID               = new UUID( guid.ToByteArray() );
 			ObjectGUID         = new UUID( objectGUID.ToByteArray() );
@@ -40,6 +43,7 @@ namespace CHAOS.MCM.Data.DTO
 			MetadataSchemaGUID = new UUID( metadataSchemaGUID.ToByteArray() );
 			MetadataXML        = XDocument.Parse( metadataXML );
 			DateCreated        = dateCreated;
+		    RevisionID         = revisionID;
 		}
 
 		public Metadata()

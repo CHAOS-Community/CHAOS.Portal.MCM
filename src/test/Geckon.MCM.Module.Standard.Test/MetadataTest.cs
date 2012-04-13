@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CHAOS.MCM.Data.DTO;
 using Geckon.Common.Extensions;
+using Geckon.MCM.Core.Exception;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -11,9 +12,29 @@ namespace Geckon.MCM.Module.Standard.Test
 		[Test]
 		public void Should_Set_Metadata()
 		{
-			var result = MCMModule.Metadata_Set( AdminCallContext, Object1.GUID, MetadataSchema.GUID, Afrikaans.LanguageCode, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>" );
+			var result = MCMModule.Metadata_Set( AdminCallContext, Object1.GUID, MetadataSchema.GUID, Afrikaans.LanguageCode, 1, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>" );
 
 			Assert.AreEqual(1, result.Value);
+		}
+
+        [Test]
+		public void Should_Set_Metadata_On_Other_Object()
+		{
+			var result = MCMModule.Metadata_Set( AdminCallContext, Object2.GUID, MetadataSchema.GUID, Afrikaans.LanguageCode, null, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>" );
+			Assert.AreEqual(1, result.Value);
+		}
+
+        [Test, ExpectedException(typeof(InvalidRevisionException))]
+        public void Should_Throw_InvalidRevisionException_If_RevisionID_Is_NULL_When_Metadata_Already_Exist()
+		{
+			MCMModule.Metadata_Set( AdminCallContext, Object1.GUID, MetadataSchema.GUID, Afrikaans.LanguageCode, null, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>" );
+		}
+
+        [Test, ExpectedException(typeof(InvalidRevisionException))]
+        public void Should_Throw_InvalidRevisionException_If_RevisionID_Is_Outdated()
+		{
+            MCMModule.Metadata_Set(AdminCallContext, Object1.GUID, MetadataSchema.GUID, Afrikaans.LanguageCode, 1, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>");
+            MCMModule.Metadata_Set(AdminCallContext, Object1.GUID, MetadataSchema.GUID, Afrikaans.LanguageCode, 1, "<demo><title>test</title><abstract>test</abstract><description>test</description></demo>");
 		}
 
 		//[Test]

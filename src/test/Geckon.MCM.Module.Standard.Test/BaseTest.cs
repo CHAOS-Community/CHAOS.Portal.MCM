@@ -71,7 +71,7 @@ namespace Geckon.MCM.Module.Standard.Test
 				int object1Result        = db.Object_Create( new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID ).First().Value;
 				int object2Result        = db.Object_Create( new UUID("d7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID ).First().Value;
                 int object3Result        = db.Object_Create( new UUID("c7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, subFolderID ).First().Value;
-				int metadataResult       = db.Metadata_Set( new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
+				int metadataResult       = db.Metadata_Set( new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
 				
 				Afrikaans       = db.Language_Get( null, "af" ).First().ToDTO();
 				FolderType      = db.FolderType_Get( folderTypeID, null ).First().ToDTO();
