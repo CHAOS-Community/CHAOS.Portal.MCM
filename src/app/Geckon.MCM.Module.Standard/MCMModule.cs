@@ -575,12 +575,12 @@ namespace CHAOS.MCM.Module.Standard
 					if( PermissionManager.GetFolder( (uint) folder.ID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
 					{
 						doesUserHavePermission = true;
-						continue;
+						break;
 					}
 				}
 
 				if( !doesUserHavePermission )
-					throw new InsufficientPermissionsExcention( "User does not have permissions to create object" );
+					throw new InsufficientPermissionsExcention( "User does not have permissions to set metadata on this object" );
 
 		        int result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
                 
@@ -700,24 +700,34 @@ namespace CHAOS.MCM.Module.Standard
         }
 
 		#endregion
-		//#region Files
+		#region Files
 
-		//[Datatype("File", "Create")]
-		//public File File_Create( CallContext callContext, UUID objectGUID, int? parentFileID, int formatID, int destinationID, string filename, string originalFilename, string folderPath )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        // TODO: Check if user has 'Folder', 'CREATE_UPDATE_OBJECTS permission 
-		//        // throw new InsufficientPermissionsExcention("User does not have permissions to create a file for this object");
+		[Datatype("File", "Create")]
+		public Data.DTO.File File_Create( CallContext callContext, UUID objectGUID, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath )
+		{
+		    using( MCMEntities db = DefaultMCMEntities )
+		    {
+		        bool doesUserHavePermission = false;
 
-		//        int id = db.File_Create( objectGUID.ToByteArray(), parentFileID, formatID, destinationID, filename, originalFilename, folderPath ).First().Value;
+                foreach( Data.EF.Folder folder in db.Folder_Get(null, objectGUID.ToByteArray()) )
+				{
+					if( PermissionManager.GetFolder( (uint) folder.ID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
+					{
+						doesUserHavePermission = true;
+						break;
+					}
+				}
+		        
+		        if( !doesUserHavePermission )
+                    throw new InsufficientPermissionsExcention("User does not have permissions to create a file for this object");
 
+		        int id = db.File_Create( objectGUID.ToByteArray(), (int?) parentFileID, (int) formatID, (int) destinationID, filename, originalFilename, folderPath ).First().Value;
 
-		//        return db.File_Get( id ).First().ToDTO();
-		//    }
-		//}
+		        return db.File_Get( id ).First().ToDTO();
+		    }
+		}
 
-		//#endregion
+		#endregion
 		#region Destination
 
 		[Datatype("Destination", "Get")]

@@ -125,7 +125,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		[Test]
 		public void Should_Return_False_If_User_Doesnt_Have_Permission()
 		{
-			Assert.IsFalse( topFolder.GetFolder( 48 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
+			Assert.IsFalse( topFolder.GetFolder( 9904 ).DoesUserOrGroupHavePersmission( UserGuid, GroupGuids, FolderPermissions.Read ) );
 		}
 
         [Test]

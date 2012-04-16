@@ -1,12 +1,14 @@
-﻿using Geckon.Portal.Core.Standard.Extension;
+﻿using Geckon;
+using Geckon.Portal.Core.Standard.Extension;
 
-namespace Geckon.MCM.Extension.File
+namespace CHAOS.MCM.Extension.File
 {
 	public class FileExtension : AExtension
 	{
 		#region CREATE
 
-	//	public void Create( CallContext callContext, )
+		public void Create( CallContext callContext, UUID objectGUID, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath )
+        {}
 
 		#endregion
 	}

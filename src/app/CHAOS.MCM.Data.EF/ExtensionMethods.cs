@@ -24,24 +24,24 @@ namespace CHAOS.MCM.Data.EF
 		}
 
 		#endregion
-		//#region File
+		#region File
 
-		//public static IEnumerable<DTO.File> ToDTO( this IEnumerable<File> files )
-		//{
-		//    return files.Select( item => ToDTO( item ) );
-		//}
+		public static IEnumerable<DTO.File> ToDTO( this IEnumerable<File> files )
+		{
+		    return files.Select( ToDTO );
+		}
 
-		//public static DTO.File ToDTO( this File file )
-		//{
-		//    return new DTO.File( (uint) file.ID, 
-		//                             (uint?) file.ParentID, 
-		//                             file.ObjectGUID, 
-		//                             file.Filename,
-		//                             file.OriginalFilename, 
-		//                             (uint) file.FormatID );
-		//}
+		public static DTO.File ToDTO( this File file )
+		{
+		    return new DTO.File( (uint) file.ID, 
+		                             (uint?) file.ParentID, 
+		                             file.ObjectGUID, 
+		                             file.FileName,
+		                             file.OriginalFileName, 
+		                             (uint) file.FormatID );
+		}
 
-		//#endregion
+		#endregion
 		#region FileInfo
 
 		public static IEnumerable<DTO.FileInfo> ToDTO( this IEnumerable<FileInfo> fileInfos )
