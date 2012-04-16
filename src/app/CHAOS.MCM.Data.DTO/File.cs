@@ -26,10 +26,13 @@ namespace CHAOS.MCM.Data.DTO
 		[Serialize("FormatID")]
 		public uint FormatID { get; set; }
 
+        [Serialize("OriginalFilename")]
+		public string FolderPath { get; set; }
+
 		#endregion
 		#region Constructor
 
-		public File( uint id, uint? parentID, Guid objectGUID, string filename, string originalFilename, uint formatID )
+		public File( uint id, uint? parentID, Guid objectGUID, string filename, string originalFilename, uint formatID, string folderPath )
 		{
 			ID               = id;
 			ParentID         = parentID;
@@ -37,6 +40,7 @@ namespace CHAOS.MCM.Data.DTO
 			Filename         = filename;
 			OriginalFilename = originalFilename;
 			FormatID	     = formatID;
+            FolderPath       = folderPath;
 		}
 
 		public File()

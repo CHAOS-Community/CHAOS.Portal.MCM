@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using CHAOS.MCM.Data.EF;
-using CHAOS.Portal.Data.DTO;
-using Geckon.Portal.Core.Exception;
 using NUnit.Framework;
 using Object = CHAOS.MCM.Data.DTO.Object;
 
@@ -50,7 +47,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual(1, result.Value);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Not_Put_Object_In_Folder_With_Insufficient_Permissions()
 		//{
 		//    MCMModule.Object_PutInFolder(AnonCallContext, Object1.GUID, EmptyFolder.ID, ObjectFolderLink.ID);

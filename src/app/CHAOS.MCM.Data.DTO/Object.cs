@@ -38,14 +38,14 @@ namespace CHAOS.MCM.Data.DTO
 		[Serialize("ObjectRelations" )]
 		public List<Object_Object_Join> ObjectRealtions { get; set; }
 
-        public IList<Object_Folder_Join> Folders { get; set; }
+        public IList<Link> Folders { get; set; }
 		public IList<uint> FolderTree { get; set; }
 		public List<Object> RelatedObjects { get; set; }
 
 		#endregion
 		#region Constructor
 
-		public Object(Guid guid, uint objectTypeID, DateTime dateCreated, IEnumerable<Metadata> metadatas, IEnumerable<FileInfo> fileInfos, IEnumerable<Object_Object_Join> objectObjectJoins, IEnumerable<Object_Folder_Join> folders ) 
+		public Object(Guid guid, uint objectTypeID, DateTime dateCreated, IEnumerable<Metadata> metadatas, IEnumerable<FileInfo> fileInfos, IEnumerable<Object_Object_Join> objectObjectJoins, IEnumerable<Link> folders ) 
 		{
 			GUID         = new UUID( guid.ToByteArray() );
 			ObjectTypeID = objectTypeID;
@@ -72,7 +72,7 @@ namespace CHAOS.MCM.Data.DTO
 			yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 
 			if( Folders != null )
-				foreach( Object_Folder_Join folder in Folders )
+				foreach( Link folder in Folders )
 				{
 					yield return new KeyValuePair<string, string>("FolderID", folder.FolderID.ToString( ) );
 				}

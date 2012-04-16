@@ -38,7 +38,8 @@ namespace CHAOS.MCM.Data.EF
 		                             file.ObjectGUID, 
 		                             file.FileName,
 		                             file.OriginalFileName, 
-		                             (uint) file.FormatID );
+		                             (uint) file.FormatID,
+                                     file.FolderPath );
 		}
 
 		#endregion
@@ -80,14 +81,14 @@ namespace CHAOS.MCM.Data.EF
 		#endregion
 		#region Folder
 
-        public static IEnumerable<DTO.Object_Folder_Join> ToDTO(this IEnumerable<Object_Folder_Join> folders)
+        public static IEnumerable<DTO.Link> ToDTO(this IEnumerable<Object_Folder_Join> folders)
 		{
 			return folders.Select( item => ToDTO( item ) );
 		}
 
-        public static DTO.Object_Folder_Join ToDTO(this Object_Folder_Join folder)
+        public static DTO.Link ToDTO(this Object_Folder_Join folder)
 		{
-			return new DTO.Object_Folder_Join( (uint) folder.FolderID, folder.ObjectGUID, (uint) folder.ObjectFolderTypeID, folder.DateCreated );
+			return new DTO.Link( (uint) folder.FolderID, folder.ObjectGUID, (uint) folder.ObjectFolderTypeID, folder.DateCreated );
 		}
 
 		#endregion

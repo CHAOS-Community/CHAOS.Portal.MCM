@@ -48,8 +48,8 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    MCMModule.Folder_Delete( AdminCallContext, TopFolder.ID);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
-		//public void Should_Throw_InsufficientPermissionsExcention_On_Delete_Folder()
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
+		//public void Should_Throw_InsufficientPermissionsException_On_Delete_Folder()
 		//{
 		//    MCMModule.Folder_Delete( AnonCallContext, EmptyFolder.ID);
 		//}
@@ -62,8 +62,8 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.Greater( (int) result.Value, 0 );
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
-		//public void Should_Throw_InsufficientPermissionsExcention_On_Update_Folder()
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
+		//public void Should_Throw_InsufficientPermissionsException_On_Update_Folder()
 		//{
 		//    MCMModule.Folder_Update( AnonCallContext, EmptyFolder.ID, "new", null );
 		//}
@@ -97,8 +97,8 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual(FolderType.ID, folder.FolderTypeID);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
-		//public void Should_Throw_InsufficientPermissionsExcention_On_Create_Folder()
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
+		//public void Should_Throw_InsufficientPermissionsException_On_Create_Folder()
 		//{
 		//    MCMModule.Folder_Create( AnonCallContext,null, "not allowed", TopFolder.ID, FolderType.ID);
 		//}

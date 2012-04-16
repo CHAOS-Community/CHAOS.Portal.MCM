@@ -165,6 +165,17 @@ namespace Geckon.MCM.Module.Standard.Rights
 			Folders.Clear();
     	}
 
+        public bool DoesUserOrGroupHavePersmissionToFolders( IEnumerable<uint> folderIDs, Guid userGUID, IEnumerable<Guid> groupGUIDs, FolderPermissions permission )
+        {
+            foreach( int folderID in folderIDs )
+			{
+				if( GetFolder( (uint) folderID ).DoesUserOrGroupHavePersmission( userGUID, groupGUIDs, FolderPermissions.CreateUpdateObjects ) )
+			        return true;
+			}
+
+            return false;
+        }
+
         #endregion
 
     	public IEnumerable<uint> GetParentFolders( IEnumerable<uint> folderIDs )

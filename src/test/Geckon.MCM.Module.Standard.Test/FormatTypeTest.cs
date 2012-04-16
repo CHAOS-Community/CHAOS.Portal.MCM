@@ -1,7 +1,4 @@
 ﻿using System.Linq;
-using CHAOS.MCM.Data.DTO;
-using CHAOS.Portal.Data.DTO;
-using Geckon.Portal.Core.Exception;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -23,7 +20,7 @@ namespace Geckon.MCM.Module.Standard.Test
 	   //     Assert.AreEqual("name", FormatType.Value);
 	   // }
 
-	   // [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+	   // [Test, ExpectedException(typeof(InsufficientPermissionsException))]
 	   // public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Create_FormatType()
 	   // {
 	   //     MCMModule.FormatType_Create( AnonCallContext, "name");
@@ -38,7 +35,7 @@ namespace Geckon.MCM.Module.Standard.Test
 	   //     Assert.AreEqual(1, result.Value);
 	   // }
 
-	   // [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+	   // [Test, ExpectedException(typeof(InsufficientPermissionsException))]
 	   // public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Delete_FormatType()
 	   // {
 	   //     Assert.AreNotEqual(-100, MCMModule.FormatType_Delete( AnonCallContext, FormatType.ID));
@@ -52,7 +49,7 @@ namespace Geckon.MCM.Module.Standard.Test
 	   //     Assert.AreEqual(1, result.Value);
 	   // }
 
-	   // [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+	   // [Test, ExpectedException(typeof(InsufficientPermissionsException))]
 	   // public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Update_FormatType()
 	   // {
 	   //     Assert.AreNotEqual(-100, MCMModule.FormatType_Update( AnonCallContext, FormatType.ID, "name"));

@@ -32,15 +32,12 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Folder_Group_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Folder_Group_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Folder_Group_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Folder_ParentID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(CHAOS.MCM.Data.EF.Folder), "Folder1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Folder), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Folder_User_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Folder_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Folder_User_Join), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Object_Folder_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FolderType_ID_Folder_FolderTypeID", "FolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.FolderType), "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Folder), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MS_GUID_MS_Group_Join_MSGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "MetadataSchema_Group_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.MetadataSchema_Group_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MS_GUID_MS_User_Join_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "MetadataSchema_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.MetadataSchema_User_Join), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectFolderType), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID", "ObjectRelationType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectRelationType), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "AccessPoint_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_File_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "File", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.File), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object1GUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object2GUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectType_ID_Object_ObjectTypeID", "ObjectType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectType), "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object), true)]
@@ -50,6 +47,9 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Language_LanguageCode_Metadata_LanguageCode", "Language", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(CHAOS.MCM.Data.EF.Language), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Metadata), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Object_Folder_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectFolderType), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 
 #endregion
 
@@ -376,22 +376,6 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Object_Folder_Join> Object_Folder_Join
-        {
-            get
-            {
-                if ((_Object_Folder_Join == null))
-                {
-                    _Object_Folder_Join = base.CreateObjectSet<Object_Folder_Join>("Object_Folder_Join");
-                }
-                return _Object_Folder_Join;
-            }
-        }
-        private ObjectSet<Object_Folder_Join> _Object_Folder_Join;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Object_Object_Join> Object_Object_Join
         {
             get
@@ -580,6 +564,22 @@ namespace CHAOS.MCM.Data.EF
             }
         }
         private ObjectSet<Metadata> _Metadata;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Object_Folder_Join> Object_Folder_Join
+        {
+            get
+            {
+                if ((_Object_Folder_Join == null))
+                {
+                    _Object_Folder_Join = base.CreateObjectSet<Object_Folder_Join>("Object_Folder_Join");
+                }
+                return _Object_Folder_Join;
+            }
+        }
+        private ObjectSet<Object_Folder_Join> _Object_Folder_Join;
 
         #endregion
 
@@ -722,14 +722,6 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Object_Folder_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToObject_Folder_Join(Object_Folder_Join object_Folder_Join)
-        {
-            base.AddObject("Object_Folder_Join", object_Folder_Join);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Object_Object_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToObject_Object_Join(Object_Object_Join object_Object_Join)
@@ -823,6 +815,14 @@ namespace CHAOS.MCM.Data.EF
         public void AddToMetadata(Metadata metadata)
         {
             base.AddObject("Metadata", metadata);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Object_Folder_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToObject_Folder_Join(Object_Folder_Join object_Folder_Join)
+        {
+            base.AddObject("Object_Folder_Join", object_Folder_Join);
         }
 
         #endregion
@@ -2282,6 +2282,118 @@ namespace CHAOS.MCM.Data.EF
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectRelation_Delete", object1GUIDParameter, object2GUIDParameter, objectRelationTypeIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="folderID">No Metadata Documentation available.</param>
+        /// <param name="objectFolderTypeID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Object_Folder_Join_Create(global::System.Byte[] objectGUID, Nullable<global::System.Int32> folderID, Nullable<global::System.Int32> objectFolderTypeID)
+        {
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter folderIDParameter;
+            if (folderID.HasValue)
+            {
+                folderIDParameter = new ObjectParameter("FolderID", folderID);
+            }
+            else
+            {
+                folderIDParameter = new ObjectParameter("FolderID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter objectFolderTypeIDParameter;
+            if (objectFolderTypeID.HasValue)
+            {
+                objectFolderTypeIDParameter = new ObjectParameter("ObjectFolderTypeID", objectFolderTypeID);
+            }
+            else
+            {
+                objectFolderTypeIDParameter = new ObjectParameter("ObjectFolderTypeID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Folder_Join_Create", objectGUIDParameter, folderIDParameter, objectFolderTypeIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="folderID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Object_Folder_Join_Delete(global::System.Byte[] objectGUID, Nullable<global::System.Int32> folderID)
+        {
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter folderIDParameter;
+            if (folderID.HasValue)
+            {
+                folderIDParameter = new ObjectParameter("FolderID", folderID);
+            }
+            else
+            {
+                folderIDParameter = new ObjectParameter("FolderID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Folder_Join_Delete", objectGUIDParameter, folderIDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="folderID">No Metadata Documentation available.</param>
+        /// <param name="newFolderID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Object_Folder_Join_Update(global::System.Byte[] objectGUID, Nullable<global::System.Int32> folderID, Nullable<global::System.Int32> newFolderID)
+        {
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter folderIDParameter;
+            if (folderID.HasValue)
+            {
+                folderIDParameter = new ObjectParameter("FolderID", folderID);
+            }
+            else
+            {
+                folderIDParameter = new ObjectParameter("FolderID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter newFolderIDParameter;
+            if (newFolderID.HasValue)
+            {
+                newFolderIDParameter = new ObjectParameter("NewFolderID", newFolderID);
+            }
+            else
+            {
+                newFolderIDParameter = new ObjectParameter("NewFolderID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Folder_Join_Update", objectGUIDParameter, folderIDParameter, newFolderIDParameter);
         }
 
         #endregion
@@ -5224,28 +5336,6 @@ namespace CHAOS.MCM.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Folder_ID_Object_Folder_Join_FolderID", "Object_Folder_Join")]
-        public EntityCollection<Object_Folder_Join> Object_Folder_Join
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Object_Folder_Join>("MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID", "Object_Folder_Join");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object_Folder_Join>("MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID", "Object_Folder_Join", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_FolderType_ID_Folder_FolderTypeID", "FolderType")]
         public FolderType FolderType
         {
@@ -5274,6 +5364,28 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FolderType>("MCMModel.FK_FolderType_ID_Folder_FolderTypeID", "FolderType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Folder_ID_Object_Folder_Join_FolderID", "Object_Folder_Join")]
+        public EntityCollection<Object_Folder_Join> Object_Folder_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Object_Folder_Join>("MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID", "Object_Folder_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object_Folder_Join>("MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID", "Object_Folder_Join", value);
                 }
             }
         }
@@ -7755,28 +7867,6 @@ namespace CHAOS.MCM.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join")]
-        public EntityCollection<Object_Folder_Join> Object_Folder_Join
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Object_Folder_Join>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object_Folder_Join>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object1GUID", "Object_Object_Join")]
         public EntityCollection<Object_Object_Join> Object_Object_Join
         {
@@ -7871,6 +7961,28 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join")]
+        public EntityCollection<Object_Folder_Join> Object_Folder_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Object_Folder_Join>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object_Folder_Join>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join", value);
                 }
             }
         }
@@ -8061,44 +8173,6 @@ namespace CHAOS.MCM.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType")]
-        public ObjectFolderType ObjectFolderType
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectFolderType>("MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectFolderType>("MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<ObjectFolderType> ObjectFolderTypeReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectFolderType>("MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ObjectFolderType>("MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object")]
         public Object Object
         {
@@ -8127,6 +8201,44 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Object>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType")]
+        public ObjectFolderType ObjectFolderType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectFolderType>("MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectFolderType>("MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<ObjectFolderType> ObjectFolderTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<ObjectFolderType>("MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<ObjectFolderType>("MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType", value);
                 }
             }
         }

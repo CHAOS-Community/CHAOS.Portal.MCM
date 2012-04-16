@@ -1,7 +1,4 @@
-﻿using CHAOS.MCM.Data.DTO;
-using CHAOS.Portal.Data.DTO;
-using Geckon.Common.Extensions;
-using Geckon.Portal.Core.Exception;
+﻿using Geckon.Common.Extensions;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -24,7 +21,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual("code", lan.LanguageCode);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Create_Language()
 		//{
 		//    Assert.AreNotEqual(-100, MCMModule.Language_Create( AnonCallContext, "name", "code" ) );
@@ -38,7 +35,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual(1, result.Value);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Delete_Language()
 		//{
 		//    Assert.AreNotEqual(-100, MCMModule.Language_Delete( AnonCallContext,Afrikaans.LanguageCode ) );
@@ -52,7 +49,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual(1, result.Value);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Update_Language()
 		//{
 		//    Assert.AreNotEqual(-100, MCMModule.Language_Update( AnonCallContext, Afrikaans.LanguageCode, "name"));

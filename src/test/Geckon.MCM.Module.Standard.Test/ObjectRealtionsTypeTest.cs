@@ -1,7 +1,4 @@
-﻿using CHAOS.MCM.Data.DTO;
-using CHAOS.Portal.Data.DTO;
-using Geckon.Common.Extensions;
-using Geckon.Portal.Core.Exception;
+﻿using Geckon.Common.Extensions;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -23,7 +20,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual("name", objectRelationType.Value);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Create_ObjectRelationType()
 		//{
 		//    MCMModule.ObjectRelationType_Create( AnonCallContext, "name" );
@@ -37,7 +34,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual(1, result.Value);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Delete_ObjectRelationType()
 		//{
 		//    Assert.AreNotEqual(-100, MCMModule.ObjectRelationType_Delete( AnonCallContext, ObjectContains.ID));
@@ -51,7 +48,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual(1, result.Value);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Update_ObjectRelationType()
 		//{
 		//    Assert.AreNotEqual(-100, MCMModule.ObjectRelationType_Update( AnonCallContext, ObjectContains.ID, "name"));

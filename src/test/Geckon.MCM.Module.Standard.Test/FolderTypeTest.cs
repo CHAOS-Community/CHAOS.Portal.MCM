@@ -20,7 +20,7 @@ namespace Geckon.MCM.Module.Standard.Test
 	   //     Assert.AreEqual("name", folderType.Name);
 	   // }
 
-	   // [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+	   // [Test, ExpectedException(typeof(InsufficientPermissionsException))]
 	   // public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Create_FolderType()
 	   // {
 	   //     MCMModule.FolderType_Create( AnonCallContext, "name");
@@ -34,7 +34,7 @@ namespace Geckon.MCM.Module.Standard.Test
 	   //     Assert.AreEqual(1, result.Value);
 	   // }
 
-	   // [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+	   // [Test, ExpectedException(typeof(InsufficientPermissionsException))]
 	   // public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Delete_FolderType()
 	   // {
 	   //     Assert.AreNotEqual(-100, MCMModule.FolderType_Delete( AnonCallContext, FolderType.ID));
@@ -48,7 +48,7 @@ namespace Geckon.MCM.Module.Standard.Test
 	   //     Assert.AreEqual(1, result.Value);
 	   // }
 
-	   // [Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+	   // [Test, ExpectedException(typeof(InsufficientPermissionsException))]
 	   // public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Update_FolderType()
 	   // {
 	   //     Assert.AreNotEqual(-100, MCMModule.FolderType_Update( AnonCallContext, FolderType.ID, "name"));

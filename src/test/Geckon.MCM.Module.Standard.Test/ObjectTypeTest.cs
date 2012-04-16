@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CHAOS.MCM.Data.DTO;
-using CHAOS.Portal.Data.DTO;
-using Geckon.Portal.Core.Exception;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test
@@ -18,7 +16,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual( "MyObjectType", objectType.Value );
 		//}
 
-		//[Test, ExpectedException( typeof( InsufficientPermissionsExcention ) )]
+		//[Test, ExpectedException( typeof( InsufficientPermissionsException ) )]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Create_ObjectType()
 		//{
 		//    MCMModule.ObjectType_Create( AnonCallContext, "MyObjectType" );
@@ -47,7 +45,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    }
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Update_ObjectType()
 		//{
 		//    ScalarResult result = MCMModule.ObjectType_Update( AnonCallContext,
@@ -66,7 +64,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		//    Assert.AreEqual(1, result.Value);
 		//}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsExcention))]
+		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Delete_ObjectType()
 		//{
 		//    ScalarResult result = MCMModule.ObjectType_Delete( AnonCallContext,

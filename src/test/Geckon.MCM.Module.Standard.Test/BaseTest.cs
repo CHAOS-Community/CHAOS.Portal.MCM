@@ -15,7 +15,6 @@ using FormatCategory     = CHAOS.MCM.Data.DTO.FormatCategory;
 using DestinationInfo    = CHAOS.MCM.Data.DTO.DestinationInfo;
 using MetadataSchema     = CHAOS.MCM.Data.DTO.MetadataSchema;
 using Object             = CHAOS.MCM.Data.DTO.Object;
-using CHAOS.Portal.Data.DTO;
 
 namespace Geckon.MCM.Module.Standard.Test
 {
@@ -33,6 +32,7 @@ namespace Geckon.MCM.Module.Standard.Test
 		public FormatType         FormatType { get; set; }
 		public FormatCategory     FormatCategory { get; set; }
 		public Folder			  TopFolder { get; set; }
+        public Folder			  SubFolder { get; set; }
 		public Folder             EmptyFolder { get; set; }
 		public Object             Object1 { get; set; }
 	    public Object             Object2 { get; set; }
@@ -66,6 +66,7 @@ namespace Geckon.MCM.Module.Standard.Test
 				int destinationID	     = db.Destination_Create( SubscriptionInfo.GUID.ToByteArray(), "CHAOS Source" ).First().Value;
 				int accessProvider       = db.AccessProvider_Create( destinationID, "http://example.com", "{BASE_PATH}{FOLDER_PATH}{FILENAME}", "HTTP Download" ).First().Value;
 				int objectFolderTypeID   = db.ObjectFolderType_Create( 1, "Physical" ).First().Value;
+                int objectFolderTypeID2  = db.ObjectFolderType_Create( 2, "Link" ).First().Value;
 				int languageResult       = db.Language_Create( "Afrikaans", "af" ).First().Value;
 				int metadataSchemaResult = db.MetadataSchema_Create( new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />" );
 				int object1Result        = db.Object_Create( new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID ).First().Value;
@@ -77,6 +78,7 @@ namespace Geckon.MCM.Module.Standard.Test
 				FolderType      = db.FolderType_Get( folderTypeID, null ).First().ToDTO();
 				FolderTestType  = db.FolderType_Get( folderTestTypeID, null ).First().ToDTO();
 				TopFolder       = db.Folder_Get( topFolderID, null ).First().ToDTO();
+                SubFolder       = db.Folder_Get( subFolderID, null ).First().ToDTO();
 				EmptyFolder     = db.Folder_Get( emptyFolderID, null ).First().ToDTO();
 				AssetObjectType = db.ObjectType_Get( assetObjectTypeID, null ).First().ToDTO();
 				DemoObjectType  = db.ObjectType_Get( demoObjectTypeID, null ).First().ToDTO();

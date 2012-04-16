@@ -19,6 +19,7 @@ using Geckon.Portal.Data.Result.Standard;
 using Folder = Geckon.MCM.Module.Standard.Rights.Folder;
 using Object = CHAOS.MCM.Data.DTO.Object;
 using Geckon.Serialization;
+using CHAOS.MCM.Data.DTO;
 
 namespace CHAOS.MCM.Module.Standard
 {
@@ -86,7 +87,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.ObjectType_Insert( value, callContext.User.SystemPermissions ); 
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to create an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to create an Object Type" );
 
 		//        return db.ObjectType_Get( result, null ).First();
 		//    }
@@ -109,7 +110,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.ObjectType_Update(id, newName, callContext.User.SystemPermission);
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to update an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to update an Object Type" );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -123,7 +124,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.ObjectType_Delete( id, null, callContext.User.SystemPermission );
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -149,7 +150,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.Language_Create( name, languageCode, callContext.User.SystemPermission );
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
 
 		//        return db.Language_Get( name, languageCode ).First();
 		//    }
@@ -163,7 +164,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.Language_Update( newName, languageCode, callContext.User.SystemPermission );
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -177,7 +178,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.Language_Delete( languageCode, callContext.User.SystemPermission );
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -203,7 +204,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.ObjectRelationType_Create(value, callContext.User.SystemPermission);
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
 
 		//        return db.ObjectRelationType_Get(result, null).First();
 		//    }
@@ -217,7 +218,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.ObjectRelationType_Update(id, value, callContext.User.SystemPermission);
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -231,7 +232,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.ObjectRelationType_Delete(id, callContext.User.SystemPermission);
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete an Object Type" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -257,7 +258,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.FolderType_Create(name, callContext.User.SystemPermission);
 
 		//        if (result == -100)
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException("User does not have permission to delete an Object Type");
 
 		//        return db.FolderType_Get(result, null).First();
 		//    }
@@ -271,7 +272,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.FolderType_Update(id, name, callContext.User.SystemPermission);
 
 		//        if (result == -100)
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException("User does not have permission to delete an Object Type");
 
 		//        return new ScalarResult(result);
 		//    }
@@ -285,7 +286,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.FolderType_Delete(id, callContext.User.SystemPermission);
 
 		//        if (result == -100)
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException("User does not have permission to delete an Object Type");
 
 		//        return new ScalarResult(result);
 		//    }
@@ -311,7 +312,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.FormatType_Create(name, callContext.User.SystemPermission);
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException("User does not have permission to delete an Object Type");
 
 		//        return db.FormatType_Get(result, null).First();
 		//    }
@@ -325,7 +326,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.FormatType_Update( id, name, callContext.User.SystemPermission );
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException("User does not have permission to delete an Object Type");
 
 		//        return new ScalarResult(result);
 		//    }
@@ -339,7 +340,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.FormatType_Delete(id, callContext.User.SystemPermission);
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention("User does not have permission to delete an Object Type");
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException("User does not have permission to delete an Object Type");
 
 		//        return new ScalarResult(result);
 		//    }
@@ -395,7 +396,7 @@ namespace CHAOS.MCM.Module.Standard
 		//            throw new FolderNotEmptyException( "You cannot delete non empty folder" );
  
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to delete the folder" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete the folder" );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -412,7 +413,7 @@ namespace CHAOS.MCM.Module.Standard
 		//            throw new InvalidProtocolException( "The parameters to update cant all be null" );
 
 		//        if( result == -100 )
-		//            throw new InsufficientPermissionsExcention( "User does not have permission to update the folder" );
+		//            throw new InsufficientPermissionsException( "User does not have permission to update the folder" );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -443,7 +444,7 @@ namespace CHAOS.MCM.Module.Standard
 		//                                       folderTypeID);
 
 		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsExcention( "User does not have permission to Create the folder" );
+		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to Create the folder" );
 
 		//        return db.Folder_Get( callContext.Groups.Select(group => group.GUID).ToList(),
 		//                              callContext.User.GUID, 
@@ -510,7 +511,7 @@ namespace CHAOS.MCM.Module.Standard
 		    using( MCMEntities db = DefaultMCMEntities )
 		    {
 				if( !PermissionManager.GetFolder( folderID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
-					throw new InsufficientPermissionsExcention( "User does not have permissions to create object" );
+					throw new InsufficientPermissionsException( "User does not have permissions to create object" );
 
 				UUID guid = GUID ?? new UUID();
 
@@ -535,7 +536,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.Object_Delete( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, GUID, folderID );
 
 		//        if( result == -100 )
-		//            throw new InsufficientPermissionsExcention( "User does not have permissions to delete object" );
+		//            throw new InsufficientPermissionsException( "User does not have permissions to delete object" );
 
 		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ GUID }, true, false, true, true ) );
 
@@ -551,7 +552,7 @@ namespace CHAOS.MCM.Module.Standard
 		//        int result = db.Object_PutInFolder( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, GUID, folderID, objectFolderTypeID );
 
 		//        if( result == -100 )
-		//            throw new InsufficientPermissionsExcention( "User does not have permissions to put object into folder" );
+		//            throw new InsufficientPermissionsException( "User does not have permissions to put object into folder" );
 
 		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ GUID }, true, false, true, true ) );
 
@@ -580,7 +581,7 @@ namespace CHAOS.MCM.Module.Standard
 				}
 
 				if( !doesUserHavePermission )
-					throw new InsufficientPermissionsExcention( "User does not have permissions to set metadata on this object" );
+					throw new InsufficientPermissionsException( "User does not have permissions to set metadata on this object" );
 
 		        int result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
                 
@@ -671,7 +672,7 @@ namespace CHAOS.MCM.Module.Standard
                     throw new UnhandledException( "No result was returned from the database when calling ObjectRelation_Create" );
 
 		        if( result == -100 )
-		            throw new InsufficientPermissionsExcention( "The user do not have permission to create object relations" );
+		            throw new InsufficientPermissionsException( "The user do not have permission to create object relations" );
 
 		        if( result == -200 )
 		            throw new ObjectRelationAlreadyExistException( "The object relation already exists" );
@@ -693,7 +694,7 @@ namespace CHAOS.MCM.Module.Standard
                     throw new UnhandledException( "ObjectRelation Delete failed on the database" );
 
                 if( result == -100 )
-                    throw new InsufficientPermissionsExcention( "The user do not have permission to delete object relations" );
+                    throw new InsufficientPermissionsException( "The user do not have permission to delete object relations" );
 
                 return new ScalarResult( result.Value );
             }
@@ -705,47 +706,86 @@ namespace CHAOS.MCM.Module.Standard
 		[Datatype("File", "Create")]
 		public Data.DTO.File File_Create( CallContext callContext, UUID objectGUID, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath )
 		{
-		    using( MCMEntities db = DefaultMCMEntities )
-		    {
-		        bool doesUserHavePermission = false;
-
-                foreach( Data.EF.Folder folder in db.Folder_Get(null, objectGUID.ToByteArray()) )
-				{
-					if( PermissionManager.GetFolder( (uint) folder.ID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
-					{
-						doesUserHavePermission = true;
-						break;
-					}
-				}
-		        
-		        if( !doesUserHavePermission )
-                    throw new InsufficientPermissionsExcention("User does not have permissions to create a file for this object");
+            using( MCMEntities db = DefaultMCMEntities )
+            {
+                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get(null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
+                    throw new InsufficientPermissionsException("User does not have permissions to create a file for this object");
 
 		        int id = db.File_Create( objectGUID.ToByteArray(), (int?) parentFileID, (int) formatID, (int) destinationID, filename, originalFilename, folderPath ).First().Value;
 
 		        return db.File_Get( id ).First().ToDTO();
-		    }
-		}
+            }
+        }
 
-		#endregion
-		#region Destination
+        #endregion
+        #region Link
 
-		[Datatype("Destination", "Get")]
-		public IEnumerable<Data.DTO.DestinationInfo> Destination_Get(CallContext callContext, uint destinationID )
-		{
-			using( MCMEntities db = DefaultMCMEntities )
-			{
-				return db.DestinationInfo_Get( (int?) destinationID ).ToDTO().ToList();
-			}
-		}
+        [Datatype("Link", "Create")]
+        public ScalarResult Link_Create(CallContext callContext, UUID objectGUID, uint folderID)
+        {
+            using( MCMEntities db = DefaultMCMEntities )
+            {
+                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateLink ) )
+                    throw new InsufficientPermissionsException("User can only create links");
+                
+                // TODO: Manage magical number better (ObjectFolderTypeID:2 is link by default)
+                int result = db.Object_Folder_Join_Create( objectGUID.ToByteArray(), (int) folderID, 2 ).First().Value;
 
-		#endregion
+                if( result == -100 )
+                    throw new InsufficientPermissionsException( "User can only create links" );
 
-		private void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
-		{
-			index.Set( newObject );
-		}
+                return new ScalarResult( result );
+            }
+        }
+
+        [Datatype("Link", "Update")]
+        public ScalarResult Link_Update( CallContext callContext, UUID objectGUID, uint folderID, uint newFolderID )
+        {
+            using( MCMEntities db = DefaultMCMEntities )
+            {
+                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateLink ) )
+                    throw new InsufficientPermissionsException("User does not have permission to update link");
+
+                int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
+
+                return new ScalarResult( result );
+            }
+        }
+
+        [Datatype("Link", "Delete")]
+        public ScalarResult Link_Delete( CallContext callContext, UUID objectGUID, uint folderID )
+        {
+            using( MCMEntities db = DefaultMCMEntities )
+            {
+                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateLink ) )
+                    throw new InsufficientPermissionsException("User does not have permission to delete link");
+
+                int result = db.Object_Folder_Join_Delete( objectGUID.ToByteArray(), (int) folderID ).First().Value;
+
+                return new ScalarResult( result );
+            }
+        }
+
+        #endregion
+        #region Destination
+
+        [Datatype("Destination", "Get")]
+        public IEnumerable<Data.DTO.DestinationInfo> Destination_Get(CallContext callContext, uint destinationID )
+        {
+            using( MCMEntities db = DefaultMCMEntities )
+            {
+                return db.DestinationInfo_Get( (int?) destinationID ).ToDTO().ToList();
+            }
+        }
+
+        #endregion
+
+        private void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
+        {
+            index.Set( newObject );
+        }
 
 		#endregion
     }
+
 }

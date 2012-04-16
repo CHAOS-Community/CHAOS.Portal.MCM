@@ -5,7 +5,7 @@ using Geckon.Serialization;
 
 namespace CHAOS.MCM.Data.DTO
 {
-    public class Object_Folder_Join : Result
+    public class Link : Result
     {
         #region Properties
 
@@ -24,12 +24,12 @@ namespace CHAOS.MCM.Data.DTO
         #endregion
         #region Contructors
 
-        public Object_Folder_Join()
+        public Link()
         {
             
         }
 
-        public Object_Folder_Join( uint folderID, Guid objectGUID, uint objectFolderTypeID, DateTime dateCreated )
+        public Link( uint folderID, Guid objectGUID, uint objectFolderTypeID, DateTime dateCreated )
         {
             FolderID           = folderID;
             ObjectGUID         = new UUID( objectGUID.ToByteArray() ).ToString();
