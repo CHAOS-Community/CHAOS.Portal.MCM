@@ -88,8 +88,8 @@ namespace Geckon.MCM.Module.Standard.Test
 				Format          = db.Format_Get( formatID, null ).First().ToDTO();
 				DestinationInfo = db.DestinationInfo_Get( destinationID ).First().ToDTO();
 				MetadataSchema  = db.MetadataSchema_Get( new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray() ).First().ToDTO();
-				Object1         = db.Object_Get( new[]{ new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true ).First().ToDTO();
-				Object2         = db.Object_Get( new[]{ new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true ).First().ToDTO();
+				Object1         = db.Object_Get( new[]{ new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true, true ).First().ToDTO();
+				Object2         = db.Object_Get( new[]{ new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true ).First().ToDTO();
 
 				MCMModule = new MCMModule();
                 MCMModule.Init(XElement.Parse("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>"));

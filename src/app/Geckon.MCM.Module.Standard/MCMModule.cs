@@ -498,7 +498,7 @@ namespace CHAOS.MCM.Module.Standard
 					if (resultPage.Count() == 0)
 						return new Geckon.Index.Standard.PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
 					
-					return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false).ToDTO().ToList());
+					return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false ).ToDTO().ToList());
 				}
 			}
 
@@ -520,7 +520,7 @@ namespace CHAOS.MCM.Module.Standard
 				if( result == -200 )
 					throw new UnhandledException("Unhandled exception, Object_Create was rolled back");
 
-		        IEnumerable<Object> newObject = db.Object_Get( new[]{guid}, false, false, false ).ToDTO();
+		        IEnumerable<Object> newObject = db.Object_Get( new[]{guid}, false, false, false, false ).ToDTO();
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), newObject );
 
@@ -594,7 +594,7 @@ namespace CHAOS.MCM.Module.Standard
                 if( result == -200 )
                     throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
 
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ objectGUID }, true, true, true ).ToDTO() );
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true ).ToDTO() );
 
 		        return new ScalarResult( result );
 		    }
@@ -734,6 +734,8 @@ namespace CHAOS.MCM.Module.Standard
                 if( result == -100 )
                     throw new InsufficientPermissionsException( "User can only create links" );
 
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true ).ToDTO() );
+
                 return new ScalarResult( result );
             }
         }
@@ -748,6 +750,8 @@ namespace CHAOS.MCM.Module.Standard
 
                 int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
 
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true ).ToDTO() );
+
                 return new ScalarResult( result );
             }
         }
@@ -761,6 +765,8 @@ namespace CHAOS.MCM.Module.Standard
                     throw new InsufficientPermissionsException("User does not have permission to delete link");
 
                 int result = db.Object_Folder_Join_Delete( objectGUID.ToByteArray(), (int) folderID ).First().Value;
+
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true ).ToDTO() );
 
                 return new ScalarResult( result );
             }

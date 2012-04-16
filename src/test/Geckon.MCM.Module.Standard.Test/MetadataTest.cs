@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using CHAOS.MCM.Data.DTO;
-using Geckon.Common.Extensions;
-using Geckon.MCM.Core.Exception;
+﻿using Geckon.MCM.Core.Exception;
 using NUnit.Framework;
 
 namespace Geckon.MCM.Module.Standard.Test

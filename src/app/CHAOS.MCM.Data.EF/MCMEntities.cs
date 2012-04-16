@@ -17,7 +17,17 @@ namespace CHAOS.MCM.Data.EF
 	        get { return (Connection as System.Data.EntityClient.EntityConnection).StoreConnection.ConnectionString; }
 	    }
 
-		public IEnumerable<Object> Object_Get( IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations )
+        public IEnumerable<Object> Object_Get( UUID guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders  )
+        {
+            return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders );
+        }
+
+        public IEnumerable<Object> Object_Get( IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders  )
+        {
+            return Object_Get( ConvertToDBList( guids ), includeMetadata, includeFiles, includeObjectRelations, includeFolders );
+        }
+
+		private IEnumerable<Object> Object_Get( string guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders )
 		{
 			using( MySqlConnection conn = new MySqlConnection( ConnectionString ) )
 			using( MySqlCommand comm = new MySqlCommand("Object_GetByGUIDs", conn ) )
@@ -28,7 +38,7 @@ namespace CHAOS.MCM.Data.EF
 				param.DbType        = DbType.String;
 				param.Direction     = ParameterDirection.Input;
 				param.ParameterName = "GUIDs";
-				param.Value         = ConvertToDBList( guids );
+				param.Value         = guids;
 				param.Size          = 21845;
 				comm.Parameters.Add( param );
 
@@ -51,6 +61,13 @@ namespace CHAOS.MCM.Data.EF
 				param.Direction     = ParameterDirection.Input;
 				param.ParameterName = "IncludeObjectRelations";
 				param.Value         = includeObjectRelations;
+				comm.Parameters.Add( param );
+
+                param = comm.CreateParameter();
+				param.DbType        = DbType.Boolean;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "IncludeFolders";
+				param.Value         = includeFolders;
 				comm.Parameters.Add( param );
 
 				conn.Open();
@@ -90,14 +107,16 @@ namespace CHAOS.MCM.Data.EF
 					}
 				}
 
-				//if( includeFolders )
-				//{
-				//    foreach( Object o in objects )
-				//    {
-				//        o.Folders = Folder_Get(o.GUID, false).ToList();
-				//        o.FolderTree = Folder_Get(o.ID, true).ToList();
-				//    }
-				//}
+				if( includeFolders )
+				{
+                    reader.NextResult();
+                    IEnumerable<Object_Folder_Join> folders = Translate<Object_Folder_Join>(reader).ToList();
+
+					foreach( Object o in objects )
+					{
+						o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
+					}
+				}
 
 				return objects;
 			}		
