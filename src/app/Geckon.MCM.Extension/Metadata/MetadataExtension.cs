@@ -1,8 +1,8 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
+using Geckon;
 using Geckon.Portal.Core.Standard.Extension;
 
-namespace Geckon.MCM.Extension.Metadata
+namespace CHAOS.MCM.Extension.Metadata
 {
     public class MetadataExtension : AExtension
     {
@@ -18,7 +18,7 @@ namespace Geckon.MCM.Extension.Metadata
 
         [ValidateInput(false)]
         [HttpPost]
-        public void Set( CallContext callContext, UUID objectGUID, int metadataSchemaID, string languageCode, uint? revisionID, string metadataXML )
+        public void Set( CallContext callContext, UUID objectGUID, UUID metadataSchemaGUID, string languageCode, uint? revisionID, string metadataXML )
         {
             
         }

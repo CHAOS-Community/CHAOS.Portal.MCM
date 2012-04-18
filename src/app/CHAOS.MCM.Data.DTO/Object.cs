@@ -72,15 +72,9 @@ namespace CHAOS.MCM.Data.DTO
 			yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 
 			if( Folders != null )
-				foreach( Link folder in from f in Folders where f.ObjectFolderTypeID == 1 select f )
+				foreach( Link folder in Folders )
 				{
 					yield return new KeyValuePair<string, string>("FolderID", folder.FolderID.ToString( ) );
-				}
-
-            if( Folders != null )
-				foreach( Link folder in from f in Folders where f.ObjectFolderTypeID != 1 select f )
-				{
-					yield return new KeyValuePair<string, string>("LinkFolderIDs", folder.FolderID.ToString( ) );
 				}
 
 			if( FolderTree != null )

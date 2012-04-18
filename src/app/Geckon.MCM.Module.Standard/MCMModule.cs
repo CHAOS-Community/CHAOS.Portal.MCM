@@ -520,7 +520,10 @@ namespace CHAOS.MCM.Module.Standard
 				if( result == -200 )
 					throw new UnhandledException("Unhandled exception, Object_Create was rolled back");
 
-		        IEnumerable<Object> newObject = db.Object_Get( new[]{guid}, false, false, false, false ).ToDTO();
+		        var newObject = db.Object_Get( guid, true, true, true, true ).ToDTO().ToList();
+
+                if( newObject == null )
+                    throw new UnhandledException("Error retrieving object from DB");
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), newObject );
 
@@ -594,7 +597,7 @@ namespace CHAOS.MCM.Module.Standard
                 if( result == -200 )
                     throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
 
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true ).ToDTO() );
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true ).ToDTO().ToList() );
 
 		        return new ScalarResult( result );
 		    }
@@ -641,12 +644,7 @@ namespace CHAOS.MCM.Module.Standard
 		        {
 		            var objects = db.Object_Get( folderID, true, false, false, true, i, pageSize ).ToDTO().ToList();
 					
-					foreach( Object o in objects )
-					{
-						o.FolderTree = PermissionManager.GetParentFolders( o.Folders.Select( item => item.FolderID ) ).ToList();
-					}
-
-					index.Set( objects.Select( obj => (IIndexable) obj ), true );
+                    PutObjectInIndex( index, objects );
 
 		            if( objects.Count() != pageSize )
 		                break;
@@ -655,6 +653,16 @@ namespace CHAOS.MCM.Module.Standard
 
 		    return new ScalarResult(1);
 		}
+
+        private void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
+        {
+            foreach( Object o in newObject )
+			{
+				o.FolderTree = PermissionManager.GetParentFolders( o.Folders.Where( item => item.ObjectFolderTypeID == 1 ).Select( item => item.FolderID ) ).ToList();
+			}
+
+            index.Set( newObject );
+        }
 
 		#endregion
 		#region ObjectRelation
@@ -725,11 +733,14 @@ namespace CHAOS.MCM.Module.Standard
         {
             using( MCMEntities db = DefaultMCMEntities )
             {
+                try
+                {
                 if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateLink ) )
                     throw new InsufficientPermissionsException("User can only create links");
                 
                 // TODO: Manage magical number better (ObjectFolderTypeID:2 is link by default)
-                int result = db.Object_Folder_Join_Create( objectGUID.ToByteArray(), (int) folderID, 2 ).First().Value;
+                
+                                    int result = db.Object_Folder_Join_Create( objectGUID.ToByteArray(), (int) folderID, 2 ).First().Value;
 
                 if( result == -100 )
                     throw new InsufficientPermissionsException( "User can only create links" );
@@ -737,6 +748,12 @@ namespace CHAOS.MCM.Module.Standard
                 PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true ).ToDTO() );
 
                 return new ScalarResult( result );
+                }
+                catch (Exception e)
+                {
+                    
+                    throw e.InnerException;
+                }
             }
         }
 
@@ -785,11 +802,6 @@ namespace CHAOS.MCM.Module.Standard
         }
 
         #endregion
-
-        private void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
-        {
-            index.Set( newObject );
-        }
 
 		#endregion
     }
