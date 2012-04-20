@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using CHAOS.Portal.DTO.Standard;
 using Geckon;
-using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 
 namespace CHAOS.MCM.Data.DTO

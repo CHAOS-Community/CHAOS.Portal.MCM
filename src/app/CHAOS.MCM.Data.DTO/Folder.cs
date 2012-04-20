@@ -1,7 +1,7 @@
 ﻿using System;
 using Geckon;
-using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
+using CHAOS.Portal.DTO.Standard;
 
 namespace CHAOS.MCM.Data.DTO
 {

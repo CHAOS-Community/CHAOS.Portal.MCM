@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{663E2831-9B22-49B8-BA6D-26395E3D285C}</ProjectGuid>
+    <ProjectGuid>{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CHAOS.MCM.Data.DTO</RootNamespace>
-    <AssemblyName>CHAOS.MCM.Data.DTO</AssemblyName>
+    <RootNamespace>CHAOS.MCM.Module</RootNamespace>
+    <AssemblyName>CHAOS.MCM.Module</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,28 +39,31 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="File.cs" />
-    <Compile Include="DestinationInfo.cs" />
-    <Compile Include="Format.cs" />
-    <Compile Include="FormatCategory.cs" />
-    <Compile Include="Folder.cs" />
-    <Compile Include="Object.cs" />
-    <Compile Include="FileInfo.cs" />
-    <Compile Include="FolderInfo.cs" />
-    <Compile Include="FolderType.cs" />
-    <Compile Include="FormatType.cs" />
-    <Compile Include="Language.cs" />
-    <Compile Include="Metadata.cs" />
-    <Compile Include="MetadataSchema.cs" />
-    <Compile Include="ObjectObjectJoin.cs" />
-    <Compile Include="ObjectRelationType.cs" />
-    <Compile Include="ObjectType.cs" />
-    <Compile Include="Link.cs" />
+    <Compile Include="Rights\Folder.cs" />
+    <Compile Include="MCMModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rights\FolderPermissions.cs" />
+    <Compile Include="Rights\PermissionManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CHAOS.MCM.Data.DTO\CHAOS.MCM.Data.DTO.csproj">
+      <Project>{663E2831-9B22-49B8-BA6D-26395E3D285C}</Project>
+      <Name>CHAOS.MCM.Data.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CHAOS.MCM.Data.EF\CHAOS.MCM.Data.EF.csproj">
+      <Project>{DF345249-3E02-470B-BD17-CAE1F1716B8F}</Project>
+      <Name>CHAOS.MCM.Data.EF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CHAOS.MCM.Core.Exception\CHAOS.MCM.Core.Exception.csproj">
+      <Project>{4E125648-0FA1-4FD3-AB15-343468DE471D}</Project>
+      <Name>CHAOS.MCM.Core.Exception</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

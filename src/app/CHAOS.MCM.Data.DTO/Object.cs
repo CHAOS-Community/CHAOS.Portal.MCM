@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using CHAOS.Portal.DTO.Standard;
 using Geckon;
 using Geckon.Index;
-using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 
 namespace CHAOS.MCM.Data.DTO
@@ -68,19 +69,19 @@ namespace CHAOS.MCM.Data.DTO
 		public IEnumerable<KeyValuePair<string, string>> GetIndexableFields( )
 		{
 			yield return new KeyValuePair<string, string>("GUID", GUID.ToString( ) );
-			yield return new KeyValuePair<string, string>("ObjectTypeID", ObjectTypeID.ToString( ) );
+			yield return new KeyValuePair<string, string>("ObjectTypeID", ObjectTypeID.ToString(CultureInfo.InvariantCulture) );
 			yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 
 			if( Folders != null )
 				foreach( Link folder in Folders )
 				{
-					yield return new KeyValuePair<string, string>("FolderID", folder.FolderID.ToString( ) );
+					yield return new KeyValuePair<string, string>("FolderID", folder.FolderID.ToString(CultureInfo.InvariantCulture) );
 				}
 
 			if( FolderTree != null )
 				foreach( uint folderID in FolderTree )
 				{
-					yield return new KeyValuePair<string, string>("FolderTree", folderID.ToString() );
+					yield return new KeyValuePair<string, string>("FolderTree", folderID.ToString(CultureInfo.InvariantCulture) );
 				}
 
 			// TODO: Implement Metadata XML converter
@@ -89,6 +90,15 @@ namespace CHAOS.MCM.Data.DTO
 			if( Metadatas != null )
 				foreach( Metadata metadata in Metadatas )
 				{
+                    if (metadata.MetadataSchemaGUID.ToString() == "e4ee26e4-94dc-d946-8e23-459c7de51fc0")
+                        yield return new KeyValuePair<string, string>( "LB_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
+
+                    if (metadata.MetadataSchemaGUID.ToString() == "f39ac380-e33d-7c4e-9ed9-7745990ed6c7")
+                        yield return new KeyValuePair<string, string>( "HT_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
+
+                    if( metadata.MetadataSchemaGUID.ToString() == "21453740-eb1a-8842-81b4-ec62975e89e0" )
+                        yield return new KeyValuePair<string, string>( "HT_Country_" + metadata.LanguageCode, metadata.MetadataXML.Descendants( "Country" ).First().Value );
+
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
 
@@ -104,7 +114,7 @@ namespace CHAOS.MCM.Data.DTO
 
 		private string GetXmlContent(XElement xml )
 		{
-			StringBuilder sb = new StringBuilder( );
+			var sb = new StringBuilder( );
 
 			foreach( XElement node in xml.Descendants( ) )
 			{

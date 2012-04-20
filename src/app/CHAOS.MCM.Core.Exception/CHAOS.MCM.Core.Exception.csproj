@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{663E2831-9B22-49B8-BA6D-26395E3D285C}</ProjectGuid>
+    <ProjectGuid>{4E125648-0FA1-4FD3-AB15-343468DE471D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CHAOS.MCM.Data.DTO</RootNamespace>
-    <AssemblyName>CHAOS.MCM.Data.DTO</AssemblyName>
+    <RootNamespace>CHAOS.MCM.Core.Exception</RootNamespace>
+    <AssemblyName>CHAOS.MCM.Core.Exception</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,40 +31,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="geckon">
-      <HintPath>..\..\..\lib\geckon.dll</HintPath>
-    </Reference>
-    <Reference Include="Portal">
-      <HintPath>..\..\..\lib\Portal.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="File.cs" />
-    <Compile Include="DestinationInfo.cs" />
-    <Compile Include="Format.cs" />
-    <Compile Include="FormatCategory.cs" />
-    <Compile Include="Folder.cs" />
-    <Compile Include="Object.cs" />
-    <Compile Include="FileInfo.cs" />
-    <Compile Include="FolderInfo.cs" />
-    <Compile Include="FolderType.cs" />
-    <Compile Include="FormatType.cs" />
-    <Compile Include="Language.cs" />
-    <Compile Include="Metadata.cs" />
-    <Compile Include="MetadataSchema.cs" />
-    <Compile Include="ObjectObjectJoin.cs" />
-    <Compile Include="ObjectRelationType.cs" />
-    <Compile Include="ObjectType.cs" />
-    <Compile Include="Link.cs" />
+    <Compile Include="InvalidRevisionException.cs" />
+    <Compile Include="ObjectRelationAlreadyExistException.cs" />
+    <Compile Include="FolderNotEmptyException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\MCMModule\$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\MCMModule\$(TargetFileName)
+COPY $(TargetPath) $(SolutionDir)bin\MCMExtension\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,6 +1,6 @@
 ﻿using System;
+using CHAOS.Portal.DTO.Standard;
 using Geckon;
-using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 
 namespace CHAOS.MCM.Data.DTO

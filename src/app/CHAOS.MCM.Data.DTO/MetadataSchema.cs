@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
+using CHAOS.Portal.DTO.Standard;
 using Geckon;
-using Geckon.Portal.Data.Result.Standard;
 using Geckon.Serialization;
 using Geckon.Serialization.XML;
 
