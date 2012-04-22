@@ -31,8 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="geckon">
-      <HintPath>..\..\..\lib\geckon.dll</HintPath>
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
     <Reference Include="Portal">
       <HintPath>..\..\..\lib\Portal.dll</HintPath>

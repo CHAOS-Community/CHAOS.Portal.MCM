@@ -1,7 +1,5 @@
 ﻿using System.Linq;
 using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Module;
-using Geckon;
 using NUnit.Framework;
 using Object = CHAOS.MCM.Data.DTO.Object;
 

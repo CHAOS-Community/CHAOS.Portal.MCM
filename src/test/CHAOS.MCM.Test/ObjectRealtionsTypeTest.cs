@@ -1,5 +1,4 @@
-﻿using CHAOS.MCM.Module;
-using Geckon.Common.Extensions;
+﻿using System.Linq;
 using NUnit.Framework;
 
 namespace CHAOS.MCM.Test

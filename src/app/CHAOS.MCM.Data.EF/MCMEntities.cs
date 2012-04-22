@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
-using Geckon;
 using MySql.Data.MySqlClient;
 
 namespace CHAOS.MCM.Data.EF

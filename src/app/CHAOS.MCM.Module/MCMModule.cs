@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using CHAOS.Extensions;
+using CHAOS.Index;
+using CHAOS.Index.Solr;
+using CHAOS.Index.Standard;
 using CHAOS.MCM.Core.Exception;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
@@ -10,8 +14,6 @@ using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
-using Geckon;
-using Geckon.Index;
 using Folder = CHAOS.MCM.Module.Rights.Folder;
 using Object = CHAOS.MCM.Data.DTO.Object;
 using CHAOS.Portal.Core;
@@ -492,9 +494,9 @@ namespace CHAOS.MCM.Module
 
 					// if solr doesnt return anything there is no need to continue, so just return an empty list
 					if (resultPage.Count() == 0)
-						return new Geckon.Index.Standard.PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
+						return new PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
 					
-					return new Geckon.Index.Standard.PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false ).ToDTO().ToList());
+					return new PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false ).ToDTO().ToList());
 				}
 			}
 
@@ -626,7 +628,7 @@ namespace CHAOS.MCM.Module
 		[Datatype("Test","ReIndex")]
 		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
 		{
-            Geckon.Index.Solr.Solr<UUIDResult> index = ( Geckon.Index.Solr.Solr<UUIDResult> )callContext.IndexManager.GetIndex<MCMModule>();
+            Solr<UUIDResult> index = ( Solr<UUIDResult> )callContext.IndexManager.GetIndex<MCMModule>();
 
             if( clearIndex.HasValue && clearIndex.Value )
                 index.RemoveAll(false);

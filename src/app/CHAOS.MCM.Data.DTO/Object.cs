@@ -4,10 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using CHAOS.Index;
 using CHAOS.Portal.DTO.Standard;
-using Geckon;
-using Geckon.Index;
-using Geckon.Serialization;
+using CHAOS.Serialization;
 
 namespace CHAOS.MCM.Data.DTO
 {

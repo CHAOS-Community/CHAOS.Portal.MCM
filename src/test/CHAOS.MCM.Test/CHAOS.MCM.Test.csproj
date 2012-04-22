@@ -31,7 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="geckon, Version=1.0.4473.42470, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\nunit\nunit.framework.dll</HintPath>
     </Reference>

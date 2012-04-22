@@ -2,7 +2,6 @@
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module;
 using CHAOS.Portal.Test;
-using Geckon;
 using NUnit.Framework;
 using DestinationInfo = CHAOS.MCM.Data.DTO.DestinationInfo;
 using Folder = CHAOS.MCM.Data.DTO.Folder;

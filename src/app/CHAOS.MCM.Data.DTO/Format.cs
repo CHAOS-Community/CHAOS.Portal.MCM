@@ -1,7 +1,6 @@
-﻿using System;
-using System.Xml.Linq;
-using Geckon.Serialization;
-using Geckon.Serialization.XML;
+﻿using System.Xml.Linq;
+using CHAOS.Serialization;
+using CHAOS.Serialization.XML;
 
 namespace CHAOS.MCM.Data.DTO
 {

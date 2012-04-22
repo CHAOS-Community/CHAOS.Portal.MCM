@@ -1,5 +1,5 @@
 ﻿using CHAOS.Portal.DTO.Standard;
-using Geckon.Serialization;
+using CHAOS.Serialization;
 
 namespace CHAOS.MCM.Data.DTO
 {

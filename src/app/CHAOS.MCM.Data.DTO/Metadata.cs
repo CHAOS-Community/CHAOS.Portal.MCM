@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Xml.Linq;
 using CHAOS.Portal.DTO.Standard;
-using Geckon;
-using Geckon.Serialization;
-using Geckon.Serialization.XML;
+using CHAOS.Serialization;
+using CHAOS.Serialization.XML;
 
 namespace CHAOS.MCM.Data.DTO
 {
