@@ -2,5 +2,5 @@ bin
 *.suo
 !/bin
 obj
-_ReSharper.Geckon.MCM
+_ReSharper.MCM
 *.user
