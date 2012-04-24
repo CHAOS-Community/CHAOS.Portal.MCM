@@ -567,21 +567,12 @@ namespace CHAOS.MCM.Module
 		[Datatype("Metadata","Set")]
 		public ScalarResult Metadata_Set( ICallContext callContext, UUID objectGUID, UUID metadataSchemaGUID, string languageCode, uint? revisionID, string metadataXML )
 		{
+		    // TODO: replace with proper XML validation, Quick ugly fix, to make sure it's valid XML
+            XDocument.Parse( metadataXML );
+
 		    using( MCMEntities db = DefaultMCMEntities )
 		    {
-		    	bool doesUserHavePermission = false;
-
-				// TODO: Refactor Permission check
-				foreach( Data.EF.Folder folder in db.Folder_Get(null, objectGUID.ToByteArray()) )
-				{
-					if( PermissionManager.GetFolder( (uint) folder.ID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
-					{
-						doesUserHavePermission = true;
-						break;
-					}
-				}
-
-				if( !doesUserHavePermission )
+				if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
 					throw new InsufficientPermissionsException( "User does not have permissions to set metadata on this object" );
 
 		        int result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;

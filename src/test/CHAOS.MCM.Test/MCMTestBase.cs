@@ -73,7 +73,17 @@ namespace CHAOS.MCM.Test
                 int object3Result = db.Object_Create(new UUID("c7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, subFolderID).First().Value;
                 int metadataResult = db.Metadata_Set(new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
 
-                Afrikaans = db.Language_Get(null, "af").First().ToDTO();
+                //for (int i = 0; i < 10; i++ )
+                //{
+                //    var folderID = db.Folder_Create( UserAdministrator.GUID.ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), i.ToString(), null, folderTypeID, 0).First().Value;
+
+                //    for (int j = 0; j < 100; j++)
+                //    {
+                //        folderID = db.Folder_Create( UserAdministrator.GUID.ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), j.ToString(), folderID, folderTypeID, 0).First().Value;
+                //    }
+                //}
+
+                    Afrikaans = db.Language_Get(null, "af").First().ToDTO();
                 FolderType = db.FolderType_Get(folderTypeID, null).First().ToDTO();
                 FolderTestType = db.FolderType_Get(folderTestTypeID, null).First().ToDTO();
                 TopFolder = db.Folder_Get(topFolderID, null).First().ToDTO();
