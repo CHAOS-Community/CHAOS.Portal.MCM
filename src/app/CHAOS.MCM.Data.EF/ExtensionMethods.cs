@@ -205,7 +205,7 @@ namespace CHAOS.MCM.Data.EF
 
 		public static DTO.Object ToDTO( this Object obj )
 		{
-			return new DTO.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDTO(), obj.pFiles.ToDTO(), obj.ObjectRealtions.ToDTO(), obj.Folders.ToDTO() );
+			return new DTO.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDTO(), obj.pFiles.ToDTO(), obj.ObjectRealtions.ToDTO(), obj.Folders.ToDTO(), obj.AccessPoints.ToDTO() );
 		}
 
 		#endregion
@@ -232,6 +232,19 @@ namespace CHAOS.MCM.Data.EF
 		public static DTO.Object_Object_Join ToDTO( this Object_Object_Join objectRelation )
 		{
 			return new DTO.Object_Object_Join( objectRelation.Object1GUID, objectRelation.Object2GUID, (uint) objectRelation.ObjectRelationTypeID, objectRelation.Sequence, objectRelation.DateCreated );
+		}
+
+		#endregion
+        #region AccessPoint_Object_Join
+
+		public static IEnumerable<DTO.AccessPoint_Object_Join> ToDTO( this IEnumerable<AccessPoint_Object_Join> objectRelations )
+		{
+			return objectRelations.Select( ToDTO );
+		}
+
+		public static DTO.AccessPoint_Object_Join ToDTO( this AccessPoint_Object_Join access )
+		{
+			return new DTO.AccessPoint_Object_Join( access.AccessPointGUID, access.ObjectGUID, access.StartDate, access.EndDate, access.DateCreated, access.DateModified );
 		}
 
 		#endregion

@@ -12,18 +12,20 @@ namespace CHAOS.MCM.Data.EF
 		public IEnumerable<Object_Object_Join> RelatedObjects { get; set; }
         public IEnumerable<Object_Folder_Join> Folders { get; set; }
         public IEnumerable<Object_Folder_Join> FolderTree { get; set; }
+        public IEnumerable<AccessPoint_Object_Join> AccessPoints { get; set; }
 
 		#endregion
 		#region Constructor
 
 		public Object()
 		{
-			pMetadatas = new List<Metadata>();
-			pFiles     = new List<FileInfo>();
+			pMetadatas      = new List<Metadata>();
+			pFiles          = new List<FileInfo>();
 			ObjectRealtions = new List<Object_Object_Join>();
-			RelatedObjects = new List<Object_Object_Join>();
-            Folders = new List<Object_Folder_Join>();
-            FolderTree = new List<Object_Folder_Join>();
+			RelatedObjects  = new List<Object_Object_Join>();
+            Folders         = new List<Object_Folder_Join>();
+            FolderTree      = new List<Object_Folder_Join>();
+            AccessPoints    = new List<AccessPoint_Object_Join>();
 		}
 
 		#endregion

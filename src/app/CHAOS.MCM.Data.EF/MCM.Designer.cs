@@ -20,7 +20,6 @@ using System.Xml.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_AccessPoint_AccessPoint_Group_Join", "AccessPoint", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.AccessPoint), "AccessPoint_Group_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_Group_Join), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.AccessPoint), "AccessPoint_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_AccessPoint_AccessPoint_User_Join", "AccessPoint", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.AccessPoint), "AccessPoint_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_User_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_AccessPoint_GUID_Conversion_AccessPointGUID", "AccessPoint", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.AccessPoint), "Conversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Conversion), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Destination_ID_AccessProvider_DestinationID", "Destination", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Destination), "AccessProvider", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessProvider), true)]
@@ -36,7 +35,6 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MS_GUID_MS_Group_Join_MSGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "MetadataSchema_Group_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.MetadataSchema_Group_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_MS_GUID_MS_User_Join_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.MetadataSchema), "MetadataSchema_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.MetadataSchema_User_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID", "ObjectRelationType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectRelationType), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "AccessPoint_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_File_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "File", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.File), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object1GUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Object_Join_Object2GUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Object_Join), true)]
@@ -50,6 +48,8 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Object_Folder_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Folder), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.ObjectFolderType), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.Object_Folder_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.AccessPoint), "AccessPoint_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_Object_Join), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(CHAOS.MCM.Data.EF.Object), "AccessPoint_Object_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(CHAOS.MCM.Data.EF.AccessPoint_Object_Join), true)]
 
 #endregion
 
@@ -132,22 +132,6 @@ namespace CHAOS.MCM.Data.EF
             }
         }
         private ObjectSet<AccessPoint_Group_Join> _AccessPoint_Group_Join;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<AccessPoint_Object_Join> AccessPoint_Object_Join
-        {
-            get
-            {
-                if ((_AccessPoint_Object_Join == null))
-                {
-                    _AccessPoint_Object_Join = base.CreateObjectSet<AccessPoint_Object_Join>("AccessPoint_Object_Join");
-                }
-                return _AccessPoint_Object_Join;
-            }
-        }
-        private ObjectSet<AccessPoint_Object_Join> _AccessPoint_Object_Join;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -580,6 +564,22 @@ namespace CHAOS.MCM.Data.EF
             }
         }
         private ObjectSet<Object_Folder_Join> _Object_Folder_Join;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<AccessPoint_Object_Join> AccessPoint_Object_Join
+        {
+            get
+            {
+                if ((_AccessPoint_Object_Join == null))
+                {
+                    _AccessPoint_Object_Join = base.CreateObjectSet<AccessPoint_Object_Join>("AccessPoint_Object_Join");
+                }
+                return _AccessPoint_Object_Join;
+            }
+        }
+        private ObjectSet<AccessPoint_Object_Join> _AccessPoint_Object_Join;
 
         #endregion
 
@@ -599,14 +599,6 @@ namespace CHAOS.MCM.Data.EF
         public void AddToAccessPoint_Group_Join(AccessPoint_Group_Join accessPoint_Group_Join)
         {
             base.AddObject("AccessPoint_Group_Join", accessPoint_Group_Join);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the AccessPoint_Object_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToAccessPoint_Object_Join(AccessPoint_Object_Join accessPoint_Object_Join)
-        {
-            base.AddObject("AccessPoint_Object_Join", accessPoint_Object_Join);
         }
     
         /// <summary>
@@ -823,6 +815,14 @@ namespace CHAOS.MCM.Data.EF
         public void AddToObject_Folder_Join(Object_Folder_Join object_Folder_Join)
         {
             base.AddObject("Object_Folder_Join", object_Folder_Join);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the AccessPoint_Object_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToAccessPoint_Object_Join(AccessPoint_Object_Join accessPoint_Object_Join)
+        {
+            base.AddObject("AccessPoint_Object_Join", accessPoint_Object_Join);
         }
 
         #endregion
@@ -2395,6 +2395,137 @@ namespace CHAOS.MCM.Data.EF
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Folder_Join_Update", objectGUIDParameter, folderIDParameter, newFolderIDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="subscriptionGuid">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public int AccessPoint_Create(global::System.Byte[] gUID, global::System.Byte[] subscriptionGuid, global::System.String name)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter subscriptionGuidParameter;
+            if (subscriptionGuid != null)
+            {
+                subscriptionGuidParameter = new ObjectParameter("SubscriptionGuid", subscriptionGuid);
+            }
+            else
+            {
+                subscriptionGuidParameter = new ObjectParameter("SubscriptionGuid", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("AccessPoint_Create", gUIDParameter, subscriptionGuidParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="startDate">No Metadata Documentation available.</param>
+        /// <param name="endDate">No Metadata Documentation available.</param>
+        public int AccessPoint_Object_Join_Create(global::System.Byte[] accessPointGUID, global::System.Byte[] objectGUID, Nullable<global::System.DateTime> startDate, Nullable<global::System.DateTime> endDate)
+        {
+            ObjectParameter accessPointGUIDParameter;
+            if (accessPointGUID != null)
+            {
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", accessPointGUID);
+            }
+            else
+            {
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter startDateParameter;
+            if (startDate.HasValue)
+            {
+                startDateParameter = new ObjectParameter("StartDate", startDate);
+            }
+            else
+            {
+                startDateParameter = new ObjectParameter("StartDate", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter endDateParameter;
+            if (endDate.HasValue)
+            {
+                endDateParameter = new ObjectParameter("EndDate", endDate);
+            }
+            else
+            {
+                endDateParameter = new ObjectParameter("EndDate", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction("AccessPoint_Object_Join_Create", accessPointGUIDParameter, objectGUIDParameter, startDateParameter, endDateParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] gUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", gUIDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] gUID, MergeOption mergeOption)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", mergeOption, gUIDParameter);
+        }
 
         #endregion
 
@@ -2567,28 +2698,6 @@ namespace CHAOS.MCM.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint_Object_Join")]
-        public EntityCollection<AccessPoint_Object_Join> AccessPoint_Object_Join
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint_Object_Join");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint_Object_Join", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_AccessPoint_AccessPoint_User_Join", "AccessPoint_User_Join")]
         public EntityCollection<AccessPoint_User_Join> AccessPoint_User_Join
         {
@@ -2623,6 +2732,28 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Conversion>("MCMModel.FK_AccessPoint_GUID_Conversion_AccessPointGUID", "Conversion", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint_Object_Join")]
+        public EntityCollection<AccessPoint_Object_Join> AccessPoint_Object_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint_Object_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_AccessPoint_AccessPoint_Object_Join", "AccessPoint_Object_Join", value);
                 }
             }
         }
@@ -2827,14 +2958,12 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="accessPointGUID">Initial value of the AccessPointGUID property.</param>
         /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
-        /// <param name="dateModified">Initial value of the DateModified property.</param>
-        public static AccessPoint_Object_Join CreateAccessPoint_Object_Join(global::System.Guid accessPointGUID, global::System.Guid objectGUID, global::System.DateTime dateCreated, global::System.DateTime dateModified)
+        public static AccessPoint_Object_Join CreateAccessPoint_Object_Join(global::System.Guid accessPointGUID, global::System.Guid objectGUID, global::System.DateTime dateCreated)
         {
             AccessPoint_Object_Join accessPoint_Object_Join = new AccessPoint_Object_Join();
             accessPoint_Object_Join.AccessPointGUID = accessPointGUID;
             accessPoint_Object_Join.ObjectGUID = objectGUID;
             accessPoint_Object_Join.DateCreated = dateCreated;
-            accessPoint_Object_Join.DateModified = dateModified;
             return accessPoint_Object_Join;
         }
 
@@ -2971,9 +3100,9 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.DateTime DateModified
+        public Nullable<global::System.DateTime> DateModified
         {
             get
             {
@@ -2988,8 +3117,8 @@ namespace CHAOS.MCM.Data.EF
                 OnDateModifiedChanged();
             }
         }
-        private global::System.DateTime _DateModified;
-        partial void OnDateModifiedChanging(global::System.DateTime value);
+        private Nullable<global::System.DateTime> _DateModified;
+        partial void OnDateModifiedChanging(Nullable<global::System.DateTime> value);
         partial void OnDateModifiedChanged();
 
         #endregion
@@ -7823,28 +7952,6 @@ namespace CHAOS.MCM.Data.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join")]
-        public EntityCollection<AccessPoint_Object_Join> AccessPoint_Object_Join
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_File_ObjectGUID", "File")]
         public EntityCollection<File> File
         {
@@ -7983,6 +8090,28 @@ namespace CHAOS.MCM.Data.EF
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Object_Folder_Join>("MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object_Folder_Join", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join")]
+        public EntityCollection<AccessPoint_Object_Join> AccessPoint_Object_Join
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<AccessPoint_Object_Join>("MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID", "AccessPoint_Object_Join", value);
                 }
             }
         }

@@ -225,7 +225,7 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="DateModified" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
         </EntityType>
         <EntityType Name="AccessPoint_User_Join">
           <Key>
@@ -901,15 +901,15 @@
           <Parameter Name="GUID" Type="binary" Mode="In" />
           <Parameter Name="SubscriptionGuid" Type="binary" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
-          <Parameter Name="DateCreated" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="AccessPoint_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
         </Function>
         <Function Name="AccessPoint_Object_Join_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="AccessPointGUID" Type="binary" Mode="In" />
           <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
-          <Parameter Name="DateCreated" Type="datetime" Mode="In" />
-          <Parameter Name="DateModified" Type="datetime" Mode="In" />
         </Function>
         <Function Name="AccessProvider_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="DestinationID" Type="int" Mode="In" />
@@ -1124,6 +1124,7 @@
           <Parameter Name="IncludeFiles" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeObjectRelations" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeFolders" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeAccessPoints" Type="tinyint" Mode="In" />
           <Parameter Name="PageIndex" Type="int" Mode="In" />
           <Parameter Name="PageSize" Type="int" Mode="In" />
         </Function>
@@ -1132,6 +1133,8 @@
           <Parameter Name="IncludeMetadata" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeFiles" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeObjectRelations" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeFolders" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeAccessPoints" Type="tinyint" Mode="In" />
         </Function>
         <Function Name="Permission_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="TableIdentifier" Type="varchar" Mode="In" />
@@ -1147,7 +1150,6 @@
         <EntityContainer Name="MCMEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AccessPoint" EntityType="MCMModel.AccessPoint" />
           <EntitySet Name="AccessPoint_Group_Join" EntityType="MCMModel.AccessPoint_Group_Join" />
-          <EntitySet Name="AccessPoint_Object_Join" EntityType="MCMModel.AccessPoint_Object_Join" />
           <EntitySet Name="AccessPoint_User_Join" EntityType="MCMModel.AccessPoint_User_Join" />
           <EntitySet Name="AccessProvider" EntityType="MCMModel.AccessProvider" />
           <EntitySet Name="Conversion" EntityType="MCMModel.Conversion" />
@@ -1170,10 +1172,6 @@
           <AssociationSet Name="FK_AccessPoint_AccessPoint_Group_Join" Association="MCMModel.FK_AccessPoint_AccessPoint_Group_Join">
             <End Role="AccessPoint" EntitySet="AccessPoint" />
             <End Role="AccessPoint_Group_Join" EntitySet="AccessPoint_Group_Join" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AccessPoint_AccessPoint_Object_Join" Association="MCMModel.FK_AccessPoint_AccessPoint_Object_Join">
-            <End Role="AccessPoint" EntitySet="AccessPoint" />
-            <End Role="AccessPoint_Object_Join" EntitySet="AccessPoint_Object_Join" />
           </AssociationSet>
           <AssociationSet Name="FK_AccessPoint_AccessPoint_User_Join" Association="MCMModel.FK_AccessPoint_AccessPoint_User_Join">
             <End Role="AccessPoint" EntitySet="AccessPoint" />
@@ -1255,10 +1253,6 @@
             <Parameter Name="Description" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="Object" EntityType="MCMModel.Object" />
-          <AssociationSet Name="FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" Association="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID">
-            <End Role="Object" EntitySet="Object" />
-            <End Role="AccessPoint_Object_Join" EntitySet="AccessPoint_Object_Join" />
-          </AssociationSet>
           <AssociationSet Name="FK_Object_GUID_File_ObjectGUID" Association="MCMModel.FK_Object_GUID_File_ObjectGUID">
             <End Role="Object" EntitySet="Object" />
             <End Role="File" EntitySet="File" />
@@ -1453,6 +1447,29 @@
             <Parameter Name="FolderID" Mode="In" Type="Int32" />
             <Parameter Name="NewFolderID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="AccessPoint_Create">
+            <Parameter Name="GUID" Mode="In" Type="Binary" />
+            <Parameter Name="SubscriptionGuid" Mode="In" Type="Binary" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AccessPoint_Object_Join_Create">
+            <Parameter Name="AccessPointGUID" Mode="In" Type="Binary" />
+            <Parameter Name="ObjectGUID" Mode="In" Type="Binary" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="AccessPoint_Get" EntitySet="AccessPoint" ReturnType="Collection(MCMModel.AccessPoint)">
+          <Parameter Name="GUID" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <EntitySet Name="AccessPoint_Object_Join" EntityType="MCMModel.AccessPoint_Object_Join" />
+          <AssociationSet Name="FK_AccessPoint_AccessPoint_Object_Join" Association="MCMModel.FK_AccessPoint_AccessPoint_Object_Join">
+            <End Role="AccessPoint" EntitySet="AccessPoint" />
+            <End Role="AccessPoint_Object_Join" EntitySet="AccessPoint_Object_Join" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" Association="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID">
+            <End Role="Object" EntitySet="Object" />
+            <End Role="AccessPoint_Object_Join" EntitySet="AccessPoint_Object_Join" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccessPoint">
           <Key>
@@ -1463,9 +1480,9 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="AccessPoint_Group_Join" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Group_Join" FromRole="AccessPoint" ToRole="AccessPoint_Group_Join" />
-          <NavigationProperty Name="AccessPoint_Object_Join" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" FromRole="AccessPoint" ToRole="AccessPoint_Object_Join" />
           <NavigationProperty Name="AccessPoint_User_Join" Relationship="MCMModel.FK_AccessPoint_AccessPoint_User_Join" FromRole="AccessPoint" ToRole="AccessPoint_User_Join" />
           <NavigationProperty Name="Conversion" Relationship="MCMModel.FK_AccessPoint_GUID_Conversion_AccessPointGUID" FromRole="AccessPoint" ToRole="Conversion" />
+          <NavigationProperty Name="AccessPoint_Object_Join" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" FromRole="AccessPoint" ToRole="AccessPoint_Object_Join" />
         </EntityType>
         <EntityType Name="AccessPoint_Group_Join">
           <Key>
@@ -1477,20 +1494,6 @@
           <Property Name="Permission" Type="Int64" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" />
           <NavigationProperty Name="AccessPoint" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Group_Join" FromRole="AccessPoint_Group_Join" ToRole="AccessPoint" />
-        </EntityType>
-        <EntityType Name="AccessPoint_Object_Join">
-          <Key>
-            <PropertyRef Name="AccessPointGUID" />
-            <PropertyRef Name="ObjectGUID" />
-          </Key>
-          <Property Name="AccessPointGUID" Type="Guid" Nullable="false" />
-          <Property Name="ObjectGUID" Type="Guid" Nullable="false" />
-          <Property Name="StartDate" Type="DateTime" />
-          <Property Name="EndDate" Type="DateTime" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="AccessPoint" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" FromRole="AccessPoint_Object_Join" ToRole="AccessPoint" />
-          <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" FromRole="AccessPoint_Object_Join" ToRole="Object" />
         </EntityType>
         <EntityType Name="AccessPoint_User_Join">
           <Key>
@@ -1724,18 +1727,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AccessPoint_AccessPoint_Object_Join">
-          <End Role="AccessPoint" Type="MCMModel.AccessPoint" Multiplicity="1" />
-          <End Role="AccessPoint_Object_Join" Type="MCMModel.AccessPoint_Object_Join" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccessPoint">
-              <PropertyRef Name="GUID" />
-            </Principal>
-            <Dependent Role="AccessPoint_Object_Join">
-              <PropertyRef Name="AccessPointGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AccessPoint_AccessPoint_User_Join">
           <End Role="AccessPoint" Type="MCMModel.AccessPoint" Multiplicity="1" />
           <End Role="AccessPoint_User_Join" Type="MCMModel.AccessPoint_User_Join" Multiplicity="*" />
@@ -1941,26 +1932,14 @@
           <Property Type="Guid" Name="GUID" Nullable="false" />
           <Property Type="Int64" Name="ObjectTypeID" Nullable="false" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" />
-          <NavigationProperty Name="AccessPoint_Object_Join" Relationship="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" FromRole="Object" ToRole="AccessPoint_Object_Join" />
           <NavigationProperty Name="File" Relationship="MCMModel.FK_Object_GUID_File_ObjectGUID" FromRole="Object" ToRole="File" />
           <NavigationProperty Name="Object_Object_Join" Relationship="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID" FromRole="Object" ToRole="Object_Object_Join" />
           <NavigationProperty Name="Object_Object_Join1" Relationship="MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID" FromRole="Object" ToRole="Object_Object_Join" />
           <NavigationProperty Name="ObjectType" Relationship="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" FromRole="Object" ToRole="ObjectType" />
           <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" FromRole="Object" ToRole="Metadata" />
           <NavigationProperty Name="Object_Folder_Join" Relationship="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID" FromRole="Object" ToRole="Object_Folder_Join" />
+          <NavigationProperty Name="AccessPoint_Object_Join" Relationship="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" FromRole="Object" ToRole="AccessPoint_Object_Join" />
         </EntityType>
-        <Association Name="FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID">
-          <End Type="MCMModel.Object" Role="Object" Multiplicity="1" />
-          <End Type="MCMModel.AccessPoint_Object_Join" Role="AccessPoint_Object_Join" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Object">
-              <PropertyRef Name="GUID" />
-            </Principal>
-            <Dependent Role="AccessPoint_Object_Join">
-              <PropertyRef Name="ObjectGUID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Object_GUID_File_ObjectGUID">
           <End Type="MCMModel.Object" Role="Object" Multiplicity="1" />
           <End Type="MCMModel.File" Role="File" Multiplicity="*" />
@@ -2206,6 +2185,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AccessPoint_Object_Join">
+          <Key>
+            <PropertyRef Name="AccessPointGUID" />
+            <PropertyRef Name="ObjectGUID" />
+          </Key>
+          <Property Type="Guid" Name="AccessPointGUID" Nullable="false" />
+          <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" />
+          <Property Type="DateTime" Name="EndDate" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="DateTime" Name="DateModified" />
+          <NavigationProperty Name="AccessPoint" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" FromRole="AccessPoint_Object_Join" ToRole="AccessPoint" />
+          <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" FromRole="AccessPoint_Object_Join" ToRole="Object" />
+        </EntityType>
+        <Association Name="FK_AccessPoint_AccessPoint_Object_Join">
+          <End Type="MCMModel.AccessPoint" Role="AccessPoint" Multiplicity="1" />
+          <End Type="MCMModel.AccessPoint_Object_Join" Role="AccessPoint_Object_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccessPoint">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="AccessPoint_Object_Join">
+              <PropertyRef Name="AccessPointGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID">
+          <End Type="MCMModel.Object" Role="Object" Multiplicity="1" />
+          <End Type="MCMModel.AccessPoint_Object_Join" Role="AccessPoint_Object_Join" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Object">
+              <PropertyRef Name="GUID" />
+            </Principal>
+            <Dependent Role="AccessPoint_Object_Join">
+              <PropertyRef Name="ObjectGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2223,14 +2240,6 @@
             <ScalarProperty Name="GroupGUID" ColumnName="GroupGUID" />
             <ScalarProperty Name="Permission" ColumnName="Permission" />
             <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="AccessPoint_Object_Join"><EntityTypeMapping TypeName="MCMModel.AccessPoint_Object_Join"><MappingFragment StoreEntitySet="AccessPoint_Object_Join">
-            <ScalarProperty Name="AccessPointGUID" ColumnName="AccessPointGUID" />
-            <ScalarProperty Name="ObjectGUID" ColumnName="ObjectGUID" />
-            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-            <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-            <ScalarProperty Name="DateModified" ColumnName="DateModified" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="AccessPoint_User_Join"><EntityTypeMapping TypeName="MCMModel.AccessPoint_User_Join"><MappingFragment StoreEntitySet="AccessPoint_User_Join">
             <ScalarProperty Name="AccessPointGUID" ColumnName="AccessPointGUID" />
@@ -2478,6 +2487,21 @@
           <FunctionImportMapping FunctionImportName="Object_Folder_Join_Create" FunctionName="MCMModel.Store.Object_Folder_Join_Create" />
           <FunctionImportMapping FunctionImportName="Object_Folder_Join_Delete" FunctionName="MCMModel.Store.Object_Folder_Join_Delete" />
           <FunctionImportMapping FunctionImportName="Object_Folder_Join_Update" FunctionName="MCMModel.Store.Object_Folder_Join_Update" />
+          <FunctionImportMapping FunctionImportName="AccessPoint_Create" FunctionName="MCMModel.Store.AccessPoint_Create" />
+          <FunctionImportMapping FunctionImportName="AccessPoint_Object_Join_Create" FunctionName="MCMModel.Store.AccessPoint_Object_Join_Create" />
+          <FunctionImportMapping FunctionImportName="AccessPoint_Get" FunctionName="MCMModel.Store.AccessPoint_Get" />
+          <EntitySetMapping Name="AccessPoint_Object_Join">
+            <EntityTypeMapping TypeName="MCMModel.AccessPoint_Object_Join">
+              <MappingFragment StoreEntitySet="AccessPoint_Object_Join">
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ObjectGUID" ColumnName="ObjectGUID" />
+                <ScalarProperty Name="AccessPointGUID" ColumnName="AccessPointGUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2501,7 +2525,6 @@
       <Diagram Name="MCM">
         <EntityTypeShape EntityType="MCMModel.AccessPoint" Width="1.5" PointX="10.75" PointY="16.75" Height="2.5571907552083317" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.AccessPoint_Group_Join" Width="1.5" PointX="13" PointY="17.125" Height="1.9802864583333317" IsExpanded="true" />
-        <EntityTypeShape EntityType="MCMModel.AccessPoint_Object_Join" Width="1.5" PointX="13" PointY="19.875" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.AccessPoint_User_Join" Width="1.5" PointX="13" PointY="23" Height="1.9802864583333317" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.AccessProvider" Width="1.5" PointX="10" PointY="12.875" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.Conversion" Width="1.5" PointX="13" PointY="12.5" Height="2.9417936197916674" IsExpanded="true" />
@@ -2523,28 +2546,19 @@
         <EntityTypeShape EntityType="MCMModel.Permission" Width="1.5" PointX="10.75" PointY="5.25" Height="1.7879850260416674" IsExpanded="true" />
         <AssociationConnector Association="MCMModel.FK_AccessPoint_AccessPoint_Group_Join" ManuallyRouted="false">
           <ConnectorPoint PointX="12.25" PointY="18.115143229166666" />
-          <ConnectorPoint PointX="12.666666666666666" PointY="18.115143229166666" />
-          <ConnectorPoint PointX="12.833333333333334" PointY="18.115143229166666" />
           <ConnectorPoint PointX="13" PointY="18.115143229166666" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" ManuallyRouted="false">
-          <ConnectorPoint PointX="11.29687375" PointY="19.307190755208332" />
-          <ConnectorPoint PointX="11.29687375" PointY="21.406125546875003" />
-          <ConnectorPoint PointX="11.822919166666667" PointY="21.406125546875003" />
-          <ConnectorPoint PointX="11.989585833333335" PointY="21.406125546875003" />
-          <ConnectorPoint PointX="13" PointY="21.406125546875003" />
-        </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_AccessPoint_AccessPoint_User_Join" ManuallyRouted="false">
-          <ConnectorPoint PointX="11.9062525" PointY="20.317555338541666" />
-          <ConnectorPoint PointX="11.9062525" PointY="24.255768229166666" />
-          <ConnectorPoint PointX="13" PointY="24.255768229166666" />
+          <ConnectorPoint PointX="11.5" PointY="19.307190755208335" />
+          <ConnectorPoint PointX="11.5" PointY="23.990143229166666" />
+          <ConnectorPoint PointX="13" PointY="23.990143229166666" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_AccessPoint_GUID_Conversion_AccessPointGUID" ManuallyRouted="false">
           <ConnectorPoint PointX="11.90625" PointY="16.75" />
-          <ConnectorPoint PointX="11.90625" PointY="12.616166513652861" />
-          <ConnectorPoint PointX="12.666666666666666" PointY="12.616166513652861" />
-          <ConnectorPoint PointX="12.833333333333334" PointY="12.616166513652861" />
-          <ConnectorPoint PointX="13" PointY="12.616166513652861" />
+          <ConnectorPoint PointX="11.90625" PointY="15.372091471354167" />
+          <ConnectorPoint PointX="12.026044166666667" PointY="15.372091471354167" />
+          <ConnectorPoint PointX="12.192710833333335" PointY="15.372091471354167" />
+          <ConnectorPoint PointX="13" PointY="15.372091471354167" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Destination_ID_AccessProvider_DestinationID" ManuallyRouted="false">
           <ConnectorPoint PointX="9.25" PointY="14.057444661458334" />
@@ -2555,13 +2569,13 @@
           <ConnectorPoint PointX="8.4687475" PointY="12.58491401365286" />
           <ConnectorPoint PointX="9.4567526530138064" PointY="12.58491401365286" />
           <ConnectorPoint PointX="9.6234193196804743" PointY="12.58491401365286" />
-          <ConnectorPoint PointX="12.666666666666666" PointY="12.58491401365286" />
-          <ConnectorPoint PointX="12.833333333333334" PointY="12.58491401365286" />
+          <ConnectorPoint PointX="12.026044166666667" PointY="12.58491401365286" />
+          <ConnectorPoint PointX="12.192710833333335" PointY="12.58491401365286" />
           <ConnectorPoint PointX="13" PointY="12.58491401365286" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Format_ID_Conversion_FormatID" ManuallyRouted="false">
-          <ConnectorPoint PointX="9.25" PointY="10.396439406699411" />
-          <ConnectorPoint PointX="9.75" PointY="10.396439406699411" />
+          <ConnectorPoint PointX="9.25" PointY="10.37597179058929" />
+          <ConnectorPoint PointX="9.75" PointY="10.37597179058929" />
           <ConnectorPoint PointX="9.75" PointY="12.210999348958332" />
           <ConnectorPoint PointX="13.562500499999999" PointY="12.210999348958332" />
           <ConnectorPoint PointX="13.562500499999999" PointY="12.5" />
@@ -2617,54 +2631,39 @@
           <ConnectorPoint PointX="3" PointY="21.740143229166669" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID" ManuallyRouted="false">
-          <ConnectorPoint PointX="12.25" PointY="2.7950776644490576" />
-          <ConnectorPoint PointX="12.541666666666666" PointY="2.7950776644490571" />
-          <ConnectorPoint PointX="12.708333333333334" PointY="2.7950776644490576" />
-          <ConnectorPoint PointX="13" PointY="2.7950776644490576" />
+          <ConnectorPoint PointX="12.25" PointY="2.7934852129872656" />
+          <ConnectorPoint PointX="12.541666666666666" PointY="2.7934852129872652" />
+          <ConnectorPoint PointX="12.708333333333334" PointY="2.7934852129872656" />
+          <ConnectorPoint PointX="13" PointY="2.7934852129872656" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.DestinationInfo" Width="1.5" PointX="0.75" PointY="8.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="MCMModel.Object" Width="1.5" PointX="3" PointY="0.75" Height="2.9417936197916674" />
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="2.2208968098958337" />
-          <ConnectorPoint PointX="5.75" PointY="2.2208968098958337" />
-          <ConnectorPoint PointX="5.75" PointY="2.59568359375" />
-          <ConnectorPoint PointX="8" PointY="2.59568359375" />
-          <ConnectorPoint PointX="8" PointY="4.3071907552083326" />
-          <ConnectorPoint PointX="8.9166666666666661" PointY="4.3071907552083317" />
-          <ConnectorPoint PointX="9.0833333333333339" PointY="4.3071907552083326" />
-          <ConnectorPoint PointX="14.125" PointY="4.3071907552083326" />
-          <ConnectorPoint PointX="14.125" PointY="12.25" />
-          <ConnectorPoint PointX="12.75" PointY="12.25" />
-          <ConnectorPoint PointX="12.75" PointY="19.5" />
-          <ConnectorPoint PointX="13.75" PointY="19.5" />
-          <ConnectorPoint PointX="13.75" PointY="19.875" />
-        </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_File_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="2.9081075470753213" />
-          <ConnectorPoint PointX="4.916666666666667" PointY="2.9081075470753208" />
-          <ConnectorPoint PointX="5.083333333333333" PointY="2.9081075470753213" />
-          <ConnectorPoint PointX="6" PointY="2.9081075470753213" />
-          <ConnectorPoint PointX="6" PointY="2.84568359375" />
-          <ConnectorPoint PointX="7.75" PointY="2.84568359375" />
+          <ConnectorPoint PointX="4.5" PointY="2.800730869391026" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="2.8007308693910256" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="2.800730869391026" />
+          <ConnectorPoint PointX="6" PointY="2.800730869391026" />
+          <ConnectorPoint PointX="6" PointY="2.720683593749996" />
+          <ConnectorPoint PointX="7.75" PointY="2.720683593749996" />
           <ConnectorPoint PointX="7.75" PointY="7.875" />
           <ConnectorPoint PointX="10.75" PointY="7.875" />
           <ConnectorPoint PointX="10.75" PointY="8.25" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID" >
-          <ConnectorPoint PointX="3.4796632026388647" PointY="0.75" />
-          <ConnectorPoint PointX="3.4796632026388647" PointY="0.5" />
+          <ConnectorPoint PointX="3.5898540438118487" PointY="0.75" />
+          <ConnectorPoint PointX="3.5898540438118487" PointY="0.5" />
           <ConnectorPoint PointX="12.625" PointY="0.5" />
-          <ConnectorPoint PointX="12.625" PointY="3.4573862098286887" />
-          <ConnectorPoint PointX="13" PointY="3.4573862098286887" />
+          <ConnectorPoint PointX="12.625" PointY="3.4565899840977927" />
+          <ConnectorPoint PointX="13" PointY="3.4565899840977927" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID" >
-          <ConnectorPoint PointX="4.0210836013194324" PointY="0.75" />
-          <ConnectorPoint PointX="4.0210836013194324" PointY="0.484375" />
+          <ConnectorPoint PointX="4.076179021905924" PointY="0.75" />
+          <ConnectorPoint PointX="4.076179021905924" PointY="0.484375" />
           <ConnectorPoint PointX="12.5" PointY="0.484375" />
-          <ConnectorPoint PointX="12.5" PointY="2.1162868322245352" />
-          <ConnectorPoint PointX="12.541666666666666" PointY="2.1162868322245347" />
-          <ConnectorPoint PointX="12.708333333333334" PointY="2.1162868322245352" />
-          <ConnectorPoint PointX="13" PointY="2.1162868322245352" />
+          <ConnectorPoint PointX="12.5" PointY="2.1154906064936392" />
+          <ConnectorPoint PointX="12.541666666666666" PointY="2.1154906064936387" />
+          <ConnectorPoint PointX="12.708333333333334" PointY="2.1154906064936392" />
+          <ConnectorPoint PointX="13" PointY="2.1154906064936392" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" >
           <ConnectorPoint PointX="2.25" PointY="2.047841796875" />
@@ -2676,10 +2675,8 @@
           <ConnectorPoint PointX="7" PointY="12.794838027305723" />
           <ConnectorPoint PointX="9.2468286393609436" PointY="12.794838027305723" />
           <ConnectorPoint PointX="9.4134953060276114" PointY="12.794838027305723" />
-          <ConnectorPoint PointX="11.822916666666666" PointY="12.794838027305723" />
-          <ConnectorPoint PointX="11.989583333333334" PointY="12.794838027305723" />
-          <ConnectorPoint PointX="12.666666666666666" PointY="12.794838027305723" />
-          <ConnectorPoint PointX="12.833333333333334" PointY="12.794838027305723" />
+          <ConnectorPoint PointX="12.026044166666667" PointY="12.794838027305723" />
+          <ConnectorPoint PointX="12.192710833333335" PointY="12.794838027305723" />
           <ConnectorPoint PointX="13" PointY="12.794838027305723" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_FormatCategory_ID_Format_FormatCategoryID" >
@@ -2708,8 +2705,8 @@
           <ConnectorPoint PointX="5.25" PointY="16.153722330729167" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="2.2208968098958337" />
-          <ConnectorPoint PointX="5" PointY="2.2208968098958337" />
+          <ConnectorPoint PointX="4.5" PointY="1.8651437291666659" />
+          <ConnectorPoint PointX="5" PointY="1.8651437291666659" />
           <ConnectorPoint PointX="5" PointY="14.375" />
           <ConnectorPoint PointX="6" PointY="14.375" />
           <ConnectorPoint PointX="6" PointY="14.75" />
@@ -2725,17 +2722,41 @@
           <ConnectorPoint PointX="9" PointY="3.2398893229166674" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID" >
-          <ConnectorPoint PointX="3.2085796013194328" PointY="0.75" />
-          <ConnectorPoint PointX="3.2085796013194328" PointY="0.46875" />
-          <ConnectorPoint PointX="7.875" PointY="0.46875" />
-          <ConnectorPoint PointX="7.875" PointY="1.8314930130208333" />
-          <ConnectorPoint PointX="8.25" PointY="1.8314930130208333" />
+          <ConnectorPoint PointX="4.5" PointY="3.0291217573116995" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="3.0291217573116991" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="3.0291217573116995" />
+          <ConnectorPoint PointX="7.666666666666667" PointY="3.0291217573116991" />
+          <ConnectorPoint PointX="7.833333333333333" PointY="3.0291217573116995" />
+          <ConnectorPoint PointX="7.916666666666667" PointY="3.0291217573116991" />
+          <ConnectorPoint PointX="8.0833333333333339" PointY="3.0291217573116995" />
+          <ConnectorPoint PointX="8.25" PointY="3.0291217573116995" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID" >
           <ConnectorPoint PointX="7.5" PointY="1.2907465065104167" />
           <ConnectorPoint PointX="7.791666666666667" PointY="1.290746506510416" />
           <ConnectorPoint PointX="7.958333333333333" PointY="1.2907465065104167" />
           <ConnectorPoint PointX="8.25" PointY="1.2907465065104167" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MCMModel.AccessPoint_Object_Join" Width="1.5" PointX="16" PointY="10.75" Height="2.5571907552083388" />
+        <AssociationConnector Association="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" >
+          <ConnectorPoint PointX="12.1093775" PointY="16.75" />
+          <ConnectorPoint PointX="12.1093775" PointY="12.332062174479166" />
+          <ConnectorPoint PointX="13.479167166666665" PointY="12.332062174479166" />
+          <ConnectorPoint PointX="13.645833833333333" PointY="12.332062174479166" />
+          <ConnectorPoint PointX="16" PointY="12.332062174479166" />
+        </AssociationConnector>
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" >
+          <ConnectorPoint PointX="4.5" PointY="2.0061434545272441" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="2.0061434545272436" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="2.0061434545272441" />
+          <ConnectorPoint PointX="5.75" PointY="2.0061434545272441" />
+          <ConnectorPoint PointX="5.75" PointY="2.595683593749996" />
+          <ConnectorPoint PointX="8" PointY="2.595683593749996" />
+          <ConnectorPoint PointX="8" PointY="4.3071907552083326" />
+          <ConnectorPoint PointX="8.9166666666666661" PointY="4.3071907552083317" />
+          <ConnectorPoint PointX="9.0833333333333339" PointY="4.3071907552083326" />
+          <ConnectorPoint PointX="16.75" PointY="4.3071907552083326" />
+          <ConnectorPoint PointX="16.75" PointY="10.75" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

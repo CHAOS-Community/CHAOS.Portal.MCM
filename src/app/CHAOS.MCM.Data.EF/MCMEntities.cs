@@ -14,20 +14,20 @@ namespace CHAOS.MCM.Data.EF
 	        get { return (Connection as System.Data.EntityClient.EntityConnection).StoreConnection.ConnectionString; }
 	    }
 
-        public IEnumerable<Object> Object_Get( UUID guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders  )
+        public IEnumerable<Object> Object_Get( UUID guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints  )
         {
-            return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders );
+            return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints );
         }
 
-        public IEnumerable<Object> Object_Get( IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders  )
+        public IEnumerable<Object> Object_Get( IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints  )
         {
-            return Object_Get( ConvertToDBList( guids ), includeMetadata, includeFiles, includeObjectRelations, includeFolders );
+            return Object_Get( ConvertToDBList( guids ), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints );
         }
 
-		private IEnumerable<Object> Object_Get( string guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders )
+		private IEnumerable<Object> Object_Get( string guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints )
 		{
-			using( MySqlConnection conn = new MySqlConnection( ConnectionString ) )
-			using( MySqlCommand comm = new MySqlCommand("Object_GetByGUIDs", conn ) )
+			using( var conn = new MySqlConnection( ConnectionString ) )
+			using( var comm = new MySqlCommand("Object_GetByGUIDs", conn ) )
 			{
 				comm.CommandType = CommandType.StoredProcedure;
 
@@ -67,62 +67,82 @@ namespace CHAOS.MCM.Data.EF
 				param.Value         = includeFolders;
 				comm.Parameters.Add( param );
 
+                param = comm.CreateParameter();
+				param.DbType        = DbType.Boolean;
+				param.Direction     = ParameterDirection.Input;
+                param.ParameterName = "IncludeAccessPoints";
+				param.Value         = includeAccessPoints;
+				comm.Parameters.Add( param );
+
 				conn.Open();
-				DbDataReader        reader  = comm.ExecuteReader( CommandBehavior.SequentialAccess );
-				IEnumerable<Object> objects = Translate<Object>( reader ).ToList();
+			    using( var reader = comm.ExecuteReader( CommandBehavior.SequentialAccess ) )
+			    {
+                    var objects = Translate<Object>(reader).ToList();
 
-				if( includeMetadata )
-				{
-					reader.NextResult();
-					IEnumerable<Metadata> metadatas = Translate<Metadata>(reader).ToList();
+			        if( includeMetadata )
+			        {
+			            reader.NextResult();
+			            var metadatas = Translate<Metadata>(reader).ToList();
 
-				    foreach( Object o in objects )
-				    {
-				        o.pMetadatas = (from m in metadatas where m.ObjectGUID == o.GUID select m ).ToList();
-				    }
-				}
+			            foreach( var o in objects )
+			            {
+			                o.pMetadatas = (from m in metadatas where m.ObjectGUID == o.GUID select m ).ToList();
+			            }
+			        }
 
-				if( includeFiles )
-				{
-					reader.NextResult();
-					IEnumerable<FileInfo> files = Translate<FileInfo>(reader).ToList();
+			        if( includeFiles )
+			        {
+			            reader.NextResult();
+			            var files = Translate<FileInfo>(reader).ToList();
 
-					foreach( Object o in objects )
-					{
-						o.pFiles = (from f in files where f.ObjectGUID == o.GUID select f).ToList();
-					}
-				}
+			            foreach( var o in objects )
+			            {
+			                o.pFiles = (from f in files where f.ObjectGUID == o.GUID select f).ToList();
+			            }
+			        }
 
-				if( includeObjectRelations )
-				{
-					reader.NextResult();
-					IEnumerable<Object_Object_Join> objectRelations = Translate<Object_Object_Join>(reader).ToList();
+			        if( includeObjectRelations )
+			        {
+			            reader.NextResult();
+			            var objectRelations = Translate<Object_Object_Join>(reader).ToList();
 
-					foreach( Object o in objects )
-					{
-						o.ObjectRealtions = (from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or).ToList();
-					}
-				}
+			            foreach( var o in objects )
+			            {
+			                o.ObjectRealtions = (from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or).ToList();
+			            }
+			        }
 
-				if( includeFolders )
-				{
-                    reader.NextResult();
-                    IEnumerable<Object_Folder_Join> folders = Translate<Object_Folder_Join>(reader).ToList();
+			        if( includeFolders )
+			        {
+			            reader.NextResult();
+			            var folders = Translate<Object_Folder_Join>(reader).ToList();
 
-					foreach( Object o in objects )
-					{
-						o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
-					}
-				}
+			            foreach( var o in objects )
+			            {
+			                o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
+			            }
+			        }
 
-				return objects;
+			        if( includeAccessPoints )
+			        {
+			            reader.NextResult();
+			            var accessPoints = Translate<AccessPoint_Object_Join>(reader).ToList();
+
+			            foreach( var o in objects )
+			            {
+			                o.AccessPoints = (from ap in accessPoints where ap.ObjectGUID == o.GUID select ap ).ToList();
+			            }
+			        }
+
+                    return objects;
+			    }
 			}		
 		}
 
-		public IEnumerable<Object> Object_Get( uint? folderID, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, uint pageIndex, uint pageSize )
+		public IEnumerable<Object> Object_Get( uint? folderID, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, uint pageIndex, uint pageSize )
 		{
-			using( MySqlConnection conn = new MySqlConnection( ConnectionString ) )
-			using( MySqlCommand comm = new MySqlCommand("Object_GetByFolderID", conn ) )
+			using( var conn = new MySqlConnection( ConnectionString ) )
+			using( var comm = new MySqlCommand("Object_GetByFolderID", conn ) )
 			{
 				comm.CommandType = CommandType.StoredProcedure;
 
@@ -162,6 +182,13 @@ namespace CHAOS.MCM.Data.EF
 				comm.Parameters.Add( param );
 
 				param = comm.CreateParameter();
+				param.DbType        = DbType.Boolean;
+				param.Direction     = ParameterDirection.Input;
+				param.ParameterName = "IncludeAccessPoints";
+				param.Value         = includeAccessPoints;
+				comm.Parameters.Add( param );
+
+				param = comm.CreateParameter();
 				param.DbType        = DbType.UInt32;
 				param.Direction     = ParameterDirection.Input;
 				param.ParameterName = "PageIndex";
@@ -177,16 +204,14 @@ namespace CHAOS.MCM.Data.EF
 
 				conn.Open();
 
-				IEnumerable<Object> objects;
-
-				using( DbDataReader reader = comm.ExecuteReader( CommandBehavior.SequentialAccess ) )
+			    using( var reader = comm.ExecuteReader( CommandBehavior.SequentialAccess ) )
 				{
-					objects = Translate<Object>( reader ).ToList();
+					var objects = Translate<Object>( reader ).ToList();
 
 					if( includeMetadata )
 					{
 						reader.NextResult();
-						IEnumerable<Metadata> metadatas = Translate<Metadata>(reader).ToList();
+						var metadatas = Translate<Metadata>(reader).ToList();
 
 						foreach( Object o in objects )
 						{
@@ -197,7 +222,7 @@ namespace CHAOS.MCM.Data.EF
 					if( includeFiles )
 					{
 						reader.NextResult();
-						IEnumerable<FileInfo> files = Translate<FileInfo>(reader).ToList();
+						var files = Translate<FileInfo>(reader).ToList();
 
 						foreach( Object o in objects )
 						{
@@ -208,7 +233,7 @@ namespace CHAOS.MCM.Data.EF
 					if( includeObjectRelations )
 					{
 						reader.NextResult();
-						IEnumerable<Object_Object_Join> objectRelations = Translate<Object_Object_Join>(reader).ToList();
+						var objectRelations = Translate<Object_Object_Join>(reader).ToList();
 
 						foreach( Object o in objects )
 						{
@@ -219,13 +244,24 @@ namespace CHAOS.MCM.Data.EF
 					if( includeFolders )
 					{
                         reader.NextResult();
-                        IEnumerable<Object_Folder_Join> folders = Translate<Object_Folder_Join>(reader).ToList();
+                        var folders = Translate<Object_Folder_Join>(reader).ToList();
 
 						foreach( Object o in objects )
 						{
 							o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
 						}
 					}
+
+                    if( includeAccessPoints )
+				    {
+                        reader.NextResult();
+                        var accessPoints = Translate<AccessPoint_Object_Join>(reader).ToList();
+
+					    foreach( var o in objects )
+					    {
+                            o.AccessPoints = (from ap in accessPoints where ap.ObjectGUID == o.GUID select ap ).ToList();
+					    }
+				    }
 
 					return objects;
 				}	

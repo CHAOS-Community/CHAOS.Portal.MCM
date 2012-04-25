@@ -41,11 +41,12 @@ namespace CHAOS.MCM.Data.DTO
         public IList<Link> Folders { get; set; }
 		public IList<uint> FolderTree { get; set; }
 		public List<Object> RelatedObjects { get; set; }
+        public IList<AccessPoint_Object_Join> AccessPoints { get; set; }
 
 		#endregion
 		#region Constructor
 
-		public Object(Guid guid, uint objectTypeID, DateTime dateCreated, IEnumerable<Metadata> metadatas, IEnumerable<FileInfo> fileInfos, IEnumerable<Object_Object_Join> objectObjectJoins, IEnumerable<Link> folders ) 
+        public Object( Guid guid, uint objectTypeID, DateTime dateCreated, IEnumerable<Metadata> metadatas, IEnumerable<FileInfo> fileInfos, IEnumerable<Object_Object_Join> objectObjectJoins, IEnumerable<Link> folders, IEnumerable<AccessPoint_Object_Join> accessPoints ) 
 		{
 			GUID         = new UUID( guid.ToByteArray() );
 			ObjectTypeID = objectTypeID;
@@ -55,6 +56,7 @@ namespace CHAOS.MCM.Data.DTO
 			Files           = fileInfos.ToList();
 			ObjectRealtions = objectObjectJoins.ToList();
 			Folders         = folders.ToList();
+            AccessPoints    = accessPoints.ToList();
 		}
 
 		public Object()
@@ -109,13 +111,25 @@ namespace CHAOS.MCM.Data.DTO
 						yield return new KeyValuePair<string, string>( string.Format( "rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXML.Root ) );
 					}
 				}
+
+            if( AccessPoints != null )
+                foreach( var accessPoint in AccessPoints )
+                {
+                    if( accessPoint.StartDate.HasValue )
+                        yield return new KeyValuePair<string, string>( "PubStart", accessPoint.StartDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+                    
+                    if( accessPoint.EndDate.HasValue )
+                        yield return new KeyValuePair<string, string>( "PubEnd", accessPoint.EndDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+
+                    break;
+                }
 		}
 
-		private string GetXmlContent(XElement xml )
+		private static string GetXmlContent( XContainer xml )
 		{
 			var sb = new StringBuilder( );
 
-			foreach( XElement node in xml.Descendants( ) )
+			foreach( var node in xml.Descendants( ) )
 			{
 				if( !node.HasElements )
 					sb.AppendLine(node.Value );

@@ -21,13 +21,24 @@ namespace CHAOS.MCM.Test
         [Test]
         public void Should_Get_Objects_ByFolderID()
         {
-            using( MCMEntities db = new MCMEntities() )
+            using( var db = new MCMEntities() )
             {
-                var list = db.Object_Get( null, true, true, false, true, 0, 10 ).ToList();
+                var list = db.Object_Get( null, true, true, false, true, true, 0, 10 ).ToList();
 
                 Assert.AreEqual( 1, list[0].Folders.First().FolderID );
                 Assert.AreEqual( 3, list[1].Folders.First().FolderID );
                 Assert.AreEqual( 1, list[2].Folders.First().FolderID );
+            }
+        }
+
+        [Test]
+        public void Should_Get_Objects_IncludeAccessPoints()
+        {
+            using( var db = new MCMEntities() )
+            {
+                var list = db.Object_Get( null, true, true, false, true, true, 0, 10 ).ToList();
+
+                Assert.AreEqual( AccessPoint.GUID.ToByteArray(), list[0].AccessPoints.First().AccessPointGUID.ToByteArray() );
             }
         }
          

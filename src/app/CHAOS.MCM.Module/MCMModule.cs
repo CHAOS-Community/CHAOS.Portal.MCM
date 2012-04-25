@@ -51,9 +51,9 @@ namespace CHAOS.MCM.Module
     	{
     		using( MCMEntities db = DefaultMCMEntities )
     		{
-				PermissionManager pm = new PermissionManager();
+				var pm = new PermissionManager();
 
-				foreach( Data.EF.Folder folder in db.Folder )
+				foreach( var folder in db.Folder )
 				{
 					pm.AddFolder( (uint?) folder.ParentID, new Folder( (uint) folder.ID ) );
 				}
@@ -94,7 +94,7 @@ namespace CHAOS.MCM.Module
 		[Datatype("ObjectType", "Get")]
 		public IEnumerable<Data.DTO.ObjectType> ObjectType_Get( ICallContext callContext )
 		{
-			using( MCMEntities db = DefaultMCMEntities )
+			using( var db = DefaultMCMEntities )
 			{
 				return db.ObjectType_Get( null, null ).ToDTO().ToList();
 			}
@@ -460,9 +460,9 @@ namespace CHAOS.MCM.Module
 		#region Object
 
 		[Datatype("Object", "Get")]
-		public IPagedResult<IResult> Object_Get( ICallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations)
+		public IPagedResult<IResult> Object_Get( ICallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
 		{
-			using( MCMEntities db = DefaultMCMEntities )
+			using( var db = DefaultMCMEntities )
 			{
 				IEnumerable<UUID> resultPage = null;
 
@@ -470,10 +470,10 @@ namespace CHAOS.MCM.Module
 				{
 					//TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
 
-                    IList<Folder> folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ) ).ToList();
+                    var folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ) ).ToList();
 
 					//TODO: Refactor building of queries
-					System.Text.StringBuilder sb = new System.Text.StringBuilder(query.Query);
+					var sb = new System.Text.StringBuilder(query.Query);
 					sb.Append(" AND (");
 
 					for (int i = 0; i < folders.Count(); i++)
@@ -488,15 +488,15 @@ namespace CHAOS.MCM.Module
 
 					query.Query = sb.ToString();
 
-					IPagedResult<IIndexResult> indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get(query);
+					var indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get(query);
 
 					resultPage = indexResult.Results.Select(result => ((UUIDResult)result).Guid);
 
 					// if solr doesnt return anything there is no need to continue, so just return an empty list
-					if (resultPage.Count() == 0)
+					if( !resultPage.Any() )
 						return new PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
 					
-					return new PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false ).ToDTO().ToList());
+					return new PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false ).ToDTO().ToList());
 				}
 			}
 
@@ -506,19 +506,19 @@ namespace CHAOS.MCM.Module
 		[Datatype("Object","Create")]
 		public Object Object_Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
 		{
-		    using( MCMEntities db = DefaultMCMEntities )
+		    using( var db = DefaultMCMEntities )
 		    {
 				if( !PermissionManager.GetFolder( folderID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
 					throw new InsufficientPermissionsException( "User does not have permissions to create object" );
 
-				UUID guid = GUID ?? new UUID();
+				var guid = GUID ?? new UUID();
 
 		        int result = db.Object_Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
 
 				if( result == -200 )
 					throw new UnhandledException("Unhandled exception, Object_Create was rolled back");
 
-		        var newObject = db.Object_Get( guid, true, true, true, true ).ToDTO().ToList();
+		        var newObject = db.Object_Get( guid, true, true, true, true, true ).ToDTO().ToList();
 
                 if( newObject == null )
                     throw new UnhandledException("Error retrieving object from DB");
@@ -586,7 +586,7 @@ namespace CHAOS.MCM.Module
                 if( result == -200 )
                     throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
 
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true ).ToDTO().ToList() );
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
 		        return new ScalarResult( result );
 		    }
@@ -619,19 +619,19 @@ namespace CHAOS.MCM.Module
 		[Datatype("Test","ReIndex")]
 		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
 		{
-            Solr<UUIDResult> index = ( Solr<UUIDResult> )callContext.IndexManager.GetIndex<MCMModule>();
+            var index = ( Solr<UUIDResult> )callContext.IndexManager.GetIndex<MCMModule>();
 
             if( clearIndex.HasValue && clearIndex.Value )
                 index.RemoveAll(false);
 
-		    uint pageSize = 1000;
+		    const uint pageSize = 1000;
 
 		    for( uint i = 0;; i++ )
 		    {
 		        // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
-		        using( MCMEntities db = DefaultMCMEntities )
+		        using( var db = DefaultMCMEntities )
 		        {
-		            var objects = db.Object_Get( folderID, true, false, false, true, i, pageSize ).ToDTO().ToList();
+		            var objects = db.Object_Get( folderID, true, false, false, true, true, i, pageSize ).ToDTO().ToList();
 					
                     PutObjectInIndex( index, objects );
 
@@ -645,7 +645,7 @@ namespace CHAOS.MCM.Module
 
         private void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
         {
-            foreach( Object o in newObject )
+            foreach( var o in newObject )
 			{
 				o.FolderTree = PermissionManager.GetParentFolders( o.Folders.Where( item => item.ObjectFolderTypeID == 1 ).Select( item => item.FolderID ) ).ToList();
 			}
@@ -731,7 +731,7 @@ namespace CHAOS.MCM.Module
                 if( result == -100 )
                     throw new InsufficientPermissionsException( "User can only create links" );
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true ).ToDTO() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true, true ).ToDTO() );
 
                 return new ScalarResult( result );
             }
@@ -747,7 +747,7 @@ namespace CHAOS.MCM.Module
 
                 int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true ).ToDTO() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true, true ).ToDTO() );
 
                 return new ScalarResult( result );
             }
@@ -763,7 +763,7 @@ namespace CHAOS.MCM.Module
 
                 int result = db.Object_Folder_Join_Delete( objectGUID.ToByteArray(), (int) folderID ).First().Value;
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true ).ToDTO() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true, true ).ToDTO() );
 
                 return new ScalarResult( result );
             }
