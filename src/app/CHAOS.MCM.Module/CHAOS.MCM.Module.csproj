@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ObjectModule.cs" />
     <Compile Include="Rights\Folder.cs" />
     <Compile Include="MCMModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,9 +65,6 @@
       <Project>{4E125648-0FA1-4FD3-AB15-343468DE471D}</Project>
       <Name>CHAOS.MCM.Core.Exception</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

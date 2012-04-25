@@ -13,7 +13,7 @@ namespace CHAOS.MCM.Test
 		{
 			UUID guid = new UUID();
 
-			Object objectz = MCMModule.Object_Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
+			Object objectz = ObjectModule.Object_Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
 
 			Assert.AreEqual( guid.ToString(), objectz.GUID.ToString() );
 		}
