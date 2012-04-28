@@ -26,7 +26,7 @@ namespace CHAOS.MCM.Data.DTO
 		#endregion
 		#region Constructor
 
-		public Object_Object_Join(Guid object1GUID, Guid object2GUID, uint objectRelationTypeID, int sequence, DateTime dateCreated)
+		public Object_Object_Join(Guid object1GUID, Guid object2GUID, uint objectRelationTypeID, int? sequence, DateTime dateCreated)
 		{
 			Object1GUID          = new UUID( object1GUID.ToByteArray() );
 			Object2GUID          = new UUID( object2GUID.ToByteArray() );

@@ -35,7 +35,7 @@ namespace CHAOS.MCM.Module
         {
             ConnectionString  = XDocument.Parse(configuration).Root.Attribute( "ConnectionString" ).Value;
 			PermissionManager = new PermissionManager();
-			Timer = new Timer( SynchronizeFolders, null, 1000, 1000 );
+			Timer = new Timer( SynchronizeFolders, null, 0, 5000 );
 			SynchronizeFolders( null );
         }
 
@@ -358,23 +358,23 @@ namespace CHAOS.MCM.Module
 		[Datatype("Folder", "Get")]
 		public IEnumerable<Data.DTO.FolderInfo> Folder_Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID)
 		{
-			IList<long> folderIDs = new List<long>();
+			var folderIDs = new List<long>();
 
 			if( !parentID.HasValue && !id.HasValue )
 				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() ).Select( folder => (long) folder.ID ).ToList();
-
+            else
 			if( parentID.HasValue )
 				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), parentID.Value).Select(folder => (long) folder.ID).ToList();
-
-			if (id.HasValue)
+            else
+			if( id.HasValue )
 			{
-				Folder folder = PermissionManager.GetFolder( id.Value );
+				var folder = PermissionManager.GetFolder( id.Value );
 
 				if( folder.DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), FolderPermissions.Read, true ) )
 					folderIDs.Add( folder.ID );
 			}
 
-			using( MCMEntities db = DefaultMCMEntities )
+			using( var db = DefaultMCMEntities )
 			{
 				return db.FolderInfo.Where( fi => folderIDs.Contains<long>( fi.ID ) ).ToDTO().ToList();
 			}

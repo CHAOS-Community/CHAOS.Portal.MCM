@@ -89,15 +89,15 @@ namespace CHAOS.MCM.Data.DTO
 
 			// Convert to all field
 			if( Metadatas != null )
-				foreach( Metadata metadata in Metadatas )
+				foreach( var metadata in Metadatas )
 				{
-                    if (metadata.MetadataSchemaGUID.ToString() == "e4ee26e4-94dc-d946-8e23-459c7de51fc0")
+                    if (metadata.MetadataSchemaGUID.ToString() == "e4ee26e4-94dc-d946-8e23-459c7de51fc0" && metadata.MetadataXML.Descendants("TotalVotes").FirstOrDefault() != null )
                         yield return new KeyValuePair<string, string>( "LB_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
 
-                    if (metadata.MetadataSchemaGUID.ToString() == "f39ac380-e33d-7c4e-9ed9-7745990ed6c7")
+                    if (metadata.MetadataSchemaGUID.ToString() == "f39ac380-e33d-7c4e-9ed9-7745990ed6c7" && metadata.MetadataXML.Descendants( "TotalVotes" ).FirstOrDefault() != null )
                         yield return new KeyValuePair<string, string>( "HT_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
 
-                    if( metadata.MetadataSchemaGUID.ToString() == "21453740-eb1a-8842-81b4-ec62975e89e0" )
+                    if (metadata.MetadataSchemaGUID.ToString() == "21453740-eb1a-8842-81b4-ec62975e89e0" && metadata.MetadataXML.Descendants("Country").FirstOrDefault() != null )
                         yield return new KeyValuePair<string, string>( "HT_Country_" + metadata.LanguageCode, metadata.MetadataXML.Descendants( "Country" ).First().Value );
 
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
@@ -106,7 +106,7 @@ namespace CHAOS.MCM.Data.DTO
 			if( RelatedObjects != null )
 				foreach( Object obj in RelatedObjects )
 				{
-					foreach( Metadata relatedMetadata in obj.Metadatas )
+					foreach( var relatedMetadata in obj.Metadatas )
 					{
 						yield return new KeyValuePair<string, string>( string.Format( "rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXML.Root ) );
 					}
@@ -117,9 +117,13 @@ namespace CHAOS.MCM.Data.DTO
                 {
                     if( accessPoint.StartDate.HasValue )
                         yield return new KeyValuePair<string, string>( "PubStart", accessPoint.StartDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+                    else 
+                        yield return new KeyValuePair<string, string>( "PubStart", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
                     
                     if( accessPoint.EndDate.HasValue )
                         yield return new KeyValuePair<string, string>( "PubEnd", accessPoint.EndDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+                    else
+                        yield return new KeyValuePair<string, string>( "PubEnd", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 
                     break;
                 }

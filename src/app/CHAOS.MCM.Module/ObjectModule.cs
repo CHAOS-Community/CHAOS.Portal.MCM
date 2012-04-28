@@ -17,37 +17,47 @@ namespace CHAOS.MCM.Module
     public class ObjectModule : MCMModule
     {
         [Datatype("Object", "Get")]
-		public IPagedResult<IResult> Object_Get( ICallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
-		{
+		public IPagedResult<IResult> Object_Get( ICallContext callContext, IQuery query, UUID accessPointGUID, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
+		{ // TODO: Implement AccessPointGUID for queries when user isnt logged in
 			using( var db = DefaultMCMEntities )
 			{
-				IEnumerable<UUID> resultPage = null;
-
-				if( query != null )
+			    if( query != null )
 				{
-					//TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
+                    //var sb = new System.Text.StringBuilder(query.Query);
+                    //sb.Append(" AND (");
 
-                    var folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ) ).ToList();
+                    //if (accessPointGUID != null)
+                    //{
+                    //    sb.Append(" e");
+                    //}
+                    //else
+                    //{
+                        //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
 
-					//TODO: Refactor building of queries
-					var sb = new System.Text.StringBuilder(query.Query);
-					sb.Append(" AND (");
+                        var folders = PermissionManager.GetFolders(callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid())).ToList();
+                        //var sb = new System.Text.StringBuilder(query.Query);
+                        //sb.Append(" AND (");
+                        ////TODO: Refactor building of queries
 
-					for (int i = 0; i < folders.Count(); i++)
-					{
-						sb.Append(string.Format("FolderTree:{0}", folders[i].ID));
 
-						if (i + 1 < folders.Count())
-							sb.Append(" OR ");
-					}
+                        //for( int i = 0; i < folders.Count(); i++ )
+                        //{
+                        //    sb.Append( string.Format( "FolderTree:{0}", folders[i].ID ) );
 
-					sb.Append(")");
+                        //    if( i + 1 < folders.Count() )
+                        //        sb.Append(" OR ");
+                        //}
 
-					query.Query = sb.ToString();
+                        //sb.Append(")");
 
-					var indexResult = callContext.IndexManager.GetIndex<MCMModule>().Get(query);
+                        //query.Query = sb.ToString();
 
-					resultPage = indexResult.Results.Select(result => ((UUIDResult)result).Guid);
+                        query.Query = query.Query + " AND (" + string.Join(" OR ", folders.Select(folder => string.Format("FolderTree:{0}", folder.ID))) + ")";
+                //    }
+
+					var indexResult = callContext.IndexManager.GetIndex<ObjectModule>().Get(query);
+
+					var resultPage = indexResult.Results.Select(result => ((UUIDResult)result).Guid);
 
 					// if solr doesnt return anything there is no need to continue, so just return an empty list
 					if( !resultPage.Any() )
@@ -77,7 +87,7 @@ namespace CHAOS.MCM.Module
 
 		        var newObject = db.Object_Get( guid, true, true, true, true, true ).ToDTO().ToList();
 
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), newObject );
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<ObjectModule>(), newObject );
 
 		        return newObject.First();
 		    }
