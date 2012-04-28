@@ -23,37 +23,20 @@ namespace CHAOS.MCM.Module
 			{
 			    if( query != null )
 				{
-                    //var sb = new System.Text.StringBuilder(query.Query);
-                    //sb.Append(" AND (");
-
-                    //if (accessPointGUID != null)
-                    //{
-                    //    sb.Append(" e");
-                    //}
-                    //else
-                    //{
+                    if( accessPointGUID != null )
+                    {
+                        query.Query = string.Format( "{0}+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+T+*])", query.Query );
+                    }
+                    else
+                    {
                         //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
 
                         var folders = PermissionManager.GetFolders(callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid())).ToList();
-                        //var sb = new System.Text.StringBuilder(query.Query);
-                        //sb.Append(" AND (");
-                        ////TODO: Refactor building of queries
-
-
-                        //for( int i = 0; i < folders.Count(); i++ )
-                        //{
-                        //    sb.Append( string.Format( "FolderTree:{0}", folders[i].ID ) );
-
-                        //    if( i + 1 < folders.Count() )
-                        //        sb.Append(" OR ");
-                        //}
-
-                        //sb.Append(")");
-
-                        //query.Query = sb.ToString();
-
-                        query.Query = query.Query + " AND (" + string.Join(" OR ", folders.Select(folder => string.Format("FolderTree:{0}", folder.ID))) + ")";
-                //    }
+  
+                        //TODO: Refactor building of queries
+                        
+                        query.Query = string.Format( "{0}+AND+{1}", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
+                    }
 
 					var indexResult = callContext.IndexManager.GetIndex<ObjectModule>().Get(query);
 
