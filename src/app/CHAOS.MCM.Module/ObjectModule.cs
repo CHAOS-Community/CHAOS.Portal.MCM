@@ -25,7 +25,7 @@ namespace CHAOS.MCM.Module
 				{
                     if( accessPointGUID != null )
                     {
-                        query.Query = string.Format( "{0}+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+T+*])", query.Query );
+                        query.Query = string.Format( "{0}+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+TO+*])", query.Query );
                     }
                     else
                     {
@@ -35,7 +35,7 @@ namespace CHAOS.MCM.Module
   
                         //TODO: Refactor building of queries
                         
-                        query.Query = string.Format( "{0}+AND+{1}", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
+                        query.Query = string.Format( "{0}+AND+({1})", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
                     }
 
 					var indexResult = callContext.IndexManager.GetIndex<ObjectModule>().Get(query);
