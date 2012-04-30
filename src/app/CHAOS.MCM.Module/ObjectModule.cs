@@ -14,7 +14,8 @@ using CHAOS.Portal.Exception;
 
 namespace CHAOS.MCM.Module
 {
-    public class ObjectModule : MCMModule
+    [Module("MCM")]
+    public class ObjectModule : AMCMModule
     {
         [Datatype("Object", "Get")]
 		public IPagedResult<IResult> Object_Get( ICallContext callContext, IQuery query, UUID accessPointGUID, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )

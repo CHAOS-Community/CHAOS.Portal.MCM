@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AMCMModule.cs" />
     <Compile Include="ObjectModule.cs" />
     <Compile Include="Rights\Folder.cs" />
     <Compile Include="MCMModule.cs" />
