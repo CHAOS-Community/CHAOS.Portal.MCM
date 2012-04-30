@@ -13,13 +13,31 @@ namespace CHAOS.MCM.Module
     [Module("MCM")]
     public class AMCMModule : AModule
     {
-                #region Properties
+        #region Properties
 
         private string            ConnectionString { get; set; }
-		private Timer             Timer { get; set; }
-		protected PermissionManager PermissionManager { get; set; }
+        private Thread            SynchronizationThread { get; set; }
 
-		public MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
+        private PermissionManager _permissionManager;
+        protected PermissionManager PermissionManager
+        {
+            get
+            {
+            //    lock( _syncLock )
+                {
+                    return _permissionManager;
+                }
+            }
+            set
+            {
+           //     lock( _syncLock )
+                {
+                    _permissionManager = value;
+                }
+            }
+        }
+
+        public MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
 
         #endregion
         #region Construction
@@ -27,42 +45,40 @@ namespace CHAOS.MCM.Module
         public override void Initialize( string configuration )
         {
             ConnectionString  = XDocument.Parse(configuration).Root.Attribute( "ConnectionString" ).Value;
-			PermissionManager = new PermissionManager();
-			Timer = new Timer( SynchronizeFolders, null, 0, 5000 );
-			SynchronizeFolders( null );
+			PermissionManager = new PermissionManager(  );
+            //SynchronizationThread = new Thread( SynchronizeFolders );
+            //SynchronizationThread.Start();
+            SynchronizeFolders();
         }
 
     	#endregion
         #region Business Logic
 
-        private object _syncLock = new object();
+        private readonly object _syncLock = new object();
 
-		private void SynchronizeFolders( object state )
+		protected void SynchronizeFolders( )
     	{
-    		using( MCMEntities db = DefaultMCMEntities )
-    		{
-				var pm = new PermissionManager();
+            using (var db = DefaultMCMEntities)
+            {
+                var pm = new PermissionManager();
 
-				foreach( var folder in db.Folder )
-				{
-					pm.AddFolder( (uint?) folder.ParentID, new Folder( (uint) folder.ID ) );
-				}
+                foreach (var folder in db.Folder)
+                {
+                    pm.AddFolder((uint?)folder.ParentID, new Folder((uint)folder.ID));
+                }
 
-				foreach( var folderUserJoin in db.Folder_User_Join )
-				{
-					pm.AddUser( (uint) folderUserJoin.FolderID, folderUserJoin.UserGUID, (FolderPermissions) folderUserJoin.Permission );
-				}
+                foreach (var folderUserJoin in db.Folder_User_Join)
+                {
+                    pm.AddUser((uint)folderUserJoin.FolderID, folderUserJoin.UserGUID, (FolderPermissions)folderUserJoin.Permission);
+                }
 
-				foreach( var folderGroupJoin in db.Folder_Group_Join )
-				{
-					pm.AddGroup( (uint) folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions) folderGroupJoin.Permission );
-				}
+                foreach (var folderGroupJoin in db.Folder_Group_Join)
+                {
+                    pm.AddGroup((uint)folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions)folderGroupJoin.Permission);
+                }
 
-				lock( _syncLock )
-				{
-					PermissionManager = pm;
-				}
-			}
+                PermissionManager = pm;
+            }
     	}
 
         protected void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )

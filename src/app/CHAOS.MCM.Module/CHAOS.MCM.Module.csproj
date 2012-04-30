@@ -69,7 +69,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>COPY $(TargetPath) $(SolutionDir)bin\MCMModule\$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>COPY $(TargetName).dll $(SolutionDir)bin\MCMModule\$(TargetName).dll
+COPY $(TargetName).pdb $(SolutionDir)bin\MCMModule\$(TargetName).pdb</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
