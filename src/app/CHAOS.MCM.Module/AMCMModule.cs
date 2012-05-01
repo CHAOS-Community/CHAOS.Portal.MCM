@@ -46,9 +46,9 @@ namespace CHAOS.MCM.Module
         {
             ConnectionString  = XDocument.Parse(configuration).Root.Attribute( "ConnectionString" ).Value;
 			PermissionManager = new PermissionManager(  );
-            //SynchronizationThread = new Thread( SynchronizeFolders );
-            //SynchronizationThread.Start();
-            SynchronizeFolders();
+            SynchronizationThread = new Thread( SynchronizeFolders );
+            SynchronizationThread.Start();
+         //   SynchronizeFolders();
         }
 
     	#endregion
@@ -58,26 +58,31 @@ namespace CHAOS.MCM.Module
 
 		protected void SynchronizeFolders( )
     	{
-            using (var db = DefaultMCMEntities)
+            while( true )
             {
-                var pm = new PermissionManager();
-
-                foreach (var folder in db.Folder)
+                using( var db = DefaultMCMEntities )
                 {
-                    pm.AddFolder((uint?)folder.ParentID, new Folder((uint)folder.ID));
-                }
+                    var pm = new PermissionManager();
 
-                foreach (var folderUserJoin in db.Folder_User_Join)
-                {
-                    pm.AddUser((uint)folderUserJoin.FolderID, folderUserJoin.UserGUID, (FolderPermissions)folderUserJoin.Permission);
-                }
+                    foreach (var folder in db.Folder)
+                    {
+                        pm.AddFolder((uint?)folder.ParentID, new Folder((uint)folder.ID));
+                    }
 
-                foreach (var folderGroupJoin in db.Folder_Group_Join)
-                {
-                    pm.AddGroup((uint)folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions)folderGroupJoin.Permission);
-                }
+                    foreach (var folderUserJoin in db.Folder_User_Join)
+                    {
+                        pm.AddUser((uint)folderUserJoin.FolderID, folderUserJoin.UserGUID, (FolderPermissions)folderUserJoin.Permission);
+                    }
 
-                PermissionManager = pm;
+                    foreach (var folderGroupJoin in db.Folder_Group_Join)
+                    {
+                        pm.AddGroup((uint)folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions)folderGroupJoin.Permission);
+                    }
+
+                    PermissionManager = pm;
+
+                    Thread.Sleep( 5 * 1000 );
+                }
             }
     	}
 
