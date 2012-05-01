@@ -668,7 +668,7 @@ namespace CHAOS.MCM.Module
                     throw new InsufficientPermissionsException( "User can only create links" );
 
                 SynchronizeFolders();
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true, true ).ToDTO() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
                 return new ScalarResult( result );
             }
@@ -685,7 +685,7 @@ namespace CHAOS.MCM.Module
                 int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
 
                 SynchronizeFolders();
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true, true ).ToDTO() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
                 return new ScalarResult( result );
             }
@@ -702,7 +702,7 @@ namespace CHAOS.MCM.Module
                 int result = db.Object_Folder_Join_Delete( objectGUID.ToByteArray(), (int) folderID ).First().Value;
 
                 SynchronizeFolders();
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, false, true, true, true ).ToDTO() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
                 return new ScalarResult( result );
             }
