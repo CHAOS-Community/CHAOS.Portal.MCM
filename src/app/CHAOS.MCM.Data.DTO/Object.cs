@@ -91,14 +91,20 @@ namespace CHAOS.MCM.Data.DTO
 			if( Metadatas != null )
 				foreach( var metadata in Metadatas )
 				{
-                    if (metadata.MetadataSchemaGUID.ToString() == "e4ee26e4-94dc-d946-8e23-459c7de51fc0" && metadata.MetadataXML.Descendants("TotalVotes").FirstOrDefault() != null )
+                    if( metadata.MetadataSchemaGUID.ToString() == "e4ee26e4-94dc-d946-8e23-459c7de51fc0" && metadata.MetadataXML.Descendants("TotalVotes").FirstOrDefault() != null  )
                         yield return new KeyValuePair<string, string>( "LB_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
-
-                    if (metadata.MetadataSchemaGUID.ToString() == "f39ac380-e33d-7c4e-9ed9-7745990ed6c7" && metadata.MetadataXML.Descendants( "TotalVotes" ).FirstOrDefault() != null )
+                    else
+                    if( metadata.MetadataSchemaGUID.ToString() == "f39ac380-e33d-7c4e-9ed9-7745990ed6c7" && metadata.MetadataXML.Descendants( "TotalVotes" ).FirstOrDefault() != null )
                         yield return new KeyValuePair<string, string>( "HT_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
-
-                    if (metadata.MetadataSchemaGUID.ToString() == "21453740-eb1a-8842-81b4-ec62975e89e0" && metadata.MetadataXML.Descendants("Country").FirstOrDefault() != null )
+                    else
+                    if( metadata.MetadataSchemaGUID.ToString() == "21453740-eb1a-8842-81b4-ec62975e89e0" && metadata.MetadataXML.Descendants("Country").FirstOrDefault() != null )
                         yield return new KeyValuePair<string, string>( "HT_Country_" + metadata.LanguageCode, metadata.MetadataXML.Descendants( "Country" ).First().Value );
+                    else
+                    if( metadata.MetadataSchemaGUID.ToString() == "d9efe8c8-9502-11e1-ba5d-02cea2621172" && metadata.MetadataXML.Descendants("FacebookIds").FirstOrDefault() != null )
+                        foreach( var id in metadata.MetadataXML.Descendants("FacebookIds").Elements( "Id" ) )
+                        {
+                            yield return new KeyValuePair<string, string>( "FacebookUserIDs", id.Value );
+                        }
 
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
