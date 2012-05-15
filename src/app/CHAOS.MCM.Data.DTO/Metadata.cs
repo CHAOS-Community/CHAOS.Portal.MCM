@@ -40,7 +40,14 @@ namespace CHAOS.MCM.Data.DTO
 			ObjectGUID         = new UUID( objectGUID.ToByteArray() );
 			LanguageCode       = languageCode;
 			MetadataSchemaGUID = new UUID( metadataSchemaGUID.ToByteArray() );
-			MetadataXML        = XDocument.Parse( metadataXML );
+		    try
+		    {
+                MetadataXML = XDocument.Parse(metadataXML);
+		    }
+		    catch (Exception e)
+		    {
+		        throw new Exception( GUID.ToString() + e.Message );
+		    }
 			DateCreated        = dateCreated;
 		    RevisionID         = revisionID;
 		}

@@ -100,7 +100,7 @@ namespace CHAOS.MCM.Module.Rights
 
 		public IEnumerable<Folder> GetFolders( Guid userGuid, IEnumerable<Guid> groupGuids, uint parentFolderID )
 		{
-			List<Folder> directFolders = new List<Folder>();
+			var directFolders = new List<Folder>();
 
 			if( UserFolderIndex.ContainsKey( userGuid ) )
 				directFolders = UserFolderIndex[ userGuid ].ToList();

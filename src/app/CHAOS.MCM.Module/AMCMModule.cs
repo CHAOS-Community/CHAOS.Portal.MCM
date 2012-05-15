@@ -15,27 +15,10 @@ namespace CHAOS.MCM.Module
     {
         #region Properties
 
-        private string            ConnectionString { get; set; }
-        private Thread            SynchronizationThread { get; set; }
-
-        private PermissionManager _permissionManager;
-        protected PermissionManager PermissionManager
-        {
-            get
-            {
-            //    lock( _syncLock )
-                {
-                    return _permissionManager;
-                }
-            }
-            set
-            {
-           //     lock( _syncLock )
-                {
-                    _permissionManager = value;
-                }
-            }
-        }
+        private string        ConnectionString { get; set; }
+        private static Thread SynchronizationThread { get; set; }
+        
+        protected static PermissionManager PermissionManager { get; set; }
 
         public MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
 
@@ -45,46 +28,50 @@ namespace CHAOS.MCM.Module
         public override void Initialize( string configuration )
         {
             ConnectionString  = XDocument.Parse(configuration).Root.Attribute( "ConnectionString" ).Value;
-			PermissionManager = new PermissionManager(  );
+            PermissionManager = SynchronizeFoldersOnce();
             SynchronizationThread = new Thread( SynchronizeFolders );
             SynchronizationThread.Start();
-         //   SynchronizeFolders();
         }
 
     	#endregion
         #region Business Logic
 
-        private readonly object _syncLock = new object();
-
 		protected void SynchronizeFolders( )
     	{
             while( true )
             {
-                using( var db = DefaultMCMEntities )
-                {
-                    var pm = new PermissionManager();
+                PermissionManager = SynchronizeFoldersOnce();
 
-                    foreach (var folder in db.Folder)
-                    {
-                        pm.AddFolder((uint?)folder.ParentID, new Folder((uint)folder.ID));
-                    }
-
-                    foreach (var folderUserJoin in db.Folder_User_Join)
-                    {
-                        pm.AddUser((uint)folderUserJoin.FolderID, folderUserJoin.UserGUID, (FolderPermissions)folderUserJoin.Permission);
-                    }
-
-                    foreach (var folderGroupJoin in db.Folder_Group_Join)
-                    {
-                        pm.AddGroup((uint)folderGroupJoin.FolderID, folderGroupJoin.GroupGUID, (FolderPermissions)folderGroupJoin.Permission);
-                    }
-
-                    PermissionManager = pm;
-
-                    Thread.Sleep( 5 * 1000 );
-                }
+                Thread.Sleep(5 * 1000);
             }
     	}
+
+        private PermissionManager SynchronizeFoldersOnce()
+        {
+            using( var db = DefaultMCMEntities )
+            {
+                var pm = new PermissionManager();
+
+                foreach( var folder in db.Folder )
+                {
+                    pm.AddFolder((uint?) folder.ParentID, new Folder((uint) folder.ID));
+                }
+
+                foreach (var folderUserJoin in db.Folder_User_Join)
+                {
+                    pm.AddUser((uint) folderUserJoin.FolderID, folderUserJoin.UserGUID,
+                               (FolderPermissions) folderUserJoin.Permission);
+                }
+
+                foreach (var folderGroupJoin in db.Folder_Group_Join)
+                {
+                    pm.AddGroup((uint) folderGroupJoin.FolderID, folderGroupJoin.GroupGUID,
+                                (FolderPermissions) folderGroupJoin.Permission);
+                }
+
+                 return pm;
+            }
+        }
 
         protected void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
         {
