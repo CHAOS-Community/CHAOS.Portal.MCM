@@ -26,6 +26,7 @@ namespace CHAOS.MCM.Test
 
         public MCMModule          MCMModule { get; set; }
         public ObjectModule       ObjectModule { get; set; }
+        public FolderModule       FolderModule { get; set; }
         public AccessPoint        AccessPoint { get; set; }
         public ObjectType         AssetObjectType { get; set; }
 		public ObjectType         DemoObjectType { get; set; }
@@ -100,6 +101,9 @@ namespace CHAOS.MCM.Test
 
                 MCMModule = new MCMModule();
                 MCMModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");
+
+                FolderModule = new FolderModule();
+                FolderModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");
 
                 ObjectModule = new ObjectModule();
                 ObjectModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");

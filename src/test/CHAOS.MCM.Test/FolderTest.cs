@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading;
 using CHAOS.MCM.Data.DTO;
-using CHAOS.MCM.Module;
 using NUnit.Framework;
 
 namespace CHAOS.MCM.Test
@@ -10,10 +9,18 @@ namespace CHAOS.MCM.Test
     [TestFixture]
     public class FolderTest : MCMTestBase
     {
+        [Test]
+        public void Should_Get_Permissions_For_Folder()
+        {
+            var result = FolderModule.GetPermissions( AdminCallContext, SubFolder.ID );
+
+            Assert.AreEqual( uint.MaxValue, result.AccumulatedPermission );
+        }
+
 		[Test]
 		public void Should_Get_TopFolders()
 		{
-			IEnumerable<FolderInfo> folders = MCMModule.Folder_Get(AdminCallContext, null, null, null);
+			IEnumerable<FolderInfo> folders = FolderModule.Get( AdminCallContext, null, null, null );
 
 			Assert.Greater(folders.Count(), 0);
 		}
@@ -22,7 +29,7 @@ namespace CHAOS.MCM.Test
 		public void Should_Get_SubFolders()
 		{
 		    Thread.Sleep( 1000 );
-		    IEnumerable<FolderInfo> folders = MCMModule.Folder_Get( AdminCallContext, null, null, TopFolder.ID);
+		    IEnumerable<FolderInfo> folders = FolderModule.Get( AdminCallContext, null, null, TopFolder.ID);
 
 		    foreach( FolderInfo folderInfo in folders )
 		    {

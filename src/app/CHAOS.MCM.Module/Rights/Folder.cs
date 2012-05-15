@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CHAOS.MCM.Module.Rights
 {
@@ -57,6 +58,42 @@ namespace CHAOS.MCM.Module.Rights
 		public virtual void AddUser( Guid userGUID, FolderPermissions permission )
         {
 			UserPermissions.Add( userGUID, permission );
+        }
+
+        public FolderPermissions GetUserFolderPermission( Guid userGUID )
+        {
+            return GetUserParentFolderPermission( userGUID, this );
+        }
+
+        public static FolderPermissions GetUserParentFolderPermission( Guid userGUID, Folder folder )
+        {
+            var currentPermission = FolderPermissions.None;
+
+            if( folder.UserPermissions.ContainsKey( userGUID ) )
+                currentPermission = folder.UserPermissions[ userGUID ];
+
+            if( folder.ParentFolder == null )
+                return currentPermission;
+
+            return currentPermission | GetUserParentFolderPermission( userGUID, folder.ParentFolder );
+        }
+
+        public FolderPermissions GetGroupFolderPermission( IEnumerable<Guid> groupGUIDs )
+        {
+            return groupGUIDs.Aggregate( FolderPermissions.None, (current, groupGUID) => current | GetGroupParentFolderPermission( groupGUID, this ) );
+        }
+
+        public static FolderPermissions GetGroupParentFolderPermission( Guid groupGUID, Folder folder )
+        {
+            var currentPermission = FolderPermissions.None;
+
+            if( folder.GroupPermissions.ContainsKey( groupGUID ) )
+                currentPermission = folder.GroupPermissions[ groupGUID ];
+
+            if( folder.ParentFolder == null )
+                return currentPermission;
+
+            return currentPermission | GetGroupParentFolderPermission( groupGUID, folder.ParentFolder );
         }
 
 		public bool DoesUserOrGroupHavePersmission( Guid userGUID, IEnumerable<Guid> groupGUIDs, FolderPermissions permission )
