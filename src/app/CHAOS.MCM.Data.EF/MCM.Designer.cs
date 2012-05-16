@@ -2526,6 +2526,88 @@ namespace CHAOS.MCM.Data.EF
     
             return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", mergeOption, gUIDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="groupGUID">No Metadata Documentation available.</param>
+        /// <param name="folderID">No Metadata Documentation available.</param>
+        /// <param name="permission">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Folder_Group_Join_Set(global::System.Byte[] groupGUID, Nullable<global::System.Int32> folderID, Nullable<global::System.Int32> permission)
+        {
+            ObjectParameter groupGUIDParameter;
+            if (groupGUID != null)
+            {
+                groupGUIDParameter = new ObjectParameter("GroupGUID", groupGUID);
+            }
+            else
+            {
+                groupGUIDParameter = new ObjectParameter("GroupGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter folderIDParameter;
+            if (folderID.HasValue)
+            {
+                folderIDParameter = new ObjectParameter("FolderID", folderID);
+            }
+            else
+            {
+                folderIDParameter = new ObjectParameter("FolderID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter permissionParameter;
+            if (permission.HasValue)
+            {
+                permissionParameter = new ObjectParameter("Permission", permission);
+            }
+            else
+            {
+                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_Group_Join_Set", groupGUIDParameter, folderIDParameter, permissionParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="folderID">No Metadata Documentation available.</param>
+        /// <param name="permission">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Folder_User_Join_Set(global::System.Byte[] userGUID, Nullable<global::System.Int32> folderID, Nullable<global::System.Int32> permission)
+        {
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter folderIDParameter;
+            if (folderID.HasValue)
+            {
+                folderIDParameter = new ObjectParameter("FolderID", folderID);
+            }
+            else
+            {
+                folderIDParameter = new ObjectParameter("FolderID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter permissionParameter;
+            if (permission.HasValue)
+            {
+                permissionParameter = new ObjectParameter("Permission", permission);
+            }
+            else
+            {
+                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_User_Join_Set", userGUIDParameter, folderIDParameter, permissionParameter);
+        }
 
         #endregion
 

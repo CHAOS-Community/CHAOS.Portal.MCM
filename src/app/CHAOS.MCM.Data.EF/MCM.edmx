@@ -972,11 +972,21 @@
           <Parameter Name="UserGUID" Type="binary" Mode="In" />
           <Parameter Name="RequiredPermission" Type="int" Mode="In" />
         </Function>
+        <Function Name="Folder_Group_Join_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="GroupGUID" Type="binary" Mode="In" />
+          <Parameter Name="FolderID" Type="int" Mode="In" />
+          <Parameter Name="Permission" Type="int" Mode="In" />
+        </Function>
         <Function Name="Folder_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="ID" Type="int" Mode="In" />
           <Parameter Name="NewTitle" Type="varchar" Mode="In" />
           <Parameter Name="NewParentID" Type="int" Mode="In" />
           <Parameter Name="NewFolderTypeID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Folder_User_Join_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="FolderID" Type="int" Mode="In" />
+          <Parameter Name="Permission" Type="int" Mode="In" />
         </Function>
         <Function Name="FormatCategory_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="FormatTypeID" Type="int" Mode="In" />
@@ -1470,6 +1480,16 @@
             <End Role="Object" EntitySet="Object" />
             <End Role="AccessPoint_Object_Join" EntitySet="AccessPoint_Object_Join" />
           </AssociationSet>
+          <FunctionImport Name="Folder_Group_Join_Set" ReturnType="Collection(Int32)">
+            <Parameter Name="GroupGUID" Mode="In" Type="Binary" />
+            <Parameter Name="FolderID" Mode="In" Type="Int32" />
+            <Parameter Name="Permission" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Folder_User_Join_Set" ReturnType="Collection(Int32)">
+            <Parameter Name="UserGUID" Mode="In" Type="Binary" />
+            <Parameter Name="FolderID" Mode="In" Type="Int32" />
+            <Parameter Name="Permission" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">
           <Key>
@@ -2506,6 +2526,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Folder_Group_Join_Set" FunctionName="MCMModel.Store.Folder_Group_Join_Set" />
+          <FunctionImportMapping FunctionImportName="Folder_User_Join_Set" FunctionName="MCMModel.Store.Folder_User_Join_Set" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

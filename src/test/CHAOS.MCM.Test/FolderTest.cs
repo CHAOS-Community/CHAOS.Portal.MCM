@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using CHAOS.MCM.Data.DTO;
+using CHAOS.MCM.Module.Rights;
 using NUnit.Framework;
 
 namespace CHAOS.MCM.Test
@@ -12,9 +13,23 @@ namespace CHAOS.MCM.Test
         [Test]
         public void Should_Get_Permissions_For_Folder()
         {
-            var result = FolderModule.GetPermissions( AdminCallContext, SubFolder.ID );
+            var result     = FolderModule.GetPermission( AdminCallContext, SubFolder.ID );
+            var permission = (FolderPermissions) result.AccumulatedPermission;
 
             Assert.AreEqual( uint.MaxValue, result.AccumulatedPermission );
+           
+            Assert.IsTrue( permission.HasFlag( FolderPermissions.Read ) );
+            Assert.IsTrue( permission.HasFlag( FolderPermissions.Write ) );
+            Assert.IsTrue( permission.HasFlag( FolderPermissions.CreateLink ) );
+            Assert.IsTrue( permission.HasFlag( FolderPermissions.CreateUpdateObjects ) );
+        }
+
+        [Test]
+        public void Should_Set_Permissions_On_Folder()
+        {
+            var result = FolderModule.SetPermission( AdminCallContext, UserAnonymous.GUID, null, EmptyFolder.ID, (uint) FolderPermissions.Read );
+
+            Assert.AreEqual( 1, result.Value );
         }
 
 		[Test]

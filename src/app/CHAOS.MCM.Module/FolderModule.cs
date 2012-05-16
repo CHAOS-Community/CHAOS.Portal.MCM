@@ -6,6 +6,8 @@ using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
+using CHAOS.Portal.DTO.Standard;
+using Permission = CHAOS.MCM.Data.DTO.Permission;
 
 namespace CHAOS.MCM.Module
 {
@@ -14,10 +16,36 @@ namespace CHAOS.MCM.Module
     {
         #region Permission
 
-        [Datatype("Folder","GetPermissions")]
-        public FolderPermission GetPermissions( ICallContext callContext, uint folderID )
+        [Datatype("Folder","GetPermission")]
+        public FolderPermission GetPermission( ICallContext callContext, uint folderID )
         {
-            return new FolderPermission{ AccumulatedPermission = (uint) PermissionManager.GetFolder( folderID ).GetUserFolderPermission( callContext.User.GUID.ToGuid() ) | (uint) PermissionManager.GetFolder( folderID ).GetGroupFolderPermission( callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() ) };
+            var perm = PermissionManager.GetFolder( folderID ).GetUserFolderPermission( callContext.User.GUID.ToGuid() ) | PermissionManager.GetFolder( folderID ).GetGroupFolderPermission( callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() );
+
+            IList<Permission> permissions = new List<Permission>();
+
+            for( int i = 1, shift = 1 << i; shift < (uint) FolderPermissions.All; i++, shift = 1 << i )
+            {
+                permissions.Add( new Permission( ( (FolderPermissions) shift).ToString(), (uint) shift ) );
+            }
+
+            return new FolderPermission( (uint) perm, permissions );
+        }
+
+        [Datatype("Folder","SetPermission")]
+        public ScalarResult SetPermission( ICallContext callContext, UUID userGUID, UUID groupGUID, uint folderID, uint permission )
+        {
+            // TODO: Add permissions check before setting the new permissions
+            int result = 0;
+
+            using( var db = DefaultMCMEntities )
+            {
+                if( !userGUID.IsNull() )
+                    result += db.Folder_User_Join_Set( userGUID.ToByteArray(), (int?) folderID, (int?) permission ).First().Value;    
+                if( !groupGUID.IsNull() )
+                    result += db.Folder_Group_Join_Set( groupGUID.ToByteArray(), (int?) folderID, (int?) permission ).First().Value;
+            }
+
+            return new ScalarResult( result );
         }
 
         #endregion
