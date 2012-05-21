@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Extensions;
 using CHAOS.MCM.Data.DTO;
@@ -7,6 +8,7 @@ using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
+using CHAOS.Portal.Exception;
 using Permission = CHAOS.MCM.Data.DTO.Permission;
 
 namespace CHAOS.MCM.Module
@@ -19,9 +21,8 @@ namespace CHAOS.MCM.Module
         [Datatype("Folder","GetPermission")]
         public FolderPermission GetPermission( ICallContext callContext, uint folderID )
         {
-            var perm = PermissionManager.GetFolder( folderID ).GetUserFolderPermission( callContext.User.GUID.ToGuid() ) | PermissionManager.GetFolder( folderID ).GetGroupFolderPermission( callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() );
-
-            IList<Permission> permissions = new List<Permission>();
+            var perm        = PermissionManager.GetFolder( folderID ).GetUserFolderPermission( callContext.User.GUID.ToGuid() ) | PermissionManager.GetFolder( folderID ).GetGroupFolderPermission( callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() );
+            var permissions = new List<Permission>();
 
             for( int i = 1, shift = 1 << i; shift < (uint) FolderPermissions.All; i++, shift = 1 << i )
             {
@@ -36,6 +37,9 @@ namespace CHAOS.MCM.Module
         {
             // TODO: Add permissions check before setting the new permissions
             int result = 0;
+            
+            if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( new[] {folderID}, callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), (FolderPermissions) permission ) )
+                throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
             using( var db = DefaultMCMEntities )
             {
@@ -109,43 +113,36 @@ namespace CHAOS.MCM.Module
 		//    }
 		//}
 
-		//[Datatype("Folder", "Create")]
-		//public FolderInfo Folder_Create( CallContext callContext, string subscriptionGUID, string title, int? parentID, int folderTypeID )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        Guid? subGUID       = null;
-		//        int?  subPermission = 0;
+		[Datatype("Folder", "Create")]
+		public Data.DTO.FolderInfo Create( ICallContext callContext, UUID subscriptionGUID, string title, uint? parentID, uint folderTypeID )
+		{
+            if( subscriptionGUID.IsNull() && !parentID.HasValue )
+                throw new ArgumentException( "Both parentID and subscriptionGUID can't be null" );
 
-		//        if( !string.IsNullOrEmpty( subscriptionGUID ) )
-		//        {
-		//            SubscriptionInfo subscription = callContext.Subscriptions.FirstOrDefault( sub => sub.GUID.CompareTo( Guid.Parse( subscriptionGUID ) ) == 0 );
+		    using( var db = DefaultMCMEntities )
+		    {
+		        if( !subscriptionGUID.IsNull() )
+		        {
+                    throw new NotImplementedException( "Creating top folders has not been implemented" );
+		            var subscription = callContext.Subscriptions.FirstOrDefault( sub => sub.GUID.ToString() == sub.ToString() );
 
-		//            subGUID       = subscription.GUID;
-		//            subPermission = subscription.Permission;
-		//        }
+                    // TODO: Check actual subscription permissions
 
-		//        int result = db.Folder_Create( callContext.Groups.Select( group => group.GUID ).ToList(), 
-		//                                       callContext.User.GUID,
-		//                                       subGUID,
-		//                                       subPermission,
-		//                                       title, 
-		//                                       parentID, 
-		//                                       folderTypeID);
+		            if( subscription == null )
+		                throw new InsufficientPermissionsException( "User does not have permission to create topfolders with the subscriptionGUID" );
+		        }
 
-		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to Create the folder" );
+		        var result = db.Folder_Create( callContext.User.GUID.ToByteArray(),
+                                               subscriptionGUID == null ? null : subscriptionGUID.ToByteArray(),
+		                                       title, 
+		                                       (int?) parentID, 
+		                                       (int?) folderTypeID ).First();
 
-		//        return db.Get( callContext.Groups.Select(group => group.GUID).ToList(),
-		//                              callContext.User.GUID, 
-		//                              result, 
-		//                              null, 
-		//                              null ).First();
+		        if( result == -100 )
+		            throw new InsufficientPermissionsException( "User does not have permission to Create the folder" );
 
-		//    //    FolderInfo folder = Get( callContext, result, null, null ).First();
-
-		//     //   return folder;
-		//    }
-		//}
+                return db.FolderInfo.First( fi => result == fi.ID ).ToDTO();
+		    }
+		}
     }
 }

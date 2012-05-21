@@ -58,9 +58,9 @@ namespace CHAOS.MCM.Test
 
                 int folderTypeID         = db.FolderType_Create("Folder").First().Value;
                 int folderTestTypeID     = db.FolderType_Create("TEST").First().Value;
-                int topFolderID          = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "top folder", null, folderTypeID, 0).First().Value;
-                int emptyFolderID        = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), null, "empty folder", topFolderID, folderTypeID, 0).First().Value;
-                int subFolderID          = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), null, "sub folder", emptyFolderID, folderTypeID, 0).First().Value;
+                int topFolderID          = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "top folder", null, folderTypeID ).First().Value;
+                int emptyFolderID        = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), null, "empty folder", topFolderID, folderTypeID ).First().Value;
+                int subFolderID          = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), null, "sub folder", emptyFolderID, folderTypeID ).First().Value;
                 int assetObjectTypeID    = db.ObjectType_Create("Asset").First().Value;
                 int demoObjectTypeID     = db.ObjectType_Create("Demo").First().Value;
                 int objectContainsID     = db.ObjectRelationType_Create("Contains").First().Value;

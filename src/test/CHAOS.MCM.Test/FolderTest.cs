@@ -97,25 +97,25 @@ namespace CHAOS.MCM.Test
 		//    Assert.Greater((int)result.Value, 0);
 		//}
 
-		//[Test]
-		//public void Should_Create_Folder()
-		//{
-		//    FolderInfo folder = MCMModule.Folder_Create( AdminCallContext, SubscriptionInfo.GUID.ToString(), "hellooo", TopFolder.ID, FolderType.ID);
+		[Test]
+		public void Should_Create_Folder()
+		{
+		    FolderInfo folder = FolderModule.Create( AdminCallContext, null, "hellooo", TopFolder.ID, FolderType.ID);
 
-		//    Assert.AreEqual( "hellooo", folder.Title );
-		//    Assert.AreEqual( TopFolder.ID, folder.ParentID );
-		//    Assert.AreEqual( FolderType.ID, folder.FolderTypeID );
-		//}
+		    Assert.AreEqual( "hellooo", folder.Name );
+		    Assert.AreEqual( TopFolder.ID, folder.ParentID );
+		    Assert.AreEqual( FolderType.ID, folder.FolderTypeID );
+		}
 
-		//[Test]
-		//public void Should_Create_TopFolder()
-		//{
-		//    FolderInfo folder = MCMModule.Folder_Create( AdminCallContext, SubscriptionInfo.GUID.ToString(), "hellooo", null, FolderType.ID);
+        //[Test]
+        //public void Should_Create_TopFolder()
+        //{
+        //    FolderInfo folder = FolderModule.Create( AdminCallContext, SubscriptionInfo.GUID, "hellooo", null, FolderType.ID);
 
-		//    Assert.AreEqual("hellooo", folder.Title);
-		//    Assert.IsNull(folder.ParentID);
-		//    Assert.AreEqual(FolderType.ID, folder.FolderTypeID);
-		//}
+        //    Assert.AreEqual( "hellooo", folder.Name);
+        //    Assert.IsNull( folder.ParentID);
+        //    Assert.AreEqual( FolderType.ID, folder.FolderTypeID);
+        //}
 
 		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
 		//public void Should_Throw_InsufficientPermissionsException_On_Create_Folder()

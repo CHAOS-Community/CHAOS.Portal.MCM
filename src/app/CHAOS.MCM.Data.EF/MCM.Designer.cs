@@ -837,8 +837,7 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="name">No Metadata Documentation available.</param>
         /// <param name="parentID">No Metadata Documentation available.</param>
         /// <param name="folderTypeID">No Metadata Documentation available.</param>
-        /// <param name="subscriptionPermission">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> Folder_Create(global::System.Byte[] userGUID, global::System.Byte[] subscriptionGUID, global::System.String name, Nullable<global::System.Int32> parentID, Nullable<global::System.Int32> folderTypeID, Nullable<global::System.Int32> subscriptionPermission)
+        public ObjectResult<Nullable<global::System.Int32>> Folder_Create(global::System.Byte[] userGUID, global::System.Byte[] subscriptionGUID, global::System.String name, Nullable<global::System.Int32> parentID, Nullable<global::System.Int32> folderTypeID)
         {
             ObjectParameter userGUIDParameter;
             if (userGUID != null)
@@ -890,17 +889,7 @@ namespace CHAOS.MCM.Data.EF
                 folderTypeIDParameter = new ObjectParameter("FolderTypeID", typeof(global::System.Int32));
             }
     
-            ObjectParameter subscriptionPermissionParameter;
-            if (subscriptionPermission.HasValue)
-            {
-                subscriptionPermissionParameter = new ObjectParameter("SubscriptionPermission", subscriptionPermission);
-            }
-            else
-            {
-                subscriptionPermissionParameter = new ObjectParameter("SubscriptionPermission", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_Create", userGUIDParameter, subscriptionGUIDParameter, nameParameter, parentIDParameter, folderTypeIDParameter, subscriptionPermissionParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_Create", userGUIDParameter, subscriptionGUIDParameter, nameParameter, parentIDParameter, folderTypeIDParameter);
         }
     
         /// <summary>

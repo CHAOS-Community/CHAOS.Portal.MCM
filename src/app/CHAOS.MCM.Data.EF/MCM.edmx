@@ -958,7 +958,6 @@
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="ParentID" Type="int" Mode="In" />
           <Parameter Name="FolderTypeID" Type="int" Mode="In" />
-          <Parameter Name="SubscriptionPermission" Type="int" Mode="In" />
         </Function>
         <Function Name="Folder_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="FolderID" Type="int" Mode="In" />
@@ -1245,7 +1244,6 @@
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="ParentID" Mode="In" Type="Int32" />
             <Parameter Name="FolderTypeID" Mode="In" Type="Int32" />
-            <Parameter Name="SubscriptionPermission" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="FolderType_Create" ReturnType="Collection(Int32)">
           <Parameter Name="Name" Mode="In" Type="String" />
