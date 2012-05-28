@@ -2481,39 +2481,105 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] gUID)
+        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
+        /// <param name="permisssion">No Metadata Documentation available.</param>
+        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, global::System.String groupGUIDs, Nullable<global::System.Int32> permisssion)
         {
-            ObjectParameter gUIDParameter;
-            if (gUID != null)
+            ObjectParameter accessPointGUIDParameter;
+            if (accessPointGUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", accessPointGUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", gUIDParameter);
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter groupGUIDsParameter;
+            if (groupGUIDs != null)
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", groupGUIDs);
+            }
+            else
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", typeof(global::System.String));
+            }
+    
+            ObjectParameter permisssionParameter;
+            if (permisssion.HasValue)
+            {
+                permisssionParameter = new ObjectParameter("Permisssion", permisssion);
+            }
+            else
+            {
+                permisssionParameter = new ObjectParameter("Permisssion", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", accessPointGUIDParameter, userGUIDParameter, groupGUIDsParameter, permisssionParameter);
         }
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] gUID, MergeOption mergeOption)
+        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
+        /// <param name="permisssion">No Metadata Documentation available.</param>
+        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, global::System.String groupGUIDs, Nullable<global::System.Int32> permisssion, MergeOption mergeOption)
         {
-            ObjectParameter gUIDParameter;
-            if (gUID != null)
+            ObjectParameter accessPointGUIDParameter;
+            if (accessPointGUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", accessPointGUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", mergeOption, gUIDParameter);
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter groupGUIDsParameter;
+            if (groupGUIDs != null)
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", groupGUIDs);
+            }
+            else
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", typeof(global::System.String));
+            }
+    
+            ObjectParameter permisssionParameter;
+            if (permisssion.HasValue)
+            {
+                permisssionParameter = new ObjectParameter("Permisssion", permisssion);
+            }
+            else
+            {
+                permisssionParameter = new ObjectParameter("Permisssion", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", mergeOption, accessPointGUIDParameter, userGUIDParameter, groupGUIDsParameter, permisssionParameter);
         }
     
         /// <summary>
@@ -2596,6 +2662,99 @@ namespace CHAOS.MCM.Data.EF
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_User_Join_Set", userGUIDParameter, folderIDParameter, permissionParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
+        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="startDate">No Metadata Documentation available.</param>
+        /// <param name="endDate">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> AccessPoint_Object_Join_Set(global::System.Byte[] accessPointGUID, global::System.Byte[] objectGUID, Nullable<global::System.DateTime> startDate, Nullable<global::System.DateTime> endDate)
+        {
+            ObjectParameter accessPointGUIDParameter;
+            if (accessPointGUID != null)
+            {
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", accessPointGUID);
+            }
+            else
+            {
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter objectGUIDParameter;
+            if (objectGUID != null)
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+            }
+            else
+            {
+                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter startDateParameter;
+            if (startDate.HasValue)
+            {
+                startDateParameter = new ObjectParameter("StartDate", startDate);
+            }
+            else
+            {
+                startDateParameter = new ObjectParameter("StartDate", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter endDateParameter;
+            if (endDate.HasValue)
+            {
+                endDateParameter = new ObjectParameter("EndDate", endDate);
+            }
+            else
+            {
+                endDateParameter = new ObjectParameter("EndDate", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("AccessPoint_Object_Join_Set", accessPointGUIDParameter, objectGUIDParameter, startDateParameter, endDateParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="permission">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> AccessPoint_User_Join_Set(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, Nullable<global::System.Int32> permission)
+        {
+            ObjectParameter accessPointGUIDParameter;
+            if (accessPointGUID != null)
+            {
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", accessPointGUID);
+            }
+            else
+            {
+                accessPointGUIDParameter = new ObjectParameter("AccessPointGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter permissionParameter;
+            if (permission.HasValue)
+            {
+                permissionParameter = new ObjectParameter("Permission", permission);
+            }
+            else
+            {
+                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("AccessPoint_User_Join_Set", accessPointGUIDParameter, userGUIDParameter, permissionParameter);
         }
 
         #endregion

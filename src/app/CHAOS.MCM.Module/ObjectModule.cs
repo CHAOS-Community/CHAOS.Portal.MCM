@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
 using CHAOS.Extensions;
@@ -11,6 +12,7 @@ using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
+using Object = CHAOS.MCM.Data.DTO.Object;
 
 namespace CHAOS.MCM.Module
 {
@@ -18,7 +20,7 @@ namespace CHAOS.MCM.Module
     public class ObjectModule : AMCMModule
     {
         [Datatype("Object", "Get")]
-		public IPagedResult<IResult> Object_Get( ICallContext callContext, IQuery query, UUID accessPointGUID, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
+		public IPagedResult<IResult> Get( ICallContext callContext, IQuery query, UUID accessPointGUID, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
 		{ // TODO: Implement AccessPointGUID for queries when user isnt logged in
 			using( var db = DefaultMCMEntities )
 			{
@@ -55,7 +57,7 @@ namespace CHAOS.MCM.Module
 		}
 
 		[Datatype("Object","Create")]
-		public Data.DTO.Object Object_Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
+		public Data.DTO.Object Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
 		{
 		    using( var db = DefaultMCMEntities )
 		    {
@@ -67,7 +69,7 @@ namespace CHAOS.MCM.Module
 		        int result = db.Object_Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
 
 				if( result == -200 )
-					throw new UnhandledException("Unhandled exception, Object_Create was rolled back");
+					throw new UnhandledException("Unhandled exception, Create was rolled back");
 
 		        var newObject = db.Object_Get( guid, true, true, true, true, true ).ToDTO().ToList();
 
@@ -76,6 +78,22 @@ namespace CHAOS.MCM.Module
 		        return newObject.First();
 		    }
 		}
+
+        [Datatype("Object","SetPublishSettings")]
+        public ScalarResult SetPublishSettings( ICallContext callContext, UUID objectGUID, UUID accessPointGUID, DateTime? startDate, DateTime? endDate )
+        {
+            using( var db = DefaultMCMEntities )
+            {
+
+                   // throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
+
+                var result = db.AccessPoint_Object_Join_Set( accessPointGUID.ToByteArray(), objectGUID.ToByteArray(), startDate, endDate ).First();
+                
+                PutObjectInIndex( callContext.IndexManager.GetIndex<ObjectModule>(), new []{ db.Object_Get( objectGUID, true, true, true, true, true ).First().ToDTO() } );
+
+                return new ScalarResult( result.Value );
+            }
+        }
 
 		//[Datatype("Object", "Delete")]
 		//public ScalarResult Object_Delete( CallContext callContext, Guid GUID, int folderID )
@@ -87,7 +105,7 @@ namespace CHAOS.MCM.Module
 		//        if( result == -100 )
 		//            throw new InsufficientPermissionsException( "User does not have permissions to delete object" );
 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ GUID }, true, false, true, true ) );
+		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ GUID }, true, false, true, true ) );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -103,7 +121,7 @@ namespace CHAOS.MCM.Module
 		//        if( result == -100 )
 		//            throw new InsufficientPermissionsException( "User does not have permissions to put object into folder" );
 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ GUID }, true, false, true, true ) );
+		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ GUID }, true, false, true, true ) );
 
 		//        return new ScalarResult( result );
 		//    }

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using CHAOS.Extensions;
 using CHAOS.MCM.Data.EF;
 using NUnit.Framework;
 using Object = CHAOS.MCM.Data.DTO.Object;
@@ -13,7 +15,7 @@ namespace CHAOS.MCM.Test
 		{
 			UUID guid = new UUID();
 
-			Object objectz = ObjectModule.Object_Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
+			Object objectz = ObjectModule.Create( AdminCallContext, guid, AssetObjectType.ID, TopFolder.ID );
 
 			Assert.AreEqual( guid.ToString(), objectz.GUID.ToString() );
 		}
@@ -41,6 +43,14 @@ namespace CHAOS.MCM.Test
                 Assert.AreEqual( AccessPoint.GUID.ToByteArray(), list[0].AccessPoints.First().AccessPointGUID.ToByteArray() );
             }
         }
+
+        [Test]
+        public void Should_Publish_Object()
+        {
+            var result = ObjectModule.SetPublishSettings( AdminCallContext, Object1.GUID, AccessPoint.GUID.ToUUID(), DateTime.Now, null );
+
+            Assert.AreEqual( 1, result.Value );
+        }
          
 		//[Test]
 		//public void Should_Delete_Object()
@@ -67,7 +77,7 @@ namespace CHAOS.MCM.Test
         //[Test]
         //public void Should_Get_Index_Fields_From_Object()
         //{
-        //    Object obje = MCMModule.Object_Get(AdminCallContext, null, true, false, null, TopFolder.ID).First();
+        //    Object obje = MCMModule.Get(AdminCallContext, null, true, false, null, TopFolder.ID).First();
 
         //    Assert.AreEqual("title\r\nabstract\r\ndescription\r\n", obje.GetIndexableFields().Where(field => field.Key == "1_en_all").First().Value);
         //}

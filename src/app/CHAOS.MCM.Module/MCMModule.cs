@@ -306,7 +306,7 @@ namespace CHAOS.MCM.Module
 		#region Object
 
         //[Datatype("Object", "Get")]
-        //public IPagedResult<IResult> Object_Get( ICallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
+        //public IPagedResult<IResult> Get( ICallContext callContext, IQuery query, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
         //{
         //    using( var db = DefaultMCMEntities )
         //    {
@@ -342,7 +342,7 @@ namespace CHAOS.MCM.Module
         //            if( !resultPage.Any() )
         //                return new PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
 					
-        //            return new PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false ).ToDTO().ToList());
+        //            return new PagedResult<IResult>(indexResult.FoundCount, query.PageIndex, db.Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false ).ToDTO().ToList());
         //        }
         //    }
 
@@ -350,7 +350,7 @@ namespace CHAOS.MCM.Module
         //}
 
         //[Datatype("Object","Create")]
-        //public Object Object_Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
+        //public Object Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
         //{
         //    using( var db = DefaultMCMEntities )
         //    {
@@ -359,12 +359,12 @@ namespace CHAOS.MCM.Module
 
         //        var guid = GUID ?? new UUID();
 
-        //        int result = db.Object_Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
+        //        int result = db.Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
 
         //        if( result == -200 )
-        //            throw new UnhandledException("Unhandled exception, Object_Create was rolled back");
+        //            throw new UnhandledException("Unhandled exception, Create was rolled back");
 
-        //        var newObject = db.Object_Get( guid, true, true, true, true, true ).ToDTO().ToList();
+        //        var newObject = db.Get( guid, true, true, true, true, true ).ToDTO().ToList();
 
         //        if( newObject == null )
         //            throw new UnhandledException("Error retrieving object from DB");
@@ -385,7 +385,7 @@ namespace CHAOS.MCM.Module
 		//        if( result == -100 )
 		//            throw new InsufficientPermissionsException( "User does not have permissions to delete object" );
 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ GUID }, true, false, true, true ) );
+		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ GUID }, true, false, true, true ) );
 
 		//        return new ScalarResult( result );
 		//    }
@@ -401,7 +401,7 @@ namespace CHAOS.MCM.Module
 		//        if( result == -100 )
 		//            throw new InsufficientPermissionsException( "User does not have permissions to put object into folder" );
 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( new []{ GUID }, true, false, true, true ) );
+		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ GUID }, true, false, true, true ) );
 
 		//        return new ScalarResult( result );
 		//    }

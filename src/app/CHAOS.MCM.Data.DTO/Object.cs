@@ -105,6 +105,9 @@ namespace CHAOS.MCM.Data.DTO
                         {
                             yield return new KeyValuePair<string, string>( "FacebookUserIDs", id.Value );
                         }
+                    else                                           
+                    if( metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-000063c30000" && metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null )
+                        yield return new KeyValuePair<string, string>( "DKA-Organization", metadata.MetadataXML.Descendants("Organization").First().Value );
 
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}

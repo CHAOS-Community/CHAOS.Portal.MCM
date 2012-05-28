@@ -903,13 +903,27 @@
           <Parameter Name="Name" Type="varchar" Mode="In" />
         </Function>
         <Function Name="AccessPoint_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
-          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="AccessPointGUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="GroupGUIDs" Type="varchar" Mode="In" />
+          <Parameter Name="Permisssion" Type="int" Mode="In" />
         </Function>
         <Function Name="AccessPoint_Object_Join_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="AccessPointGUID" Type="binary" Mode="In" />
           <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
           <Parameter Name="StartDate" Type="datetime" Mode="In" />
           <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="AccessPoint_Object_Join_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="AccessPointGUID" Type="binary" Mode="In" />
+          <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="EndDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="AccessPoint_User_Join_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="AccessPointGUID" Type="binary" Mode="In" />
+          <Parameter Name="UserGUID" Type="binary" Mode="In" />
+          <Parameter Name="Permission" Type="int" Mode="In" />
         </Function>
         <Function Name="AccessProvider_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="DestinationID" Type="int" Mode="In" />
@@ -1454,7 +1468,10 @@
             <Parameter Name="EndDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="AccessPoint_Get" EntitySet="AccessPoint" ReturnType="Collection(MCMModel.AccessPoint)">
-          <Parameter Name="GUID" Mode="In" Type="Binary" />
+            <Parameter Name="AccessPointGUID" Mode="In" Type="Binary" />
+            <Parameter Name="UserGUID" Mode="In" Type="Binary" />
+            <Parameter Name="GroupGUIDs" Mode="In" Type="String" />
+            <Parameter Name="Permisssion" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Object_Object_Join" EntityType="MCMModel.Object_Object_Join" />
           <AssociationSet Name="FK_Object_GUID_Object_Object_Join_Object1GUID" Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID">
@@ -1486,6 +1503,17 @@
           <FunctionImport Name="Folder_User_Join_Set" ReturnType="Collection(Int32)">
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
             <Parameter Name="FolderID" Mode="In" Type="Int32" />
+            <Parameter Name="Permission" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AccessPoint_Object_Join_Set" ReturnType="Collection(Int32)">
+            <Parameter Name="AccessPointGUID" Mode="In" Type="Binary" />
+            <Parameter Name="ObjectGUID" Mode="In" Type="Binary" />
+            <Parameter Name="StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="EndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="AccessPoint_User_Join_Set" ReturnType="Collection(Int32)">
+            <Parameter Name="AccessPointGUID" Mode="In" Type="Binary" />
+            <Parameter Name="UserGUID" Mode="In" Type="Binary" />
             <Parameter Name="Permission" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
@@ -2526,6 +2554,8 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="Folder_Group_Join_Set" FunctionName="MCMModel.Store.Folder_Group_Join_Set" />
           <FunctionImportMapping FunctionImportName="Folder_User_Join_Set" FunctionName="MCMModel.Store.Folder_User_Join_Set" />
+          <FunctionImportMapping FunctionImportName="AccessPoint_Object_Join_Set" FunctionName="MCMModel.Store.AccessPoint_Object_Join_Set" />
+          <FunctionImportMapping FunctionImportName="AccessPoint_User_Join_Set" FunctionName="MCMModel.Store.AccessPoint_User_Join_Set" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
