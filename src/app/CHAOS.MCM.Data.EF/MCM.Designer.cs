@@ -2484,8 +2484,8 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="accessPointGUID">No Metadata Documentation available.</param>
         /// <param name="userGUID">No Metadata Documentation available.</param>
         /// <param name="groupGUIDs">No Metadata Documentation available.</param>
-        /// <param name="permisssion">No Metadata Documentation available.</param>
-        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, global::System.String groupGUIDs, Nullable<global::System.Int32> permisssion)
+        /// <param name="permission">No Metadata Documentation available.</param>
+        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, global::System.String groupGUIDs, Nullable<global::System.Int32> permission)
         {
             ObjectParameter accessPointGUIDParameter;
             if (accessPointGUID != null)
@@ -2517,17 +2517,17 @@ namespace CHAOS.MCM.Data.EF
                 groupGUIDsParameter = new ObjectParameter("GroupGUIDs", typeof(global::System.String));
             }
     
-            ObjectParameter permisssionParameter;
-            if (permisssion.HasValue)
+            ObjectParameter permissionParameter;
+            if (permission.HasValue)
             {
-                permisssionParameter = new ObjectParameter("Permisssion", permisssion);
+                permissionParameter = new ObjectParameter("Permission", permission);
             }
             else
             {
-                permisssionParameter = new ObjectParameter("Permisssion", typeof(global::System.Int32));
+                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", accessPointGUIDParameter, userGUIDParameter, groupGUIDsParameter, permisssionParameter);
+            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", accessPointGUIDParameter, userGUIDParameter, groupGUIDsParameter, permissionParameter);
         }
         /// <summary>
         /// No Metadata Documentation available.
@@ -2536,8 +2536,8 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="accessPointGUID">No Metadata Documentation available.</param>
         /// <param name="userGUID">No Metadata Documentation available.</param>
         /// <param name="groupGUIDs">No Metadata Documentation available.</param>
-        /// <param name="permisssion">No Metadata Documentation available.</param>
-        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, global::System.String groupGUIDs, Nullable<global::System.Int32> permisssion, MergeOption mergeOption)
+        /// <param name="permission">No Metadata Documentation available.</param>
+        public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, global::System.String groupGUIDs, Nullable<global::System.Int32> permission, MergeOption mergeOption)
         {
             ObjectParameter accessPointGUIDParameter;
             if (accessPointGUID != null)
@@ -2569,17 +2569,17 @@ namespace CHAOS.MCM.Data.EF
                 groupGUIDsParameter = new ObjectParameter("GroupGUIDs", typeof(global::System.String));
             }
     
-            ObjectParameter permisssionParameter;
-            if (permisssion.HasValue)
+            ObjectParameter permissionParameter;
+            if (permission.HasValue)
             {
-                permisssionParameter = new ObjectParameter("Permisssion", permisssion);
+                permissionParameter = new ObjectParameter("Permission", permission);
             }
             else
             {
-                permisssionParameter = new ObjectParameter("Permisssion", typeof(global::System.Int32));
+                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", mergeOption, accessPointGUIDParameter, userGUIDParameter, groupGUIDsParameter, permisssionParameter);
+            return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", mergeOption, accessPointGUIDParameter, userGUIDParameter, groupGUIDsParameter, permissionParameter);
         }
     
         /// <summary>

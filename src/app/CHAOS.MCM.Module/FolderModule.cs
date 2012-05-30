@@ -43,9 +43,9 @@ namespace CHAOS.MCM.Module
 
             using( var db = DefaultMCMEntities )
             {
-                if( !userGUID.IsNull() )
+                if( userGUID != null )
                     result += db.Folder_User_Join_Set( userGUID.ToByteArray(), (int?) folderID, (int?) permission ).First().Value;    
-                if( !groupGUID.IsNull() )
+                if( groupGUID != null )
                     result += db.Folder_Group_Join_Set( groupGUID.ToByteArray(), (int?) folderID, (int?) permission ).First().Value;
             }
 
@@ -116,12 +116,12 @@ namespace CHAOS.MCM.Module
 		[Datatype("Folder", "Create")]
 		public Data.DTO.FolderInfo Create( ICallContext callContext, UUID subscriptionGUID, string title, uint? parentID, uint folderTypeID )
 		{
-            if( subscriptionGUID.IsNull() && !parentID.HasValue )
+            if( subscriptionGUID == null && !parentID.HasValue )
                 throw new ArgumentException( "Both parentID and subscriptionGUID can't be null" );
 
 		    using( var db = DefaultMCMEntities )
 		    {
-		        if( !subscriptionGUID.IsNull() )
+		        if( subscriptionGUID != null )
 		        {
                     throw new NotImplementedException( "Creating top folders has not been implemented" );
 		            var subscription = callContext.Subscriptions.FirstOrDefault( sub => sub.GUID.ToString() == sub.ToString() );

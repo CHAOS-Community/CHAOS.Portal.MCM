@@ -906,7 +906,7 @@
           <Parameter Name="AccessPointGUID" Type="binary" Mode="In" />
           <Parameter Name="UserGUID" Type="binary" Mode="In" />
           <Parameter Name="GroupGUIDs" Type="varchar" Mode="In" />
-          <Parameter Name="Permisssion" Type="int" Mode="In" />
+          <Parameter Name="Permission" Type="int" Mode="In" />
         </Function>
         <Function Name="AccessPoint_Object_Join_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="AccessPointGUID" Type="binary" Mode="In" />
@@ -1471,7 +1471,7 @@
             <Parameter Name="AccessPointGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
             <Parameter Name="GroupGUIDs" Mode="In" Type="String" />
-            <Parameter Name="Permisssion" Mode="In" Type="Int32" />
+            <Parameter Name="Permission" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="Object_Object_Join" EntityType="MCMModel.Object_Object_Join" />
           <AssociationSet Name="FK_Object_GUID_Object_Object_Join_Object1GUID" Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID">

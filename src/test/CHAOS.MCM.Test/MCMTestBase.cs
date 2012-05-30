@@ -80,7 +80,7 @@ namespace CHAOS.MCM.Test
                 
                 db.AccessPoint_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "Test accesspoint" );
                 db.AccessPoint_Object_Join_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), DateTime.Now, DateTime.Now.AddDays( 1 ) );
-                db.AccessPoint_User_Join_Set( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), 0x1 );
+                db.AccessPoint_User_Join_Set( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), 0x1 ).First();
 
                 Afrikaans       = db.Language_Get(null, "af").First().ToDTO();
                 FolderType      = db.FolderType_Get(folderTypeID, null).First().ToDTO();
@@ -98,7 +98,7 @@ namespace CHAOS.MCM.Test
                 MetadataSchema  = db.MetadataSchema_Get(new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray()).First().ToDTO();
                 Object1         = db.Object_Get(new[] { new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
                 Object2         = db.Object_Get(new[] { new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
-                AccessPoint     = db.AccessPoint_Get( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), "", 1 ).First();
+                AccessPoint     = db.AccessPoint_Get( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), "", 1 ).FirstOrDefault();
 
                 MCMModule = new MCMModule();
                 MCMModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");

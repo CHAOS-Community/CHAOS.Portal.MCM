@@ -80,7 +80,7 @@ namespace CHAOS.MCM.Module
 				o.FolderTree = PermissionManager.GetParentFolders( o.Folders.Where( item => item.ObjectFolderTypeID == 1 ).Select( item => item.FolderID ) ).ToList();
 			}
 
-            index.Set( newObject );
+            index.Set( newObject, false );
         }
 
         #endregion
