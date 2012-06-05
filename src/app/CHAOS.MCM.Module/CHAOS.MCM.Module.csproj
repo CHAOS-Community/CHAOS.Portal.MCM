@@ -34,10 +34,6 @@
     <Reference Include="CHAOS">
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="Portal">
       <HintPath>..\..\..\lib\Portal.dll</HintPath>
     </Reference>
@@ -50,8 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessPointModule.cs" />
     <Compile Include="AMCMModule.cs" />
+    <Compile Include="ObjectTypeModule.cs" />
     <Compile Include="FolderModule.cs" />
     <Compile Include="ObjectModule.cs" />
     <Compile Include="Rights\Folder.cs" />
@@ -73,10 +69,6 @@
       <Project>{4E125648-0FA1-4FD3-AB15-343468DE471D}</Project>
       <Name>CHAOS.MCM.Core.Exception</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

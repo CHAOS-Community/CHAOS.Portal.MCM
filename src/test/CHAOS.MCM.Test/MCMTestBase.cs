@@ -27,6 +27,7 @@ namespace CHAOS.MCM.Test
         public MCMModule          MCMModule { get; set; }
         public ObjectModule       ObjectModule { get; set; }
         public FolderModule       FolderModule { get; set; }
+        public ObjectTypeModule   ObjectTypeModule { get; set; }
         public AccessPoint        AccessPoint { get; set; }
         public ObjectType         AssetObjectType { get; set; }
 		public ObjectType         DemoObjectType { get; set; }
@@ -48,7 +49,7 @@ namespace CHAOS.MCM.Test
         #endregion
         
         [SetUp]
-        public void SetUp()
+        public new void SetUp()
         {
             base.SetUp();
 

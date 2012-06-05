@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CHAOS.MCM.Data.DTO;
-using CHAOS.MCM.Module;
+using CHAOS.Portal.Exception;
 using NUnit.Framework;
 
 namespace CHAOS.MCM.Test
@@ -9,19 +9,19 @@ namespace CHAOS.MCM.Test
     [TestFixture]
     public class ObjectTypeTest : MCMTestBase
     {
-		//[Test]
-		//public void Should_Create_ObjectType()
-		//{
-		//    ObjectType objectType = MCMModule.ObjectType_Create( AdminCallContext, "MyObjectType" );
+		[Test]
+		public void Should_Create_ObjectType()
+		{
+		    var objectType = ObjectTypeModule.Create( AdminCallContext, "MyObjectType" );
 
-		//    Assert.AreEqual( "MyObjectType", objectType.Value );
-		//}
+		    Assert.AreEqual( "MyObjectType", objectType.Name );
+		}
 
-		//[Test, ExpectedException( typeof( InsufficientPermissionsException ) )]
-		//public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Create_ObjectType()
-		//{
-		//    MCMModule.ObjectType_Create( AnonCallContext, "MyObjectType" );
-		//}
+		[Test, ExpectedException( typeof( InsufficientPermissionsException ) )]
+		public void Should_Throw_InsufficientPermisssionsException_If_User_Dont_Have_Permission_To_Create_ObjectType()
+		{
+		    ObjectTypeModule.Create( AnonCallContext, "MyObjectType" );
+		}
 
 		[Test]
 		public void Should_Get_All_ObjectTypes()
