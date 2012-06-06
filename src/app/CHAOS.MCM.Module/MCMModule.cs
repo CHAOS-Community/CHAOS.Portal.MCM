@@ -21,60 +21,6 @@ namespace CHAOS.MCM.Module
     {
         #region Business Logic
 
-		#region ObjectType
-
-		//[Datatype("ObjectType","Create")]
-		//public ObjectType ObjectType_Create( CallContext callContext, string value  )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.ObjectType_Insert( value, callContext.User.SystemPermissions ); 
-
-		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to create an Object Type" );
-
-		//        return db.ObjectType_Get( result, null ).First();
-		//    }
-		//}
-
-		[Datatype("ObjectType", "Get")]
-		public IEnumerable<Data.DTO.ObjectType> ObjectType_Get( ICallContext callContext )
-		{
-			using( var db = DefaultMCMEntities )
-			{
-				return db.ObjectType_Get( null, null ).ToDTO().ToList();
-			}
-		}
-
-		//[Datatype("ObjectType","Update")]
-		//public ScalarResult ObjectType_Update(  CallContext callContext, int id, string newName )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.ObjectType_Update(id, newName, callContext.User.SystemPermission);
-
-		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to update an Object Type" );
-
-		//        return new ScalarResult( result );
-		//    }
-		//}
-
-		//[Datatype("ObjectType","Delete")]
-		//public ScalarResult ObjectType_Delete( CallContext callContext, int id )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.ObjectType_Delete( id, null, callContext.User.SystemPermission );
-
-		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
-
-		//        return new ScalarResult( result );
-		//    }
-		//}
-
-		#endregion
 		#region Language
 
 		[Datatype("Language", "Get")]
@@ -446,18 +392,6 @@ namespace CHAOS.MCM.Module
 		//        return db.Metadata_Get( Guid.Parse( objectGUID ), metadataSchemaGUID == null ? (Guid?) null : Guid.Parse( metadataSchemaGUID ), languageCode ).ToList();
 		//    }
 		//}
-
-		#endregion
-		#region MetadataSchema
-
-		[Datatype("MetadataSchema", "Get")]
-		public IEnumerable<Data.DTO.MetadataSchema> MetadataSchema_Get( ICallContext callContext, UUID metadataSchemaGUID )
-		{
-			using( MCMEntities db = DefaultMCMEntities )
-			{
-				return db.MetadataSchema_Get( metadataSchemaGUID == null ? null : metadataSchemaGUID.ToByteArray() ).ToDTO().ToList();
-			}
-		}
 
 		#endregion
 		#region Test

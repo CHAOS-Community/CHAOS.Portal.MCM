@@ -1057,8 +1057,16 @@
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="SchemaXML" Type="text" Mode="In" />
         </Function>
+        <Function Name="MetadataSchema_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+        </Function>
         <Function Name="MetadataSchema_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
+        </Function>
+        <Function Name="MetadataSchema_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="GUID" Type="binary" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="SchemaXML" Type="text" Mode="In" />
         </Function>
         <Function Name="Metadata_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
@@ -1352,7 +1360,7 @@
             <Parameter Name="StringFormat" Mode="In" Type="String" />
             <Parameter Name="Token" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MetadataSchema_Create">
+          <FunctionImport Name="MetadataSchema_Create" ReturnType="Collection(Int32)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="SchemaXML" Mode="In" Type="String" />
@@ -1515,6 +1523,22 @@
             <Parameter Name="AccessPointGUID" Mode="In" Type="Binary" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
             <Parameter Name="Permission" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ObjectType_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ObjectType_Delete" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MetadataSchema_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="GUID" Mode="In" Type="Binary" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="SchemaXML" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="MetadataSchema_Delete" ReturnType="Collection(Int32)">
+            <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">
@@ -2556,6 +2580,10 @@
           <FunctionImportMapping FunctionImportName="Folder_User_Join_Set" FunctionName="MCMModel.Store.Folder_User_Join_Set" />
           <FunctionImportMapping FunctionImportName="AccessPoint_Object_Join_Set" FunctionName="MCMModel.Store.AccessPoint_Object_Join_Set" />
           <FunctionImportMapping FunctionImportName="AccessPoint_User_Join_Set" FunctionName="MCMModel.Store.AccessPoint_User_Join_Set" />
+          <FunctionImportMapping FunctionImportName="ObjectType_Update" FunctionName="MCMModel.Store.ObjectType_Update" />
+          <FunctionImportMapping FunctionImportName="ObjectType_Delete" FunctionName="MCMModel.Store.ObjectType_Delete" />
+          <FunctionImportMapping FunctionImportName="MetadataSchema_Update" FunctionName="MCMModel.Store.MetadataSchema_Update" />
+          <FunctionImportMapping FunctionImportName="MetadataSchema_Delete" FunctionName="MCMModel.Store.MetadataSchema_Delete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

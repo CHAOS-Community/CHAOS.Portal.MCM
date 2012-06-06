@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AMCMModule.cs" />
+    <Compile Include="MetadataSchemaModule.cs" />
     <Compile Include="ObjectTypeModule.cs" />
     <Compile Include="FolderModule.cs" />
     <Compile Include="ObjectModule.cs" />

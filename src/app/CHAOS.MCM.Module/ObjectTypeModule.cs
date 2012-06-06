@@ -3,6 +3,7 @@ using System.Linq;
 using CHAOS.MCM.Data.EF;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core;
+using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 
 namespace CHAOS.MCM.Module
@@ -12,24 +13,22 @@ namespace CHAOS.MCM.Module
     {
         #region Business Logic
 
-		#region ObjectType
-
 		[Datatype("ObjectType","Create")]
-		public ObjectType Create( ICallContext callContext, string value  )
+		public ObjectType Create( ICallContext callContext, string name  )
 		{
-            if( !callContext.User.SystemPermissonsEnum.HasFlag( Portal.DTO.Standard.SystemPermissons.Manage ) )
+            if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
 
 		    using( var db = DefaultMCMEntities )
 		    {
-		        var result = db.ObjectType_Create( value ).First().Value; 
+		        var result = db.ObjectType_Create( name ).First().Value; 
 
 		        return db.ObjectType_Get( result, null ).First();
 		    }
 		}
 
 		[Datatype("ObjectType", "Get")]
-		public IEnumerable<Data.DTO.ObjectType> ObjectType_Get( ICallContext callContext )
+		public IEnumerable<Data.DTO.ObjectType> Get( ICallContext callContext )
 		{
 			using( var db = DefaultMCMEntities )
 			{
@@ -37,35 +36,39 @@ namespace CHAOS.MCM.Module
 			}
 		}
 
-		//[Datatype("ObjectType","Update")]
-		//public ScalarResult ObjectType_Update(  CallContext callContext, int id, string newName )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.ObjectType_Update(id, newName, callContext.User.SystemPermission);
+		[Datatype("ObjectType","Update")]
+		public ScalarResult Update(  ICallContext callContext, uint id, string newName )
+		{
+            if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
+                throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
 
-		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to update an Object Type" );
+		    using( var db = DefaultMCMEntities )
+		    {
+		        var result = db.ObjectType_Update( (int?) id, newName ).First();
 
-		//        return new ScalarResult( result );
-		//    }
-		//}
+		        if( result.Value == -100 )
+		            throw new InsufficientPermissionsException( "User does not have permission to update an Object Type" );
 
-		//[Datatype("ObjectType","Delete")]
-		//public ScalarResult ObjectType_Delete( CallContext callContext, int id )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.ObjectType_Delete( id, null, callContext.User.SystemPermission );
+		        return new ScalarResult( result.Value );
+		    }
+		}
 
-		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
+		[Datatype("ObjectType","Delete")]
+		public ScalarResult Delete( ICallContext callContext, uint id )
+		{
+            if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
+                throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
 
-		//        return new ScalarResult( result );
-		//    }
-		//}
+		    using( var db = DefaultMCMEntities )
+		    {
+		        var result = db.ObjectType_Delete( (int?) id, null ).First();
 
-		#endregion
+		        if( result.Value == -100 )
+		            throw new InsufficientPermissionsException( "User does not have permission to delete an Object Type" );
+
+		        return new ScalarResult( result.Value );
+		    }
+		}
 
 		#endregion
     }

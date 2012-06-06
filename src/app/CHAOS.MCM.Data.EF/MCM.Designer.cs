@@ -1656,7 +1656,7 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="gUID">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
         /// <param name="schemaXML">No Metadata Documentation available.</param>
-        public int MetadataSchema_Create(global::System.Byte[] gUID, global::System.String name, global::System.String schemaXML)
+        public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Create(global::System.Byte[] gUID, global::System.String name, global::System.String schemaXML)
         {
             ObjectParameter gUIDParameter;
             if (gUID != null)
@@ -1688,7 +1688,7 @@ namespace CHAOS.MCM.Data.EF
                 schemaXMLParameter = new ObjectParameter("SchemaXML", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction("MetadataSchema_Create", gUIDParameter, nameParameter, schemaXMLParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Create", gUIDParameter, nameParameter, schemaXMLParameter);
         }
     
         /// <summary>
@@ -2755,6 +2755,126 @@ namespace CHAOS.MCM.Data.EF
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("AccessPoint_User_Join_Set", accessPointGUIDParameter, userGUIDParameter, permissionParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> ObjectType_Update(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectType_Update", iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> ObjectType_Delete(Nullable<global::System.Int32> iD, global::System.String name)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectType_Delete", iDParameter, nameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="schemaXML">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Update(global::System.Byte[] gUID, global::System.String name, global::System.String schemaXML)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter schemaXMLParameter;
+            if (schemaXML != null)
+            {
+                schemaXMLParameter = new ObjectParameter("SchemaXML", schemaXML);
+            }
+            else
+            {
+                schemaXMLParameter = new ObjectParameter("SchemaXML", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Update", gUIDParameter, nameParameter, schemaXMLParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Delete(global::System.Byte[] gUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Delete", gUIDParameter);
         }
 
         #endregion
