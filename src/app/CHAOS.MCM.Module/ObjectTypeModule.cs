@@ -14,7 +14,7 @@ namespace CHAOS.MCM.Module
         #region Business Logic
 
 		[Datatype("ObjectType","Create")]
-		public ObjectType Create( ICallContext callContext, string name  )
+        public Data.DTO.ObjectType Create(ICallContext callContext, string name)
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
@@ -23,7 +23,7 @@ namespace CHAOS.MCM.Module
 		    {
 		        var result = db.ObjectType_Create( name ).First().Value; 
 
-		        return db.ObjectType_Get( result, null ).First();
+		        return db.ObjectType_Get( result, null ).ToDTO().First();
 		    }
 		}
 
