@@ -10,7 +10,7 @@ namespace CHAOS.MCM.Test
 		[Test]
 		public void Should_Get_All_MetadataSchemas()
 		{
-			var results = MetadataSchemaModule.Get( AnonCallContext, null );
+			var results = MetadataSchemaModule.Get( AdminCallContext, null );
 
 			Assert.Greater(results.Count(), 0);
 		}
@@ -33,7 +33,7 @@ namespace CHAOS.MCM.Test
         }
 
         [Test]
-        public void Should_Deleted_MetadataSchema()
+        public void Should_Delete_MetadataSchema()
         {
             var result = MetadataSchemaModule.Delete( AdminCallContext, MetadataSchema2.GUID );
 

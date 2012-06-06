@@ -75,8 +75,8 @@ namespace CHAOS.MCM.Test
                 int objectFolderTypeID    = db.ObjectFolderType_Create(1, "Physical").First().Value;
                 int objectFolderTypeID2   = db.ObjectFolderType_Create(2, "Link").First().Value;
                 int languageResult        = db.Language_Create("Afrikaans", "af").First().Value;
-                int metadataSchemaResult1 = db.MetadataSchema_Create(new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />").First().Value;
-                int metadataSchemaResult2 = db.MetadataSchema_Create(new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />").First().Value;
+                int metadataSchemaResult1 = db.MetadataSchema_Create(new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
+                int metadataSchemaResult2 = db.MetadataSchema_Create(new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema2", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
                 int object1Result         = db.Object_Create(new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID).First().Value;
                 int object2Result         = db.Object_Create(new UUID("d7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID).First().Value;
                 int object3Result         = db.Object_Create(new UUID("c7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, subFolderID).First().Value;
@@ -99,8 +99,8 @@ namespace CHAOS.MCM.Test
                 FormatCategory  = db.FormatCategory_Get(formatID, null).First().ToDTO();
                 Format          = db.Format_Get(formatID, null).First().ToDTO();
                 DestinationInfo = db.DestinationInfo_Get(destinationID).First().ToDTO();
-                MetadataSchema  = db.MetadataSchema_Get(new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray()).First().ToDTO();
-                MetadataSchema2 = db.MetadataSchema_Get(new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray()).First().ToDTO();
+                MetadataSchema  = db.MetadataSchema_Get( null, null,new UUID("2df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray() ).First().ToDTO();
+                MetadataSchema2 = db.MetadataSchema_Get( null, null, new UUID("3df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray()).First().ToDTO();
                 Object1         = db.Object_Get(new[] { new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
                 Object2         = db.Object_Get(new[] { new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
                 AccessPoint     = db.AccessPoint_Get( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), "", 1 ).FirstOrDefault();

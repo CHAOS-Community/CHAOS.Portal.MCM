@@ -1656,7 +1656,8 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="gUID">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
         /// <param name="schemaXML">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Create(global::System.Byte[] gUID, global::System.String name, global::System.String schemaXML)
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Create(global::System.Byte[] gUID, global::System.String name, global::System.String schemaXML, global::System.Byte[] userGUID)
         {
             ObjectParameter gUIDParameter;
             if (gUID != null)
@@ -1688,45 +1689,99 @@ namespace CHAOS.MCM.Data.EF
                 schemaXMLParameter = new ObjectParameter("SchemaXML", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Create", gUIDParameter, nameParameter, schemaXMLParameter);
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
+            }
+            else
+            {
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Create", gUIDParameter, nameParameter, schemaXMLParameter, userGUIDParameter);
         }
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] gUID)
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
+        /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
+        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] userGUID, global::System.String groupGUIDs, global::System.Byte[] metadataSchemaGUID)
         {
-            ObjectParameter gUIDParameter;
-            if (gUID != null)
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", gUIDParameter);
+            ObjectParameter groupGUIDsParameter;
+            if (groupGUIDs != null)
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", groupGUIDs);
+            }
+            else
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", typeof(global::System.String));
+            }
+    
+            ObjectParameter metadataSchemaGUIDParameter;
+            if (metadataSchemaGUID != null)
+            {
+                metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", metadataSchemaGUID);
+            }
+            else
+            {
+                metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", userGUIDParameter, groupGUIDsParameter, metadataSchemaGUIDParameter);
         }
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] gUID, MergeOption mergeOption)
+        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
+        /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
+        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] userGUID, global::System.String groupGUIDs, global::System.Byte[] metadataSchemaGUID, MergeOption mergeOption)
         {
-            ObjectParameter gUIDParameter;
-            if (gUID != null)
+            ObjectParameter userGUIDParameter;
+            if (userGUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                userGUIDParameter = new ObjectParameter("UserGUID", userGUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                userGUIDParameter = new ObjectParameter("UserGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", mergeOption, gUIDParameter);
+            ObjectParameter groupGUIDsParameter;
+            if (groupGUIDs != null)
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", groupGUIDs);
+            }
+            else
+            {
+                groupGUIDsParameter = new ObjectParameter("GroupGUIDs", typeof(global::System.String));
+            }
+    
+            ObjectParameter metadataSchemaGUIDParameter;
+            if (metadataSchemaGUID != null)
+            {
+                metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", metadataSchemaGUID);
+            }
+            else
+            {
+                metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", mergeOption, userGUIDParameter, groupGUIDsParameter, metadataSchemaGUIDParameter);
         }
     
         /// <summary>

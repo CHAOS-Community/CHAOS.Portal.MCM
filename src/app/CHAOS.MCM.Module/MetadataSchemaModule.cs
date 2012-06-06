@@ -18,10 +18,9 @@ namespace CHAOS.MCM.Module
 		[Datatype("MetadataSchema", "Get")]
 		public IEnumerable<Data.DTO.MetadataSchema> Get( ICallContext callContext, UUID metadataSchemaGUID )
 		{
-            // TODO: Limit to metadata where use has permissions
 			using( var db = DefaultMCMEntities )
 			{
-				return db.MetadataSchema_Get( metadataSchemaGUID == null ? null : metadataSchemaGUID.ToByteArray() ).ToDTO().ToList();
+				return db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",",callContext.Groups.Select( guid => guid.GUID.ToString().Replace("-","") ) ), metadataSchemaGUID == null ? null : metadataSchemaGUID.ToByteArray() ).ToDTO().ToList();
 			}
 		}
 
@@ -31,16 +30,15 @@ namespace CHAOS.MCM.Module
             // TODO: Replace with proper validation, quick fix to make sure only valid XML is inserted
             XDocument.Parse( schemaXML );
 
-            // TODO: Limit to metadata where use has permissions
 			using( var db = DefaultMCMEntities )
 			{
 			    var guid   = metadataSchemaGUID ?? new UUID();
-				var result = db.MetadataSchema_Create( guid.ToByteArray(), name, schemaXML ).FirstOrDefault();
+				var result = db.MetadataSchema_Create( guid.ToByteArray(), name, schemaXML, callContext.User.GUID.ToByteArray() ).FirstOrDefault();
                 
                 if( result == null || !result.HasValue || result.Value != 1 )
                     throw new UnhandledException( "MetadataSchema was not created" );
 
-                return db.MetadataSchema_Get( guid.ToByteArray() ).ToDTO().First();
+                return db.MetadataSchema_Get( null, null, guid.ToByteArray() ).ToDTO().First();
 			}
 		}
 
