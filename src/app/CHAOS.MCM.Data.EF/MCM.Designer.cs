@@ -1708,7 +1708,8 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="userGUID">No Metadata Documentation available.</param>
         /// <param name="groupGUIDs">No Metadata Documentation available.</param>
         /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
-        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] userGUID, global::System.String groupGUIDs, global::System.Byte[] metadataSchemaGUID)
+        /// <param name="permissionRequired">No Metadata Documentation available.</param>
+        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] userGUID, global::System.String groupGUIDs, global::System.Byte[] metadataSchemaGUID, Nullable<global::System.Int32> permissionRequired)
         {
             ObjectParameter userGUIDParameter;
             if (userGUID != null)
@@ -1740,7 +1741,17 @@ namespace CHAOS.MCM.Data.EF
                 metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", userGUIDParameter, groupGUIDsParameter, metadataSchemaGUIDParameter);
+            ObjectParameter permissionRequiredParameter;
+            if (permissionRequired.HasValue)
+            {
+                permissionRequiredParameter = new ObjectParameter("PermissionRequired", permissionRequired);
+            }
+            else
+            {
+                permissionRequiredParameter = new ObjectParameter("PermissionRequired", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", userGUIDParameter, groupGUIDsParameter, metadataSchemaGUIDParameter, permissionRequiredParameter);
         }
         /// <summary>
         /// No Metadata Documentation available.
@@ -1749,7 +1760,8 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="userGUID">No Metadata Documentation available.</param>
         /// <param name="groupGUIDs">No Metadata Documentation available.</param>
         /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
-        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] userGUID, global::System.String groupGUIDs, global::System.Byte[] metadataSchemaGUID, MergeOption mergeOption)
+        /// <param name="permissionRequired">No Metadata Documentation available.</param>
+        public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] userGUID, global::System.String groupGUIDs, global::System.Byte[] metadataSchemaGUID, Nullable<global::System.Int32> permissionRequired, MergeOption mergeOption)
         {
             ObjectParameter userGUIDParameter;
             if (userGUID != null)
@@ -1781,7 +1793,17 @@ namespace CHAOS.MCM.Data.EF
                 metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", typeof(global::System.Byte[]));
             }
     
-            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", mergeOption, userGUIDParameter, groupGUIDsParameter, metadataSchemaGUIDParameter);
+            ObjectParameter permissionRequiredParameter;
+            if (permissionRequired.HasValue)
+            {
+                permissionRequiredParameter = new ObjectParameter("PermissionRequired", permissionRequired);
+            }
+            else
+            {
+                permissionRequiredParameter = new ObjectParameter("PermissionRequired", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", mergeOption, userGUIDParameter, groupGUIDsParameter, metadataSchemaGUIDParameter, permissionRequiredParameter);
         }
     
         /// <summary>

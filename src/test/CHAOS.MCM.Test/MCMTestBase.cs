@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Objects;
 using System.Linq;
 using System.Xml.Linq;
 using CHAOS.MCM.Data.EF;
@@ -99,8 +100,8 @@ namespace CHAOS.MCM.Test
                 FormatCategory  = db.FormatCategory_Get(formatID, null).First().ToDTO();
                 Format          = db.Format_Get(formatID, null).First().ToDTO();
                 DestinationInfo = db.DestinationInfo_Get(destinationID).First().ToDTO();
-                MetadataSchema  = db.MetadataSchema_Get( null, null,new UUID("2df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray() ).First().ToDTO();
-                MetadataSchema2 = db.MetadataSchema_Get( null, null, new UUID("3df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray()).First().ToDTO();
+                MetadataSchema  = db.MetadataSchema_Get( null, null,new UUID("2df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray(), 0x1 ).First().ToDTO();
+                MetadataSchema2 = db.MetadataSchema_Get( null, null, new UUID("3df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray(), 0x1 ).First().ToDTO();
                 Object1         = db.Object_Get(new[] { new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
                 Object2         = db.Object_Get(new[] { new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
                 AccessPoint     = db.AccessPoint_Get( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), "", 1 ).FirstOrDefault();

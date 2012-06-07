@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using CHAOS.MCM.Module;
+using CHAOS.Portal.Exception;
 using NUnit.Framework;
 
 namespace CHAOS.MCM.Test
@@ -38,6 +39,18 @@ namespace CHAOS.MCM.Test
             var result = MetadataSchemaModule.Delete( AdminCallContext, MetadataSchema2.GUID );
 
             Assert.AreEqual( 1, result.Value );
+        }
+
+        [Test, ExpectedException( typeof( InsufficientPermissionsException ))]
+        public void Should_Throw_InsufficientPermissionsException_On_Delete_MetadataSchema()
+        {
+            MetadataSchemaModule.Delete( AnonCallContext, MetadataSchema2.GUID );
+        }
+
+        [Test, ExpectedException( typeof( InsufficientPermissionsException ))]
+        public void Should_Throw_InsufficientPermissionsException_On_Update_MetadataSchema()
+        {
+            MetadataSchemaModule.Update( AnonCallContext, MetadataSchema2.GUID, "test", "<xmmml />" );
         }
     }
 }

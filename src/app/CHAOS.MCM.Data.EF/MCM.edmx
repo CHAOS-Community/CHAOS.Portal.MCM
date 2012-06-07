@@ -1065,6 +1065,7 @@
           <Parameter Name="UserGUID" Type="binary" Mode="In" />
           <Parameter Name="GroupGUIDs" Type="varchar" Mode="In" />
           <Parameter Name="MetadataSchemaGUID" Type="binary" Mode="In" />
+          <Parameter Name="PermissionRequired" Type="int" Mode="In" />
         </Function>
         <Function Name="MetadataSchema_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
@@ -1370,9 +1371,10 @@
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="MetadataSchema_Get" EntitySet="MetadataSchema" ReturnType="Collection(MCMModel.MetadataSchema)">
-          <Parameter Name="UserGUID" Mode="In" Type="Binary" />
+            <Parameter Name="UserGUID" Mode="In" Type="Binary" />
             <Parameter Name="GroupGUIDs" Mode="In" Type="String" />
             <Parameter Name="MetadataSchemaGUID" Mode="In" Type="Binary" />
+            <Parameter Name="PermissionRequired" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Object_Create" ReturnType="Collection(Int32)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
@@ -1544,7 +1546,7 @@
             <Parameter Name="SchemaXML" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MetadataSchema_Delete" ReturnType="Collection(Int32)">
-          <Parameter Name="GUID" Mode="In" Type="Binary" />
+            <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">

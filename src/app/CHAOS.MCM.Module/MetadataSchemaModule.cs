@@ -7,6 +7,7 @@ using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
+using System.Data.Objects;
 
 namespace CHAOS.MCM.Module
 {
@@ -20,13 +21,16 @@ namespace CHAOS.MCM.Module
 		{
 			using( var db = DefaultMCMEntities )
 			{
-				return db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",",callContext.Groups.Select( guid => guid.GUID.ToString().Replace("-","") ) ), metadataSchemaGUID == null ? null : metadataSchemaGUID.ToByteArray() ).ToDTO().ToList();
+				return db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",",callContext.Groups.Select( guid => guid.GUID.ToString().Replace("-","") ) ), metadataSchemaGUID == null ? null : metadataSchemaGUID.ToByteArray(), 0x1 ).ToDTO().ToList();
 			}
 		}
 
         [Datatype("MetadataSchema", "Create")]
 		public Data.DTO.MetadataSchema Create( ICallContext callContext, UUID metadataSchemaGUID, string name, string schemaXML )
 		{
+            if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
+                throw new InsufficientPermissionsException( "Manage permissions are required to create metadata schemas" );
+            
             // TODO: Replace with proper validation, quick fix to make sure only valid XML is inserted
             XDocument.Parse( schemaXML );
 
@@ -38,7 +42,7 @@ namespace CHAOS.MCM.Module
                 if( result == null || !result.HasValue || result.Value != 1 )
                     throw new UnhandledException( "MetadataSchema was not created" );
 
-                return db.MetadataSchema_Get( null, null, guid.ToByteArray() ).ToDTO().First();
+                return db.MetadataSchema_Get( null, null, guid.ToByteArray(), 0x1 ).ToDTO().First();
 			}
 		}
 
@@ -48,9 +52,14 @@ namespace CHAOS.MCM.Module
             // TODO: Replace with proper validation, quick fix to make sure only valid XML is inserted
             XDocument.Parse( schemaXML );
 
-            // TODO: Limit to metadata where use has permissions
 			using( var db = DefaultMCMEntities )
 			{
+                var guids = string.Join( ",",callContext.Groups.Select( guid => guid.GUID.ToString().Replace("-","") ) );
+			    var getWithPermission = db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), guids, metadataSchemaGUID.ToByteArray(), 0x4 ).FirstOrDefault();
+
+                if( getWithPermission == null )
+                    throw new InsufficientPermissionsException( "User does not have permission to delete MetadataSchema" );
+
 			    var result = db.MetadataSchema_Update( metadataSchemaGUID.ToByteArray(), name, schemaXML ).FirstOrDefault();
                 
                 if( result == null || !result.HasValue || result.Value != 1 )
@@ -63,12 +72,17 @@ namespace CHAOS.MCM.Module
         [Datatype("MetadataSchema", "Delete")]
 		public ScalarResult Delete( ICallContext callContext, UUID metadataSchemaGUID )
 		{
-            // TODO: Limit to metadata where use has permissions
 			using( var db = DefaultMCMEntities )
 			{
-			    var result = db.MetadataSchema_Delete( metadataSchemaGUID.ToByteArray() ).FirstOrDefault();
-                
-                if( result == null || !result.HasValue || result.Value != 1 )
+                var guids = string.Join( ",",callContext.Groups.Select( guid => guid.GUID.ToString().Replace("-","") ) );
+			    var getWithPermission = db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), guids, metadataSchemaGUID.ToByteArray(), 0x2 ).FirstOrDefault();
+
+                if( getWithPermission == null )
+                    throw new InsufficientPermissionsException( "User does not have permission to delete MetadataSchema" );
+
+                var result = db.MetadataSchema_Delete( metadataSchemaGUID.ToByteArray() ).FirstOrDefault();
+
+                if (result == null || !result.HasValue || result.Value != 1)
                     throw new UnhandledException( "MetadataSchema was not deleted" );
 
                 return new ScalarResult( result.Value );
