@@ -52,17 +52,26 @@ namespace CHAOS.MCM.Data.EF
 
 		public static DTO.FileInfo ToDTO( this FileInfo fileInfo )
 		{
-			return new DTO.FileInfo( (uint) fileInfo.ID, 
-								     (uint?) fileInfo.ParentID, 
-									 fileInfo.ObjectGUID, 
-									 fileInfo.Filename, 
-									 fileInfo.OriginalFilename, 
-									 fileInfo.Token, 
-									 fileInfo.URL,
-									 (uint) fileInfo.FormatID, 
-									 fileInfo.Format, 
-									 fileInfo.FormatCategory, 
-									 fileInfo.FormatType );
+			return new DTO.FileInfo( (uint) fileInfo.FileID,  
+									 fileInfo.ObjectGUID,
+                                     (uint?) fileInfo.ParentID,
+									 (uint)fileInfo.DestinationID, 
+									 fileInfo.FileName, 
+									 fileInfo.OriginalFileName, 
+									 fileInfo.FolderPath,
+									 fileInfo.FileDateCreated,
+									 fileInfo.BasePath, 
+									 fileInfo.StringFormat, 
+									 fileInfo.AccessProviderDateCreated,
+                                     fileInfo.Token,
+                                     (uint) fileInfo.FormatID,
+                                     fileInfo.FormatName,
+                                     fileInfo.FormatXML,
+                                     fileInfo.MimeType,
+                                     (uint) fileInfo.FormatCategoryID,
+                                     fileInfo.FormatCategoryName,
+                                     (uint) fileInfo.FormatTypeID,
+                                     fileInfo.FormatTypeName );
 		}
 
 		#endregion

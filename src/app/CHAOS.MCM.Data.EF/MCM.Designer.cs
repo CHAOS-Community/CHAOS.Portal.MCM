@@ -504,22 +504,6 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<FileInfo> FileInfo
-        {
-            get
-            {
-                if ((_FileInfo == null))
-                {
-                    _FileInfo = base.CreateObjectSet<FileInfo>("FileInfo");
-                }
-                return _FileInfo;
-            }
-        }
-        private ObjectSet<FileInfo> _FileInfo;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Metadata> Metadata
         {
             get
@@ -580,6 +564,22 @@ namespace CHAOS.MCM.Data.EF
             }
         }
         private ObjectSet<AccessPoint_Object_Join> _AccessPoint_Object_Join;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FileInfo> FileInfo
+        {
+            get
+            {
+                if ((_FileInfo == null))
+                {
+                    _FileInfo = base.CreateObjectSet<FileInfo>("FileInfo");
+                }
+                return _FileInfo;
+            }
+        }
+        private ObjectSet<FileInfo> _FileInfo;
 
         #endregion
 
@@ -786,14 +786,6 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FileInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToFileInfo(FileInfo fileInfo)
-        {
-            base.AddObject("FileInfo", fileInfo);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMetadata(Metadata metadata)
@@ -823,6 +815,14 @@ namespace CHAOS.MCM.Data.EF
         public void AddToAccessPoint_Object_Join(AccessPoint_Object_Join accessPoint_Object_Join)
         {
             base.AddObject("AccessPoint_Object_Join", accessPoint_Object_Join);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FileInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFileInfo(FileInfo fileInfo)
+        {
+            base.AddObject("FileInfo", fileInfo);
         }
 
         #endregion
@@ -5275,27 +5275,45 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// Create a new FileInfo object.
         /// </summary>
-        /// <param name="id">Initial value of the ID property.</param>
+        /// <param name="fileID">Initial value of the FileID property.</param>
         /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
-        /// <param name="filename">Initial value of the Filename property.</param>
-        /// <param name="originalFilename">Initial value of the OriginalFilename property.</param>
+        /// <param name="destinationID">Initial value of the DestinationID property.</param>
+        /// <param name="fileName">Initial value of the FileName property.</param>
+        /// <param name="originalFileName">Initial value of the OriginalFileName property.</param>
+        /// <param name="folderPath">Initial value of the FolderPath property.</param>
+        /// <param name="fileDateCreated">Initial value of the FileDateCreated property.</param>
+        /// <param name="basePath">Initial value of the BasePath property.</param>
+        /// <param name="stringFormat">Initial value of the StringFormat property.</param>
+        /// <param name="accessProviderDateCreated">Initial value of the AccessProviderDateCreated property.</param>
         /// <param name="token">Initial value of the Token property.</param>
         /// <param name="formatID">Initial value of the FormatID property.</param>
-        /// <param name="format">Initial value of the Format property.</param>
-        /// <param name="formatCategory">Initial value of the FormatCategory property.</param>
-        /// <param name="formatType">Initial value of the FormatType property.</param>
-        public static FileInfo CreateFileInfo(global::System.Int64 id, global::System.Guid objectGUID, global::System.String filename, global::System.String originalFilename, global::System.String token, global::System.Int64 formatID, global::System.String format, global::System.String formatCategory, global::System.String formatType)
+        /// <param name="formatName">Initial value of the FormatName property.</param>
+        /// <param name="mimeType">Initial value of the MimeType property.</param>
+        /// <param name="formatCategoryID">Initial value of the FormatCategoryID property.</param>
+        /// <param name="formatCategoryName">Initial value of the FormatCategoryName property.</param>
+        /// <param name="formatTypeID">Initial value of the FormatTypeID property.</param>
+        /// <param name="formatTypeName">Initial value of the FormatTypeName property.</param>
+        public static FileInfo CreateFileInfo(global::System.Int64 fileID, global::System.Guid objectGUID, global::System.Int64 destinationID, global::System.String fileName, global::System.String originalFileName, global::System.String folderPath, global::System.DateTime fileDateCreated, global::System.String basePath, global::System.String stringFormat, global::System.DateTime accessProviderDateCreated, global::System.String token, global::System.Int64 formatID, global::System.String formatName, global::System.String mimeType, global::System.Int64 formatCategoryID, global::System.String formatCategoryName, global::System.Int64 formatTypeID, global::System.String formatTypeName)
         {
             FileInfo fileInfo = new FileInfo();
-            fileInfo.ID = id;
+            fileInfo.FileID = fileID;
             fileInfo.ObjectGUID = objectGUID;
-            fileInfo.Filename = filename;
-            fileInfo.OriginalFilename = originalFilename;
+            fileInfo.DestinationID = destinationID;
+            fileInfo.FileName = fileName;
+            fileInfo.OriginalFileName = originalFileName;
+            fileInfo.FolderPath = folderPath;
+            fileInfo.FileDateCreated = fileDateCreated;
+            fileInfo.BasePath = basePath;
+            fileInfo.StringFormat = stringFormat;
+            fileInfo.AccessProviderDateCreated = accessProviderDateCreated;
             fileInfo.Token = token;
             fileInfo.FormatID = formatID;
-            fileInfo.Format = format;
-            fileInfo.FormatCategory = formatCategory;
-            fileInfo.FormatType = formatType;
+            fileInfo.FormatName = formatName;
+            fileInfo.MimeType = mimeType;
+            fileInfo.FormatCategoryID = formatCategoryID;
+            fileInfo.FormatCategoryName = formatCategoryName;
+            fileInfo.FormatTypeID = formatTypeID;
+            fileInfo.FormatTypeName = formatTypeName;
             return fileInfo;
         }
 
@@ -5308,51 +5326,27 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int64 ID
+        public global::System.Int64 FileID
         {
             get
             {
-                return _ID;
+                return _FileID;
             }
             set
             {
-                if (_ID != value)
+                if (_FileID != value)
                 {
-                    OnIDChanging(value);
-                    ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ID");
-                    OnIDChanged();
+                    OnFileIDChanging(value);
+                    ReportPropertyChanging("FileID");
+                    _FileID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FileID");
+                    OnFileIDChanged();
                 }
             }
         }
-        private global::System.Int64 _ID;
-        partial void OnIDChanging(global::System.Int64 value);
-        partial void OnIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int64> ParentID
-        {
-            get
-            {
-                return _ParentID;
-            }
-            set
-            {
-                OnParentIDChanging(value);
-                ReportPropertyChanging("ParentID");
-                _ParentID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ParentID");
-                OnParentIDChanged();
-            }
-        }
-        private Nullable<global::System.Int64> _ParentID;
-        partial void OnParentIDChanging(Nullable<global::System.Int64> value);
-        partial void OnParentIDChanged();
+        private global::System.Int64 _FileID;
+        partial void OnFileIDChanging(global::System.Int64 value);
+        partial void OnFileIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5384,56 +5378,242 @@ namespace CHAOS.MCM.Data.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String Filename
+        public Nullable<global::System.Int64> ParentID
         {
             get
             {
-                return _Filename;
+                return _ParentID;
             }
             set
             {
-                if (_Filename != value)
-                {
-                    OnFilenameChanging(value);
-                    ReportPropertyChanging("Filename");
-                    _Filename = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("Filename");
-                    OnFilenameChanged();
-                }
+                OnParentIDChanging(value);
+                ReportPropertyChanging("ParentID");
+                _ParentID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ParentID");
+                OnParentIDChanged();
             }
         }
-        private global::System.String _Filename;
-        partial void OnFilenameChanging(global::System.String value);
-        partial void OnFilenameChanged();
+        private Nullable<global::System.Int64> _ParentID;
+        partial void OnParentIDChanging(Nullable<global::System.Int64> value);
+        partial void OnParentIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String OriginalFilename
+        public global::System.Int64 DestinationID
         {
             get
             {
-                return _OriginalFilename;
+                return _DestinationID;
             }
             set
             {
-                if (_OriginalFilename != value)
+                if (_DestinationID != value)
                 {
-                    OnOriginalFilenameChanging(value);
-                    ReportPropertyChanging("OriginalFilename");
-                    _OriginalFilename = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("OriginalFilename");
-                    OnOriginalFilenameChanged();
+                    OnDestinationIDChanging(value);
+                    ReportPropertyChanging("DestinationID");
+                    _DestinationID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("DestinationID");
+                    OnDestinationIDChanged();
                 }
             }
         }
-        private global::System.String _OriginalFilename;
-        partial void OnOriginalFilenameChanging(global::System.String value);
-        partial void OnOriginalFilenameChanged();
+        private global::System.Int64 _DestinationID;
+        partial void OnDestinationIDChanging(global::System.Int64 value);
+        partial void OnDestinationIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FileName
+        {
+            get
+            {
+                return _FileName;
+            }
+            set
+            {
+                if (_FileName != value)
+                {
+                    OnFileNameChanging(value);
+                    ReportPropertyChanging("FileName");
+                    _FileName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("FileName");
+                    OnFileNameChanged();
+                }
+            }
+        }
+        private global::System.String _FileName;
+        partial void OnFileNameChanging(global::System.String value);
+        partial void OnFileNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String OriginalFileName
+        {
+            get
+            {
+                return _OriginalFileName;
+            }
+            set
+            {
+                if (_OriginalFileName != value)
+                {
+                    OnOriginalFileNameChanging(value);
+                    ReportPropertyChanging("OriginalFileName");
+                    _OriginalFileName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("OriginalFileName");
+                    OnOriginalFileNameChanged();
+                }
+            }
+        }
+        private global::System.String _OriginalFileName;
+        partial void OnOriginalFileNameChanging(global::System.String value);
+        partial void OnOriginalFileNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FolderPath
+        {
+            get
+            {
+                return _FolderPath;
+            }
+            set
+            {
+                if (_FolderPath != value)
+                {
+                    OnFolderPathChanging(value);
+                    ReportPropertyChanging("FolderPath");
+                    _FolderPath = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("FolderPath");
+                    OnFolderPathChanged();
+                }
+            }
+        }
+        private global::System.String _FolderPath;
+        partial void OnFolderPathChanging(global::System.String value);
+        partial void OnFolderPathChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime FileDateCreated
+        {
+            get
+            {
+                return _FileDateCreated;
+            }
+            set
+            {
+                if (_FileDateCreated != value)
+                {
+                    OnFileDateCreatedChanging(value);
+                    ReportPropertyChanging("FileDateCreated");
+                    _FileDateCreated = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FileDateCreated");
+                    OnFileDateCreatedChanged();
+                }
+            }
+        }
+        private global::System.DateTime _FileDateCreated;
+        partial void OnFileDateCreatedChanging(global::System.DateTime value);
+        partial void OnFileDateCreatedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String BasePath
+        {
+            get
+            {
+                return _BasePath;
+            }
+            set
+            {
+                if (_BasePath != value)
+                {
+                    OnBasePathChanging(value);
+                    ReportPropertyChanging("BasePath");
+                    _BasePath = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("BasePath");
+                    OnBasePathChanged();
+                }
+            }
+        }
+        private global::System.String _BasePath;
+        partial void OnBasePathChanging(global::System.String value);
+        partial void OnBasePathChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String StringFormat
+        {
+            get
+            {
+                return _StringFormat;
+            }
+            set
+            {
+                if (_StringFormat != value)
+                {
+                    OnStringFormatChanging(value);
+                    ReportPropertyChanging("StringFormat");
+                    _StringFormat = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("StringFormat");
+                    OnStringFormatChanged();
+                }
+            }
+        }
+        private global::System.String _StringFormat;
+        partial void OnStringFormatChanging(global::System.String value);
+        partial void OnStringFormatChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime AccessProviderDateCreated
+        {
+            get
+            {
+                return _AccessProviderDateCreated;
+            }
+            set
+            {
+                if (_AccessProviderDateCreated != value)
+                {
+                    OnAccessProviderDateCreatedChanging(value);
+                    ReportPropertyChanging("AccessProviderDateCreated");
+                    _AccessProviderDateCreated = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AccessProviderDateCreated");
+                    OnAccessProviderDateCreatedChanged();
+                }
+            }
+        }
+        private global::System.DateTime _AccessProviderDateCreated;
+        partial void OnAccessProviderDateCreatedChanging(global::System.DateTime value);
+        partial void OnAccessProviderDateCreatedChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5461,30 +5641,6 @@ namespace CHAOS.MCM.Data.EF
         private global::System.String _Token;
         partial void OnTokenChanging(global::System.String value);
         partial void OnTokenChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String URL
-        {
-            get
-            {
-                return _URL;
-            }
-            set
-            {
-                OnURLChanging(value);
-                ReportPropertyChanging("URL");
-                _URL = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("URL");
-                OnURLChanged();
-            }
-        }
-        private global::System.String _URL;
-        partial void OnURLChanging(global::System.String value);
-        partial void OnURLChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5518,81 +5674,186 @@ namespace CHAOS.MCM.Data.EF
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String Format
+        public global::System.String FormatName
         {
             get
             {
-                return _Format;
+                return _FormatName;
             }
             set
             {
-                if (_Format != value)
+                if (_FormatName != value)
                 {
-                    OnFormatChanging(value);
-                    ReportPropertyChanging("Format");
-                    _Format = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("Format");
-                    OnFormatChanged();
+                    OnFormatNameChanging(value);
+                    ReportPropertyChanging("FormatName");
+                    _FormatName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("FormatName");
+                    OnFormatNameChanged();
                 }
             }
         }
-        private global::System.String _Format;
-        partial void OnFormatChanging(global::System.String value);
-        partial void OnFormatChanged();
+        private global::System.String _FormatName;
+        partial void OnFormatNameChanging(global::System.String value);
+        partial void OnFormatNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FormatXML
+        {
+            get
+            {
+                return _FormatXML;
+            }
+            set
+            {
+                OnFormatXMLChanging(value);
+                ReportPropertyChanging("FormatXML");
+                _FormatXML = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FormatXML");
+                OnFormatXMLChanged();
+            }
+        }
+        private global::System.String _FormatXML;
+        partial void OnFormatXMLChanging(global::System.String value);
+        partial void OnFormatXMLChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String FormatCategory
+        public global::System.String MimeType
         {
             get
             {
-                return _FormatCategory;
+                return _MimeType;
             }
             set
             {
-                if (_FormatCategory != value)
+                if (_MimeType != value)
                 {
-                    OnFormatCategoryChanging(value);
-                    ReportPropertyChanging("FormatCategory");
-                    _FormatCategory = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("FormatCategory");
-                    OnFormatCategoryChanged();
+                    OnMimeTypeChanging(value);
+                    ReportPropertyChanging("MimeType");
+                    _MimeType = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("MimeType");
+                    OnMimeTypeChanged();
                 }
             }
         }
-        private global::System.String _FormatCategory;
-        partial void OnFormatCategoryChanging(global::System.String value);
-        partial void OnFormatCategoryChanged();
+        private global::System.String _MimeType;
+        partial void OnMimeTypeChanging(global::System.String value);
+        partial void OnMimeTypeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String FormatType
+        public global::System.Int64 FormatCategoryID
         {
             get
             {
-                return _FormatType;
+                return _FormatCategoryID;
             }
             set
             {
-                if (_FormatType != value)
+                if (_FormatCategoryID != value)
                 {
-                    OnFormatTypeChanging(value);
-                    ReportPropertyChanging("FormatType");
-                    _FormatType = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("FormatType");
-                    OnFormatTypeChanged();
+                    OnFormatCategoryIDChanging(value);
+                    ReportPropertyChanging("FormatCategoryID");
+                    _FormatCategoryID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FormatCategoryID");
+                    OnFormatCategoryIDChanged();
                 }
             }
         }
-        private global::System.String _FormatType;
-        partial void OnFormatTypeChanging(global::System.String value);
-        partial void OnFormatTypeChanged();
+        private global::System.Int64 _FormatCategoryID;
+        partial void OnFormatCategoryIDChanging(global::System.Int64 value);
+        partial void OnFormatCategoryIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FormatCategoryName
+        {
+            get
+            {
+                return _FormatCategoryName;
+            }
+            set
+            {
+                if (_FormatCategoryName != value)
+                {
+                    OnFormatCategoryNameChanging(value);
+                    ReportPropertyChanging("FormatCategoryName");
+                    _FormatCategoryName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("FormatCategoryName");
+                    OnFormatCategoryNameChanged();
+                }
+            }
+        }
+        private global::System.String _FormatCategoryName;
+        partial void OnFormatCategoryNameChanging(global::System.String value);
+        partial void OnFormatCategoryNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 FormatTypeID
+        {
+            get
+            {
+                return _FormatTypeID;
+            }
+            set
+            {
+                if (_FormatTypeID != value)
+                {
+                    OnFormatTypeIDChanging(value);
+                    ReportPropertyChanging("FormatTypeID");
+                    _FormatTypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("FormatTypeID");
+                    OnFormatTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _FormatTypeID;
+        partial void OnFormatTypeIDChanging(global::System.Int64 value);
+        partial void OnFormatTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FormatTypeName
+        {
+            get
+            {
+                return _FormatTypeName;
+            }
+            set
+            {
+                if (_FormatTypeName != value)
+                {
+                    OnFormatTypeNameChanging(value);
+                    ReportPropertyChanging("FormatTypeName");
+                    _FormatTypeName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("FormatTypeName");
+                    OnFormatTypeNameChanged();
+                }
+            }
+        }
+        private global::System.String _FormatTypeName;
+        partial void OnFormatTypeNameChanging(global::System.String value);
+        partial void OnFormatTypeNameChanged();
 
         #endregion
 

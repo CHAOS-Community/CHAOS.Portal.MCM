@@ -46,17 +46,26 @@
           </EntitySet>
           <EntitySet Name="FileInfo" EntityType="MCMModel.Store.FileInfo" store:Type="Views" store:Schema="MCM" store:Name="FileInfo">
             <DefiningQuery>SELECT
-      `FileInfo`.`ID`, 
-      `FileInfo`.`ParentID`, 
+      `FileInfo`.`FileID`, 
       `FileInfo`.`ObjectGUID`, 
-      `FileInfo`.`Filename`, 
-      `FileInfo`.`OriginalFilename`, 
+      `FileInfo`.`ParentID`, 
+      `FileInfo`.`DestinationID`, 
+      `FileInfo`.`FileName`, 
+      `FileInfo`.`OriginalFileName`, 
+      `FileInfo`.`FolderPath`, 
+      `FileInfo`.`FileDateCreated`, 
+      `FileInfo`.`BasePath`, 
+      `FileInfo`.`StringFormat`, 
+      `FileInfo`.`AccessProviderDateCreated`, 
       `FileInfo`.`Token`, 
-      `FileInfo`.`URL`, 
       `FileInfo`.`FormatID`, 
-      `FileInfo`.`Format`, 
-      `FileInfo`.`FormatCategory`, 
-      `FileInfo`.`FormatType`
+      `FileInfo`.`FormatName`, 
+      `FileInfo`.`FormatXML`, 
+      `FileInfo`.`MimeType`, 
+      `FileInfo`.`FormatCategoryID`, 
+      `FileInfo`.`FormatCategoryName`, 
+      `FileInfo`.`FormatTypeID`, 
+      `FileInfo`.`FormatTypeName`
       FROM `FileInfo` AS `FileInfo`</DefiningQuery>
           </EntitySet>
           <EntitySet Name="FolderInfo" EntityType="MCMModel.Store.FolderInfo" store:Type="Views" store:Schema="MCM" store:Name="FolderInfo">
@@ -482,27 +491,45 @@
       -->
         <EntityType Name="FileInfo">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="FileID" />
             <PropertyRef Name="ObjectGUID" />
-            <PropertyRef Name="Filename" />
-            <PropertyRef Name="OriginalFilename" />
+            <PropertyRef Name="DestinationID" />
+            <PropertyRef Name="FileName" />
+            <PropertyRef Name="OriginalFileName" />
+            <PropertyRef Name="FolderPath" />
+            <PropertyRef Name="FileDateCreated" />
+            <PropertyRef Name="BasePath" />
+            <PropertyRef Name="StringFormat" />
+            <PropertyRef Name="AccessProviderDateCreated" />
             <PropertyRef Name="Token" />
             <PropertyRef Name="FormatID" />
-            <PropertyRef Name="Format" />
-            <PropertyRef Name="FormatCategory" />
-            <PropertyRef Name="FormatType" />
+            <PropertyRef Name="FormatName" />
+            <PropertyRef Name="MimeType" />
+            <PropertyRef Name="FormatCategoryID" />
+            <PropertyRef Name="FormatCategoryName" />
+            <PropertyRef Name="FormatTypeID" />
+            <PropertyRef Name="FormatTypeName" />
           </Key>
-          <Property Name="ID" Type="uint" Nullable="false" />
-          <Property Name="ParentID" Type="uint" />
+          <Property Name="FileID" Type="uint" Nullable="false" />
           <Property Name="ObjectGUID" Type="guid" Nullable="false" />
-          <Property Name="Filename" Type="varchar" Nullable="false" MaxLength="2048" />
-          <Property Name="OriginalFilename" Type="varchar" Nullable="false" MaxLength="2048" />
+          <Property Name="ParentID" Type="uint" />
+          <Property Name="DestinationID" Type="uint" Nullable="false" />
+          <Property Name="FileName" Type="varchar" Nullable="false" MaxLength="2048" />
+          <Property Name="OriginalFileName" Type="varchar" Nullable="false" MaxLength="2048" />
+          <Property Name="FolderPath" Type="varchar" Nullable="false" MaxLength="2048" />
+          <Property Name="FileDateCreated" Type="datetime" Nullable="false" />
+          <Property Name="BasePath" Type="varchar" Nullable="false" MaxLength="2048" />
+          <Property Name="StringFormat" Type="varchar" Nullable="false" MaxLength="2048" />
+          <Property Name="AccessProviderDateCreated" Type="datetime" Nullable="false" />
           <Property Name="Token" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="URL" Type="mediumtext" />
           <Property Name="FormatID" Type="uint" Nullable="false" />
-          <Property Name="Format" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="FormatCategory" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="FormatType" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="FormatName" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="FormatXML" Type="text" />
+          <Property Name="MimeType" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="FormatCategoryID" Type="uint" Nullable="false" />
+          <Property Name="FormatCategoryName" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="FormatTypeID" Type="uint" Nullable="false" />
+          <Property Name="FormatTypeName" Type="varchar" Nullable="false" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'def.MCM.FolderInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -1420,7 +1447,6 @@
             <Parameter Name="RequiredPermission" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="FolderInfo" EntityType="MCMModel.FolderInfo" />
-          <EntitySet Name="FileInfo" EntityType="MCMModel.FileInfo" />
           <FunctionImport Name="ObjectRelation_Create" ReturnType="Collection(Int32)">
             <Parameter Name="Object1GUID" Mode="In" Type="Binary" />
             <Parameter Name="Object2GUID" Mode="In" Type="Binary" />
@@ -1546,8 +1572,9 @@
             <Parameter Name="SchemaXML" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="MetadataSchema_Delete" ReturnType="Collection(Int32)">
-            <Parameter Name="GUID" Mode="In" Type="Binary" />
+          <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
+          <EntitySet Name="FileInfo" EntityType="MCMModel.FileInfo" />
           </EntityContainer>
         <EntityType Name="AccessPoint">
           <Key>
@@ -2087,30 +2114,6 @@
           <Property Type="Int64" Name="NumberOfSubFolders" />
           <Property Type="Int64" Name="NumberOfObjects" />
         </EntityType>
-        <EntityType Name="FileInfo">
-          <Key>
-            <PropertyRef Name="ID" />
-            <PropertyRef Name="ObjectGUID" />
-            <PropertyRef Name="Filename" />
-            <PropertyRef Name="OriginalFilename" />
-            <PropertyRef Name="Token" />
-            <PropertyRef Name="FormatID" />
-            <PropertyRef Name="Format" />
-            <PropertyRef Name="FormatCategory" />
-            <PropertyRef Name="FormatType" />
-          </Key>
-          <Property Type="Int64" Name="ID" Nullable="false" />
-          <Property Type="Int64" Name="ParentID" />
-          <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
-          <Property Type="String" Name="Filename" Nullable="false" />
-          <Property Type="String" Name="OriginalFilename" Nullable="false" />
-          <Property Type="String" Name="Token" Nullable="false" />
-          <Property Type="String" Name="URL" />
-          <Property Type="Int64" Name="FormatID" Nullable="false" />
-          <Property Type="String" Name="Format" Nullable="false" />
-          <Property Type="String" Name="FormatCategory" Nullable="false" />
-          <Property Type="String" Name="FormatType" Nullable="false" />
-        </EntityType>
         <EntityType Name="Metadata">
           <Key>
             <PropertyRef Name="GUID" />
@@ -2301,6 +2304,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FileInfo">
+          <Key>
+            <PropertyRef Name="FileID" />
+            <PropertyRef Name="ObjectGUID" />
+            <PropertyRef Name="DestinationID" />
+            <PropertyRef Name="FileName" />
+            <PropertyRef Name="OriginalFileName" />
+            <PropertyRef Name="FolderPath" />
+            <PropertyRef Name="FileDateCreated" />
+            <PropertyRef Name="BasePath" />
+            <PropertyRef Name="StringFormat" />
+            <PropertyRef Name="AccessProviderDateCreated" />
+            <PropertyRef Name="Token" />
+            <PropertyRef Name="FormatID" />
+            <PropertyRef Name="FormatName" />
+            <PropertyRef Name="MimeType" />
+            <PropertyRef Name="FormatCategoryID" />
+            <PropertyRef Name="FormatCategoryName" />
+            <PropertyRef Name="FormatTypeID" />
+            <PropertyRef Name="FormatTypeName" />
+          </Key>
+          <Property Type="Int64" Name="FileID" Nullable="false" />
+          <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
+          <Property Type="Int64" Name="ParentID" />
+          <Property Type="Int64" Name="DestinationID" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" />
+          <Property Type="String" Name="OriginalFileName" Nullable="false" />
+          <Property Type="String" Name="FolderPath" Nullable="false" />
+          <Property Type="DateTime" Name="FileDateCreated" Nullable="false" />
+          <Property Type="String" Name="BasePath" Nullable="false" />
+          <Property Type="String" Name="StringFormat" Nullable="false" />
+          <Property Type="DateTime" Name="AccessProviderDateCreated" Nullable="false" />
+          <Property Type="String" Name="Token" Nullable="false" />
+          <Property Type="Int64" Name="FormatID" Nullable="false" />
+          <Property Type="String" Name="FormatName" Nullable="false" />
+          <Property Type="String" Name="FormatXML" />
+          <Property Type="String" Name="MimeType" Nullable="false" />
+          <Property Type="Int64" Name="FormatCategoryID" Nullable="false" />
+          <Property Type="String" Name="FormatCategoryName" Nullable="false" />
+          <Property Type="Int64" Name="FormatTypeID" Nullable="false" />
+          <Property Type="String" Name="FormatTypeName" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2512,23 +2557,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="FileInfo">
-            <EntityTypeMapping TypeName="MCMModel.FileInfo">
-              <MappingFragment StoreEntitySet="FileInfo">
-                <ScalarProperty Name="FormatType" ColumnName="FormatType" />
-                <ScalarProperty Name="FormatCategory" ColumnName="FormatCategory" />
-                <ScalarProperty Name="Format" ColumnName="Format" />
-                <ScalarProperty Name="FormatID" ColumnName="FormatID" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="Token" ColumnName="Token" />
-                <ScalarProperty Name="OriginalFilename" ColumnName="OriginalFilename" />
-                <ScalarProperty Name="Filename" ColumnName="Filename" />
-                <ScalarProperty Name="ObjectGUID" ColumnName="ObjectGUID" />
-                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="ObjectRelation_Create" FunctionName="MCMModel.Store.ObjectRelation_Create" />
           <FunctionImportMapping FunctionImportName="ObjectRelation_Delete" FunctionName="MCMModel.Store.ObjectRelation_Delete" />
           <EntitySetMapping Name="Metadata">
@@ -2592,6 +2620,32 @@
           <FunctionImportMapping FunctionImportName="ObjectType_Delete" FunctionName="MCMModel.Store.ObjectType_Delete" />
           <FunctionImportMapping FunctionImportName="MetadataSchema_Update" FunctionName="MCMModel.Store.MetadataSchema_Update" />
           <FunctionImportMapping FunctionImportName="MetadataSchema_Delete" FunctionName="MCMModel.Store.MetadataSchema_Delete" />
+          <EntitySetMapping Name="FileInfo">
+            <EntityTypeMapping TypeName="MCMModel.FileInfo">
+              <MappingFragment StoreEntitySet="FileInfo">
+                <ScalarProperty Name="FormatTypeName" ColumnName="FormatTypeName" />
+                <ScalarProperty Name="FormatTypeID" ColumnName="FormatTypeID" />
+                <ScalarProperty Name="FormatCategoryName" ColumnName="FormatCategoryName" />
+                <ScalarProperty Name="FormatCategoryID" ColumnName="FormatCategoryID" />
+                <ScalarProperty Name="MimeType" ColumnName="MimeType" />
+                <ScalarProperty Name="FormatXML" ColumnName="FormatXML" />
+                <ScalarProperty Name="FormatName" ColumnName="FormatName" />
+                <ScalarProperty Name="FormatID" ColumnName="FormatID" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="AccessProviderDateCreated" ColumnName="AccessProviderDateCreated" />
+                <ScalarProperty Name="StringFormat" ColumnName="StringFormat" />
+                <ScalarProperty Name="BasePath" ColumnName="BasePath" />
+                <ScalarProperty Name="FileDateCreated" ColumnName="FileDateCreated" />
+                <ScalarProperty Name="FolderPath" ColumnName="FolderPath" />
+                <ScalarProperty Name="OriginalFileName" ColumnName="OriginalFileName" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="DestinationID" ColumnName="DestinationID" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ObjectGUID" ColumnName="ObjectGUID" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2724,10 +2778,10 @@
         <EntityTypeShape EntityType="MCMModel.DestinationInfo" Width="1.5" PointX="0.75" PointY="8.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="MCMModel.Object" Width="1.5" PointX="3" PointY="0.75" Height="2.9417936197916674" />
         <AssociationConnector Association="MCMModel.FK_Object_GUID_File_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="2.800730869391026" />
-          <ConnectorPoint PointX="4.916666666666667" PointY="2.8007308693910256" />
-          <ConnectorPoint PointX="5.083333333333333" PointY="2.800730869391026" />
-          <ConnectorPoint PointX="6" PointY="2.800730869391026" />
+          <ConnectorPoint PointX="4.5" PointY="2.9295828826121797" />
+          <ConnectorPoint PointX="4.916666666666667" PointY="2.9295828826121793" />
+          <ConnectorPoint PointX="5.083333333333333" PointY="2.9295828826121797" />
+          <ConnectorPoint PointX="6" PointY="2.9295828826121797" />
           <ConnectorPoint PointX="6" PointY="2.720683593749996" />
           <ConnectorPoint PointX="7.75" PointY="2.720683593749996" />
           <ConnectorPoint PointX="7.75" PointY="7.875" />
@@ -2762,7 +2816,6 @@
           <ConnectorPoint PointX="5.5" PointY="12.422841796874998" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.FolderInfo" Width="1.5" PointX="12.375" PointY="8.75" Height="2.5771907552083331" />
-        <EntityTypeShape EntityType="MCMModel.FileInfo" Width="1.5" PointX="14.375" PointY="6" Height="3.1340950520833246" />
         <EntityTypeShape EntityType="MCMModel.Metadata" Width="1.5" PointX="5.25" PointY="14.75" Height="3.1340950520833246" />
         <AssociationConnector Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" >
           <ConnectorPoint PointX="2.25" PointY="14.102885742187505" />
@@ -2776,8 +2829,8 @@
           <ConnectorPoint PointX="5.25" PointY="16.153722330729167" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="1.8651437291666659" />
-          <ConnectorPoint PointX="5" PointY="1.8651437291666659" />
+          <ConnectorPoint PointX="4.5" PointY="2.2208968098958337" />
+          <ConnectorPoint PointX="5" PointY="2.2208968098958337" />
           <ConnectorPoint PointX="5" PointY="14.375" />
           <ConnectorPoint PointX="5.593748" PointY="14.375" />
           <ConnectorPoint PointX="5.593748" PointY="14.75" />
@@ -2838,18 +2891,17 @@
           <ConnectorPoint PointX="16" PointY="12.332062174479166" />
         </AssociationConnector>
         <AssociationConnector Association="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" >
-          <ConnectorPoint PointX="4.5" PointY="2.0061434545272441" />
-          <ConnectorPoint PointX="4.916666666666667" PointY="2.0061434545272436" />
-          <ConnectorPoint PointX="5.083333333333333" PointY="2.0061434545272441" />
-          <ConnectorPoint PointX="5.75" PointY="2.0061434545272441" />
+          <ConnectorPoint PointX="4.5" PointY="1.7699147636217951" />
+          <ConnectorPoint PointX="5.75" PointY="1.7699147636217951" />
           <ConnectorPoint PointX="5.75" PointY="2.595683593749996" />
           <ConnectorPoint PointX="8" PointY="2.595683593749996" />
           <ConnectorPoint PointX="8" PointY="3.8071907552083246" />
           <ConnectorPoint PointX="8.9166666666666661" PointY="3.8071907552083242" />
           <ConnectorPoint PointX="9.0833333333333339" PointY="3.8071907552083246" />
-          <ConnectorPoint PointX="16.75" PointY="3.8071907552083246" />
-          <ConnectorPoint PointX="16.75" PointY="10.875" />
+          <ConnectorPoint PointX="16.9062495" PointY="3.8071907552083246" />
+          <ConnectorPoint PointX="16.9062495" PointY="10.875" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="MCMModel.FileInfo" Width="1.5" PointX="14.375" PointY="4.75" Height="4.8648079427083246" />
         </Diagram>
     </Diagrams>
   </Designer>
