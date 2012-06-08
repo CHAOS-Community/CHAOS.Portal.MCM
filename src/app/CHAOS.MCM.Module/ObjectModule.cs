@@ -25,7 +25,9 @@ namespace CHAOS.MCM.Module
 			using( var db = DefaultMCMEntities )
 			{
 			    if( query != null )
-				{
+			    {
+			        var metadataSchemas = new List<MetadataSchema>();
+
                     if( accessPointGUID != null )
                     {
                         query.Query = string.Format( "({0})+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+TO+*])", query.Query );
@@ -36,9 +38,9 @@ namespace CHAOS.MCM.Module
 
                         var folders = PermissionManager.GetFolders(callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid())).ToList();
   
-                        //TODO: Refactor building of queries
-                        
                         query.Query = string.Format( "({0})+AND+({1})", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
+                        
+                        metadataSchemas = db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",", callContext.Groups.Select( group => group.GUID.ToString().Replace("-","") ) ), null, 0x1 ).ToList();
                     }
 
 					var indexResult = callContext.IndexManager.GetIndex<ObjectModule>().Get(query);
@@ -48,8 +50,8 @@ namespace CHAOS.MCM.Module
 					// if solr doesnt return anything there is no need to continue, so just return an empty list
 					if( !resultPage.Any() )
 						return new PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
-					
-					return new PagedResult<IResult>( indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false ).ToDTO().ToList() );
+
+					return new PagedResult<IResult>( indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO().ToList() );
 				}
 			}
 

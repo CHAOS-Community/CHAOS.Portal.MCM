@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.Objects;
 using System.Linq;
 using MySql.Data.MySqlClient;
 
@@ -16,15 +17,15 @@ namespace CHAOS.MCM.Data.EF
 
         public IEnumerable<Object> Object_Get( UUID guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints  )
         {
-            return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints );
+            return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, new List<DTO.MetadataSchema>() );
         }
 
-        public IEnumerable<Object> Object_Get( IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints  )
+        public IEnumerable<Object> Object_Get(IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints )
         {
-            return Object_Get( ConvertToDBList( guids ), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints );
+            return Object_Get( ConvertToDBList( guids ), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, new List<DTO.MetadataSchema>() );
         }
 
-		private IEnumerable<Object> Object_Get( string guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints )
+		private IEnumerable<Object> Object_Get( string guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, IEnumerable<DTO.MetadataSchema> metadataSchemas )
 		{
 			using( var conn = new MySqlConnection( ConnectionString ) )
 			using( var comm = new MySqlCommand("Object_GetByGUIDs", conn ) )
@@ -84,9 +85,13 @@ namespace CHAOS.MCM.Data.EF
 			            reader.NextResult();
 			            var metadatas = Translate<Metadata>(reader).ToList();
 
+			            metadataSchemas = metadataSchemas.ToList();
+
 			            foreach( var o in objects )
 			            {
-			                o.pMetadatas = (from m in metadatas where m.ObjectGUID == o.GUID select m ).ToList();
+			                o.pMetadatas = (from m in metadatas
+                                            where m.ObjectGUID == o.GUID && metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray() == m.GUID.ToByteArray() )
+                                            select m ).ToList();
 			            }
 			        }
 
@@ -272,5 +277,10 @@ namespace CHAOS.MCM.Data.EF
 		{
 			return String.Join( ",", guids.Select( item => item.ToString().Replace("-","") ) );
 		}
+
+	    public IEnumerable<Object> Object_Get( IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, IEnumerable<DTO.MetadataSchema> metadataSchemas )
+	    {
+	        return Object_Get( ConvertToDBList( guids ), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, metadataSchemas );
+	    }
 	}
 }

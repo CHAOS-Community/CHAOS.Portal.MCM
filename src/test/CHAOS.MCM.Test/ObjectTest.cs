@@ -34,6 +34,17 @@ namespace CHAOS.MCM.Test
         }
 
         [Test]
+        public void Should_Get_Objects_By_GUIDs()
+        {
+            using( var db = new MCMEntities() )
+            {
+                var list = db.Object_Get( Object1.GUID, true, true, true, true, true ).ToList();
+
+                Assert.AreEqual( 1, list.Count );
+            }
+        }
+
+        [Test]
         public void Should_Get_Objects_IncludeAccessPoints()
         {
             using( var db = new MCMEntities() )
