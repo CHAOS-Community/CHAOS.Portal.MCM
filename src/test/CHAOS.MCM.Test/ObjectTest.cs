@@ -2,6 +2,7 @@
 using System.Linq;
 using CHAOS.Extensions;
 using CHAOS.MCM.Data.EF;
+using CHAOS.Portal.DTO.Standard;
 using NUnit.Framework;
 using Object = CHAOS.MCM.Data.DTO.Object;
 
@@ -62,14 +63,14 @@ namespace CHAOS.MCM.Test
 
             Assert.AreEqual( 1, result.Value );
         }
-         
-		//[Test]
-		//public void Should_Delete_Object()
-		//{
-		//    ScalarResult result = MCMModule.Object_Delete( AdminCallContext, Object1.GUID, TopFolder.ID );
 
-		//    Assert.AreEqual( 1, result.Value );
-		//}
+        [Test]
+        public void Should_Delete_Object()
+        {
+            ScalarResult result = ObjectModule.Delete( AdminCallContext, Object1.GUID );
+
+            Assert.AreEqual( 1, result.Value );
+        }
 
 		//[Test]
 		//public void Should_Put_Object_In_Folder()

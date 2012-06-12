@@ -438,7 +438,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="uint" Nullable="false" />
+          <Property Name="ID" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
         </EntityType>
         <EntityType Name="ObjectRelationType">
@@ -1164,7 +1164,6 @@
         </Function>
         <Function Name="Object_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
-          <Parameter Name="FolderID" Type="int" Mode="In" />
         </Function>
         <Function Name="Object_Folder_Join_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
@@ -1575,6 +1574,9 @@
           <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <EntitySet Name="FileInfo" EntityType="MCMModel.FileInfo" />
+          <FunctionImport Name="Object_Delete" ReturnType="Collection(Int32)">
+          <Parameter Name="GUID" Mode="In" Type="Binary" />
+          </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">
           <Key>
@@ -1582,8 +1584,8 @@
           </Key>
           <Property Name="GUID" Type="Guid" Nullable="false" />
           <Property Name="SubscriptionGUID" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AccessPoint_Group_Join" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Group_Join" FromRole="AccessPoint" ToRole="AccessPoint_Group_Join" />
           <NavigationProperty Name="AccessPoint_User_Join" Relationship="MCMModel.FK_AccessPoint_AccessPoint_User_Join" FromRole="AccessPoint" ToRole="AccessPoint_User_Join" />
           <NavigationProperty Name="Conversion" Relationship="MCMModel.FK_AccessPoint_GUID_Conversion_AccessPointGUID" FromRole="AccessPoint" ToRole="Conversion" />
@@ -1597,7 +1599,7 @@
           <Property Name="AccessPointGUID" Type="Guid" Nullable="false" />
           <Property Name="GroupGUID" Type="Guid" Nullable="false" />
           <Property Name="Permission" Type="Int64" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AccessPoint" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Group_Join" FromRole="AccessPoint_Group_Join" ToRole="AccessPoint" />
         </EntityType>
         <EntityType Name="AccessPoint_User_Join">
@@ -1608,7 +1610,7 @@
           <Property Name="AccessPointGUID" Type="Guid" Nullable="false" />
           <Property Name="UserGUID" Type="Guid" Nullable="false" />
           <Property Name="Permission" Type="Int64" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AccessPoint" Relationship="MCMModel.FK_AccessPoint_AccessPoint_User_Join" FromRole="AccessPoint_User_Join" ToRole="AccessPoint" />
         </EntityType>
         <EntityType Name="AccessProvider">
@@ -1617,10 +1619,10 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DestinationID" Type="Int64" Nullable="false" />
-          <Property Name="BasePath" Type="String" Nullable="false" />
-          <Property Name="StringFormat" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
-          <Property Name="Token" Type="String" Nullable="false" />
+          <Property Name="BasePath" Type="String" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Name="StringFormat" Type="String" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Destination" Relationship="MCMModel.FK_Destination_ID_AccessProvider_DestinationID" FromRole="AccessProvider" ToRole="Destination" />
         </EntityType>
         <EntityType Name="Conversion">
@@ -1632,7 +1634,7 @@
           <Property Name="FormatCategoryID" Type="Int64" Nullable="false" />
           <Property Name="FormatID" Type="Int64" Nullable="false" />
           <Property Name="DestinationID" Type="Int64" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AccessPoint" Relationship="MCMModel.FK_AccessPoint_GUID_Conversion_AccessPointGUID" FromRole="Conversion" ToRole="AccessPoint" />
           <NavigationProperty Name="Destination" Relationship="MCMModel.FK_Destination_ID_Conversion_DestinationID" FromRole="Conversion" ToRole="Destination" />
           <NavigationProperty Name="Format" Relationship="MCMModel.FK_Format_ID_Conversion_FormatID" FromRole="Conversion" ToRole="Format" />
@@ -1644,8 +1646,8 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SubscriptionGUID" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="AccessProvider" Relationship="MCMModel.FK_Destination_ID_AccessProvider_DestinationID" FromRole="Destination" ToRole="AccessProvider" />
           <NavigationProperty Name="Conversion" Relationship="MCMModel.FK_Destination_ID_Conversion_DestinationID" FromRole="Destination" ToRole="Conversion" />
           <NavigationProperty Name="File" Relationship="MCMModel.FK_Destination_ID_File_DestinationID" FromRole="Destination" ToRole="File" />
@@ -1659,10 +1661,10 @@
           <Property Name="ParentID" Type="Int64" />
           <Property Name="FormatID" Type="Int64" Nullable="false" />
           <Property Name="DestinationID" Type="Int64" Nullable="false" />
-          <Property Name="FileName" Type="String" Nullable="false" />
-          <Property Name="OriginalFileName" Type="String" Nullable="false" />
-          <Property Name="FolderPath" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Name="OriginalFileName" Type="String" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Name="FolderPath" Type="String" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Destination" Relationship="MCMModel.FK_Destination_ID_File_DestinationID" FromRole="File" ToRole="Destination" />
           <NavigationProperty Name="File1" Relationship="MCMModel.FK_File_ID_File_ParentID" FromRole="File" ToRole="File1" />
           <NavigationProperty Name="File2" Relationship="MCMModel.FK_File_ID_File_ParentID" FromRole="File1" ToRole="File" />
@@ -1677,8 +1679,8 @@
           <Property Name="ParentID" Type="Int64" />
           <Property Name="FolderTypeID" Type="Int64" Nullable="false" />
           <Property Name="SubscriptionGUID" Type="Guid" Nullable="true" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Folder_Group_Join" Relationship="MCMModel.FK_Folder_ID_Folder_Group_Join_FolderID" FromRole="Folder" ToRole="Folder_Group_Join" />
           <NavigationProperty Name="Folder1" Relationship="MCMModel.FK_Folder_ID_Folder_ParentID" FromRole="Folder" ToRole="Folder1" />
           <NavigationProperty Name="Folder2" Relationship="MCMModel.FK_Folder_ID_Folder_ParentID" FromRole="Folder1" ToRole="Folder" />
@@ -1694,7 +1696,7 @@
           <Property Name="FolderID" Type="Int64" Nullable="false" />
           <Property Name="GroupGUID" Type="Guid" Nullable="false" />
           <Property Name="Permission" Type="Int64" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Folder" Relationship="MCMModel.FK_Folder_ID_Folder_Group_Join_FolderID" FromRole="Folder_Group_Join" ToRole="Folder" />
         </EntityType>
         <EntityType Name="Folder_User_Join">
@@ -1705,7 +1707,7 @@
           <Property Name="FolderID" Type="Int64" Nullable="false" />
           <Property Name="UserGUID" Type="Guid" Nullable="false" />
           <Property Name="Permission" Type="Int64" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Folder" Relationship="MCMModel.FK_Folder_ID_Folder_User_Join_FolderID" FromRole="Folder_User_Join" ToRole="Folder" />
         </EntityType>
         <EntityType Name="FolderType">
@@ -1713,8 +1715,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Folder" Relationship="MCMModel.FK_FolderType_ID_Folder_FolderTypeID" FromRole="FolderType" ToRole="Folder" />
         </EntityType>
         <EntityType Name="Format">
@@ -1723,9 +1725,9 @@
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FormatCategoryID" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="FormatXML" Type="String" />
-          <Property Name="MimeType" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="FormatXML" Type="String" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Name="MimeType" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Conversion" Relationship="MCMModel.FK_Format_ID_Conversion_FormatID" FromRole="Format" ToRole="Conversion" />
           <NavigationProperty Name="File" Relationship="MCMModel.FK_Format_ID_File_FormatID" FromRole="Format" ToRole="File" />
           <NavigationProperty Name="FormatCategory" Relationship="MCMModel.FK_FormatCategory_ID_Format_FormatCategoryID" FromRole="Format" ToRole="FormatCategory" />
@@ -1734,8 +1736,8 @@
           <Key>
             <PropertyRef Name="LanguageCode" />
           </Key>
-          <Property Name="LanguageCode" Type="String" Nullable="false" />
-          <Property Name="Name" Type="String" />
+          <Property Name="LanguageCode" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" FromRole="Language" ToRole="Metadata" />
         </EntityType>
         <EntityType Name="MetadataSchema">
@@ -1743,9 +1745,9 @@
             <PropertyRef Name="GUID" />
           </Key>
           <Property Name="GUID" Type="Guid" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="SchemaXML" Type="String" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="SchemaXML" Type="String" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="MetadataSchema_Group_Join" Relationship="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID" FromRole="MetadataSchema" ToRole="MetadataSchema_Group_Join" />
           <NavigationProperty Name="MetadataSchema_User_Join" Relationship="MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" FromRole="MetadataSchema" ToRole="MetadataSchema_User_Join" />
           <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" FromRole="MetadataSchema" ToRole="Metadata" />
@@ -1758,7 +1760,7 @@
           <Property Name="MetadataSchemaGUID" Type="Guid" Nullable="false" />
           <Property Name="GroupGUID" Type="Guid" Nullable="false" />
           <Property Name="Permission" Type="Int64" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="MetadataSchema" Relationship="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID" FromRole="MetadataSchema_Group_Join" ToRole="MetadataSchema" />
         </EntityType>
         <EntityType Name="MetadataSchema_User_Join">
@@ -1769,7 +1771,7 @@
           <Property Name="MetadataSchemaGUID" Type="Guid" Nullable="false" />
           <Property Name="UserGUID" Type="Guid" Nullable="false" />
           <Property Name="Permission" Type="Int64" Nullable="false" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="MetadataSchema" Relationship="MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" FromRole="MetadataSchema_User_Join" ToRole="MetadataSchema" />
         </EntityType>
         <EntityType Name="ObjectFolderType">
@@ -1777,7 +1779,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Object_Folder_Join" Relationship="MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID" FromRole="ObjectFolderType" ToRole="Object_Folder_Join" />
         </EntityType>
         <EntityType Name="ObjectRelationType">
@@ -1785,7 +1787,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Object_Object_Join" Relationship="MCMModel.FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID" FromRole="ObjectRelationType" ToRole="Object_Object_Join" />
         </EntityType>
         <EntityType Name="ObjectType">
@@ -1793,7 +1795,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Object" Relationship="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" FromRole="ObjectType" ToRole="Object" />
         </EntityType>
         <EntityType Name="Permission">
@@ -1801,10 +1803,10 @@
             <PropertyRef Name="TableIdentifier" />
             <PropertyRef Name="Permission1" />
           </Key>
-          <Property Name="TableIdentifier" Type="String" Nullable="false" />
+          <Property Name="TableIdentifier" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Name="Permission1" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" />
-          <Property Name="Description" Type="String" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="2048" Unicode="false" FixedLength="false" />
         </EntityType>
         <Association Name="FK_AccessPoint_AccessPoint_Group_Join">
           <End Role="AccessPoint" Type="MCMModel.AccessPoint" Multiplicity="1" />
@@ -1998,11 +2000,11 @@
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" />
           <Property Type="Guid" Name="SubscriptionGUID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
-          <Property Type="String" Name="BasePath" Nullable="false" />
-          <Property Type="String" Name="StringFormat" Nullable="false" />
-          <Property Type="String" Name="Token" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="String" Name="BasePath" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="StringFormat" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="Token" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityType Name="Object">
           <Key>
@@ -2010,7 +2012,7 @@
           </Key>
           <Property Type="Guid" Name="GUID" Nullable="false" />
           <Property Type="Int64" Name="ObjectTypeID" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="File" Relationship="MCMModel.FK_Object_GUID_File_ObjectGUID" FromRole="Object" ToRole="File" />
           <NavigationProperty Name="ObjectType" Relationship="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" FromRole="Object" ToRole="ObjectType" />
           <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" FromRole="Object" ToRole="Metadata" />
@@ -2049,7 +2051,7 @@
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int64" Name="FormatTypeID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Conversion" Relationship="MCMModel.FK_FormatCategory_ID_Conversion_FormatCategoryID" FromRole="FormatCategory" ToRole="Conversion" />
           <NavigationProperty Name="Format" Relationship="MCMModel.FK_FormatCategory_ID_Format_FormatCategoryID" FromRole="FormatCategory" ToRole="Format" />
           <NavigationProperty Name="FormatType" Relationship="MCMModel.FK_FormatType_ID_FormatCategory_FormatTypeID" FromRole="FormatCategory" ToRole="FormatType" />
@@ -2059,7 +2061,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="FormatCategory" Relationship="MCMModel.FK_FormatType_ID_FormatCategory_FormatTypeID" FromRole="FormatType" ToRole="FormatCategory" />
         </EntityType>
         <Association Name="FK_FormatCategory_ID_Conversion_FormatCategoryID">
@@ -2109,8 +2111,8 @@
           <Property Type="Int64" Name="ParentID" />
           <Property Type="Int64" Name="FolderTypeID" Nullable="false" />
           <Property Type="Guid" Name="SubscriptionGUID" Nullable="true" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <Property Type="Int64" Name="NumberOfSubFolders" />
           <Property Type="Int64" Name="NumberOfObjects" />
         </EntityType>
@@ -2121,11 +2123,11 @@
           </Key>
           <Property Type="Guid" Name="GUID" Nullable="false" />
           <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
-          <Property Type="String" Name="LanguageCode" />
+          <Property Type="String" Name="LanguageCode" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Type="Guid" Name="MetadataSchemaGUID" Nullable="false" />
           <Property Type="Int64" Name="RevisionID" Nullable="false" />
-          <Property Type="String" Name="MetadataXML" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="String" Name="MetadataXML" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <Property Type="Guid" Name="EditingUserGUID" Nullable="false" />
           <NavigationProperty Name="Language" Relationship="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" FromRole="Metadata" ToRole="Language" />
           <NavigationProperty Name="MetadataSchema" Relationship="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" FromRole="Metadata" ToRole="MetadataSchema" />
@@ -2175,7 +2177,7 @@
           <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
           <Property Type="Int64" Name="FolderID" Nullable="false" />
           <Property Type="Int64" Name="ObjectFolderTypeID" Nullable="false" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="Folder" Relationship="MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID" FromRole="Object_Folder_Join" ToRole="Folder" />
           <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID" FromRole="Object_Folder_Join" ToRole="Object" />
           <NavigationProperty Name="ObjectFolderType" Relationship="MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID" FromRole="Object_Folder_Join" ToRole="ObjectFolderType" />
@@ -2225,7 +2227,7 @@
           <Property Type="Guid" Name="Object2GUID" Nullable="false" />
           <Property Type="Int64" Name="ObjectRelationTypeID" Nullable="false" />
           <Property Type="Int32" Name="Sequence" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID" FromRole="Object_Object_Join" ToRole="Object" />
           <NavigationProperty Name="Object1" Relationship="MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID" FromRole="Object_Object_Join" ToRole="Object" />
           <NavigationProperty Name="ObjectRelationType" Relationship="MCMModel.FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID" FromRole="Object_Object_Join" ToRole="ObjectRelationType" />
@@ -2273,10 +2275,10 @@
           </Key>
           <Property Type="Guid" Name="AccessPointGUID" Nullable="false" />
           <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
-          <Property Type="DateTime" Name="StartDate" />
-          <Property Type="DateTime" Name="EndDate" />
-          <Property Type="DateTime" Name="DateCreated" Nullable="false" />
-          <Property Type="DateTime" Name="DateModified" />
+          <Property Type="DateTime" Name="StartDate" Precision="3" />
+          <Property Type="DateTime" Name="EndDate" Precision="3" />
+          <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="DateModified" Precision="3" />
           <NavigationProperty Name="AccessPoint" Relationship="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" FromRole="AccessPoint_Object_Join" ToRole="AccessPoint" />
           <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" FromRole="AccessPoint_Object_Join" ToRole="Object" />
         </EntityType>
@@ -2329,22 +2331,22 @@
           <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
           <Property Type="Int64" Name="ParentID" />
           <Property Type="Int64" Name="DestinationID" Nullable="false" />
-          <Property Type="String" Name="FileName" Nullable="false" />
-          <Property Type="String" Name="OriginalFileName" Nullable="false" />
-          <Property Type="String" Name="FolderPath" Nullable="false" />
-          <Property Type="DateTime" Name="FileDateCreated" Nullable="false" />
-          <Property Type="String" Name="BasePath" Nullable="false" />
-          <Property Type="String" Name="StringFormat" Nullable="false" />
-          <Property Type="DateTime" Name="AccessProviderDateCreated" Nullable="false" />
-          <Property Type="String" Name="Token" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="OriginalFileName" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="FolderPath" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="FileDateCreated" Nullable="false" Precision="3" />
+          <Property Type="String" Name="BasePath" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="StringFormat" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
+          <Property Type="DateTime" Name="AccessProviderDateCreated" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Token" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Type="Int64" Name="FormatID" Nullable="false" />
-          <Property Type="String" Name="FormatName" Nullable="false" />
-          <Property Type="String" Name="FormatXML" />
-          <Property Type="String" Name="MimeType" Nullable="false" />
+          <Property Type="String" Name="FormatName" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="FormatXML" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="MimeType" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Type="Int64" Name="FormatCategoryID" Nullable="false" />
-          <Property Type="String" Name="FormatCategoryName" Nullable="false" />
+          <Property Type="String" Name="FormatCategoryName" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Type="Int64" Name="FormatTypeID" Nullable="false" />
-          <Property Type="String" Name="FormatTypeName" Nullable="false" />
+          <Property Type="String" Name="FormatTypeName" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2646,6 +2648,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Object_Delete" FunctionName="MCMModel.Store.Object_Delete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

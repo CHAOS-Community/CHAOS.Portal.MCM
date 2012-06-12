@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
 using CHAOS.Index;
+using CHAOS.Index.Solr;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core.Module;
@@ -81,6 +82,11 @@ namespace CHAOS.MCM.Module
 			}
 
             index.Set( newObject, false );
+        }
+
+        protected void RemoveObjectFromIndex( IIndex index, Data.DTO.Object delObject )
+        {
+            index.Remove( delObject, false );
         }
 
         #endregion

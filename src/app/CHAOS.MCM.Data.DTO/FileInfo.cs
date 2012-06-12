@@ -32,11 +32,11 @@ namespace CHAOS.MCM.Data.DTO
 	        {
 	            var url = new System.Text.StringBuilder( StringFormat );
                 
-                url.Replace( "{BASE_PATH}", BasePath );
+                url.Replace( "{BASE_PATH}", BasePath ?? "{BASE_PATH_MISSING}" );
                 url.Replace( "{FOLDER_PATH}", string.IsNullOrEmpty( System.IO.Path.GetPathRoot( BasePath ) ) ? FolderPath.Replace( "\\", "/" ) : FolderPath.Replace( "/", "\\" ) );
-                url.Replace( "{FILENAME}", Filename );
-                url.Replace( "{SESSION_GUID}", SessionGUID.ToString() );
-                url.Replace( "{OBJECT_GUID}", ObjectGUID.ToString() );
+                url.Replace( "{FILENAME}", Filename ?? "{FILENAME_MISSING}");
+                url.Replace( "{SESSION_GUID}", SessionGUID == null ? "{SESSION_GUID_MISSING}" : SessionGUID.ToString() );
+                url.Replace( "{OBJECT_GUID}", ObjectGUID == null ? "{OBJECT_GUID_MISSING}" : ObjectGUID.ToString() );
 
 	            return url.ToString();
 	        }

@@ -31,6 +31,7 @@ namespace CHAOS.MCM.Data.EF
 			using( var comm = new MySqlCommand("Object_GetByGUIDs", conn ) )
 			{
 				comm.CommandType = CommandType.StoredProcedure;
+			    comm.EnableCaching = true;
 
 				var param = comm.CreateParameter();
 				param.DbType        = DbType.String;
@@ -76,7 +77,7 @@ namespace CHAOS.MCM.Data.EF
 				comm.Parameters.Add( param );
 
 				conn.Open();
-			    using( var reader = comm.ExecuteReader( CommandBehavior.SequentialAccess ) )
+			    using( var reader = comm.ExecuteReader( CommandBehavior.SequentialAccess & CommandBehavior.CloseConnection ) )
 			    {
                     var objects = Translate<Object>(reader).ToList();
 
@@ -138,6 +139,8 @@ namespace CHAOS.MCM.Data.EF
 			                o.AccessPoints = (from ap in accessPoints where ap.ObjectGUID == o.GUID select ap ).ToList();
 			            }
 			        }
+
+                    conn.Close();
 
                     return objects;
 			    }

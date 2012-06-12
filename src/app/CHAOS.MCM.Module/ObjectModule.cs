@@ -51,7 +51,11 @@ namespace CHAOS.MCM.Module
 					if( !resultPage.Any() )
 						return new PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
 
-					return new PagedResult<IResult>( indexResult.FoundCount, query.PageIndex, db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO().ToList() );
+                    var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO().ToList();
+
+                    db.Connection.Close();
+
+					return new PagedResult<IResult>( indexResult.FoundCount, query.PageIndex, objects );
 				}
 			}
 
@@ -97,21 +101,26 @@ namespace CHAOS.MCM.Module
             }
         }
 
-		//[Datatype("Object", "Delete")]
-		//public ScalarResult Object_Delete( CallContext callContext, Guid GUID, int folderID )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.Object_Delete( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, GUID, folderID );
+        [Datatype("Object", "Delete")]
+        public ScalarResult Delete( ICallContext callContext, UUID GUID )
+        {
+            using( MCMEntities db = DefaultMCMEntities )
+            {
+                var delObject = db.Object_Get( GUID, false, false, false, true, false ).ToDTO().First();
 
-		//        if( result == -100 )
-		//            throw new InsufficientPermissionsException( "User does not have permissions to delete object" );
+                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( delObject.Folders.Select( folder => folder.FolderID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ), FolderPermissions.DeleteObject ) )
+                    throw new InsufficientPermissionsException( "User does not have permissions to remove object" );
 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ GUID }, true, false, true, true ) );
+                var result = db.Object_Delete( GUID.ToByteArray() ).FirstOrDefault();
 
-		//        return new ScalarResult( result );
-		//    }
-		//}
+                if( !result.HasValue || result.Value == -200 )
+                    throw new UnhandledException( "Object was not deleted, database rolled back" );
+
+                RemoveObjectFromIndex( callContext.IndexManager.GetIndex<MCMModule>(), delObject );
+
+                return new ScalarResult( result.Value );
+            }
+        }
 
 		//[Datatype("Object", "PutInFolder")]
 		//public ScalarResult Object_PutInFolder(CallContext callContext, Guid GUID, int folderID, int objectFolderTypeID)

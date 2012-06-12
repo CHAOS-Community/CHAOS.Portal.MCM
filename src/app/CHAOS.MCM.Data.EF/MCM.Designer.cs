@@ -2953,6 +2953,25 @@ namespace CHAOS.MCM.Data.EF
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Delete", gUIDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="gUID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Object_Delete(global::System.Byte[] gUID)
+        {
+            ObjectParameter gUIDParameter;
+            if (gUID != null)
+            {
+                gUIDParameter = new ObjectParameter("GUID", gUID);
+            }
+            else
+            {
+                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Delete", gUIDParameter);
+        }
 
         #endregion
 

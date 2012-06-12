@@ -43,6 +43,11 @@ namespace CHAOS.MCM.Data.DTO
 		public List<Object> RelatedObjects { get; set; }
         public IList<AccessPoint_Object_Join> AccessPoints { get; set; }
 
+        public KeyValuePair<string, string> UniqueIdentifier
+        {
+            get { return new KeyValuePair<string, string>( "GUID", GUID.ToString() ); }
+        }
+
 		#endregion
 		#region Constructor
 
@@ -138,7 +143,7 @@ namespace CHAOS.MCM.Data.DTO
                 }
 		}
 
-		private static string GetXmlContent( XContainer xml )
+	    private static string GetXmlContent( XContainer xml )
 		{
 			var sb = new StringBuilder( );
 
