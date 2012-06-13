@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
 using CHAOS.Extensions;
@@ -12,7 +11,6 @@ using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
-using Object = CHAOS.MCM.Data.DTO.Object;
 
 namespace CHAOS.MCM.Module
 {
@@ -52,8 +50,6 @@ namespace CHAOS.MCM.Module
 						return new PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
 
                     var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO().ToList();
-
-                    db.Connection.Close();
 
 					return new PagedResult<IResult>( indexResult.FoundCount, query.PageIndex, objects );
 				}

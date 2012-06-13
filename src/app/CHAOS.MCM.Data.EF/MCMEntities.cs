@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Common;
-using System.Data.Objects;
 using System.Linq;
 using MySql.Data.MySqlClient;
 
@@ -28,252 +26,258 @@ namespace CHAOS.MCM.Data.EF
 		private IEnumerable<Object> Object_Get( string guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, IEnumerable<DTO.MetadataSchema> metadataSchemas )
 		{
 			using( var conn = new MySqlConnection( ConnectionString ) )
-			using( var comm = new MySqlCommand("Object_GetByGUIDs", conn ) )
-			{
-				comm.CommandType = CommandType.StoredProcedure;
-			    comm.EnableCaching = true;
-
-				var param = comm.CreateParameter();
-				param.DbType        = DbType.String;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "GUIDs";
-				param.Value         = guids;
-				param.Size          = 21845;
-				comm.Parameters.Add( param );
-
-				param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeMetadata";
-				param.Value         = includeMetadata;
-				comm.Parameters.Add( param );
-
-				param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeFiles";
-				param.Value         = includeFiles;
-				comm.Parameters.Add( param );
-
-				param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeObjectRelations";
-				param.Value         = includeObjectRelations;
-				comm.Parameters.Add( param );
-
-                param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeFolders";
-				param.Value         = includeFolders;
-				comm.Parameters.Add( param );
-
-                param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-                param.ParameterName = "IncludeAccessPoints";
-				param.Value         = includeAccessPoints;
-				comm.Parameters.Add( param );
-
-				conn.Open();
-			    using( var reader = comm.ExecuteReader( CommandBehavior.SequentialAccess & CommandBehavior.CloseConnection ) )
+            {
+			    using( var comm = conn.CreateCommand() )
 			    {
-                    var objects = Translate<Object>(reader).ToList();
+			        comm.CommandText = "Object_GetByGUIDs";
+				    comm.CommandType = CommandType.StoredProcedure;
+                    comm.EnableCaching = true;
 
-			        if( includeMetadata )
+				    var param = comm.CreateParameter();
+				    param.DbType        = DbType.String;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "GUIDs";
+				    param.Value         = guids;
+				    param.Size          = 21845;
+				    comm.Parameters.Add( param );
+
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeMetadata";
+				    param.Value         = includeMetadata;
+				    comm.Parameters.Add( param );
+
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeFiles";
+				    param.Value         = includeFiles;
+				    comm.Parameters.Add( param );
+
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeObjectRelations";
+				    param.Value         = includeObjectRelations;
+				    comm.Parameters.Add( param );
+
+                    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeFolders";
+				    param.Value         = includeFolders;
+				    comm.Parameters.Add( param );
+
+                    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+                    param.ParameterName = "IncludeAccessPoints";
+				    param.Value         = includeAccessPoints;
+				    comm.Parameters.Add( param );
+
+				    conn.Open();
+
+			        using( var reader = comm.ExecuteReader( ) )
 			        {
-			            reader.NextResult();
-			            var metadatas = Translate<Metadata>(reader).ToList();
+                        var objects = Translate<Object>(reader).ToList();
 
-			            metadataSchemas = metadataSchemas.ToList();
-
-			            foreach( var o in objects )
+			            if( includeMetadata )
 			            {
-			                o.pMetadatas = (from m in metadatas
-                                            where m.ObjectGUID == o.GUID && metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray() == m.GUID.ToByteArray() )
-                                            select m ).ToList();
+			                reader.NextResult();
+			                var metadatas = Translate<Metadata>(reader).ToList();
+
+			                metadataSchemas = metadataSchemas.ToList();
+
+			                foreach( var o in objects )
+			                {
+			                    o.pMetadatas = (from m in metadatas
+                                                where m.ObjectGUID == o.GUID && metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray() == m.GUID.ToByteArray() )
+                                                select m ).ToList();
+			                }
 			            }
-			        }
 
-			        if( includeFiles )
-			        {
-			            reader.NextResult();
-			            var files = Translate<FileInfo>(reader).ToList();
-
-			            foreach( var o in objects )
+			            if( includeFiles )
 			            {
-			                o.pFiles = (from f in files where f.ObjectGUID == o.GUID select f).ToList();
+			                reader.NextResult();
+			                var files = Translate<FileInfo>(reader).ToList();
+
+			                foreach( var o in objects )
+			                {
+			                    o.pFiles = (from f in files where f.ObjectGUID == o.GUID select f).ToList();
+			                }
 			            }
-			        }
 
-			        if( includeObjectRelations )
-			        {
-			            reader.NextResult();
-			            var objectRelations = Translate<Object_Object_Join>(reader).ToList();
-
-			            foreach( var o in objects )
+			            if( includeObjectRelations )
 			            {
-			                o.ObjectRealtions = (from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or).ToList();
+			                reader.NextResult();
+			                var objectRelations = Translate<Object_Object_Join>(reader).ToList();
+
+			                foreach( var o in objects )
+			                {
+			                    o.ObjectRealtions = (from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or).ToList();
+			                }
 			            }
-			        }
 
-			        if( includeFolders )
-			        {
-			            reader.NextResult();
-			            var folders = Translate<Object_Folder_Join>(reader).ToList();
-
-			            foreach( var o in objects )
+			            if( includeFolders )
 			            {
-			                o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
+			                reader.NextResult();
+			                var folders = Translate<Object_Folder_Join>(reader).ToList();
+
+			                foreach( var o in objects )
+			                {
+			                    o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
+			                }
 			            }
-			        }
 
-			        if( includeAccessPoints )
-			        {
-			            reader.NextResult();
-			            var accessPoints = Translate<AccessPoint_Object_Join>(reader).ToList();
-
-			            foreach( var o in objects )
+			            if( includeAccessPoints )
 			            {
-			                o.AccessPoints = (from ap in accessPoints where ap.ObjectGUID == o.GUID select ap ).ToList();
+			                reader.NextResult();
+			                var accessPoints = Translate<AccessPoint_Object_Join>(reader).ToList();
+
+			                foreach( var o in objects )
+			                {
+			                    o.AccessPoints = (from ap in accessPoints where ap.ObjectGUID == o.GUID select ap ).ToList();
+			                }
 			            }
+
+                        return objects;
 			        }
-
-                    conn.Close();
-
-                    return objects;
 			    }
-			}		
+            }
 		}
 
 		public IEnumerable<Object> Object_Get( uint? folderID, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, uint pageIndex, uint pageSize )
 		{
 			using( var conn = new MySqlConnection( ConnectionString ) )
-			using( var comm = new MySqlCommand("Object_GetByFolderID", conn ) )
-			{
-				comm.CommandType = CommandType.StoredProcedure;
+            {
+			    using( var comm = conn.CreateCommand() )
+			    {
+			        comm.CommandText = "Object_GetByFolderID";
+				    comm.CommandType = CommandType.StoredProcedure;
+			        comm.EnableCaching = true;
 
-				var param = comm.CreateParameter();
-				param.DbType        = DbType.UInt32;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "FolderID";
-				param.Value         = folderID;
-				comm.Parameters.Add( param );
+				    var param = comm.CreateParameter();
+				    param.DbType        = DbType.UInt32;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "FolderID";
+				    param.Value         = folderID;
+				    comm.Parameters.Add( param );
 
-				param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeMetadata";
-				param.Value         = includeMetadata;
-				comm.Parameters.Add( param );
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeMetadata";
+				    param.Value         = includeMetadata;
+				    comm.Parameters.Add( param );
 
-				param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeFiles";
-				param.Value         = includeFiles;
-				comm.Parameters.Add( param );
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeFiles";
+				    param.Value         = includeFiles;
+				    comm.Parameters.Add( param );
 
-				param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeObjectRelations";
-				param.Value         = includeObjectRelations;
-				comm.Parameters.Add( param );
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeObjectRelations";
+				    param.Value         = includeObjectRelations;
+				    comm.Parameters.Add( param );
 
-				param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeFolders";
-				param.Value         = includeFolders;
-				comm.Parameters.Add( param );
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeFolders";
+				    param.Value         = includeFolders;
+				    comm.Parameters.Add( param );
 
-				param = comm.CreateParameter();
-				param.DbType        = DbType.Boolean;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "IncludeAccessPoints";
-				param.Value         = includeAccessPoints;
-				comm.Parameters.Add( param );
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.Boolean;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "IncludeAccessPoints";
+				    param.Value         = includeAccessPoints;
+				    comm.Parameters.Add( param );
 
-				param = comm.CreateParameter();
-				param.DbType        = DbType.UInt32;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "PageIndex";
-				param.Value         = pageIndex;
-				comm.Parameters.Add( param );
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.UInt32;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "PageIndex";
+				    param.Value         = pageIndex;
+				    comm.Parameters.Add( param );
 
-				param = comm.CreateParameter();
-				param.DbType        = DbType.UInt32;
-				param.Direction     = ParameterDirection.Input;
-				param.ParameterName = "PageSize";
-				param.Value         = pageSize;
-				comm.Parameters.Add( param );
+				    param = comm.CreateParameter();
+				    param.DbType        = DbType.UInt32;
+				    param.Direction     = ParameterDirection.Input;
+				    param.ParameterName = "PageSize";
+				    param.Value         = pageSize;
+				    comm.Parameters.Add( param );
 
-				conn.Open();
+				    conn.Open();
 
-			    using( var reader = comm.ExecuteReader( CommandBehavior.SequentialAccess ) )
-				{
-					var objects = Translate<Object>( reader ).ToList();
-
-					if( includeMetadata )
-					{
-						reader.NextResult();
-						var metadatas = Translate<Metadata>(reader).ToList();
-
-						foreach( Object o in objects )
-						{
-							o.pMetadatas = (from m in metadatas where m.ObjectGUID == o.GUID select m ).ToList();
-						}
-					}
-
-					if( includeFiles )
-					{
-						reader.NextResult();
-						var files = Translate<FileInfo>(reader).ToList();
-
-						foreach( Object o in objects )
-						{
-							o.pFiles = (from f in files where f.ObjectGUID == o.GUID select f).ToList();
-						}
-					}
-
-					if( includeObjectRelations )
-					{
-						reader.NextResult();
-						var objectRelations = Translate<Object_Object_Join>(reader).ToList();
-
-						foreach( Object o in objects )
-						{
-							o.ObjectRealtions = (from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or).ToList();
-						}
-					}
-
-					if( includeFolders )
-					{
-                        reader.NextResult();
-                        var folders = Translate<Object_Folder_Join>(reader).ToList();
-
-						foreach( Object o in objects )
-						{
-							o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
-						}
-					}
-
-                    if( includeAccessPoints )
+			        using( var reader = comm.ExecuteReader( ) )
 				    {
-                        reader.NextResult();
-                        var accessPoints = Translate<AccessPoint_Object_Join>(reader).ToList();
+					    var objects = Translate<Object>( reader ).ToList();
 
-					    foreach( var o in objects )
+					    if( includeMetadata )
 					    {
-                            o.AccessPoints = (from ap in accessPoints where ap.ObjectGUID == o.GUID select ap ).ToList();
-					    }
-				    }
+						    reader.NextResult();
+						    var metadatas = Translate<Metadata>(reader).ToList();
 
-					return objects;
-				}	
-			}		
+						    foreach( Object o in objects )
+						    {
+							    o.pMetadatas = (from m in metadatas where m.ObjectGUID == o.GUID select m ).ToList();
+						    }
+					    }
+
+					    if( includeFiles )
+					    {
+						    reader.NextResult();
+						    var files = Translate<FileInfo>(reader).ToList();
+
+						    foreach( Object o in objects )
+						    {
+							    o.pFiles = (from f in files where f.ObjectGUID == o.GUID select f).ToList();
+						    }
+					    }
+
+					    if( includeObjectRelations )
+					    {
+						    reader.NextResult();
+						    var objectRelations = Translate<Object_Object_Join>(reader).ToList();
+
+						    foreach( Object o in objects )
+						    {
+							    o.ObjectRealtions = (from or in objectRelations where or.Object1GUID == o.GUID || or.Object2GUID == o.GUID select or).ToList();
+						    }
+					    }
+
+					    if( includeFolders )
+					    {
+                            reader.NextResult();
+                            var folders = Translate<Object_Folder_Join>(reader).ToList();
+
+						    foreach( Object o in objects )
+						    {
+							    o.Folders = (from f in folders where f.ObjectGUID == o.GUID select f).ToList();
+						    }
+					    }
+
+                        if( includeAccessPoints )
+				        {
+                            reader.NextResult();
+                            var accessPoints = Translate<AccessPoint_Object_Join>(reader).ToList();
+
+					        foreach( var o in objects )
+					        {
+                                o.AccessPoints = (from ap in accessPoints where ap.ObjectGUID == o.GUID select ap ).ToList();
+					        }
+				        }
+
+					    return objects;
+				    }	
+			    }
+            }
 		}
 
 		private string ConvertToDBList(IEnumerable<UUID> guids)
