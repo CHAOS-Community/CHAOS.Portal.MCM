@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CHAOS.Extensions;
+using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
 using CHAOS.Portal.DTO.Standard;
 using NUnit.Framework;
@@ -39,9 +40,36 @@ namespace CHAOS.MCM.Test
         {
             using( var db = new MCMEntities() )
             {
-                var list = db.Object_Get( Object1.GUID, true, true, true, true, true ).ToList();
+                var list = db.Object_Get( Object1.GUID, true, true, true, true, true ).ToDTO().ToList();
 
                 Assert.AreEqual( 1, list.Count );
+                Assert.AreEqual( 1, list.First().Metadatas.Count() );
+            }
+        }
+
+        [Test]
+        public void Should_Get_Objects_By_GUIDs_Limited_By_MetadataSchema()
+        {
+            using( var db = new MCMEntities() )
+            {
+                var result = db.Metadata_Set( Guid.NewGuid().ToByteArray(), Object1.GUID.ToByteArray(), MetadataSchema2.GUID.ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
+                var list = db.Object_Get(Object1.GUID, true, true, true, true, true,new []{MetadataSchema}).ToDTO().ToList();
+
+                Assert.AreEqual(1, result, "Metadata wasnt created successfully");
+                Assert.AreEqual(1, list.Count);
+                Assert.AreEqual(1, list.First().Metadatas.Count());
+            }
+        }
+
+        [Test]
+        public void Should_Get_Objects_By_GUIDs_Without_Permission_To_MetadataSchema()
+        {
+            using (var db = new MCMEntities())
+            {
+                var list = db.Object_Get(Object1.GUID, true, true, true, true, true,new []{MetadataSchema2}).ToDTO().ToList();
+
+                Assert.AreEqual(1, list.Count);
+                Assert.AreEqual(0, list.First().Metadatas.Count());
             }
         }
 

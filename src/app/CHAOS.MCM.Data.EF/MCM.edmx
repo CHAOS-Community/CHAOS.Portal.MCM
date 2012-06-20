@@ -1094,6 +1094,12 @@
           <Parameter Name="MetadataSchemaGUID" Type="binary" Mode="In" />
           <Parameter Name="PermissionRequired" Type="int" Mode="In" />
         </Function>
+        <Function Name="MetadataSchema_Group_Join_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="MetadataSchemaGUID" Type="binary" Mode="In" />
+          <Parameter Name="GroupGUID" Type="binary" Mode="In" />
+          <Parameter Name="Permission" Type="int" Mode="In" />
+          <Parameter Name="RequestingUserGUID" Type="binary" Mode="In" />
+        </Function>
         <Function Name="MetadataSchema_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
@@ -1576,6 +1582,12 @@
           <EntitySet Name="FileInfo" EntityType="MCMModel.FileInfo" />
           <FunctionImport Name="Object_Delete" ReturnType="Collection(Int32)">
           <Parameter Name="GUID" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="MetadataSchema_Group_Join_Set" ReturnType="Collection(Int32)">
+            <Parameter Name="MetadataSchemaGUID" Mode="In" Type="Binary" />
+            <Parameter Name="GroupGUID" Mode="In" Type="Binary" />
+            <Parameter Name="Permission" Mode="In" Type="Int32" />
+            <Parameter Name="RequestingUserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">
@@ -2649,6 +2661,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="Object_Delete" FunctionName="MCMModel.Store.Object_Delete" />
+          <FunctionImportMapping FunctionImportName="MetadataSchema_Group_Join_Set" FunctionName="MCMModel.Store.MetadataSchema_Group_Join_Set" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2664,7 +2677,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

@@ -18,6 +18,11 @@ namespace CHAOS.MCM.Data.EF
             return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, new List<DTO.MetadataSchema>() );
         }
 
+        public IEnumerable<Object> Object_Get( UUID guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, IEnumerable<DTO.MetadataSchema> metadataSchemas )
+        {
+            return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, metadataSchemas );
+        }
+
         public IEnumerable<Object> Object_Get(IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints )
         {
             return Object_Get( ConvertToDBList( guids ), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, new List<DTO.MetadataSchema>() );
@@ -92,7 +97,7 @@ namespace CHAOS.MCM.Data.EF
 			                foreach( var o in objects )
 			                {
 			                    o.pMetadatas = (from m in metadatas
-                                                where m.ObjectGUID == o.GUID && metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray() == m.GUID.ToByteArray() )
+                                                where m.ObjectGUID == o.GUID && (!metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray().SequenceEqual( m.MetadataSchemaGUID.ToByteArray() ) ) )
                                                 select m ).ToList();
 			                }
 			            }
