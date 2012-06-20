@@ -18,11 +18,6 @@ namespace CHAOS.MCM.Data.EF
             return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, new List<DTO.MetadataSchema>() );
         }
 
-        public IEnumerable<Object> Object_Get( UUID guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, IEnumerable<DTO.MetadataSchema> metadataSchemas )
-        {
-            return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, metadataSchemas );
-        }
-
         public IEnumerable<Object> Object_Get(IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints )
         {
             return Object_Get( ConvertToDBList( guids ), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, new List<DTO.MetadataSchema>() );
@@ -34,9 +29,9 @@ namespace CHAOS.MCM.Data.EF
             {
 			    using( var comm = conn.CreateCommand() )
 			    {
-			        comm.CommandText = "Object_GetByGUIDs";
-				    comm.CommandType = CommandType.StoredProcedure;
-                    comm.EnableCaching = true;
+			        comm.CommandText   = "Object_GetByGUIDs";
+				    comm.CommandType   = CommandType.StoredProcedure;
+			        comm.EnableCaching = true;
 
 				    var param = comm.CreateParameter();
 				    param.DbType        = DbType.String;
@@ -97,7 +92,7 @@ namespace CHAOS.MCM.Data.EF
 			                foreach( var o in objects )
 			                {
 			                    o.pMetadatas = (from m in metadatas
-                                                where m.ObjectGUID == o.GUID && (!metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray().SequenceEqual( m.MetadataSchemaGUID.ToByteArray() ) ) )
+                                                where m.ObjectGUID == o.GUID/* && (!metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray().Equals( m.GUID.ToByteArray() ) ) )*/
                                                 select m ).ToList();
 			                }
 			            }
@@ -158,8 +153,8 @@ namespace CHAOS.MCM.Data.EF
             {
 			    using( var comm = conn.CreateCommand() )
 			    {
-			        comm.CommandText = "Object_GetByFolderID";
-				    comm.CommandType = CommandType.StoredProcedure;
+			        comm.CommandText   = "Object_GetByFolderID";
+				    comm.CommandType   = CommandType.StoredProcedure;
 			        comm.EnableCaching = true;
 
 				    var param = comm.CreateParameter();

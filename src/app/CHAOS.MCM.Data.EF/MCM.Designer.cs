@@ -2972,58 +2972,6 @@ namespace CHAOS.MCM.Data.EF
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Delete", gUIDParameter);
         }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
-        /// <param name="groupGUID">No Metadata Documentation available.</param>
-        /// <param name="permission">No Metadata Documentation available.</param>
-        /// <param name="requestingUserGUID">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Group_Join_Set(global::System.Byte[] metadataSchemaGUID, global::System.Byte[] groupGUID, Nullable<global::System.Int32> permission, global::System.Byte[] requestingUserGUID)
-        {
-            ObjectParameter metadataSchemaGUIDParameter;
-            if (metadataSchemaGUID != null)
-            {
-                metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", metadataSchemaGUID);
-            }
-            else
-            {
-                metadataSchemaGUIDParameter = new ObjectParameter("MetadataSchemaGUID", typeof(global::System.Byte[]));
-            }
-    
-            ObjectParameter groupGUIDParameter;
-            if (groupGUID != null)
-            {
-                groupGUIDParameter = new ObjectParameter("GroupGUID", groupGUID);
-            }
-            else
-            {
-                groupGUIDParameter = new ObjectParameter("GroupGUID", typeof(global::System.Byte[]));
-            }
-    
-            ObjectParameter permissionParameter;
-            if (permission.HasValue)
-            {
-                permissionParameter = new ObjectParameter("Permission", permission);
-            }
-            else
-            {
-                permissionParameter = new ObjectParameter("Permission", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter requestingUserGUIDParameter;
-            if (requestingUserGUID != null)
-            {
-                requestingUserGUIDParameter = new ObjectParameter("RequestingUserGUID", requestingUserGUID);
-            }
-            else
-            {
-                requestingUserGUIDParameter = new ObjectParameter("RequestingUserGUID", typeof(global::System.Byte[]));
-            }
-    
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Group_Join_Set", metadataSchemaGUIDParameter, groupGUIDParameter, permissionParameter, requestingUserGUIDParameter);
-        }
 
         #endregion
 

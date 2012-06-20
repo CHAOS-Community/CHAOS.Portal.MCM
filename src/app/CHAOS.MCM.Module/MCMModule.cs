@@ -362,12 +362,12 @@ namespace CHAOS.MCM.Module
 		    // TODO: replace with proper XML validation, Quick ugly fix, to make sure it's valid XML
             XDocument.Parse( metadataXML );
 
-		    using( MCMEntities db = DefaultMCMEntities )
+		    using( var db = DefaultMCMEntities )
 		    {
 				if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
 					throw new InsufficientPermissionsException( "User does not have permissions to set metadata on this object" );
 
-		        int result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
+		        var result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
                 
                 if( result == -300 )
                     throw new InvalidRevisionException( "RevisionID is too old, set metadata with the latest revisionID." );
@@ -378,20 +378,13 @@ namespace CHAOS.MCM.Module
                 if( result == -200 )
                     throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
 
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
+                var objects = db.Object_Get( objectGUID, true, false, false, true, true ).ToDTO().ToList();
 
-		        return new ScalarResult( result );
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), objects );
+
+		        return new ScalarResult( objects.First( ).Metadatas.Count() );
 		    }
 		}
-
-		//[Datatype("Metadata", "Get")]
-		//public IEnumerable<Metadata> Metadata_Get( CallContext callContext, string objectGUID, string metadataSchemaGUID, string languageCode )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        return db.Metadata_Get( Guid.Parse( objectGUID ), metadataSchemaGUID == null ? (Guid?) null : Guid.Parse( metadataSchemaGUID ), languageCode ).ToList();
-		//    }
-		//}
 
 		#endregion
 		#region Test
