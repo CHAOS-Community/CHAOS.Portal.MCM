@@ -29,9 +29,9 @@ namespace CHAOS.MCM.Data.EF
             {
 			    using( var comm = conn.CreateCommand() )
 			    {
-			        comm.CommandText = "Object_GetByGUIDs";
-				    comm.CommandType = CommandType.StoredProcedure;
-                    comm.EnableCaching = true;
+			        comm.CommandText   = "Object_GetByGUIDs";
+				    comm.CommandType   = CommandType.StoredProcedure;
+			        comm.EnableCaching = true;
 
 				    var param = comm.CreateParameter();
 				    param.DbType        = DbType.String;
@@ -92,7 +92,7 @@ namespace CHAOS.MCM.Data.EF
 			                foreach( var o in objects )
 			                {
 			                    o.pMetadatas = (from m in metadatas
-                                                where m.ObjectGUID == o.GUID && metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray() == m.GUID.ToByteArray() )
+                                                where m.ObjectGUID == o.GUID/* && (!metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray().Equals( m.GUID.ToByteArray() ) ) )*/
                                                 select m ).ToList();
 			                }
 			            }
@@ -153,8 +153,8 @@ namespace CHAOS.MCM.Data.EF
             {
 			    using( var comm = conn.CreateCommand() )
 			    {
-			        comm.CommandText = "Object_GetByFolderID";
-				    comm.CommandType = CommandType.StoredProcedure;
+			        comm.CommandText   = "Object_GetByFolderID";
+				    comm.CommandType   = CommandType.StoredProcedure;
 			        comm.EnableCaching = true;
 
 				    var param = comm.CreateParameter();

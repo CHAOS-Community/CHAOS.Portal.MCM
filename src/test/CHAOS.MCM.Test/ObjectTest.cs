@@ -39,9 +39,10 @@ namespace CHAOS.MCM.Test
         {
             using( var db = new MCMEntities() )
             {
-                var list = db.Object_Get( Object1.GUID, true, true, true, true, true ).ToList();
+                var list = db.Object_Get( Object1.GUID, true, true, true, true, true ).ToDTO().ToList();
 
                 Assert.AreEqual( 1, list.Count );
+                Assert.AreEqual( 1, list.First().Metadatas.Count() );
             }
         }
 
