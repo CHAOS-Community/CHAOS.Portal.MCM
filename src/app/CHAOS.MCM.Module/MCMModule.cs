@@ -392,7 +392,7 @@ namespace CHAOS.MCM.Module
 		[Datatype("Test","ReIndex")]
 		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
 		{
-            var index = ( Solr<UUIDResult> )callContext.IndexManager.GetIndex<MCMModule>();
+            var index = ( Solr )callContext.IndexManager.GetIndex<MCMModule>();
 
             if( clearIndex.HasValue && clearIndex.Value )
                 index.RemoveAll(false);
