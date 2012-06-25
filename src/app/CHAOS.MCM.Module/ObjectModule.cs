@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using CHAOS.Extensions;
 using CHAOS.Index;
-using CHAOS.Index.Standard;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core;
@@ -41,9 +40,9 @@ namespace CHAOS.MCM.Module
                         metadataSchemas = db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",", callContext.Groups.Select( group => group.GUID.ToString().Replace("-","") ) ), null, 0x1 ).ToList();
                     }
 
-					var indexResult = callContext.IndexManager.GetIndex<ObjectModule>().Get(query);
+					var indexResult = callContext.IndexManager.GetIndex<ObjectModule>().Get<UUIDResult>( query );
 
-					var resultPage = indexResult.Results.Select(result => ((UUIDResult)result).Guid);
+					var resultPage = indexResult.QueryResult.Results.Select(result => ((UUIDResult)result).Guid);
 
 					// if solr doesnt return anything there is no need to continue, so just return an empty list
 					if( !resultPage.Any() )
@@ -51,7 +50,7 @@ namespace CHAOS.MCM.Module
 
                     var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO().ToList();
 
-					return new PagedResult<IResult>( indexResult.FoundCount, query.PageIndex, objects );
+					return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, query.PageIndex, objects );
 				}
 			}
 
