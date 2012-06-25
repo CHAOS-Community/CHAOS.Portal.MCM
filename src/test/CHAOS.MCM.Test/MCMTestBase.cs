@@ -78,10 +78,12 @@ namespace CHAOS.MCM.Test
                 int languageResult        = db.Language_Create("Afrikaans", "af").First().Value;
                 int metadataSchemaResult1 = db.MetadataSchema_Create(new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
                 int metadataSchemaResult2 = db.MetadataSchema_Create(new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema2", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
+                int metadataSchemaResult3 = db.MetadataSchema_Create(new UUID("4df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema3", "<xml />", UserAnonymous.GUID.ToByteArray() ).First().Value;
                 int object1Result         = db.Object_Create(new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID).First().Value;
                 int object2Result         = db.Object_Create(new UUID("d7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID).First().Value;
                 int object3Result         = db.Object_Create(new UUID("c7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, subFolderID).First().Value;
                 int metadataResult        = db.Metadata_Set(new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
+                int metadataResult2       = db.Metadata_Set(new UUID("fd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
                 
                 db.AccessPoint_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "Test accesspoint" );
                 db.AccessPoint_Object_Join_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), DateTime.Now, DateTime.Now.AddDays( 1 ) );

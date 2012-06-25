@@ -42,7 +42,22 @@ namespace CHAOS.MCM.Test
                 var list = db.Object_Get( Object1.GUID, true, true, true, true, true ).ToDTO().ToList();
 
                 Assert.AreEqual( 1, list.Count );
+                Assert.AreEqual( 2, list.First().Metadatas.Count() );
+                Assert.AreEqual( "dd68f458-3b20-4afe-92b4-a60ad3e0cc1e", list.First().Metadatas.First().GUID.ToString() );
+                Assert.AreEqual( "fd68f458-3b20-4afe-92b4-a60ad3e0cc1e", list.First().Metadatas.Last().GUID.ToString() );
+            }
+        }
+
+        [Test]
+        public void Should_Get_Objects_By_GUID_With_MetadataSchema_Check()
+        {
+            using( var db = new MCMEntities() )
+            {
+                var list = db.Object_Get( Object1.GUID, true, true, true, true, true, new[]{MetadataSchema} ).ToDTO().ToList();
+
+                Assert.AreEqual( 1, list.Count );
                 Assert.AreEqual( 1, list.First().Metadatas.Count() );
+                Assert.AreEqual( "dd68f458-3b20-4afe-92b4-a60ad3e0cc1e", list.First().Metadatas.First().GUID.ToString() );
             }
         }
 
