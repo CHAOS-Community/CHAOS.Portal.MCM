@@ -116,6 +116,9 @@ namespace CHAOS.MCM.Data.DTO
                     else
                     if( metadata.MetadataSchemaGUID.ToString() == "d361328e-4fd2-4cb1-a2b4-37ecc7679a6e" && metadata.MetadataXML.Descendants("ID").FirstOrDefault() != null )
                         yield return new KeyValuePair<string, string>( "DKA-DFI-ID", metadata.MetadataXML.Descendants("ID").First().Value );
+                    else
+                    if( metadata.MetadataSchemaGUID.ToString() == "1fd4e56e-3f3a-4f25-ba3e-3d9f80d5d49e" && metadata.MetadataXML.Root.Element("Name") != null )
+                        yield return new KeyValuePair<string, string>( "CHAOS-Profile-Name", metadata.MetadataXML.Root.Element("Name").Value );
 
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
