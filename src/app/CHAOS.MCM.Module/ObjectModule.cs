@@ -26,13 +26,10 @@ namespace CHAOS.MCM.Module
 			        var metadataSchemas = new List<MetadataSchema>();
 
                     if( accessPointGUID != null )
-                    {
                         query.Query = string.Format( "({0})+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+TO+*])", query.Query );
-                    }
                     else
                     {
                         //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
-
                         var folders = PermissionManager.GetFolders(callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid())).ToList();
   
                         query.Query = string.Format( "({0})+AND+({1})", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
@@ -41,12 +38,11 @@ namespace CHAOS.MCM.Module
                     }
 
 					var indexResult = callContext.IndexManager.GetIndex<ObjectModule>().Get<UUIDResult>( query );
-
-					var resultPage = indexResult.QueryResult.Results.Select(result => ((UUIDResult)result).Guid);
+					var resultPage  = indexResult.QueryResult.Results.Select(result => ((UUIDResult)result).Guid);
 
 					// if solr doesnt return anything there is no need to continue, so just return an empty list
 					if( !resultPage.Any() )
-						return new PagedResult<IResult>(0, 0, new List<Data.DTO.Object>());
+                        return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, 0, new List<Data.DTO.Object>() );
 
                     var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO().ToList();
 
