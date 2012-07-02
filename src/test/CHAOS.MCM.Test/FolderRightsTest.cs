@@ -79,7 +79,7 @@ namespace CHAOS.MCM.Test
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
-			foreach( Folder folder in topFolder.GetFolders( UserGuid, GroupGuids ) )
+			foreach( Folder folder in topFolder.GetFolders( UserGuid, GroupGuids, FolderPermissions.Read ) )
 			{
 				if (!new uint[] { 1, 5, 1784, 55 }.Contains(folder.ID))
 					Assert.Fail();
@@ -94,7 +94,7 @@ namespace CHAOS.MCM.Test
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
-			Assert.AreEqual( 2, topFolder.GetFolders( UserGuid, GroupGuids, 1 ).Count() );
+			Assert.AreEqual( 2, topFolder.GetFolders( UserGuid, GroupGuids, FolderPermissions.Read, 1 ).Count() );
 
 			Console.WriteLine("{0}ms", sw.ElapsedMilliseconds);
 		}
@@ -105,7 +105,7 @@ namespace CHAOS.MCM.Test
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
 
-			Assert.AreEqual( 0, topFolder.GetFolders( UserGuid, GroupGuids, 1222 ).Count() );
+			Assert.AreEqual( 0, topFolder.GetFolders( UserGuid, GroupGuids, FolderPermissions.Read, 1222 ).Count() );
 		}
 
 		[Test]

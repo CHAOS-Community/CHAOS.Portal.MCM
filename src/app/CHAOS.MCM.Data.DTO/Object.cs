@@ -119,6 +119,15 @@ namespace CHAOS.MCM.Data.DTO
                     else
                     if( metadata.MetadataSchemaGUID.ToString() == "1fd4e56e-3f3a-4f25-ba3e-3d9f80d5d49e" && metadata.MetadataXML.Root.Element("Name") != null )
                         yield return new KeyValuePair<string, string>( "CHAOS-Profile-Name", metadata.MetadataXML.Root.Element("Name").Value );
+					else
+					if( metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-0000df820000" && metadata.MetadataXML.Root.Element("PublicationDateTime") != null )
+                        yield return new KeyValuePair<string, string>( "LARM-PubStartDate", DateTime.Parse(metadata.MetadataXML.Root.Element("PublicationDateTime").Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+					else
+					if( metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-0000df820000" && metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null )
+                        yield return new KeyValuePair<string, string>( "LARM-PubEndDate", DateTime.Parse(metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+					else
+					if( metadata.MetadataSchemaGUID.ToString() == "70c26faf-b1ee-41e8-b916-a5a16b25ca69" && metadata.MetadataXML.Root.Element("Date") != null )
+                        yield return new KeyValuePair<string, string>( "LARM-PubStartDate", DateTime.Parse(metadata.MetadataXML.Root.Element("Date").Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}

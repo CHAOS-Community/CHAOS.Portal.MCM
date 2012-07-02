@@ -55,21 +55,24 @@ namespace CHAOS.MCM.Module
         #endregion
         
         [Datatype("Folder", "Get")]
-		public IEnumerable<Data.DTO.FolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID )
+		public IEnumerable<Data.DTO.FolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID, uint? permission )
 		{
-			var folderIDs = new List<long>();
+			var folderIDs      = new List<long>();
+			var permissionEnum = (FolderPermissions) ( permission ?? (uint) FolderPermissions.Read );
+
+			permissionEnum = permissionEnum | FolderPermissions.Read;
 
 			if( !parentID.HasValue && !id.HasValue )
-				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() ).Select( folder => (long) folder.ID ).ToList();
+				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), permissionEnum ).Select( folder => (long) folder.ID ).ToList();
             else
 			if( parentID.HasValue )
-				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), parentID.Value).Select(folder => (long) folder.ID).ToList();
+				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), permissionEnum, parentID.Value).Select(folder => (long) folder.ID).ToList();
             else
 			if( id.HasValue )
 			{
 				var folder = PermissionManager.GetFolder( id.Value );
 
-				if( folder.DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), FolderPermissions.Read, true ) )
+				if( folder.DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), permissionEnum, true ) )
 					folderIDs.Add( folder.ID );
 			}
 

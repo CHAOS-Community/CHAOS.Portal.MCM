@@ -30,7 +30,7 @@ namespace CHAOS.MCM.Module
                     else
                     {
                         //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
-                        var folders = PermissionManager.GetFolders(callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid())).ToList();
+                        var folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid() ), FolderPermissions.Read ).ToList();
   
                         query.Query = string.Format( "({0})+AND+({1})", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
                         

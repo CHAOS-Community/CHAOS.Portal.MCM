@@ -81,7 +81,7 @@ namespace CHAOS.MCM.Module.Rights
             return Folders;
         }
 
-		public IEnumerable<Folder> GetFolders( Guid userGuid, IEnumerable<Guid> groupGuids )
+		public IEnumerable<Folder> GetFolders( Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermissions permissions )
 		{
 			// Generate list of folders the user has direct permissions to
 			List<Folder> directFolders = new List<Folder>();
@@ -89,23 +89,23 @@ namespace CHAOS.MCM.Module.Rights
             if( UserFolderIndex.ContainsKey( userGuid ) )
                 directFolders = UserFolderIndex[ userGuid ].ToList();
 
-			foreach( Guid groupGuid in groupGuids )
+			foreach( var groupGuid in groupGuids )
 			{
 				if( GroupFolderIndex.ContainsKey( groupGuid ) )
 					directFolders.AddRange( GroupFolderIndex[ groupGuid ] );
 			}
 
-			return GetTopFolders( userGuid, groupGuids, directFolders );
+			return GetTopFolders( userGuid, groupGuids, directFolders, permissions );
 		}
 
-		public IEnumerable<Folder> GetFolders( Guid userGuid, IEnumerable<Guid> groupGuids, uint parentFolderID )
+		public IEnumerable<Folder> GetFolders( Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermissions permissions, uint parentFolderID )
 		{
 			var directFolders = new List<Folder>();
 
 			if( UserFolderIndex.ContainsKey( userGuid ) )
 				directFolders = UserFolderIndex[ userGuid ].ToList();
 
-			foreach( Guid groupGuid in groupGuids )
+			foreach( var groupGuid in groupGuids )
 			{
 				if( GroupFolderIndex.ContainsKey( groupGuid ) )
 					directFolders.AddRange( GroupFolderIndex[ groupGuid ] );
@@ -114,9 +114,9 @@ namespace CHAOS.MCM.Module.Rights
 			if( !FolderIndex.ContainsKey( parentFolderID ) )
 				yield break;
 
-			foreach( Folder subFolder in FolderIndex[ parentFolderID ].GetSubFolders( false ) )
+			foreach( var subFolder in FolderIndex[ parentFolderID ].GetSubFolders( false ) )
 			{
-				if( subFolder.DoesUserOrGroupHavePersmission( userGuid, groupGuids, FolderPermissions.Read, true ) )
+				if( subFolder.DoesUserOrGroupHavePersmission( userGuid, groupGuids, permissions, true ) )
 					yield return subFolder;
 			}
 		}
@@ -126,7 +126,7 @@ namespace CHAOS.MCM.Module.Rights
             return FolderIndex[ id ];
         }
 
-		public IEnumerable<Folder> GetTopFolders( Guid userGuid, IEnumerable<Guid> groupGuids, IEnumerable<Folder> directFolderIDs )
+		public IEnumerable<Folder> GetTopFolders( Guid userGuid, IEnumerable<Guid> groupGuids, IEnumerable<Folder> directFolderIDs, FolderPermissions permissions )
 		{
 			IList<Folder> folders = new List<Folder>();
 
@@ -137,7 +137,7 @@ namespace CHAOS.MCM.Module.Rights
 				if( folder.ParentFolder != null && folders.Contains( folder.ParentFolder ) )
 					folders.Remove( folder );
 
-				if( IsTopFolder( folder.ParentFolder, userGuid, groupGuids, FolderPermissions.Read ) )
+				if( IsTopFolder( folder.ParentFolder, userGuid, groupGuids, permissions ) )
 					folders.Add( folder );
 			}
 

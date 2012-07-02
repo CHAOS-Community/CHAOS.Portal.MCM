@@ -35,7 +35,7 @@ namespace CHAOS.MCM.Test
 		[Test]
 		public void Should_Get_TopFolders()
 		{
-			IEnumerable<FolderInfo> folders = FolderModule.Get( AdminCallContext, null, null, null );
+			IEnumerable<FolderInfo> folders = FolderModule.Get( AdminCallContext, null, null, null, null );
 
 			Assert.Greater(folders.Count(), 0);
 		}
@@ -44,7 +44,7 @@ namespace CHAOS.MCM.Test
 		public void Should_Get_SubFolders()
 		{
 		    Thread.Sleep( 1000 );
-		    IEnumerable<FolderInfo> folders = FolderModule.Get( AdminCallContext, null, null, TopFolder.ID);
+		    IEnumerable<FolderInfo> folders = FolderModule.Get( AdminCallContext, null, null, TopFolder.ID, null);
 
 		    foreach( FolderInfo folderInfo in folders )
 		    {
