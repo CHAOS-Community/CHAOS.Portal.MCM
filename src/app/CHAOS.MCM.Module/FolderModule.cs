@@ -99,22 +99,22 @@ namespace CHAOS.MCM.Module
 		//    }
 		//}
 
-		//[Datatype("Folder","Update")]
-		//public ScalarResult Folder_Update( CallContext callContext, int id, string newTitle, int? newFolderTypeID )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.Folder_Update( callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, id, newTitle, null, newFolderTypeID );
+		[Datatype("Folder", "Update")]
+		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID )
+		{
+			using( var db = DefaultMCMEntities )
+			{
+				if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( new[] {id}, callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.Update ) )
+					throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
-		//        if( result == -10 )
-		//            throw new InvalidProtocolException( "The parameters to update cant all be null" );
+				var result = db.Folder_Update( (int?) id, newTitle, null, (int?) newFolderTypeID ).FirstOrDefault();
 
-		//        if( result == -100 )
-		//            throw new InsufficientPermissionsException( "User does not have permission to update the folder" );
+				if( !result.HasValue )
+					throw new UnhandledException( "Procedure finished without a value" );
 
-		//        return new ScalarResult( result );
-		//    }
-		//}
+				return new ScalarResult( result.Value );
+			}
+		}
 
 		[Datatype("Folder", "Create")]
 		public Data.DTO.FolderInfo Create( ICallContext callContext, UUID subscriptionGUID, string title, uint? parentID, uint folderTypeID )

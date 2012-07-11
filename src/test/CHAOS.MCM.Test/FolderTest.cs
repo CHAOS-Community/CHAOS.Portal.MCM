@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Module.Rights;
+using CHAOS.Portal.Exception;
 using NUnit.Framework;
 
 namespace CHAOS.MCM.Test
@@ -74,19 +75,19 @@ namespace CHAOS.MCM.Test
 		//    MCMModule.Folder_Delete( AnonCallContext, EmptyFolder.ID);
 		//}
 
-		//[Test]
-		//public void Should_Update_Folder()
-		//{
-		//    ScalarResult result = MCMModule.Folder_Update( AdminCallContext, EmptyFolder.ID, "hellooo", null );
+		[Test]
+		public void Should_Update_Folder()
+		{
+			var result = FolderModule.Update( AdminCallContext, EmptyFolder.ID, "hellooo", null );
 
-		//    Assert.Greater( (int) result.Value, 0 );
-		//}
+			Assert.Greater((int)result.Value, 0);
+		}
 
-		//[Test, ExpectedException(typeof(InsufficientPermissionsException))]
-		//public void Should_Throw_InsufficientPermissionsException_On_Update_Folder()
-		//{
-		//    MCMModule.Folder_Update( AnonCallContext, EmptyFolder.ID, "new", null );
-		//}
+		[Test, ExpectedException(typeof(InsufficientPermissionsException)) ]
+		public void Should_Throw_InsufficientPermissionsException_On_Update_Folder()
+		{
+			FolderModule.Update( AnonCallContext, EmptyFolder.ID, "new", null );
+		}
 
 		//[Test]
 		//public void Should_Move_Folder()

@@ -1019,7 +1019,7 @@
         </Function>
         <Function Name="Folder_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="ID" Type="int" Mode="In" />
-          <Parameter Name="NewTitle" Type="varchar" Mode="In" />
+          <Parameter Name="NewName" Type="varchar" Mode="In" />
           <Parameter Name="NewParentID" Type="int" Mode="In" />
           <Parameter Name="NewFolderTypeID" Type="int" Mode="In" />
         </Function>
@@ -1576,6 +1576,12 @@
           <EntitySet Name="FileInfo" EntityType="MCMModel.FileInfo" />
           <FunctionImport Name="Object_Delete" ReturnType="Collection(Int32)">
           <Parameter Name="GUID" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="Folder_Update" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
+            <Parameter Name="NewName" Mode="In" Type="String" />
+            <Parameter Name="NewParentID" Mode="In" Type="Int32" />
+            <Parameter Name="NewFolderTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">
@@ -2649,6 +2655,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="Object_Delete" FunctionName="MCMModel.Store.Object_Delete" />
+          <FunctionImportMapping FunctionImportName="Folder_Update" FunctionName="MCMModel.Store.Folder_Update" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

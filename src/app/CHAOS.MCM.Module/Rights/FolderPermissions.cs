@@ -11,6 +11,7 @@ namespace CHAOS.MCM.Module.Rights
 		CreateUpdateObjects = 1 << 3,
         CreateLink          = 1 << 4,
         DeleteObject        = 1 << 5,
-		All                 = Read | Write | CreateUpdateObjects | CreateLink | DeleteObject
+		Update				= 1 << 6,
+		All                 = Read | Write | CreateUpdateObjects | CreateLink | DeleteObject | Update
 	}
 }

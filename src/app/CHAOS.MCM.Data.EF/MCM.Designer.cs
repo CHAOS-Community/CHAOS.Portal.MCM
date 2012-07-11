@@ -2972,6 +2972,58 @@ namespace CHAOS.MCM.Data.EF
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Delete", gUIDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="newName">No Metadata Documentation available.</param>
+        /// <param name="newParentID">No Metadata Documentation available.</param>
+        /// <param name="newFolderTypeID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Folder_Update(Nullable<global::System.Int32> iD, global::System.String newName, Nullable<global::System.Int32> newParentID, Nullable<global::System.Int32> newFolderTypeID)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter newNameParameter;
+            if (newName != null)
+            {
+                newNameParameter = new ObjectParameter("NewName", newName);
+            }
+            else
+            {
+                newNameParameter = new ObjectParameter("NewName", typeof(global::System.String));
+            }
+    
+            ObjectParameter newParentIDParameter;
+            if (newParentID.HasValue)
+            {
+                newParentIDParameter = new ObjectParameter("NewParentID", newParentID);
+            }
+            else
+            {
+                newParentIDParameter = new ObjectParameter("NewParentID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter newFolderTypeIDParameter;
+            if (newFolderTypeID.HasValue)
+            {
+                newFolderTypeIDParameter = new ObjectParameter("NewFolderTypeID", newFolderTypeID);
+            }
+            else
+            {
+                newFolderTypeIDParameter = new ObjectParameter("NewFolderTypeID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_Update", iDParameter, newNameParameter, newParentIDParameter, newFolderTypeIDParameter);
+        }
 
         #endregion
 
