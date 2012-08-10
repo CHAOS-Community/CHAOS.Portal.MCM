@@ -1,0 +1,39 @@
+﻿<project name="Media-Content-Manager" default="build">
+  
+  <property name="nantcontrib_path" value="..\tools\nantcontrib-0.92"/>
+  <property name="nant_path" value="..\tools\nant-0.92"/>
+  <property name="project_path" value="..\"/>
+  <property name="solutionfile" value="MCM.sln"/>
+  
+  <target name="build">
+    <loadtasks assembly="${path::combine(nantcontrib_path, 'bin\NAnt.Contrib.Tasks.dll')}" />
+    <loadtasks assembly="${path::combine(nant_path, 'bin\Fyhr.NAnt.ILMerge.dll')}" />
+    
+    <msbuild project="${path::combine(project_path,solutionfile)}">
+      <arg value="/property:Configuration=release" />
+      <arg value="/t:Rebuild" />
+    </msbuild>
+
+    <ilmerge outputfile="CHAOS.MCM.Module.dll"
+             targetkind="dll"
+             logfile="ilmerge.log"
+             targetplatform="v4"
+             targetplatformdirectory="C:\Windows\Microsoft.NET\Framework64\v4.0.30319">
+		
+		<librarypath>
+			<include name="..\lib\" />
+      <include name="..\tools\nunit\" />
+		</librarypath>
+		
+		<inputassemblies>
+			<include name="..\src\app\CHAOS.MCM.Core.Exception\bin\Release\CHAOS.MCM.Core.Exception.dll" />
+			<include name="..\src\app\CHAOS.MCM.Data.DTO\bin\Release\CHAOS.MCM.Data.DTO.dll" />
+			<include name="..\src\app\CHAOS.MCM.Data.EF\bin\Release\CHAOS.MCM.Data.EF.dll" />
+			<include name="..\src\app\CHAOS.MCM.Module\bin\Release\CHAOS.MCM.Module.dll" />
+		</inputassemblies>
+		
+    </ilmerge>
+    
+  </target>
+  
+</project>
