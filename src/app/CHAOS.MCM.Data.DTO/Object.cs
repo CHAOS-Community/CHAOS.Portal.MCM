@@ -137,7 +137,14 @@ namespace CHAOS.MCM.Data.DTO
 						if( metadata.MetadataXML.Root.Element("Title") != null )
 							yield return new KeyValuePair<string, string>( "LARM-Title", metadata.MetadataXML.Root.Element("Title").Value );
 					}
+					if( metadata.MetadataSchemaGUID.ToString() == "c82a6f6d-b56b-4662-9627-f19410afc309" )
+						if( metadata.MetadataXML.Root.Element("Keywords") != null )
+							foreach( var keyword in metadata.MetadataXML.Root.Element("Keywords").Value.Split(' ') )
+							{
+								yield return new KeyValuePair<string,string>( "LARM-Test2-Keyword", keyword.Replace( "%20", " " ) );
+							}
 
+					//LARM-Test2-Keyword
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
 
