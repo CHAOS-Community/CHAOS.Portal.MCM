@@ -382,7 +382,7 @@ namespace CHAOS.MCM.Module
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), objects );
 
-		        return new ScalarResult( objects.First( ).Metadatas.Count() );
+		        return new ScalarResult( result );
 		    }
 		}
 
