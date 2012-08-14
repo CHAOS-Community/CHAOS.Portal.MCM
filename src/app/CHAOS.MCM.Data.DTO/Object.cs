@@ -113,6 +113,10 @@ namespace CHAOS.MCM.Data.DTO
                     else                                           
                     if( metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-000063c30000" && metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null )
                         yield return new KeyValuePair<string, string>( "DKA-Organization", metadata.MetadataXML.Descendants("Organization").First().Value );
+					else
+					if( metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-000063c30000" && metadata.MetadataXML.Root.Element("Type") != null )
+						yield return new KeyValuePair<string, string>( "DKA-Type", metadata.MetadataXML.Root.Element("Type").Value );
+
                     else
                     if( metadata.MetadataSchemaGUID.ToString() == "d361328e-4fd2-4cb1-a2b4-37ecc7679a6e" && metadata.MetadataXML.Descendants("ID").FirstOrDefault() != null )
                         yield return new KeyValuePair<string, string>( "DKA-DFI-ID", metadata.MetadataXML.Descendants("ID").First().Value );
