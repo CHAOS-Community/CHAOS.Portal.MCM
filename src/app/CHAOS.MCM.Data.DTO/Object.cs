@@ -96,59 +96,71 @@ namespace CHAOS.MCM.Data.DTO
 			if( Metadatas != null )
 				foreach( var metadata in Metadatas )
 				{
-                    if( metadata.MetadataSchemaGUID.ToString() == "e4ee26e4-94dc-d946-8e23-459c7de51fc0" && metadata.MetadataXML.Descendants("TotalVotes").FirstOrDefault() != null  )
-                        yield return new KeyValuePair<string, string>( "LB_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
-                    else
-                    if( metadata.MetadataSchemaGUID.ToString() == "f39ac380-e33d-7c4e-9ed9-7745990ed6c7" && metadata.MetadataXML.Descendants( "TotalVotes" ).FirstOrDefault() != null )
-                        yield return new KeyValuePair<string, string>( "HT_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
-                    else
-                    if( metadata.MetadataSchemaGUID.ToString() == "21453740-eb1a-8842-81b4-ec62975e89e0" && metadata.MetadataXML.Descendants("Country").FirstOrDefault() != null )
-                        yield return new KeyValuePair<string, string>( "HT_Country_" + metadata.LanguageCode, metadata.MetadataXML.Descendants( "Country" ).First().Value );
-                    else
-                    if( metadata.MetadataSchemaGUID.ToString() == "d9efe8c8-9502-11e1-ba5d-02cea2621172" && metadata.MetadataXML.Descendants("FacebookIds").FirstOrDefault() != null )
-                        foreach( var id in metadata.MetadataXML.Descendants("FacebookIds").Elements( "Id" ) )
-                        {
-                            yield return new KeyValuePair<string, string>( "FacebookUserIDs", id.Value );
-                        }
-                    else                                           
-                    if( metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-000063c30000" && metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null )
-                        yield return new KeyValuePair<string, string>( "DKA-Organization", metadata.MetadataXML.Descendants("Organization").First().Value );
-					else
-					if( metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-000063c30000" && metadata.MetadataXML.Root.Element("Type") != null )
-						yield return new KeyValuePair<string, string>( "DKA-Type", metadata.MetadataXML.Root.Element("Type").Value );
-
-                    else
-                    if( metadata.MetadataSchemaGUID.ToString() == "d361328e-4fd2-4cb1-a2b4-37ecc7679a6e" && metadata.MetadataXML.Descendants("ID").FirstOrDefault() != null )
-                        yield return new KeyValuePair<string, string>( "DKA-DFI-ID", metadata.MetadataXML.Descendants("ID").First().Value );
-                    else
-                    if( metadata.MetadataSchemaGUID.ToString() == "1fd4e56e-3f3a-4f25-ba3e-3d9f80d5d49e" && metadata.MetadataXML.Root.Element("Name") != null )
-                        yield return new KeyValuePair<string, string>( "CHAOS-Profile-Name", metadata.MetadataXML.Root.Element("Name").Value );
-					else
-					if( metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-0000df820000" )
+					switch( metadata.GUID.ToString() )
 					{
-						if( metadata.MetadataXML.Root.Element("PublicationDateTime") != null )
-							yield return new KeyValuePair<string, string>( "LARM-PubStartDate", DateTime.Parse(metadata.MetadataXML.Root.Element("PublicationDateTime").Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-						if( metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null )
-							yield return new KeyValuePair<string, string>( "LARM-PubEndDate", DateTime.Parse(metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-						if( metadata.MetadataXML.Root.Element("Title") != null )
-							yield return new KeyValuePair<string, string>( "LARM-Title", metadata.MetadataXML.Root.Element("Title").Value );
-					}
-					else
-					if( metadata.MetadataSchemaGUID.ToString() == "70c26faf-b1ee-41e8-b916-a5a16b25ca69" )
-					{
-						if( metadata.MetadataXML.Root.Element("Date") != null )
-							yield return new KeyValuePair<string, string>( "LARM-PubStartDate", DateTime.Parse(metadata.MetadataXML.Root.Element("Date").Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-						if( metadata.MetadataXML.Root.Element("Title") != null )
-							yield return new KeyValuePair<string, string>( "LARM-Title", metadata.MetadataXML.Root.Element("Title").Value );
-					}
-					if( metadata.MetadataSchemaGUID.ToString() == "c82a6f6d-b56b-4662-9627-f19410afc309" )
-						if( metadata.MetadataXML.Root.Element("Keywords") != null )
-							foreach( var keyword in metadata.MetadataXML.Root.Element("Keywords").Value.Split(' ') )
-							{
-								yield return new KeyValuePair<string,string>( "LARM-Test2-Keyword", keyword.Replace( "%20", " " ) );
-							}
+						case "e4ee26e4-94dc-d946-8e23-459c7de51fc0":
+							if( metadata.MetadataXML.Descendants("TotalVotes").FirstOrDefault() != null )
+								yield return new KeyValuePair<string, string>( "LB_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
+							break;
+						case "f39ac380-e33d-7c4e-9ed9-7745990ed6c7":
+							if( metadata.MetadataXML.Descendants( "TotalVotes" ).FirstOrDefault() != null )
+								yield return new KeyValuePair<string, string>( "HT_TotalVotes", metadata.MetadataXML.Descendants( "TotalVotes" ).First().Value );
+							break;
+						case "21453740-eb1a-8842-81b4-ec62975e89e0":
+							if( metadata.MetadataXML.Descendants("Country").FirstOrDefault() != null )
+								yield return new KeyValuePair<string, string>( "HT_Country_" + metadata.LanguageCode, metadata.MetadataXML.Descendants( "Country" ).First().Value );
+							break;
+						case "d9efe8c8-9502-11e1-ba5d-02cea2621172":
+							if( metadata.MetadataXML.Descendants("FacebookIds").FirstOrDefault() != null )
+								foreach( var id in metadata.MetadataXML.Descendants("FacebookIds").Elements( "Id" ) )
+								{
+									yield return new KeyValuePair<string, string>( "FacebookUserIDs", id.Value );
+								}
+							break;
+						case "00000000-0000-0000-0000-000063c30000":
+							if( metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null )
+								yield return new KeyValuePair<string, string>( "DKA-Organization", metadata.MetadataXML.Descendants("Organization").First().Value );
 
-					//LARM-Test2-Keyword
+							if( metadata.MetadataXML.Root.Element("Type") != null )
+								yield return new KeyValuePair<string, string>( "DKA-Type", metadata.MetadataXML.Root.Element("Type").Value );
+							break;
+						case "d361328e-4fd2-4cb1-a2b4-37ecc7679a6e":
+							if( metadata.MetadataXML.Descendants("ID").FirstOrDefault() != null )
+								yield return new KeyValuePair<string, string>( "DKA-DFI-ID", metadata.MetadataXML.Descendants("ID").First().Value );
+							break;
+						case "1fd4e56e-3f3a-4f25-ba3e-3d9f80d5d49e":
+							if( metadata.MetadataXML.Root.Element("Name") != null )
+								yield return new KeyValuePair<string, string>( "CHAOS-Profile-Name", metadata.MetadataXML.Root.Element("Name").Value );
+							break;
+						case "00000000-0000-0000-0000-0000df820000":
+							DateTime larmPubStartDate;
+
+							if( metadata.MetadataXML.Root.Element("PublicationDateTime") != null && DateTime.TryParse( metadata.MetadataXML.Root.Element("PublicationDateTime").Value, out larmPubStartDate ) )
+								yield return new KeyValuePair<string, string>( "LARM-PubStartDate", larmPubStartDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+
+							DateTime larmPubEndDate;
+
+							if( metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null && DateTime.TryParse( metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value, out larmPubEndDate ) )
+								yield return new KeyValuePair<string, string>( "LARM-PubEndDate", larmPubEndDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+
+							if( metadata.MetadataXML.Root.Element("Title") != null )
+								yield return new KeyValuePair<string, string>( "LARM-Title", metadata.MetadataXML.Root.Element("Title").Value );
+							break;
+						case "70c26faf-b1ee-41e8-b916-a5a16b25ca69":
+							if( metadata.MetadataXML.Root.Element("Date") != null )
+								yield return new KeyValuePair<string, string>( "LARM-PubStartDate", DateTime.Parse(metadata.MetadataXML.Root.Element("Date").Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+							if( metadata.MetadataXML.Root.Element("Title") != null )
+								yield return new KeyValuePair<string, string>( "LARM-Title", metadata.MetadataXML.Root.Element("Title").Value );
+							break;
+						case "c82a6f6d-b56b-4662-9627-f19410afc309":
+							if( metadata.MetadataXML.Root.Element("Keywords") != null )
+								foreach( var keyword in metadata.MetadataXML.Root.Element("Keywords").Value.Split(' ') )
+								{
+									yield return new KeyValuePair<string,string>( "LARM-Test2-Keyword", keyword.Replace( "%20", " " ) );
+								}
+							break;
+					}
+
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
 
