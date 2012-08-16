@@ -45,12 +45,12 @@ namespace CHAOS.MCM.Data.EF
 		#endregion
 		#region FileInfo
 
-		public static IEnumerable<DTO.FileInfo> ToDTO( this IEnumerable<FileInfo> fileInfos )
+		public static IEnumerable<DTO.FileInfo> ToDTO( this IEnumerable<FileInfo> fileInfos, UUID sessionGUID = null )
 		{
-			return fileInfos.Select( item => ToDTO( item ) );
+			return fileInfos.Select( item => ToDTO( item, sessionGUID ) );
 		}
 
-		public static DTO.FileInfo ToDTO( this FileInfo fileInfo )
+		public static DTO.FileInfo ToDTO( this FileInfo fileInfo, UUID sessionGUID = null )
 		{
 			return new DTO.FileInfo( (uint) fileInfo.FileID,  
 									 fileInfo.ObjectGUID,
@@ -71,7 +71,8 @@ namespace CHAOS.MCM.Data.EF
                                      (uint) fileInfo.FormatCategoryID,
                                      fileInfo.FormatCategoryName,
                                      (uint) fileInfo.FormatTypeID,
-                                     fileInfo.FormatTypeName );
+                                     fileInfo.FormatTypeName,
+									 sessionGUID );
 		}
 
 		#endregion
@@ -207,14 +208,14 @@ namespace CHAOS.MCM.Data.EF
 		#endregion
 		#region Object
 
-		public static IEnumerable<DTO.Object> ToDTO( this IEnumerable<Object> objects )
+		public static IEnumerable<DTO.Object> ToDTO( this IEnumerable<Object> objects, UUID sessionGUID = null )
 		{
-			return objects.Select( item => ToDTO( item ) );
+			return objects.Select( item => ToDTO( item, sessionGUID ) );
 		}
 
-		public static DTO.Object ToDTO( this Object obj )
+		public static DTO.Object ToDTO( this Object obj, UUID sessionGUID = null )
 		{
-			return new DTO.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDTO(), obj.pFiles.ToDTO(), obj.ObjectRealtions.ToDTO(), obj.Folders.ToDTO(), obj.AccessPoints.ToDTO() );
+			return new DTO.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDTO(), obj.pFiles.ToDTO( sessionGUID ), obj.ObjectRealtions.ToDTO(), obj.Folders.ToDTO(), obj.AccessPoints.ToDTO() );
 		}
 
 		#endregion
