@@ -133,15 +133,28 @@ namespace CHAOS.MCM.Data.DTO
 								yield return new KeyValuePair<string, string>( "CHAOS-Profile-Name", metadata.MetadataXML.Root.Element("Name").Value );
 							break;
 						case "00000000-0000-0000-0000-0000df820000":
-							DateTime larmPubStartDate;
+							if( metadata.MetadataXML.Root.Element("PublicationDateTime") != null && metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null )
+							{
+								DateTime larmPubStartDate;
+								DateTime larmPubEndDate;
 
-							if( metadata.MetadataXML.Root.Element("PublicationDateTime") != null && DateTime.TryParse( metadata.MetadataXML.Root.Element("PublicationDateTime").Value, out larmPubStartDate ) )
+								if( !DateTime.TryParse( metadata.MetadataXML.Root.Element("PublicationDateTime").Value, out larmPubStartDate ) )
+									break;
+
+								if( !DateTime.TryParse( metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value, out larmPubEndDate ) )
+									break;
+
 								yield return new KeyValuePair<string, string>( "LARM-PubStartDate", larmPubStartDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-
-							DateTime larmPubEndDate;
-
-							if( metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null && DateTime.TryParse( metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value, out larmPubEndDate ) )
 								yield return new KeyValuePair<string, string>( "LARM-PubEndDate", larmPubEndDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+								
+								if( larmPubEndDate.CompareTo( larmPubStartDate ) > 0 )
+									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubEndDate.Subtract( larmPubStartDate ).TotalSeconds ).ToString());
+								else
+									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubStartDate.Subtract( larmPubEndDate ).TotalSeconds ).ToString());
+							}
+							
+							if( metadata.MetadataXML.Root.Element("PublicationChannel") != null )
+								yield return new KeyValuePair<string, string>( "LARM-Channel", metadata.MetadataXML.Root.Element("PublicationChannel").Value );
 
 							if( metadata.MetadataXML.Root.Element("Title") != null )
 								yield return new KeyValuePair<string, string>( "LARM-Title", metadata.MetadataXML.Root.Element("Title").Value );
