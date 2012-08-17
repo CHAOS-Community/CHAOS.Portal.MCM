@@ -29,9 +29,15 @@ namespace CHAOS.MCM.Module
                         query.Query = string.Format( "({0})+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+TO+*])", query.Query );
                     else
                     {
+						if( callContext.IsAnonymousUser )
+							throw new InsufficientPermissionsException("User must be logged in or use accessPointGUID" );
+
                         //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
                         var folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid() ), FolderPermissions.Read ).ToList();
   
+						if( folders.Count == 0 )
+							throw new InsufficientPermissionsException("User does not have access to any folders" );
+
                         query.Query = string.Format( "({0})+AND+({1})", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
                         
                         metadataSchemas = db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",", callContext.Groups.Select( group => group.GUID.ToString().Replace("-","") ) ), null, 0x1 ).ToList();
@@ -44,7 +50,7 @@ namespace CHAOS.MCM.Module
 					if( !resultPage.Any() )
                         return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, 0, new List<Data.DTO.Object>() );
 
-                    var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO( callContext.Session.GUID ).ToList();
+                    var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO( callContext.Session == null ? null : callContext.Session.GUID ).ToList();
 
 					return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, query.PageIndex, objects );
 				}
