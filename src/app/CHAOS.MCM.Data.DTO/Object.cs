@@ -96,7 +96,7 @@ namespace CHAOS.MCM.Data.DTO
 			if( Metadatas != null )
 				foreach( var metadata in Metadatas )
 				{
-					switch( metadata.GUID.ToString() )
+					switch( metadata.MetadataSchemaGUID.ToString() )
 					{
 						case "e4ee26e4-94dc-d946-8e23-459c7de51fc0":
 							if( metadata.MetadataXML.Descendants("TotalVotes").FirstOrDefault() != null )
@@ -126,7 +126,7 @@ namespace CHAOS.MCM.Data.DTO
 							break;
 						case "d361328e-4fd2-4cb1-a2b4-37ecc7679a6e":
 							if( metadata.MetadataXML.Descendants("ID").FirstOrDefault() != null )
-								yield return new KeyValuePair<string, string>( "DKA-DFI-ID", metadata.MetadataXML.Descendants("ID").First().Value );
+								yield return new KeyValuePair<string, string>( "DKA-DFI-ID", metadata.MetadataXML.Root.Element("ID").Value );
 							break;
 						case "1fd4e56e-3f3a-4f25-ba3e-3d9f80d5d49e":
 							if( metadata.MetadataXML.Root.Element("Name") != null )
