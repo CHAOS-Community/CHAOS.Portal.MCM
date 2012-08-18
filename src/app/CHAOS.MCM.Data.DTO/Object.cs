@@ -138,19 +138,30 @@ namespace CHAOS.MCM.Data.DTO
 								DateTime larmPubStartDate;
 								DateTime larmPubEndDate;
 
-								if( !DateTime.TryParse( metadata.MetadataXML.Root.Element("PublicationDateTime").Value, out larmPubStartDate ) )
-									break;
+								var dateTimeFormat1 = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
+								var dateTimeFormat2 = "dd'-'MM'-'yyyy HH':'mm':'ss";
+								var dateTimeFormat3 = "dd'/'MM'/'yyyy HH':'mm':'ss";
+								var formatProvider = System.Globalization.CultureInfo.InvariantCulture;
+								var larmPubStartDateString = metadata.MetadataXML.Root.Element("PublicationDateTime").Value;
+								var larmPubEndDateString   = metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value;
 
-								if( !DateTime.TryParse( metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value, out larmPubEndDate ) )
-									break;
+								if( !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat1, formatProvider, DateTimeStyles.None, out larmPubStartDate ))
+									if( !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat2, formatProvider, DateTimeStyles.None, out larmPubStartDate ))
+										if( !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat3, formatProvider, DateTimeStyles.None, out larmPubStartDate ))
+										break;
 
-								yield return new KeyValuePair<string, string>( "LARM-PubStartDate", larmPubStartDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-								yield return new KeyValuePair<string, string>( "LARM-PubEndDate", larmPubEndDate.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+								if( !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat1, formatProvider, DateTimeStyles.None, out larmPubEndDate ) )
+									if( !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat2, formatProvider, DateTimeStyles.None, out larmPubEndDate ))
+										if( !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat3, formatProvider, DateTimeStyles.None, out larmPubEndDate ))
+										break;
+
+								yield return new KeyValuePair<string, string>( "LARM-PubStartDate", larmPubStartDate.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", formatProvider ) );
+								yield return new KeyValuePair<string, string>( "LARM-PubEndDate", larmPubEndDate.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", formatProvider ) );
 								
 								if( larmPubEndDate.CompareTo( larmPubStartDate ) > 0 )
 									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubEndDate.Subtract( larmPubStartDate ).TotalSeconds ).ToString());
 								else
-									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubStartDate.Subtract( larmPubEndDate ).TotalSeconds ).ToString());
+									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubStartDate.Subtract( larmPubEndDate ).TotalSeconds ).ToString());	
 							}
 							
 							if( metadata.MetadataXML.Root.Element("PublicationChannel") != null )
