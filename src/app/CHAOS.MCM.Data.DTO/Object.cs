@@ -141,19 +141,22 @@ namespace CHAOS.MCM.Data.DTO
 								var dateTimeFormat1 = "yyyy'-'MM'-'dd'T'HH':'mm':'ss";
 								var dateTimeFormat2 = "dd'-'MM'-'yyyy HH':'mm':'ss";
 								var dateTimeFormat3 = "dd'/'MM'/'yyyy HH':'mm':'ss";
+								var dateTimeFormat4 = "yyyy'-'MM'-'dd HH':'mm':'ss";
 								var formatProvider = System.Globalization.CultureInfo.InvariantCulture;
 								var larmPubStartDateString = metadata.MetadataXML.Root.Element("PublicationDateTime").Value;
 								var larmPubEndDateString   = metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value;
 
-								if( !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat1, formatProvider, DateTimeStyles.None, out larmPubStartDate ))
-									if( !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat2, formatProvider, DateTimeStyles.None, out larmPubStartDate ))
-										if( !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat3, formatProvider, DateTimeStyles.None, out larmPubStartDate ))
-										break;
+								if( !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat1, formatProvider, DateTimeStyles.None, out larmPubStartDate ) &&
+								    !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat2, formatProvider, DateTimeStyles.None, out larmPubStartDate ) &&
+									!DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat3, formatProvider, DateTimeStyles.None, out larmPubStartDate ) &&
+									!DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat4, formatProvider, DateTimeStyles.None, out larmPubStartDate ) )
+									break;
 
-								if( !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat1, formatProvider, DateTimeStyles.None, out larmPubEndDate ) )
-									if( !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat2, formatProvider, DateTimeStyles.None, out larmPubEndDate ))
-										if( !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat3, formatProvider, DateTimeStyles.None, out larmPubEndDate ))
-										break;
+								if( !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat1, formatProvider, DateTimeStyles.None, out larmPubEndDate ) &&
+								    !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat2, formatProvider, DateTimeStyles.None, out larmPubEndDate ) &&
+									!DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat3, formatProvider, DateTimeStyles.None, out larmPubEndDate ) &&
+									!DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat4, formatProvider, DateTimeStyles.None, out larmPubEndDate ) )
+									break;
 
 								yield return new KeyValuePair<string, string>( "LARM-PubStartDate", larmPubStartDate.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", formatProvider ) );
 								yield return new KeyValuePair<string, string>( "LARM-PubEndDate", larmPubEndDate.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", formatProvider ) );
