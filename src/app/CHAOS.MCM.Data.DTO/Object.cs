@@ -117,6 +117,12 @@ namespace CHAOS.MCM.Data.DTO
 									yield return new KeyValuePair<string, string>( "FacebookUserIDs", id.Value );
 								}
 							break;
+						// DKA2
+						case "5906a41b-feae-48db-bfb7-714b3e105396":
+							if( metadata.MetadataXML.Descendants("ExternalIdentifier").FirstOrDefault() != null )
+								yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants("ExternalIdentifier").First().Value );
+							break;
+						// DKA
 						case "00000000-0000-0000-0000-000063c30000":
 							if( metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null )
 								yield return new KeyValuePair<string, string>( "DKA-Organization", metadata.MetadataXML.Descendants("Organization").First().Value );
@@ -132,6 +138,7 @@ namespace CHAOS.MCM.Data.DTO
 							if( metadata.MetadataXML.Root.Element("Name") != null )
 								yield return new KeyValuePair<string, string>( "CHAOS-Profile-Name", metadata.MetadataXML.Root.Element("Name").Value );
 							break;
+						// LARM Program
 						case "00000000-0000-0000-0000-0000df820000":
 							if( metadata.MetadataXML.Root.Element("PublicationDateTime") != null && metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null )
 							{
