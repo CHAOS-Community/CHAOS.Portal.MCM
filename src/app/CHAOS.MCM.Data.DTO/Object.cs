@@ -207,21 +207,34 @@ namespace CHAOS.MCM.Data.DTO
 					}
 				}
 
-            if( AccessPoints != null )
-                foreach( var accessPoint in AccessPoints )
-                {
-                    if( accessPoint.StartDate.HasValue )
-                        yield return new KeyValuePair<string, string>( "PubStart", accessPoint.StartDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-                    else 
-                        yield return new KeyValuePair<string, string>( "PubStart", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+			//if( AccessPoints != null )
+			//	foreach( var accessPoint in AccessPoints )
+			//	{
+			//		if( accessPoint.StartDate.HasValue )
+			//			yield return new KeyValuePair<string, string>( "PubStart", accessPoint.StartDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+			//		else 
+			//			yield return new KeyValuePair<string, string>( "PubStart", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
                     
-                    if( accessPoint.EndDate.HasValue )
-                        yield return new KeyValuePair<string, string>( "PubEnd", accessPoint.EndDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-                    else
-                        yield return new KeyValuePair<string, string>( "PubEnd", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+			//		if( accessPoint.EndDate.HasValue )
+			//			yield return new KeyValuePair<string, string>( "PubEnd", accessPoint.EndDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+			//		else
+			//			yield return new KeyValuePair<string, string>( "PubEnd", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 
-                    break;
-                }
+			//		break;
+			//	}
+
+			// TODO: Modify accessPoint logic to support multiple accessPoints with different publish settings
+			var accessPoint = AccessPoints.FirstOrDefault();
+
+			if( accessPoint != null && accessPoint.StartDate.HasValue )
+                yield return new KeyValuePair<string, string>( "PubStart", accessPoint.StartDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+            else 
+                yield return new KeyValuePair<string, string>( "PubStart", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+                    
+            if( accessPoint != null && accessPoint.EndDate.HasValue )
+                yield return new KeyValuePair<string, string>( "PubEnd", accessPoint.EndDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
+            else
+                yield return new KeyValuePair<string, string>( "PubEnd", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 		}
 
 	    private static string GetXmlContent( XContainer xml )
