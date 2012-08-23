@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Linq;
+using CHAOS.Extensions;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Serialization;
 using CHAOS.Serialization.XML;
@@ -12,6 +13,9 @@ namespace CHAOS.MCM.Data.DTO
 
 		[Serialize("GUID")]
 		public UUID GUID { get; set; }
+
+		[Serialize("EditingUserGUID")]
+		public UUID EditingUserGUID { get; set; }
 
 		public UUID ObjectGUID { get; set; }
 
@@ -34,7 +38,7 @@ namespace CHAOS.MCM.Data.DTO
 		#endregion
 		#region Constructor
 
-		public Metadata( Guid guid, Guid objectGUID, string languageCode, Guid metadataSchemaGUID, uint revisionID, string metadataXML, DateTime dateCreated )
+		public Metadata( Guid guid, Guid objectGUID, string languageCode, Guid metadataSchemaGUID, uint revisionID, string metadataXML, DateTime dateCreated, Guid editingUserGUID )
 		{
 			GUID               = new UUID( guid.ToByteArray() );
 			ObjectGUID         = new UUID( objectGUID.ToByteArray() );
@@ -50,6 +54,7 @@ namespace CHAOS.MCM.Data.DTO
 		    }
 			DateCreated        = dateCreated;
 		    RevisionID         = revisionID;
+			EditingUserGUID    = editingUserGUID.ToUUID();
 		}
 
 		public Metadata()

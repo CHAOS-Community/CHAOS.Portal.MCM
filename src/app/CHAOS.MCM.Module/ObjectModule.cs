@@ -50,7 +50,7 @@ namespace CHAOS.MCM.Module
 					if( !resultPage.Any() )
                         return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, 0, new List<Data.DTO.Object>() );
 
-                    var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO( callContext.Session == null ? null : callContext.Session.GUID ).ToList();
+                    var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO( callContext.GetSessionFromDatabase() == null ? null : callContext.Session.GUID ).ToList();
 
 					return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, query.PageIndex, objects );
 				}

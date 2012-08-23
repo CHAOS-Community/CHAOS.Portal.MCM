@@ -189,7 +189,7 @@ namespace CHAOS.MCM.Data.EF
 
 		public static DTO.Metadata ToDTO( this Metadata metadata )
 		{
-			return new DTO.Metadata( metadata.GUID, metadata.ObjectGUID, metadata.LanguageCode, metadata.MetadataSchemaGUID, (uint) metadata.RevisionID, metadata.MetadataXML, metadata.DateCreated );
+			return new DTO.Metadata( metadata.GUID, metadata.ObjectGUID, metadata.LanguageCode, metadata.MetadataSchemaGUID, (uint) metadata.RevisionID, metadata.MetadataXML, metadata.DateCreated, metadata.EditingUserGUID );
 		}
 
 		#endregion
