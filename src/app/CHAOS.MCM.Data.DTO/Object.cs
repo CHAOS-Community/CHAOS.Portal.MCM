@@ -53,9 +53,9 @@ namespace CHAOS.MCM.Data.DTO
 
         public Object( Guid guid, uint objectTypeID, DateTime dateCreated, IEnumerable<Metadata> metadatas, IEnumerable<FileInfo> fileInfos, IEnumerable<Object_Object_Join> objectObjectJoins, IEnumerable<Link> folders, IEnumerable<AccessPoint_Object_Join> accessPoints ) 
 		{
-			GUID         = new UUID( guid.ToByteArray() );
-			ObjectTypeID = objectTypeID;
-			DateCreated  = dateCreated;
+			GUID            = new UUID( guid.ToByteArray() );
+			ObjectTypeID    = objectTypeID;
+			DateCreated     = dateCreated;
 
 			Metadatas       = metadatas.ToList();
 			Files           = fileInfos.ToList();
@@ -228,13 +228,9 @@ namespace CHAOS.MCM.Data.DTO
 
 			if( accessPoint != null && accessPoint.StartDate.HasValue )
                 yield return new KeyValuePair<string, string>( "PubStart", accessPoint.StartDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-            else 
-                yield return new KeyValuePair<string, string>( "PubStart", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
                     
             if( accessPoint != null && accessPoint.EndDate.HasValue )
                 yield return new KeyValuePair<string, string>( "PubEnd", accessPoint.EndDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-            else
-                yield return new KeyValuePair<string, string>( "PubEnd", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 		}
 
 	    private static string GetXmlContent( XContainer xml )
