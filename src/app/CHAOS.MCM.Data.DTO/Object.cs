@@ -113,16 +113,17 @@ namespace CHAOS.MCM.Data.DTO
 						case "d9efe8c8-9502-11e1-ba5d-02cea2621172":
 							if( metadata.MetadataXML.Descendants("FacebookIds").FirstOrDefault() != null )
 								foreach( var id in metadata.MetadataXML.Descendants("FacebookIds").Elements( "Id" ) )
-								{
 									yield return new KeyValuePair<string, string>( "FacebookUserIDs", id.Value );
-								}
 							break;
 						// DKA2
 						case "5906a41b-feae-48db-bfb7-714b3e105396":
-							if( metadata.MetadataXML.Descendants("ExternalIdentifier").FirstOrDefault() != null )
-								yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants("ExternalIdentifier").First().Value );
+							var ns = metadata.MetadataXML.Root.GetNamespaceOfPrefix( "dka" );
+
+							if( ns != null && metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", ns.NamespaceName ) ).FirstOrDefault() != null )
+								yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", ns.NamespaceName ) ).First().Value );
 							break;
 						// DKA
+						// TODO: Remember to add namespace to DKA fields when DKA is replaced by DKA2
 						case "00000000-0000-0000-0000-000063c30000":
 							if( metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null )
 								yield return new KeyValuePair<string, string>( "DKA-Organization", metadata.MetadataXML.Descendants("Organization").First().Value );
