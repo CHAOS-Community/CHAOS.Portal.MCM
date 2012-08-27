@@ -364,7 +364,7 @@ namespace CHAOS.MCM.Module
 
 		    using( var db = DefaultMCMEntities )
 		    {
-				if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
+				if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateUpdateObjects ) )
 					throw new InsufficientPermissionsException( "User does not have permissions to set metadata on this object" );
 
 		        var result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
@@ -386,7 +386,7 @@ namespace CHAOS.MCM.Module
 		    }
 		}
 
-		#endregion
+	    #endregion
 		#region Test
 
 		[Datatype("Test","ReIndex")]
@@ -468,7 +468,7 @@ namespace CHAOS.MCM.Module
 		{
             using( MCMEntities db = DefaultMCMEntities )
             {
-                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get(null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
+                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateUpdateObjects) )
                     throw new InsufficientPermissionsException("User does not have permissions to create a file for this object");
 
 		        int id = db.File_Create( objectGUID.ToByteArray(), (int?) parentFileID, (int) formatID, (int) destinationID, filename, originalFilename, folderPath ).First().Value;
@@ -485,7 +485,7 @@ namespace CHAOS.MCM.Module
         {
             using( MCMEntities db = DefaultMCMEntities )
             {
-                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateLink ) )
+                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateLink ) )
                     throw new InsufficientPermissionsException("User can only create links");
                 
                 // TODO: Manage magical number better (ObjectFolderTypeID:2 is link by default)
@@ -505,7 +505,7 @@ namespace CHAOS.MCM.Module
         {
             using( MCMEntities db = DefaultMCMEntities )
             {
-                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateLink ) )
+                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateLink ) )
                     throw new InsufficientPermissionsException("User does not have permission to update link");
 
                 int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
@@ -521,7 +521,7 @@ namespace CHAOS.MCM.Module
         {
             using( MCMEntities db = DefaultMCMEntities )
             {
-                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( db.Folder_Get( null, objectGUID.ToByteArray()).Select( item => (uint) item.ID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateLink ) )
+                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateLink ) )
                     throw new InsufficientPermissionsException("User does not have permission to delete link");
 
                 int result = db.Object_Folder_Join_Delete( objectGUID.ToByteArray(), (int) folderID ).First().Value;

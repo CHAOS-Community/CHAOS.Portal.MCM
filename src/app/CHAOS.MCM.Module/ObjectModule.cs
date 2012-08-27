@@ -32,7 +32,6 @@ namespace CHAOS.MCM.Module
 						if( callContext.IsAnonymousUser )
 							throw new InsufficientPermissionsException("User must be logged in or use accessPointGUID" );
 
-                        //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
                         var folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid() ), FolderPermissions.Read ).ToList();
   
 						if( folders.Count == 0 )
@@ -87,7 +86,7 @@ namespace CHAOS.MCM.Module
         {
             using( var db = DefaultMCMEntities )
             {
-
+				// TODO: Implement Permissions on SetPublishSettings
                    // throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
 
                 var result = db.AccessPoint_Object_Join_Set( accessPointGUID.ToByteArray(), objectGUID.ToByteArray(), startDate, endDate ).First();

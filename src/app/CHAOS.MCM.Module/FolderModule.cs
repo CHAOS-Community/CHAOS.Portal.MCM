@@ -64,10 +64,10 @@ namespace CHAOS.MCM.Module
 
 			if( !parentID.HasValue && !id.HasValue )
 				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), permissionEnum ).Select( folder => (long) folder.ID ).ToList();
-            else
+			else
 			if( parentID.HasValue )
 				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), permissionEnum, parentID.Value).Select(folder => (long) folder.ID).ToList();
-            else
+			else
 			if( id.HasValue )
 			{
 				var folder = PermissionManager.GetFolder( id.Value );

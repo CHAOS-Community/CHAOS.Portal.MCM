@@ -42,8 +42,10 @@ namespace CHAOS.MCM.Test
 		public Folder			    TopFolder { get; set; }
         public Folder			    SubFolder { get; set; }
 		public Folder               EmptyFolder { get; set; }
+		public Folder               FolderWithAnonAccess { get; set; }
 		public Object               Object1 { get; set; }
 	    public Object               Object2 { get; set; }
+		public Object               ObjectAnonAccess { get; set; }
 		public MetadataSchema       MetadataSchema { get; set; }
         public MetadataSchema       MetadataSchema2 { get; set; }
 		public Format               Format { get; set; }
@@ -60,53 +62,57 @@ namespace CHAOS.MCM.Test
 			{
 				db.PreTest();
 
-                int folderTypeID          = db.FolderType_Create("Folder").First().Value;
-                int folderTestTypeID      = db.FolderType_Create("TEST").First().Value;
-                int topFolderID           = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "top folder", null, folderTypeID ).First().Value;
-                int emptyFolderID         = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), null, "empty folder", topFolderID, folderTypeID ).First().Value;
-                int subFolderID           = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), null, "sub folder", emptyFolderID, folderTypeID ).First().Value;
-                int assetObjectTypeID     = db.ObjectType_Create("Asset").First().Value;
-                int demoObjectTypeID      = db.ObjectType_Create("Demo").First().Value;
-                int objectContainsID      = db.ObjectRelationType_Create("Contains").First().Value;
-                int formatTypeID          = db.FormatType_Create("Video").First().Value;
-                int formatCategoryID      = db.FormatCategory_Create(formatTypeID, "Video Source").First().Value;
-                int formatID              = db.Format_Create(formatCategoryID, "H.264 vb:896 ab:128", null, "video/mp4").First().Value;
-                int destinationID         = db.Destination_Create(SubscriptionInfo.GUID.ToByteArray(), "CHAOS Source").First().Value;
-                int accessProvider        = db.AccessProvider_Create(destinationID, "http://example.com", "{BASE_PATH}{FOLDER_PATH}{FILENAME}", "HTTP Download").First().Value;
-                int objectFolderTypeID    = db.ObjectFolderType_Create(1, "Physical").First().Value;
-                int objectFolderTypeID2   = db.ObjectFolderType_Create(2, "Link").First().Value;
-                int languageResult        = db.Language_Create("Afrikaans", "af").First().Value;
-                int metadataSchemaResult1 = db.MetadataSchema_Create(new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
-                int metadataSchemaResult2 = db.MetadataSchema_Create(new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema2", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
-                int metadataSchemaResult3 = db.MetadataSchema_Create(new UUID("4df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema3", "<xml />", UserAnonymous.GUID.ToByteArray() ).First().Value;
-                int object1Result         = db.Object_Create(new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID).First().Value;
-                int object2Result         = db.Object_Create(new UUID("d7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID).First().Value;
-                int object3Result         = db.Object_Create(new UUID("c7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, subFolderID).First().Value;
-                int metadataResult        = db.Metadata_Set(new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
-                int metadataResult2       = db.Metadata_Set(new UUID("fd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
+                int folderTypeID           = db.FolderType_Create("Folder").First().Value;
+                int folderTestTypeID       = db.FolderType_Create("TEST").First().Value;
+                int topFolderID            = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "top folder", null, folderTypeID ).First().Value;
+                int emptyFolderID          = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), null, "empty folder", topFolderID, folderTypeID ).First().Value;
+                int subFolderID            = db.Folder_Create(UserAdministrator.GUID.ToByteArray(), null, "sub folder", emptyFolderID, folderTypeID ).First().Value;
+				int folderWithAnonAccessID = db.Folder_Create(UserAnonymous.GUID.ToByteArray(), SubscriptionInfo.GUID.ToByteArray(),"Anon Folder", null, folderTypeID ).First().Value;
+                int assetObjectTypeID      = db.ObjectType_Create("Asset").First().Value;
+                int demoObjectTypeID       = db.ObjectType_Create("Demo").First().Value;
+                int objectContainsID       = db.ObjectRelationType_Create("Contains").First().Value;
+                int formatTypeID           = db.FormatType_Create("Video").First().Value;
+                int formatCategoryID       = db.FormatCategory_Create(formatTypeID, "Video Source").First().Value;
+                int formatID               = db.Format_Create(formatCategoryID, "H.264 vb:896 ab:128", null, "video/mp4").First().Value;
+                int destinationID          = db.Destination_Create(SubscriptionInfo.GUID.ToByteArray(), "CHAOS Source").First().Value;
+                int accessProvider         = db.AccessProvider_Create(destinationID, "http://example.com", "{BASE_PATH}{FOLDER_PATH}{FILENAME}", "HTTP Download").First().Value;
+                int objectFolderTypeID     = db.ObjectFolderType_Create(1, "Physical").First().Value;
+                int objectFolderTypeID2    = db.ObjectFolderType_Create(2, "Link").First().Value;
+                int languageResult         = db.Language_Create("Afrikaans", "af").First().Value;
+                int metadataSchemaResult1  = db.MetadataSchema_Create(new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
+                int metadataSchemaResult2  = db.MetadataSchema_Create(new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema2", "<xml />", UserAdministrator.GUID.ToByteArray() ).First().Value;
+                int metadataSchemaResult3  = db.MetadataSchema_Create(new UUID("4df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "demo schema3", "<xml />", UserAnonymous.GUID.ToByteArray() ).First().Value;
+                int object1Result          = db.Object_Create(new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID).First().Value;
+                int object2Result          = db.Object_Create(new UUID("d7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, topFolderID).First().Value;
+                int object3Result          = db.Object_Create(new UUID("c7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, subFolderID).First().Value;
+				int object4Result          = db.Object_Create(new UUID("e7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, folderWithAnonAccessID).First().Value;
+                int metadataResult         = db.Metadata_Set(new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
+                int metadataResult2        = db.Metadata_Set(new UUID("fd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
                 
                 db.AccessPoint_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "Test accesspoint" );
                 db.AccessPoint_Object_Join_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), DateTime.Now, DateTime.Now.AddDays( 1 ) );
                 db.AccessPoint_User_Join_Set( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), 0x1 ).First();
 
-                Afrikaans       = db.Language_Get(null, "af").First().ToDTO();
-                FolderType      = db.FolderType_Get(folderTypeID, null).First().ToDTO();
-                FolderTestType  = db.FolderType_Get(folderTestTypeID, null).First().ToDTO();
-                TopFolder       = db.Folder_Get(topFolderID, null).First().ToDTO();
-                SubFolder       = db.Folder_Get(subFolderID, null).First().ToDTO();
-                EmptyFolder     = db.Folder_Get(emptyFolderID, null).First().ToDTO();
-                AssetObjectType = db.ObjectType_Get(assetObjectTypeID, null).First().ToDTO();
-                DemoObjectType  = db.ObjectType_Get(demoObjectTypeID, null).First().ToDTO();
-                ObjectContains  = db.ObjectRelationType_Get(objectContainsID, null).First().ToDTO();
-                FormatType      = db.FormatType_Get(formatTypeID, null).First().ToDTO();
-                FormatCategory  = db.FormatCategory_Get(formatID, null).First().ToDTO();
-                Format          = db.Format_Get(formatID, null).First().ToDTO();
-                DestinationInfo = db.DestinationInfo_Get(destinationID).First().ToDTO();
-                MetadataSchema  = db.MetadataSchema_Get( null, null,new UUID("2df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray(), 0x1 ).First().ToDTO();
-                MetadataSchema2 = db.MetadataSchema_Get( null, null, new UUID("3df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray(), 0x1 ).First().ToDTO();
-                Object1         = db.Object_Get(new[] { new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
-                Object2         = db.Object_Get(new[] { new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
-                AccessPoint     = db.AccessPoint_Get( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), "", 1 ).FirstOrDefault();
+                Afrikaans			 = db.Language_Get(null, "af").First().ToDTO();
+                FolderType			 = db.FolderType_Get(folderTypeID, null).First().ToDTO();
+                FolderTestType		 = db.FolderType_Get(folderTestTypeID, null).First().ToDTO();
+                TopFolder			 = db.Folder_Get(topFolderID, null).First().ToDTO();
+                SubFolder       	 = db.Folder_Get(subFolderID, null).First().ToDTO();
+                EmptyFolder			 = db.Folder_Get(emptyFolderID, null).First().ToDTO();
+				FolderWithAnonAccess = db.Folder_Get( folderWithAnonAccessID, null ).First().ToDTO();
+                AssetObjectType		 = db.ObjectType_Get(assetObjectTypeID, null).First().ToDTO();
+                DemoObjectType		 = db.ObjectType_Get(demoObjectTypeID, null).First().ToDTO();
+                ObjectContains		 = db.ObjectRelationType_Get(objectContainsID, null).First().ToDTO();
+                FormatType			 = db.FormatType_Get(formatTypeID, null).First().ToDTO();
+                FormatCategory		 = db.FormatCategory_Get(formatID, null).First().ToDTO();
+                Format				 = db.Format_Get(formatID, null).First().ToDTO();
+                DestinationInfo		 = db.DestinationInfo_Get(destinationID).First().ToDTO();
+                MetadataSchema		 = db.MetadataSchema_Get( null, null,new UUID("2df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray(), 0x1 ).First().ToDTO();
+                MetadataSchema2		 = db.MetadataSchema_Get( null, null, new UUID("3df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray(), 0x1 ).First().ToDTO();
+                Object1				 = db.Object_Get(new[] { new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
+                Object2				 = db.Object_Get(new[] { new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
+				ObjectAnonAccess     = db.Object_Get(new[] { new UUID("e7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
+                AccessPoint			 = db.AccessPoint_Get( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), "", 1 ).FirstOrDefault();
 
                 MCMModule = new MCMModule();
                 MCMModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");

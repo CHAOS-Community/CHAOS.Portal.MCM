@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Threading;
 using System.Xml.Linq;
+using CHAOS.Extensions;
 using CHAOS.Index;
 using CHAOS.Index.Solr;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
+using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using Folder = CHAOS.MCM.Module.Rights.Folder;
 
@@ -18,8 +20,8 @@ namespace CHAOS.MCM.Module
 
         private string        ConnectionString { get; set; }
         private static Thread SynchronizationThread { get; set; }
-        
-        protected static PermissionManager PermissionManager { get; set; }
+
+		public static PermissionManager PermissionManager { get; set; }
 
         public MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
 
@@ -88,6 +90,19 @@ namespace CHAOS.MCM.Module
         {
             index.Remove( delObject, false );
         }
+
+		public bool HasPermissionToObject( ICallContext callContext, UUID objectGUID, FolderPermissions permissions )
+	    {
+		    using( var db = DefaultMCMEntities )
+		    {
+				var folderIDs  = db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => (uint) item.ID );
+				var userGUID   = callContext.User.GUID.ToGuid();
+				var groupGUIDs = callContext.Groups.Select( item => item.GUID.ToGuid() );
+
+			    return PermissionManager.DoesUserOrGroupHavePersmissionToFolders( folderIDs, userGUID, groupGUIDs, permissions );
+		    }
+
+	    }
 
         #endregion
     }
