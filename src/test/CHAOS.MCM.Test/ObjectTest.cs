@@ -88,6 +88,15 @@ namespace CHAOS.MCM.Test
             Assert.AreEqual( 1, result.Value );
         }
 
+		[Test]
+        public void Should_Delete_Object_With_Object_Relation()
+        {
+
+            ScalarResult result = ObjectModule.Delete( AdminCallContext, Object3.GUID );
+
+            Assert.AreEqual( 1, result.Value );
+        }
+
 		//[Test]
 		//public void Should_Put_Object_In_Folder()
 		//{

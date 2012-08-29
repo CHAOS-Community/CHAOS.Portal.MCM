@@ -45,6 +45,7 @@ namespace CHAOS.MCM.Test
 		public Folder               FolderWithAnonAccess { get; set; }
 		public Object               Object1 { get; set; }
 	    public Object               Object2 { get; set; }
+		public Object               Object3 { get; set; }
 		public Object               ObjectAnonAccess { get; set; }
 		public MetadataSchema       MetadataSchema { get; set; }
         public MetadataSchema       MetadataSchema2 { get; set; }
@@ -89,9 +90,11 @@ namespace CHAOS.MCM.Test
                 int metadataResult         = db.Metadata_Set(new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
                 int metadataResult2        = db.Metadata_Set(new UUID("fd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
                 
+
                 db.AccessPoint_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "Test accesspoint" );
                 db.AccessPoint_Object_Join_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), DateTime.Now, DateTime.Now.AddDays( 1 ) );
                 db.AccessPoint_User_Join_Set( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), 0x1 ).First();
+				db.ObjectRelation_Create( new UUID("c7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("e7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), objectContainsID, null ).First();
 
                 Afrikaans			 = db.Language_Get(null, "af").First().ToDTO();
                 FolderType			 = db.FolderType_Get(folderTypeID, null).First().ToDTO();
@@ -111,6 +114,7 @@ namespace CHAOS.MCM.Test
                 MetadataSchema2		 = db.MetadataSchema_Get( null, null, new UUID("3df25b70-7442-11e1-89cc-08002723312d" ).ToByteArray(), 0x1 ).First().ToDTO();
                 Object1				 = db.Object_Get(new[] { new UUID("bb738610-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
                 Object2				 = db.Object_Get(new[] { new UUID("d7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
+				Object3              = db.Object_Get(new[] { new UUID("c7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
 				ObjectAnonAccess     = db.Object_Get(new[] { new UUID("e7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
                 AccessPoint			 = db.AccessPoint_Get( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), "", 1 ).FirstOrDefault();
 
