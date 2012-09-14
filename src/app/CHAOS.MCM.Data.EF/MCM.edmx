@@ -339,6 +339,7 @@
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
           <Property Name="FormatXML" Type="text" />
           <Property Name="MimeType" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="Extension" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="FormatCategory">
           <Key>
@@ -1055,6 +1056,7 @@
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="FormatXML" Type="text" Mode="In" />
           <Parameter Name="MimeType" Type="varchar" Mode="In" />
+          <Parameter Name="Extension" Type="varchar" Mode="In" />
         </Function>
         <Function Name="Format_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -1368,6 +1370,7 @@
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="FormatXML" Mode="In" Type="String" />
             <Parameter Name="MimeType" Mode="In" Type="String" />
+            <Parameter Name="Extension" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="FormatCategory_Get" EntitySet="FormatCategory" ReturnType="Collection(MCMModel.FormatCategory)">
             <Parameter Name="ID" Mode="In" Type="Int32" />
@@ -1737,6 +1740,7 @@
           <NavigationProperty Name="Conversion" Relationship="MCMModel.FK_Format_ID_Conversion_FormatID" FromRole="Format" ToRole="Conversion" />
           <NavigationProperty Name="File" Relationship="MCMModel.FK_Format_ID_File_FormatID" FromRole="Format" ToRole="File" />
           <NavigationProperty Name="FormatCategory" Relationship="MCMModel.FK_FormatCategory_ID_Format_FormatCategoryID" FromRole="Format" ToRole="FormatCategory" />
+          <Property Type="String" Name="Extension" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Language">
           <Key>
@@ -2437,7 +2441,8 @@
             <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Format"><EntityTypeMapping TypeName="MCMModel.Format"><MappingFragment StoreEntitySet="Format">
-            <ScalarProperty Name="ID" ColumnName="ID" />
+            <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
             <ScalarProperty Name="FormatCategoryID" ColumnName="FormatCategoryID" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="FormatXML" ColumnName="FormatXML" />

@@ -1395,7 +1395,8 @@ namespace CHAOS.MCM.Data.EF
         /// <param name="name">No Metadata Documentation available.</param>
         /// <param name="formatXML">No Metadata Documentation available.</param>
         /// <param name="mimeType">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> Format_Create(Nullable<global::System.Int32> formatCategoryID, global::System.String name, global::System.String formatXML, global::System.String mimeType)
+        /// <param name="extension">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Format_Create(Nullable<global::System.Int32> formatCategoryID, global::System.String name, global::System.String formatXML, global::System.String mimeType, global::System.String extension)
         {
             ObjectParameter formatCategoryIDParameter;
             if (formatCategoryID.HasValue)
@@ -1437,7 +1438,17 @@ namespace CHAOS.MCM.Data.EF
                 mimeTypeParameter = new ObjectParameter("MimeType", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("Format_Create", formatCategoryIDParameter, nameParameter, formatXMLParameter, mimeTypeParameter);
+            ObjectParameter extensionParameter;
+            if (extension != null)
+            {
+                extensionParameter = new ObjectParameter("Extension", extension);
+            }
+            else
+            {
+                extensionParameter = new ObjectParameter("Extension", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Format_Create", formatCategoryIDParameter, nameParameter, formatXMLParameter, mimeTypeParameter, extensionParameter);
         }
     
         /// <summary>
@@ -7170,6 +7181,30 @@ namespace CHAOS.MCM.Data.EF
         private global::System.String _MimeType;
         partial void OnMimeTypeChanging(global::System.String value);
         partial void OnMimeTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Extension
+        {
+            get
+            {
+                return _Extension;
+            }
+            set
+            {
+                OnExtensionChanging(value);
+                ReportPropertyChanging("Extension");
+                _Extension = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Extension");
+                OnExtensionChanged();
+            }
+        }
+        private global::System.String _Extension;
+        partial void OnExtensionChanging(global::System.String value);
+        partial void OnExtensionChanged();
 
         #endregion
 

@@ -33,13 +33,13 @@ namespace CHAOS.MCM.Test
 
         	for( int i = 1; i < 30000; i++ )
         	{
-				uint id = (uint) rand.Next( 1, 30000 );
+				uint id = (uint) rand.Next( 1, 10000 );
         		topFolder.GetFolder( id ).AddUser( Guid.NewGuid(), FolderPermissions.Read );
         	}
 
 			for( int i = 0; i < 5000; i++ )
         	{
-        		uint id = (uint) rand.Next(1, 30000);
+        		uint id = (uint) rand.Next(1, 10000);
 				topFolder.GetFolder( id ).AddGroup( Guid.NewGuid(), FolderPermissions.Read );
         	}
 

@@ -74,7 +74,7 @@ namespace CHAOS.MCM.Test
                 int objectContainsID       = db.ObjectRelationType_Create("Contains").First().Value;
                 int formatTypeID           = db.FormatType_Create("Video").First().Value;
                 int formatCategoryID       = db.FormatCategory_Create(formatTypeID, "Video Source").First().Value;
-                int formatID               = db.Format_Create(formatCategoryID, "H.264 vb:896 ab:128", null, "video/mp4").First().Value;
+                int formatID               = db.Format_Create(formatCategoryID, "H.264 vb:896 ab:128", null, "video/mp4",".mp4").First().Value;
                 int destinationID          = db.Destination_Create(SubscriptionInfo.GUID.ToByteArray(), "CHAOS Source").First().Value;
                 int accessProvider         = db.AccessProvider_Create(destinationID, "http://example.com", "{BASE_PATH}{FOLDER_PATH}{FILENAME}", "HTTP Download").First().Value;
                 int objectFolderTypeID     = db.ObjectFolderType_Create(1, "Physical").First().Value;
