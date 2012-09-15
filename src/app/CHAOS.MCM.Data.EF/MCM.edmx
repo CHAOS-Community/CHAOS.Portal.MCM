@@ -4,7 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MCMModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="MCMModel.Store" 
+            Alias="Self" 
+            Provider="MySql.Data.MySqlClient" 
+            ProviderManifestToken="5.5" 
+            xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" 
+            xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="MCMModelStoreContainer">
           <EntitySet Name="AccessPoint" EntityType="MCMModel.Store.AccessPoint" store:Type="Tables" Schema="MCM" />
           <EntitySet Name="AccessPoint_Group_Join" EntityType="MCMModel.Store.AccessPoint_Group_Join" store:Type="Tables" Schema="MCM" />

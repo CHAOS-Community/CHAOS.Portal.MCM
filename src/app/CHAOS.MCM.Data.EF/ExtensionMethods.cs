@@ -89,7 +89,7 @@ namespace CHAOS.MCM.Data.EF
 		}
 
 		#endregion
-		#region Folder
+		#region Object_Folder
 
         public static IEnumerable<DTO.Link> ToDTO(this IEnumerable<Object_Folder_Join> folders)
 		{
@@ -163,7 +163,7 @@ namespace CHAOS.MCM.Data.EF
 
 		public static DTO.Format ToDTO( this Format format )
 		{
-			return new DTO.Format( (uint) format.ID, (uint) format.FormatCategoryID, format.Name, format.FormatXML, format.MimeType );
+			return new DTO.Format( (uint) format.ID, (uint) format.FormatCategoryID, format.Name, format.FormatXML, format.MimeType, format.Extension );
 		}
 
 		#endregion

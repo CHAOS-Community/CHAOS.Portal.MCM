@@ -24,16 +24,20 @@ namespace CHAOS.MCM.Data.DTO
 		[Serialize]
 		public string MimeType { get; set; }
 
+        [Serialize]
+        public string Extension { get; set; }
+
 		#endregion
 		#region Constructor
 
-		public Format( uint id, uint formatCategoryID, string name, string formatXML, string mimeType )
+		public Format( uint id, uint formatCategoryID, string name, string formatXML, string mimeType, string extenison )
 		{
 			ID               = id;
 			FormatCategoryID = formatCategoryID;
 			Name             = name;
 			FormatXML        = string.IsNullOrEmpty( formatXML ) ? null : XDocument.Parse( formatXML );
 			MimeType         = mimeType;
+            Extension        = extenison;
 		}
 
 		public Format()
