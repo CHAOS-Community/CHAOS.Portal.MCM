@@ -18,7 +18,7 @@ namespace CHAOS.MCM.Module
         {
             using (var db = DefaultMCMEntities)
             {
-                return db.Format_Get((int?) ID, name).ToDTO();
+                return db.Format_Get((int?) ID, name).ToDTO().ToList();
             }
         }
 

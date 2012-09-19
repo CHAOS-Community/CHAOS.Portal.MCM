@@ -27,6 +27,7 @@ namespace CHAOS.MCM.Test
 
         public MCMModule            MCMModule { get; set; }
         public ObjectModule         ObjectModule { get; set; }
+        public FormatModule         FormatModule { get; set; }
         public FolderModule         FolderModule { get; set; }
         public ObjectTypeModule     ObjectTypeModule { get; set; }
         public MetadataSchemaModule MetadataSchemaModule { get; set; }
@@ -132,6 +133,9 @@ namespace CHAOS.MCM.Test
 
                 MetadataSchemaModule = new MetadataSchemaModule();
                 MetadataSchemaModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");
+
+                FormatModule = new FormatModule();
+                FormatModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");
 			}
         }
     }
