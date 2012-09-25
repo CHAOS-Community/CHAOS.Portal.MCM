@@ -139,6 +139,19 @@ namespace CHAOS.MCM.Data.DTO
 							if( metadata.MetadataXML.Root.Element("Name") != null )
 								yield return new KeyValuePair<string, string>( "CHAOS-Profile-Name", metadata.MetadataXML.Root.Element("Name").Value );
 							break;
+
+                        // FIAT / IFTA
+                        case "22c70550-90ce-43f9-9176-973c09760138":
+                            if (metadata.MetadataXML.Root.Element("FirstPublicationDate") != null)
+                                yield return new KeyValuePair<string, string>("FIATIFTA-ANP-FirstPublicationDate", metadata.MetadataXML.Root.Element("FirstPublicationDate").Value);
+
+                            if (metadata.MetadataXML.Root.Element("Title") != null)
+                                yield return new KeyValuePair<string, string>("FIATIFTA-ANP-Title", metadata.MetadataXML.Root.Element("Title").Value);
+
+                            if (metadata.MetadataXML.Root.Element("Publisher") != null)
+                                yield return new KeyValuePair<string, string>("FIATIFTA-ANP-Publisher", metadata.MetadataXML.Root.Element("Publisher").Value);
+                            break;
+
 						// LARM Program
 						case "00000000-0000-0000-0000-0000df820000":
 							if( metadata.MetadataXML.Root.Element("PublicationDateTime") != null && metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null )
@@ -150,6 +163,7 @@ namespace CHAOS.MCM.Data.DTO
 								var dateTimeFormat2 = "dd'-'MM'-'yyyy HH':'mm':'ss";
 								var dateTimeFormat3 = "dd'/'MM'/'yyyy HH':'mm':'ss";
 								var dateTimeFormat4 = "yyyy'-'MM'-'dd HH':'mm':'ss";
+                                var dateTimeFormat5 = "yyyy-MM-ddTHH:mm:ss.fffzzz";
 								var formatProvider = System.Globalization.CultureInfo.InvariantCulture;
 								var larmPubStartDateString = metadata.MetadataXML.Root.Element("PublicationDateTime").Value;
 								var larmPubEndDateString   = metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value;
@@ -157,13 +171,15 @@ namespace CHAOS.MCM.Data.DTO
 								if( !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat1, formatProvider, DateTimeStyles.None, out larmPubStartDate ) &&
 								    !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat2, formatProvider, DateTimeStyles.None, out larmPubStartDate ) &&
 									!DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat3, formatProvider, DateTimeStyles.None, out larmPubStartDate ) &&
-									!DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat4, formatProvider, DateTimeStyles.None, out larmPubStartDate ) )
+									!DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat4, formatProvider, DateTimeStyles.None, out larmPubStartDate ) &&
+                                    !DateTime.TryParseExact( larmPubStartDateString, dateTimeFormat5, formatProvider, DateTimeStyles.None, out larmPubStartDate ))
 									break;
 
 								if( !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat1, formatProvider, DateTimeStyles.None, out larmPubEndDate ) &&
 								    !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat2, formatProvider, DateTimeStyles.None, out larmPubEndDate ) &&
 									!DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat3, formatProvider, DateTimeStyles.None, out larmPubEndDate ) &&
-									!DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat4, formatProvider, DateTimeStyles.None, out larmPubEndDate ) )
+									!DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat4, formatProvider, DateTimeStyles.None, out larmPubEndDate ) &&
+                                    !DateTime.TryParseExact( larmPubEndDateString, dateTimeFormat5, formatProvider, DateTimeStyles.None, out larmPubEndDate ))
 									break;
 
 								yield return new KeyValuePair<string, string>( "LARM-PubStartDate", larmPubStartDate.ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", formatProvider ) );
