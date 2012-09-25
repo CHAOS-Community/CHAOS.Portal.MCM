@@ -143,7 +143,8 @@ namespace CHAOS.MCM.Data.DTO
                         // FIAT / IFTA
                         case "22c70550-90ce-43f9-9176-973c09760138":
                             if (metadata.MetadataXML.Root.Element("FirstPublicationDate") != null)
-                                yield return new KeyValuePair<string, string>("FIATIFTA-ANP-FirstPublicationDate", metadata.MetadataXML.Root.Element("FirstPublicationDate").Value);
+                                yield return new KeyValuePair<string, string>("FIATIFTA-ANP-FirstPublicationDate", 
+                                    DateTime.Parse(metadata.MetadataXML.Root.Element("FirstPublicationDate").Value).ToString( "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" )  );
 
                             if (metadata.MetadataXML.Root.Element("Title") != null)
                                 yield return new KeyValuePair<string, string>("FIATIFTA-ANP-Title", metadata.MetadataXML.Root.Element("Title").Value);
