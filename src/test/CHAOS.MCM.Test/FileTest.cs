@@ -1,6 +1,5 @@
 ﻿using System;
 using CHAOS.MCM.Data.DTO;
-using CHAOS.MCM.Module;
 using NUnit.Framework;
 
 namespace CHAOS.MCM.Test
@@ -11,10 +10,18 @@ namespace CHAOS.MCM.Test
 		[Test]
 		public void Create_File()
 		{
-		    File file = MCMModule.File_Create(AdminCallContext, Object1.GUID, null, Format.ID, DestinationInfo.ID, "filename", "originalfilename", "/1/2/3/");
-
+		    File file = FileModule.Create(AdminCallContext, Object1.GUID, null, Format.ID, DestinationInfo.ID, "filename", "originalfilename", "/1/2/3/");
+            
 		    Assert.AreEqual( "filename", file.Filename );
 		}
+
+        [Test]
+        public void Delete_File()
+        {
+            var result = FileModule.Delete(AdminCallContext, File.ID);
+
+            Assert.AreEqual(1, result.Value);
+        }
 
         [Test]
         public void Should_Create_URL_In_FileInfo()

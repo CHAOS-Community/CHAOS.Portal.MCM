@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Data.Objects;
 using System.Linq;
-using System.Xml.Linq;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module;
 using CHAOS.Portal.Test;
@@ -17,6 +15,7 @@ using MetadataSchema = CHAOS.MCM.Data.DTO.MetadataSchema;
 using Object = CHAOS.MCM.Data.DTO.Object;
 using ObjectRelationType = CHAOS.MCM.Data.DTO.ObjectRelationType;
 using ObjectType = CHAOS.MCM.Data.DTO.ObjectType;
+using File = CHAOS.MCM.Data.DTO.File;
 
 namespace CHAOS.MCM.Test
 {
@@ -29,6 +28,7 @@ namespace CHAOS.MCM.Test
         public ObjectModule         ObjectModule { get; set; }
         public FormatModule         FormatModule { get; set; }
         public FolderModule         FolderModule { get; set; }
+        public FileModule           FileModule  { get; set; }
         public ObjectTypeModule     ObjectTypeModule { get; set; }
         public MetadataSchemaModule MetadataSchemaModule { get; set; }
         public AccessPoint          AccessPoint { get; set; }
@@ -40,6 +40,7 @@ namespace CHAOS.MCM.Test
 		public FolderType           FolderTestType { get; set; }
 		public FormatType           FormatType { get; set; }
 		public FormatCategory       FormatCategory { get; set; }
+        public File                 File { get; set; }
 		public Folder			    TopFolder { get; set; }
         public Folder			    SubFolder { get; set; }
 		public Folder               EmptyFolder { get; set; }
@@ -90,7 +91,7 @@ namespace CHAOS.MCM.Test
 				int object4Result          = db.Object_Create(new UUID("e7207ba4-7443-11e1-89cc-08002723312d").ToByteArray(), demoObjectTypeID, folderWithAnonAccessID).First().Value;
                 int metadataResult         = db.Metadata_Set(new UUID("dd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("2df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
                 int metadataResult2        = db.Metadata_Set(new UUID("fd68f458-3b20-4afe-92b4-a60ad3e0cc1e").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("3df25b70-7442-11e1-89cc-08002723312d").ToByteArray(), "af", null, "<xml />", UserAdministrator.GUID.ToByteArray()).First().Value;
-                
+                int fileId                 = db.File_Create( new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(),null,formatID,destinationID,"somename.ext","origi.nal","/folder/" ).First().Value;
 
                 db.AccessPoint_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), SubscriptionInfo.GUID.ToByteArray(), "Test accesspoint" );
                 db.AccessPoint_Object_Join_Create( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), new UUID("bb738610-7443-11e1-89cc-08002723312d").ToByteArray(), DateTime.Now, DateTime.Now.AddDays( 1 ) );
@@ -118,6 +119,7 @@ namespace CHAOS.MCM.Test
 				Object3              = db.Object_Get(new[] { new UUID("c7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
 				ObjectAnonAccess     = db.Object_Get(new[] { new UUID("e7207ba4-7443-11e1-89cc-08002723312d") }, true, true, true, true, true ).First().ToDTO();
                 AccessPoint			 = db.AccessPoint_Get( new UUID("11991199-7443-11e1-89cc-08002723312d").ToByteArray(), UserAdministrator.GUID.ToByteArray(), "", 1 ).FirstOrDefault();
+			    File                 = db.File_Get(fileId).First().ToDTO();
 
                 MCMModule = new MCMModule();
                 MCMModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");
@@ -136,6 +138,9 @@ namespace CHAOS.MCM.Test
 
                 FormatModule = new FormatModule();
                 FormatModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");
+
+                FileModule = new FileModule();
+                FileModule.Initialize("<Settings ConnectionString=\"metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server=10.211.55.9;User Id=Portal;password=GECKONpbvu7000;Persist Security Info=True;database=MCM&quot;\"/>");
 			}
         }
     }

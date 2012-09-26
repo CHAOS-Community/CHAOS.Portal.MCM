@@ -461,23 +461,6 @@ namespace CHAOS.MCM.Module
         }
 
 		#endregion
-		#region Files
-
-		[Datatype("File", "Create")]
-		public Data.DTO.File File_Create( ICallContext callContext, UUID objectGUID, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath )
-		{
-            using( MCMEntities db = DefaultMCMEntities )
-            {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateUpdateObjects) )
-                    throw new InsufficientPermissionsException("User does not have permissions to create a file for this object");
-
-		        int id = db.File_Create( objectGUID.ToByteArray(), (int?) parentFileID, (int) formatID, (int) destinationID, filename, originalFilename, folderPath ).First().Value;
-
-		        return db.File_Get( id ).First().ToDTO();
-            }
-        }
-
-        #endregion
         #region Link
 
         [Datatype("Link", "Create")]

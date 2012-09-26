@@ -4,12 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MCMModel.Store" 
-            Alias="Self" 
-            Provider="MySql.Data.MySqlClient" 
-            ProviderManifestToken="5.5" 
-            xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" 
-            xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="MCMModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="MCMModelStoreContainer">
           <EntitySet Name="AccessPoint" EntityType="MCMModel.Store.AccessPoint" store:Type="Tables" Schema="MCM" />
           <EntitySet Name="AccessPoint_Group_Join" EntityType="MCMModel.Store.AccessPoint_Group_Join" store:Type="Tables" Schema="MCM" />
@@ -980,6 +975,9 @@
           <Parameter Name="OriginalFilename" Type="varchar" Mode="In" />
           <Parameter Name="FolderPath" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="File_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="File_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="FileID" Type="int" Mode="In" />
         </Function>
@@ -1590,6 +1588,9 @@
             <Parameter Name="NewName" Mode="In" Type="String" />
             <Parameter Name="NewParentID" Mode="In" Type="Int32" />
             <Parameter Name="NewFolderTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="File_Delete" ReturnType="Collection(Int32)">
+            <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">
@@ -2666,6 +2667,7 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="Object_Delete" FunctionName="MCMModel.Store.Object_Delete" />
           <FunctionImportMapping FunctionImportName="Folder_Update" FunctionName="MCMModel.Store.Folder_Update" />
+          <FunctionImportMapping FunctionImportName="File_Delete" FunctionName="MCMModel.Store.File_Delete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

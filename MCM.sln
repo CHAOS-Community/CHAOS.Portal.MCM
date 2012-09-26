@@ -26,6 +26,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{6B23DDF8-C4F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.storedprocedures", "{C901C1DC-38A7-4BF7-95D8-55A5DCE2788A}"
 	ProjectSection(SolutionItems) = preProject
+		sql\3.storedprocedures\File_Delete.sql = sql\3.storedprocedures\File_Delete.sql
 		sql\3.storedprocedures\Format_Create.sql = sql\3.storedprocedures\Format_Create.sql
 		sql\3.storedprocedures\Format_Get.sql = sql\3.storedprocedures\Format_Get.sql
 	EndProjectSection

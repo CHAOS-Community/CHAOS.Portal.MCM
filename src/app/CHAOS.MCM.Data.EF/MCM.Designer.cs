@@ -3035,6 +3035,25 @@ namespace CHAOS.MCM.Data.EF
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_Update", iDParameter, newNameParameter, newParentIDParameter, newFolderTypeIDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> File_Delete(Nullable<global::System.Int32> iD)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("File_Delete", iDParameter);
+        }
 
         #endregion
 
