@@ -62,9 +62,10 @@ namespace CHAOS.MCM.Data.DTO
 			ObjectRealtions = objectObjectJoins.ToList();
 			Folders         = folders.ToList();
             AccessPoints    = accessPoints.ToList();
+            Fullname        = "CHAOS.MCM.Data.DTO.Object";
 		}
 
-		public Object()
+		public Object() : this(Guid.Empty,uint.MinValue,DateTime.MinValue,new List<Metadata>(),new List<FileInfo>(),new List<Object_Object_Join>(),new List<Link>(),new List<AccessPoint_Object_Join>() )
 		{
 			
 		}

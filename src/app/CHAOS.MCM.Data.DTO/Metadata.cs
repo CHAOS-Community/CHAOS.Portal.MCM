@@ -40,24 +40,19 @@ namespace CHAOS.MCM.Data.DTO
 
 		public Metadata( Guid guid, Guid objectGUID, string languageCode, Guid metadataSchemaGUID, uint revisionID, string metadataXML, DateTime dateCreated, Guid editingUserGUID )
 		{
+            if (!string.IsNullOrEmpty(metadataXML)) MetadataXML = XDocument.Parse(metadataXML);
+
 			GUID               = new UUID( guid.ToByteArray() );
 			ObjectGUID         = new UUID( objectGUID.ToByteArray() );
 			LanguageCode       = languageCode;
 			MetadataSchemaGUID = new UUID( metadataSchemaGUID.ToByteArray() );
-		    try
-		    {
-                MetadataXML = XDocument.Parse(metadataXML);
-		    }
-		    catch (Exception e)
-		    {
-		        throw new Exception( GUID.ToString() + e.Message );
-		    }
 			DateCreated        = dateCreated;
 		    RevisionID         = revisionID;
 			EditingUserGUID    = editingUserGUID.ToUUID();
+            Fullname           = "CHAOS.MCM.Data.DTO.Metadata";
 		}
 
-		public Metadata()
+		public Metadata() : this(Guid.Empty, Guid.Empty,null,Guid.Empty,uint.MinValue,null,DateTime.MinValue,Guid.Empty)
 		{
 			
 		}

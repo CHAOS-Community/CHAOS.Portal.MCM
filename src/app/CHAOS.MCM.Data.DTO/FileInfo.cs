@@ -94,6 +94,7 @@ namespace CHAOS.MCM.Data.DTO
             FormatCategory         = formatCategoryName;
             FormatTypeID           = formatTypeId;
             FormatTypeName         = formatTypeName;
+            Fullname               = "CHAOS.MCM.Data.DTO.FileInfo";
         }
 
         public FileInfo( uint fileId, Guid objectGUID, uint? parentId, uint destinationId, string fileName, string originalFileName, string folderPath, DateTime fileDateCreated, string basePath, string stringFormat, DateTime accessProviderDateCreated, string token, uint formatId, string formatName, string formatXML, string mimeType, uint formatCategoryId, string formatCategoryName, uint formatTypeId, string formatTypeName, UUID sessionGUID ) : this ( fileId,objectGUID, parentId,destinationId,fileName,originalFileName,folderPath,fileDateCreated,basePath,stringFormat, accessProviderDateCreated, token,formatId,formatName,formatXML,mimeType,formatCategoryId,formatCategoryName,formatTypeId,formatTypeName )
@@ -101,7 +102,7 @@ namespace CHAOS.MCM.Data.DTO
             SessionGUID = sessionGUID;
         }
 
-		public FileInfo()
+		public FileInfo() : this(uint.MinValue,Guid.Empty,null,uint.MinValue,null,null,null,DateTime.MinValue,null,null,DateTime.MinValue,null,uint.MinValue,null,null,null,uint.MinValue,null,uint.MinValue,null)
 		{
 			
 		}
