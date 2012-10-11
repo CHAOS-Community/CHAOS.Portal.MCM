@@ -69,9 +69,6 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\DataSources\MCMEntities.datasource" />
   </ItemGroup>
   <ItemGroup>

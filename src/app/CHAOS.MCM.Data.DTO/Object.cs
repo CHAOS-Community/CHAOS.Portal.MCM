@@ -212,6 +212,11 @@ namespace CHAOS.MCM.Data.DTO
 									yield return new KeyValuePair<string,string>( "LARM-Test2-Keyword", keyword.Replace( "%20", " " ) );
 								}
 							break;
+                        case "bb615cd5-4470-ce4a-9207-b18e8ae33880":
+                            if (metadata.MetadataXML.Root.Element("sequenceIndex") != null)
+                                yield return new KeyValuePair<string, string>("KN-SequenceIndex", metadata.MetadataXML.Root.Element("sequenceIndex").Value);
+                            break;
+
 					}
 
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
