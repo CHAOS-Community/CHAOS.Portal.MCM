@@ -4,7 +4,6 @@ using System.Threading;
 using System.Xml.Linq;
 using CHAOS.Extensions;
 using CHAOS.Index;
-using CHAOS.Index.Solr;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core;
@@ -18,7 +17,7 @@ namespace CHAOS.MCM.Module
     {
         #region Properties
 
-        private string        ConnectionString { get; set; }
+        private static string ConnectionString { get; set; }
         private static Thread SynchronizationThread { get; set; }
 
 		public static PermissionManager PermissionManager { get; set; }
@@ -39,7 +38,7 @@ namespace CHAOS.MCM.Module
     	#endregion
         #region Business Logic
 
-		protected void SynchronizeFolders( )
+		protected static void SynchronizeFolders( )
     	{
             while( true )
             {
@@ -49,9 +48,9 @@ namespace CHAOS.MCM.Module
             }
     	}
 
-        private PermissionManager SynchronizeFoldersOnce()
+        private static PermissionManager SynchronizeFoldersOnce()
         {
-            using( var db = DefaultMCMEntities )
+            using (var db = new MCMEntities(ConnectionString))
             {
                 var pm = new PermissionManager();
 
