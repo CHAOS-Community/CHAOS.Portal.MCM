@@ -166,6 +166,7 @@ namespace CHAOS.MCM.Data.DTO
 								var dateTimeFormat3 = "dd'/'MM'/'yyyy HH':'mm':'ss";
 								var dateTimeFormat4 = "yyyy'-'MM'-'dd HH':'mm':'ss";
                                 var dateTimeFormat5 = "yyyy-MM-ddTHH:mm:ss.fffzzz";
+
 								var formatProvider = System.Globalization.CultureInfo.InvariantCulture;
 								var larmPubStartDateString = metadata.MetadataXML.Root.Element("PublicationDateTime").Value;
 								var larmPubEndDateString   = metadata.MetadataXML.Root.Element("PublicationEndDateTime").Value;
