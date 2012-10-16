@@ -60,13 +60,20 @@ namespace CHAOS.MCM.Module
                     callContext.Log.Debug("get from database");
                     var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO( callContext.GetSessionFromDatabase() == null ? null : callContext.Session.GUID ).ToList();
 
+                    callContext.Log.Debug("sort result");
+                    var sortedResult = ReArrange(objects, resultPage);
                     callContext.Log.Debug("return object get");
-					return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, query.PageIndex, objects );
+                    return new PagedResult<IResult>(indexResult.QueryResult.FoundCount, query.PageIndex, sortedResult);
 				}
 			}
 
 			throw new NotImplementedException("No implmentation for Object Get without solr parameters");
 		}
+
+        private static IEnumerable<Data.DTO.Object> ReArrange(IEnumerable<Data.DTO.Object> objects, IEnumerable<UUID> resultPage)
+        {
+            return resultPage.Select(uuid => objects.First(item => item.GUID.ToString() == uuid.ToString()));
+        }
 
 		[Datatype("Object","Create")]
 		public Data.DTO.Object Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
