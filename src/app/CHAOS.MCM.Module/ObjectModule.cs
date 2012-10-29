@@ -3,13 +3,14 @@ using System.Linq;
 using System.Collections.Generic;
 using CHAOS.Extensions;
 using CHAOS.Index;
+using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
+using MetadataSchema = CHAOS.MCM.Data.EF.MetadataSchema;
 using Object = CHAOS.MCM.Data.DTO.Object;
 
 namespace CHAOS.MCM.Module

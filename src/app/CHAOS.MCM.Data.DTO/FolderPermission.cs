@@ -7,22 +7,22 @@ namespace CHAOS.MCM.Data.DTO
     public class FolderPermission : Result
     {
         [Serialize]
-        public uint AccumulatedPermission { get; set; }
+        public IEnumerable<PermissionDetails> UserPermissions { get; set; }
 
         [Serialize]
-        public IEnumerable<Permission> PermissionDetails { get; set; }
+        public IEnumerable<PermissionDetails> GroupPermissions { get; set; }
 
         #region Constructors
 
-        public FolderPermission()
+        public FolderPermission(IEnumerable<PermissionDetails> userPermissions, IEnumerable<PermissionDetails> groupPermissions)
         {
-            
+            UserPermissions  = userPermissions;
+            GroupPermissions = groupPermissions;
         }
 
-        public FolderPermission( uint accumulatedPermissions, IEnumerable<Permission> permissionDetails )
+        public FolderPermission() : this(new List<PermissionDetails>(), new List<PermissionDetails>())
         {
-            AccumulatedPermission = accumulatedPermissions;
-            PermissionDetails     = permissionDetails;
+            
         }
 
         #endregion

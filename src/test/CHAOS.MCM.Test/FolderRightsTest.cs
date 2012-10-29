@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Module.Rights;
 using NUnit.Framework;
 using System.IO;
+using Folder = CHAOS.MCM.Module.Rights.Folder;
 
 namespace CHAOS.MCM.Test
 {

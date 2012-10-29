@@ -4,6 +4,7 @@ using System.Threading;
 using System.Xml.Linq;
 using CHAOS.Extensions;
 using CHAOS.Index;
+using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core;

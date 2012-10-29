@@ -21,6 +21,10 @@ namespace CHAOS.MCM.Module
         [Datatype("Folder","GetPermission")]
         public FolderPermission GetPermission( ICallContext callContext, uint folderID )
         {
+            var users
+
+            PermissionManager.GetFolder( folderID ).GetUserFolderPermission()
+
             var perm        = PermissionManager.GetFolder( folderID ).GetUserFolderPermission( callContext.User.GUID.ToGuid() ) | PermissionManager.GetFolder( folderID ).GetGroupFolderPermission( callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() );
             var permissions = new List<Permission>();
 

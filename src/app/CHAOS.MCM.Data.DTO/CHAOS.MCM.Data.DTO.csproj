@@ -49,6 +49,7 @@
     <Compile Include="File.cs" />
     <Compile Include="DestinationInfo.cs" />
     <Compile Include="FolderPermission.cs" />
+    <Compile Include="FolderPermissions.cs" />
     <Compile Include="Format.cs" />
     <Compile Include="FormatCategory.cs" />
     <Compile Include="Folder.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="ObjectType.cs" />
     <Compile Include="Link.cs" />
     <Compile Include="Permission.cs" />
+    <Compile Include="PermissionDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

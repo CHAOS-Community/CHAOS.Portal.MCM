@@ -59,6 +59,7 @@
       <DependentUpon>MCM.edmx</DependentUpon>
     </Compile>
     <Compile Include="MCMEntities.cs" />
+    <Compile Include="McmRepository.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -75,6 +76,10 @@
     <ProjectReference Include="..\CHAOS.MCM.Data.DTO\CHAOS.MCM.Data.DTO.csproj">
       <Project>{663E2831-9B22-49B8-BA6D-26395E3D285C}</Project>
       <Name>CHAOS.MCM.Data.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CHAOS.MCM\CHAOS.MCM.csproj">
+      <Project>{461EF48B-BBEB-4A4C-9968-66ACE8D3D43D}</Project>
+      <Name>CHAOS.MCM</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

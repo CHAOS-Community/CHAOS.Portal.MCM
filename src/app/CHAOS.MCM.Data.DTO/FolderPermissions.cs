@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CHAOS.MCM.Module.Rights
+namespace CHAOS.MCM.Data.DTO
 {
 	[Flags]
 	public enum FolderPermissions : uint

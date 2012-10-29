@@ -56,7 +56,6 @@
     <Compile Include="Rights\Folder.cs" />
     <Compile Include="MCMModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rights\FolderPermissions.cs" />
     <Compile Include="Rights\PermissionManager.cs" />
   </ItemGroup>
   <ItemGroup>

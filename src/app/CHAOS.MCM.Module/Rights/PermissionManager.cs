@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CHAOS.MCM.Data.DTO;
 
 namespace CHAOS.MCM.Module.Rights
 {

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core;

@@ -7,6 +7,7 @@ using CHAOS.Extensions;
 using CHAOS.Index;
 using CHAOS.Index.Solr;
 using CHAOS.MCM.Core.Exception;
+using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core.Module;

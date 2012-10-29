@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using CHAOS.Extensions;
 using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Exception;
@@ -14,10 +15,11 @@ namespace CHAOS.MCM.Test
         [Test]
         public void Should_Get_Permissions_For_Folder()
         {
-            var result     = FolderModule.GetPermission( AdminCallContext, SubFolder.ID );
-            var permission = (FolderPermissions) result.AccumulatedPermission;
+            var result            = FolderModule.GetPermission( AdminCallContext, SubFolder.ID );
+            var permissionDetails = result.UserPermissions.First(item => item.Guid.ToByteArray() == AdminCallContext.User.GUID.ToByteArray());
+            var permission        = (FolderPermissions)permissionDetails.Permissions;
 
-            Assert.AreEqual( uint.MaxValue, result.AccumulatedPermission );
+            Assert.AreEqual( uint.MaxValue, permissionDetails.Permissions );
            
             Assert.IsTrue( permission.HasFlag( FolderPermissions.Read ) );
             Assert.IsTrue( permission.HasFlag( FolderPermissions.Write ) );
