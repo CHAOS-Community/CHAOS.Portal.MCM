@@ -125,7 +125,7 @@ namespace CHAOS.MCM.Module.Rights
         public Folder GetFolder( uint id )
         {
             if( !FolderIndex.ContainsKey(id) )
-                throw new ArgumentOutOfRangeException(string.Format("No folder with ID:{0}",id));
+                throw new KeyNotFoundException(string.Format("No folder with ID:{0}", id));
 
             return FolderIndex[ id ];
         }

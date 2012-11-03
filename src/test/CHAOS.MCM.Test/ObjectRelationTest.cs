@@ -29,7 +29,7 @@ namespace CHAOS.MCM.Test
 
 		//    using( MCMDataContext db = MCMModule.DefaultMCMDataContext )
 		//    {
-		//        IList<Object> objects = db.Get( true, false, false, true, true, Object1.ID, null, null, 0, 10).ToList();
+		//        IList<Object> objects = db.GetFolder( true, false, false, true, true, Object1.ID, null, null, 0, 10).ToList();
 
 		//        Assert.AreEqual( Object2.GUID, objects.First().ObjectRealtions[0].Object2GUID );
 		//        Assert.AreEqual( Object2.GUID, objects.First().RelatedObjects[0].GUID );

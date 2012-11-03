@@ -51,7 +51,7 @@ namespace CHAOS.MCM.Test
 			topFolder.AddGroup( 55, GroupGuids.First(), FolderPermissions.Read);
 			topFolder.AddUser( 1784, UserGuid, FolderPermissions.Read);
         }
-
+        
         [Test]
         public void Should_Count_Folders()
         {
@@ -80,6 +80,7 @@ namespace CHAOS.MCM.Test
 		{
 			Stopwatch sw = new Stopwatch();
 			sw.Start();
+
 
 			foreach( Folder folder in topFolder.GetFolders( UserGuid, GroupGuids, FolderPermissions.Read ) )
 			{

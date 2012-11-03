@@ -114,7 +114,7 @@ namespace CHAOS.MCM.Test
         //[Test]
         //public void Should_Get_Index_Fields_From_Object()
         //{
-        //    Object obje = MCMModule.Get(AdminCallContext, null, true, false, null, TopFolder.ID).First();
+        //    Object obje = MCMModule.GetFolder(AdminCallContext, null, true, false, null, TopFolder.ID).First();
 
         //    Assert.AreEqual("title\r\nabstract\r\ndescription\r\n", obje.GetIndexableFields().Where(field => field.Key == "1_en_all").First().Value);
         //}

@@ -21,19 +21,19 @@ namespace CHAOS.MCM.Module
         [Datatype("Folder","GetPermission")]
         public FolderPermission GetPermission( ICallContext callContext, uint folderID )
         {
-            var users
+            //var users
 
-            PermissionManager.GetFolder( folderID ).GetUserFolderPermission()
+            //PermissionManager.GetFolder( folderID ).GetUserFolderPermission()
 
-            var perm        = PermissionManager.GetFolder( folderID ).GetUserFolderPermission( callContext.User.GUID.ToGuid() ) | PermissionManager.GetFolder( folderID ).GetGroupFolderPermission( callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() );
-            var permissions = new List<Permission>();
+            //var perm        = PermissionManager.GetFolder( folderID ).GetUserFolderPermission( callContext.User.GUID.ToGuid() ) | PermissionManager.GetFolder( folderID ).GetGroupFolderPermission( callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() );
+            //var permissions = new List<Permission>();
 
-            for( int i = 1, shift = 1 << i; shift < (uint) FolderPermissions.All; i++, shift = 1 << i )
-            {
-                permissions.Add( new Permission( ( (FolderPermissions) shift).ToString(), (uint) shift ) );
-            }
+            //for( int i = 1, shift = 1 << i; shift < (uint) FolderPermissions.All; i++, shift = 1 << i )
+            //{
+            //    permissions.Add( new Permission( ( (FolderPermissions) shift).ToString(), (uint) shift ) );
+            //}
 
-            return new FolderPermission( (uint) perm, permissions );
+            return new FolderPermission( null,null );
         }
 
         [Datatype("Folder","SetPermission")]

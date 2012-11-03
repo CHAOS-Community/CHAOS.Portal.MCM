@@ -29,7 +29,7 @@
         #endregion
         #region Business Logic
 
-        public DTO.Permission
+        
 
         #endregion
     }

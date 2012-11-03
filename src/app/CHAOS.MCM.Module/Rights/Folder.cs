@@ -61,17 +61,20 @@ namespace CHAOS.MCM.Module.Rights
 			UserPermissions.Add( userGUID, permission );
         }
 
-        public IEnumerable<PermissionDetails> GetUsersPermissionDetails(bool recursive)
-        {
-            var permissions = UserPermissions.Select(item => new PermissionDetails((uint) item.Value);
+        //public IEnumerable<PermissionDetails> GetUsersPermissionDetails(bool recursive)
+        //{
+        //    var permissions = UserPermissions.Select(item => new PermissionDetails((uint) item.Value)).ToList();
 
-            return recursive ? GetUsersPermissionDetails(permissions) : permissions;
-        }
+        //    return recursive ? GetUsersPermissionDetails(permissions) : permissions;
+        //}
 
-        private IEnumerable<PermissionDetails> GetUsersPermissionDetails(IEnumerable<PermissionDetails> permissions)
-        {
-            if( ParentFolder == null )
-        }
+        //protected IEnumerable<PermissionDetails> GetUsersPermissionDetails(IList<PermissionDetails> permissions)
+        //{
+        //    if( ParentFolder == null )
+        //        return permissions;
+
+        //    return ParentFolder.GetUsersPermissionDetails(permissions);
+        //}
 
         public FolderPermissions GetUserFolderPermission( Guid userGUID )
         {
