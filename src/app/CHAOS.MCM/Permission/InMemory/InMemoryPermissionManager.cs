@@ -23,6 +23,8 @@ namespace CHAOS.MCM.Permission.InMemory
         #endregion
         #region Business logic
 
+        #region Adding folders
+
         /// <summary>
         /// Saves the folder 
         /// </summary>
@@ -34,80 +36,13 @@ namespace CHAOS.MCM.Permission.InMemory
             else
                 _folders[folder.ID] = folder;
 
-            if(folder.ParentFolder == null)
+            if (folder.ParentFolder == null)
                 return;
 
             folder.ParentFolder.AddSubFolder(folder);
-
-            InheritParentPermissions(folder);
         }
 
-        /// <summary>
-        /// Adds of Combines the current folders permissions with that of the parent
-        /// </summary>
-        /// <param name="folder"></param>
-        private static void InheritParentPermissions(IFolder folder)
-        {
-            foreach (var userPermission in folder.ParentFolder.UserPermissions)
-            {
-                SetEntityPermission(folder.UserPermissions, userPermission.Key, userPermission.Value);
-            }
-
-            foreach (var groupPermission in folder.ParentFolder.GroupPermissions)
-            {
-                SetEntityPermission(folder.GroupPermissions, groupPermission.Key, groupPermission.Value);
-            }
-        }
-
-        /// <summary>
-        /// Triggers all sub folders to inherit their parents permissions
-        /// </summary>
-        /// <param name="folder"></param>
-        private static void PropagatePermissionsToSubFolders(IFolder folder)
-        {
-            foreach( var subFolder in folder.GetSubFolders() )
-            {
-                InheritParentPermissions(subFolder);
-            }
-        }
-
-        private static void SetEntityPermission(IDictionary<Guid, FolderPermission> entityPermissions, Guid entityGuid, FolderPermission permission)
-        {
-            if (entityPermissions.ContainsKey(entityGuid))
-                entityPermissions[entityGuid] = permission | entityPermissions[entityGuid];
-            else
-                entityPermissions.Add(entityGuid, permission);
-        }
-
-        /// <summary>
-        /// Adds user permissions to a folder. If the user already exists then the permissions are merged
-        /// </summary>
-        /// <param name="folderID"></param>
-        /// <param name="userPermission"></param>
-        /// <returns>The EntityPermission object that was added/updated</returns>
-        public void AddUser(uint folderID, IEntityPermission userPermission)
-        {
-            var folder = GetFolder(folderID);
-
-            SetEntityPermission(folder.UserPermissions, userPermission.Guid, userPermission.Permission);
-
-            PropagatePermissionsToSubFolders(folder);
-        }
-
-        /// <summary>
-        /// Adds group permissions to a folder. If the group already exists then the permissions are merged
-        /// </summary>
-        /// <param name="folderID"></param>
-        /// <param name="groupPermission"></param>
-        public void AddGroup(uint folderID, IEntityPermission groupPermission)
-        {
-            var folder = GetFolder(folderID);
-
-            SetEntityPermission(folder.GroupPermissions, groupPermission.Guid, groupPermission.Permission);
-
-            PropagatePermissionsToSubFolders(folder);
-        }
-
+        #endregion
         #region Queries
 
         /// <summary>
@@ -115,7 +50,7 @@ namespace CHAOS.MCM.Permission.InMemory
         /// </summary>
         /// <param name="id">the id of the folder to return</param>
         /// <returns></returns>
-        public IFolder GetFolder(uint id)
+        public IFolder GetFolders(uint id)
         {
             return _folders[id];
         }
@@ -125,27 +60,33 @@ namespace CHAOS.MCM.Permission.InMemory
         /// </summary>
         /// <param name="permission"></param>
         /// <param name="userGuid"></param>
+        /// <param name="guids"> </param>
         /// <returns></returns>
-        public IEnumerable<IFolder> GetTopFolders(FolderPermission permission, Guid userGuid)
+        public IEnumerable<IFolder> GetFolders(FolderPermission permission, Guid userGuid, IEnumerable<Guid> groupGuids)
         {
-            return GetTopFolders(_folders.Values.Where(folder => folder.ParentFolder == null), permission, userGuid);
+            return GetTopFolders(_folders.Values.Where(folder => folder.ParentFolder == null), permission, userGuid, groupGuids);
         }
 
-        private static IEnumerable<IFolder> GetTopFolders(IEnumerable<IFolder> folders, FolderPermission permission, Guid userGuid)
+        private static IEnumerable<IFolder> GetTopFolders(IEnumerable<IFolder> folders, FolderPermission permission, Guid userGuid, IEnumerable<Guid> groupGuids)
         {
             foreach (var folder in folders)
             {
-                if(folder.UserPermissions.ContainsKey(userGuid) && (folder.UserPermissions[userGuid] & permission) == permission )
-                {
+                if ( UserHasPemissionToFolder(userGuid, permission, folder) || GroupsHavePermissionToFolder(groupGuids, permission, folder) )
                     yield return folder;
-                    continue;
-                }
-
-                foreach (var subFolder in GetTopFolders(folder.GetSubFolders(), permission, userGuid))
-                {
+                else
+                    foreach (var subFolder in GetTopFolders(folder.GetSubFolders(), permission, userGuid, groupGuids))
                         yield return subFolder;
-                }
             }
+        }
+
+        private static bool UserHasPemissionToFolder(Guid userGuid, FolderPermission permission, IFolder folder)
+        {
+            return folder.UserPermissions.ContainsKey(userGuid) && (folder.UserPermissions[userGuid] & permission) == permission;
+        }
+
+        private static bool GroupsHavePermissionToFolder(IEnumerable<Guid> groupGuids, FolderPermission permission, IFolder folder)
+        {
+            return groupGuids.Any(groupGuid => folder.GroupPermissions.ContainsKey(groupGuid) && (folder.GroupPermissions[groupGuid] & permission) == permission);
         }
 
         #endregion
