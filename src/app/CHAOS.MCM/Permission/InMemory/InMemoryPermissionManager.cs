@@ -42,18 +42,27 @@ namespace CHAOS.MCM.Permission.InMemory
             InheritParentPermissions(folder);
         }
 
-
+        /// <summary>
+        /// Adds of Combines the current folders permissions with that of the parent
+        /// </summary>
+        /// <param name="folder"></param>
         private static void InheritParentPermissions(IFolder folder)
         {
-            foreach (var userPermissions in folder.ParentFolder.UserPermissions.Values)
+            foreach (var userPermission in folder.ParentFolder.UserPermissions)
             {
-                if (folder.UserPermissions.ContainsKey(userPermissions.Guid))
-                    folder.UserPermissions[userPermissions.Guid].CombinePermission(userPermissions.Permission);
-                else
-                    folder.UserPermissions.Add(userPermissions.Guid, userPermissions);
+                SetEntityPermission(folder.UserPermissions, userPermission.Key, userPermission.Value);
+            }
+
+            foreach (var groupPermission in folder.ParentFolder.GroupPermissions)
+            {
+                SetEntityPermission(folder.GroupPermissions, groupPermission.Key, groupPermission.Value);
             }
         }
 
+        /// <summary>
+        /// Triggers all sub folders to inherit their parents permissions
+        /// </summary>
+        /// <param name="folder"></param>
         private static void PropagatePermissionsToSubFolders(IFolder folder)
         {
             foreach( var subFolder in folder.GetSubFolders() )
@@ -61,6 +70,45 @@ namespace CHAOS.MCM.Permission.InMemory
                 InheritParentPermissions(subFolder);
             }
         }
+
+        private static void SetEntityPermission(IDictionary<Guid, FolderPermission> entityPermissions, Guid entityGuid, FolderPermission permission)
+        {
+            if (entityPermissions.ContainsKey(entityGuid))
+                entityPermissions[entityGuid] = permission | entityPermissions[entityGuid];
+            else
+                entityPermissions.Add(entityGuid, permission);
+        }
+
+        /// <summary>
+        /// Adds user permissions to a folder. If the user already exists then the permissions are merged
+        /// </summary>
+        /// <param name="folderID"></param>
+        /// <param name="userPermission"></param>
+        /// <returns>The EntityPermission object that was added/updated</returns>
+        public void AddUser(uint folderID, IEntityPermission userPermission)
+        {
+            var folder = GetFolder(folderID);
+
+            SetEntityPermission(folder.UserPermissions, userPermission.Guid, userPermission.Permission);
+
+            PropagatePermissionsToSubFolders(folder);
+        }
+
+        /// <summary>
+        /// Adds group permissions to a folder. If the group already exists then the permissions are merged
+        /// </summary>
+        /// <param name="folderID"></param>
+        /// <param name="groupPermission"></param>
+        public void AddGroup(uint folderID, IEntityPermission groupPermission)
+        {
+            var folder = GetFolder(folderID);
+
+            SetEntityPermission(folder.GroupPermissions, groupPermission.Guid, groupPermission.Permission);
+
+            PropagatePermissionsToSubFolders(folder);
+        }
+
+        #region Queries
 
         /// <summary>
         /// Looks up the folder from the in memory dictionary and returns it
@@ -73,24 +121,34 @@ namespace CHAOS.MCM.Permission.InMemory
         }
 
         /// <summary>
-        /// Adds user permissions to a folder. If the user already exists then the permissions are merged
+        /// 
         /// </summary>
-        /// <param name="folderID"></param>
-        /// <param name="userPermission"></param>
-        /// <returns>The EntityPermission object that was added/updated</returns>
-        public IEntityPermission AddUser(uint folderID, IEntityPermission userPermission)
+        /// <param name="permission"></param>
+        /// <param name="userGuid"></param>
+        /// <returns></returns>
+        public IEnumerable<IFolder> GetTopFolders(FolderPermission permission, Guid userGuid)
         {
-            var folder = GetFolder(folderID);
-           
-            if(folder.UserPermissions.ContainsKey(userPermission.Guid))
-                folder.UserPermissions[userPermission.Guid].CombinePermission(with: userPermission.Permission);
-            else
-                folder.UserPermissions.Add(userPermission.Guid,userPermission);
-
-            PropagatePermissionsToSubFolders(folder);
-
-            return folder.UserPermissions[userPermission.Guid];
+            return GetTopFolders(_folders.Values.Where(folder => folder.ParentFolder == null), permission, userGuid);
         }
+
+        private static IEnumerable<IFolder> GetTopFolders(IEnumerable<IFolder> folders, FolderPermission permission, Guid userGuid)
+        {
+            foreach (var folder in folders)
+            {
+                if(folder.UserPermissions.ContainsKey(userGuid) && (folder.UserPermissions[userGuid] & permission) == permission )
+                {
+                    yield return folder;
+                    continue;
+                }
+
+                foreach (var subFolder in GetTopFolders(folder.GetSubFolders(), permission, userGuid))
+                {
+                        yield return subFolder;
+                }
+            }
+        }
+
+        #endregion
 
         #endregion
     }

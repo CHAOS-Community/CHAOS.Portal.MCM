@@ -8,8 +8,8 @@ namespace CHAOS.MCM.Permission
         uint ID { get; set; }
         string Name { get; set; }
         DateTime DateCreated { get; set; }
-        IDictionary<Guid, IEntityPermission> UserPermissions  { get; set; }
-        IDictionary<Guid, IEntityPermission> GroupPermissions { get; set; }
+        IDictionary<Guid, FolderPermission> UserPermissions  { get; set; }
+        IDictionary<Guid, FolderPermission> GroupPermissions { get; set; }
 
         IFolder ParentFolder { get; set; }
         IEnumerable<IFolder> GetSubFolders();
