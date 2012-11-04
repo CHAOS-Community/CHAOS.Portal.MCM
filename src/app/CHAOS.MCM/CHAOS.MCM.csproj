@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\IMcmRepository.cs" />
+    <Compile Include="Permission\InMemory\Folder.cs" />
     <Compile Include="Permission\FolderPermission.cs" />
     <Compile Include="Permission\IFolder.cs" />
     <Compile Include="Permission\InMemory\InMemoryPermissionManager.cs" />

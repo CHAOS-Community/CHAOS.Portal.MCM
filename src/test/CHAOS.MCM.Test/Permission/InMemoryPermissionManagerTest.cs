@@ -58,23 +58,6 @@ namespace CHAOS.MCM.Test.Permission
         }
 
         [Test]
-        public void Should_assocociate_parent_with_parent_folder()
-        {
-            var folder1 = new Mock<IFolder>().SetupProperty(f => f.ID, (uint)1)
-                                             .SetupProperty(f => f.Name, "folder 1");
-            var folder2 = new Mock<IFolder>().SetupProperty(f => f.ID, (uint)2)
-                                             .SetupProperty(f => f.Name, "folder 2");
-            
-            PermissionManager.AddFolder(folder1.Object);
-            PermissionManager.AddFolder(folder2.Object,folder1.Object.ID);
-
-            var result = PermissionManager.GetFolder(folder2.Object.ID);
-
-            Assert.AreEqual("folder 2", result.Name);
-            folder2.VerifySet(f => f.Parent);
-        }
-
-        [Test]
         public void Should_assocociate_inherit_userpermissions_when_adding_subfolder()
         {
             var folder1 = new Mock<IFolder>().SetupProperty(f => f.ID, (uint)1)
@@ -82,19 +65,62 @@ namespace CHAOS.MCM.Test.Permission
                                              .SetupProperty(f => f.UserPermissions, new Dictionary<Guid, IEntityPermission>());
             var folder2 = new Mock<IFolder>().SetupProperty(f => f.ID, (uint)2)
                                              .SetupProperty(f => f.Name, "folder 2")
-                                             .SetupProperty(f => f.UserPermissions, new Dictionary<Guid, IEntityPermission>());
+                                             .SetupProperty(f => f.UserPermissions, new Dictionary<Guid, IEntityPermission>())
+                                             .SetupProperty(f => f.ParentFolder, folder1.Object);
             var user    = new Mock<IEntityPermission>().SetupProperty(f => f.Guid, new Guid("39f26c89-5e6c-46d5-af3a-bc14a7e1486b"))
                                                        .SetupProperty(f => f.Permission, FolderPermission.Max);
 
             PermissionManager.AddFolder(folder1.Object);
             PermissionManager.AddUser(folder1.Object.ID, user.Object);
-            PermissionManager.AddFolder(folder2.Object, folder1.Object.ID);
+            PermissionManager.AddFolder(folder2.Object);
 
             var result = PermissionManager.GetFolder(folder2.Object.ID);
 
             Assert.AreEqual("folder 2", result.Name);
             Assert.AreEqual(1, result.UserPermissions.Count);
-            Assert.AreEqual("39f26c89-5e6c-46d5-af3a-bc14a7e1486b", result.UserPermissions.Values.First().Guid);
+            Assert.AreEqual("39f26c89-5e6c-46d5-af3a-bc14a7e1486b", result.UserPermissions.First().Value.Guid.ToString());
+            
+            folder1.VerifyGet(f => f.UserPermissions);
+        }
+
+        [Test]
+        public void Should_assocociate_subfolders_with_parent_on_addfolder()
+        {
+            var folder1 = new Mock<IFolder>().SetupProperty(f => f.ID, (uint)1)
+                                             .SetupProperty(f => f.Name, "folder 1")
+                                             .SetupProperty(f => f.UserPermissions, new Dictionary<Guid, IEntityPermission>());
+            var folder2 = new Mock<IFolder>().SetupProperty(f => f.ID, (uint)2)
+                                             .SetupProperty(f => f.Name, "folder 2")
+                                             .SetupProperty(f => f.UserPermissions, new Dictionary<Guid, IEntityPermission>())
+                                             .SetupProperty(f => f.ParentFolder, folder1.Object);
+
+            PermissionManager.AddFolder(folder1.Object);
+            PermissionManager.AddFolder(folder2.Object);
+
+            folder1.Verify(f => f.AddSubFolder(folder2.Object));
+        }
+
+        [Test]
+        public void Should_propergate_userpermissions_to_subfolders_when_adding_a_user()
+        {
+            var folder1 = new Mock<IFolder>().SetupProperty(f => f.ID, (uint)1)
+                                             .SetupProperty(f => f.Name, "folder 1")
+                                             .SetupProperty(f => f.UserPermissions, new Dictionary<Guid, IEntityPermission>());
+            var folder2 = new Mock<IFolder>().SetupProperty(f => f.ID, (uint)2)
+                                             .SetupProperty(f => f.Name, "folder 2")
+                                             .SetupProperty(f => f.UserPermissions, new Dictionary<Guid, IEntityPermission>())
+                                             .SetupProperty(f => f.ParentFolder, folder1.Object);
+            var user    = new Mock<IEntityPermission>().SetupProperty(f => f.Guid, new Guid("39f26c89-5e6c-46d5-af3a-bc14a7e1486b"))
+                                                       .SetupProperty(f => f.Permission, FolderPermission.Max);
+
+            folder1.Setup(f => f.GetSubFolders()).Returns( new[] {folder2.Object});
+
+            PermissionManager.AddFolder(folder1.Object);
+            PermissionManager.AddFolder(folder2.Object);
+            PermissionManager.AddUser(folder1.Object.ID, user.Object);
+
+            Assert.AreEqual(user.Object.Guid, folder2.Object.UserPermissions.First().Key);
+            Assert.AreEqual(user.Object, folder2.Object.UserPermissions.First().Value);
         }
     }
 }

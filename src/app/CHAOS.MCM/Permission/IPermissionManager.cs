@@ -7,8 +7,6 @@
         /// </summary>
         /// <param name="folder"></param>
         void AddFolder(IFolder folder);
-        void AddFolder(IFolder folder, IFolder parentFolder);
-        void AddFolder(IFolder folder, uint parentFolderID);
 
         /// <summary>
         /// Retrieve a folder from the permission manager

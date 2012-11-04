@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CHAOS.MCM.Permission.InMemory
 {
@@ -27,25 +29,37 @@ namespace CHAOS.MCM.Permission.InMemory
         /// <param name="folder"></param>
         public void AddFolder(IFolder folder)
         {
-            AddFolder(folder,null);
-        }
-
-        public void AddFolder(IFolder folder, IFolder parentFolder)
-        {
-            folder.Parent = parentFolder;
-
             if (!_folders.ContainsKey(folder.ID))
                 _folders.Add(folder.ID, folder);
             else
                 _folders[folder.ID] = folder;
 
-            // TODO: Add User to subfolders
+            if(folder.ParentFolder == null)
+                return;
 
+            folder.ParentFolder.AddSubFolder(folder);
+
+            InheritParentPermissions(folder);
         }
 
-        public void AddFolder(IFolder folder, uint parentFolderID)
+
+        private static void InheritParentPermissions(IFolder folder)
         {
-            AddFolder(folder, GetFolder(parentFolderID));
+            foreach (var userPermissions in folder.ParentFolder.UserPermissions.Values)
+            {
+                if (folder.UserPermissions.ContainsKey(userPermissions.Guid))
+                    folder.UserPermissions[userPermissions.Guid].CombinePermission(userPermissions.Permission);
+                else
+                    folder.UserPermissions.Add(userPermissions.Guid, userPermissions);
+            }
+        }
+
+        private static void PropagatePermissionsToSubFolders(IFolder folder)
+        {
+            foreach( var subFolder in folder.GetSubFolders() )
+            {
+                InheritParentPermissions(subFolder);
+            }
         }
 
         /// <summary>
@@ -73,7 +87,7 @@ namespace CHAOS.MCM.Permission.InMemory
             else
                 folder.UserPermissions.Add(userPermission.Guid,userPermission);
 
-            // TODO: Add to subfolders
+            PropagatePermissionsToSubFolders(folder);
 
             return folder.UserPermissions[userPermission.Guid];
         }
