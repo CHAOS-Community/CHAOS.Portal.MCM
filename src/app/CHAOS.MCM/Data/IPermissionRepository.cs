@@ -3,12 +3,10 @@ using CHAOS.MCM.Data.DTO;
 
 namespace CHAOS.MCM.Data
 {
-    public interface IMcmRepository
+    public interface IPermissionRepository
     {
-        IMcmRepository WithConfiguration(string connectionString);
-
+        IEnumerable<Folder> GetFolder();
         IEnumerable<FolderUserJoin> GetFolderUserJoin();
         IEnumerable<FolderGroupJoin> GetFolderGroupJoin();
-        IEnumerable<Folder> GetFolder();
     }
 }

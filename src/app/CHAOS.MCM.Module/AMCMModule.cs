@@ -6,7 +6,9 @@ using CHAOS.Extensions;
 using CHAOS.Index;
 using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Module.Rights;
+using CHAOS.MCM.Permission;
+using CHAOS.MCM.Permission.InMemory;
+using CHAOS.MCM.Permission.Specification;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using Folder = CHAOS.MCM.Module.Rights.Folder;
@@ -21,7 +23,7 @@ namespace CHAOS.MCM.Module
         private static string ConnectionString { get; set; }
         private static Thread SynchronizationThread { get; set; }
 
-		public static PermissionManager PermissionManager { get; set; }
+		public static IPermissionManager PermissionManager { get; set; }
 
         public MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
 
@@ -30,51 +32,18 @@ namespace CHAOS.MCM.Module
 
         public override void Initialize( string configuration )
         {
-            ConnectionString  = XDocument.Parse(configuration).Root.Attribute( "ConnectionString" ).Value;
-            PermissionManager = SynchronizeFoldersOnce();
-            SynchronizationThread = new Thread( SynchronizeFolders );
-            SynchronizationThread.Start();
+            // TODO: Removed default Permission Manager from Module logic (IoC)
+            Initialize(configuration, new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(), new IntervalSpecification(10000)) );
+        }
+
+        public void Initialize(string configuration, IPermissionManager permissionManager)
+        {
+            ConnectionString  = XDocument.Parse(configuration).Root.Attribute("ConnectionString").Value;
+            PermissionManager = permissionManager;
         }
 
     	#endregion
         #region Business Logic
-
-		protected static void SynchronizeFolders( )
-    	{
-            while( true )
-            {
-                PermissionManager = SynchronizeFoldersOnce();
-
-                Thread.Sleep(30 * 1000);
-            }
-    	}
-
-        private static PermissionManager SynchronizeFoldersOnce()
-        {
-            using (var db = new MCMEntities(ConnectionString))
-            {
-                var pm = new PermissionManager();
-
-                foreach( var folder in db.Folder )
-                {
-                    pm.AddFolder((uint?) folder.ParentID, new Folder((uint) folder.ID));
-                }
-
-                foreach (var folderUserJoin in db.Folder_User_Join)
-                {
-                    pm.AddUser((uint) folderUserJoin.FolderID, folderUserJoin.UserGUID,
-                               (FolderPermissions) folderUserJoin.Permission);
-                }
-
-                foreach (var folderGroupJoin in db.Folder_Group_Join)
-                {
-                    pm.AddGroup((uint) folderGroupJoin.FolderID, folderGroupJoin.GroupGUID,
-                                (FolderPermissions) folderGroupJoin.Permission);
-                }
-
-                 return pm;
-            }
-        }
 
         protected void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
         {

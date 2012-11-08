@@ -31,12 +31,12 @@ namespace CHAOS.MCM.Data.DTO
 
 		public Folder( uint id, uint folderTypeID, uint? parentID, Guid? subscriptionGUID, string name, DateTime dateCreated)
 		{
-			ID = id;
-			FolderTypeID = folderTypeID;
-			ParentID = parentID;
+			ID               = id;
+			FolderTypeID     = folderTypeID;
+			ParentID         = parentID;
 			SubscriptionGUID = subscriptionGUID.HasValue ? new UUID( subscriptionGUID.Value.ToByteArray() ) : null;
-			Name = name;
-			DateCreated = dateCreated;
+			Name             = name;
+			DateCreated      = dateCreated;
 		}
 
 		public Folder()

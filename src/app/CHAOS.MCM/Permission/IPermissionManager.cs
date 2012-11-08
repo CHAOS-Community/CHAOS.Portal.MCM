@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CHAOS.MCM.Data;
 
 namespace CHAOS.MCM.Permission
 {
@@ -26,5 +27,13 @@ namespace CHAOS.MCM.Permission
         /// <param name="groupGuids"> </param>
         /// <returns></returns>
         IEnumerable<IFolder> GetFolders(FolderPermission permission, Guid userGuid, IEnumerable<Guid> groupGuids);
+
+        /// <summary>
+        /// Initialize the permission manager with a synchnization specification
+        /// </summary>
+        /// <param name="repository"></param>
+        /// <param name="synchronizationSpecification"></param>
+        /// <returns></returns>
+        IPermissionManager WithSynchronization(IPermissionRepository repository, ISynchronizationSpecification synchronizationSpecification);
     }
 }

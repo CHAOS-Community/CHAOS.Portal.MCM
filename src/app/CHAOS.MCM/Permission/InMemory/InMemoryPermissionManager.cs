@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using CHAOS.MCM.Data;
 
 namespace CHAOS.MCM.Permission.InMemory
 {
@@ -9,6 +11,7 @@ namespace CHAOS.MCM.Permission.InMemory
         #region Fields
 
         private readonly IDictionary<uint, IFolder> _folders = new Dictionary<uint,IFolder>();
+        private IPermissionRepository _permissionRepository;
 
         #endregion
         #region Properties
@@ -43,6 +46,53 @@ namespace CHAOS.MCM.Permission.InMemory
         }
 
         #endregion
+        #region Synchronization
+
+        public IPermissionManager WithSynchronization(IPermissionRepository repository, ISynchronizationSpecification synchronizationSpecification)
+        {
+            _permissionRepository = repository;
+            synchronizationSpecification.OnSynchronizationTrigger += Synchronize;
+
+            return this;
+        }
+
+        private void Synchronize(object sender, EventArgs e)
+        {
+            foreach (var folder in _permissionRepository.GetFolder())
+            {
+                var permissionFolder = new Folder
+                                           {
+                                               ID          = folder.ID,
+                                               Name        = folder.Name,
+                                               DateCreated = folder.DateCreated
+                                           };
+
+                if(folder.ParentID.HasValue)
+                    permissionFolder.ParentFolder = GetFolders((uint) folder.ParentID);
+
+                AddFolder(permissionFolder);
+            }
+
+            foreach (var folderUserJoin in _permissionRepository.GetFolderUserJoin())
+            {
+                GetFolders(folderUserJoin.FolderID).AddUser(new EntityPermission
+                                                                {
+                                                                    Guid       = folderUserJoin.UserGuid,
+                                                                    Permission = (FolderPermission)folderUserJoin.Permission
+                                                                });
+            }
+
+            foreach (var folderGroupJoin in _permissionRepository.GetFolderGroupJoin())
+            {
+                GetFolders(folderGroupJoin.FolderID).AddUser(new EntityPermission
+                                                                 {
+                                                                     Guid       = folderGroupJoin.GroupGuid,
+                                                                     Permission = (FolderPermission) folderGroupJoin.Permission
+                                                                 });
+            }
+        }
+
+        #endregion
         #region Queries
 
         /// <summary>
@@ -60,7 +110,7 @@ namespace CHAOS.MCM.Permission.InMemory
         /// </summary>
         /// <param name="permission"></param>
         /// <param name="userGuid"></param>
-        /// <param name="guids"> </param>
+        /// <param name="groupGuids"></param>
         /// <returns></returns>
         public IEnumerable<IFolder> GetFolders(FolderPermission permission, Guid userGuid, IEnumerable<Guid> groupGuids)
         {

@@ -48,8 +48,10 @@
     <Compile Include="AccessPoint_Object_Join.cs" />
     <Compile Include="File.cs" />
     <Compile Include="DestinationInfo.cs" />
+    <Compile Include="FolderGroupJoin.cs" />
     <Compile Include="FolderPermission.cs" />
     <Compile Include="FolderPermissions.cs" />
+    <Compile Include="FolderUserJoin.cs" />
     <Compile Include="Format.cs" />
     <Compile Include="FormatCategory.cs" />
     <Compile Include="Folder.cs" />

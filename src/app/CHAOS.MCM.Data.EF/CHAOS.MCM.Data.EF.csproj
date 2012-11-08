@@ -61,6 +61,7 @@
     <Compile Include="MCMEntities.cs" />
     <Compile Include="McmRepository.cs" />
     <Compile Include="Object.cs" />
+    <Compile Include="PermissionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

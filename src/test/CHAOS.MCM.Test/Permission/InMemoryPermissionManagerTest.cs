@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using CHAOS.MCM.Permission;
 using CHAOS.MCM.Permission.InMemory;
@@ -56,7 +55,7 @@ namespace CHAOS.MCM.Test.Permission
             
             Assert.AreEqual(1, folder1.UserPermissions.Count);
         }
-
+        
         [Test]
         public void Should_assocociate_inherit_userpermissions_when_adding_subfolder()
         {

@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Portal">
+      <HintPath>..\..\..\lib\Portal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,17 +42,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\IPermissionRepository.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
+    <Compile Include="Permission\InMemory\EntityPermission.cs" />
     <Compile Include="Permission\InMemory\Folder.cs" />
     <Compile Include="Permission\FolderPermission.cs" />
     <Compile Include="Permission\IFolder.cs" />
     <Compile Include="Permission\InMemory\InMemoryPermissionManager.cs" />
     <Compile Include="Permission\IPermissionManager.cs" />
     <Compile Include="Permission\IEntityPermission.cs" />
+    <Compile Include="Permission\ISynchronizationSpecification.cs" />
+    <Compile Include="Permission\Specification\IntervalSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadOnlyDictionary.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CHAOS.MCM.Data.DTO\CHAOS.MCM.Data.DTO.csproj">
+      <Project>{663E2831-9B22-49B8-BA6D-26395E3D285C}</Project>
+      <Name>CHAOS.MCM.Data.DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
