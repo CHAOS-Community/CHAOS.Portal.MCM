@@ -9,7 +9,7 @@ namespace CHAOS.MCM.Permission.InMemory
 
         public FolderPermission CombinePermission(FolderPermission with)
         {
-            Permission = Permission | with;
+            return Permission = Permission | with;
         }
     }
 }

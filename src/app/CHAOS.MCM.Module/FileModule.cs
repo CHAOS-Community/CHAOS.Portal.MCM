@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
+using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
 
 namespace CHAOS.MCM.Module
 {
@@ -19,12 +19,15 @@ namespace CHAOS.MCM.Module
 		{
             using( var db = DefaultMCMEntities )
             {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateUpdateObjects) )
+                if( !HasPermissionToObject( callContext, objectGUID, Permission.FolderPermission.CreateUpdateObjects) )
                     throw new InsufficientPermissionsException("User does not have permissions to create a file for this object");
 
-		        var id = db.File_Create( objectGUID.ToByteArray(), (int?) parentFileID, (int) formatID, (int) destinationID, filename, originalFilename, folderPath ).First().Value;
+		        var result = db.File_Create( objectGUID.ToByteArray(), (int?) parentFileID, (int) formatID, (int) destinationID, filename, originalFilename, folderPath ).FirstOrDefault();
 
-		        return db.File_Get( id ).First().ToDTO();
+                if(!result.HasValue)
+                    throw new UnhandledException("The creating the file failed in the database and was rolled back");
+
+		        return db.File_Get( result.Value ).First().ToDTO();
             }
         }
 
@@ -35,10 +38,15 @@ namespace CHAOS.MCM.Module
             {
                 var file = db.File_Get((int?) ID).First().ToDTO();
 
-                if( !HasPermissionToObject( callContext, file.ObjectGUID, FolderPermissions.CreateUpdateObjects) )
+                if( !HasPermissionToObject( callContext, file.ObjectGUID, FolderPermission.CreateUpdateObjects) )
                     throw new InsufficientPermissionsException("User does not have permissions to delete a file on this object");
 
-		        return new ScalarResult( db.File_Delete( (int?) ID ).First().Value );
+                var result = db.File_Delete((int?) ID).FirstOrDefault();
+
+                if(!result.HasValue)
+                    throw new UnhandledException("File delete failed in the database and was rolled back");
+
+		        return new ScalarResult( result.Value );
             }
         }
 

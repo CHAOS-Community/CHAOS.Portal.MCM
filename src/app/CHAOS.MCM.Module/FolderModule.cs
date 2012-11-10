@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Extensions;
-using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Module.Rights;
+using CHAOS.MCM.Permission;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
-using Permission = CHAOS.MCM.Data.DTO.Permission;
+using FolderInfo = CHAOS.MCM.Data.DTO.FolderInfo;
+using FolderPermission = CHAOS.MCM.Data.DTO.FolderPermission;
 
 namespace CHAOS.MCM.Module
 {
@@ -39,10 +39,13 @@ namespace CHAOS.MCM.Module
         [Datatype("Folder","SetPermission")]
         public ScalarResult SetPermission( ICallContext callContext, UUID userGUID, UUID groupGUID, uint folderID, uint permission )
         {
-            // TODO: Add permissions check before setting the new permissions
-            int result = 0;
+            if (userGUID == null && groupGUID == null)
+                throw new ArgumentException("Both userGUID and groupGUID can't be null at the same time");
             
-            if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( new[] {folderID}, callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), (FolderPermissions) permission ) )
+            var result = 0;
+            var folder = PermissionManager.GetFolders(folderID);
+
+            if (!folder.DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), (Permission.FolderPermission)permission))
                 throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
             using( var db = DefaultMCMEntities )
@@ -59,34 +62,39 @@ namespace CHAOS.MCM.Module
         #endregion
         
         [Datatype("Folder", "Get")]
-		public IEnumerable<Data.DTO.FolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID, uint? permission )
+		public IEnumerable<FolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID, uint? permission )
 		{
-			var folderIDs      = new List<long>();
-			var permissionEnum = (FolderPermissions) ( permission ?? (uint) FolderPermissions.Read );
-
-			permissionEnum = permissionEnum | FolderPermissions.Read;
+			var permissionEnum = (Permission.FolderPermission) ( permission ?? (uint) Permission.FolderPermission.Read ) | Permission.FolderPermission.Read;
+            var userGuid       = callContext.User.GUID.ToGuid();
+            var groupGuids     = callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList();
 
 			if( !parentID.HasValue && !id.HasValue )
-				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), permissionEnum ).Select( folder => (long) folder.ID ).ToList();
-			else
-			if( parentID.HasValue )
-				folderIDs = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), permissionEnum, parentID.Value).Select(folder => (long) folder.ID).ToList();
-			else
-			if( id.HasValue )
-			{
-				var folder = PermissionManager.GetFolder( id.Value );
+                return RetrieveFolderInfos( PermissionManager.GetFolders(permissionEnum, userGuid, groupGuids) );
+            if( parentID.HasValue && !id.HasValue )
+                return RetrieveFolderInfos( PermissionManager.GetFolders(permissionEnum, userGuid, groupGuids).Where(f => f.ParentFolder != null && f.ParentFolder.ID == parentID.Value) );
+            if( !parentID.HasValue )
+            {
+                var folder = PermissionManager.GetFolders( id.Value );
 
-				if( folder.DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList(), permissionEnum, true ) )
-					folderIDs.Add( folder.ID );
-			}
-
-			using( var db = DefaultMCMEntities )
-			{
-				return db.FolderInfo.Where( fi => folderIDs.Contains<long>( fi.ID ) ).ToDTO().ToList();
-			}
+                if( folder.DoesUserOrGroupHavePermission( userGuid, groupGuids, permissionEnum ) )
+                    return RetrieveFolderInfos(new[] {folder});
+            }
+            
+            throw new ArgumentException("It does not make sense to specficy both ID and ParentID in the same query");
 		}
 
-		//[Datatype("Folder","Delete")]
+        private IEnumerable<FolderInfo> RetrieveFolderInfos(IEnumerable<IFolder> folders)
+        {
+            // TODO: optimize folder retrival form the database
+            using (var db = DefaultMCMEntities)
+            {
+                var folderIDs = folders.Select(folder => (long) folder.ID).ToList();
+
+                return db.FolderInfo.Where(fi => folderIDs.Contains<long>(fi.ID)).ToDTO().ToList();
+            }
+        }
+
+        //[Datatype("Folder","Delete")]
 		//public ScalarResult Folder_Delete( CallContext callContext, int id )
 		//{
 		//    using( MCMEntities db = DefaultMCMEntities )
@@ -108,7 +116,7 @@ namespace CHAOS.MCM.Module
 		{
 			using( var db = DefaultMCMEntities )
 			{
-				if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( new[] {id}, callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.Update ) )
+                if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), Permission.FolderPermission.Update ) )
 					throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
 				var result = db.Folder_Update( (int?) id, newTitle, null, (int?) newFolderTypeID ).FirstOrDefault();

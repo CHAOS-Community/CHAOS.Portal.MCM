@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CHAOS.MCM.Permission.InMemory
 {
@@ -90,6 +91,28 @@ namespace CHAOS.MCM.Permission.InMemory
                 entityPermissions[entityGuid] = permission | entityPermissions[entityGuid];
             else
                 entityPermissions.Add(entityGuid, permission);
+        }
+
+        /// <summary>
+        /// Return true if user or group has permission to folder
+        /// </summary>
+        /// <param name="userGuid"></param>
+        /// <param name="groupGuids"></param>
+        /// <param name="permission"></param>
+        /// <returns></returns>
+        public bool DoesUserOrGroupHavePermission(Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermission permission)
+        {
+            return UserHasPemissionToFolder(userGuid, permission) || GroupsHavePermissionToFolder(groupGuids, permission);
+        }
+
+        private bool UserHasPemissionToFolder(Guid userGuid, FolderPermission permission)
+        {
+            return UserPermissions.ContainsKey(userGuid) && (UserPermissions[userGuid] & permission) == permission;
+        }
+
+        private bool GroupsHavePermissionToFolder(IEnumerable<Guid> groupGuids, FolderPermission permission)
+        {
+            return groupGuids.Any(groupGuid => GroupPermissions.ContainsKey(groupGuid) && (GroupPermissions[groupGuid] & permission) == permission);
         }
         
         #endregion

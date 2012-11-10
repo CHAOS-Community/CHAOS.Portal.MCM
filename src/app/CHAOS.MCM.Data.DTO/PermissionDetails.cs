@@ -33,13 +33,14 @@ namespace CHAOS.MCM.Data.DTO
 
         private static IEnumerable<Permission> ConvertToPermissions(uint permissions)
         {
+            throw new NotImplementedException();
             var flags = new List<Permission>();
 
-            for (int i = 1, shift = 1 << i; shift < (uint) FolderPermissions.All; i++, shift = 1 << i)
-            {
-                if ((permissions & shift) == shift)
-                    flags.Add(new Permission(((FolderPermissions) shift).ToString(), (uint) shift));
-            }
+            //for (int i = 1, shift = 1 << i; shift < (uint) FolderPermission; i++, shift = 1 << i)
+            //{
+            //    if ((permissions & shift) == shift)
+            //        flags.Add(new Permission(((FolderPermissions) shift).ToString(), (uint) shift));
+            //}
 
             return flags;
         }

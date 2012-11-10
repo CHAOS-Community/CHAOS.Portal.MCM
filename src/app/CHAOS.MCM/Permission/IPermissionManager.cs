@@ -35,5 +35,15 @@ namespace CHAOS.MCM.Permission
         /// <param name="synchronizationSpecification"></param>
         /// <returns></returns>
         IPermissionManager WithSynchronization(IPermissionRepository repository, ISynchronizationSpecification synchronizationSpecification);
+
+        /// <summary>
+        /// Returns true if the user or groups have the requested permission to the folders
+        /// </summary>
+        /// <param name="userGuid"></param>
+        /// <param name="groupGuids"></param>
+        /// <param name="permission"></param>
+        /// <param name="folders"></param>
+        /// <returns></returns>
+        bool DoesUserOrGroupHavePermissionToFolders(Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermission permission, IEnumerable<IFolder> folders);
     }
 }

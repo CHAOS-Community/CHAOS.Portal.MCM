@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CHAOS.MCM.Data;
 using CHAOS.MCM.Permission;
 using CHAOS.MCM.Permission.InMemory;
 using Moq;
@@ -144,6 +145,21 @@ namespace CHAOS.MCM.Test.Permission
             Assert.AreEqual(2, topFolders.Count());
             Assert.AreEqual(3, topFolders[0].ID);
             Assert.AreEqual(4, topFolders[1].ID);
+        }
+
+        [Test]
+        public void Should_synchronize_with_permission_repository()
+        {
+            var permissionRepository = new Mock<IPermissionRepository>();
+            var syncSpecification    = new Mock<ISynchronizationSpecification>();
+
+            PermissionManager.WithSynchronization(permissionRepository.Object, syncSpecification.Object);
+
+            syncSpecification.Raise(s => s.OnSynchronizationTrigger += null, new EventArgs());
+
+            permissionRepository.Verify(repo => repo.GetFolder(), Times.AtLeastOnce());
+            permissionRepository.Verify(repo => repo.GetFolderGroupJoin(), Times.AtLeastOnce());
+            permissionRepository.Verify(repo => repo.GetFolderUserJoin(), Times.AtLeastOnce());
         }
     }
 }

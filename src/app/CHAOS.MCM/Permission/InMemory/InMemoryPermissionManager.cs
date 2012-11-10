@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using CHAOS.MCM.Data;
 
 namespace CHAOS.MCM.Permission.InMemory
@@ -58,6 +57,7 @@ namespace CHAOS.MCM.Permission.InMemory
 
         private void Synchronize(object sender, EventArgs e)
         {
+            // GetFolder has to return folders ordered by ID, otherwise the parent won't be 
             foreach (var folder in _permissionRepository.GetFolder())
             {
                 var permissionFolder = new Folder
@@ -84,11 +84,11 @@ namespace CHAOS.MCM.Permission.InMemory
 
             foreach (var folderGroupJoin in _permissionRepository.GetFolderGroupJoin())
             {
-                GetFolders(folderGroupJoin.FolderID).AddUser(new EntityPermission
-                                                                 {
-                                                                     Guid       = folderGroupJoin.GroupGuid,
-                                                                     Permission = (FolderPermission) folderGroupJoin.Permission
-                                                                 });
+                GetFolders(folderGroupJoin.FolderID).AddGroup(new EntityPermission
+                                                                  {
+                                                                      Guid       = folderGroupJoin.GroupGuid,
+                                                                      Permission = (FolderPermission) folderGroupJoin.Permission
+                                                                  });
             }
         }
 
@@ -137,6 +137,19 @@ namespace CHAOS.MCM.Permission.InMemory
         private static bool GroupsHavePermissionToFolder(IEnumerable<Guid> groupGuids, FolderPermission permission, IFolder folder)
         {
             return groupGuids.Any(groupGuid => folder.GroupPermissions.ContainsKey(groupGuid) && (folder.GroupPermissions[groupGuid] & permission) == permission);
+        }
+
+        /// <summary>
+        /// Returns true if the user or groups have the requested permission to the folders
+        /// </summary>
+        /// <param name="userGuid"></param>
+        /// <param name="groupGuids"></param>
+        /// <param name="permission"></param>
+        /// <param name="folders"></param>
+        /// <returns></returns>
+        public bool DoesUserOrGroupHavePermissionToFolders(Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermission permission, IEnumerable<IFolder> folders)
+        {
+            return folders.Any(f => f.DoesUserOrGroupHavePermission(userGuid, groupGuids, permission));
         }
 
         #endregion

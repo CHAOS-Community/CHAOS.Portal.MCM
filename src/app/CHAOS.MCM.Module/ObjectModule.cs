@@ -10,6 +10,7 @@ using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
+using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
 using MetadataSchema = CHAOS.MCM.Data.EF.MetadataSchema;
 using Object = CHAOS.MCM.Data.DTO.Object;
 
@@ -37,7 +38,7 @@ namespace CHAOS.MCM.Module
 							throw new InsufficientPermissionsException("User must be logged in or use accessPointGUID" );
 
                         callContext.Log.Debug("get folders");
-                        var folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid() ), FolderPermissions.Read ).ToList();
+                        var folders = PermissionManager.GetFolders( FolderPermission.Read, callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid() ) ).ToList();
   
 						if( folders.Count == 0 )
 							throw new InsufficientPermissionsException("User does not have access to any folders" );
@@ -78,18 +79,17 @@ namespace CHAOS.MCM.Module
         }
 
         [Datatype("Object","Create")]
-		public Data.DTO.Object Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
+		public Object Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
 		{
 		    using( var db = DefaultMCMEntities )
 		    {
-				if( !PermissionManager.GetFolder( folderID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
+				if( !PermissionManager.GetFolders( folderID ).DoesUserOrGroupHavePermission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermission.CreateUpdateObjects ) )
 					throw new InsufficientPermissionsException( "User does not have permissions to create object" );
 
-				var guid = GUID ?? new UUID();
+				var guid   = GUID ?? new UUID();
+		        var result = db.Object_Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).FirstOrDefault();
 
-		        int result = db.Object_Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
-
-				if( result == -200 )
+				if( result.HasValue && result.Value == -200 )
 					throw new UnhandledException("Unhandled exception, Create was rolled back");
 
 		        var newObject = db.Object_Get( guid, true, true, true, true, true ).ToDTO().ToList();
@@ -119,11 +119,11 @@ namespace CHAOS.MCM.Module
         [Datatype("Object", "Delete")]
         public ScalarResult Delete( ICallContext callContext, UUID GUID )
         {
-            using( MCMEntities db = DefaultMCMEntities )
+            using( var db = DefaultMCMEntities )
             {
                 var delObject = db.Object_Get( GUID, false, false, false, true, false ).ToDTO().First();
 
-                if( !PermissionManager.DoesUserOrGroupHavePersmissionToFolders( delObject.Folders.Select( folder => folder.FolderID ), callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ), FolderPermissions.DeleteObject ) )
+                if( !PermissionManager.DoesUserOrGroupHavePermissionToFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ), Permission.FolderPermission.DeleteObject,delObject.Folders.Select( folder => PermissionManager.GetFolders(folder.FolderID) ) ) )
                     throw new InsufficientPermissionsException( "User does not have permissions to remove object" );
 
                 var result = db.Object_Delete( GUID.ToByteArray() ).FirstOrDefault();

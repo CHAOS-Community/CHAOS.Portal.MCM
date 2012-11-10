@@ -31,5 +31,14 @@ namespace CHAOS.MCM.Permission
         /// <param name="folderID"></param>
         /// <param name="groupPermission"></param>
         void AddGroup(IEntityPermission groupPermission);
+
+        /// <summary>
+        /// Returns true if the user or groups have the requested permission to the folder
+        /// </summary>
+        /// <param name="userGuid"></param>
+        /// <param name="groupGuids"></param>
+        /// <param name="permission"></param>
+        /// <returns></returns>
+        bool DoesUserOrGroupHavePermission(Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermission permission);
     }
 }

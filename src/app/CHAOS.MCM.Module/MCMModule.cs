@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Xml.Linq;
-using CHAOS.Extensions;
-using CHAOS.Index;
 using CHAOS.Index.Solr;
 using CHAOS.MCM.Core.Exception;
 using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Module.Rights;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 using CHAOS.Portal.Core;
+using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
 
 namespace CHAOS.MCM.Module
 {
@@ -365,25 +361,28 @@ namespace CHAOS.MCM.Module
 
 		    using( var db = DefaultMCMEntities )
 		    {
-				if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateUpdateObjects ) )
+				if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateUpdateObjects ) )
 					throw new InsufficientPermissionsException( "User does not have permissions to set metadata on this object" );
 
-		        var result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).First().Value;
-                
-                if( result == -300 )
+		        var result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).FirstOrDefault();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("Metadata set failed on the database and was rolled back");
+
+                if( result.Value == -300 )
                     throw new InvalidRevisionException( "RevisionID is too old, set metadata with the latest revisionID." );
 
-                if( result == -350 )
+                if( result.Value == -350 )
                     throw new InvalidRevisionException( "RevisionID can only be null if there is no metadata already on the object" );
 
-                if( result == -200 )
+                if( result.Value == -200 )
                     throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
 
                 var objects = db.Object_Get( objectGUID, true, false, false, true, true ).ToDTO().ToList();
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), objects );
 
-		        return new ScalarResult( result );
+		        return new ScalarResult( result.Value );
 		    }
 		}
 
@@ -469,18 +468,21 @@ namespace CHAOS.MCM.Module
         {
             using( MCMEntities db = DefaultMCMEntities )
             {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateLink ) )
+                if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateLink ) )
                     throw new InsufficientPermissionsException("User can only create links");
                 
                 // TODO: Manage magical number better (ObjectFolderTypeID:2 is link by default)
-                int result = db.Object_Folder_Join_Create( objectGUID.ToByteArray(), (int) folderID, 2 ).First().Value;
+                var result = db.Object_Folder_Join_Create( objectGUID.ToByteArray(), (int) folderID, 2 ).FirstOrDefault();
 
-                if( result == -100 )
+                if(!result.HasValue)
+                    throw new UnhandledException("Link create failed on the database and was rolled back");
+
+                if( result.Value == -100 )
                     throw new InsufficientPermissionsException( "User can only create links" );
 
                 PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
-                return new ScalarResult( result );
+                return new ScalarResult( result.Value );
             }
         }
 
@@ -489,7 +491,7 @@ namespace CHAOS.MCM.Module
         {
             using( MCMEntities db = DefaultMCMEntities )
             {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateLink ) )
+                if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateLink ) )
                     throw new InsufficientPermissionsException("User does not have permission to update link");
 
                 int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
@@ -505,14 +507,17 @@ namespace CHAOS.MCM.Module
         {
             using( MCMEntities db = DefaultMCMEntities )
             {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermissions.CreateLink ) )
+                if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateLink ) )
                     throw new InsufficientPermissionsException("User does not have permission to delete link");
 
-                int result = db.Object_Folder_Join_Delete( objectGUID.ToByteArray(), (int) folderID ).First().Value;
+                var result = db.Object_Folder_Join_Delete( objectGUID.ToByteArray(), (int) folderID ).FirstOrDefault();
+
+                if(!result.HasValue)
+                    throw new UnhandledException("Link delete failed on the database and was rolled back");
 
                 PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
-                return new ScalarResult( result );
+                return new ScalarResult( result.Value );
             }
         }
 

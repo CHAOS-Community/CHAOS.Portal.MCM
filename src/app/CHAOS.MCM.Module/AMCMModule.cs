@@ -11,7 +11,7 @@ using CHAOS.MCM.Permission.InMemory;
 using CHAOS.MCM.Permission.Specification;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
-using Folder = CHAOS.MCM.Module.Rights.Folder;
+using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
 
 namespace CHAOS.MCM.Module
 {
@@ -48,9 +48,12 @@ namespace CHAOS.MCM.Module
         protected void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
         {
             foreach( var o in newObject )
-			{
-				o.FolderTree = PermissionManager.GetParentFolders( o.Folders.Where( item => item.ObjectFolderTypeID == 1 ).Select( item => item.FolderID ) ).ToList();
-			}
+            {
+                foreach (var ancestorFolder in o.Folders.Where(item => item.ObjectFolderTypeID == 1).SelectMany(folder => PermissionManager.GetFolders(folder.FolderID).GetAncestorFolders()))
+                {
+                    o.FolderTree.Add(ancestorFolder.ID);
+                }
+            }
 
             index.Set( newObject, false );
         }
@@ -60,15 +63,15 @@ namespace CHAOS.MCM.Module
             index.Remove( delObject, false );
         }
 
-		public bool HasPermissionToObject( ICallContext callContext, UUID objectGUID, FolderPermissions permissions )
+        public bool HasPermissionToObject(ICallContext callContext, UUID objectGUID, FolderPermission permissions)
 	    {
 		    using( var db = DefaultMCMEntities )
 		    {
-				var folderIDs  = db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => (uint) item.ID );
+				var folders    = db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => PermissionManager.GetFolders((uint) item.ID) );
 				var userGUID   = callContext.User.GUID.ToGuid();
 				var groupGUIDs = callContext.Groups.Select( item => item.GUID.ToGuid() );
-
-			    return PermissionManager.DoesUserOrGroupHavePersmissionToFolders( folderIDs, userGUID, groupGUIDs, permissions );
+                
+                return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGUID, groupGUIDs, permissions, folders);
 		    }
 
 	    }
