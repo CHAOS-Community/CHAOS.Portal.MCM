@@ -69,6 +69,17 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
+        public IEnumerable<DTO.FolderInfo> GetFolderInfo(IEnumerable<uint> ids)
+        {
+            var folderIDs = ids.Select(item => (long) item);
+
+            // TODO: optimize folder retrival form the database
+            using (var db = CreateMcmEntities())
+            {
+                return db.FolderInfo.Where(fi => folderIDs.Contains(fi.ID)).ToDTO().ToList();
+            }
+        }
+
         #endregion
     }
 }

@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Xml.Linq;
 using CHAOS.Extensions;
 using CHAOS.Index;
-using CHAOS.MCM.Data.DTO;
+using CHAOS.MCM.Data;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Permission;
 using CHAOS.MCM.Permission.InMemory;
@@ -21,11 +20,11 @@ namespace CHAOS.MCM.Module
         #region Properties
 
         private static string ConnectionString { get; set; }
-        private static Thread SynchronizationThread { get; set; }
 
 		public static IPermissionManager PermissionManager { get; set; }
 
         public MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
+        public IMcmRepository McmRepository { get; set; }
 
         #endregion
         #region Construction
@@ -33,13 +32,22 @@ namespace CHAOS.MCM.Module
         public override void Initialize( string configuration )
         {
             // TODO: Removed default Permission Manager from Module logic (IoC)
-            Initialize(configuration, new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(), new IntervalSpecification(10000)) );
+            Initialize(configuration, 
+                       new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(), new IntervalSpecification(10000)),
+                       new McmRepository());
         }
 
-        public void Initialize(string configuration, IPermissionManager permissionManager)
+        public void Initialize(string configuration, IPermissionManager permissionManager, IMcmRepository mcmRepository)
         {
             ConnectionString  = XDocument.Parse(configuration).Root.Attribute("ConnectionString").Value;
             PermissionManager = permissionManager;
+            McmRepository     = mcmRepository.WithConfiguration(ConnectionString);
+        }
+
+        public void Initialize(IPermissionManager permissionManager, IMcmRepository mcmRepository)
+        {
+            PermissionManager = permissionManager;
+            McmRepository     = mcmRepository.WithConfiguration(ConnectionString);
         }
 
     	#endregion

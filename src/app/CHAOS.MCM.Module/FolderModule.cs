@@ -85,13 +85,10 @@ namespace CHAOS.MCM.Module
 
         private IEnumerable<FolderInfo> RetrieveFolderInfos(IEnumerable<IFolder> folders)
         {
-            // TODO: optimize folder retrival form the database
-            using (var db = DefaultMCMEntities)
-            {
-                var folderIDs = folders.Select(folder => (long) folder.ID).ToList();
+            var folderIDs = folders.Select(folder => folder.ID).ToList();
 
-                return db.FolderInfo.Where(fi => folderIDs.Contains<long>(fi.ID)).ToDTO().ToList();
-            }
+            var retrieveFolderInfos = McmRepository.GetFolderInfo(folderIDs);
+            return retrieveFolderInfos;
         }
 
         //[Datatype("Folder","Delete")]

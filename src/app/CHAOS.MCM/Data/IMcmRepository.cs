@@ -10,5 +10,6 @@ namespace CHAOS.MCM.Data
         IEnumerable<FolderUserJoin> GetFolderUserJoin();
         IEnumerable<FolderGroupJoin> GetFolderGroupJoin();
         IEnumerable<Folder> GetFolder();
+        IEnumerable<FolderInfo> GetFolderInfo(IEnumerable<uint> ids);
     }
 }
