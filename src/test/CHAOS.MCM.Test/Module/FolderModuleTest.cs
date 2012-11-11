@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Extensions;
-using CHAOS.MCM.Data;
 using CHAOS.MCM.Data.Dto.Standard;
 using CHAOS.MCM.Module;
 using CHAOS.MCM.Permission;
-using CHAOS.MCM.Permission.InMemory;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.DTO.Standard;
 using Chaos.Mcm.Data;
@@ -90,6 +88,36 @@ namespace CHAOS.MCM.Test.Module
             Assert.AreEqual("e1678025-fbc6-4b8a-a566-b5d7d54d4279", result.UserPermissions.First().Guid.ToString());
             Assert.AreEqual(5, (uint) result.UserPermissions.First().Permission);
             Assert.AreEqual(2, (uint) result.GroupPermissions.First().Permission);
+        }
+
+        [Test]
+        public void Should_set_users_permission_to_folder()
+        {
+            var permissionManager = new Mock<IPermissionManager>();
+            var mcmRepository     = new Mock<IMcmRepository>();
+            var callContext       = new Mock<ICallContext>();
+            var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint) 100);
+            var userGUID = new UUID("8c50786c-e2bf-4014-8694-e964b54cdd2b");
+            var userInfo = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
+                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
+                                        1,
+                                        "email",
+                                        new DateTime(2000, 06, 06),
+                                        new DateTime(2010, 06, 06));
+
+            callContext.SetupGet(p => p.User).Returns(userInfo);
+            callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
+            permissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
+            folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.GUID.ToGuid(), new Guid[0], FolderPermission.Read)).Returns(true);
+            mcmRepository.Setup(m => m.SetFolderUserJoin(userGUID.ToGuid(), folder.Object.ID, (uint)FolderPermission.Read)).Returns(1);
+            mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
+
+            var module = new FolderModule();
+            module.Initialize(permissionManager.Object, mcmRepository.Object);
+
+            var result = module.SetPermission(callContext.Object, userGUID, null, folder.Object.ID, (uint)FolderPermission.Read);
+
+            Assert.AreEqual(1, result.Value);
         }
     }
 }

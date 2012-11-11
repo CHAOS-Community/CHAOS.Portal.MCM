@@ -7,20 +7,20 @@ namespace CHAOS.MCM.Data.Dto.Standard
     public class FolderPermission : Result
     {
         [Serialize]
-        public IEnumerable<IEntityPermission> UserPermissions { get; set; }
+        public IEnumerable<EntityPermission> UserPermissions { get; set; }
 
         [Serialize]
-        public IEnumerable<IEntityPermission> GroupPermissions { get; set; }
+        public IEnumerable<EntityPermission> GroupPermissions { get; set; }
 
         #region Constructors
 
-        public FolderPermission(IEnumerable<IEntityPermission> userPermissions, IEnumerable<IEntityPermission> groupPermissions)
+        public FolderPermission(IEnumerable<EntityPermission> userPermissions, IEnumerable<EntityPermission> groupPermissions)
         {
-            UserPermissions = userPermissions;
+            UserPermissions  = userPermissions;
             GroupPermissions = groupPermissions;
         }
 
-        public FolderPermission() : this(new List<IEntityPermission>(), new List<IEntityPermission>())
+        public FolderPermission() : this(new List<EntityPermission>(), new List<EntityPermission>())
         {
 
         }

@@ -34,11 +34,6 @@ namespace CHAOS.MCM.Module
                                                                                   Permission = item.Value
                                                                               });
 
-            //for( int i = 1, shift = 1 << i; shift < (uint) FolderPermissions.All; i++, shift = 1 << i )
-            //{
-            //    permissions.Add( new Permission( ( (FolderPermissions) shift).ToString(), (uint) shift ) );
-            //}
-
             return new FolderPermission( userPermissions, groupPermissions );
         }
 
@@ -54,13 +49,10 @@ namespace CHAOS.MCM.Module
             if (!folder.DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), (Permission.FolderPermission)permission))
                 throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
-            using( var db = DefaultMCMEntities )
-            {
-                if( userGUID != null )
-                    result += db.Folder_User_Join_Set( userGUID.ToByteArray(), (int?) folderID, (int?) permission ).First().Value;    
-                if( groupGUID != null )
-                    result += db.Folder_Group_Join_Set( groupGUID.ToByteArray(), (int?) folderID, (int?) permission ).First().Value;
-            }
+            if (userGUID != null)
+                result += (int) McmRepository.SetFolderUserJoin(userGUID.ToGuid(), folderID, permission);
+            if (groupGUID != null)
+                result += (int) McmRepository.SetFolderGroupJoin(groupGUID.ToGuid(), folderID, permission);
 
             return new ScalarResult( result );
         }

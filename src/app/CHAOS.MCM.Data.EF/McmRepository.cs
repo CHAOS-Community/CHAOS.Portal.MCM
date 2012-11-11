@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CHAOS.MCM.Data.Dto;
 using CHAOS.MCM.Data.Dto.Standard;
+using CHAOS.Portal.Exception;
 using Chaos.Mcm.Data;
 
 namespace CHAOS.MCM.Data.EF
@@ -49,6 +51,19 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
+        public uint SetFolderUserJoin(Guid userGuid, uint folderID, uint permission)
+        {
+            using (var db = CreateMcmEntities())
+            {
+                var result = db.Folder_User_Join_Set( userGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("Folder_User_Join_Set failed on the database and was rolled back");
+
+                return (uint) result.Value;
+            }
+        }
+
         public IEnumerable<IFolderGroupJoin> GetFolderGroupJoin()
         {
             using (var db = CreateMcmEntities())
@@ -60,6 +75,19 @@ namespace CHAOS.MCM.Data.EF
                                                                    Permission  = (uint) item.Permission,
                                                                    DateCreated = item.DateCreated
                                                                });
+            }
+        }
+
+        public uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission)
+        {
+            using (var db = CreateMcmEntities())
+            {
+                var result = db.Folder_Group_Join_Set(groupGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
+                
+                if(!result.HasValue)
+                    throw new UnhandledException("Folder_Group_Join_Set failed on the database and was rolled back");
+
+                return (uint) result.Value;
             }
         }
 
