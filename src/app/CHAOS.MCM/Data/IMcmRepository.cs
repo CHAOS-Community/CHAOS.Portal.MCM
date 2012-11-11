@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using CHAOS.MCM.Data.DTO;
+using CHAOS.MCM.Data.Dto;
 
-namespace CHAOS.MCM.Data
+namespace Chaos.Mcm.Data
 {
     public interface IMcmRepository
     {
         IMcmRepository WithConfiguration(string connectionString);
 
-        IEnumerable<FolderUserJoin> GetFolderUserJoin();
-        IEnumerable<FolderGroupJoin> GetFolderGroupJoin();
-        IEnumerable<Folder> GetFolder();
-        IEnumerable<FolderInfo> GetFolderInfo(IEnumerable<uint> ids);
+        IEnumerable<IFolderUserJoin> GetFolderUserJoin();
+        IEnumerable<IFolderGroupJoin> GetFolderGroupJoin();
+        IEnumerable<IFolder> GetFolder();
+        IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids);
     }
 }

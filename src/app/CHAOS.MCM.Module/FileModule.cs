@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
@@ -15,7 +14,7 @@ namespace CHAOS.MCM.Module
         #region Business Logic
 
 		[Datatype("File", "Create")]
-		public Data.DTO.File Create( ICallContext callContext, UUID objectGUID, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath )
+        public Data.Dto.Standard.File Create(ICallContext callContext, UUID objectGUID, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath)
 		{
             using( var db = DefaultMCMEntities )
             {

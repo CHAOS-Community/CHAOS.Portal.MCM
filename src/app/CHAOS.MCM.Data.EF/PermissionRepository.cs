@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using CHAOS.MCM.Data.Dto;
+using Chaos.Mcm.Data;
 
 namespace CHAOS.MCM.Data.EF
 {
@@ -11,17 +13,17 @@ namespace CHAOS.MCM.Data.EF
         #endregion
         #region Business Logic
 
-        public IEnumerable<DTO.Folder> GetFolder()
+        public IEnumerable<IFolder> GetFolder()
         {
             return _mcmRepository.GetFolder();
         }
 
-        public IEnumerable<DTO.FolderUserJoin> GetFolderUserJoin()
+        public IEnumerable<IFolderUserJoin> GetFolderUserJoin()
         {
             return _mcmRepository.GetFolderUserJoin();
         }
 
-        public IEnumerable<DTO.FolderGroupJoin> GetFolderGroupJoin()
+        public IEnumerable<IFolderGroupJoin> GetFolderGroupJoin()
         {
             return _mcmRepository.GetFolderGroupJoin();
         }

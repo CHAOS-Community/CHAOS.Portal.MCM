@@ -3,13 +3,15 @@ using System.Linq;
 using System.Xml.Linq;
 using CHAOS.Index.Solr;
 using CHAOS.MCM.Core.Exception;
-using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 using CHAOS.Portal.Core;
 using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
+using FormatType = CHAOS.MCM.Data.Dto.Standard.FormatType;
+using Language = CHAOS.MCM.Data.Dto.Standard.Language;
+using ObjectRelationType = CHAOS.MCM.Data.Dto.Standard.ObjectRelationType;
 
 namespace CHAOS.MCM.Module
 {
@@ -21,7 +23,7 @@ namespace CHAOS.MCM.Module
 		#region Language
 
 		[Datatype("Language", "Get")]
-		public IEnumerable<Data.DTO.Language> Language_Get( ICallContext callContext, string name, string languageCode )
+		public IEnumerable<Language> Language_Get( ICallContext callContext, string name, string languageCode )
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
@@ -75,7 +77,7 @@ namespace CHAOS.MCM.Module
 		#region ObjectRelationType
 
 		[Datatype("ObjectRelationType", "Get")]
-		public IEnumerable<Data.DTO.ObjectRelationType> ObjectRelationType_Get( ICallContext callContext, int? id, string value )
+		public IEnumerable<ObjectRelationType> ObjectRelationType_Get( ICallContext callContext, int? id, string value )
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
@@ -129,7 +131,7 @@ namespace CHAOS.MCM.Module
 		#region FolderType
 
 		[Datatype("FolderType", "Get")]
-		public IEnumerable<Data.DTO.FolderType> FolderType_Get( ICallContext callContext, int? id, string name )
+        public IEnumerable<Data.Dto.Standard.FolderType> FolderType_Get(ICallContext callContext, int? id, string name)
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
@@ -183,7 +185,7 @@ namespace CHAOS.MCM.Module
 		#region FormatType
 
 		[Datatype("FormatType", "Get")]
-		public IEnumerable<Data.DTO.FormatType> FormatType_Get( ICallContext callContext, int? id, string name )
+		public IEnumerable<FormatType> FormatType_Get( ICallContext callContext, int? id, string name )
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
@@ -525,7 +527,7 @@ namespace CHAOS.MCM.Module
         #region Destination
 
         [Datatype("Destination", "Get")]
-        public IEnumerable<Data.DTO.DestinationInfo> Destination_Get( ICallContext callContext, uint destinationID )
+        public IEnumerable<Data.Dto.Standard.DestinationInfo> Destination_Get(ICallContext callContext, uint destinationID)
         {
             using( MCMEntities db = DefaultMCMEntities )
             {

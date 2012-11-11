@@ -8,6 +8,7 @@ using CHAOS.Portal.Core;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 using System.Data.Objects;
+using MetadataSchema = CHAOS.MCM.Data.Dto.Standard.MetadataSchema;
 
 namespace CHAOS.MCM.Module
 {
@@ -17,7 +18,7 @@ namespace CHAOS.MCM.Module
         #region Business Logic
 
 		[Datatype("MetadataSchema", "Get")]
-		public IEnumerable<Data.DTO.MetadataSchema> Get( ICallContext callContext, UUID metadataSchemaGUID )
+		public IEnumerable<MetadataSchema> Get( ICallContext callContext, UUID metadataSchemaGUID )
 		{
 			using( var db = DefaultMCMEntities )
 			{
@@ -26,7 +27,7 @@ namespace CHAOS.MCM.Module
 		}
 
         [Datatype("MetadataSchema", "Create")]
-		public Data.DTO.MetadataSchema Create( ICallContext callContext, UUID metadataSchemaGUID, string name, string schemaXML )
+		public MetadataSchema Create( ICallContext callContext, UUID metadataSchemaGUID, string name, string schemaXML )
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "Manage permissions are required to create metadata schemas" );

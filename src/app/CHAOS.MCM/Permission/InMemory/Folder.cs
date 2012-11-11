@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CHAOS.MCM.Data.Dto;
 
 namespace CHAOS.MCM.Permission.InMemory
 {
@@ -9,6 +10,9 @@ namespace CHAOS.MCM.Permission.InMemory
         #region Properties
 
         public uint ID { get; set; }
+        public uint? ParentID { get; set; }
+        public uint FolderTypeID { get; set; }
+        public UUID SubscriptionGUID { get; set; }
         public string Name { get; set; }
         public DateTime DateCreated { get; set; }        
         public IList<IFolder> SubFolders { get; private set; }
@@ -25,7 +29,7 @@ namespace CHAOS.MCM.Permission.InMemory
         {
             UserPermissions  = new Dictionary<Guid, FolderPermission>();
             GroupPermissions = new Dictionary<Guid, FolderPermission>();
-            SubFolders             = new List<IFolder>();
+            SubFolders       = new List<IFolder>();
         }
 
         #endregion
@@ -88,7 +92,7 @@ namespace CHAOS.MCM.Permission.InMemory
         private static void SetEntityPermission(IDictionary<Guid, FolderPermission> entityPermissions, Guid entityGuid, FolderPermission permission)
         {
             if (entityPermissions.ContainsKey(entityGuid))
-                entityPermissions[entityGuid] = permission | entityPermissions[entityGuid];
+                entityPermissions[entityGuid] = entityPermissions[entityGuid].Or(permission);
             else
                 entityPermissions.Add(entityGuid, permission);
         }

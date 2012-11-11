@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using CHAOS.MCM.Data.DTO;
+using CHAOS.MCM.Data.Dto;
 
 namespace CHAOS.MCM.Data
 {
     public interface IPermissionRepository
     {
-        IEnumerable<Folder> GetFolder();
-        IEnumerable<FolderUserJoin> GetFolderUserJoin();
-        IEnumerable<FolderGroupJoin> GetFolderGroupJoin();
+        IEnumerable<IFolder> GetFolder();
+        IEnumerable<IFolderUserJoin> GetFolderUserJoin();
+        IEnumerable<IFolderGroupJoin> GetFolderGroupJoin();
     }
 }

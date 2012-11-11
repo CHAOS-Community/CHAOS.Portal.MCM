@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using CHAOS.MCM.Data.DTO;
+using CHAOS.MCM.Data.Dto.Standard;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;

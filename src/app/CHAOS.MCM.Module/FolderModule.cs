@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Extensions;
+using CHAOS.MCM.Data.Dto.Standard;
 using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Permission;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
-using FolderInfo = CHAOS.MCM.Data.DTO.FolderInfo;
-using FolderPermission = CHAOS.MCM.Data.DTO.FolderPermission;
+using FolderInfo       = CHAOS.MCM.Data.Dto.Standard.FolderInfo;
+using FolderPermission = CHAOS.MCM.Data.Dto.Standard.FolderPermission;
+using IFolder = CHAOS.MCM.Permission.IFolder;
 
 namespace CHAOS.MCM.Module
 {
@@ -21,19 +22,24 @@ namespace CHAOS.MCM.Module
         [Datatype("Folder","GetPermission")]
         public FolderPermission GetPermission( ICallContext callContext, uint folderID )
         {
-            //var users
-
-            //PermissionManager.GetFolder( folderID ).GetUserFolderPermission()
-
-            //var perm        = PermissionManager.GetFolder( folderID ).GetUserFolderPermission( callContext.User.GUID.ToGuid() ) | PermissionManager.GetFolder( folderID ).GetGroupFolderPermission( callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList() );
-            //var permissions = new List<Permission>();
+            var folder           = PermissionManager.GetFolders(folderID);
+            var userPermissions  = folder.UserPermissions.Select(item => new EntityPermission
+                                                                            {
+                                                                                Guid       = item.Key,
+                                                                                Permission = item.Value
+                                                                            });
+            var groupPermissions = folder.GroupPermissions.Select(item => new EntityPermission
+                                                                              {
+                                                                                  Guid       = item.Key,
+                                                                                  Permission = item.Value
+                                                                              });
 
             //for( int i = 1, shift = 1 << i; shift < (uint) FolderPermissions.All; i++, shift = 1 << i )
             //{
             //    permissions.Add( new Permission( ( (FolderPermissions) shift).ToString(), (uint) shift ) );
             //}
 
-            return new FolderPermission( null,null );
+            return new FolderPermission( userPermissions, groupPermissions );
         }
 
         [Datatype("Folder","SetPermission")]
@@ -87,8 +93,7 @@ namespace CHAOS.MCM.Module
         {
             var folderIDs = folders.Select(folder => folder.ID).ToList();
 
-            var retrieveFolderInfos = McmRepository.GetFolderInfo(folderIDs);
-            return retrieveFolderInfos;
+            return (IEnumerable<FolderInfo>) McmRepository.GetFolderInfo(folderIDs);
         }
 
         //[Datatype("Folder","Delete")]
@@ -126,7 +131,7 @@ namespace CHAOS.MCM.Module
 		}
 
 		[Datatype("Folder", "Create")]
-		public Data.DTO.FolderInfo Create( ICallContext callContext, UUID subscriptionGUID, string title, uint? parentID, uint folderTypeID )
+        public FolderInfo Create(ICallContext callContext, UUID subscriptionGUID, string title, uint? parentID, uint folderTypeID)
 		{
             if( subscriptionGUID == null && !parentID.HasValue )
                 throw new ArgumentException( "Both parentID and subscriptionGUID can't be null" );

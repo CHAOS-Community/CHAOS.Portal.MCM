@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CHAOS.MCM.Data;
+using CHAOS.MCM.Data.Dto.Standard;
 
 namespace CHAOS.MCM.Permission.InMemory
 {

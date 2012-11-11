@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using CHAOS.MCM.Data.Dto;
 
 namespace CHAOS.MCM.Permission
 {
-    public interface IFolder
+    public interface IFolder : Data.Dto.IFolder
     {
-        uint ID { get; set; }
-        string Name { get; set; }
-        DateTime DateCreated { get; set; }
-
         IFolder ParentFolder { get; set; }
         IEnumerable<IFolder> GetSubFolders();
         IEnumerable<IFolder> GetAncestorFolders();

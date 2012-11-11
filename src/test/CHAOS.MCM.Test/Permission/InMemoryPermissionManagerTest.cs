@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Linq;
 using CHAOS.MCM.Data;
-using CHAOS.MCM.Data.DTO;
+using CHAOS.MCM.Data.Dto;
+using CHAOS.MCM.Data.Dto.Standard;
 using CHAOS.MCM.Permission;
 using CHAOS.MCM.Permission.InMemory;
 using Moq;
 using NUnit.Framework;
 using Folder = CHAOS.MCM.Permission.InMemory.Folder;
 using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
+using IFolder = CHAOS.MCM.Permission.IFolder;
 
 namespace CHAOS.MCM.Test.Permission
 {
@@ -159,7 +161,7 @@ namespace CHAOS.MCM.Test.Permission
             entity.SetupProperty(p => p.Guid, new Guid("c86a1cfc-10de-4a51-8d7b-6ba8f985e273"))
                   .SetupProperty(p => p.Permission, FolderPermission.Read);
 
-            permissionRepository.Setup(repo => repo.GetFolder()).Returns( new[] {new Data.DTO.Folder{ID = 1} });
+            permissionRepository.Setup(repo => repo.GetFolder()).Returns(new[] { new Data.Dto.Standard.Folder { ID = 1 } });
             permissionRepository.Setup(repo => repo.GetFolderUserJoin()).Returns(new[] { new FolderUserJoin { FolderID = 1, Permission = 1 } });
             permissionRepository.Setup(repo => repo.GetFolderGroupJoin()).Returns(new[] { new FolderGroupJoin { FolderID = 1, Permission = 1 } });
 

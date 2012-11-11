@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using CHAOS.Extensions;
 using CHAOS.Index;
-using CHAOS.MCM.Data.DTO;
 using CHAOS.MCM.Data.EF;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
@@ -12,7 +11,7 @@ using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
 using MetadataSchema = CHAOS.MCM.Data.EF.MetadataSchema;
-using Object = CHAOS.MCM.Data.DTO.Object;
+using Object = CHAOS.MCM.Data.Dto.Standard.Object;
 
 namespace CHAOS.MCM.Module
 {
@@ -58,7 +57,7 @@ namespace CHAOS.MCM.Module
 					// if solr doesnt return anything there is no need to continue, so just return an empty list
                     callContext.Log.Debug("check any results");
 					if( !resultPage.Any() )
-                        return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, 0, new List<Data.DTO.Object>() );
+                        return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, 0, new List<Object>() );
 
                     callContext.Log.Debug("get from database");
                     var objects = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO( callContext.GetSessionFromDatabase() == null ? null : callContext.Session.GUID ).ToList();

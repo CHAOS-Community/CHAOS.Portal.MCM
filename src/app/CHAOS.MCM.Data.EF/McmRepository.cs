@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CHAOS.MCM.Data.DTO;
+using CHAOS.MCM.Data.Dto;
+using CHAOS.MCM.Data.Dto.Standard;
+using Chaos.Mcm.Data;
 
 namespace CHAOS.MCM.Data.EF
 {
@@ -33,7 +35,7 @@ namespace CHAOS.MCM.Data.EF
         #endregion
         #region Business Logic
 
-        public IEnumerable<FolderUserJoin> GetFolderUserJoin()
+        public IEnumerable<IFolderUserJoin> GetFolderUserJoin()
         {
             using (var db = CreateMcmEntities())
             {
@@ -47,7 +49,7 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
-        public IEnumerable<FolderGroupJoin> GetFolderGroupJoin()
+        public IEnumerable<IFolderGroupJoin> GetFolderGroupJoin()
         {
             using (var db = CreateMcmEntities())
             {
@@ -61,7 +63,7 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
-        public IEnumerable<DTO.Folder> GetFolder()
+        public IEnumerable<IFolder> GetFolder()
         {
             using (var db = CreateMcmEntities())
             {
@@ -69,7 +71,7 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
-        public IEnumerable<DTO.FolderInfo> GetFolderInfo(IEnumerable<uint> ids)
+        public IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids)
         {
             var folderIDs = ids.Select(item => (long) item);
 

@@ -14,7 +14,7 @@ namespace CHAOS.MCM.Module
         #region Business Logic
 
         [Datatype("Format","Get")]
-        public IEnumerable<Data.DTO.Format> Get( ICallContext callContext, uint? ID, string name )
+        public IEnumerable<Data.Dto.Standard.Format> Get(ICallContext callContext, uint? ID, string name)
         {
             using (var db = DefaultMCMEntities)
             {

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Extensions;
 using CHAOS.MCM.Data;
-using CHAOS.MCM.Data.DTO;
+using CHAOS.MCM.Data.Dto.Standard;
 using CHAOS.MCM.Module;
 using CHAOS.MCM.Permission;
 using CHAOS.MCM.Permission.InMemory;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.DTO.Standard;
+using Chaos.Mcm.Data;
 using Moq;
 using NUnit.Framework;
+using Folder = CHAOS.MCM.Permission.InMemory.Folder;
 using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
 
 namespace CHAOS.MCM.Test.Module
@@ -57,6 +59,37 @@ namespace CHAOS.MCM.Test.Module
 
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(100, result[0].ID);
+        }
+
+        [Test]
+        public void Should_Get_Users_and_Groups_with_permission_to_a_folder()
+        {
+            var permissionManager = new Mock<IPermissionManager>();
+            var mcmRepository     = new Mock<IMcmRepository>();
+            var callContext       = new Mock<ICallContext>();
+            var folder            = new Folder();
+            folder.AddUser(new EntityPermission
+                               {
+                                   Guid       = new Guid("e1678025-fbc6-4b8a-a566-b5d7d54d4279"),
+                                   Permission = (FolderPermission) 5
+                               });
+            folder.AddGroup(new EntityPermission
+                                {
+                                    Guid       = new Guid("60627145-18b5-43cd-89c9-25a9c0f878be"),
+                                    Permission = (FolderPermission) 2
+                                });
+
+            var module = new FolderModule();
+            module.Initialize(permissionManager.Object, mcmRepository.Object);
+
+            permissionManager.Setup(m => m.GetFolders(folder.ID)).Returns(folder);
+
+            var result = module.GetPermission(callContext.Object, folder.ID);
+
+            Assert.AreEqual(1, result.UserPermissions.Count());
+            Assert.AreEqual("e1678025-fbc6-4b8a-a566-b5d7d54d4279", result.UserPermissions.First().Guid.ToString());
+            Assert.AreEqual(5, (uint) result.UserPermissions.First().Permission);
+            Assert.AreEqual(2, (uint) result.GroupPermissions.First().Permission);
         }
     }
 }

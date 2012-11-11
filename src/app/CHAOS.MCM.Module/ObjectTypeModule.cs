@@ -5,6 +5,7 @@ using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
+using ObjectType = CHAOS.MCM.Data.Dto.Standard.ObjectType;
 
 namespace CHAOS.MCM.Module
 {
@@ -14,7 +15,7 @@ namespace CHAOS.MCM.Module
         #region Business Logic
 
 		[Datatype("ObjectType","Create")]
-        public Data.DTO.ObjectType Create(ICallContext callContext, string name)
+        public ObjectType Create(ICallContext callContext, string name)
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
@@ -28,7 +29,7 @@ namespace CHAOS.MCM.Module
 		}
 
 		[Datatype("ObjectType", "Get")]
-		public IEnumerable<Data.DTO.ObjectType> Get( ICallContext callContext )
+		public IEnumerable<ObjectType> Get( ICallContext callContext )
 		{
 			using( var db = DefaultMCMEntities )
 			{

@@ -30,36 +30,58 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHAOS, Version=1.0.4687.26568, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
     <Reference Include="Portal">
       <HintPath>..\..\..\lib\Portal.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\IPermissionRepository.cs" />
+    <Compile Include="Data\Dto\Standard\AccessPoint_Object_Join.cs" />
+    <Compile Include="Data\Dto\Standard\DestinationInfo.cs" />
+    <Compile Include="Data\Dto\Standard\EntityPermission.cs" />
+    <Compile Include="Data\Dto\Standard\File.cs" />
+    <Compile Include="Data\Dto\Standard\FileInfo.cs" />
+    <Compile Include="Data\Dto\Standard\Folder.cs" />
+    <Compile Include="Data\Dto\Standard\FolderGroupJoin.cs" />
+    <Compile Include="Data\Dto\Standard\FolderInfo.cs" />
+    <Compile Include="Data\Dto\Standard\FolderPermission.cs" />
+    <Compile Include="Data\Dto\Standard\FolderType.cs" />
+    <Compile Include="Data\Dto\Standard\FolderUserJoin.cs" />
+    <Compile Include="Data\Dto\Standard\Format.cs" />
+    <Compile Include="Data\Dto\Standard\FormatCategory.cs" />
+    <Compile Include="Data\Dto\Standard\FormatType.cs" />
+    <Compile Include="Data\Dto\IEntityPermission.cs" />
+    <Compile Include="Data\Dto\IFolder.cs" />
+    <Compile Include="Data\Dto\IFolderGroupJoin.cs" />
+    <Compile Include="Data\Dto\IFolderInfo.cs" />
+    <Compile Include="Data\Dto\IFolderUserJoin.cs" />
+    <Compile Include="Data\Dto\Standard\Language.cs" />
+    <Compile Include="Data\Dto\Standard\Link.cs" />
+    <Compile Include="Data\Dto\Standard\Metadata.cs" />
+    <Compile Include="Data\Dto\Standard\MetadataSchema.cs" />
+    <Compile Include="Data\Dto\Standard\Object.cs" />
+    <Compile Include="Data\Dto\Standard\ObjectObjectJoin.cs" />
+    <Compile Include="Data\Dto\Standard\ObjectRelationType.cs" />
+    <Compile Include="Data\Dto\Standard\ObjectType.cs" />
+    <Compile Include="Data\Dto\Standard\Permission.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
-    <Compile Include="Permission\InMemory\EntityPermission.cs" />
+    <Compile Include="Data\IPermissionRepository.cs" />
+    <Compile Include="Permission\FolderPermissionExtensions.cs" />
     <Compile Include="Permission\InMemory\Folder.cs" />
     <Compile Include="Permission\FolderPermission.cs" />
     <Compile Include="Permission\IFolder.cs" />
     <Compile Include="Permission\InMemory\InMemoryPermissionManager.cs" />
     <Compile Include="Permission\IPermissionManager.cs" />
-    <Compile Include="Permission\IEntityPermission.cs" />
     <Compile Include="Permission\ISynchronizationSpecification.cs" />
     <Compile Include="Permission\Specification\IntervalSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CHAOS.MCM.Data.DTO\CHAOS.MCM.Data.DTO.csproj">
-      <Project>{663E2831-9B22-49B8-BA6D-26395E3D285C}</Project>
-      <Name>CHAOS.MCM.Data.DTO</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

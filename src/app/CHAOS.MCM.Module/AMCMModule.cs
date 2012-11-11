@@ -10,7 +10,9 @@ using CHAOS.MCM.Permission.InMemory;
 using CHAOS.MCM.Permission.Specification;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
+using Chaos.Mcm.Data;
 using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
+using Object = CHAOS.MCM.Data.Dto.Standard.Object;
 
 namespace CHAOS.MCM.Module
 {
@@ -53,7 +55,7 @@ namespace CHAOS.MCM.Module
     	#endregion
         #region Business Logic
 
-        protected void PutObjectInIndex( IIndex index, IEnumerable<Data.DTO.Object> newObject )
+        protected void PutObjectInIndex( IIndex index, IEnumerable<Object> newObject )
         {
             foreach( var o in newObject )
             {
@@ -66,7 +68,7 @@ namespace CHAOS.MCM.Module
             index.Set( newObject, false );
         }
 
-        protected void RemoveObjectFromIndex( IIndex index, Data.DTO.Object delObject )
+        protected void RemoveObjectFromIndex( IIndex index, Object delObject )
         {
             index.Remove( delObject, false );
         }
