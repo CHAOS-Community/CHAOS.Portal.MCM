@@ -114,15 +114,17 @@ namespace CHAOS.MCM.Test.Permission
         {
             var folder1 = new Folder { ID = 1 };
             var folder2 = new Folder { ID = 2, ParentFolder = folder1 };
+            var folder3 = new Folder { ID = 3, ParentFolder = folder2 };
             var group   = new Mock<IEntityPermission>().SetupProperty(f => f.Guid, new Guid("39f26c89-5e6c-46d5-af3a-bc14a7e1486b"))
                                                        .SetupProperty(f => f.Permission, FolderPermission.Max);
 
             PermissionManager.AddFolder(folder1);
             PermissionManager.AddFolder(folder2);
+            PermissionManager.AddFolder(folder3);
             PermissionManager.GetFolders(folder1.ID).AddGroup(group.Object);
 
-            Assert.AreEqual(group.Object.Guid, folder2.GroupPermissions.First().Key);
-            Assert.AreEqual(group.Object.Permission, folder2.GroupPermissions.First().Value);
+            Assert.AreEqual(group.Object.Guid, folder3.GroupPermissions.First().Key);
+            Assert.AreEqual(group.Object.Permission, folder3.GroupPermissions.First().Value);
         }
 
         [Test]
@@ -150,6 +152,31 @@ namespace CHAOS.MCM.Test.Permission
             Assert.AreEqual(2, topFolders.Count());
             Assert.AreEqual(3, topFolders[0].ID);
             Assert.AreEqual(4, topFolders[1].ID);
+        }
+
+        [Test]
+        public void Should_Get_SubFolders_With_Permission_Through_Group()
+        {
+            var folder1 = new Folder { ID = 1 };
+            var folder2 = new Folder { ID = 2, ParentFolder = folder1 };
+            var folder3 = new Folder { ID = 3, ParentFolder = folder2 };
+            var folder4 = new Folder { ID = 4 };
+            var perm1   = new Mock<IEntityPermission>().SetupProperty(f => f.Guid, new Guid("39f26c89-5e6c-46d5-af3a-bc14a7e1486b"))
+                                                       .SetupProperty(f => f.Permission, FolderPermission.Max);
+            var perm2   = new Mock<IEntityPermission>().SetupProperty(f => f.Guid, new Guid("40f26c89-5e6c-46d5-af3a-bc14a7e1486b"))
+                                                       .SetupProperty(f => f.Permission, FolderPermission.Read);
+
+            PermissionManager.AddFolder(folder1);
+            PermissionManager.AddFolder(folder2);
+            PermissionManager.AddFolder(folder3);
+            PermissionManager.AddFolder(folder4);
+            PermissionManager.GetFolders(folder1.ID).AddGroup(perm2.Object);
+
+            var hasPermissions = PermissionManager.GetFolders(folder1.ID).DoesUserOrGroupHavePermission(perm1.Object.Guid, new[] { perm2.Object.Guid }, FolderPermission.Read );
+            var folders        = PermissionManager.GetFolders(folder1.ID).GetSubFolders().Where(item => item.DoesUserOrGroupHavePermission(perm1.Object.Guid, new[] { perm2.Object.Guid }, FolderPermission.Read));
+
+            Assert.IsTrue(hasPermissions);
+            Assert.AreEqual(2, folders.First().ID);
         }
 
         [Test]

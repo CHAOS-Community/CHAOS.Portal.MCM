@@ -8,7 +8,15 @@ namespace CHAOS.MCM.Data.EF
     {
         #region Fields
 
-        private readonly IMcmRepository _mcmRepository = new McmRepository();
+        private readonly IMcmRepository _mcmRepository;
+
+        #endregion
+        #region Constructors
+
+        public PermissionRepository(IMcmRepository mcmRepository)
+        {
+            _mcmRepository = mcmRepository;
+        }
 
         #endregion
         #region Business Logic

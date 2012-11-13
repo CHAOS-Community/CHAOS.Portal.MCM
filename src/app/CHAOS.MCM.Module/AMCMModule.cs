@@ -33,10 +33,11 @@ namespace CHAOS.MCM.Module
 
         public override void Initialize( string configuration )
         {
+            var mcmDefaultRepository = new McmRepository();
             // TODO: Removed default Permission Manager from Module logic (IoC)
-            Initialize(configuration, 
-                       new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(), new IntervalSpecification(10000)),
-                       new McmRepository());
+            Initialize(configuration,
+                       new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(mcmDefaultRepository), new IntervalSpecification(10000)),
+                       mcmDefaultRepository);
         }
 
         public void Initialize(string configuration, IPermissionManager permissionManager, IMcmRepository mcmRepository)

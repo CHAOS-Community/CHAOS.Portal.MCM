@@ -41,7 +41,7 @@ namespace CHAOS.MCM.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Folder_User_Join.Select(item => new FolderUserJoin
+                return db.Folder_User_Join.ToList().Select(item => new FolderUserJoin
                                                              {
                                                                  FolderID    = (uint) item.FolderID,
                                                                  UserGuid    = item.UserGUID,
@@ -68,7 +68,7 @@ namespace CHAOS.MCM.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Folder_Group_Join.Select(item => new FolderGroupJoin
+                return db.Folder_Group_Join.ToList().Select(item => new FolderGroupJoin
                                                                {
                                                                    FolderID    = (uint) item.FolderID,
                                                                    GroupGuid   = item.GroupGUID,
@@ -95,7 +95,7 @@ namespace CHAOS.MCM.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Folder_Get(null, null).ToDTO();
+                return db.Folder_Get(null, null).ToDTO().ToList();
             }
         }
 

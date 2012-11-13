@@ -62,23 +62,24 @@ namespace CHAOS.MCM.Module
         [Datatype("Folder", "Get")]
 		public IEnumerable<FolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID, uint? permission )
 		{
-			var permissionEnum = (Permission.FolderPermission) ( permission ?? (uint) Permission.FolderPermission.Read ) | Permission.FolderPermission.Read;
+            if (parentID.HasValue && id.HasValue)
+                throw new ArgumentException("It does not make sense to specficy both ID and ParentID in the same query");
+
+            var permissionEnum = (Permission.FolderPermission) ( permission ?? (uint) Permission.FolderPermission.Read ) | Permission.FolderPermission.Read;
             var userGuid       = callContext.User.GUID.ToGuid();
             var groupGuids     = callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList();
 
-			if( !parentID.HasValue && !id.HasValue )
-                return RetrieveFolderInfos( PermissionManager.GetFolders(permissionEnum, userGuid, groupGuids) );
-            if( parentID.HasValue && !id.HasValue )
-                return RetrieveFolderInfos( PermissionManager.GetFolders(permissionEnum, userGuid, groupGuids).Where(f => f.ParentFolder != null && f.ParentFolder.ID == parentID.Value) );
-            if( !parentID.HasValue )
-            {
-                var folder = PermissionManager.GetFolders( id.Value );
+            IEnumerable<IFolder> folderResults;
 
-                if( folder.DoesUserOrGroupHavePermission( userGuid, groupGuids, permissionEnum ) )
-                    return RetrieveFolderInfos(new[] {folder});
-            }
-            
-            throw new ArgumentException("It does not make sense to specficy both ID and ParentID in the same query");
+			if( !parentID.HasValue && !id.HasValue )
+                folderResults = PermissionManager.GetFolders(permissionEnum, userGuid, groupGuids);
+            else
+            if( parentID.HasValue )
+                folderResults = PermissionManager.GetFolders(parentID.Value).GetSubFolders();
+            else
+                folderResults = new [] {PermissionManager.GetFolders( id.Value )};
+
+            return RetrieveFolderInfos(folderResults.Where(item => item.DoesUserOrGroupHavePermission(userGuid, groupGuids, permissionEnum) ) );
 		}
 
         private IEnumerable<FolderInfo> RetrieveFolderInfos(IEnumerable<IFolder> folders)

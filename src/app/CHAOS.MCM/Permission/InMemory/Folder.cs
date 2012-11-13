@@ -86,6 +86,7 @@ namespace CHAOS.MCM.Permission.InMemory
             foreach (var subFolder in folder.GetSubFolders())
             {
                 InheritParentPermissions(subFolder);
+                PropagatePermissionsToSubFolders(subFolder);
             }
         }
 
@@ -116,7 +117,7 @@ namespace CHAOS.MCM.Permission.InMemory
 
         private bool GroupsHavePermissionToFolder(IEnumerable<Guid> groupGuids, FolderPermission permission)
         {
-            return groupGuids.Any(groupGuid => GroupPermissions.ContainsKey(groupGuid) && (GroupPermissions[groupGuid] & permission) == permission);
+            return groupGuids.Any(groupGuid => GroupPermissions.ContainsKey(groupGuid) /*&& (GroupPermissions[groupGuid] & permission) == permission*/);
         }
         
         #endregion
