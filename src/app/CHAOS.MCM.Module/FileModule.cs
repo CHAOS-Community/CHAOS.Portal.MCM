@@ -18,7 +18,7 @@ namespace CHAOS.MCM.Module
 		{
             using( var db = DefaultMCMEntities )
             {
-                if( !HasPermissionToObject( callContext, objectGUID, Permission.FolderPermission.CreateUpdateObjects) )
+                if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateUpdateObjects) )
                     throw new InsufficientPermissionsException("User does not have permissions to create a file for this object");
 
 		        var result = db.File_Create( objectGUID.ToByteArray(), (int?) parentFileID, (int) formatID, (int) destinationID, filename, originalFilename, folderPath ).FirstOrDefault();

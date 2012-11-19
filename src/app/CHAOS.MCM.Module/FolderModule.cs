@@ -10,7 +10,7 @@ using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
 using FolderInfo       = CHAOS.MCM.Data.Dto.Standard.FolderInfo;
 using FolderPermission = CHAOS.MCM.Data.Dto.Standard.FolderPermission;
-using IFolder = CHAOS.MCM.Permission.IFolder;
+using IFolder          = CHAOS.MCM.Permission.IFolder;
 
 namespace CHAOS.MCM.Module
 {
@@ -78,7 +78,7 @@ namespace CHAOS.MCM.Module
                 folderResults = PermissionManager.GetFolders(parentID.Value).GetSubFolders();
             else
                 folderResults = new [] {PermissionManager.GetFolders( id.Value )};
-
+            
             return RetrieveFolderInfos(folderResults.Where(item => item.DoesUserOrGroupHavePermission(userGuid, groupGuids, permissionEnum) ) );
 		}
 

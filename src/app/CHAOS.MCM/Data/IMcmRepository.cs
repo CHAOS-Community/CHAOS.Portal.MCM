@@ -14,5 +14,8 @@ namespace Chaos.Mcm.Data
         uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission);
         IEnumerable<IFolder> GetFolder();
         IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids);
+        IEnumerable<IAccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission);
+        uint SetAccessPointPublishSettings(Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate);
+        IEnumerable<IObject> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint);
     }
 }

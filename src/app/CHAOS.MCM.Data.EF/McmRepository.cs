@@ -102,6 +102,7 @@ namespace CHAOS.MCM.Data.EF
         public IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids)
         {
             var folderIDs = ids.Select(item => (long) item);
+            var folderIDStrings = string.Join(",", ids);
 
             // TODO: optimize folder retrival form the database
             using (var db = CreateMcmEntities())
@@ -109,6 +110,44 @@ namespace CHAOS.MCM.Data.EF
                 return db.FolderInfo.Where(fi => folderIDs.Contains(fi.ID)).ToDTO().ToList();
             }
         }
+
+        #region AccessPoint
+
+        public IEnumerable<IAccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission )
+        {
+            var groupGuidsString = string.Join(",", groupGuids);
+
+            using (var db = CreateMcmEntities())
+            {
+                return db.AccessPoint_Get(accessPointGuid.ToByteArray(), userGuid.ToByteArray(), groupGuidsString, (int?)permission).ToDto();
+            }
+        }
+
+        public uint SetAccessPointPublishSettings( Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate )
+        {
+            using (var db = CreateMcmEntities())
+            {
+                var result = db.AccessPoint_Object_Join_Set(accessPointGuid.ToByteArray(), objectGuid.ToByteArray(), startDate, endDate).FirstOrDefault();
+
+                if(!result.HasValue)
+                    throw new UnhandledException("SetAccessPointPublishSettings failed on the database, and was rolled back");
+
+                return (uint) result.Value;
+            }
+        }
+
+        #endregion
+        #region Object
+
+        public IEnumerable<IObject> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint)
+        {
+            using (var db = CreateMcmEntities())
+            {
+                return db.Object_Get(objectGuid, true, true, true, true, true).ToDTO();
+            }
+        }
+
+        #endregion
 
         #endregion
     }

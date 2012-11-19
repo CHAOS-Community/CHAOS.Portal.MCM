@@ -18,9 +18,19 @@ namespace CHAOS.MCM.Data.EF
             return Object_Get( guid, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, new List<Dto.Standard.MetadataSchema>() );
         }
 
+        public IEnumerable<Object> Object_Get(Guid guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints)
+        {
+            return Object_Get(guid, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, new List<Dto.Standard.MetadataSchema>());
+        }
+
         public IEnumerable<Object> Object_Get( UUID guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, IEnumerable<Dto.Standard.MetadataSchema> metadataSchemas  )
         {
             return Object_Get( guid.ToString().Replace("-",""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, metadataSchemas );
+        }
+
+        public IEnumerable<Object> Object_Get(Guid guid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints, IEnumerable<Dto.Standard.MetadataSchema> metadataSchemas)
+        {
+            return Object_Get(guid.ToString().Replace("-", ""), includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints, metadataSchemas);
         }
 
         public IEnumerable<Object> Object_Get(IEnumerable<UUID> guids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints )

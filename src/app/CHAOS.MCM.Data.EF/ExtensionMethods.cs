@@ -6,10 +6,29 @@ using CHAOS.MCM.Data.Dto.Standard;
 namespace CHAOS.MCM.Data.EF
 {
 	public static class ExtensionMethods
-	{
-		#region DestinationInfo
+    {
+        #region AccessPoint
 
-		public static IEnumerable<Dto.Standard.DestinationInfo> ToDTO( this IEnumerable<DestinationInfo> destinationInfos )
+        public static IEnumerable<Dto.Standard.AccessPoint> ToDto(this IEnumerable<AccessPoint> accessPoints )
+        {
+            return accessPoints.Select(ToDto);
+        }
+
+        public static Dto.Standard.AccessPoint ToDto( this AccessPoint accessPoint )
+        {
+            return new Dto.Standard.AccessPoint
+                       {
+                           Guid             = accessPoint.GUID,
+                           SubscriptionGuid = accessPoint.SubscriptionGUID,
+                           Name             = accessPoint.Name,
+                           DateCreated      = accessPoint.DateCreated
+                       };
+        }
+
+        #endregion
+        #region DestinationInfo
+
+        public static IEnumerable<Dto.Standard.DestinationInfo> ToDTO( this IEnumerable<DestinationInfo> destinationInfos )
 		{
 			return destinationInfos.Select( item => ToDTO( item ) );
 		}
@@ -52,6 +71,7 @@ namespace CHAOS.MCM.Data.EF
 			return fileInfos.Select( item => ToDTO( item, sessionGUID ) );
 		}
 
+        // TODO: Refactor sessionGuid, fileinfo shouldn't be generated like this.
         public static Dto.Standard.FileInfo ToDTO(this FileInfo fileInfo, UUID sessionGUID = null)
 		{
             return new Dto.Standard.FileInfo((uint)fileInfo.FileID,  
