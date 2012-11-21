@@ -75,11 +75,11 @@ namespace CHAOS.MCM.Module
                 folderResults = PermissionManager.GetFolders(permissionEnum, userGuid, groupGuids);
             else
             if( parentID.HasValue )
-                folderResults = PermissionManager.GetFolders(parentID.Value).GetSubFolders();
+                folderResults = PermissionManager.GetFolders(parentID.Value).GetSubFolders().Where(item => item.DoesUserOrGroupHavePermission(userGuid, groupGuids, permissionEnum));
             else
-                folderResults = new [] {PermissionManager.GetFolders( id.Value )};
+                folderResults = new[] { PermissionManager.GetFolders(id.Value) }.Where(item => item.DoesUserOrGroupHavePermission(userGuid, groupGuids, permissionEnum));
             
-            return RetrieveFolderInfos(folderResults.Where(item => item.DoesUserOrGroupHavePermission(userGuid, groupGuids, permissionEnum) ) );
+            return RetrieveFolderInfos(folderResults);
 		}
 
         private IEnumerable<FolderInfo> RetrieveFolderInfos(IEnumerable<IFolder> folders)

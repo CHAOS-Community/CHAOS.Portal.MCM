@@ -37,9 +37,12 @@ namespace CHAOS.MCM.Module
 						if( callContext.IsAnonymousUser )
 							throw new InsufficientPermissionsException("User must be logged in or use accessPointGUID" );
 
+                        var userGuid   = callContext.User.GUID.ToGuid();
+                        var groupGuids = callContext.Groups.Select(group => group.GUID.ToGuid()).ToList();
+
                         callContext.Log.Debug("get folders");
-                        var folders = PermissionManager.GetFolders( FolderPermission.Read, callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid() ) ).ToList();
-  
+                        var folders = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
+
 						if( folders.Count == 0 )
 							throw new InsufficientPermissionsException("User does not have access to any folders" );
 

@@ -124,22 +124,12 @@ namespace CHAOS.MCM.Permission.InMemory
         {
             foreach (var folder in folders)
             {
-                if ( UserHasPemissionToFolder(userGuid, permission, folder) || GroupsHavePermissionToFolder(groupGuids, permission, folder) )
+                if ( folder.DoesUserOrGroupHavePermission(userGuid, groupGuids, permission) )
                     yield return folder;
                 else
                     foreach (var subFolder in GetTopFolders(folder.GetSubFolders(), permission, userGuid, groupGuids))
                         yield return subFolder;
             }
-        }
-
-        private static bool UserHasPemissionToFolder(Guid userGuid, FolderPermission permission, IFolder folder)
-        {
-            return folder.UserPermissions.ContainsKey(userGuid) && (folder.UserPermissions[userGuid] & permission) == permission;
-        }
-
-        private static bool GroupsHavePermissionToFolder(IEnumerable<Guid> groupGuids, FolderPermission permission, IFolder folder)
-        {
-            return groupGuids.Any(groupGuid => folder.GroupPermissions.ContainsKey(groupGuid) && (folder.GroupPermissions[groupGuid] & permission) == permission);
         }
 
         /// <summary>

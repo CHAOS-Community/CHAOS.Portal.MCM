@@ -51,7 +51,6 @@ namespace CHAOS.MCM.Permission.InMemory
         /// <summary>
         /// Adds group permissions to a folder. If the group already exists then the permissions are merged
         /// </summary>
-        /// <param name="folderID"></param>
         /// <param name="groupPermission"></param>
         public void AddGroup(IEntityPermission groupPermission)
         {

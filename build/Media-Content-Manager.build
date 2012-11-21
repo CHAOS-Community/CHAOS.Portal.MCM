@@ -26,7 +26,8 @@
 		</librarypath>
 		
 		<inputassemblies>
-			<include name="..\src\app\CHAOS.MCM.Core.Exception\bin\Release\CHAOS.MCM.Core.Exception.dll" />
+      
+      <include name="..\src\app\CHAOS.MCM.Core.Exception\bin\Release\CHAOS.MCM.Core.Exception.dll" />
 			<include name="..\src\app\CHAOS.MCM.Data.DTO\bin\Release\CHAOS.MCM.Data.DTO.dll" />
 			<include name="..\src\app\CHAOS.MCM.Data.EF\bin\Release\CHAOS.MCM.Data.EF.dll" />
 			<include name="..\src\app\CHAOS.MCM.Module\bin\Release\CHAOS.MCM.Module.dll" />
