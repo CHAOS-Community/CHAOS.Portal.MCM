@@ -1005,7 +1005,7 @@
           <Parameter Name="FolderTypeID" Type="int" Mode="In" />
         </Function>
         <Function Name="Folder_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
-          <Parameter Name="FolderID" Type="int" Mode="In" />
+          <Parameter Name="ID" Type="int" Mode="In" />
         </Function>
         <Function Name="Folder_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="ID" Type="int" Mode="In" />
@@ -1590,7 +1590,10 @@
             <Parameter Name="NewFolderTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="File_Delete" ReturnType="Collection(Int32)">
-            <Parameter Name="ID" Mode="In" Type="Int32" />
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Folder_Delete" ReturnType="Collection(Int32)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <EntityType Name="AccessPoint">
@@ -2668,6 +2671,7 @@
           <FunctionImportMapping FunctionImportName="Object_Delete" FunctionName="MCMModel.Store.Object_Delete" />
           <FunctionImportMapping FunctionImportName="Folder_Update" FunctionName="MCMModel.Store.Folder_Update" />
           <FunctionImportMapping FunctionImportName="File_Delete" FunctionName="MCMModel.Store.File_Delete" />
+          <FunctionImportMapping FunctionImportName="Folder_Delete" FunctionName="MCMModel.Store.Folder_Delete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

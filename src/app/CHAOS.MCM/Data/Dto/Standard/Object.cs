@@ -61,6 +61,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
 			Files           = fileInfos.ToList();
 			ObjectRealtions = objectObjectJoins.ToList();
 			Folders         = folders.ToList();
+            FolderTree      = new List<uint>();
             AccessPoints    = accessPoints.ToList();
             Fullname        = "CHAOS.MCM.Data.DTO.Object";
 		}

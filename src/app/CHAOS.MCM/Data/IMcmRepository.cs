@@ -13,6 +13,7 @@ namespace Chaos.Mcm.Data
         IEnumerable<IFolderGroupJoin> GetFolderGroupJoin();
         uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission);
         IEnumerable<IFolder> GetFolder();
+        uint DeleteFolder(uint id);
         IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids);
         IEnumerable<IAccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission);
         uint SetAccessPointPublishSettings(Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate);

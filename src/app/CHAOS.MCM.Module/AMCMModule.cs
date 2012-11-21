@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using CHAOS.Extensions;
@@ -59,7 +60,7 @@ namespace CHAOS.MCM.Module
 
         protected void PutObjectInIndex( IIndex index, IEnumerable<IObject> newObject )
         {
-            foreach( Object o in newObject )
+            foreach( var o in newObject )
             {
                 foreach (var ancestorFolder in o.Folders.Where(item => item.ObjectFolderTypeID == 1).SelectMany(folder => PermissionManager.GetFolders(folder.FolderID).GetAncestorFolders()))
                 {

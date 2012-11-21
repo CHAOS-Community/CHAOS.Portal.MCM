@@ -125,6 +125,9 @@ namespace CHAOS.MCM.Permission.InMemory
         {
             yield return this;
 
+            if(ParentFolder == null)
+                yield break;
+
             foreach (var ancestorFolder in ParentFolder.GetAncestorFolders())
                 yield return ancestorFolder;
         }

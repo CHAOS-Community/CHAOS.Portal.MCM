@@ -37,6 +37,25 @@ namespace CHAOS.MCM.Data.EF
         #endregion
         #region Business Logic
 
+        #region Folder
+
+        public uint DeleteFolder(uint id)
+        {
+            using (var db = CreateMcmEntities())
+            {
+                var result = db.Folder_Delete((int?) id).FirstOrDefault();
+
+                if(result.HasValue && result.Value == -200)
+                    throw new UnhandledException("An unknown error occured on folder_delete and was rolled back");
+
+                if(result.HasValue && result.Value == -50)
+                    throw new InsufficientPermissionsException("The folder has to be empty to be deleted");
+
+                return (uint) result.Value;
+            }
+        }
+
+        #endregion
         public IEnumerable<IFolderUserJoin> GetFolderUserJoin()
         {
             using (var db = CreateMcmEntities())

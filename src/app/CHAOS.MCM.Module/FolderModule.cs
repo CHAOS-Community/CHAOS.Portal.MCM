@@ -89,22 +89,22 @@ namespace CHAOS.MCM.Module
             return (IEnumerable<FolderInfo>) McmRepository.GetFolderInfo(folderIDs);
         }
 
-        //[Datatype("Folder","Delete")]
-		//public ScalarResult Folder_Delete( CallContext callContext, int id )
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.Folder_Delete( callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, id );
+        //[Datatype("Folder", "Delete")]
+        //public ScalarResult Delete(ICallContext callContext, int id)
+        //{
+        //    using (MCMEntities db = DefaultMCMEntities)
+        //    {
+        //        int result = db.Folder_Delete(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, id);
 
-		//        if( result == -50 )
-		//            throw new FolderNotEmptyException( "You cannot delete non empty folder" );
- 
-		//        if( result == -100 )
-		//            throw new Portal.Core.Exception.InsufficientPermissionsException( "User does not have permission to delete the folder" );
+        //        if (result == -50)
+        //            throw new FolderNotEmptyException("You cannot delete non empty folder");
 
-		//        return new ScalarResult( result );
-		//    }
-		//}
+        //        if (result == -100)
+        //            throw new Portal.Core.Exception.InsufficientPermissionsException("User does not have permission to delete the folder");
+
+        //        return new ScalarResult(result);
+        //    }
+        //}
 
 		[Datatype("Folder", "Update")]
 		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID )
