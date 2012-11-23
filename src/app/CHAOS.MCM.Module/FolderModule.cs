@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Extensions;
+using CHAOS.MCM.Core.Exception;
 using CHAOS.MCM.Data.Dto.Standard;
 using CHAOS.MCM.Data.EF;
 using CHAOS.Portal.Core;
@@ -89,22 +90,22 @@ namespace CHAOS.MCM.Module
             return (IEnumerable<FolderInfo>) McmRepository.GetFolderInfo(folderIDs);
         }
 
-        //[Datatype("Folder", "Delete")]
-        //public ScalarResult Delete(ICallContext callContext, int id)
-        //{
-        //    using (MCMEntities db = DefaultMCMEntities)
-        //    {
-        //        int result = db.Folder_Delete(callContext.Groups.Select(group => group.GUID).ToList(), callContext.User.GUID, id);
+        [Datatype("Folder", "Delete")]
+        public ScalarResult Delete(ICallContext callContext, uint id)
+        {
+            var userGuid   = callContext.User.GUID.ToGuid();
+            var groupGuids = callContext.Groups.Select(group => group.GUID.ToGuid()).ToList();
 
-        //        if (result == -50)
-        //            throw new FolderNotEmptyException("You cannot delete non empty folder");
+            if(!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(userGuid, groupGuids, Permission.FolderPermission.Delete))
+                throw new InsufficientPermissionsException("User does not have permission to delete the folder");
 
-        //        if (result == -100)
-        //            throw new Portal.Core.Exception.InsufficientPermissionsException("User does not have permission to delete the folder");
+            var result = McmRepository.DeleteFolder(id);
 
-        //        return new ScalarResult(result);
-        //    }
-        //}
+            if (result == -50)
+                throw new FolderNotEmptyException("You cannot delete non empty folder");
+
+            return new ScalarResult((int) result);
+        }
 
 		[Datatype("Folder", "Update")]
 		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID )

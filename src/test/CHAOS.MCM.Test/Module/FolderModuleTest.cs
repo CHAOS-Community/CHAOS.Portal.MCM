@@ -213,5 +213,30 @@ namespace CHAOS.MCM.Test.Module
 
             Assert.AreEqual(1, result.Value);
         }
+
+        [Test]
+        public void Should_Delete_Folder()
+        {
+            var permissionManager = new Mock<IPermissionManager>();
+            var mcmRepository     = new Mock<IMcmRepository>();
+            var callContext       = new Mock<ICallContext>();
+            var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
+            var user              = new Mock<UserInfo>();
+            var group             = new Mock<Group>();
+            var groups            = new []{group.Object};
+
+            permissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
+            folder.Setup(m => m.DoesUserOrGroupHavePermission(default(Guid), null, FolderPermission.Delete)).Returns(true);
+            mcmRepository.Setup(m => m.DeleteFolder(folder.Object.ID)).Returns(1);
+            callContext.SetupProperty(p => p.User, user.Object);
+            callContext.SetupProperty(p => p.Groups, groups);
+
+            var module = new FolderModule();
+            module.Initialize(permissionManager.Object, mcmRepository.Object);
+
+            var result = module.Delete(callContext.Object, folder.Object.ID);
+
+            Assert.AreEqual(1, result.Value);
+        }
     }
 }
