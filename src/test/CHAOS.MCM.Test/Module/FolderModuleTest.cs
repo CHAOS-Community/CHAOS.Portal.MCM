@@ -221,15 +221,19 @@ namespace CHAOS.MCM.Test.Module
             var mcmRepository     = new Mock<IMcmRepository>();
             var callContext       = new Mock<ICallContext>();
             var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
-            var user              = new Mock<UserInfo>();
-            var group             = new Mock<Group>();
-            var groups            = new []{group.Object};
+            var userInfo          = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
+                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
+                                        1,
+                                        "email",
+                                        new DateTime(2000, 06, 06),
+                                        new DateTime(2010, 06, 06));
 
             permissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
-            folder.Setup(m => m.DoesUserOrGroupHavePermission(default(Guid), null, FolderPermission.Delete)).Returns(true);
+            folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.GUID.ToGuid(), new Guid[0], FolderPermission.Delete)).Returns(true);
+            mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
             mcmRepository.Setup(m => m.DeleteFolder(folder.Object.ID)).Returns(1);
-            callContext.SetupProperty(p => p.User, user.Object);
-            callContext.SetupProperty(p => p.Groups, groups);
+            callContext.SetupGet(p => p.User).Returns(userInfo);
+            callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
 
             var module = new FolderModule();
             module.Initialize(permissionManager.Object, mcmRepository.Object);
