@@ -14,6 +14,7 @@ namespace Chaos.Mcm.Data
         uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission);
         IEnumerable<IFolder> GetFolder();
         uint DeleteFolder(uint id);
+        uint CreateFolder(Guid userGuid, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID);
         IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids);
         IEnumerable<IAccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission);
         uint SetAccessPointPublishSettings(Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate);

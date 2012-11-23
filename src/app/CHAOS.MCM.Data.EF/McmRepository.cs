@@ -55,6 +55,26 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
+        public uint CreateFolder(Guid userGuid, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID )
+        {
+            using (var db = CreateMcmEntities())
+            {
+                var result = db.Folder_Create(userGuid.ToByteArray(),
+                                              subscriptionGuid.HasValue ? subscriptionGuid.Value.ToByteArray() : null,
+                                              title,
+                                              (int?) parentID,
+                                              (int?) folderTypeID).FirstOrDefault();
+
+                if(result.HasValue && result == -200)
+                    throw new UnhandledException("An unknown error occured on Folder_Create and was rolled back");
+
+                if(result.HasValue && result == -10)
+                    throw new UnhandledException("Invalid input parameters");
+
+                return (uint) result.Value;
+            }
+        }
+
         #endregion
         public IEnumerable<IFolderUserJoin> GetFolderUserJoin()
         {

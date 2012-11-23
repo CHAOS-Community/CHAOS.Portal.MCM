@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Extensions;
 using CHAOS.MCM.Core.Exception;
+using CHAOS.MCM.Data.Dto;
 using CHAOS.MCM.Data.Dto.Standard;
 using CHAOS.MCM.Data.EF;
+using CHAOS.MCM.Permission;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
@@ -125,35 +127,27 @@ namespace CHAOS.MCM.Module
 		}
 
 		[Datatype("Folder", "Create")]
-        public FolderInfo Create(ICallContext callContext, UUID subscriptionGUID, string title, uint? parentID, uint folderTypeID)
+        public IFolderInfo Create(ICallContext callContext, UUID subscriptionGUID, string title, uint? parentID, uint folderTypeID)
 		{
             if( subscriptionGUID == null && !parentID.HasValue )
                 throw new ArgumentException( "Both parentID and subscriptionGUID can't be null" );
 
-		    using( var db = DefaultMCMEntities )
-		    {
-		        if( subscriptionGUID != null )
-		        {
-                    throw new NotImplementedException( "Creating top folders has not been implemented" );
-		            var subscription = callContext.Subscriptions.FirstOrDefault( sub => sub.GUID.ToString() == sub.ToString() );
+		    var userGuid     = callContext.User.GUID.ToGuid();
+		    var groupGuids   = callContext.Groups.Select(item => item.GUID.ToGuid());
+            var subscription = callContext.Subscriptions.FirstOrDefault( sub => sub.GUID.ToString() == subscriptionGUID.ToString() );
 
-                    // TODO: Check actual subscription permissions
+		    if( subscription != null && subscription.Permission != SubscriptionPermission.CreateFolder )
+		        throw new InsufficientPermissionsException( "User does not have permission to create topfolders with the subscriptionGUID" );
+		    
+            if(parentID.HasValue &&!PermissionManager.GetFolders((uint) parentID).DoesUserOrGroupHavePermission(userGuid, groupGuids, Permission.FolderPermission.Write))
+                throw new InsufficientPermissionsException("User does not have permission to create subfolders");
 
-		            if( subscription == null )
-		                throw new InsufficientPermissionsException( "User does not have permission to create topfolders with the subscriptionGUID" );
-		        }
+            var result = McmRepository.CreateFolder(userGuid, subscription == null ? (Guid?) null : subscription.GUID.ToGuid(), title, parentID, folderTypeID);
 
-		        var result = db.Folder_Create( callContext.User.GUID.ToByteArray(),
-                                               subscriptionGUID == null ? null : subscriptionGUID.ToByteArray(),
-		                                       title, 
-		                                       (int?) parentID, 
-		                                       (int?) folderTypeID ).First();
+		    if( result == -100 )
+		        throw new InsufficientPermissionsException( "User does not have permission to Create the folder" );
 
-		        if( result == -100 )
-		            throw new InsufficientPermissionsException( "User does not have permission to Create the folder" );
-
-                return db.FolderInfo.First( fi => result == fi.ID ).ToDTO();
-		    }
+            return McmRepository.GetFolderInfo(new[] { result }).First();
 		}
     }
 }
