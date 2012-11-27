@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using CHAOS.MCM.Data.Dto;
 using CHAOS.MCM.Data.Dto.Standard;
+using CHAOS.MCM.Permission;
 using CHAOS.Portal.Exception;
 using Chaos.Mcm.Data;
 
@@ -76,7 +77,30 @@ namespace CHAOS.MCM.Data.EF
         }
 
         #endregion
-        public IEnumerable<IFolderUserJoin> GetFolderUserJoin()
+        #region Metadata Schema
+
+        public IEnumerable<Dto.Standard.MetadataSchema> GetMetadataSchema(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission )
+        {
+            using( var db = CreateMcmEntities() )
+            {
+                var sGroupGuids = string.Join(",", groupGuids.Select(guid => guid.ToString().Replace("-", "")));
+
+                return db.MetadataSchema_Get(userGuid.ToByteArray(), sGroupGuids, metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null, (int?)permission).ToList().ToDTO();
+			}
+        }
+
+        //public IEnumerable<Dto.Standard.MetadataSchemaInfo> GetMetadataSchemaInfo(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission)
+        //{
+        //    using (var db = CreateMcmEntities())
+        //    {
+        //        var sGroupGuids = string.Join(",", groupGuids.Select(guid => guid.ToString().Replace("-", "")));
+
+        //        return db.MetadataSchema_Get(userGuid.ToByteArray(), sGroupGuids, metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null, (int?)permission).ToList().ToDTO();
+        //    }
+        //}
+
+        #endregion
+        public IEnumerable<Dto.Standard.FolderUserJoin> GetFolderUserJoin()
         {
             using (var db = CreateMcmEntities())
             {
@@ -103,7 +127,7 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
-        public IEnumerable<IFolderGroupJoin> GetFolderGroupJoin()
+        public IEnumerable<Dto.Standard.FolderGroupJoin> GetFolderGroupJoin()
         {
             using (var db = CreateMcmEntities())
             {
@@ -130,15 +154,15 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
-        public IEnumerable<IFolder> GetFolder()
+        public IEnumerable<Dto.Standard.Folder> GetFolder()
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Folder_Get(null, null).ToDTO().ToList();
+                return db.Folder_Get(null, null).ToList().ToDTO();
             }
         }
 
-        public IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids)
+        public IEnumerable<Dto.Standard.FolderInfo> GetFolderInfo(IEnumerable<uint> ids)
         {
             var folderIDs = ids.Select(item => (long) item);
             var folderIDStrings = string.Join(",", ids);
@@ -152,7 +176,7 @@ namespace CHAOS.MCM.Data.EF
 
         #region AccessPoint
 
-        public IEnumerable<IAccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission )
+        public IEnumerable<Dto.Standard.AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
         {
             var groupGuidsString = string.Join(",", groupGuids);
 
@@ -178,11 +202,27 @@ namespace CHAOS.MCM.Data.EF
         #endregion
         #region Object
 
-        public IEnumerable<IObject> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint)
+        public IEnumerable<Dto.Standard.Object> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint)
         {
             using (var db = CreateMcmEntities())
             {
                 return db.Object_Get(objectGuid, true, true, true, true, true).ToDTO();
+            }
+        }
+
+        public IEnumerable<Dto.Standard.Object> GetObject(IEnumerable<Guid> objectGuids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint)
+        {
+            using (var db = CreateMcmEntities())
+            {
+                return db.Object_Get(objectGuids, true, true, true, true, true).ToDTO();
+            }
+        }
+
+        public IEnumerable<Dto.Standard.Object> GetObject(Guid relatedToObjectWithGuid, uint? objectRelationTypeID)
+        {
+            using (var db = CreateMcmEntities())
+            {
+                return db.Object_Get(relatedToObjectWithGuid, objectRelationTypeID, true, true, true, true).ToList().ToDTO();
             }
         }
 

@@ -58,7 +58,7 @@ namespace CHAOS.MCM.Module
     	#endregion
         #region Business Logic
 
-        protected void PutObjectInIndex( IIndex index, IEnumerable<IObject> newObject )
+        protected void PutObjectInIndex( IIndex index, IEnumerable<Object> newObject )
         {
             foreach( var o in newObject )
             {
@@ -66,6 +66,8 @@ namespace CHAOS.MCM.Module
                 {
                     o.FolderTree.Add(ancestorFolder.ID);
                 }
+
+                o.RelatedObjects = McmRepository.GetObject(o.ObjectRealtions.Select(item => item.Object2GUID.ToGuid()), true, true, true, true, true).ToList();
             }
 
             index.Set( newObject.Select(item => item as Object), false );

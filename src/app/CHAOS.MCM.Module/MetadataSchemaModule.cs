@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using CHAOS.Extensions;
 using CHAOS.MCM.Data.EF;
+using CHAOS.MCM.Permission;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
-using System.Data.Objects;
 using MetadataSchema = CHAOS.MCM.Data.Dto.Standard.MetadataSchema;
 
 namespace CHAOS.MCM.Module
@@ -20,10 +21,11 @@ namespace CHAOS.MCM.Module
 		[Datatype("MetadataSchema", "Get")]
 		public IEnumerable<MetadataSchema> Get( ICallContext callContext, UUID metadataSchemaGUID )
 		{
-			using( var db = DefaultMCMEntities )
-			{
-				return db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",",callContext.Groups.Select( guid => guid.GUID.ToString().Replace("-","") ) ), metadataSchemaGUID == null ? null : metadataSchemaGUID.ToByteArray(), 0x1 ).ToDTO().ToList();
-			}
+		    var userGuid           = callContext.User.GUID.ToGuid();
+		    var groupGuids         = callContext.Groups.Select(item => item.GUID.ToGuid());
+		    var metadataSchemaGuid = metadataSchemaGUID == null ? (Guid?) null : metadataSchemaGUID.ToGuid();
+
+		    return McmRepository.GetMetadataSchema(userGuid, groupGuids, metadataSchemaGuid, MetadataSchemaPermission.Read);
 		}
 
         [Datatype("MetadataSchema", "Create")]

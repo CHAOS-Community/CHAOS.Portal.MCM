@@ -10,7 +10,7 @@ using CHAOS.Serialization;
 
 namespace CHAOS.MCM.Data.Dto.Standard
 {
-	public class Object : Result, IIndexable, IObject
+	public class Object : Result, IIndexable
 	{
 		#region Properties
 
@@ -40,7 +40,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
 
         public IList<Link> Folders { get; set; }
 		public IList<uint> FolderTree { get; set; }
-		public List<IObject> RelatedObjects { get; set; }
+		public List<Object> RelatedObjects { get; set; }
         public IList<AccessPoint_Object_Join> AccessPoints { get; set; }
 
         public KeyValuePair<string, string> UniqueIdentifier

@@ -47,6 +47,7 @@
     <Compile Include="Data\Dto\IObject.cs" />
     <Compile Include="Data\Dto\Standard\AccessPoint.cs" />
     <Compile Include="Data\Dto\Standard\AccessPoint_Object_Join.cs" />
+    <Compile Include="Data\Dto\Standard\MetadataSchemaInfo.cs" />
     <Compile Include="Data\Dto\Standard\DestinationInfo.cs" />
     <Compile Include="Data\Dto\Standard\EntityPermission.cs" />
     <Compile Include="Data\Dto\Standard\File.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Permission\InMemory\InMemoryPermissionManager.cs" />
     <Compile Include="Permission\IPermissionManager.cs" />
     <Compile Include="Permission\ISynchronizationSpecification.cs" />
+    <Compile Include="Permission\MetadataSchemaPermission.cs" />
     <Compile Include="Permission\Specification\IntervalSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

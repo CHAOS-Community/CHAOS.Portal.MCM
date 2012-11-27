@@ -126,12 +126,12 @@ namespace CHAOS.MCM.Data.EF
 		#endregion
 		#region Folder
 
-		public static IEnumerable<IFolder> ToDTO( this IEnumerable<Folder> folders )
+		public static IEnumerable<Dto.Standard.Folder> ToDTO( this IEnumerable<Folder> folders )
 		{
-			return folders.Select( item => ToDTO( item ) );
+			return folders.Select(ToDTO);
 		}
 
-		public static IFolder ToDTO( this Folder folder )
+		public static Dto.Standard.Folder ToDTO( this Folder folder )
 		{
 			return new Dto.Standard.Folder( (uint) folder.ID, (uint) folder.FolderTypeID, (uint?) folder.ParentID, folder.SubscriptionGUID, folder.Name, folder.DateCreated );
 		}

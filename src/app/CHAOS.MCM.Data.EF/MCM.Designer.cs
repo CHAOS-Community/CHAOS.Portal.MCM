@@ -9953,5 +9953,19 @@ namespace CHAOS.MCM.Data.EF
 
     #endregion
 
+    #region ComplexTypes
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="MCMModel", Name="Object_GetByRelatedObjectGUID_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class Object_GetByRelatedObjectGUID_Result : ComplexObject
+    {
+    }
+
+    #endregion
+
     
 }

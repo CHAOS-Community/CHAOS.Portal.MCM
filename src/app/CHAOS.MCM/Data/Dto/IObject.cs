@@ -14,7 +14,7 @@ namespace CHAOS.MCM.Data.Dto
         List<Object_Object_Join> ObjectRealtions { get; set; }
         IList<Link> Folders { get; set; }
         IList<uint> FolderTree { get; set; }
-        List<IObject> RelatedObjects { get; set; }
+        List<Standard.Object> RelatedObjects { get; set; }
         IList<AccessPoint_Object_Join> AccessPoints { get; set; }
 
         KeyValuePair<string, string> UniqueIdentifier { get; }

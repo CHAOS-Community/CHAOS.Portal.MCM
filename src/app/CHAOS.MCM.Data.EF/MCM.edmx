@@ -1202,6 +1202,14 @@
           <Parameter Name="IncludeFolders" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeAccessPoints" Type="tinyint" Mode="In" />
         </Function>
+        <Function Name="Object_GetByRelatedObjectGUID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+          <Parameter Name="RelatedObjectGUID" Type="binary" Mode="In" />
+          <Parameter Name="ObjectRelationTypeID" Type="int" Mode="In" />
+          <Parameter Name="IncludeMetadata" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeFiles" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeFolders" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeAccessPoints" Type="tinyint" Mode="In" />
+        </Function>
         <Function Name="Permission_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="TableIdentifier" Type="varchar" Mode="In" />
           <Parameter Name="Permission" Type="int" Mode="In" />
@@ -2367,6 +2375,7 @@
           <Property Type="Int64" Name="FormatTypeID" Nullable="false" />
           <Property Type="String" Name="FormatTypeName" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
         </EntityType>
+        <ComplexType Name="Object_GetByRelatedObjectGUID_Result" />
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
