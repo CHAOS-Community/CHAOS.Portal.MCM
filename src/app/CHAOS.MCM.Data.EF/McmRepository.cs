@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using CHAOS.Extensions;
 using CHAOS.MCM.Data.Dto.Standard;
 using CHAOS.MCM.Permission;
 using CHAOS.Portal.Exception;
@@ -83,7 +84,7 @@ namespace CHAOS.MCM.Data.EF
         {
             using( var db = CreateMcmEntities() )
             {
-                var sGroupGuids = string.Join(",", groupGuids.Select(guid => guid.ToString().Replace("-", "")));
+                var sGroupGuids = string.Join(",", groupGuids.Select(guid => guid.ToUUID().ToString().Replace("-", "")));
 
                 return db.MetadataSchema_Get(userGuid.ToByteArray(), sGroupGuids, metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null, (int?)permission).ToList().ToDTO();
 			}
