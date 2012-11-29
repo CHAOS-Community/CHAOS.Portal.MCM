@@ -49,6 +49,7 @@ namespace CHAOS.MCM.Module
             var result = 0;
             var folder = PermissionManager.GetFolders(folderID);
 
+            // REVIEW: What permissions are required to remove a permission?
             if (!folder.DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), (Permission.FolderPermission)permission))
                 throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 

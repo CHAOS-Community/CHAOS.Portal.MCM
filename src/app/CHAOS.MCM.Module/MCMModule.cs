@@ -406,7 +406,7 @@ namespace CHAOS.MCM.Module
 		        // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
 		        using( var db = DefaultMCMEntities )
 		        {
-		            var objects = db.Object_Get( folderID, true, false, false, true, true, i, pageSize ).ToDTO().ToList();
+		            var objects = db.Object_Get( folderID, true, false, true, true, true, i, pageSize ).ToDTO().ToList();
 					
                     PutObjectInIndex( index, objects );
 

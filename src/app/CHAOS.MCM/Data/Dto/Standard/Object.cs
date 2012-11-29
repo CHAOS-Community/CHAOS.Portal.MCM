@@ -60,6 +60,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
 			Metadatas       = metadatas.ToList();
 			Files           = fileInfos.ToList();
 			ObjectRealtions = objectObjectJoins.ToList();
+            RelatedObjects  = new List<Object>();
 			Folders         = folders.ToList();
             FolderTree      = new List<uint>();
             AccessPoints    = accessPoints.ToList();
@@ -193,6 +194,16 @@ namespace CHAOS.MCM.Data.Dto.Standard
 									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubEndDate.Subtract( larmPubStartDate ).TotalSeconds ).ToString());
 								else
 									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubStartDate.Subtract( larmPubEndDate ).TotalSeconds ).ToString());	
+
+                                yield return new KeyValuePair<string, string>("LARM-Annotation-Count", RelatedObjects.Count(item => item.ObjectTypeID == 41 || item.ObjectTypeID == 64).ToString());
+
+                                foreach (var obj in RelatedObjects)
+                                {
+                                    foreach (var relatedMetadata in obj.Metadatas)
+                                    {
+                                        yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode), GetXmlContent(relatedMetadata.MetadataXML.Root));
+                                    }
+                                }
 							}
 							
 							if( metadata.MetadataXML.Root.Element("PublicationChannel") != null )
@@ -224,14 +235,16 @@ namespace CHAOS.MCM.Data.Dto.Standard
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
 
-			if( RelatedObjects != null )
-				foreach( Object obj in RelatedObjects )
-				{
-					foreach( var relatedMetadata in obj.Metadatas )
-					{
-						yield return new KeyValuePair<string, string>( string.Format( "rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXML.Root ) );
-					}
-				}
+            //if (RelatedObjects != null)
+            //{
+            //    foreach (var obj in RelatedObjects)
+            //    {
+            //        foreach (var relatedMetadata in obj.Metadatas)
+            //        {
+            //            yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode), GetXmlContent(relatedMetadata.MetadataXML.Root));
+            //        }
+            //    }
+            //}
 
 			//if( AccessPoints != null )
 			//	foreach( var accessPoint in AccessPoints )

@@ -67,7 +67,8 @@ namespace CHAOS.MCM.Module
                     o.FolderTree.Add(ancestorFolder.ID);
                 }
 
-                o.RelatedObjects = McmRepository.GetObject(o.ObjectRealtions.Select(item => item.Object2GUID.ToGuid()), true, true, true, true, true).ToList();
+                if (o.ObjectRealtions.Any())
+                    o.RelatedObjects = McmRepository.GetObject(o.GUID.ToGuid(), null).ToList();
             }
 
             index.Set( newObject.Select(item => item as Object), false );
