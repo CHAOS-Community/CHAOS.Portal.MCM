@@ -111,20 +111,14 @@ namespace CHAOS.MCM.Module
         }
 
 		[Datatype("Folder", "Update")]
-		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID )
+		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID, uint? newParentFolderID )
 		{
-			using( var db = DefaultMCMEntities )
-			{
-                if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), Permission.FolderPermission.Update ) )
-					throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
+            if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), Permission.FolderPermission.Update ) )
+				throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
-				var result = db.Folder_Update( (int?) id, newTitle, null, (int?) newFolderTypeID ).FirstOrDefault();
+			var result = McmRepository.UpdateFolder(id, newTitle, newFolderTypeID, newParentFolderID);
 
-				if( !result.HasValue )
-					throw new UnhandledException( "Procedure finished without a value" );
-
-				return new ScalarResult( result.Value );
-			}
+			return new ScalarResult( (int) result );
 		}
 
 		[Datatype("Folder", "Create")]

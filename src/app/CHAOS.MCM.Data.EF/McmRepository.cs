@@ -77,6 +77,17 @@ namespace CHAOS.MCM.Data.EF
             }
         }
 
+        public uint UpdateFolder(uint id, string newTitle, uint? newParentFolderID, uint? newFolderTypeID)
+        {
+            using (var db = CreateMcmEntities())
+            {
+                var result = db.Folder_Update((int)id, newTitle, (int?)newParentFolderID, (int?)newFolderTypeID).FirstOrDefault();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("Folder_Update finished without a value");
+            }
+        }
+
         #endregion
         #region Metadata Schema
 

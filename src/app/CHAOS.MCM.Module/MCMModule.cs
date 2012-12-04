@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using CHAOS.Index.Solr;
@@ -394,28 +395,28 @@ namespace CHAOS.MCM.Module
 		[Datatype("Test","ReIndex")]
 		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
 		{
-            var index = ( Solr )callContext.IndexManager.GetIndex<MCMModule>();
+            var index = (Solr)callContext.IndexManager.GetIndex<MCMModule>();
 
-            if( clearIndex.HasValue && clearIndex.Value )
+            if (clearIndex.HasValue && clearIndex.Value)
                 index.RemoveAll(false);
 
-		    const uint pageSize = 1000;
+            const uint pageSize = 1000;
 
-		    for( uint i = 0;; i++ )
-		    {
-		        // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
-		        using( var db = DefaultMCMEntities )
-		        {
-		            var objects = db.Object_Get( folderID, true, false, true, true, true, i, pageSize ).ToDTO().ToList();
-					
-                    PutObjectInIndex( index, objects );
+            for (uint i = 0; ; i++)
+            {
+                // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
+                using (var db = DefaultMCMEntities)
+                {
+                    var objects = db.Object_Get(folderID, true, false, true, true, true, i, pageSize).ToDTO().ToList();
 
-		            if( objects.Count() != pageSize )
-		                break;
-		        }
-		    }
+                    PutObjectInIndex(index, objects);
 
-		    return new ScalarResult(1);
+                    if (objects.Count() != pageSize)
+                        break;
+                }
+            }
+
+            return new ScalarResult(1);
 		}
 
 		#endregion
