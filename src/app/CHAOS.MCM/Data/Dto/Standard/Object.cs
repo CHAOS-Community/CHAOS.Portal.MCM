@@ -120,10 +120,15 @@ namespace CHAOS.MCM.Data.Dto.Standard
 							break;
 						// DKA2
 						case "5906a41b-feae-48db-bfb7-714b3e105396":
-							var ns = metadata.MetadataXML.Root.GetNamespaceOfPrefix( "dka" );
+							var ns        = metadata.MetadataXML.Root.GetNamespaceOfPrefix( "dka" );
+					        var defaultNs = metadata.MetadataXML.Root.GetDefaultNamespace();
 
 							if( ns != null && metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", ns.NamespaceName ) ).FirstOrDefault() != null )
 								yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", ns.NamespaceName ) ).First().Value );
+                            else if( defaultNs != null && metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", defaultNs.NamespaceName ) ).FirstOrDefault() != null )
+                                yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", defaultNs.NamespaceName ) ).First().Value );
+                            else if (metadata.MetadataXML.Descendants("ExternalIdentifier").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants( "ExternalIdentifier" ).First().Value );
 							break;
 						// DKA
 						// TODO: Remember to add namespace to DKA fields when DKA is replaced by DKA2
