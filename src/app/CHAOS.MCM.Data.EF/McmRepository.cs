@@ -196,7 +196,7 @@ namespace CHAOS.MCM.Data.EF
 
             using (var db = CreateMcmEntities())
             {
-                return db.AccessPoint_Get(accessPointGuid.ToByteArray(), userGuid.ToByteArray(), groupGuidsString, (int?)permission).ToDto();
+                return db.AccessPoint_Get(accessPointGuid.ToByteArray(), userGuid.ToByteArray(), groupGuidsString, (int?)permission).ToList().ToDto();
             }
         }
 

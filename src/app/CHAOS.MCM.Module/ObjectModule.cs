@@ -106,22 +106,19 @@ namespace CHAOS.MCM.Module
         [Datatype("Object","SetPublishSettings")]
         public ScalarResult SetPublishSettings( ICallContext callContext, UUID objectGUID, UUID accessPointGUID, DateTime? startDate, DateTime? endDate )
         {
-            using( var db = DefaultMCMEntities )
-            {
-                var objectGuid      = objectGUID.ToGuid();
-                var accessPointGuid = accessPointGUID.ToGuid();
-                var userGuid        = callContext.User.GUID.ToGuid();
-                var groupGuids      = callContext.Groups.Select(item => item.GUID.ToGuid());
+            var objectGuid      = objectGUID.ToGuid();
+            var accessPointGuid = accessPointGUID.ToGuid();
+            var userGuid        = callContext.User.GUID.ToGuid();
+            var groupGuids      = callContext.Groups.Select(item => item.GUID.ToGuid());
 
-                if (McmRepository.GetAccessPoint(accessPointGuid, userGuid, groupGuids, (uint) AccessPointPermission.Write).FirstOrDefault() == null)
-                   throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
+            if (McmRepository.GetAccessPoint(accessPointGuid, userGuid, groupGuids, (uint) AccessPointPermission.Write).FirstOrDefault() == null)
+                throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
 
-                var result = McmRepository.SetAccessPointPublishSettings(accessPointGuid, objectGuid, startDate, endDate);
+            var result = McmRepository.SetAccessPointPublishSettings(accessPointGuid, objectGuid, startDate, endDate);
                 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<ObjectModule>(), McmRepository.GetObject(objectGuid, true, true, true, true, true) );
+            PutObjectInIndex( callContext.IndexManager.GetIndex<ObjectModule>(), McmRepository.GetObject(objectGuid, true, true, true, true, true) );
 
-                return new ScalarResult( (int) result );
-            }
+            return new ScalarResult( (int) result );
         }
 
         [Datatype("Object", "Delete")]
