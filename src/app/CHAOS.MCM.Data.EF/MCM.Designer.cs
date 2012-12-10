@@ -586,7 +586,7 @@ namespace CHAOS.MCM.Data.EF
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AccessPoint EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the AccessPoint EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAccessPoint(AccessPoint accessPoint)
         {
@@ -594,7 +594,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AccessPoint_Group_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the AccessPoint_Group_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAccessPoint_Group_Join(AccessPoint_Group_Join accessPoint_Group_Join)
         {
@@ -602,7 +602,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AccessPoint_User_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the AccessPoint_User_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAccessPoint_User_Join(AccessPoint_User_Join accessPoint_User_Join)
         {
@@ -610,7 +610,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AccessProvider EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the AccessProvider EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAccessProvider(AccessProvider accessProvider)
         {
@@ -618,7 +618,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Conversion EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Conversion EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToConversion(Conversion conversion)
         {
@@ -626,7 +626,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Destination EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Destination EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToDestination(Destination destination)
         {
@@ -634,7 +634,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the File EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the File EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFile(File file)
         {
@@ -642,7 +642,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Folder EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Folder EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFolder(Folder folder)
         {
@@ -650,7 +650,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Folder_Group_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Folder_Group_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFolder_Group_Join(Folder_Group_Join folder_Group_Join)
         {
@@ -658,7 +658,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Folder_User_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Folder_User_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFolder_User_Join(Folder_User_Join folder_User_Join)
         {
@@ -666,7 +666,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FolderType EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the FolderType EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFolderType(FolderType folderType)
         {
@@ -674,7 +674,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Format EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Format EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFormat(Format format)
         {
@@ -682,7 +682,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Language EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Language EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToLanguage(Language language)
         {
@@ -690,7 +690,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the MetadataSchema EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the MetadataSchema EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMetadataSchema(MetadataSchema metadataSchema)
         {
@@ -698,7 +698,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the MetadataSchema_Group_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the MetadataSchema_Group_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMetadataSchema_Group_Join(MetadataSchema_Group_Join metadataSchema_Group_Join)
         {
@@ -706,7 +706,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the MetadataSchema_User_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the MetadataSchema_User_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMetadataSchema_User_Join(MetadataSchema_User_Join metadataSchema_User_Join)
         {
@@ -714,7 +714,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the ObjectFolderType EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the ObjectFolderType EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToObjectFolderType(ObjectFolderType objectFolderType)
         {
@@ -722,7 +722,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the ObjectRelationType EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the ObjectRelationType EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToObjectRelationType(ObjectRelationType objectRelationType)
         {
@@ -730,7 +730,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the ObjectType EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the ObjectType EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToObjectType(ObjectType objectType)
         {
@@ -738,7 +738,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Permission EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Permission EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToPermission(Permission permission)
         {
@@ -746,7 +746,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the DestinationInfo EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the DestinationInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToDestinationInfo(DestinationInfo destinationInfo)
         {
@@ -754,7 +754,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Object EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Object EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToObject(Object @object)
         {
@@ -762,7 +762,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FormatCategory EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the FormatCategory EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFormatCategory(FormatCategory formatCategory)
         {
@@ -770,7 +770,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FormatType EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the FormatType EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFormatType(FormatType formatType)
         {
@@ -778,7 +778,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FolderInfo EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the FolderInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFolderInfo(FolderInfo folderInfo)
         {
@@ -786,7 +786,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMetadata(Metadata metadata)
         {
@@ -794,7 +794,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Object_Folder_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Object_Folder_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToObject_Folder_Join(Object_Folder_Join object_Folder_Join)
         {
@@ -802,7 +802,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Object_Object_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Object_Object_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToObject_Object_Join(Object_Object_Join object_Object_Join)
         {
@@ -810,7 +810,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the AccessPoint_Object_Join EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the AccessPoint_Object_Join EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToAccessPoint_Object_Join(AccessPoint_Object_Join accessPoint_Object_Join)
         {
@@ -818,7 +818,7 @@ namespace CHAOS.MCM.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FileInfo EntitySet. Consider using the .AddFolder method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the FileInfo EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToFileInfo(FileInfo fileInfo)
         {
@@ -3053,6 +3053,25 @@ namespace CHAOS.MCM.Data.EF
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("File_Delete", iDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iD">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> Folder_Delete(Nullable<global::System.Int32> iD)
+        {
+            ObjectParameter iDParameter;
+            if (iD.HasValue)
+            {
+                iDParameter = new ObjectParameter("ID", iD);
+            }
+            else
+            {
+                iDParameter = new ObjectParameter("ID", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Folder_Delete", iDParameter);
         }
 
         #endregion
@@ -9930,6 +9949,20 @@ namespace CHAOS.MCM.Data.EF
         #endregion
 
     
+    }
+
+    #endregion
+
+    #region ComplexTypes
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="MCMModel", Name="Object_GetByRelatedObjectGUID_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class Object_GetByRelatedObjectGUID_Result : ComplexObject
+    {
     }
 
     #endregion

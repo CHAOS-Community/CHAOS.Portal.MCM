@@ -213,5 +213,128 @@ namespace CHAOS.MCM.Test.Module
 
             Assert.AreEqual(1, result.Value);
         }
+
+        [Test]
+        public void Should_set_zero_users_permission_to_folder()
+        {
+            var permissionManager = new Mock<IPermissionManager>();
+            var mcmRepository     = new Mock<IMcmRepository>();
+            var callContext       = new Mock<ICallContext>();
+            var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
+            var userGUID = new UUID("8c50786c-e2bf-4014-8694-e964b54cdd2b");
+            var userInfo = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
+                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
+                                        1,
+                                        "email",
+                                        new DateTime(2000, 06, 06),
+                                        new DateTime(2010, 06, 06));
+
+            callContext.SetupGet(p => p.User).Returns(userInfo);
+            callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
+            permissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
+            folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.GUID.ToGuid(), new Guid[0], FolderPermission.None)).Returns(true);
+            mcmRepository.Setup(m => m.SetFolderUserJoin(userGUID.ToGuid(), folder.Object.ID, (uint)FolderPermission.None)).Returns(1);
+            mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
+
+            var module = new FolderModule();
+            module.Initialize(permissionManager.Object, mcmRepository.Object);
+
+            var result = module.SetPermission(callContext.Object, userGUID, null, folder.Object.ID, (uint)FolderPermission.None);
+
+            Assert.AreEqual(1, result.Value);
+        }
+
+        [Test]
+        public void Should_Delete_Folder()
+        {
+            var permissionManager = new Mock<IPermissionManager>();
+            var mcmRepository     = new Mock<IMcmRepository>();
+            var callContext       = new Mock<ICallContext>();
+            var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
+            var userInfo          = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
+                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
+                                        1,
+                                        "email",
+                                        new DateTime(2000, 06, 06),
+                                        new DateTime(2010, 06, 06));
+
+            permissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
+            folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.GUID.ToGuid(), new Guid[0], FolderPermission.Delete)).Returns(true);
+            mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
+            mcmRepository.Setup(m => m.DeleteFolder(folder.Object.ID)).Returns(1);
+            callContext.SetupGet(p => p.User).Returns(userInfo);
+            callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
+
+            var module = new FolderModule();
+            module.Initialize(permissionManager.Object, mcmRepository.Object);
+
+            var result = module.Delete(callContext.Object, folder.Object.ID);
+
+            Assert.AreEqual(1, result.Value);
+        }
+
+        [Test]
+        public void Should_Create_Top_Folder()
+        {
+            var permissionManager = new Mock<IPermissionManager>();
+            var mcmRepository     = new Mock<IMcmRepository>();
+            var callContext       = new Mock<ICallContext>();
+            var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
+            var userInfo          = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
+                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
+                                        1,
+                                        "email",
+                                        new DateTime(2000, 06, 06),
+                                        new DateTime(2010, 06, 06));
+            var folderInfo        = new FolderInfo {ID = 1001};
+            var subscriptionGUID  = new UUID("cb576e41-9e0a-44a0-ab79-753c383b3661");
+
+            permissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
+            mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
+            mcmRepository.Setup(m => m.CreateFolder(userInfo.GUID.ToGuid(), subscriptionGUID.ToGuid(), "title", null, 1)).Returns(folderInfo.ID);
+            mcmRepository.Setup(m => m.GetFolderInfo(new[] { folderInfo.ID })).Returns(new[] { folderInfo });
+            callContext.SetupGet(p => p.User).Returns(userInfo);
+            callContext.SetupGet(p => p.Subscriptions).Returns(new[] { new SubscriptionInfo { GUID = subscriptionGUID, Permission = SubscriptionPermission.CreateFolder}, });
+            callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
+
+            var module = new FolderModule();
+            module.Initialize(permissionManager.Object, mcmRepository.Object);
+
+            var result = module.Create(callContext.Object, subscriptionGUID, "title", null, 1);
+
+            Assert.AreEqual(1001, result.ID);
+        }
+
+        [Test]
+        public void Should_Create_Sub_Folder()
+        {
+            var permissionManager = new Mock<IPermissionManager>();
+            var mcmRepository     = new Mock<IMcmRepository>();
+            var callContext       = new Mock<ICallContext>();
+            var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
+            var userInfo          = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
+                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
+                                        1,
+                                        "email",
+                                        new DateTime(2000, 06, 06),
+                                        new DateTime(2010, 06, 06));
+            var folderInfo        = new FolderInfo { ID = 1001 };
+
+            permissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
+            folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.GUID.ToGuid(), new Guid[0], FolderPermission.Write)).Returns(true);
+            mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
+            mcmRepository.Setup(m => m.CreateFolder(userInfo.GUID.ToGuid(), null, "title", 100, 1)).Returns(folderInfo.ID);
+            mcmRepository.Setup(m => m.GetFolderInfo(new[] { folderInfo.ID })).Returns(new[] { folderInfo });
+            callContext.SetupGet(p => p.User).Returns(userInfo);
+            callContext.SetupGet(p => p.Subscriptions).Returns(new SubscriptionInfo[0]);
+            callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
+
+            var module = new FolderModule();
+            module.Initialize(permissionManager.Object, mcmRepository.Object);
+
+            var result = module.Create(callContext.Object, null, "title", 100, 1);
+
+            Assert.AreEqual(1001, result.ID);
+        }
     }
 }

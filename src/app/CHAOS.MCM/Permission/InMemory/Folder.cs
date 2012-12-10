@@ -51,7 +51,6 @@ namespace CHAOS.MCM.Permission.InMemory
         /// <summary>
         /// Adds group permissions to a folder. If the group already exists then the permissions are merged
         /// </summary>
-        /// <param name="folderID"></param>
         /// <param name="groupPermission"></param>
         public void AddGroup(IEntityPermission groupPermission)
         {
@@ -117,7 +116,7 @@ namespace CHAOS.MCM.Permission.InMemory
 
         private bool GroupsHavePermissionToFolder(IEnumerable<Guid> groupGuids, FolderPermission permission)
         {
-            return groupGuids.Any(groupGuid => GroupPermissions.ContainsKey(groupGuid) /*&& (GroupPermissions[groupGuid] & permission) == permission*/);
+            return groupGuids.Any(groupGuid => GroupPermissions.ContainsKey(groupGuid) && (GroupPermissions[groupGuid] & permission) == permission);
         }
         
         #endregion
@@ -125,6 +124,9 @@ namespace CHAOS.MCM.Permission.InMemory
         public IEnumerable<IFolder> GetAncestorFolders()
         {
             yield return this;
+
+            if(ParentFolder == null)
+                yield break;
 
             foreach (var ancestorFolder in ParentFolder.GetAncestorFolders())
                 yield return ancestorFolder;

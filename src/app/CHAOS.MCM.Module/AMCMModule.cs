@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using CHAOS.Extensions;
 using CHAOS.Index;
-using CHAOS.MCM.Data;
+using CHAOS.MCM.Data.Dto;
 using CHAOS.MCM.Data.EF;
 using CHAOS.MCM.Permission;
 using CHAOS.MCM.Permission.InMemory;
@@ -34,9 +35,10 @@ namespace CHAOS.MCM.Module
         public override void Initialize( string configuration )
         {
             var mcmDefaultRepository = new McmRepository();
-            // TODO: Removed default Permission Manager from Module logic (IoC)
+
+            // TODO: Removed default Permission Manager from Module logic (DI)
             Initialize(configuration,
-                       new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(mcmDefaultRepository), new IntervalSpecification(10000)),
+                       PermissionManager ?? new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(mcmDefaultRepository), new IntervalSpecification(10000)),
                        mcmDefaultRepository);
         }
 
@@ -64,9 +66,12 @@ namespace CHAOS.MCM.Module
                 {
                     o.FolderTree.Add(ancestorFolder.ID);
                 }
+
+                if (o.ObjectRealtions.Any())
+                    o.RelatedObjects = McmRepository.GetObject(o.GUID.ToGuid(), null).ToList();
             }
 
-            index.Set( newObject, false );
+            index.Set( newObject.Select(item => item as Object), false );
         }
 
         protected void RemoveObjectFromIndex( IIndex index, Object delObject )

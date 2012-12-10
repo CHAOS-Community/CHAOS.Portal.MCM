@@ -13,6 +13,7 @@ namespace CHAOS.MCM.Permission
         CreateLink          = 1 << 4,
         DeleteObject        = 1 << 5,
         Update				= 1 << 6,
-        Max					= uint.MaxValue
+        Delete              = 1 << 7,
+        Max					= uint.MaxValue        
     }
 }

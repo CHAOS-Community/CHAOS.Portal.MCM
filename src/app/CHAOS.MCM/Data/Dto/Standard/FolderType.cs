@@ -8,8 +8,8 @@ namespace CHAOS.MCM.Data.Dto.Standard
 	{
 		public FolderType( uint id, string name, DateTime dateCreated )
 		{
-			ID   = id;
-			Name = name;
+			ID          = id;
+			Name        = name;
 			DateCreated = dateCreated;
 		}
 

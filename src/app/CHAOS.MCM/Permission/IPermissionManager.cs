@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CHAOS.MCM.Data;
+using CHAOS.Portal.Core;
 
 namespace CHAOS.MCM.Permission
 {

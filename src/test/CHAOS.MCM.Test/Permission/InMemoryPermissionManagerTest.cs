@@ -155,6 +155,36 @@ namespace CHAOS.MCM.Test.Permission
         }
 
         [Test]
+        public void Should_Get_TopFolders_With_Group_Permission()
+        {
+            var folder1 = new Folder { ID = 1 };
+            var folder2 = new Folder { ID = 2 };
+            var folder3 = new Folder { ID = 3, ParentFolder = folder1 };
+            var folder4 = new Folder { ID = 4, ParentFolder = folder2 };
+            var folder5 = new Folder { ID = 5, ParentFolder = folder3};
+            var folder6 = new Folder { ID = 6, ParentFolder = folder4};
+            var perm1   = new Mock<IEntityPermission>().SetupProperty(f => f.Guid, new Guid("39f26c89-5e6c-46d5-af3a-bc14a7e1486b"))
+                                                       .SetupProperty(f => f.Permission, FolderPermission.Max);
+            var perm2   = new Mock<IEntityPermission>().SetupProperty(f => f.Guid, new Guid("40f26c89-5e6c-46d5-af3a-bc14a7e1486b"))
+                                                       .SetupProperty(f => f.Permission, FolderPermission.Max);
+
+            PermissionManager.AddFolder(folder1);
+            PermissionManager.AddFolder(folder2);
+            PermissionManager.AddFolder(folder3);
+            PermissionManager.AddFolder(folder4);
+            PermissionManager.AddFolder(folder5);
+            PermissionManager.AddFolder(folder6);
+            PermissionManager.GetFolders(folder1.ID).AddGroup(perm1.Object);
+            PermissionManager.GetFolders(folder4.ID).AddUser(perm1.Object);
+
+            var topFolders = PermissionManager.GetFolders(FolderPermission.Read, perm1.Object.Guid, new[] { perm2.Object.Guid, perm1.Object.Guid }).ToList();
+
+            Assert.AreEqual(2, topFolders.Count());
+            Assert.AreEqual(folder1.ID, topFolders[0].ID);
+            Assert.AreEqual(folder4.ID, topFolders[1].ID);
+        }
+
+        [Test]
         public void Should_Get_SubFolders_With_Permission_Through_Group()
         {
             var folder1 = new Folder { ID = 1 };

@@ -43,7 +43,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Dto\IAccessPoint.cs" />
+    <Compile Include="Data\Dto\IObject.cs" />
+    <Compile Include="Data\Dto\Standard\AccessPoint.cs" />
     <Compile Include="Data\Dto\Standard\AccessPoint_Object_Join.cs" />
+    <Compile Include="Data\Dto\Standard\MetadataSchemaInfo.cs" />
     <Compile Include="Data\Dto\Standard\DestinationInfo.cs" />
     <Compile Include="Data\Dto\Standard\EntityPermission.cs" />
     <Compile Include="Data\Dto\Standard\File.cs" />
@@ -73,6 +77,7 @@
     <Compile Include="Data\Dto\Standard\Permission.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
     <Compile Include="Data\IPermissionRepository.cs" />
+    <Compile Include="Permission\AccessPointPermission.cs" />
     <Compile Include="Permission\FolderPermissionExtensions.cs" />
     <Compile Include="Permission\InMemory\Folder.cs" />
     <Compile Include="Permission\FolderPermission.cs" />
@@ -80,6 +85,7 @@
     <Compile Include="Permission\InMemory\InMemoryPermissionManager.cs" />
     <Compile Include="Permission\IPermissionManager.cs" />
     <Compile Include="Permission\ISynchronizationSpecification.cs" />
+    <Compile Include="Permission\MetadataSchemaPermission.cs" />
     <Compile Include="Permission\Specification\IntervalSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

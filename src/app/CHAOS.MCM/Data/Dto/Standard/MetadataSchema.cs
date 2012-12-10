@@ -26,7 +26,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
 		#endregion
 		#region Constructors
 
-		public MetadataSchema( Guid guid, string name, string schemaXML, DateTime dateCreated)
+		public MetadataSchema( Guid guid, string name, string schemaXML, DateTime dateCreated) 
 		{
 			GUID        = new UUID( guid.ToByteArray() );
 			Name        = name;

@@ -71,6 +71,7 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <None Include="Properties\DataSources\MCMEntities.datasource" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using CHAOS.Extensions;
 using CHAOS.Index;
 using CHAOS.MCM.Data.EF;
+using CHAOS.MCM.Permission;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO;
@@ -36,9 +37,12 @@ namespace CHAOS.MCM.Module
 						if( callContext.IsAnonymousUser )
 							throw new InsufficientPermissionsException("User must be logged in or use accessPointGUID" );
 
+                        var userGuid   = callContext.User.GUID.ToGuid();
+                        var groupGuids = callContext.Groups.Select(group => group.GUID.ToGuid()).ToList();
+
                         callContext.Log.Debug("get folders");
-                        var folders = PermissionManager.GetFolders( FolderPermission.Read, callContext.User.GUID.ToGuid(), callContext.Groups.Select(group => group.GUID.ToGuid() ) ).ToList();
-  
+                        var folders = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
+
 						if( folders.Count == 0 )
 							throw new InsufficientPermissionsException("User does not have access to any folders" );
 
@@ -102,17 +106,19 @@ namespace CHAOS.MCM.Module
         [Datatype("Object","SetPublishSettings")]
         public ScalarResult SetPublishSettings( ICallContext callContext, UUID objectGUID, UUID accessPointGUID, DateTime? startDate, DateTime? endDate )
         {
-            using( var db = DefaultMCMEntities )
-            {
-				// TODO: Implement Permissions on SetPublishSettings
-                   // throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
+            var objectGuid      = objectGUID.ToGuid();
+            var accessPointGuid = accessPointGUID.ToGuid();
+            var userGuid        = callContext.User.GUID.ToGuid();
+            var groupGuids      = callContext.Groups.Select(item => item.GUID.ToGuid());
 
-                var result = db.AccessPoint_Object_Join_Set( accessPointGUID.ToByteArray(), objectGUID.ToByteArray(), startDate, endDate ).First();
+            if (McmRepository.GetAccessPoint(accessPointGuid, userGuid, groupGuids, (uint) AccessPointPermission.Write).FirstOrDefault() == null)
+                throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
+
+            var result = McmRepository.SetAccessPointPublishSettings(accessPointGuid, objectGuid, startDate, endDate);
                 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<ObjectModule>(), new []{ db.Object_Get( objectGUID, true, true, true, true, true ).First().ToDTO() } );
+            PutObjectInIndex( callContext.IndexManager.GetIndex<ObjectModule>(), McmRepository.GetObject(objectGuid, true, true, true, true, true) );
 
-                return new ScalarResult( result.Value );
-            }
+            return new ScalarResult( (int) result );
         }
 
         [Datatype("Object", "Delete")]

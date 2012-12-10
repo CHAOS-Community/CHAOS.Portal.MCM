@@ -60,7 +60,9 @@ namespace CHAOS.MCM.Data.Dto.Standard
 			Metadatas       = metadatas.ToList();
 			Files           = fileInfos.ToList();
 			ObjectRealtions = objectObjectJoins.ToList();
+            RelatedObjects  = new List<Object>();
 			Folders         = folders.ToList();
+            FolderTree      = new List<uint>();
             AccessPoints    = accessPoints.ToList();
             Fullname        = "CHAOS.MCM.Data.DTO.Object";
 		}
@@ -118,10 +120,15 @@ namespace CHAOS.MCM.Data.Dto.Standard
 							break;
 						// DKA2
 						case "5906a41b-feae-48db-bfb7-714b3e105396":
-							var ns = metadata.MetadataXML.Root.GetNamespaceOfPrefix( "dka" );
+							var ns        = metadata.MetadataXML.Root.GetNamespaceOfPrefix( "dka" );
+					        var defaultNs = metadata.MetadataXML.Root.GetDefaultNamespace();
 
 							if( ns != null && metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", ns.NamespaceName ) ).FirstOrDefault() != null )
 								yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", ns.NamespaceName ) ).First().Value );
+                            else if( defaultNs != null && metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", defaultNs.NamespaceName ) ).FirstOrDefault() != null )
+                                yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants( XName.Get( "ExternalIdentifier", defaultNs.NamespaceName ) ).First().Value );
+                            else if (metadata.MetadataXML.Descendants("ExternalIdentifier").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>( "DKA-ExternalIdentifier", metadata.MetadataXML.Descendants( "ExternalIdentifier" ).First().Value );
 							break;
 						// DKA
 						// TODO: Remember to add namespace to DKA fields when DKA is replaced by DKA2
@@ -192,6 +199,16 @@ namespace CHAOS.MCM.Data.Dto.Standard
 									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubEndDate.Subtract( larmPubStartDate ).TotalSeconds ).ToString());
 								else
 									yield return new KeyValuePair<string, string>( "LARM-Duration",  ( (uint) larmPubStartDate.Subtract( larmPubEndDate ).TotalSeconds ).ToString());	
+
+                                yield return new KeyValuePair<string, string>("LARM-Annotation-Count", RelatedObjects.Count(item => item.ObjectTypeID == 41 || item.ObjectTypeID == 64).ToString());
+
+                                foreach (var obj in RelatedObjects)
+                                {
+                                    foreach (var relatedMetadata in obj.Metadatas)
+                                    {
+                                        yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode), GetXmlContent(relatedMetadata.MetadataXML.Root));
+                                    }
+                                }
 							}
 							
 							if( metadata.MetadataXML.Root.Element("PublicationChannel") != null )
@@ -223,14 +240,16 @@ namespace CHAOS.MCM.Data.Dto.Standard
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
 
-			if( RelatedObjects != null )
-				foreach( Object obj in RelatedObjects )
-				{
-					foreach( var relatedMetadata in obj.Metadatas )
-					{
-						yield return new KeyValuePair<string, string>( string.Format( "rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode ), GetXmlContent( relatedMetadata.MetadataXML.Root ) );
-					}
-				}
+            //if (RelatedObjects != null)
+            //{
+            //    foreach (var obj in RelatedObjects)
+            //    {
+            //        foreach (var relatedMetadata in obj.Metadatas)
+            //        {
+            //            yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode), GetXmlContent(relatedMetadata.MetadataXML.Root));
+            //        }
+            //    }
+            //}
 
 			//if( AccessPoints != null )
 			//	foreach( var accessPoint in AccessPoints )
