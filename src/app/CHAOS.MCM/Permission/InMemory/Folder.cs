@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CHAOS.MCM.Data.Dto;
+using CHAOS;
+using Chaos.Mcm.Data.Dto;
 
-namespace CHAOS.MCM.Permission.InMemory
+namespace Chaos.Mcm.Permission.InMemory
 {
     public class Folder : IFolder
     {

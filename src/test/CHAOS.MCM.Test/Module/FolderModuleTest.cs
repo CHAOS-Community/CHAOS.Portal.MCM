@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CHAOS;
 using CHAOS.Extensions;
-using CHAOS.MCM.Data.Dto;
-using CHAOS.MCM.Data.Dto.Standard;
-using CHAOS.MCM.Module;
-using CHAOS.MCM.Permission;
-using CHAOS.Portal.Core;
-using CHAOS.Portal.DTO.Standard;
+using Chaos.Mcm.Data.Dto.Standard;
+using Chaos.Mcm.Permission;
 using Chaos.Mcm.Data;
+using Chaos.Mcm.Extension;
+using Chaos.Portal;
+using Chaos.Portal.Data.Dto.Standard;
 using Moq;
 using NUnit.Framework;
-using Folder = CHAOS.MCM.Permission.InMemory.Folder;
-using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
-using IFolder = CHAOS.MCM.Permission.IFolder;
+using Folder = Chaos.Mcm.Permission.InMemory.Folder;
+using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
+using IFolder = Chaos.Mcm.Permission.IFolder;
 
-namespace CHAOS.MCM.Test.Module
+namespace Chaos.Mcm.Test.Module
 {
     [TestFixture]
     public class FolderModuleTest
@@ -52,8 +52,8 @@ namespace CHAOS.MCM.Test.Module
             mcmRepository.Setup(m => m.GetFolderInfo(new[] { folderInfo.ID })).Returns(new[] { folderInfo });
             mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             var result = module.Get(callContext.Object, 1, null, null, null).ToList();
 
@@ -98,8 +98,8 @@ namespace CHAOS.MCM.Test.Module
             mcmRepository.Setup(m => m.GetFolderInfo(new[] { folder2.Object.ID })).Returns(new[] { folderInfo });
             mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             var result = module.Get(callContext.Object, null, null, 100, null).ToList();
 
@@ -144,8 +144,8 @@ namespace CHAOS.MCM.Test.Module
             mcmRepository.Setup(m => m.GetFolderInfo(new[] { folder2.Object.ID })).Returns(new[] { folderInfo });
             mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             var result = module.Get(callContext.Object, null, null, 100, null).ToList();
 
@@ -171,8 +171,8 @@ namespace CHAOS.MCM.Test.Module
                                     Permission = (FolderPermission) 2
                                 });
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             permissionManager.Setup(m => m.GetFolders(folder.ID)).Returns(folder);
 
@@ -206,8 +206,8 @@ namespace CHAOS.MCM.Test.Module
             mcmRepository.Setup(m => m.SetFolderUserJoin(userGUID.ToGuid(), folder.Object.ID, (uint)FolderPermission.Read)).Returns(1);
             mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             var result = module.SetPermission(callContext.Object, userGUID, null, folder.Object.ID, (uint)FolderPermission.Read);
 
@@ -236,8 +236,8 @@ namespace CHAOS.MCM.Test.Module
             mcmRepository.Setup(m => m.SetFolderUserJoin(userGUID.ToGuid(), folder.Object.ID, (uint)FolderPermission.None)).Returns(1);
             mcmRepository.Setup(m => m.WithConfiguration(null)).Returns(mcmRepository.Object);
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             var result = module.SetPermission(callContext.Object, userGUID, null, folder.Object.ID, (uint)FolderPermission.None);
 
@@ -265,8 +265,8 @@ namespace CHAOS.MCM.Test.Module
             callContext.SetupGet(p => p.User).Returns(userInfo);
             callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             var result = module.Delete(callContext.Object, folder.Object.ID);
 
@@ -297,8 +297,8 @@ namespace CHAOS.MCM.Test.Module
             callContext.SetupGet(p => p.Subscriptions).Returns(new[] { new SubscriptionInfo { GUID = subscriptionGUID, Permission = SubscriptionPermission.CreateFolder}, });
             callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             var result = module.Create(callContext.Object, subscriptionGUID, "title", null, 1);
 
@@ -329,8 +329,8 @@ namespace CHAOS.MCM.Test.Module
             callContext.SetupGet(p => p.Subscriptions).Returns(new SubscriptionInfo[0]);
             callContext.SetupGet(p => p.Groups).Returns(new Group[0]);
 
-            var module = new FolderModule();
-            module.Initialize(permissionManager.Object, mcmRepository.Object);
+            var module = new Extension.Folder();
+            module.WithConfiguration(permissionManager.Object, mcmRepository.Object);
 
             var result = module.Create(callContext.Object, null, "title", 100, 1);
 

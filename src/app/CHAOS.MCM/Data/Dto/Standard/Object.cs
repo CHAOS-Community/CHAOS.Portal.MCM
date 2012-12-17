@@ -4,11 +4,12 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using CHAOS;
 using CHAOS.Index;
-using CHAOS.Portal.DTO.Standard;
 using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public class Object : Result, IIndexable
 	{
@@ -64,7 +65,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
 			Folders         = folders.ToList();
             FolderTree      = new List<uint>();
             AccessPoints    = accessPoints.ToList();
-            Fullname        = "CHAOS.MCM.Data.DTO.Object";
+            Fullname        = "Chaos.Mcm.Data.DTO.Object";
 		}
 
 		public Object() : this(Guid.Empty,uint.MinValue,DateTime.MinValue,new List<Metadata>(),new List<FileInfo>(),new List<Object_Object_Join>(),new List<Link>(),new List<AccessPoint_Object_Join>() )

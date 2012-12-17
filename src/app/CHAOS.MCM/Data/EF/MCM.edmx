@@ -1220,8 +1220,8 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MCMModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="MCMEntities" annotation:LazyLoadingEnabled="true">
+      <Schema Namespace="MCMModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MCMEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="AccessPoint" EntityType="MCMModel.AccessPoint" />
           <EntitySet Name="AccessPoint_Group_Join" EntityType="MCMModel.AccessPoint_Group_Join" />
           <EntitySet Name="AccessPoint_User_Join" EntityType="MCMModel.AccessPoint_User_Join" />
@@ -1333,7 +1333,7 @@
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="Folder_Get" EntitySet="Folder" ReturnType="Collection(MCMModel.Folder)" >
+          <FunctionImport Name="Folder_Get" EntitySet="Folder" ReturnType="Collection(MCMModel.Folder)">
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="ObjectGUID" Mode="In" Type="Binary" />
           </FunctionImport>
@@ -1643,7 +1643,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="DestinationID" Type="Int64" Nullable="false" />
           <Property Name="BasePath" Type="String" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
           <Property Name="StringFormat" Type="String" Nullable="false" MaxLength="2048" Unicode="false" FixedLength="false" />
@@ -1655,7 +1655,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="AccessPointGUID" Type="Guid" Nullable="false" />
           <Property Name="FormatCategoryID" Type="Int64" Nullable="false" />
           <Property Name="FormatID" Type="Int64" Nullable="false" />
@@ -1670,7 +1670,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="SubscriptionGUID" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
@@ -1682,7 +1682,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="ObjectGUID" Type="Guid" Nullable="false" />
           <Property Name="ParentID" Type="Int64" />
           <Property Name="FormatID" Type="Int64" Nullable="false" />
@@ -1701,7 +1701,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="ParentID" Type="Int64" />
           <Property Name="FolderTypeID" Type="Int64" Nullable="false" />
           <Property Name="SubscriptionGUID" Type="Guid" Nullable="true" />
@@ -1740,7 +1740,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Folder" Relationship="MCMModel.FK_FolderType_ID_Folder_FolderTypeID" FromRole="FolderType" ToRole="Folder" />
@@ -1749,7 +1749,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="FormatCategoryID" Type="Int64" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Name="FormatXML" Type="String" MaxLength="65535" Unicode="false" FixedLength="false" />
@@ -1805,7 +1805,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Object_Folder_Join" Relationship="MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID" FromRole="ObjectFolderType" ToRole="Object_Folder_Join" />
         </EntityType>
@@ -1813,7 +1813,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Object_Object_Join" Relationship="MCMModel.FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID" FromRole="ObjectRelationType" ToRole="Object_Object_Join" />
         </EntityType>
@@ -1821,7 +1821,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Object" Relationship="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" FromRole="ObjectType" ToRole="Object" />
         </EntityType>
@@ -2076,7 +2076,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="Int64" Name="FormatTypeID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Conversion" Relationship="MCMModel.FK_FormatCategory_ID_Conversion_FormatCategoryID" FromRole="FormatCategory" ToRole="Conversion" />
@@ -2087,7 +2087,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="FormatCategory" Relationship="MCMModel.FK_FormatType_ID_FormatCategory_FormatTypeID" FromRole="FormatType" ToRole="FormatCategory" />
         </EntityType>
@@ -2812,7 +2812,7 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.DestinationInfo" Width="1.5" PointX="0.75" PointY="8.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="MCMModel.Object" Width="1.5" PointX="3" PointY="0.75" Height="2.9417936197916674" />
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_File_ObjectGUID" >
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_File_ObjectGUID">
           <ConnectorPoint PointX="4.5" PointY="2.9295828826121797" />
           <ConnectorPoint PointX="4.916666666666667" PointY="2.9295828826121793" />
           <ConnectorPoint PointX="5.083333333333333" PointY="2.9295828826121797" />
@@ -2823,13 +2823,13 @@
           <ConnectorPoint PointX="10.75" PointY="7.875" />
           <ConnectorPoint PointX="10.75" PointY="8.25" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" >
+        <AssociationConnector Association="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID">
           <ConnectorPoint PointX="2.25" PointY="2.047841796875" />
           <ConnectorPoint PointX="3" PointY="2.047841796875" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.FormatCategory" Width="1.5" PointX="5.5" PointY="11.25" Height="2.1725878906250102" />
         <EntityTypeShape EntityType="MCMModel.FormatType" Width="1.5" PointX="3.25" PointY="11.625" Height="1.595683593749996" />
-        <AssociationConnector Association="MCMModel.FK_FormatCategory_ID_Conversion_FormatCategoryID" >
+        <AssociationConnector Association="MCMModel.FK_FormatCategory_ID_Conversion_FormatCategoryID">
           <ConnectorPoint PointX="7" PointY="12.794838027305723" />
           <ConnectorPoint PointX="9.2468286393609436" PointY="12.794838027305723" />
           <ConnectorPoint PointX="9.4134953060276114" PointY="12.794838027305723" />
@@ -2839,12 +2839,12 @@
           <ConnectorPoint PointX="12.192710833333335" PointY="12.794838027305723" />
           <ConnectorPoint PointX="13" PointY="12.794838027305723" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_FormatCategory_ID_Format_FormatCategoryID" >
+        <AssociationConnector Association="MCMModel.FK_FormatCategory_ID_Format_FormatCategoryID">
           <ConnectorPoint PointX="6.25" PointY="11.25" />
           <ConnectorPoint PointX="6.25" PointY="9.9999995000000013" />
           <ConnectorPoint PointX="7.75" PointY="9.9999995000000013" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_FormatType_ID_FormatCategory_FormatTypeID" >
+        <AssociationConnector Association="MCMModel.FK_FormatType_ID_FormatCategory_FormatTypeID">
           <ConnectorPoint PointX="4.75" PointY="12.422841796874998" />
           <ConnectorPoint PointX="4.916666666666667" PointY="12.422841796874998" />
           <ConnectorPoint PointX="5.083333333333333" PointY="12.422841796874998" />
@@ -2852,18 +2852,18 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.FolderInfo" Width="1.5" PointX="12.375" PointY="8.75" Height="2.5771907552083331" />
         <EntityTypeShape EntityType="MCMModel.Metadata" Width="1.5" PointX="5.25" PointY="14.75" Height="3.1340950520833246" />
-        <AssociationConnector Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" >
+        <AssociationConnector Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode">
           <ConnectorPoint PointX="2.25" PointY="14.102885742187505" />
           <ConnectorPoint PointX="4.916666666666667" PointY="14.102885742187505" />
           <ConnectorPoint PointX="5.083333333333333" PointY="14.102885742187505" />
           <ConnectorPoint PointX="6" PointY="14.102885742187505" />
           <ConnectorPoint PointX="6" PointY="14.75" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" >
+        <AssociationConnector Association="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
           <ConnectorPoint PointX="2.25" PointY="16.153722330729167" />
           <ConnectorPoint PointX="5.25" PointY="16.153722330729167" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" >
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID">
           <ConnectorPoint PointX="4.5" PointY="2.2208968098958337" />
           <ConnectorPoint PointX="5" PointY="2.2208968098958337" />
           <ConnectorPoint PointX="5" PointY="14.375" />
@@ -2871,7 +2871,7 @@
           <ConnectorPoint PointX="5.593748" PointY="14.75" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.Object_Folder_Join" Width="1.5" PointX="8.25" PointY="0.875" Height="2.3648893229166674" />
-        <AssociationConnector Association="MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID" >
+        <AssociationConnector Association="MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID">
           <ConnectorPoint PointX="4.5" PointY="5.5526432291666659" />
           <ConnectorPoint PointX="4.916666666666667" PointY="5.552643229166665" />
           <ConnectorPoint PointX="5.083333333333333" PointY="5.5526432291666659" />
@@ -2880,7 +2880,7 @@
           <ConnectorPoint PointX="9" PointY="5.5526432291666659" />
           <ConnectorPoint PointX="9" PointY="3.2398893229166674" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID" >
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID">
           <ConnectorPoint PointX="4.5" PointY="3.0291217573116995" />
           <ConnectorPoint PointX="4.916666666666667" PointY="3.0291217573116991" />
           <ConnectorPoint PointX="5.083333333333333" PointY="3.0291217573116995" />
@@ -2890,21 +2890,21 @@
           <ConnectorPoint PointX="8.0833333333333339" PointY="3.0291217573116995" />
           <ConnectorPoint PointX="8.25" PointY="3.0291217573116995" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID" >
+        <AssociationConnector Association="MCMModel.FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID">
           <ConnectorPoint PointX="7.5" PointY="1.2907465065104167" />
           <ConnectorPoint PointX="7.791666666666667" PointY="1.290746506510416" />
           <ConnectorPoint PointX="7.958333333333333" PointY="1.2907465065104167" />
           <ConnectorPoint PointX="8.25" PointY="1.2907465065104167" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.Object_Object_Join" Width="1.5" PointX="13" PointY="1" Height="2.5571907552083246" />
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID" >
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID">
           <ConnectorPoint PointX="3.535158125" PointY="0.75" />
           <ConnectorPoint PointX="3.535158125" PointY="0.5" />
           <ConnectorPoint PointX="12.625" PointY="0.5" />
           <ConnectorPoint PointX="12.625" PointY="2.2320293896484396" />
           <ConnectorPoint PointX="13" PointY="2.2320293896484396" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID" >
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID">
           <ConnectorPoint PointX="4.0488310625" PointY="0.75" />
           <ConnectorPoint PointX="4.0488310625" PointY="0.484375" />
           <ConnectorPoint PointX="12.5" PointY="0.484375" />
@@ -2913,19 +2913,19 @@
           <ConnectorPoint PointX="12.708333333333334" PointY="1.5847626948242262" />
           <ConnectorPoint PointX="13" PointY="1.5847626948242262" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID" >
+        <AssociationConnector Association="MCMModel.FK_ObjectRelationType_ID_Object_Object_Join_ObjectRelationTypeID">
           <ConnectorPoint PointX="12.25" PointY="2.8746394856770809" />
           <ConnectorPoint PointX="13" PointY="2.8746394856770809" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.AccessPoint_Object_Join" Width="1.5" PointX="16" PointY="10.875" Height="2.5571907552083388" />
-        <AssociationConnector Association="MCMModel.FK_AccessPoint_AccessPoint_Object_Join" >
+        <AssociationConnector Association="MCMModel.FK_AccessPoint_AccessPoint_Object_Join">
           <ConnectorPoint PointX="12.1093775" PointY="16.75" />
           <ConnectorPoint PointX="12.1093775" PointY="12.332062174479166" />
           <ConnectorPoint PointX="13.666666666666666" PointY="12.332062174479166" />
           <ConnectorPoint PointX="13.833333333333334" PointY="12.332062174479166" />
           <ConnectorPoint PointX="16" PointY="12.332062174479166" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" >
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID">
           <ConnectorPoint PointX="4.5" PointY="1.7699147636217951" />
           <ConnectorPoint PointX="5.75" PointY="1.7699147636217951" />
           <ConnectorPoint PointX="5.75" PointY="2.595683593749996" />

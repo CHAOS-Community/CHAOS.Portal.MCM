@@ -1,38 +1,39 @@
 ﻿using System;
 using System.Xml.Linq;
+using CHAOS;
 using CHAOS.Extensions;
-using CHAOS.Portal.DTO.Standard;
 using CHAOS.Serialization;
 using CHAOS.Serialization.XML;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public class Metadata : Result
 	{
 		#region Properties
 
-		[Serialize("GUID")]
+		[Serialize]
 		public UUID GUID { get; set; }
 
-		[Serialize("EditingUserGUID")]
+		[Serialize]
 		public UUID EditingUserGUID { get; set; }
 
 		public UUID ObjectGUID { get; set; }
 
-		[Serialize("LanguageCode")]
+		[Serialize]
 		public string LanguageCode { get; set; }
 
-		[Serialize("MetadataSchemaGUID")]
+		[Serialize]
 		public UUID MetadataSchemaGUID { get; set; }
 
         [Serialize]
         public uint RevisionID { get; set; }
 
 		[SerializeXML(false, true)]
-		[Serialize("MetadataXML")]
+		[Serialize]
 		public XDocument MetadataXML { get; set; }
 
-		[Serialize("DateCreated")]
+		[Serialize]
 		public DateTime DateCreated { get; set; }
 
 		#endregion
@@ -49,7 +50,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
 			DateCreated        = dateCreated;
 		    RevisionID         = revisionID;
 			EditingUserGUID    = editingUserGUID.ToUUID();
-            Fullname           = "CHAOS.MCM.Data.DTO.Metadata";
+            Fullname           = "Chaos.Mcm.Data.DTO.Metadata";
 		}
 
 		public Metadata() : this(Guid.Empty, Guid.Empty,null,Guid.Empty,uint.MinValue,null,DateTime.MinValue,Guid.Empty)

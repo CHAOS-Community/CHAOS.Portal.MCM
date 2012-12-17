@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using CHAOS;
 using MySql.Data.MySqlClient;
 
-namespace CHAOS.MCM.Data.EF
+
+namespace Chaos.Mcm.Data.EF
 {
 	public partial class MCMEntities
 	{

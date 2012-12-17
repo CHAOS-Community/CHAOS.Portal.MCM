@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using CHAOS.MCM.Data.Dto;
-using Chaos.Mcm.Data;
+using Chaos.Mcm.Data.Dto;
 
-namespace CHAOS.MCM.Data.EF
+namespace Chaos.Mcm.Data.EF
 {
     public class PermissionRepository : IPermissionRepository
     {

@@ -2,24 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using CHAOS;
 using CHAOS.Extensions;
-using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Permission;
-using CHAOS.Portal.Core.Module;
-using CHAOS.Portal.Core;
-using CHAOS.Portal.DTO.Standard;
+using Chaos.Mcm.Data.EF;
+using Chaos.Mcm.Permission;
 using CHAOS.Portal.Exception;
-using MetadataSchema = CHAOS.MCM.Data.Dto.Standard.MetadataSchema;
+using Chaos.Portal;
+using Chaos.Portal.Data.Dto.Standard;
+using MetadataSchema = Chaos.Mcm.Data.Dto.Standard.MetadataSchema;
 
-namespace CHAOS.MCM.Module
+namespace Chaos.Mcm.Extension
 {
-    [Module("MCM")]
-    public class MetadataSchemaModule : AMCMModule
+    public class MetadataSchema : AMcmExtension
     {
         #region Business Logic
 
-		[Datatype("MetadataSchema", "Get")]
-		public IEnumerable<MetadataSchema> Get( ICallContext callContext, UUID metadataSchemaGUID )
+		public IEnumerable<Chaos.Mcm.Data.Dto.Standard.MetadataSchema> Get( ICallContext callContext, UUID metadataSchemaGUID )
 		{
 		    var userGuid           = callContext.User.GUID.ToGuid();
 		    var groupGuids         = callContext.Groups.Select(item => item.GUID.ToGuid());
@@ -28,8 +26,7 @@ namespace CHAOS.MCM.Module
 		    return McmRepository.GetMetadataSchema(userGuid, groupGuids, metadataSchemaGuid, MetadataSchemaPermission.Read);
 		}
 
-        [Datatype("MetadataSchema", "Create")]
-		public MetadataSchema Create( ICallContext callContext, UUID metadataSchemaGUID, string name, string schemaXML )
+		public Chaos.Mcm.Data.Dto.Standard.MetadataSchema Create( ICallContext callContext, UUID metadataSchemaGUID, string name, string schemaXML )
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "Manage permissions are required to create metadata schemas" );
@@ -49,7 +46,6 @@ namespace CHAOS.MCM.Module
 			}
 		}
 
-        [Datatype("MetadataSchema", "Update")]
 		public ScalarResult Update( ICallContext callContext, UUID metadataSchemaGUID, string name, string schemaXML )
 		{
             // TODO: Replace with proper validation, quick fix to make sure only valid XML is inserted
@@ -72,7 +68,6 @@ namespace CHAOS.MCM.Module
 			}
 		}
 
-        [Datatype("MetadataSchema", "Delete")]
 		public ScalarResult Delete( ICallContext callContext, UUID metadataSchemaGUID )
 		{
 			using( var db = DefaultMCMEntities )

@@ -1,19 +1,19 @@
 ﻿using System.Linq;
-using CHAOS.MCM.Data.EF;
-using CHAOS.Portal.Core;
-using CHAOS.Portal.Core.Module;
-using CHAOS.Portal.DTO.Standard;
+using CHAOS;
 using CHAOS.Portal.Exception;
-using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
+using Chaos.Mcm.Data.EF;
+using Chaos.Mcm.Permission;
+using Chaos.Portal;
+using Chaos.Portal.Data.Dto.Standard;
+using Chaos.Portal.Extension;
 
-namespace CHAOS.MCM.Module
+namespace Chaos.Mcm.Extension
 {
-    [Module("MCM")]
-    public class FileModule : AMCMModule
+    [PortalExtension(configurationName : "MCM")]
+    public class File : AMcmExtension
     {
         #region Business Logic
 
-		[Datatype("File", "Create")]
         public Data.Dto.Standard.File Create(ICallContext callContext, UUID objectGUID, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath)
 		{
             using( var db = DefaultMCMEntities )
@@ -30,7 +30,6 @@ namespace CHAOS.MCM.Module
             }
         }
 
-        [Datatype("File", "Delete")]
 		public ScalarResult Delete( ICallContext callContext, uint ID )
 		{
             using( var db = DefaultMCMEntities )

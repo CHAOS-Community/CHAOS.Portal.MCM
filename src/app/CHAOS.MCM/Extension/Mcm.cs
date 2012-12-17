@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using CHAOS;
 using CHAOS.Index.Solr;
-using CHAOS.MCM.Core.Exception;
-using CHAOS.MCM.Data.EF;
-using CHAOS.Portal.Core.Module;
-using CHAOS.Portal.DTO.Standard;
+using Chaos.Mcm.Data.EF;
+using Chaos.Mcm.Permission;
 using CHAOS.Portal.Exception;
-using CHAOS.Portal.Core;
-using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
-using FormatType = CHAOS.MCM.Data.Dto.Standard.FormatType;
-using Language = CHAOS.MCM.Data.Dto.Standard.Language;
-using ObjectRelationType = CHAOS.MCM.Data.Dto.Standard.ObjectRelationType;
+using Chaos.Mcm.Exception;
+using Chaos.Portal;
+using Chaos.Portal.Data.Dto.Standard;
+using DestinationInfo = Chaos.Mcm.Data.Dto.Standard.DestinationInfo;
+using FolderType = Chaos.Mcm.Data.Dto.Standard.FolderType;
+using FormatType = Chaos.Mcm.Data.Dto.Standard.FormatType;
+using Language = Chaos.Mcm.Data.Dto.Standard.Language;
+using ObjectRelationType = Chaos.Mcm.Data.Dto.Standard.ObjectRelationType;
 
-namespace CHAOS.MCM.Module
+namespace Chaos.Mcm.Extension
 {
-    [Module("MCM")]
-    public class MCMModule : AMCMModule
+    public class Mcm : AMcmExtension
     {
         #region Business Logic
 
 		#region Language
 
-		[Datatype("Language", "Get")]
 		public IEnumerable<Language> Language_Get( ICallContext callContext, string name, string languageCode )
 		{
 			using( MCMEntities db = DefaultMCMEntities )
@@ -77,7 +76,6 @@ namespace CHAOS.MCM.Module
 		#endregion
 		#region ObjectRelationType
 
-		[Datatype("ObjectRelationType", "Get")]
 		public IEnumerable<ObjectRelationType> ObjectRelationType_Get( ICallContext callContext, int? id, string value )
 		{
 			using( MCMEntities db = DefaultMCMEntities )
@@ -131,8 +129,7 @@ namespace CHAOS.MCM.Module
 		#endregion
 		#region FolderType
 
-		[Datatype("FolderType", "Get")]
-        public IEnumerable<Data.Dto.Standard.FolderType> FolderType_Get(ICallContext callContext, int? id, string name)
+        public IEnumerable<FolderType> FolderType_Get(ICallContext callContext, int? id, string name)
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
@@ -185,7 +182,6 @@ namespace CHAOS.MCM.Module
 		#endregion
 		#region FormatType
 
-		[Datatype("FormatType", "Get")]
 		public IEnumerable<FormatType> FormatType_Get( ICallContext callContext, int? id, string name )
 		{
 			using( MCMEntities db = DefaultMCMEntities )
@@ -356,7 +352,6 @@ namespace CHAOS.MCM.Module
 		#endregion
 		#region Metadata
 
-		[Datatype("Metadata","Set")]
 		public ScalarResult Metadata_Set( ICallContext callContext, UUID objectGUID, UUID metadataSchemaGUID, string languageCode, uint? revisionID, string metadataXML )
 		{
 		    // TODO: replace with proper XML validation, Quick ugly fix, to make sure it's valid XML
@@ -383,7 +378,7 @@ namespace CHAOS.MCM.Module
 
                 var objects = db.Object_Get( objectGUID, true, false, false, true, true ).ToDTO().ToList();
 
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), objects );
+		        PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), objects );
 
 		        return new ScalarResult( result.Value );
 		    }
@@ -392,10 +387,9 @@ namespace CHAOS.MCM.Module
 	    #endregion
 		#region Test
 
-		[Datatype("Test","ReIndex")]
 		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
 		{
-            var index = (Solr)callContext.IndexManager.GetIndex<MCMModule>();
+            var index = (Solr)callContext.IndexManager.GetIndex<Mcm>();
 
             if (clearIndex.HasValue && clearIndex.Value)
                 index.RemoveAll(false);
@@ -422,7 +416,6 @@ namespace CHAOS.MCM.Module
 		#endregion
 		#region ObjectRelation
 
-		[Datatype("ObjectRelation", "Create")]
 		public ScalarResult ObjectRelation_Create( ICallContext callContext, UUID object1GUID, UUID object2GUID, uint objectRelationTypeID, int? sequence )
 		{
 		    using( MCMEntities db = DefaultMCMEntities )
@@ -444,10 +437,9 @@ namespace CHAOS.MCM.Module
 		    }
 		}
 
-        [Datatype("ObjectRelation", "Delete")]
         public ScalarResult ObjectRelation_Delete( ICallContext callContext, UUID object1GUID, UUID object2GUID, uint objectRelationTypeID )
         {
-            using( MCMEntities db = DefaultMCMEntities )
+            using( var db = DefaultMCMEntities )
             {
                 int? result = db.ObjectRelation_Delete( object1GUID.ToByteArray(),
                                                         object2GUID.ToByteArray(),
@@ -466,7 +458,6 @@ namespace CHAOS.MCM.Module
 		#endregion
         #region Link
 
-        [Datatype("Link", "Create")]
         public ScalarResult Link_Create( ICallContext callContext, UUID objectGUID, uint folderID)
         {
             using( MCMEntities db = DefaultMCMEntities )
@@ -483,13 +474,12 @@ namespace CHAOS.MCM.Module
                 if( result.Value == -100 )
                     throw new InsufficientPermissionsException( "User can only create links" );
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
                 return new ScalarResult( result.Value );
             }
         }
 
-        [Datatype("Link", "Update")]
         public ScalarResult Link_Update( ICallContext callContext, UUID objectGUID, uint folderID, uint newFolderID )
         {
             using( MCMEntities db = DefaultMCMEntities )
@@ -499,13 +489,12 @@ namespace CHAOS.MCM.Module
 
                 int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
                 return new ScalarResult( result );
             }
         }
 
-        [Datatype("Link", "Delete")]
         public ScalarResult Link_Delete( ICallContext callContext, UUID objectGUID, uint folderID )
         {
             using( MCMEntities db = DefaultMCMEntities )
@@ -518,7 +507,7 @@ namespace CHAOS.MCM.Module
                 if(!result.HasValue)
                     throw new UnhandledException("Link delete failed on the database and was rolled back");
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
 
                 return new ScalarResult( result.Value );
             }
@@ -527,8 +516,7 @@ namespace CHAOS.MCM.Module
         #endregion
         #region Destination
 
-        [Datatype("Destination", "Get")]
-        public IEnumerable<Data.Dto.Standard.DestinationInfo> Destination_Get(ICallContext callContext, uint destinationID)
+        public IEnumerable<DestinationInfo> Destination_Get(ICallContext callContext, uint destinationID)
         {
             using( MCMEntities db = DefaultMCMEntities )
             {

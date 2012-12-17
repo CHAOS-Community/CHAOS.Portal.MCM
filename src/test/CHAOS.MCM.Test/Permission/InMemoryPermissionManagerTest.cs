@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Linq;
-using CHAOS.MCM.Data;
-using CHAOS.MCM.Data.Dto;
-using CHAOS.MCM.Data.Dto.Standard;
-using CHAOS.MCM.Permission;
-using CHAOS.MCM.Permission.InMemory;
+using Chaos.Mcm.Data;
+using Chaos.Mcm.Data.Dto;
+using Chaos.Mcm.Data.Dto.Standard;
+using Chaos.Mcm.Permission;
+using Chaos.Mcm.Permission.InMemory;
 using Moq;
 using NUnit.Framework;
-using Folder = CHAOS.MCM.Permission.InMemory.Folder;
-using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
-using IFolder = CHAOS.MCM.Permission.IFolder;
+using Folder = Chaos.Mcm.Permission.InMemory.Folder;
+using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
+using IFolder = Chaos.Mcm.Permission.IFolder;
 
-namespace CHAOS.MCM.Test.Permission
+namespace Chaos.Mcm.Test.Permission
 {
     [TestFixture]
     public class InMemoryPermissionManagerTest

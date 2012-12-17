@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using CHAOS.MCM.Data.Dto.Standard;
+using CHAOS;
+using Chaos.Mcm.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto
+namespace Chaos.Mcm.Data.Dto
 {
     public interface IObject
     {

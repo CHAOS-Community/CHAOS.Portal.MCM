@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CHAOS.MCM.Data.Dto;
-using CHAOS.MCM.Data.Dto.Standard;
+using CHAOS;
+using Chaos.Mcm.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.EF
+namespace Chaos.Mcm.Data.EF
 {
 	public static class ExtensionMethods
     {

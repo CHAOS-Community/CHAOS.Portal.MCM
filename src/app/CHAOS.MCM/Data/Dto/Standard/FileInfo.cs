@@ -1,31 +1,32 @@
 ﻿using System;
-using CHAOS.Portal.DTO.Standard;
+using CHAOS;
 using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public  class FileInfo : Result
 	{
 		#region Properties
 
-		[Serialize("ID")]
+		[Serialize]
 		public uint ID { get; set; }
 
-		[Serialize("ParentID")]
+		[Serialize]
 		public uint? ParentID { get; set; }
 
 		public UUID ObjectGUID { get; set; }
 
-		[Serialize("Filename")]
+		[Serialize]
 		public string Filename { get; set; }
 
-		[Serialize("OriginalFilename")]
+		[Serialize]
 		public string OriginalFilename { get; set; }
 
-		[Serialize("Token")]
+		[Serialize]
 		public string Token { get; set; }
 
-	    [Serialize("URL")]
+	    [Serialize]
 	    public string URL
 	    {
 	        get
@@ -42,16 +43,16 @@ namespace CHAOS.MCM.Data.Dto.Standard
 	        }
 	    }
 
-		[Serialize("FormatID")]
+		[Serialize]
 		public uint FormatID { get; set; }
 
-		[Serialize("Format")]
+		[Serialize]
 		public string Format { get; set; }
 
-		[Serialize("FormatCategory")]
+		[Serialize]
 		public string FormatCategory { get; set; }
 
-		[Serialize("FormatType")]
+		[Serialize]
 		public string FormatType { get; set; }
 
         public uint DestinationID { get; set; }
@@ -94,7 +95,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
             FormatCategory         = formatCategoryName;
             FormatTypeID           = formatTypeId;
             FormatTypeName         = formatTypeName;
-            Fullname               = "CHAOS.MCM.Data.DTO.FileInfo";
+            Fullname               = "Chaos.Mcm.Data.DTO.FileInfo";
         }
 
         public FileInfo( uint fileId, Guid objectGUID, uint? parentId, uint destinationId, string fileName, string originalFileName, string folderPath, DateTime fileDateCreated, string basePath, string stringFormat, DateTime accessProviderDateCreated, string token, uint formatId, string formatName, string formatXML, string mimeType, uint formatCategoryId, string formatCategoryName, uint formatTypeId, string formatTypeName, UUID sessionGUID ) : this ( fileId,objectGUID, parentId,destinationId,fileName,originalFileName,folderPath,fileDateCreated,basePath,stringFormat, accessProviderDateCreated, token,formatId,formatName,formatXML,mimeType,formatCategoryId,formatCategoryName,formatTypeId,formatTypeName )

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Chaos.Mcm.Data.EF;
 
-namespace CHAOS.MCM.Data.EF
+namespace Chaos.Mcm.Data.EF
 {
 	public partial class Object
 	{

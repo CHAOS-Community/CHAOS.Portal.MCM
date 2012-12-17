@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace CHAOS.MCM.Core.Exception
+namespace Chaos.Mcm.Exception
 {
     public class ObjectRelationAlreadyExistException : System.Exception
     {

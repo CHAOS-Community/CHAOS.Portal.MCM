@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CHAOS.MCM.Data;
-using CHAOS.MCM.Data.Dto.Standard;
+using Chaos.Mcm.Data;
+using Chaos.Mcm.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Permission.InMemory
+namespace Chaos.Mcm.Permission.InMemory
 {
     public class InMemoryPermissionManager : IPermissionManager
     {
         #region Fields
 
         private IDictionary<uint, IFolder> _folders = new Dictionary<uint,IFolder>();
-        private IPermissionRepository _permissionRepository;
+        private IPermissionRepository      _permissionRepository;
 
         #endregion
         #region Properties

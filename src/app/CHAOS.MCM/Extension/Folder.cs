@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CHAOS;
 using CHAOS.Extensions;
-using CHAOS.MCM.Core.Exception;
-using CHAOS.MCM.Data.Dto;
-using CHAOS.MCM.Data.Dto.Standard;
-using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Permission;
-using CHAOS.Portal.Core;
-using CHAOS.Portal.Core.Module;
-using CHAOS.Portal.DTO.Standard;
+using Chaos.Mcm.Data.Dto;
+using Chaos.Mcm.Data.Dto.Standard;
 using CHAOS.Portal.Exception;
-using FolderInfo       = CHAOS.MCM.Data.Dto.Standard.FolderInfo;
-using FolderPermission = CHAOS.MCM.Data.Dto.Standard.FolderPermission;
-using IFolder          = CHAOS.MCM.Permission.IFolder;
+using Chaos.Mcm.Exception;
+using Chaos.Portal;
+using Chaos.Portal.Data.Dto.Standard;
+using FolderInfo = Chaos.Mcm.Data.Dto.Standard.FolderInfo;
+using FolderPermission = Chaos.Mcm.Data.Dto.Standard.FolderPermission;
+using IFolder = Chaos.Mcm.Permission.IFolder;
 
-namespace CHAOS.MCM.Module
+namespace Chaos.Mcm.Extension
 {
-    [Module("MCM")]
-    public class FolderModule : AMCMModule
+    public class Folder : AMcmExtension
     {
         #region Permission
 
-        [Datatype("Folder","GetPermission")]
         public FolderPermission GetPermission( ICallContext callContext, uint folderID )
         {
             var folder           = PermissionManager.GetFolders(folderID);
@@ -40,7 +36,6 @@ namespace CHAOS.MCM.Module
             return new FolderPermission( userPermissions, groupPermissions );
         }
 
-        [Datatype("Folder","SetPermission")]
         public ScalarResult SetPermission( ICallContext callContext, UUID userGUID, UUID groupGUID, uint folderID, uint permission )
         {
             if (userGUID == null && groupGUID == null)
@@ -50,7 +45,7 @@ namespace CHAOS.MCM.Module
             var folder = PermissionManager.GetFolders(folderID);
 
             // REVIEW: What permissions are required to remove a permission?
-            if (!folder.DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), (Permission.FolderPermission)permission))
+            if (!folder.DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), (Chaos.Mcm.Permission.FolderPermission)permission))
                 throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
             if (userGUID != null)
@@ -63,13 +58,12 @@ namespace CHAOS.MCM.Module
 
         #endregion
         
-        [Datatype("Folder", "Get")]
 		public IEnumerable<FolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID, uint? permission )
 		{
             if (parentID.HasValue && id.HasValue)
                 throw new ArgumentException("It does not make sense to specficy both ID and ParentID in the same query");
 
-            var permissionEnum = (Permission.FolderPermission) ( permission ?? (uint) Permission.FolderPermission.Read ) | Permission.FolderPermission.Read;
+            var permissionEnum = (Chaos.Mcm.Permission.FolderPermission) ( permission ?? (uint) Permission.FolderPermission.Read ) | Chaos.Mcm.Permission.FolderPermission.Read;
             var userGuid       = callContext.User.GUID.ToGuid();
             var groupGuids     = callContext.Groups.Select( group => group.GUID.ToGuid() ).ToList();
 
@@ -93,27 +87,22 @@ namespace CHAOS.MCM.Module
             return (IEnumerable<FolderInfo>) McmRepository.GetFolderInfo(folderIDs);
         }
 
-        [Datatype("Folder", "Delete")]
         public ScalarResult Delete(ICallContext callContext, uint id)
         {
             var userGuid   = callContext.User.GUID.ToGuid();
             var groupGuids = callContext.Groups.Select(group => group.GUID.ToGuid()).ToList();
 
-            if(!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(userGuid, groupGuids, Permission.FolderPermission.Delete))
+            if(!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(userGuid, groupGuids, Chaos.Mcm.Permission.FolderPermission.Delete))
                 throw new InsufficientPermissionsException("User does not have permission to delete the folder");
 
             var result = McmRepository.DeleteFolder(id);
 
-            if (result == -50)
-                throw new FolderNotEmptyException("You cannot delete non empty folder");
-
-            return new ScalarResult((int) result);
+            return new ScalarResult(result);
         }
 
-		[Datatype("Folder", "Update")]
 		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID, uint? newParentID )
 		{
-            if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), Permission.FolderPermission.Update ) )
+            if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.GUID.ToGuid(), callContext.Groups.Select(item => item.GUID.ToGuid()), Chaos.Mcm.Permission.FolderPermission.Update ) )
 				throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
 			var result = McmRepository.UpdateFolder(id, newTitle, newFolderTypeID, newParentID);
@@ -121,7 +110,6 @@ namespace CHAOS.MCM.Module
 			return new ScalarResult( (int) result );
 		}
 
-		[Datatype("Folder", "Create")]
         public IFolderInfo Create(ICallContext callContext, UUID subscriptionGUID, string title, uint? parentID, uint folderTypeID)
 		{
             if( subscriptionGUID == null && !parentID.HasValue )
@@ -134,7 +122,7 @@ namespace CHAOS.MCM.Module
 		    if( subscription != null && subscription.Permission != SubscriptionPermission.CreateFolder )
 		        throw new InsufficientPermissionsException( "User does not have permission to create topfolders with the subscriptionGUID" );
 		    
-            if(parentID.HasValue &&!PermissionManager.GetFolders((uint) parentID).DoesUserOrGroupHavePermission(userGuid, groupGuids, Permission.FolderPermission.Write))
+            if(parentID.HasValue &&!PermissionManager.GetFolders((uint) parentID).DoesUserOrGroupHavePermission(userGuid, groupGuids, Chaos.Mcm.Permission.FolderPermission.Write))
                 throw new InsufficientPermissionsException("User does not have permission to create subfolders");
 
             var result = McmRepository.CreateFolder(userGuid, subscription == null ? (Guid?) null : subscription.GUID.ToGuid(), title, parentID, folderTypeID);

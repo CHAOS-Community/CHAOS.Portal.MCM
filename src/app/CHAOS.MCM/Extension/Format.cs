@@ -1,19 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CHAOS.MCM.Data.EF;
-using CHAOS.Portal.Core;
-using CHAOS.Portal.Core.Module;
-using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
+using Chaos.Mcm.Data.EF;
+using Chaos.Portal;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Module
+namespace Chaos.Mcm.Extension
 {
-    [Module("MCM")]
-    public class FormatModule : AMCMModule
+    public class Format : AMcmExtension
     {
         #region Business Logic
 
-        [Datatype("Format","Get")]
         public IEnumerable<Data.Dto.Standard.Format> Get(ICallContext callContext, uint? ID, string name)
         {
             using (var db = DefaultMCMEntities)
@@ -22,7 +19,6 @@ namespace CHAOS.MCM.Module
             }
         }
 
-        [Datatype("Format", "Create")]
         public ScalarResult Create(ICallContext callContext, uint? formatCategoryID, string name, string formatXML, string mimeType, string extension )
         {
             using (var db = DefaultMCMEntities)

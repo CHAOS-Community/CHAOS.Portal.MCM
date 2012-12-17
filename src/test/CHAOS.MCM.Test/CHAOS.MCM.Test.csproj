@@ -8,8 +8,8 @@
     <ProjectGuid>{53C4082B-8284-4588-89AE-6EC3E601CE7C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CHAOS.MCM.Test</RootNamespace>
-    <AssemblyName>CHAOS.MCM.Test</AssemblyName>
+    <RootNamespace>Chaos.Mcm.Test</RootNamespace>
+    <AssemblyName>Chaos.Mcm.Test</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -58,24 +58,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\CHAOS.MCM.Core.Exception\CHAOS.MCM.Core.Exception.csproj">
-      <Project>{4E125648-0FA1-4FD3-AB15-343468DE471D}</Project>
-      <Name>CHAOS.MCM.Core.Exception</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\CHAOS.MCM.Data.EF\CHAOS.MCM.Data.EF.csproj">
-      <Project>{DF345249-3E02-470B-BD17-CAE1F1716B8F}</Project>
-      <Name>CHAOS.MCM.Data.EF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\CHAOS.MCM.Module\CHAOS.MCM.Module.csproj">
-      <Project>{3C75FA89-055C-4AF5-9CE0-60E7AD766ECD}</Project>
-      <Name>CHAOS.MCM.Module</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\app\CHAOS.MCM\CHAOS.MCM.csproj">
-      <Project>{461EF48B-BBEB-4A4C-9968-66ACE8D3D43D}</Project>
-      <Name>CHAOS.MCM</Name>
+    <ProjectReference Include="..\..\app\CHAOS.MCM\Chaos.Mcm.csproj">
+      <Project>{461ef48b-bbeb-4a4c-9968-66ace8d3d43d}</Project>
+      <Name>Chaos.Mcm</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

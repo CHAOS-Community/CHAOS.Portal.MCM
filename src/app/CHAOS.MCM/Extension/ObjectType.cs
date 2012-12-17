@@ -1,21 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CHAOS.MCM.Data.EF;
-using CHAOS.Portal.Core.Module;
-using CHAOS.Portal.Core;
-using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
-using ObjectType = CHAOS.MCM.Data.Dto.Standard.ObjectType;
+using Chaos.Mcm.Data.EF;
+using Chaos.Portal;
+using Chaos.Portal.Data.Dto.Standard;
+using ObjectType = Chaos.Mcm.Data.Dto.Standard.ObjectType;
 
-namespace CHAOS.MCM.Module
+namespace Chaos.Mcm.Extension
 {
-    [Module("MCM")]
-    public class ObjectTypeModule : AMCMModule
+    public class ObjectType : AMcmExtension
     {
         #region Business Logic
 
-		[Datatype("ObjectType","Create")]
-        public ObjectType Create(ICallContext callContext, string name)
+        public Data.Dto.Standard.ObjectType Create(ICallContext callContext, string name)
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
@@ -28,8 +25,7 @@ namespace CHAOS.MCM.Module
 		    }
 		}
 
-		[Datatype("ObjectType", "Get")]
-		public IEnumerable<ObjectType> Get( ICallContext callContext )
+		public IEnumerable<Data.Dto.Standard.ObjectType> Get( ICallContext callContext )
 		{
 			using( var db = DefaultMCMEntities )
 			{
@@ -37,7 +33,6 @@ namespace CHAOS.MCM.Module
 			}
 		}
 
-		[Datatype("ObjectType","Update")]
 		public ScalarResult Update(  ICallContext callContext, uint id, string newName )
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
@@ -54,7 +49,6 @@ namespace CHAOS.MCM.Module
 		    }
 		}
 
-		[Datatype("ObjectType","Delete")]
 		public ScalarResult Delete( ICallContext callContext, uint id )
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )

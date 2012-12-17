@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using CHAOS.Extensions;
-using CHAOS.MCM.Data.Dto.Standard;
-using CHAOS.MCM.Permission;
+using Chaos.Mcm.Data.Dto.Standard;
+using Chaos.Mcm.Permission;
 using CHAOS.Portal.Exception;
-using Chaos.Mcm.Data;
 
-namespace CHAOS.MCM.Data.EF
+namespace Chaos.Mcm.Data.EF
 {
     public class McmRepository : IMcmRepository
     {
@@ -41,7 +39,7 @@ namespace CHAOS.MCM.Data.EF
 
         #region Folder
 
-        public uint DeleteFolder(uint id)
+        public int DeleteFolder(uint id)
         {
             using (var db = CreateMcmEntities())
             {
@@ -53,7 +51,7 @@ namespace CHAOS.MCM.Data.EF
                 if(result.HasValue && result.Value == -50)
                     throw new InsufficientPermissionsException("The folder has to be empty to be deleted");
 
-                return (uint) result.Value;
+                return result.Value;
             }
         }
 
