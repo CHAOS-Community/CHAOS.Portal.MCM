@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Chaos.Mcm.Data.Dto;
 using Chaos.Mcm.Data.Dto.Standard;
 using Chaos.Mcm.Permission;
 using Object = Chaos.Mcm.Data.Dto.Standard.Object;
@@ -17,7 +18,7 @@ namespace Chaos.Mcm.Data
         IEnumerable<Folder> GetFolder();
         int DeleteFolder(uint id);
         uint CreateFolder(Guid userGuid, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID);
-        IEnumerable<FolderInfo> GetFolderInfo(IEnumerable<uint> ids);
+        IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids);
         IEnumerable<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission);
         uint SetAccessPointPublishSettings(Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate);
         uint UpdateFolder(uint id, string newTitle, uint? newParentID, uint? newFolderTypeID);

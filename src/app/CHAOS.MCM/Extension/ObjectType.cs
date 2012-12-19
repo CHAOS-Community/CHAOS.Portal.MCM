@@ -21,7 +21,7 @@ namespace Chaos.Mcm.Extension
 		    {
 		        var result = db.ObjectType_Create( name ).First().Value; 
 
-		        return db.ObjectType_Get( result, null ).ToDTO().First();
+		        return db.ObjectType_Get( result, null ).ToDto().First();
 		    }
 		}
 
@@ -29,7 +29,7 @@ namespace Chaos.Mcm.Extension
 		{
 			using( var db = DefaultMCMEntities )
 			{
-				return db.ObjectType_Get( null, null ).ToDTO().ToList();
+				return db.ObjectType_Get( null, null ).ToDto().ToList();
 			}
 		}
 

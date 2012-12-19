@@ -28,12 +28,12 @@ namespace Chaos.Mcm.Data.EF
         #endregion
         #region DestinationInfo
 
-        public static IEnumerable<Dto.Standard.DestinationInfo> ToDTO( this IEnumerable<DestinationInfo> destinationInfos )
+        public static IEnumerable<Dto.Standard.DestinationInfo> ToDto( this IEnumerable<DestinationInfo> destinationInfos )
 		{
-			return destinationInfos.Select( item => ToDTO( item ) );
+			return destinationInfos.Select( item => ToDto( item ) );
 		}
 
-        public static Dto.Standard.DestinationInfo ToDTO(this DestinationInfo destinationInfo)
+        public static Dto.Standard.DestinationInfo ToDto(this DestinationInfo destinationInfo)
         {
             return new Dto.Standard.DestinationInfo((uint) destinationInfo.ID,
                                                     destinationInfo.SubscriptionGUID,
@@ -47,12 +47,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region File
 
-        public static IEnumerable<Dto.Standard.File> ToDTO(this IEnumerable<File> files)
+        public static IEnumerable<Dto.Standard.File> ToDto(this IEnumerable<File> files)
 		{
-		    return files.Select( ToDTO );
+		    return files.Select( ToDto );
 		}
 
-        public static Dto.Standard.File ToDTO(this File file)
+        public static Dto.Standard.File ToDto(this File file)
 		{
             return new Dto.Standard.File((uint)file.ID, 
 		                             (uint?) file.ParentID, 
@@ -66,13 +66,13 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region FileInfo
 
-        public static IEnumerable<Dto.Standard.FileInfo> ToDTO(this IEnumerable<FileInfo> fileInfos, UUID sessionGUID = null)
+        public static IEnumerable<Dto.Standard.FileInfo> ToDto(this IEnumerable<FileInfo> fileInfos, UUID sessionGUID = null)
 		{
-			return fileInfos.Select( item => ToDTO( item, sessionGUID ) );
+			return fileInfos.Select( item => ToDto( item, sessionGUID ) );
 		}
 
         // TODO: Refactor sessionGuid, fileinfo shouldn't be generated like this.
-        public static Dto.Standard.FileInfo ToDTO(this FileInfo fileInfo, UUID sessionGUID = null)
+        public static Dto.Standard.FileInfo ToDto(this FileInfo fileInfo, UUID sessionGUID = null)
 		{
             return new Dto.Standard.FileInfo((uint)fileInfo.FileID,  
 									 fileInfo.ObjectGUID,
@@ -100,12 +100,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region FolderType
 
-        public static IEnumerable<Dto.Standard.FolderType> ToDTO(this IEnumerable<FolderType> folderTypes)
+        public static IEnumerable<Dto.Standard.FolderType> ToDto(this IEnumerable<FolderType> folderTypes)
 		{
-			return folderTypes.Select( item => ToDTO( item ) );
+			return folderTypes.Select( item => ToDto( item ) );
 		}
 
-        public static Dto.Standard.FolderType ToDTO(this FolderType folderType)
+        public static Dto.Standard.FolderType ToDto(this FolderType folderType)
 		{
             return new Dto.Standard.FolderType((uint)folderType.ID, folderType.Name, folderType.DateCreated);
 		}
@@ -113,12 +113,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region Object_Folder
 
-        public static IEnumerable<Link> ToDTO(this IEnumerable<Object_Folder_Join> folders)
+        public static IEnumerable<Link> ToDto(this IEnumerable<Object_Folder_Join> folders)
 		{
-			return folders.Select( item => ToDTO( item ) );
+			return folders.Select( item => ToDto( item ) );
 		}
 
-        public static Link ToDTO(this Object_Folder_Join folder)
+        public static Link ToDto(this Object_Folder_Join folder)
 		{
 			return new Link( (uint) folder.FolderID, folder.ObjectGUID, (uint) folder.ObjectFolderTypeID, folder.DateCreated );
 		}
@@ -126,12 +126,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region Folder
 
-		public static IEnumerable<Dto.Standard.Folder> ToDTO( this IEnumerable<Folder> folders )
+		public static IEnumerable<Dto.Standard.Folder> ToDto( this IEnumerable<Folder> folders )
 		{
-			return folders.Select(ToDTO);
+			return folders.Select(ToDto);
 		}
 
-		public static Dto.Standard.Folder ToDTO( this Folder folder )
+		public static Dto.Standard.Folder ToDto( this Folder folder )
 		{
 			return new Dto.Standard.Folder( (uint) folder.ID, (uint) folder.FolderTypeID, (uint?) folder.ParentID, folder.SubscriptionGUID, folder.Name, folder.DateCreated );
 		}
@@ -139,12 +139,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region FolderInfo
 
-        public static IEnumerable<Dto.Standard.FolderInfo> ToDTO(this IEnumerable<FolderInfo> folders)
+        public static IEnumerable<Dto.Standard.FolderInfo> ToDto(this IEnumerable<FolderInfo> folders)
 		{
-			return folders.Select( item => ToDTO( item ) );
+			return folders.Select( item => ToDto( item ) );
 		}
 
-        public static Dto.Standard.FolderInfo ToDTO(this FolderInfo folder)
+        public static Dto.Standard.FolderInfo ToDto(this FolderInfo folder)
 		{
             return new Dto.Standard.FolderInfo((uint)folder.ID, (uint)folder.FolderTypeID, (uint?)folder.ParentID, folder.SubscriptionGUID, folder.Name, folder.DateCreated, folder.NumberOfSubFolders, folder.NumberOfObjects);
 		}
@@ -152,12 +152,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region FormatType
 
-		public static IEnumerable<Dto.Standard.FormatType> ToDTO( this IEnumerable<FormatType> formatTypes )
+		public static IEnumerable<Dto.Standard.FormatType> ToDto( this IEnumerable<FormatType> formatTypes )
 		{
-			return formatTypes.Select( item => ToDTO( item ) );
+			return formatTypes.Select( item => ToDto( item ) );
 		}
 
-		public static Dto.Standard.FormatType ToDTO( this FormatType formatType )
+		public static Dto.Standard.FormatType ToDto( this FormatType formatType )
 		{
 			return new Dto.Standard.FormatType( (uint) formatType.ID, formatType.Name );
 		}
@@ -165,12 +165,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region FormatCategory
 
-        public static IEnumerable<Dto.Standard.FormatCategory> ToDTO(this IEnumerable<FormatCategory> formatCategories)
+        public static IEnumerable<Dto.Standard.FormatCategory> ToDto(this IEnumerable<FormatCategory> formatCategories)
 		{
-			return formatCategories.Select( item => ToDTO( item ) );
+			return formatCategories.Select( item => ToDto( item ) );
 		}
 
-        public static Dto.Standard.FormatCategory ToDTO(this FormatCategory formatCategory)
+        public static Dto.Standard.FormatCategory ToDto(this FormatCategory formatCategory)
 		{
             return new Dto.Standard.FormatCategory((uint)formatCategory.ID, formatCategory.Name);
 		}
@@ -178,12 +178,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region Format
 
-        public static IEnumerable<Dto.Standard.Format> ToDTO(this IEnumerable<Format> formats)
+        public static IEnumerable<Dto.Standard.Format> ToDto(this IEnumerable<Format> formats)
 		{
-			return formats.Select( item => ToDTO( item ) );
+			return formats.Select( item => ToDto( item ) );
 		}
 
-        public static Dto.Standard.Format ToDTO(this Format format)
+        public static Dto.Standard.Format ToDto(this Format format)
 		{
             return new Dto.Standard.Format((uint)format.ID, (uint)format.FormatCategoryID, format.Name, format.FormatXML, format.MimeType, format.Extension);
 		}
@@ -191,12 +191,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region Language
 
-		public static IEnumerable<Dto.Standard.Language> ToDTO( this IEnumerable<Language> languages )
+		public static IEnumerable<Dto.Standard.Language> ToDto( this IEnumerable<Language> languages )
 		{
-			return languages.Select( item => ToDTO( item ) );
+			return languages.Select( item => ToDto( item ) );
 		}
 
-		public static Dto.Standard.Language ToDTO( this Language language )
+		public static Dto.Standard.Language ToDto( this Language language )
 		{
 			return new Dto.Standard.Language( language.Name, language.LanguageCode );
 		}
@@ -204,12 +204,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region Metadata
 
-		public static IEnumerable<Dto.Standard.Metadata> ToDTO( this IEnumerable<Metadata> metadatas )
+		public static IEnumerable<Dto.Standard.Metadata> ToDto( this IEnumerable<Metadata> metadatas )
 		{
-			return metadatas.Select( item => ToDTO( item ) );
+			return metadatas.Select( item => ToDto( item ) );
 		}
 
-		public static Dto.Standard.Metadata ToDTO( this Metadata metadata )
+		public static Dto.Standard.Metadata ToDto( this Metadata metadata )
 		{
 			return new Dto.Standard.Metadata( metadata.GUID, metadata.ObjectGUID, metadata.LanguageCode, metadata.MetadataSchemaGUID, (uint) metadata.RevisionID, metadata.MetadataXML, metadata.DateCreated, metadata.EditingUserGUID );
 		}
@@ -217,12 +217,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region MetadataSchema
 
-		public static IEnumerable<Dto.Standard.MetadataSchema> ToDTO( this IEnumerable<MetadataSchema> metadataSchemata )
+		public static IEnumerable<Dto.Standard.MetadataSchema> ToDto( this IEnumerable<MetadataSchema> metadataSchemata )
 		{
-			return metadataSchemata.Select( item => ToDTO( item ) );
+			return metadataSchemata.Select( item => ToDto( item ) );
 		}
 
-		public static Dto.Standard.MetadataSchema ToDTO( this MetadataSchema metadataSchema )
+		public static Dto.Standard.MetadataSchema ToDto( this MetadataSchema metadataSchema )
 		{
 			return new Dto.Standard.MetadataSchema( metadataSchema.GUID, metadataSchema.Name, metadataSchema.SchemaXML, metadataSchema.DateCreated );
 		}
@@ -230,25 +230,25 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region Object
 
-		public static IEnumerable<Dto.Standard.Object> ToDTO( this IEnumerable<Object> objects, UUID sessionGUID = null )
+		public static IEnumerable<Dto.Standard.Object> ToDto( this IEnumerable<Object> objects, UUID sessionGUID = null )
 		{
-			return objects.Select( item => ToDTO( item, sessionGUID ) );
+			return objects.Select( item => ToDto( item, sessionGUID ) );
 		}
 
-		public static Dto.Standard.Object ToDTO( this Object obj, UUID sessionGUID = null )
+		public static Dto.Standard.Object ToDto( this Object obj, UUID sessionGUID = null )
 		{
-			return new Dto.Standard.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDTO(), obj.pFiles.ToDTO( sessionGUID ), obj.ObjectRealtions.ToDTO(), obj.Folders.ToDTO(), obj.AccessPoints.ToDTO() );
+			return new Dto.Standard.Object( obj.GUID, (uint) obj.ObjectTypeID, obj.DateCreated, obj.pMetadatas.ToDto(), obj.pFiles.ToDto( sessionGUID ), obj.ObjectRealtions.ToDto(), obj.Folders.ToDto(), obj.AccessPoints.ToDto() );
 		}
 
 		#endregion
 		#region ObjectType
 
-		public static IEnumerable<Dto.Standard.ObjectType> ToDTO( this IEnumerable<ObjectType> objectTypes )
+		public static IEnumerable<Dto.Standard.ObjectType> ToDto( this IEnumerable<ObjectType> objectTypes )
 		{
-			return objectTypes.Select( item => ToDTO( item ) );
+			return objectTypes.Select( item => ToDto( item ) );
 		}
 
-		public static Dto.Standard.ObjectType ToDTO( this ObjectType objectType )
+		public static Dto.Standard.ObjectType ToDto( this ObjectType objectType )
 		{
 			return new Dto.Standard.ObjectType( (uint) objectType.ID, objectType.Name );
 		}
@@ -256,12 +256,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region Object_Object_Join
 
-		public static IEnumerable<Dto.Standard.Object_Object_Join> ToDTO( this IEnumerable<Object_Object_Join> objectRelations )
+		public static IEnumerable<Dto.Standard.Object_Object_Join> ToDto( this IEnumerable<Object_Object_Join> objectRelations )
 		{
-			return objectRelations.Select( item => ToDTO( item ) );
+			return objectRelations.Select( item => ToDto( item ) );
 		}
 
-		public static Dto.Standard.Object_Object_Join ToDTO( this Object_Object_Join objectRelation )
+		public static Dto.Standard.Object_Object_Join ToDto( this Object_Object_Join objectRelation )
 		{
 			return new Dto.Standard.Object_Object_Join( objectRelation.Object1GUID, objectRelation.Object2GUID, (uint) objectRelation.ObjectRelationTypeID, objectRelation.Sequence, objectRelation.DateCreated );
 		}
@@ -269,12 +269,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
         #region AccessPoint_Object_Join
 
-        public static IEnumerable<Dto.Standard.AccessPoint_Object_Join> ToDTO(this IEnumerable<AccessPoint_Object_Join> objectRelations)
+        public static IEnumerable<Dto.Standard.AccessPoint_Object_Join> ToDto(this IEnumerable<AccessPoint_Object_Join> objectRelations)
 		{
-			return objectRelations.Select( ToDTO );
+			return objectRelations.Select( ToDto );
 		}
 
-        public static Dto.Standard.AccessPoint_Object_Join ToDTO(this AccessPoint_Object_Join access)
+        public static Dto.Standard.AccessPoint_Object_Join ToDto(this AccessPoint_Object_Join access)
 		{
             return new Dto.Standard.AccessPoint_Object_Join(access.AccessPointGUID, access.ObjectGUID, access.StartDate, access.EndDate, access.DateCreated, access.DateModified);
 		}
@@ -282,12 +282,12 @@ namespace Chaos.Mcm.Data.EF
 		#endregion
 		#region ObjectRelationType
 
-		public static IEnumerable<Dto.Standard.ObjectRelationType> ToDTO( this IEnumerable<ObjectRelationType> objectRelationTypes )
+		public static IEnumerable<Dto.Standard.ObjectRelationType> ToDto( this IEnumerable<ObjectRelationType> objectRelationTypes )
 		{
-			return objectRelationTypes.Select( item => ToDTO( item ) );
+			return objectRelationTypes.Select( item => ToDto( item ) );
 		}
 
-		public static Dto.Standard.ObjectRelationType ToDTO( this ObjectRelationType objectRelationType )
+		public static Dto.Standard.ObjectRelationType ToDto( this ObjectRelationType objectRelationType )
 		{
 			return new Dto.Standard.ObjectRelationType( (uint) objectRelationType.ID, objectRelationType.Name );
 		}

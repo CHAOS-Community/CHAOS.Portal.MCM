@@ -27,7 +27,7 @@ namespace Chaos.Mcm.Extension
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
-				return db.Language_Get(name, languageCode).ToDTO().ToList();
+				return db.Language_Get(name, languageCode).ToDto().ToList();
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace Chaos.Mcm.Extension
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
-				return db.ObjectRelationType_Get( id, value ).ToDTO().ToList();
+				return db.ObjectRelationType_Get( id, value ).ToDto().ToList();
 			}
 		}
 
@@ -133,7 +133,7 @@ namespace Chaos.Mcm.Extension
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
-				return db.FolderType_Get(id, name).ToDTO().ToList();
+				return db.FolderType_Get(id, name).ToDto().ToList();
 			}
 		}
 
@@ -186,7 +186,7 @@ namespace Chaos.Mcm.Extension
 		{
 			using( MCMEntities db = DefaultMCMEntities )
 			{
-				return db.FormatType_Get( id, name ).ToDTO().ToList();
+				return db.FormatType_Get( id, name ).ToDto().ToList();
 			}
 		}
 
@@ -376,7 +376,7 @@ namespace Chaos.Mcm.Extension
                 if( result.Value == -200 )
                     throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
 
-                var objects = db.Object_Get( objectGUID, true, false, false, true, true ).ToDTO().ToList();
+                var objects = db.Object_Get( objectGUID, true, false, false, true, true ).ToDto().ToList();
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), objects );
 
@@ -401,7 +401,7 @@ namespace Chaos.Mcm.Extension
                 // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
                 using (var db = DefaultMCMEntities)
                 {
-                    var objects = db.Object_Get(folderID, true, false, true, true, true, i, pageSize).ToDTO().ToList();
+                    var objects = db.Object_Get(folderID, true, false, true, true, true, i, pageSize).ToDto().ToList();
 
                     PutObjectInIndex(index, objects);
 
@@ -474,7 +474,7 @@ namespace Chaos.Mcm.Extension
                 if( result.Value == -100 )
                     throw new InsufficientPermissionsException( "User can only create links" );
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
 
                 return new ScalarResult( result.Value );
             }
@@ -489,7 +489,7 @@ namespace Chaos.Mcm.Extension
 
                 int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
 
                 return new ScalarResult( result );
             }
@@ -507,7 +507,7 @@ namespace Chaos.Mcm.Extension
                 if(!result.HasValue)
                     throw new UnhandledException("Link delete failed on the database and was rolled back");
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDTO().ToList() );
+                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
 
                 return new ScalarResult( result.Value );
             }
@@ -520,7 +520,7 @@ namespace Chaos.Mcm.Extension
         {
             using( MCMEntities db = DefaultMCMEntities )
             {
-                return db.DestinationInfo_Get( (int?) destinationID ).ToDTO().ToList();
+                return db.DestinationInfo_Get( (int?) destinationID ).ToDto().ToList();
             }
         }
 

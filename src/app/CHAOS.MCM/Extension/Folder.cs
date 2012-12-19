@@ -58,7 +58,7 @@ namespace Chaos.Mcm.Extension
 
         #endregion
         
-		public IEnumerable<FolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID, uint? permission )
+		public IEnumerable<IFolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID, uint? permission )
 		{
             if (parentID.HasValue && id.HasValue)
                 throw new ArgumentException("It does not make sense to specficy both ID and ParentID in the same query");
@@ -80,11 +80,11 @@ namespace Chaos.Mcm.Extension
             return RetrieveFolderInfos(folderResults);
 		}
 
-        private IEnumerable<FolderInfo> RetrieveFolderInfos(IEnumerable<IFolder> folders)
+        private IEnumerable<IFolderInfo> RetrieveFolderInfos(IEnumerable<IFolder> folders)
         {
             var folderIDs = folders.Select(folder => folder.ID).ToList();
 
-            return (IEnumerable<FolderInfo>) McmRepository.GetFolderInfo(folderIDs);
+            return McmRepository.GetFolderInfo(folderIDs);
         }
 
         public ScalarResult Delete(ICallContext callContext, uint id)

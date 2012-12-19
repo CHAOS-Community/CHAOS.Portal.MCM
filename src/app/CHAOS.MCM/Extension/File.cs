@@ -26,7 +26,7 @@ namespace Chaos.Mcm.Extension
                 if(!result.HasValue)
                     throw new UnhandledException("The creating the file failed in the database and was rolled back");
 
-		        return db.File_Get( result.Value ).First().ToDTO();
+		        return db.File_Get( result.Value ).First().ToDto();
             }
         }
 
@@ -34,7 +34,7 @@ namespace Chaos.Mcm.Extension
 		{
             using( var db = DefaultMCMEntities )
             {
-                var file = db.File_Get((int?) ID).First().ToDTO();
+                var file = db.File_Get((int?) ID).First().ToDto();
 
                 if( !HasPermissionToObject( callContext, file.ObjectGUID, FolderPermission.CreateUpdateObjects) )
                     throw new InsufficientPermissionsException("User does not have permissions to delete a file on this object");

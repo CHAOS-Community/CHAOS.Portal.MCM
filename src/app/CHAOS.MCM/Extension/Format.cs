@@ -15,7 +15,7 @@ namespace Chaos.Mcm.Extension
         {
             using (var db = DefaultMCMEntities)
             {
-                return db.Format_Get((int?) ID, name).ToDTO().ToList();
+                return db.Format_Get((int?) ID, name).ToDto().ToList();
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CHAOS.Extensions;
+using Chaos.Mcm.Data.Dto;
 using Chaos.Mcm.Data.Dto.Standard;
 using Chaos.Mcm.Permission;
 using CHAOS.Portal.Exception;
@@ -97,7 +98,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 var sGroupGuids = string.Join(",", groupGuids.Select(guid => guid.ToUUID().ToString().Replace("-", "")));
 
-                return db.MetadataSchema_Get(userGuid.ToByteArray(), sGroupGuids, metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null, (int?)permission).ToList().ToDTO();
+                return db.MetadataSchema_Get(userGuid.ToByteArray(), sGroupGuids, metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null, (int?)permission).ToList().ToDto();
 			}
         }
 
@@ -170,11 +171,11 @@ namespace Chaos.Mcm.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Folder_Get(null, null).ToList().ToDTO();
+                return db.Folder_Get(null, null).ToList().ToDto();
             }
         }
 
-        public IEnumerable<Dto.Standard.FolderInfo> GetFolderInfo(IEnumerable<uint> ids)
+        public IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids)
         {
             var folderIDs = ids.Select(item => (long) item);
             var folderIDStrings = string.Join(",", ids);
@@ -182,7 +183,7 @@ namespace Chaos.Mcm.Data.EF
             // TODO: optimize folder retrival form the database
             using (var db = CreateMcmEntities())
             {
-                return db.FolderInfo.Where(fi => folderIDs.Contains(fi.ID)).ToDTO().ToList();
+                return db.FolderInfo.Where( fi => folderIDs.Contains( fi.ID ) ).ToList().ToDto();
             }
         }
 
@@ -218,7 +219,7 @@ namespace Chaos.Mcm.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Object_Get(objectGuid, true, true, true, true, true).ToDTO();
+                return db.Object_Get(objectGuid, true, true, true, true, true).ToDto();
             }
         }
 
@@ -226,7 +227,7 @@ namespace Chaos.Mcm.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Object_Get(objectGuids, true, true, true, true, true).ToDTO();
+                return db.Object_Get(objectGuids, true, true, true, true, true).ToDto();
             }
         }
 
@@ -234,7 +235,7 @@ namespace Chaos.Mcm.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Object_Get(relatedToObjectWithGuid, objectRelationTypeID, true, true, true, true).ToList().ToDTO();
+                return db.Object_Get(relatedToObjectWithGuid, objectRelationTypeID, true, true, true, true).ToList().ToDto();
             }
         }
 

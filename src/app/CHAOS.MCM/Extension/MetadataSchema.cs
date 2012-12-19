@@ -42,7 +42,7 @@ namespace Chaos.Mcm.Extension
                 if( result == null || !result.HasValue || result.Value != 1 )
                     throw new UnhandledException( "MetadataSchema was not created" );
 
-                return db.MetadataSchema_Get( null, null, guid.ToByteArray(), 0x1 ).ToDTO().First();
+                return db.MetadataSchema_Get( null, null, guid.ToByteArray(), 0x1 ).ToDto().First();
 			}
 		}
 

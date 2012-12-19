@@ -51,7 +51,7 @@ namespace Chaos.Mcm.Extension
 					if( !resultPage.Any() )
                         return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, 0, new List<Data.Dto.Standard.Object>() );
 
-                    var objects      = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDTO() ).ToDTO( callContext.GetSessionFromDatabase() == null ? null : callContext.Session.GUID ).ToList();
+                    var objects      = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDto() ).ToDto( callContext.GetSessionFromDatabase() == null ? null : callContext.Session.GUID ).ToList();
                     var sortedResult = ReArrange( objects, resultPage );
 
 					return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, query.PageIndex, sortedResult );
@@ -79,7 +79,7 @@ namespace Chaos.Mcm.Extension
 				if( result.HasValue && result.Value == -200 )
 					throw new UnhandledException("Unhandled exception, Create was rolled back");
 
-		        var newObject = db.Object_Get( guid, true, true, true, true, true ).ToDTO().ToList();
+		        var newObject = db.Object_Get( guid, true, true, true, true, true ).ToDto().ToList();
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), newObject );
 
@@ -108,7 +108,7 @@ namespace Chaos.Mcm.Extension
         {
             using( var db = DefaultMCMEntities )
             {
-                var delObject = db.Object_Get( GUID, false, false, false, true, false ).ToDTO().First();
+                var delObject = db.Object_Get( GUID, false, false, false, true, false ).ToDto().First();
 
                 if( !PermissionManager.DoesUserOrGroupHavePermissionToFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ), Chaos.Mcm.Permission.FolderPermission.DeleteObject,delObject.Folders.Select( folder => PermissionManager.GetFolders(folder.FolderID) ) ) )
                     throw new InsufficientPermissionsException( "User does not have permissions to remove object" );
