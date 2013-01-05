@@ -3111,7 +3111,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3130,7 +3130,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnGUIDChanging(value);
                     ReportPropertyChanging("GUID");
-                    _GUID = StructuralObject.SetValidValue(value);
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
                     ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
@@ -3155,7 +3155,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnSubscriptionGUIDChanging(value);
                 ReportPropertyChanging("SubscriptionGUID");
-                _SubscriptionGUID = StructuralObject.SetValidValue(value);
+                _SubscriptionGUID = StructuralObject.SetValidValue(value, "SubscriptionGUID");
                 ReportPropertyChanged("SubscriptionGUID");
                 OnSubscriptionGUIDChanged();
             }
@@ -3179,7 +3179,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -3203,7 +3203,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -3214,7 +3214,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -3338,7 +3337,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3357,7 +3356,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnAccessPointGUIDChanging(value);
                     ReportPropertyChanging("AccessPointGUID");
-                    _AccessPointGUID = StructuralObject.SetValidValue(value);
+                    _AccessPointGUID = StructuralObject.SetValidValue(value, "AccessPointGUID");
                     ReportPropertyChanged("AccessPointGUID");
                     OnAccessPointGUIDChanged();
                 }
@@ -3384,7 +3383,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnGroupGUIDChanging(value);
                     ReportPropertyChanging("GroupGUID");
-                    _GroupGUID = StructuralObject.SetValidValue(value);
+                    _GroupGUID = StructuralObject.SetValidValue(value, "GroupGUID");
                     ReportPropertyChanged("GroupGUID");
                     OnGroupGUIDChanged();
                 }
@@ -3409,7 +3408,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnPermissionChanging(value);
                 ReportPropertyChanging("Permission");
-                _Permission = StructuralObject.SetValidValue(value);
+                _Permission = StructuralObject.SetValidValue(value, "Permission");
                 ReportPropertyChanged("Permission");
                 OnPermissionChanged();
             }
@@ -3433,7 +3432,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -3444,7 +3443,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -3516,7 +3514,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3535,7 +3533,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnAccessPointGUIDChanging(value);
                     ReportPropertyChanging("AccessPointGUID");
-                    _AccessPointGUID = StructuralObject.SetValidValue(value);
+                    _AccessPointGUID = StructuralObject.SetValidValue(value, "AccessPointGUID");
                     ReportPropertyChanged("AccessPointGUID");
                     OnAccessPointGUIDChanged();
                 }
@@ -3562,7 +3560,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnObjectGUIDChanging(value);
                     ReportPropertyChanging("ObjectGUID");
-                    _ObjectGUID = StructuralObject.SetValidValue(value);
+                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
                     ReportPropertyChanged("ObjectGUID");
                     OnObjectGUIDChanged();
                 }
@@ -3587,7 +3585,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnStartDateChanging(value);
                 ReportPropertyChanging("StartDate");
-                _StartDate = StructuralObject.SetValidValue(value);
+                _StartDate = StructuralObject.SetValidValue(value, "StartDate");
                 ReportPropertyChanged("StartDate");
                 OnStartDateChanged();
             }
@@ -3611,7 +3609,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnEndDateChanging(value);
                 ReportPropertyChanging("EndDate");
-                _EndDate = StructuralObject.SetValidValue(value);
+                _EndDate = StructuralObject.SetValidValue(value, "EndDate");
                 ReportPropertyChanged("EndDate");
                 OnEndDateChanged();
             }
@@ -3635,7 +3633,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -3659,7 +3657,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateModifiedChanging(value);
                 ReportPropertyChanging("DateModified");
-                _DateModified = StructuralObject.SetValidValue(value);
+                _DateModified = StructuralObject.SetValidValue(value, "DateModified");
                 ReportPropertyChanged("DateModified");
                 OnDateModifiedChanged();
             }
@@ -3670,7 +3668,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -3782,7 +3779,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3801,7 +3798,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnAccessPointGUIDChanging(value);
                     ReportPropertyChanging("AccessPointGUID");
-                    _AccessPointGUID = StructuralObject.SetValidValue(value);
+                    _AccessPointGUID = StructuralObject.SetValidValue(value, "AccessPointGUID");
                     ReportPropertyChanged("AccessPointGUID");
                     OnAccessPointGUIDChanged();
                 }
@@ -3828,7 +3825,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnUserGUIDChanging(value);
                     ReportPropertyChanging("UserGUID");
-                    _UserGUID = StructuralObject.SetValidValue(value);
+                    _UserGUID = StructuralObject.SetValidValue(value, "UserGUID");
                     ReportPropertyChanged("UserGUID");
                     OnUserGUIDChanged();
                 }
@@ -3853,7 +3850,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnPermissionChanging(value);
                 ReportPropertyChanging("Permission");
-                _Permission = StructuralObject.SetValidValue(value);
+                _Permission = StructuralObject.SetValidValue(value, "Permission");
                 ReportPropertyChanged("Permission");
                 OnPermissionChanged();
             }
@@ -3877,7 +3874,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -3888,7 +3885,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -3966,7 +3962,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3985,7 +3981,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -4010,7 +4006,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDestinationIDChanging(value);
                 ReportPropertyChanging("DestinationID");
-                _DestinationID = StructuralObject.SetValidValue(value);
+                _DestinationID = StructuralObject.SetValidValue(value, "DestinationID");
                 ReportPropertyChanged("DestinationID");
                 OnDestinationIDChanged();
             }
@@ -4034,7 +4030,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnBasePathChanging(value);
                 ReportPropertyChanging("BasePath");
-                _BasePath = StructuralObject.SetValidValue(value, false);
+                _BasePath = StructuralObject.SetValidValue(value, false, "BasePath");
                 ReportPropertyChanged("BasePath");
                 OnBasePathChanged();
             }
@@ -4058,7 +4054,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnStringFormatChanging(value);
                 ReportPropertyChanging("StringFormat");
-                _StringFormat = StructuralObject.SetValidValue(value, false);
+                _StringFormat = StructuralObject.SetValidValue(value, false, "StringFormat");
                 ReportPropertyChanged("StringFormat");
                 OnStringFormatChanged();
             }
@@ -4082,7 +4078,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -4106,7 +4102,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnTokenChanging(value);
                 ReportPropertyChanging("Token");
-                _Token = StructuralObject.SetValidValue(value, false);
+                _Token = StructuralObject.SetValidValue(value, false, "Token");
                 ReportPropertyChanged("Token");
                 OnTokenChanged();
             }
@@ -4117,7 +4113,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -4195,7 +4190,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4214,7 +4209,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -4239,7 +4234,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnAccessPointGUIDChanging(value);
                 ReportPropertyChanging("AccessPointGUID");
-                _AccessPointGUID = StructuralObject.SetValidValue(value);
+                _AccessPointGUID = StructuralObject.SetValidValue(value, "AccessPointGUID");
                 ReportPropertyChanged("AccessPointGUID");
                 OnAccessPointGUIDChanged();
             }
@@ -4263,7 +4258,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFormatCategoryIDChanging(value);
                 ReportPropertyChanging("FormatCategoryID");
-                _FormatCategoryID = StructuralObject.SetValidValue(value);
+                _FormatCategoryID = StructuralObject.SetValidValue(value, "FormatCategoryID");
                 ReportPropertyChanged("FormatCategoryID");
                 OnFormatCategoryIDChanged();
             }
@@ -4287,7 +4282,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFormatIDChanging(value);
                 ReportPropertyChanging("FormatID");
-                _FormatID = StructuralObject.SetValidValue(value);
+                _FormatID = StructuralObject.SetValidValue(value, "FormatID");
                 ReportPropertyChanged("FormatID");
                 OnFormatIDChanged();
             }
@@ -4311,7 +4306,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDestinationIDChanging(value);
                 ReportPropertyChanging("DestinationID");
-                _DestinationID = StructuralObject.SetValidValue(value);
+                _DestinationID = StructuralObject.SetValidValue(value, "DestinationID");
                 ReportPropertyChanged("DestinationID");
                 OnDestinationIDChanged();
             }
@@ -4335,7 +4330,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -4346,7 +4341,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -4534,7 +4528,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4553,7 +4547,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -4578,7 +4572,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnSubscriptionGUIDChanging(value);
                 ReportPropertyChanging("SubscriptionGUID");
-                _SubscriptionGUID = StructuralObject.SetValidValue(value);
+                _SubscriptionGUID = StructuralObject.SetValidValue(value, "SubscriptionGUID");
                 ReportPropertyChanged("SubscriptionGUID");
                 OnSubscriptionGUIDChanged();
             }
@@ -4602,7 +4596,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -4626,7 +4620,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -4637,7 +4631,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -4745,7 +4738,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4764,7 +4757,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -4791,7 +4784,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnSubscriptionGUIDChanging(value);
                     ReportPropertyChanging("SubscriptionGUID");
-                    _SubscriptionGUID = StructuralObject.SetValidValue(value);
+                    _SubscriptionGUID = StructuralObject.SetValidValue(value, "SubscriptionGUID");
                     ReportPropertyChanged("SubscriptionGUID");
                     OnSubscriptionGUIDChanged();
                 }
@@ -4818,7 +4811,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnNameChanging(value);
                     ReportPropertyChanging("Name");
-                    _Name = StructuralObject.SetValidValue(value, false);
+                    _Name = StructuralObject.SetValidValue(value, false, "Name");
                     ReportPropertyChanged("Name");
                     OnNameChanged();
                 }
@@ -4845,7 +4838,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnDateCreatedChanging(value);
                     ReportPropertyChanging("DateCreated");
-                    _DateCreated = StructuralObject.SetValidValue(value);
+                    _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                     ReportPropertyChanged("DateCreated");
                     OnDateCreatedChanged();
                 }
@@ -4872,7 +4865,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnBasePathChanging(value);
                     ReportPropertyChanging("BasePath");
-                    _BasePath = StructuralObject.SetValidValue(value, false);
+                    _BasePath = StructuralObject.SetValidValue(value, false, "BasePath");
                     ReportPropertyChanged("BasePath");
                     OnBasePathChanged();
                 }
@@ -4899,7 +4892,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnStringFormatChanging(value);
                     ReportPropertyChanging("StringFormat");
-                    _StringFormat = StructuralObject.SetValidValue(value, false);
+                    _StringFormat = StructuralObject.SetValidValue(value, false, "StringFormat");
                     ReportPropertyChanged("StringFormat");
                     OnStringFormatChanged();
                 }
@@ -4926,7 +4919,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnTokenChanging(value);
                     ReportPropertyChanging("Token");
-                    _Token = StructuralObject.SetValidValue(value, false);
+                    _Token = StructuralObject.SetValidValue(value, false, "Token");
                     ReportPropertyChanged("Token");
                     OnTokenChanged();
                 }
@@ -4938,7 +4931,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -4978,7 +4970,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -4997,7 +4989,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -5022,7 +5014,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnObjectGUIDChanging(value);
                 ReportPropertyChanging("ObjectGUID");
-                _ObjectGUID = StructuralObject.SetValidValue(value);
+                _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
                 ReportPropertyChanged("ObjectGUID");
                 OnObjectGUIDChanged();
             }
@@ -5046,7 +5038,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnParentIDChanging(value);
                 ReportPropertyChanging("ParentID");
-                _ParentID = StructuralObject.SetValidValue(value);
+                _ParentID = StructuralObject.SetValidValue(value, "ParentID");
                 ReportPropertyChanged("ParentID");
                 OnParentIDChanged();
             }
@@ -5070,7 +5062,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFormatIDChanging(value);
                 ReportPropertyChanging("FormatID");
-                _FormatID = StructuralObject.SetValidValue(value);
+                _FormatID = StructuralObject.SetValidValue(value, "FormatID");
                 ReportPropertyChanged("FormatID");
                 OnFormatIDChanged();
             }
@@ -5094,7 +5086,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDestinationIDChanging(value);
                 ReportPropertyChanging("DestinationID");
-                _DestinationID = StructuralObject.SetValidValue(value);
+                _DestinationID = StructuralObject.SetValidValue(value, "DestinationID");
                 ReportPropertyChanged("DestinationID");
                 OnDestinationIDChanged();
             }
@@ -5118,7 +5110,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFileNameChanging(value);
                 ReportPropertyChanging("FileName");
-                _FileName = StructuralObject.SetValidValue(value, false);
+                _FileName = StructuralObject.SetValidValue(value, false, "FileName");
                 ReportPropertyChanged("FileName");
                 OnFileNameChanged();
             }
@@ -5142,7 +5134,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnOriginalFileNameChanging(value);
                 ReportPropertyChanging("OriginalFileName");
-                _OriginalFileName = StructuralObject.SetValidValue(value, false);
+                _OriginalFileName = StructuralObject.SetValidValue(value, false, "OriginalFileName");
                 ReportPropertyChanged("OriginalFileName");
                 OnOriginalFileNameChanged();
             }
@@ -5166,7 +5158,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFolderPathChanging(value);
                 ReportPropertyChanging("FolderPath");
-                _FolderPath = StructuralObject.SetValidValue(value, false);
+                _FolderPath = StructuralObject.SetValidValue(value, false, "FolderPath");
                 ReportPropertyChanged("FolderPath");
                 OnFolderPathChanged();
             }
@@ -5190,7 +5182,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -5201,7 +5193,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -5439,7 +5430,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -5458,7 +5449,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFileIDChanging(value);
                     ReportPropertyChanging("FileID");
-                    _FileID = StructuralObject.SetValidValue(value);
+                    _FileID = StructuralObject.SetValidValue(value, "FileID");
                     ReportPropertyChanged("FileID");
                     OnFileIDChanged();
                 }
@@ -5485,7 +5476,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnObjectGUIDChanging(value);
                     ReportPropertyChanging("ObjectGUID");
-                    _ObjectGUID = StructuralObject.SetValidValue(value);
+                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
                     ReportPropertyChanged("ObjectGUID");
                     OnObjectGUIDChanged();
                 }
@@ -5510,7 +5501,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnParentIDChanging(value);
                 ReportPropertyChanging("ParentID");
-                _ParentID = StructuralObject.SetValidValue(value);
+                _ParentID = StructuralObject.SetValidValue(value, "ParentID");
                 ReportPropertyChanged("ParentID");
                 OnParentIDChanged();
             }
@@ -5536,7 +5527,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnDestinationIDChanging(value);
                     ReportPropertyChanging("DestinationID");
-                    _DestinationID = StructuralObject.SetValidValue(value);
+                    _DestinationID = StructuralObject.SetValidValue(value, "DestinationID");
                     ReportPropertyChanged("DestinationID");
                     OnDestinationIDChanged();
                 }
@@ -5563,7 +5554,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFileNameChanging(value);
                     ReportPropertyChanging("FileName");
-                    _FileName = StructuralObject.SetValidValue(value, false);
+                    _FileName = StructuralObject.SetValidValue(value, false, "FileName");
                     ReportPropertyChanged("FileName");
                     OnFileNameChanged();
                 }
@@ -5590,7 +5581,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnOriginalFileNameChanging(value);
                     ReportPropertyChanging("OriginalFileName");
-                    _OriginalFileName = StructuralObject.SetValidValue(value, false);
+                    _OriginalFileName = StructuralObject.SetValidValue(value, false, "OriginalFileName");
                     ReportPropertyChanged("OriginalFileName");
                     OnOriginalFileNameChanged();
                 }
@@ -5617,7 +5608,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFolderPathChanging(value);
                     ReportPropertyChanging("FolderPath");
-                    _FolderPath = StructuralObject.SetValidValue(value, false);
+                    _FolderPath = StructuralObject.SetValidValue(value, false, "FolderPath");
                     ReportPropertyChanged("FolderPath");
                     OnFolderPathChanged();
                 }
@@ -5644,7 +5635,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFileDateCreatedChanging(value);
                     ReportPropertyChanging("FileDateCreated");
-                    _FileDateCreated = StructuralObject.SetValidValue(value);
+                    _FileDateCreated = StructuralObject.SetValidValue(value, "FileDateCreated");
                     ReportPropertyChanged("FileDateCreated");
                     OnFileDateCreatedChanged();
                 }
@@ -5671,7 +5662,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnBasePathChanging(value);
                     ReportPropertyChanging("BasePath");
-                    _BasePath = StructuralObject.SetValidValue(value, false);
+                    _BasePath = StructuralObject.SetValidValue(value, false, "BasePath");
                     ReportPropertyChanged("BasePath");
                     OnBasePathChanged();
                 }
@@ -5698,7 +5689,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnStringFormatChanging(value);
                     ReportPropertyChanging("StringFormat");
-                    _StringFormat = StructuralObject.SetValidValue(value, false);
+                    _StringFormat = StructuralObject.SetValidValue(value, false, "StringFormat");
                     ReportPropertyChanged("StringFormat");
                     OnStringFormatChanged();
                 }
@@ -5725,7 +5716,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnAccessProviderDateCreatedChanging(value);
                     ReportPropertyChanging("AccessProviderDateCreated");
-                    _AccessProviderDateCreated = StructuralObject.SetValidValue(value);
+                    _AccessProviderDateCreated = StructuralObject.SetValidValue(value, "AccessProviderDateCreated");
                     ReportPropertyChanged("AccessProviderDateCreated");
                     OnAccessProviderDateCreatedChanged();
                 }
@@ -5752,7 +5743,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnTokenChanging(value);
                     ReportPropertyChanging("Token");
-                    _Token = StructuralObject.SetValidValue(value, false);
+                    _Token = StructuralObject.SetValidValue(value, false, "Token");
                     ReportPropertyChanged("Token");
                     OnTokenChanged();
                 }
@@ -5779,7 +5770,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFormatIDChanging(value);
                     ReportPropertyChanging("FormatID");
-                    _FormatID = StructuralObject.SetValidValue(value);
+                    _FormatID = StructuralObject.SetValidValue(value, "FormatID");
                     ReportPropertyChanged("FormatID");
                     OnFormatIDChanged();
                 }
@@ -5806,7 +5797,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFormatNameChanging(value);
                     ReportPropertyChanging("FormatName");
-                    _FormatName = StructuralObject.SetValidValue(value, false);
+                    _FormatName = StructuralObject.SetValidValue(value, false, "FormatName");
                     ReportPropertyChanged("FormatName");
                     OnFormatNameChanged();
                 }
@@ -5831,7 +5822,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFormatXMLChanging(value);
                 ReportPropertyChanging("FormatXML");
-                _FormatXML = StructuralObject.SetValidValue(value, true);
+                _FormatXML = StructuralObject.SetValidValue(value, true, "FormatXML");
                 ReportPropertyChanged("FormatXML");
                 OnFormatXMLChanged();
             }
@@ -5857,7 +5848,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnMimeTypeChanging(value);
                     ReportPropertyChanging("MimeType");
-                    _MimeType = StructuralObject.SetValidValue(value, false);
+                    _MimeType = StructuralObject.SetValidValue(value, false, "MimeType");
                     ReportPropertyChanged("MimeType");
                     OnMimeTypeChanged();
                 }
@@ -5884,7 +5875,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFormatCategoryIDChanging(value);
                     ReportPropertyChanging("FormatCategoryID");
-                    _FormatCategoryID = StructuralObject.SetValidValue(value);
+                    _FormatCategoryID = StructuralObject.SetValidValue(value, "FormatCategoryID");
                     ReportPropertyChanged("FormatCategoryID");
                     OnFormatCategoryIDChanged();
                 }
@@ -5911,7 +5902,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFormatCategoryNameChanging(value);
                     ReportPropertyChanging("FormatCategoryName");
-                    _FormatCategoryName = StructuralObject.SetValidValue(value, false);
+                    _FormatCategoryName = StructuralObject.SetValidValue(value, false, "FormatCategoryName");
                     ReportPropertyChanged("FormatCategoryName");
                     OnFormatCategoryNameChanged();
                 }
@@ -5938,7 +5929,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFormatTypeIDChanging(value);
                     ReportPropertyChanging("FormatTypeID");
-                    _FormatTypeID = StructuralObject.SetValidValue(value);
+                    _FormatTypeID = StructuralObject.SetValidValue(value, "FormatTypeID");
                     ReportPropertyChanged("FormatTypeID");
                     OnFormatTypeIDChanged();
                 }
@@ -5965,7 +5956,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFormatTypeNameChanging(value);
                     ReportPropertyChanging("FormatTypeName");
-                    _FormatTypeName = StructuralObject.SetValidValue(value, false);
+                    _FormatTypeName = StructuralObject.SetValidValue(value, false, "FormatTypeName");
                     ReportPropertyChanged("FormatTypeName");
                     OnFormatTypeNameChanged();
                 }
@@ -5977,7 +5968,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -6009,7 +5999,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6028,7 +6018,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -6053,7 +6043,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnParentIDChanging(value);
                 ReportPropertyChanging("ParentID");
-                _ParentID = StructuralObject.SetValidValue(value);
+                _ParentID = StructuralObject.SetValidValue(value, "ParentID");
                 ReportPropertyChanged("ParentID");
                 OnParentIDChanged();
             }
@@ -6077,7 +6067,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFolderTypeIDChanging(value);
                 ReportPropertyChanging("FolderTypeID");
-                _FolderTypeID = StructuralObject.SetValidValue(value);
+                _FolderTypeID = StructuralObject.SetValidValue(value, "FolderTypeID");
                 ReportPropertyChanged("FolderTypeID");
                 OnFolderTypeIDChanged();
             }
@@ -6101,7 +6091,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnSubscriptionGUIDChanging(value);
                 ReportPropertyChanging("SubscriptionGUID");
-                _SubscriptionGUID = StructuralObject.SetValidValue(value);
+                _SubscriptionGUID = StructuralObject.SetValidValue(value, "SubscriptionGUID");
                 ReportPropertyChanged("SubscriptionGUID");
                 OnSubscriptionGUIDChanged();
             }
@@ -6125,7 +6115,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -6149,7 +6139,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -6160,7 +6150,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -6360,7 +6349,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6379,7 +6368,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFolderIDChanging(value);
                     ReportPropertyChanging("FolderID");
-                    _FolderID = StructuralObject.SetValidValue(value);
+                    _FolderID = StructuralObject.SetValidValue(value, "FolderID");
                     ReportPropertyChanged("FolderID");
                     OnFolderIDChanged();
                 }
@@ -6406,7 +6395,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnGroupGUIDChanging(value);
                     ReportPropertyChanging("GroupGUID");
-                    _GroupGUID = StructuralObject.SetValidValue(value);
+                    _GroupGUID = StructuralObject.SetValidValue(value, "GroupGUID");
                     ReportPropertyChanged("GroupGUID");
                     OnGroupGUIDChanged();
                 }
@@ -6431,7 +6420,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnPermissionChanging(value);
                 ReportPropertyChanging("Permission");
-                _Permission = StructuralObject.SetValidValue(value);
+                _Permission = StructuralObject.SetValidValue(value, "Permission");
                 ReportPropertyChanged("Permission");
                 OnPermissionChanged();
             }
@@ -6455,7 +6444,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -6466,7 +6455,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -6540,7 +6528,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6559,7 +6547,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFolderIDChanging(value);
                     ReportPropertyChanging("FolderID");
-                    _FolderID = StructuralObject.SetValidValue(value);
+                    _FolderID = StructuralObject.SetValidValue(value, "FolderID");
                     ReportPropertyChanged("FolderID");
                     OnFolderIDChanged();
                 }
@@ -6586,7 +6574,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnUserGUIDChanging(value);
                     ReportPropertyChanging("UserGUID");
-                    _UserGUID = StructuralObject.SetValidValue(value);
+                    _UserGUID = StructuralObject.SetValidValue(value, "UserGUID");
                     ReportPropertyChanged("UserGUID");
                     OnUserGUIDChanged();
                 }
@@ -6611,7 +6599,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnPermissionChanging(value);
                 ReportPropertyChanging("Permission");
-                _Permission = StructuralObject.SetValidValue(value);
+                _Permission = StructuralObject.SetValidValue(value, "Permission");
                 ReportPropertyChanged("Permission");
                 OnPermissionChanged();
             }
@@ -6635,7 +6623,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -6646,7 +6634,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -6720,7 +6707,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6739,7 +6726,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -6764,7 +6751,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnParentIDChanging(value);
                 ReportPropertyChanging("ParentID");
-                _ParentID = StructuralObject.SetValidValue(value);
+                _ParentID = StructuralObject.SetValidValue(value, "ParentID");
                 ReportPropertyChanged("ParentID");
                 OnParentIDChanged();
             }
@@ -6790,7 +6777,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFolderTypeIDChanging(value);
                     ReportPropertyChanging("FolderTypeID");
-                    _FolderTypeID = StructuralObject.SetValidValue(value);
+                    _FolderTypeID = StructuralObject.SetValidValue(value, "FolderTypeID");
                     ReportPropertyChanged("FolderTypeID");
                     OnFolderTypeIDChanged();
                 }
@@ -6815,7 +6802,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnSubscriptionGUIDChanging(value);
                 ReportPropertyChanging("SubscriptionGUID");
-                _SubscriptionGUID = StructuralObject.SetValidValue(value);
+                _SubscriptionGUID = StructuralObject.SetValidValue(value, "SubscriptionGUID");
                 ReportPropertyChanged("SubscriptionGUID");
                 OnSubscriptionGUIDChanged();
             }
@@ -6841,7 +6828,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnNameChanging(value);
                     ReportPropertyChanging("Name");
-                    _Name = StructuralObject.SetValidValue(value, false);
+                    _Name = StructuralObject.SetValidValue(value, false, "Name");
                     ReportPropertyChanged("Name");
                     OnNameChanged();
                 }
@@ -6868,7 +6855,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnDateCreatedChanging(value);
                     ReportPropertyChanging("DateCreated");
-                    _DateCreated = StructuralObject.SetValidValue(value);
+                    _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                     ReportPropertyChanged("DateCreated");
                     OnDateCreatedChanged();
                 }
@@ -6893,7 +6880,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNumberOfSubFoldersChanging(value);
                 ReportPropertyChanging("NumberOfSubFolders");
-                _NumberOfSubFolders = StructuralObject.SetValidValue(value);
+                _NumberOfSubFolders = StructuralObject.SetValidValue(value, "NumberOfSubFolders");
                 ReportPropertyChanged("NumberOfSubFolders");
                 OnNumberOfSubFoldersChanged();
             }
@@ -6917,7 +6904,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNumberOfObjectsChanging(value);
                 ReportPropertyChanging("NumberOfObjects");
-                _NumberOfObjects = StructuralObject.SetValidValue(value);
+                _NumberOfObjects = StructuralObject.SetValidValue(value, "NumberOfObjects");
                 ReportPropertyChanged("NumberOfObjects");
                 OnNumberOfObjectsChanged();
             }
@@ -6928,7 +6915,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
     }
     
     /// <summary>
@@ -6958,7 +6944,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -6977,7 +6963,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -7002,7 +6988,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -7026,7 +7012,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -7037,7 +7023,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -7095,7 +7080,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7114,7 +7099,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -7139,7 +7124,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFormatCategoryIDChanging(value);
                 ReportPropertyChanging("FormatCategoryID");
-                _FormatCategoryID = StructuralObject.SetValidValue(value);
+                _FormatCategoryID = StructuralObject.SetValidValue(value, "FormatCategoryID");
                 ReportPropertyChanged("FormatCategoryID");
                 OnFormatCategoryIDChanged();
             }
@@ -7163,7 +7148,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -7187,7 +7172,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFormatXMLChanging(value);
                 ReportPropertyChanging("FormatXML");
-                _FormatXML = StructuralObject.SetValidValue(value, true);
+                _FormatXML = StructuralObject.SetValidValue(value, true, "FormatXML");
                 ReportPropertyChanged("FormatXML");
                 OnFormatXMLChanged();
             }
@@ -7211,7 +7196,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnMimeTypeChanging(value);
                 ReportPropertyChanging("MimeType");
-                _MimeType = StructuralObject.SetValidValue(value, false);
+                _MimeType = StructuralObject.SetValidValue(value, false, "MimeType");
                 ReportPropertyChanged("MimeType");
                 OnMimeTypeChanged();
             }
@@ -7235,7 +7220,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnExtensionChanging(value);
                 ReportPropertyChanging("Extension");
-                _Extension = StructuralObject.SetValidValue(value, true);
+                _Extension = StructuralObject.SetValidValue(value, true, "Extension");
                 ReportPropertyChanged("Extension");
                 OnExtensionChanged();
             }
@@ -7246,7 +7231,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -7362,7 +7346,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7381,7 +7365,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -7406,7 +7390,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnFormatTypeIDChanging(value);
                 ReportPropertyChanging("FormatTypeID");
-                _FormatTypeID = StructuralObject.SetValidValue(value);
+                _FormatTypeID = StructuralObject.SetValidValue(value, "FormatTypeID");
                 ReportPropertyChanged("FormatTypeID");
                 OnFormatTypeIDChanged();
             }
@@ -7430,7 +7414,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -7441,7 +7425,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -7555,7 +7538,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7574,7 +7557,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -7599,7 +7582,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -7610,7 +7593,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -7662,7 +7644,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7681,7 +7663,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnLanguageCodeChanging(value);
                     ReportPropertyChanging("LanguageCode");
-                    _LanguageCode = StructuralObject.SetValidValue(value, false);
+                    _LanguageCode = StructuralObject.SetValidValue(value, false, "LanguageCode");
                     ReportPropertyChanged("LanguageCode");
                     OnLanguageCodeChanged();
                 }
@@ -7706,7 +7688,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, true);
+                _Name = StructuralObject.SetValidValue(value, true, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -7717,7 +7699,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -7781,7 +7762,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7800,7 +7781,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnGUIDChanging(value);
                     ReportPropertyChanging("GUID");
-                    _GUID = StructuralObject.SetValidValue(value);
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
                     ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
@@ -7825,7 +7806,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnObjectGUIDChanging(value);
                 ReportPropertyChanging("ObjectGUID");
-                _ObjectGUID = StructuralObject.SetValidValue(value);
+                _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
                 ReportPropertyChanged("ObjectGUID");
                 OnObjectGUIDChanged();
             }
@@ -7849,7 +7830,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnLanguageCodeChanging(value);
                 ReportPropertyChanging("LanguageCode");
-                _LanguageCode = StructuralObject.SetValidValue(value, true);
+                _LanguageCode = StructuralObject.SetValidValue(value, true, "LanguageCode");
                 ReportPropertyChanged("LanguageCode");
                 OnLanguageCodeChanged();
             }
@@ -7873,7 +7854,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnMetadataSchemaGUIDChanging(value);
                 ReportPropertyChanging("MetadataSchemaGUID");
-                _MetadataSchemaGUID = StructuralObject.SetValidValue(value);
+                _MetadataSchemaGUID = StructuralObject.SetValidValue(value, "MetadataSchemaGUID");
                 ReportPropertyChanged("MetadataSchemaGUID");
                 OnMetadataSchemaGUIDChanged();
             }
@@ -7897,7 +7878,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnRevisionIDChanging(value);
                 ReportPropertyChanging("RevisionID");
-                _RevisionID = StructuralObject.SetValidValue(value);
+                _RevisionID = StructuralObject.SetValidValue(value, "RevisionID");
                 ReportPropertyChanged("RevisionID");
                 OnRevisionIDChanged();
             }
@@ -7921,7 +7902,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnMetadataXMLChanging(value);
                 ReportPropertyChanging("MetadataXML");
-                _MetadataXML = StructuralObject.SetValidValue(value, false);
+                _MetadataXML = StructuralObject.SetValidValue(value, false, "MetadataXML");
                 ReportPropertyChanged("MetadataXML");
                 OnMetadataXMLChanged();
             }
@@ -7947,7 +7928,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnDateCreatedChanging(value);
                     ReportPropertyChanging("DateCreated");
-                    _DateCreated = StructuralObject.SetValidValue(value);
+                    _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                     ReportPropertyChanged("DateCreated");
                     OnDateCreatedChanged();
                 }
@@ -7972,7 +7953,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnEditingUserGUIDChanging(value);
                 ReportPropertyChanging("EditingUserGUID");
-                _EditingUserGUID = StructuralObject.SetValidValue(value);
+                _EditingUserGUID = StructuralObject.SetValidValue(value, "EditingUserGUID");
                 ReportPropertyChanged("EditingUserGUID");
                 OnEditingUserGUIDChanged();
             }
@@ -7983,7 +7964,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -8133,7 +8113,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -8152,7 +8132,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnGUIDChanging(value);
                     ReportPropertyChanging("GUID");
-                    _GUID = StructuralObject.SetValidValue(value);
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
                     ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
@@ -8177,7 +8157,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -8201,7 +8181,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnSchemaXMLChanging(value);
                 ReportPropertyChanging("SchemaXML");
-                _SchemaXML = StructuralObject.SetValidValue(value, false);
+                _SchemaXML = StructuralObject.SetValidValue(value, false, "SchemaXML");
                 ReportPropertyChanged("SchemaXML");
                 OnSchemaXMLChanged();
             }
@@ -8225,7 +8205,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -8236,7 +8216,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -8338,7 +8317,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -8357,7 +8336,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnMetadataSchemaGUIDChanging(value);
                     ReportPropertyChanging("MetadataSchemaGUID");
-                    _MetadataSchemaGUID = StructuralObject.SetValidValue(value);
+                    _MetadataSchemaGUID = StructuralObject.SetValidValue(value, "MetadataSchemaGUID");
                     ReportPropertyChanged("MetadataSchemaGUID");
                     OnMetadataSchemaGUIDChanged();
                 }
@@ -8384,7 +8363,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnGroupGUIDChanging(value);
                     ReportPropertyChanging("GroupGUID");
-                    _GroupGUID = StructuralObject.SetValidValue(value);
+                    _GroupGUID = StructuralObject.SetValidValue(value, "GroupGUID");
                     ReportPropertyChanged("GroupGUID");
                     OnGroupGUIDChanged();
                 }
@@ -8409,7 +8388,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnPermissionChanging(value);
                 ReportPropertyChanging("Permission");
-                _Permission = StructuralObject.SetValidValue(value);
+                _Permission = StructuralObject.SetValidValue(value, "Permission");
                 ReportPropertyChanged("Permission");
                 OnPermissionChanged();
             }
@@ -8433,7 +8412,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -8444,7 +8423,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -8518,7 +8496,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -8537,7 +8515,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnMetadataSchemaGUIDChanging(value);
                     ReportPropertyChanging("MetadataSchemaGUID");
-                    _MetadataSchemaGUID = StructuralObject.SetValidValue(value);
+                    _MetadataSchemaGUID = StructuralObject.SetValidValue(value, "MetadataSchemaGUID");
                     ReportPropertyChanged("MetadataSchemaGUID");
                     OnMetadataSchemaGUIDChanged();
                 }
@@ -8564,7 +8542,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnUserGUIDChanging(value);
                     ReportPropertyChanging("UserGUID");
-                    _UserGUID = StructuralObject.SetValidValue(value);
+                    _UserGUID = StructuralObject.SetValidValue(value, "UserGUID");
                     ReportPropertyChanged("UserGUID");
                     OnUserGUIDChanged();
                 }
@@ -8589,7 +8567,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnPermissionChanging(value);
                 ReportPropertyChanging("Permission");
-                _Permission = StructuralObject.SetValidValue(value);
+                _Permission = StructuralObject.SetValidValue(value, "Permission");
                 ReportPropertyChanged("Permission");
                 OnPermissionChanged();
             }
@@ -8613,7 +8591,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -8624,7 +8602,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -8696,7 +8673,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -8715,7 +8692,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnGUIDChanging(value);
                     ReportPropertyChanging("GUID");
-                    _GUID = StructuralObject.SetValidValue(value);
+                    _GUID = StructuralObject.SetValidValue(value, "GUID");
                     ReportPropertyChanged("GUID");
                     OnGUIDChanged();
                 }
@@ -8740,7 +8717,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnObjectTypeIDChanging(value);
                 ReportPropertyChanging("ObjectTypeID");
-                _ObjectTypeID = StructuralObject.SetValidValue(value);
+                _ObjectTypeID = StructuralObject.SetValidValue(value, "ObjectTypeID");
                 ReportPropertyChanged("ObjectTypeID");
                 OnObjectTypeIDChanged();
             }
@@ -8764,7 +8741,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -8775,7 +8752,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -8981,7 +8957,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9000,7 +8976,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnObjectGUIDChanging(value);
                     ReportPropertyChanging("ObjectGUID");
-                    _ObjectGUID = StructuralObject.SetValidValue(value);
+                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
                     ReportPropertyChanged("ObjectGUID");
                     OnObjectGUIDChanged();
                 }
@@ -9027,7 +9003,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnFolderIDChanging(value);
                     ReportPropertyChanging("FolderID");
-                    _FolderID = StructuralObject.SetValidValue(value);
+                    _FolderID = StructuralObject.SetValidValue(value, "FolderID");
                     ReportPropertyChanged("FolderID");
                     OnFolderIDChanged();
                 }
@@ -9052,7 +9028,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnObjectFolderTypeIDChanging(value);
                 ReportPropertyChanging("ObjectFolderTypeID");
-                _ObjectFolderTypeID = StructuralObject.SetValidValue(value);
+                _ObjectFolderTypeID = StructuralObject.SetValidValue(value, "ObjectFolderTypeID");
                 ReportPropertyChanged("ObjectFolderTypeID");
                 OnObjectFolderTypeIDChanged();
             }
@@ -9076,7 +9052,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -9087,7 +9063,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -9237,7 +9212,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9256,7 +9231,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnObject1GUIDChanging(value);
                     ReportPropertyChanging("Object1GUID");
-                    _Object1GUID = StructuralObject.SetValidValue(value);
+                    _Object1GUID = StructuralObject.SetValidValue(value, "Object1GUID");
                     ReportPropertyChanged("Object1GUID");
                     OnObject1GUIDChanged();
                 }
@@ -9283,7 +9258,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnObject2GUIDChanging(value);
                     ReportPropertyChanging("Object2GUID");
-                    _Object2GUID = StructuralObject.SetValidValue(value);
+                    _Object2GUID = StructuralObject.SetValidValue(value, "Object2GUID");
                     ReportPropertyChanged("Object2GUID");
                     OnObject2GUIDChanged();
                 }
@@ -9308,7 +9283,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnObjectRelationTypeIDChanging(value);
                 ReportPropertyChanging("ObjectRelationTypeID");
-                _ObjectRelationTypeID = StructuralObject.SetValidValue(value);
+                _ObjectRelationTypeID = StructuralObject.SetValidValue(value, "ObjectRelationTypeID");
                 ReportPropertyChanged("ObjectRelationTypeID");
                 OnObjectRelationTypeIDChanged();
             }
@@ -9332,7 +9307,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnSequenceChanging(value);
                 ReportPropertyChanging("Sequence");
-                _Sequence = StructuralObject.SetValidValue(value);
+                _Sequence = StructuralObject.SetValidValue(value, "Sequence");
                 ReportPropertyChanged("Sequence");
                 OnSequenceChanged();
             }
@@ -9356,7 +9331,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDateCreatedChanging(value);
                 ReportPropertyChanging("DateCreated");
-                _DateCreated = StructuralObject.SetValidValue(value);
+                _DateCreated = StructuralObject.SetValidValue(value, "DateCreated");
                 ReportPropertyChanged("DateCreated");
                 OnDateCreatedChanged();
             }
@@ -9367,7 +9342,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -9513,7 +9487,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9532,7 +9506,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -9557,7 +9531,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -9568,7 +9542,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -9622,7 +9595,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9641,7 +9614,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -9666,7 +9639,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -9677,7 +9650,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -9731,7 +9703,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9750,7 +9722,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnIDChanging(value);
                     ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
+                    _ID = StructuralObject.SetValidValue(value, "ID");
                     ReportPropertyChanged("ID");
                     OnIDChanged();
                 }
@@ -9775,7 +9747,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -9786,7 +9758,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
         #region Navigation Properties
     
         /// <summary>
@@ -9842,7 +9813,7 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-        #region Primitive Properties
+        #region Simple Properties
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -9861,7 +9832,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnTableIdentifierChanging(value);
                     ReportPropertyChanging("TableIdentifier");
-                    _TableIdentifier = StructuralObject.SetValidValue(value, false);
+                    _TableIdentifier = StructuralObject.SetValidValue(value, false, "TableIdentifier");
                     ReportPropertyChanged("TableIdentifier");
                     OnTableIdentifierChanged();
                 }
@@ -9888,7 +9859,7 @@ namespace Chaos.Mcm.Data.EF
                 {
                     OnPermission1Changing(value);
                     ReportPropertyChanging("Permission1");
-                    _Permission1 = StructuralObject.SetValidValue(value);
+                    _Permission1 = StructuralObject.SetValidValue(value, "Permission1");
                     ReportPropertyChanged("Permission1");
                     OnPermission1Changed();
                 }
@@ -9913,7 +9884,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnNameChanging(value);
                 ReportPropertyChanging("Name");
-                _Name = StructuralObject.SetValidValue(value, false);
+                _Name = StructuralObject.SetValidValue(value, false, "Name");
                 ReportPropertyChanged("Name");
                 OnNameChanged();
             }
@@ -9937,7 +9908,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 OnDescriptionChanging(value);
                 ReportPropertyChanging("Description");
-                _Description = StructuralObject.SetValidValue(value, true);
+                _Description = StructuralObject.SetValidValue(value, true, "Description");
                 ReportPropertyChanged("Description");
                 OnDescriptionChanged();
             }
@@ -9948,7 +9919,6 @@ namespace Chaos.Mcm.Data.EF
 
         #endregion
 
-    
     }
 
     #endregion
@@ -9967,5 +9937,4 @@ namespace Chaos.Mcm.Data.EF
 
     #endregion
 
-    
 }

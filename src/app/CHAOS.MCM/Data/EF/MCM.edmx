@@ -1,39 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MCMModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="MCMModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="MCMModelStoreContainer">
-          <EntitySet Name="AccessPoint" EntityType="MCMModel.Store.AccessPoint" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="AccessPoint_Group_Join" EntityType="MCMModel.Store.AccessPoint_Group_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="AccessPoint_Object_Join" EntityType="MCMModel.Store.AccessPoint_Object_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="AccessPoint_User_Join" EntityType="MCMModel.Store.AccessPoint_User_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="AccessProvider" EntityType="MCMModel.Store.AccessProvider" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Conversion" EntityType="MCMModel.Store.Conversion" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Destination" EntityType="MCMModel.Store.Destination" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="File" EntityType="MCMModel.Store.File" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Folder" EntityType="MCMModel.Store.Folder" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Folder_Group_Join" EntityType="MCMModel.Store.Folder_Group_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Folder_User_Join" EntityType="MCMModel.Store.Folder_User_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="FolderType" EntityType="MCMModel.Store.FolderType" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Format" EntityType="MCMModel.Store.Format" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="FormatCategory" EntityType="MCMModel.Store.FormatCategory" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="FormatType" EntityType="MCMModel.Store.FormatType" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Language" EntityType="MCMModel.Store.Language" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Metadata" EntityType="MCMModel.Store.Metadata" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="MetadataSchema" EntityType="MCMModel.Store.MetadataSchema" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="MetadataSchema_Group_Join" EntityType="MCMModel.Store.MetadataSchema_Group_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="MetadataSchema_User_Join" EntityType="MCMModel.Store.MetadataSchema_User_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Object" EntityType="MCMModel.Store.Object" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Object_Folder_Join" EntityType="MCMModel.Store.Object_Folder_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Object_Object_Join" EntityType="MCMModel.Store.Object_Object_Join" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="ObjectFolderType" EntityType="MCMModel.Store.ObjectFolderType" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="ObjectRelationType" EntityType="MCMModel.Store.ObjectRelationType" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="ObjectType" EntityType="MCMModel.Store.ObjectType" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="Permission" EntityType="MCMModel.Store.Permission" store:Type="Tables" Schema="MCM" />
-          <EntitySet Name="DestinationInfo" EntityType="MCMModel.Store.DestinationInfo" store:Type="Views" store:Schema="MCM" store:Name="DestinationInfo">
+          <EntitySet Name="AccessPoint" EntityType="MCMModel.Store.AccessPoint" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="AccessPoint_Group_Join" EntityType="MCMModel.Store.AccessPoint_Group_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="AccessPoint_Object_Join" EntityType="MCMModel.Store.AccessPoint_Object_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="AccessPoint_User_Join" EntityType="MCMModel.Store.AccessPoint_User_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="AccessProvider" EntityType="MCMModel.Store.AccessProvider" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Conversion" EntityType="MCMModel.Store.Conversion" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Destination" EntityType="MCMModel.Store.Destination" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="File" EntityType="MCMModel.Store.File" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Folder" EntityType="MCMModel.Store.Folder" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Folder_Group_Join" EntityType="MCMModel.Store.Folder_Group_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Folder_User_Join" EntityType="MCMModel.Store.Folder_User_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="FolderType" EntityType="MCMModel.Store.FolderType" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Format" EntityType="MCMModel.Store.Format" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="FormatCategory" EntityType="MCMModel.Store.FormatCategory" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="FormatType" EntityType="MCMModel.Store.FormatType" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Language" EntityType="MCMModel.Store.Language" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Metadata" EntityType="MCMModel.Store.Metadata" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="MetadataSchema" EntityType="MCMModel.Store.MetadataSchema" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="MetadataSchema_Group_Join" EntityType="MCMModel.Store.MetadataSchema_Group_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="MetadataSchema_User_Join" EntityType="MCMModel.Store.MetadataSchema_User_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Object" EntityType="MCMModel.Store.Object" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Object_Folder_Join" EntityType="MCMModel.Store.Object_Folder_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Object_Object_Join" EntityType="MCMModel.Store.Object_Object_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ObjectFolderType" EntityType="MCMModel.Store.ObjectFolderType" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ObjectRelationType" EntityType="MCMModel.Store.ObjectRelationType" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="ObjectType" EntityType="MCMModel.Store.ObjectType" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="Permission" EntityType="MCMModel.Store.Permission" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="DestinationInfo" EntityType="MCMModel.Store.DestinationInfo" store:Type="Views" store:Schema="MCM" store:Name="DestinationInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
             <DefiningQuery>SELECT
       `DestinationInfo`.`ID`, 
       `DestinationInfo`.`SubscriptionGUID`, 
@@ -44,7 +44,7 @@
       `DestinationInfo`.`Token`
       FROM `DestinationInfo` AS `DestinationInfo`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="FileInfo" EntityType="MCMModel.Store.FileInfo" store:Type="Views" store:Schema="MCM" store:Name="FileInfo">
+          <EntitySet Name="FileInfo" EntityType="MCMModel.Store.FileInfo" store:Type="Views" store:Schema="MCM" store:Name="FileInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
             <DefiningQuery>SELECT
       `FileInfo`.`FileID`, 
       `FileInfo`.`ObjectGUID`, 
@@ -68,7 +68,7 @@
       `FileInfo`.`FormatTypeName`
       FROM `FileInfo` AS `FileInfo`</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="FolderInfo" EntityType="MCMModel.Store.FolderInfo" store:Type="Views" store:Schema="MCM" store:Name="FolderInfo">
+          <EntitySet Name="FolderInfo" EntityType="MCMModel.Store.FolderInfo" store:Type="Views" store:Schema="MCM" store:Name="FolderInfo" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator">
             <DefiningQuery>SELECT
       `FolderInfo`.`ID`, 
       `FolderInfo`.`ParentID`, 
@@ -1220,7 +1220,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="MCMModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <Schema Namespace="MCMModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MCMEntities" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="AccessPoint" EntityType="MCMModel.AccessPoint" />
           <EntitySet Name="AccessPoint_Group_Join" EntityType="MCMModel.AccessPoint_Group_Join" />
@@ -2380,7 +2380,7 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MCMModelStoreContainer" CdmEntityContainer="MCMEntities">
           <EntitySetMapping Name="AccessPoint"><EntityTypeMapping TypeName="MCMModel.AccessPoint"><MappingFragment StoreEntitySet="AccessPoint">
             <ScalarProperty Name="GUID" ColumnName="GUID" />
@@ -2686,7 +2686,7 @@
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
