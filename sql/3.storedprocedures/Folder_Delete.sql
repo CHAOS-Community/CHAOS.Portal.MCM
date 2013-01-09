@@ -21,17 +21,20 @@ BEGIN
         
     START TRANSACTION;
 
-    DELETE 
-      FROM	Folder_Group_Join
-     WHERE	FolderID = ID;
+      DELETE FROM	
+        Folder_Group_Join
+      WHERE	
+        FolderID = ID;
 
-    DELETE 
-      FROM	Folder_User_Join
-     WHERE	FolderID = ID;
-     
-    DELETE 
-      FROM	Folder
-     WHERE	Folder.ID = ID;
+      DELETE FROM	
+        Folder_User_Join
+      WHERE	
+        FolderID = ID;
+       
+      DELETE FROM	
+        Folder
+      WHERE	
+        Folder.ID = ID;
 
     COMMIT;
         

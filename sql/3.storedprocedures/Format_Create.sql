@@ -1,8 +1,5 @@
-DROP PROCEDURE IF EXISTS Format_Create;
-
-DELIMITER $$
-
-CREATE PROCEDURE Format_Create(
+CREATE PROCEDURE Format_Create
+(
     IN  FormatCategoryID    INT,
     IN  Name                VARCHAR(255),
     IN  FormatXML           TEXT,
@@ -11,8 +8,10 @@ CREATE PROCEDURE Format_Create(
 )
 BEGIN
 
-    INSERT INTO MCM.Format( FormatCategoryID, Name, FormatXML, MimeType, Extension )
-                    VALUES( FormatCategoryID, Name, FormatXML, MimeType, Extension );
+    INSERT INTO Format
+    	( FormatCategoryID, Name, FormatXML, MimeType, Extension )
+    VALUES
+    	( FormatCategoryID, Name, FormatXML, MimeType, Extension );
     
     SELECT last_insert_id();
     

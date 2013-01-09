@@ -41,6 +41,7 @@ namespace Chaos.Mcm.Extension
         {
             var connectionString = XDocument.Parse( configuration ).Root.Attribute( "ConnectionString" ).Value;
 
+            // Provides backwards compaitibility with configurations from versino 5 and earlier.
             ConnectionString = connectionString.Replace( "metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;", 
                                                          "metadata=res://*/Data.EF.MCM.csdl|res://*/Data.EF.MCM.ssdl|res://*/Data.EF.MCM.msl;" );
 
