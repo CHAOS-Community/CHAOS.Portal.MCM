@@ -220,7 +220,7 @@ namespace CHAOS.MCM.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Object_Get(objectGuid, true, true, true, true, true).ToDTO();
+                return db.Object_Get(objectGuid, true, true, true, true, true).ToList().ToDTO();
             }
         }
 
@@ -228,7 +228,7 @@ namespace CHAOS.MCM.Data.EF
         {
             using (var db = CreateMcmEntities())
             {
-                return db.Object_Get(objectGuids, true, true, true, true, true).ToDTO();
+                return db.Object_Get(objectGuids, true, true, true, true, true).ToList().ToDTO();
             }
         }
 
