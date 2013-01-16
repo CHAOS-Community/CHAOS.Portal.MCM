@@ -6,9 +6,9 @@ using CHAOS;
 using CHAOS.Extensions;
 using Chaos.Mcm.Data.EF;
 using Chaos.Mcm.Permission;
-using CHAOS.Portal.Exception;
 using Chaos.Portal;
 using Chaos.Portal.Data.Dto.Standard;
+using Chaos.Portal.Exceptions;
 using MetadataSchema = Chaos.Mcm.Data.Dto.Standard.MetadataSchema;
 
 namespace Chaos.Mcm.Extension

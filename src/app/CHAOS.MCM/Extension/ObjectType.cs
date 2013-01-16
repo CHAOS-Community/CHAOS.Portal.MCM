@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CHAOS.Portal.Exception;
 using Chaos.Mcm.Data.EF;
 using Chaos.Portal;
 using Chaos.Portal.Data.Dto.Standard;
-using ObjectType = Chaos.Mcm.Data.Dto.Standard.ObjectType;
+using Chaos.Portal.Exceptions;
 
 namespace Chaos.Mcm.Extension
 {

@@ -1,14 +1,14 @@
 CREATE PROCEDURE FolderType_Update
 (
     IN  ID      INT,
-    IN  Name    VARCHAR(255),
+    IN  Name    VARCHAR(255) 
 )
 BEGIN
 
     UPDATE
         FolderType
     SET	
-        FolderType.Name = @Name
+        FolderType.Name = Name
     WHERE	
         FolderType.ID = ID;
      

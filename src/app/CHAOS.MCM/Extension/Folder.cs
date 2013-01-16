@@ -5,11 +5,9 @@ using CHAOS;
 using CHAOS.Extensions;
 using Chaos.Mcm.Data.Dto;
 using Chaos.Mcm.Data.Dto.Standard;
-using CHAOS.Portal.Exception;
-using Chaos.Mcm.Exception;
 using Chaos.Portal;
 using Chaos.Portal.Data.Dto.Standard;
-using FolderInfo = Chaos.Mcm.Data.Dto.Standard.FolderInfo;
+using Chaos.Portal.Exceptions;
 using FolderPermission = Chaos.Mcm.Data.Dto.Standard.FolderPermission;
 using IFolder = Chaos.Mcm.Permission.IFolder;
 

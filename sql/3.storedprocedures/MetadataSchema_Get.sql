@@ -8,9 +8,9 @@ CREATE PROCEDURE MetadataSchema_Get
 BEGIN
     
     SET @sql_text := concat( 'SELECT  MS.* ',
-                               'FROM  MCM.MetadataSchema AS MS ' ,
-                                     'LEFT OUTER JOIN MCM.MetadataSchema_Group_Join ON MS.GUID = MetadataSchema_Group_Join.MetadataSchemaGUID ',
-                                     'LEFT OUTER JOIN MCM.MetadataSchema_User_Join  ON MS.GUID = MetadataSchema_User_Join.MetadataSchemaGUID ',
+                               'FROM  MetadataSchema AS MS ' ,
+                                     'LEFT OUTER JOIN MetadataSchema_Group_Join ON MS.GUID = MetadataSchema_Group_Join.MetadataSchemaGUID ',
+                                     'LEFT OUTER JOIN MetadataSchema_User_Join  ON MS.GUID = MetadataSchema_User_Join.MetadataSchemaGUID ',
                               'WHERE  (1=1) ');
     IF( MetadataSchemaGUID IS NOT NULL ) THEN
         SET @sql_text := concat( @sql_text, 

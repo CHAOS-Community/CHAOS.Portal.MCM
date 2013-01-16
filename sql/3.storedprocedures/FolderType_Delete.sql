@@ -1,7 +1,6 @@
 CREATE PROCEDURE FolderType_Delete
 (
-    IN ID   INT,
-)
+    IN ID   INT)
 BEGIN
 
     DELETE FROM  

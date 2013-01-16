@@ -6,11 +6,10 @@ using CHAOS.Extensions;
 using CHAOS.Index;
 using Chaos.Mcm.Data.EF;
 using Chaos.Mcm.Permission;
-using CHAOS.Portal.Exception;
 using Chaos.Portal;
 using Chaos.Portal.Data.Dto;
 using Chaos.Portal.Data.Dto.Standard;
-using Object = Chaos.Mcm.Data.Dto.Standard.Object;
+using Chaos.Portal.Exceptions;
 
 namespace Chaos.Mcm.Extension
 {

@@ -5,7 +5,8 @@ using CHAOS.Extensions;
 using Chaos.Mcm.Data.Dto;
 using Chaos.Mcm.Data.Dto.Standard;
 using Chaos.Mcm.Permission;
-using CHAOS.Portal.Exception;
+using Chaos.Portal.Exceptions;
+
 
 namespace Chaos.Mcm.Data.EF
 {
