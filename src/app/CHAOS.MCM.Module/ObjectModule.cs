@@ -109,13 +109,13 @@ namespace CHAOS.MCM.Module
             var objectGuid      = objectGUID.ToGuid();
             var accessPointGuid = accessPointGUID.ToGuid();
             var userGuid        = callContext.User.GUID.ToGuid();
-            var groupGuids      = callContext.Groups.Select(item => item.GUID.ToGuid());
+            var groupGuids      = callContext.Groups.Select(item => item.GUID.ToGuid()).ToList();
 
             if (McmRepository.GetAccessPoint(accessPointGuid, userGuid, groupGuids, (uint) AccessPointPermission.Write).FirstOrDefault() == null)
                 throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
 
             var result = McmRepository.SetAccessPointPublishSettings(accessPointGuid, objectGuid, startDate, endDate);
-                
+
             PutObjectInIndex( callContext.IndexManager.GetIndex<ObjectModule>(), McmRepository.GetObject(objectGuid, true, true, true, true, true) );
 
             return new ScalarResult( (int) result );
