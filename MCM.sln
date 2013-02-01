@@ -68,6 +68,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.storedprocedures", "4.sto
 		sql\4.storedprocedures\ObjectFolderType_Create.sql = sql\4.storedprocedures\ObjectFolderType_Create.sql
 		sql\4.storedprocedures\ObjectRelation_Create.sql = sql\4.storedprocedures\ObjectRelation_Create.sql
 		sql\4.storedprocedures\ObjectRelation_Delete.sql = sql\4.storedprocedures\ObjectRelation_Delete.sql
+		sql\4.storedprocedures\ObjectRelationInfo_Get.sql = sql\4.storedprocedures\ObjectRelationInfo_Get.sql
 		sql\4.storedprocedures\ObjectRelationType_Create.sql = sql\4.storedprocedures\ObjectRelationType_Create.sql
 		sql\4.storedprocedures\ObjectRelationType_Delete.sql = sql\4.storedprocedures\ObjectRelationType_Delete.sql
 		sql\4.storedprocedures\ObjectRelationType_Get.sql = sql\4.storedprocedures\ObjectRelationType_Get.sql
@@ -133,6 +134,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.changes", "2.changes", "{
 		sql\2.changes\06.00.00.0001.sql = sql\2.changes\06.00.00.0001.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.data", "6.data", "{ACF921D6-5711-49C8-B563-8B08FDF7BD1B}"
+	ProjectSection(SolutionItems) = preProject
+		sql\6.data\initial.sql = sql\6.data\initial.sql
+		sql\6.data\optional_types.sql = sql\6.data\optional_types.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -166,6 +173,7 @@ Global
 		{5D7F85E6-B1F8-46DC-B9CA-FABC9ABAE664} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
 		{9B3BA1A5-AC4A-4524-9AE1-9D086AA422D9} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
 		{3218B79C-AF33-40C5-8C3F-9BA125D66706} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
+		{ACF921D6-5711-49C8-B563-8B08FDF7BD1B} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
 		{CD79B737-57A5-4A87-872D-E3002CC8A61B} = {3BD472E0-2E86-487E-B31C-D5D9A030FC43}
 	EndGlobalSection
 EndGlobal

@@ -13,11 +13,13 @@
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["mcm"].ConnectionString;
 
+        #region ObjectRelationInfo_Get
+
         [Test]
         public void ObjectRelationInfoGet_GivenAnObjectGuidThatDoesntExist_ReturnsAEmptyList()
         {
-            var connection            = this.Make_StoredProcedure();
-            var nonExistantObjectGuid = new Guid("bcfb5b11-f02b-4188-89d1-73357670fc44");
+            var connection = this.Make_StoredProcedure();
+            var nonExistantObjectGuid = new Guid("77777777-7777-7777-7777-777777777777");
 
             var result = connection.ObjectRelationInfoGet(nonExistantObjectGuid);
 
@@ -27,14 +29,16 @@
         [Test]
         public void ObjectRelationInfoGet_GivenAnObjectGuidThatExist_ReturnsAListWithOneObjectRelationInfo()
         {
-            var connection          = Make_StoredProcedure();
+            var connection = Make_StoredProcedure();
             var existantObject1Guid = new Guid("00000000-0000-0000-0000-000000000001");
 
             var result = connection.ObjectRelationInfoGet(existantObject1Guid);
-            
+
             Assert.IsNotEmpty(result);
             Assert.AreEqual(existantObject1Guid, result.First().Object1Guid);
         }
+
+        #endregion
 
         #region Helpers
 

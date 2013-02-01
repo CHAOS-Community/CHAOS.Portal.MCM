@@ -26,7 +26,7 @@
         #endregion
         #region Properties
 
-        public IEnumerable<KeyValuePair<string, object>[]> ExecuteQuery(IEnumerable<MySqlParameter> parameters)
+        public IList<TResultType> ExecuteQuery<TResultType>(IEnumerable<MySqlParameter> parameters)
         {
             using (var connnection = new MySqlConnection(_connectionString))
             using (var command     = new MySqlCommand())
@@ -41,6 +41,8 @@
 
                 using (var reader = command.ExecuteReader())
                 {
+                    var list = new List<KeyValuePair<string, object>[]>();
+
                     while (reader.Read())
                     {
                         var row = new KeyValuePair<string, object>[reader.FieldCount];
@@ -48,8 +50,10 @@
                         for (var i = 0; i < reader.FieldCount; i++)
                             row[i] = new KeyValuePair<string, object>(reader.GetName(i), reader.GetValue(i));
 
-                        yield return row;
+                        list.Add(row);
                     }
+
+                    return list.ToDto<TResultType>();
                 }
             }
         }
@@ -64,7 +68,7 @@
                     new MySqlParameter("Object1Guid", objectGuid.ToByteArray()),
                 };
 
-            return ExecuteQuery(parameters).ToDto<ObjectRelationInfo>();
+            return ExecuteQuery<ObjectRelationInfo>(parameters);
         }
 
         #endregion

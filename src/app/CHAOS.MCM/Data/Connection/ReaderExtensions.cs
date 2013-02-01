@@ -24,7 +24,7 @@
 
         #endregion
 
-        public static IList<TResultType> ToDto<TResultType>(this IEnumerable<KeyValuePair<string, object>[]> readerData)
+        public static IList<TResultType> ToDto<TResultType>(this IList<KeyValuePair<string, object>[]> readerData)
         {
             var type = typeof(TResultType);
 
@@ -48,6 +48,7 @@
         {
             var result = new ObjectRelationInfo();
 
+            result.Object1Guid = new Guid((byte[])row[0].Value);
 
             return result;
         }
