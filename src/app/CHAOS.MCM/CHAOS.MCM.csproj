@@ -94,6 +94,7 @@
     <Compile Include="Data\Dto\Standard\MetadataSchema.cs" />
     <Compile Include="Data\Dto\Standard\Object.cs" />
     <Compile Include="Data\Dto\Standard\ObjectObjectJoin.cs" />
+    <Compile Include="Data\Dto\Standard\ObjectRelation.cs" />
     <Compile Include="Data\Dto\Standard\ObjectRelationInfo.cs" />
     <Compile Include="Data\Dto\Standard\ObjectRelationType.cs" />
     <Compile Include="Data\Dto\Standard\ObjectType.cs" />

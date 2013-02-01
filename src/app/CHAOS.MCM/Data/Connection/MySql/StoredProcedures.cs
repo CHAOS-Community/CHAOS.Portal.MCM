@@ -26,13 +26,13 @@
         #endregion
         #region Properties
 
-        public IList<TResultType> ExecuteQuery<TResultType>(IEnumerable<MySqlParameter> parameters)
+        public IList<TResultType> ExecuteQuery<TResultType>(string storedProcedure, IEnumerable<MySqlParameter> parameters)
         {
-            using (var connnection = new MySqlConnection(_connectionString))
+            using (var connnection = new MySqlConnection(this._connectionString))
             using (var command     = new MySqlCommand())
             {
                 command.Connection  = connnection;
-                command.CommandText = "ObjectRelationInfo_Get";
+                command.CommandText = storedProcedure;
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddRange(parameters.ToArray());
@@ -57,6 +57,23 @@
                 }
             }
         }
+        
+        public long ExecuteNonQuery(string storedProcedure, IEnumerable<MySqlParameter> parameters)
+        {
+            using (var connnection = new MySqlConnection(_connectionString))
+            using (var command     = new MySqlCommand())
+            {
+                command.Connection  = connnection;
+                command.CommandText = storedProcedure;
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddRange(parameters.ToArray());
+
+                connnection.Open();
+
+                return (long) command.ExecuteScalar();
+            }
+        }
 
         #endregion
         #region Business Logic
@@ -68,7 +85,21 @@
                     new MySqlParameter("Object1Guid", objectGuid.ToByteArray()),
                 };
 
-            return ExecuteQuery<ObjectRelationInfo>(parameters);
+            return ExecuteQuery<ObjectRelationInfo>("ObjectRelationInfo_Get", parameters);
+        }
+
+        public long ObjectRelationCreate(ObjectRelation objectRelation)
+        {
+            var parameters = new List<MySqlParameter>
+                {
+                    new MySqlParameter("Object1Guid", objectRelation.Object1Guid.ToByteArray()),
+                    new MySqlParameter("Object2Guid", objectRelation.Object2Guid.ToByteArray()),
+                    new MySqlParameter("ObjectRelationTypeID", objectRelation.ObjectRelationTypeID),
+                    new MySqlParameter("MetadataGuid", objectRelation.MetadataGuid.ToByteArray()),
+                    new MySqlParameter("Sequence", objectRelation.Sequence)
+                };
+
+            return this.ExecuteNonQuery("ObjectRelation_Create",parameters);
         }
 
         #endregion

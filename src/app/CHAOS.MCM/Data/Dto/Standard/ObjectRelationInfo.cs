@@ -37,7 +37,7 @@
                    ObjectRelationType.Equals(to.ObjectRelationType) &&
                    LanguageCode.Equals(to.LanguageCode) &&
                    MetadataSchemaGuid.Equals(to.MetadataSchemaGuid) &&
-                   MetadataXml.Equals(to.MetadataXml);
+                   (MetadataXml.Root != null && to.MetadataXml.Root != null && MetadataXml.Root.Value.Equals(to.MetadataXml.Root.Value));
         }
 
         #endregion

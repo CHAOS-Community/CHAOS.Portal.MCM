@@ -57,7 +57,7 @@
             result.ObjectRelationType = (string) row[4].Value;
             result.LanguageCode       = (string) row[5].Value;
             result.MetadataSchemaGuid = new Guid((byte[])row[6].Value);
-            result.MetadataXml        = XDocument.Load(new MemoryStream((byte[])row[7].Value));
+            result.MetadataXml        = XDocument.Parse((string)row[7].Value);
 
             return result;
         }

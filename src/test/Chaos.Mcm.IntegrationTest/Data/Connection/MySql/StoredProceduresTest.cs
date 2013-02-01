@@ -32,22 +32,32 @@
         public void ObjectRelationInfoGet_GivenAnObjectGuidThatExist_ReturnsAListWithOneObjectRelationInfo()
         {
             var connection                 = Make_StoredProcedure();
-            var existentObjectRelationInfo = new ObjectRelationInfo
-                {
-                    Object1Guid        = new Guid("00000000-0000-0000-0000-000000000001"),
-                    Object2Guid        = new Guid("00000000-0000-0000-0000-000000000002"),
-                    MetadataGuid       = new Guid("00000000-0000-0000-0000-000000000010"),
-                    Sequence           = null,
-                    ObjectRelationType = "test relation type",
-                    LanguageCode       = "en",
-                    MetadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100"),
-                    MetadataXml        = XDocument.Parse("<xml>test xml</xml>")
-                };
+            var existentObjectRelationInfo = Make_ObjectRelationInfo();
 
             var result = connection.ObjectRelationInfoGet(existentObjectRelationInfo.Object1Guid);
 
             Assert.IsNotEmpty(result);
             Assert.AreEqual(existentObjectRelationInfo, result.First());
+        }
+
+        #endregion
+        #region ObjectRelation_Create
+
+        [Test]
+        public void ObjectRelationCreate_GivenCorrectParemeters_CreateInDatabaseAndReturnOne()
+        {
+            var connection             = Make_StoredProcedure();
+            var expectedObjectRelation = Make_ObjectRelation();
+
+            var result = connection.ObjectRelationCreate(expectedObjectRelation);
+
+            Assert.Greater(result, 0);
+            var resultObjectRealtionInfo = connection.ObjectRelationInfoGet(expectedObjectRelation.Object1Guid);
+            Assert.IsNotEmpty(resultObjectRealtionInfo);
+            Assert.AreEqual(expectedObjectRelation.Object1Guid, resultObjectRealtionInfo.First().Object1Guid);
+            Assert.AreEqual(expectedObjectRelation.Object2Guid, resultObjectRealtionInfo.First().Object2Guid);
+            Assert.AreEqual(expectedObjectRelation.MetadataGuid, resultObjectRealtionInfo.First().MetadataGuid);
+            Assert.AreEqual(expectedObjectRelation.Sequence, resultObjectRealtionInfo.First().Sequence);
         }
 
         #endregion
@@ -57,6 +67,33 @@
         private StoredProcedures Make_StoredProcedure()
         {
             return new StoredProcedures(this._connectionString);
+        }
+
+        private ObjectRelation Make_ObjectRelation()
+        {
+            return new ObjectRelation
+                {
+                    Object1Guid          = new Guid("00000000-0000-0000-0000-000000000003"),
+                    Object2Guid          = new Guid("00000000-0000-0000-0000-000000000002"),
+                    MetadataGuid         = new Guid("00000000-0000-0000-0000-000000000010"),
+                    Sequence             = null,
+                    ObjectRelationTypeID = 1
+                };
+        }
+
+        private static ObjectRelationInfo Make_ObjectRelationInfo()
+        {
+            return new ObjectRelationInfo
+            {
+                Object1Guid        = new Guid("00000000-0000-0000-0000-000000000001"),
+                Object2Guid        = new Guid("00000000-0000-0000-0000-000000000002"),
+                MetadataGuid       = new Guid("00000000-0000-0000-0000-000000000010"),
+                Sequence           = null,
+                ObjectRelationType = "test relation type",
+                LanguageCode       = "en",
+                MetadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100"),
+                MetadataXml        = XDocument.Parse("<xml>test xml</xml>")
+            };
         }
 
         #endregion
