@@ -16,14 +16,121 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{2265746E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{6B23DDF8-C4F7-4D26-91B6-26E343E01F74}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.storedprocedures", "{C901C1DC-38A7-4BF7-95D8-55A5DCE2788A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.storedprocedures", "4.storedprocedures", "{C901C1DC-38A7-4BF7-95D8-55A5DCE2788A}"
 	ProjectSection(SolutionItems) = preProject
-		sql\3.storedprocedures\File_Delete.sql = sql\3.storedprocedures\File_Delete.sql
-		sql\3.storedprocedures\Format_Create.sql = sql\3.storedprocedures\Format_Create.sql
-		sql\3.storedprocedures\Format_Get.sql = sql\3.storedprocedures\Format_Get.sql
+		sql\4.storedprocedures\AccessPoint_Create.sql = sql\4.storedprocedures\AccessPoint_Create.sql
+		sql\4.storedprocedures\AccessPoint_Get.sql = sql\4.storedprocedures\AccessPoint_Get.sql
+		sql\4.storedprocedures\AccessPoint_Object_Join_Set.sql = sql\4.storedprocedures\AccessPoint_Object_Join_Set.sql
+		sql\4.storedprocedures\AccessPoint_User_Join_Set.sql = sql\4.storedprocedures\AccessPoint_User_Join_Set.sql
+		sql\4.storedprocedures\AccessProvider_Create.sql = sql\4.storedprocedures\AccessProvider_Create.sql
+		sql\4.storedprocedures\DestinationInfo_Create.sql = sql\4.storedprocedures\DestinationInfo_Create.sql
+		sql\4.storedprocedures\DestinationInfo_Get.sql = sql\4.storedprocedures\DestinationInfo_Get.sql
+		sql\4.storedprocedures\File_Create.sql = sql\4.storedprocedures\File_Create.sql
+		sql\4.storedprocedures\File_Delete.sql = sql\4.storedprocedures\File_Delete.sql
+		sql\4.storedprocedures\File_Get.sql = sql\4.storedprocedures\File_Get.sql
+		sql\4.storedprocedures\Folder_Create.sql = sql\4.storedprocedures\Folder_Create.sql
+		sql\4.storedprocedures\Folder_Delete.sql = sql\4.storedprocedures\Folder_Delete.sql
+		sql\4.storedprocedures\Folder_Get.sql = sql\4.storedprocedures\Folder_Get.sql
+		sql\4.storedprocedures\Folder_Get_DirectFolderAssociations.sql = sql\4.storedprocedures\Folder_Get_DirectFolderAssociations.sql
+		sql\4.storedprocedures\Folder_Group_Join_Set.sql = sql\4.storedprocedures\Folder_Group_Join_Set.sql
+		sql\4.storedprocedures\Folder_Update.sql = sql\4.storedprocedures\Folder_Update.sql
+		sql\4.storedprocedures\Folder_User_Join_Set.sql = sql\4.storedprocedures\Folder_User_Join_Set.sql
+		sql\4.storedprocedures\FolderType_Create.sql = sql\4.storedprocedures\FolderType_Create.sql
+		sql\4.storedprocedures\FolderType_Delete.sql = sql\4.storedprocedures\FolderType_Delete.sql
+		sql\4.storedprocedures\FolderType_Get.sql = sql\4.storedprocedures\FolderType_Get.sql
+		sql\4.storedprocedures\FolderType_Update.sql = sql\4.storedprocedures\FolderType_Update.sql
+		sql\4.storedprocedures\Format_Create.sql = sql\4.storedprocedures\Format_Create.sql
+		sql\4.storedprocedures\Format_Get.sql = sql\4.storedprocedures\Format_Get.sql
+		sql\4.storedprocedures\FormatCategory_Create.sql = sql\4.storedprocedures\FormatCategory_Create.sql
+		sql\4.storedprocedures\FormatCategory_Get.sql = sql\4.storedprocedures\FormatCategory_Get.sql
+		sql\4.storedprocedures\FormatType_Create.sql = sql\4.storedprocedures\FormatType_Create.sql
+		sql\4.storedprocedures\FormatType_Delete.sql = sql\4.storedprocedures\FormatType_Delete.sql
+		sql\4.storedprocedures\FormatType_Get.sql = sql\4.storedprocedures\FormatType_Get.sql
+		sql\4.storedprocedures\FormatType_Update.sql = sql\4.storedprocedures\FormatType_Update.sql
+		sql\4.storedprocedures\Language_Create.sql = sql\4.storedprocedures\Language_Create.sql
+		sql\4.storedprocedures\Language_Delete.sql = sql\4.storedprocedures\Language_Delete.sql
+		sql\4.storedprocedures\Language_Get.sql = sql\4.storedprocedures\Language_Get.sql
+		sql\4.storedprocedures\Language_Update.sql = sql\4.storedprocedures\Language_Update.sql
+		sql\4.storedprocedures\Metadata_Get.sql = sql\4.storedprocedures\Metadata_Get.sql
+		sql\4.storedprocedures\Metadata_Set.sql = sql\4.storedprocedures\Metadata_Set.sql
+		sql\4.storedprocedures\MetadataSchema_Create.sql = sql\4.storedprocedures\MetadataSchema_Create.sql
+		sql\4.storedprocedures\MetadataSchema_Delete.sql = sql\4.storedprocedures\MetadataSchema_Delete.sql
+		sql\4.storedprocedures\MetadataSchema_Get.sql = sql\4.storedprocedures\MetadataSchema_Get.sql
+		sql\4.storedprocedures\MetadataSchema_Update.sql = sql\4.storedprocedures\MetadataSchema_Update.sql
+		sql\4.storedprocedures\Object_Create.sql = sql\4.storedprocedures\Object_Create.sql
+		sql\4.storedprocedures\Object_Delete.sql = sql\4.storedprocedures\Object_Delete.sql
+		sql\4.storedprocedures\Object_Folder_Join_Create.sql = sql\4.storedprocedures\Object_Folder_Join_Create.sql
+		sql\4.storedprocedures\Object_Folder_Join_Delete.sql = sql\4.storedprocedures\Object_Folder_Join_Delete.sql
+		sql\4.storedprocedures\Object_Folder_Join_Update.sql = sql\4.storedprocedures\Object_Folder_Join_Update.sql
+		sql\4.storedprocedures\Object_GetByFolderID.sql = sql\4.storedprocedures\Object_GetByFolderID.sql
+		sql\4.storedprocedures\Object_GetByGUIDs.sql = sql\4.storedprocedures\Object_GetByGUIDs.sql
+		sql\4.storedprocedures\Object_GetByRelatedObjectGUID.sql = sql\4.storedprocedures\Object_GetByRelatedObjectGUID.sql
+		sql\4.storedprocedures\ObjectFolderType_Create.sql = sql\4.storedprocedures\ObjectFolderType_Create.sql
+		sql\4.storedprocedures\ObjectRelation_Create.sql = sql\4.storedprocedures\ObjectRelation_Create.sql
+		sql\4.storedprocedures\ObjectRelation_Delete.sql = sql\4.storedprocedures\ObjectRelation_Delete.sql
+		sql\4.storedprocedures\ObjectRelationType_Create.sql = sql\4.storedprocedures\ObjectRelationType_Create.sql
+		sql\4.storedprocedures\ObjectRelationType_Delete.sql = sql\4.storedprocedures\ObjectRelationType_Delete.sql
+		sql\4.storedprocedures\ObjectRelationType_Get.sql = sql\4.storedprocedures\ObjectRelationType_Get.sql
+		sql\4.storedprocedures\ObjectRelationType_Update.sql = sql\4.storedprocedures\ObjectRelationType_Update.sql
+		sql\4.storedprocedures\ObjectType_Create.sql = sql\4.storedprocedures\ObjectType_Create.sql
+		sql\4.storedprocedures\ObjectType_Delete.sql = sql\4.storedprocedures\ObjectType_Delete.sql
+		sql\4.storedprocedures\ObjectType_Get.sql = sql\4.storedprocedures\ObjectType_Get.sql
+		sql\4.storedprocedures\ObjectType_Update.sql = sql\4.storedprocedures\ObjectType_Update.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.Mcm", "src\app\CHAOS.MCM\Chaos.Mcm.csproj", "{461EF48B-BBEB-4A4C-9968-66ACE8D3D43D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.Mcm.IntegrationTest", "src\test\Chaos.Mcm.IntegrationTest\Chaos.Mcm.IntegrationTest.csproj", "{6210770F-738E-4190-952A-2520AA1FC87B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.baseline", "1.baseline", "{3BD472E0-2E86-487E-B31C-D5D9A030FC43}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Views", "3.Views", "{5D7F85E6-B1F8-46DC-B9CA-FABC9ABAE664}"
+	ProjectSection(SolutionItems) = preProject
+		sql\3.views\1.DestinationInfo.sql = sql\3.views\1.DestinationInfo.sql
+		sql\3.views\1.FileInfo.sql = sql\3.views\1.FileInfo.sql
+		sql\3.views\1.FolderInfo.sql = sql\3.views\1.FolderInfo.sql
+		sql\3.views\1.ObjectRelationInfo.sql = sql\3.views\1.ObjectRelationInfo.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Triggers", "5.Triggers", "{9B3BA1A5-AC4A-4524-9AE1-9D086AA422D9}"
+	ProjectSection(SolutionItems) = preProject
+		sql\5.triggers\metadata_create_set_revisionid = sql\5.triggers\metadata_create_set_revisionid
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tables", "tables", "{CD79B737-57A5-4A87-872D-E3002CC8A61B}"
+	ProjectSection(SolutionItems) = preProject
+		sql\1.baseline\tables\1.AccessPoint.sql = sql\1.baseline\tables\1.AccessPoint.sql
+		sql\1.baseline\tables\1.Destination.sql = sql\1.baseline\tables\1.Destination.sql
+		sql\1.baseline\tables\1.FolderType.sql = sql\1.baseline\tables\1.FolderType.sql
+		sql\1.baseline\tables\1.FormatType.sql = sql\1.baseline\tables\1.FormatType.sql
+		sql\1.baseline\tables\1.Language.sql = sql\1.baseline\tables\1.Language.sql
+		sql\1.baseline\tables\1.MetadataSchema.sql = sql\1.baseline\tables\1.MetadataSchema.sql
+		sql\1.baseline\tables\1.ObjectFolderType.sql = sql\1.baseline\tables\1.ObjectFolderType.sql
+		sql\1.baseline\tables\1.ObjectRelationType.sql = sql\1.baseline\tables\1.ObjectRelationType.sql
+		sql\1.baseline\tables\1.ObjectType.sql = sql\1.baseline\tables\1.ObjectType.sql
+		sql\1.baseline\tables\2.AccessPoint_Group_Join.sql = sql\1.baseline\tables\2.AccessPoint_Group_Join.sql
+		sql\1.baseline\tables\2.AccessPoint_User_Join.sql = sql\1.baseline\tables\2.AccessPoint_User_Join.sql
+		sql\1.baseline\tables\2.AccessProvider.sql = sql\1.baseline\tables\2.AccessProvider.sql
+		sql\1.baseline\tables\2.Folder.sql = sql\1.baseline\tables\2.Folder.sql
+		sql\1.baseline\tables\2.FormatCategory.sql = sql\1.baseline\tables\2.FormatCategory.sql
+		sql\1.baseline\tables\2.MetadataSchema_Group_Join.sql = sql\1.baseline\tables\2.MetadataSchema_Group_Join.sql
+		sql\1.baseline\tables\2.MetadataSchema_User_Join.sql = sql\1.baseline\tables\2.MetadataSchema_User_Join.sql
+		sql\1.baseline\tables\2.Object.sql = sql\1.baseline\tables\2.Object.sql
+		sql\1.baseline\tables\3.AccessPoint_Object_Join.sql = sql\1.baseline\tables\3.AccessPoint_Object_Join.sql
+		sql\1.baseline\tables\3.Folder_Group_Join.sql = sql\1.baseline\tables\3.Folder_Group_Join.sql
+		sql\1.baseline\tables\3.Folder_User_Join.sql = sql\1.baseline\tables\3.Folder_User_Join.sql
+		sql\1.baseline\tables\3.Format.sql = sql\1.baseline\tables\3.Format.sql
+		sql\1.baseline\tables\3.Metadata.sql = sql\1.baseline\tables\3.Metadata.sql
+		sql\1.baseline\tables\3.Object_Folder_Join.sql = sql\1.baseline\tables\3.Object_Folder_Join.sql
+		sql\1.baseline\tables\3.Object_Object_Join.sql = sql\1.baseline\tables\3.Object_Object_Join.sql
+		sql\1.baseline\tables\4.File.sql = sql\1.baseline\tables\4.File.sql
+		sql\1.baseline\tables\4.Object_Metadata_Join.sql = sql\1.baseline\tables\4.Object_Metadata_Join.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.changes", "2.changes", "{3218B79C-AF33-40C5-8C3F-9BA125D66706}"
+	ProjectSection(SolutionItems) = preProject
+		sql\2.changes\06.00.00.0001.sql = sql\2.changes\06.00.00.0001.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +146,10 @@ Global
 		{461EF48B-BBEB-4A4C-9968-66ACE8D3D43D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{461EF48B-BBEB-4A4C-9968-66ACE8D3D43D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{461EF48B-BBEB-4A4C-9968-66ACE8D3D43D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6210770F-738E-4190-952A-2520AA1FC87B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6210770F-738E-4190-952A-2520AA1FC87B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6210770F-738E-4190-952A-2520AA1FC87B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6210770F-738E-4190-952A-2520AA1FC87B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +159,12 @@ Global
 		{F0CF42D1-62E1-4537-83C4-109BC7B7A8D6} = {25DAADDC-2457-4AB6-AB9C-A5A502E55F88}
 		{461EF48B-BBEB-4A4C-9968-66ACE8D3D43D} = {5D078BDF-7A54-4FED-9545-B619D25E357E}
 		{53C4082B-8284-4588-89AE-6EC3E601CE7C} = {F0CF42D1-62E1-4537-83C4-109BC7B7A8D6}
+		{6210770F-738E-4190-952A-2520AA1FC87B} = {F0CF42D1-62E1-4537-83C4-109BC7B7A8D6}
 		{C901C1DC-38A7-4BF7-95D8-55A5DCE2788A} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
+		{3BD472E0-2E86-487E-B31C-D5D9A030FC43} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
+		{5D7F85E6-B1F8-46DC-B9CA-FABC9ABAE664} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
+		{9B3BA1A5-AC4A-4524-9AE1-9D086AA422D9} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
+		{3218B79C-AF33-40C5-8C3F-9BA125D66706} = {6B23DDF8-C4F7-4D26-91B6-26E343E01F74}
+		{CD79B737-57A5-4A87-872D-E3002CC8A61B} = {3BD472E0-2E86-487E-B31C-D5D9A030FC43}
 	EndGlobalSection
 EndGlobal

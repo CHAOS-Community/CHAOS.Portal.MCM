@@ -14,6 +14,8 @@ using Chaos.Portal.Extension;
 
 namespace Chaos.Mcm.Extension
 {
+    using Chaos.Mcm.Data.Connection;
+
     [PortalExtension( configurationName: "MCM" )]
     public abstract class AMcmExtension : AExtension
     {
