@@ -108,6 +108,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tables", "tables", "{CD79B7
 		sql\1.baseline\tables\1.ObjectFolderType.sql = sql\1.baseline\tables\1.ObjectFolderType.sql
 		sql\1.baseline\tables\1.ObjectRelationType.sql = sql\1.baseline\tables\1.ObjectRelationType.sql
 		sql\1.baseline\tables\1.ObjectType.sql = sql\1.baseline\tables\1.ObjectType.sql
+		sql\1.baseline\tables\1.Version.sql = sql\1.baseline\tables\1.Version.sql
 		sql\1.baseline\tables\2.AccessPoint_Group_Join.sql = sql\1.baseline\tables\2.AccessPoint_Group_Join.sql
 		sql\1.baseline\tables\2.AccessPoint_User_Join.sql = sql\1.baseline\tables\2.AccessPoint_User_Join.sql
 		sql\1.baseline\tables\2.AccessProvider.sql = sql\1.baseline\tables\2.AccessProvider.sql
