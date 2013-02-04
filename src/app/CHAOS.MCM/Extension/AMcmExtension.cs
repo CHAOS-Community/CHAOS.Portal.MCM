@@ -1,20 +1,23 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using CHAOS;
-using CHAOS.Extensions;
-using CHAOS.Index;
-using Chaos.Mcm.Data;
-using Chaos.Mcm.Data.EF;
-using Chaos.Mcm.Permission;
-using Chaos.Mcm.Permission.InMemory;
-using Chaos.Mcm.Permission.Specification;
-using Chaos.Portal;
-using Chaos.Portal.Extension;
-
-namespace Chaos.Mcm.Extension
+﻿namespace Chaos.Mcm.Extension
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Xml.Linq;
+
+    using Chaos.Mcm.Data;
+    using Chaos.Mcm.Binding;
     using Chaos.Mcm.Data.Connection;
+    using Chaos.Mcm.Data.EF;
+    using Chaos.Mcm.Permission;
+    using Chaos.Mcm.Permission.InMemory;
+    using Chaos.Mcm.Permission.Specification;
+
+    using CHAOS;
+    using CHAOS.Extensions;
+    using CHAOS.Index;
+
+    using Chaos.Portal;
+    using Chaos.Portal.Extension;
 
     [PortalExtension( configurationName: "MCM" )]
     public abstract class AMcmExtension : AExtension
@@ -23,10 +26,11 @@ namespace Chaos.Mcm.Extension
 
         private static string ConnectionString { get; set; }
 
-		public static IPermissionManager PermissionManager { get; set; }
+        protected static IPermissionManager PermissionManager { get; set; }
 
-        public MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
-        public IMcmRepository McmRepository { get; set; }
+        protected MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
+
+        protected IMcmRepository McmRepository { get; set; }
 
         #endregion
         #region Construction
@@ -56,6 +60,13 @@ namespace Chaos.Mcm.Extension
             McmRepository     = mcmRepository.WithConfiguration(ConnectionString);
 
             return this;
+        }
+
+        public new IExtension WithPortalApplication(IPortalApplication portalApplication)
+        {
+            portalApplication.Bindings.Add(typeof(Data.Dto.Standard.Metadata), new MetadataBinding());
+
+            return base.WithPortalApplication(portalApplication);
         }
 
     	#endregion

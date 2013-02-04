@@ -26,5 +26,7 @@ namespace Chaos.Mcm.Data
         IEnumerable<Object> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint);
         IEnumerable<Object> GetObject(Guid relatedToObjectWithGuid, uint? objectRelationTypeID);
         IEnumerable<MetadataSchema> GetMetadataSchema(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission );
+
+        uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence);
     }
 }

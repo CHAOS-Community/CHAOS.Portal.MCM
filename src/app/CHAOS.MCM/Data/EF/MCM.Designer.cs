@@ -2317,7 +2317,7 @@ namespace Chaos.Mcm.Data.EF
                 sequenceParameter = new ObjectParameter("Sequence", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectRelation_Create", object1GUIDParameter, object2GUIDParameter, objectRelationTypeIDParameter, sequenceParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Set", object1GUIDParameter, object2GUIDParameter, objectRelationTypeIDParameter, sequenceParameter);
         }
     
         /// <summary>
@@ -2358,7 +2358,7 @@ namespace Chaos.Mcm.Data.EF
                 objectRelationTypeIDParameter = new ObjectParameter("ObjectRelationTypeID", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("ObjectRelation_Delete", object1GUIDParameter, object2GUIDParameter, objectRelationTypeIDParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("Delete", object1GUIDParameter, object2GUIDParameter, objectRelationTypeIDParameter);
         }
     
         /// <summary>

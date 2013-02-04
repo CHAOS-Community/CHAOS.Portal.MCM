@@ -2,7 +2,7 @@ CREATE TABLE Object_Object_Join
 (
 	Object1Guid           binary(16) NOT NULL,
 	Object2Guid           binary(16) NOT NULL,
-	MetadataGuid			binary(16) DEFAULT NULL,
+	MetadataGuid		  binary(16) DEFAULT NULL,
 	ObjectRelationTypeID  int(10) unsigned NOT NULL,
 	Sequence              int(11) DEFAULT NULL,
 	DateCreated           datetime NOT NULL,

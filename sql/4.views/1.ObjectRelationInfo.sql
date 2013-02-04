@@ -4,6 +4,7 @@ SELECT
 	ooj.Object2Guid,
 	ooj.MetadataGuid,
 	ooj.Sequence,
+	ooj.ObjectRelationTypeID,
 	ort.Name AS ObjectRelationType,
 	m.LanguageCode,
 	m.MetadataSchemaGUID,

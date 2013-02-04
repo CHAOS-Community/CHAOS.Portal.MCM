@@ -1,7 +1,6 @@
 CREATE PROCEDURE Metadata_Set
 (
     GUID                BINARY(16),
-    ObjectGUID          BINARY(16),
     MetadataSchemaGUID  BINARY(16),
     LanguageCode        VARCHAR(10),
     RevisionID          INT UNSIGNED,

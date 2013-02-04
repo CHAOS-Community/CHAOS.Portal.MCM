@@ -350,41 +350,6 @@ namespace Chaos.Mcm.Extension
 		//}
 
 		#endregion
-		#region Metadata
-
-		public ScalarResult Metadata_Set( ICallContext callContext, UUID objectGUID, UUID metadataSchemaGUID, string languageCode, uint? revisionID, string metadataXML )
-		{
-		    // TODO: replace with proper XML validation, Quick ugly fix, to make sure it's valid XML
-            XDocument.Parse( metadataXML );
-
-		    using( var db = DefaultMCMEntities )
-		    {
-				if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateUpdateObjects ) )
-					throw new InsufficientPermissionsException( "User does not have permissions to set metadata on this object" );
-
-		        var result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).FirstOrDefault();
-
-                if (!result.HasValue)
-                    throw new UnhandledException("Metadata set failed on the database and was rolled back");
-
-                if( result.Value == -300 )
-                    throw new InvalidRevisionException( "RevisionID is too old, set metadata with the latest revisionID." );
-
-                if( result.Value == -350 )
-                    throw new InvalidRevisionException( "RevisionID can only be null if there is no metadata already on the object" );
-
-                if( result.Value == -200 )
-                    throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
-
-                var objects = db.Object_Get( objectGUID, true, false, false, true, true ).ToDto().ToList();
-
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), objects );
-
-		        return new ScalarResult( result.Value );
-		    }
-		}
-
-	    #endregion
 		#region Test
 
 		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
@@ -412,48 +377,6 @@ namespace Chaos.Mcm.Extension
 
             return new ScalarResult(1);
 		}
-
-		#endregion
-		#region ObjectRelation
-
-		public ScalarResult ObjectRelation_Create( ICallContext callContext, UUID object1GUID, UUID object2GUID, uint objectRelationTypeID, int? sequence )
-		{
-		    using( MCMEntities db = DefaultMCMEntities )
-		    {
-		        int? result = db.ObjectRelation_Create( object1GUID.ToByteArray(),
-		                                                object2GUID.ToByteArray(),
-		                                                (int?) objectRelationTypeID,
-		                                                sequence ).First();
-                if( !result.HasValue )
-                    throw new UnhandledException( "No result was returned from the database when calling ObjectRelation_Create" );
-
-		        if( result == -100 )
-		            throw new InsufficientPermissionsException( "The user do not have permission to create object relations" );
-
-		        if( result == -200 )
-		            throw new ObjectRelationAlreadyExistException( "The object relation already exists" );
-
-		        return new ScalarResult( result.Value );
-		    }
-		}
-
-        public ScalarResult ObjectRelation_Delete( ICallContext callContext, UUID object1GUID, UUID object2GUID, uint objectRelationTypeID )
-        {
-            using( var db = DefaultMCMEntities )
-            {
-                int? result = db.ObjectRelation_Delete( object1GUID.ToByteArray(),
-                                                        object2GUID.ToByteArray(),
-                                                        (int) objectRelationTypeID ).First();
-
-                if( !result.HasValue )
-                    throw new UnhandledException( "ObjectRelation Delete failed on the database" );
-
-                if( result == -100 )
-                    throw new InsufficientPermissionsException( "The user do not have permission to delete object relations" );
-
-                return new ScalarResult( result.Value );
-            }
-        }
 
 		#endregion
         #region Link

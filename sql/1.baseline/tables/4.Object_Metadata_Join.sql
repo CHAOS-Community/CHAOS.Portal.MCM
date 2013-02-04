@@ -1,4 +1,4 @@
-CREATE  TABLE Object_Metadata_Join
+CREATE TABLE Object_Metadata_Join
 (
 	ObjectGuid		BINARY(16) NOT NULL,
 	MetadataGuid	BINARY(16) NOT NULL,

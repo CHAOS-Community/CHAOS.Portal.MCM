@@ -8,7 +8,7 @@
 
         public Guid Object2Guid { get; set; }
 
-        public Guid MetadataGuid { get; set; }
+        public Guid? MetadataGuid { get; set; }
 
         public uint ObjectRelationTypeID { get; set; }
 

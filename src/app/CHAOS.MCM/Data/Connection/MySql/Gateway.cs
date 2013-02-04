@@ -9,7 +9,7 @@
 
     using global::MySql.Data.MySqlClient;
 
-    public class StoredProcedures
+    public class Gateway
     {
         #region Fields
 
@@ -18,13 +18,17 @@
         #endregion
         #region Initialization
 
-        public StoredProcedures( string connectionString )
+        public Gateway( string connectionString )
         {
             _connectionString = connectionString;
         }
 
         #endregion
         #region Properties
+
+        #endregion
+
+        #region Business Logic
 
         public IList<TResultType> ExecuteQuery<TResultType>(string storedProcedure, IEnumerable<MySqlParameter> parameters)
         {
@@ -57,10 +61,10 @@
                 }
             }
         }
-        
+
         public long ExecuteNonQuery(string storedProcedure, IEnumerable<MySqlParameter> parameters)
         {
-            using (var connnection = new MySqlConnection(_connectionString))
+            using (var connnection = new MySqlConnection(this._connectionString))
             using (var command     = new MySqlCommand())
             {
                 command.Connection  = connnection;
@@ -75,9 +79,6 @@
             }
         }
 
-        #endregion
-        #region Business Logic
-
         public IList<ObjectRelationInfo> ObjectRelationInfoGet(Guid objectGuid)
         {
             var parameters = new List<MySqlParameter>
@@ -88,18 +89,35 @@
             return ExecuteQuery<ObjectRelationInfo>("ObjectRelationInfo_Get", parameters);
         }
 
-        public long ObjectRelationCreate(ObjectRelation objectRelation)
+        public long ObjectRelationSet(ObjectRelation objectRelation)
         {
             var parameters = new List<MySqlParameter>
                 {
                     new MySqlParameter("Object1Guid", objectRelation.Object1Guid.ToByteArray()),
                     new MySqlParameter("Object2Guid", objectRelation.Object2Guid.ToByteArray()),
                     new MySqlParameter("ObjectRelationTypeID", objectRelation.ObjectRelationTypeID),
-                    new MySqlParameter("MetadataGuid", objectRelation.MetadataGuid.ToByteArray()),
                     new MySqlParameter("Sequence", objectRelation.Sequence)
                 };
 
-            return this.ExecuteNonQuery("ObjectRelation_Create",parameters);
+            return this.ExecuteNonQuery("ObjectRelation_Set", parameters);
+        }
+
+        public long ObjectRelationSetMetadata(ObjectRelationInfo objectRelation, Guid editintUserGuid)
+        {
+            var parameters = new List<MySqlParameter>
+                {
+                    new MySqlParameter("Object1Guid", objectRelation.Object1Guid.ToByteArray()),
+                    new MySqlParameter("Object2Guid", objectRelation.Object2Guid.ToByteArray()),
+                    new MySqlParameter("ObjectRelationTypeID", objectRelation.ObjectRelationTypeID),
+                    new MySqlParameter("Sequence", objectRelation.Sequence),
+                    new MySqlParameter("MetadataGuid", objectRelation.MetadataGuid.Value.ToByteArray()),
+                    new MySqlParameter("MetadataSchemaGuid", objectRelation.MetadataSchemaGuid.Value.ToByteArray()),
+                    new MySqlParameter("MetadataXml", objectRelation.MetadataXml),
+                    new MySqlParameter("LanguageCode", objectRelation.LanguageCode),
+                    new MySqlParameter("EditingUserGuid", editintUserGuid.ToByteArray()),
+                };
+
+            return this.ExecuteNonQuery("ObjectRelation_SetMetadata", parameters);
         }
 
         #endregion

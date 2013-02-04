@@ -61,9 +61,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Binding\MetadataBinding.cs" />
     <Compile Include="Data\Connection\IMapping.cs" />
     <Compile Include="Data\Connection\McmRepository.cs" />
-    <Compile Include="Data\Connection\MySql\StoredProcedures.cs" />
+    <Compile Include="Data\Connection\MySql\Gateway.cs" />
     <Compile Include="Data\Connection\ReaderExtensions.cs" />
     <Compile Include="Data\Dto\IAccessPoint.cs" />
     <Compile Include="Data\Dto\IObject.cs" />
@@ -118,8 +119,10 @@
     <Compile Include="Extension\Folder.cs" />
     <Compile Include="Extension\Format.cs" />
     <Compile Include="Extension\Mcm.cs" />
+    <Compile Include="Extension\Metadata.cs" />
     <Compile Include="Extension\MetadataSchema.cs" />
     <Compile Include="Extension\Object.cs" />
+    <Compile Include="Extension\ObjectRelation.cs" />
     <Compile Include="Extension\ObjectType.cs" />
     <Compile Include="Extension\UserProfile.cs" />
     <Compile Include="Permission\AccessPointPermission.cs" />

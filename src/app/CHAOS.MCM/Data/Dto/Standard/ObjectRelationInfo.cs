@@ -11,7 +11,7 @@
 
         public Guid Object2Guid { get; set; }
 
-        public Guid MetadataGuid { get; set; }
+        public Guid? MetadataGuid { get; set; }
 
         public int? Sequence { get; set; }
 
@@ -21,7 +21,9 @@
 
         public XDocument MetadataXml { get; set; }
 
-        public Guid MetadataSchemaGuid { get; set; }
+        public Guid? MetadataSchemaGuid { get; set; }
+
+        public uint ObjectRelationTypeID { get; set; }
 
         #endregion
         #region Business Logic
@@ -35,6 +37,7 @@
                    MetadataGuid.Equals(to.MetadataGuid) &&
                    Sequence.Equals(to.Sequence) &&
                    ObjectRelationType.Equals(to.ObjectRelationType) &&
+                   ObjectRelationTypeID.Equals(to.ObjectRelationTypeID) &&
                    LanguageCode.Equals(to.LanguageCode) &&
                    MetadataSchemaGuid.Equals(to.MetadataSchemaGuid) &&
                    (MetadataXml.Root != null && to.MetadataXml.Root != null && MetadataXml.Root.Value.Equals(to.MetadataXml.Root.Value));

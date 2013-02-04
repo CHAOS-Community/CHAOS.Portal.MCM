@@ -50,7 +50,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Connection\MySql\StoredProceduresTest.cs" />
+    <Compile Include="Data\Connection\MySql\McmRepositoryTest.cs" />
     <Compile Include="Data\Connection\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

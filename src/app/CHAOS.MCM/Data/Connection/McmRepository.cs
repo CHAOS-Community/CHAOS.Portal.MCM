@@ -6,17 +6,23 @@ namespace Chaos.Mcm.Data.Connection
 
     using CHAOS.Extensions;
 
+    using Chaos.Mcm.Data.Connection.MySql;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Data.EF;
+    using Chaos.Mcm.Exception;
     using Chaos.Mcm.Permission;
     using Chaos.Portal.Exceptions;
+
+    using Metadata = Chaos.Mcm.Data.Dto.Standard.Metadata;
 
     public class McmRepository : IMcmRepository
     {
         #region Fields
 
         private string _connectionString;
+
+        private Gateway _gateway;
 
         #endregion
         #region Properties
@@ -28,8 +34,8 @@ namespace Chaos.Mcm.Data.Connection
 
         public IMcmRepository WithConfiguration(string connectionString)
         {
-            this._connectionString = connectionString;
-
+            _connectionString = connectionString;
+            _gateway          = new Gateway(connectionString);
             return this;
         }
 
@@ -116,32 +122,75 @@ namespace Chaos.Mcm.Data.Connection
         //}
 
         #endregion
-        public IEnumerable<Dto.Standard.FolderUserJoin> GetFolderUserJoin()
+        #region Object Relation
+    
+        public uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence)
         {
-            using (var db = this.CreateMcmEntities())
+            var result = _gateway.ObjectRelationSet(new ObjectRelation
             {
-                return db.Folder_User_Join.ToList().Select(item => new FolderUserJoin
-                                                             {
-                                                                 FolderID    = (uint) item.FolderID,
-                                                                 UserGuid    = item.UserGUID,
-                                                                 Permission  = (uint) item.Permission,
-                                                                 DateCreated = item.DateCreated
-                                                             });
+                Object1Guid = object1Guid,
+                Object2Guid = object2Guid,
+                ObjectRelationTypeID = objectRelationTypeID,
+                Sequence = sequence
+            });
+
+            if (result == -100)
+                throw new InsufficientPermissionsException("The user do not have permission to create object relations");
+
+            if (result == -200)
+                throw new ObjectRelationAlreadyExistException("The object relation already exists");
+
+            return (uint)result;
+        }
+
+        public uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid)
+        {
+            var result = _gateway.ObjectRelationSetMetadata(objectRelationInfo, editingUserGuid);
+
+            if (result == -100)
+                throw new InsufficientPermissionsException("The user do not have permission to create object relations");
+
+            if (result == -200)
+                throw new ObjectRelationAlreadyExistException("The object relation already exists");
+
+            return (uint)result;
+        }
+
+        #endregion
+        #region Folder User Join
+
+        public IEnumerable<FolderUserJoin> GetFolderUserJoin()
+        {
+            using(var db = this.CreateMcmEntities())
+            {
+                return
+                    db.Folder_User_Join.ToList().Select(
+                        item =>
+                        new FolderUserJoin
+                            {
+                                FolderID = (uint)item.FolderID,
+                                UserGuid = item.UserGUID,
+                                Permission = (uint)item.Permission,
+                                DateCreated = item.DateCreated
+                            });
             }
         }
 
         public uint SetFolderUserJoin(Guid userGuid, uint folderID, uint permission)
         {
-            using (var db = this.CreateMcmEntities())
+            using(var db = this.CreateMcmEntities())
             {
-                var result = db.Folder_User_Join_Set( userGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
+                var result =
+                    db.Folder_User_Join_Set(userGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
 
-                if (!result.HasValue)
-                    throw new UnhandledException("Folder_User_Join_Set failed on the database and was rolled back");
+                if(!result.HasValue) throw new UnhandledException("Folder_User_Join_Set failed on the database and was rolled back");
 
-                return (uint) result.Value;
+                return (uint)result.Value;
             }
         }
+
+        #endregion
+
 
         public IEnumerable<Dto.Standard.FolderGroupJoin> GetFolderGroupJoin()
         {

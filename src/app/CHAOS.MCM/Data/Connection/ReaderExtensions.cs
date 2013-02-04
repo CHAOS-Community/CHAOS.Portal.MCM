@@ -48,18 +48,56 @@
     {
         public object Map(KeyValuePair<string, object>[] row)
         {
-            var result = new ObjectRelationInfo();
-
-            result.Object1Guid        = new Guid((byte[])row[0].Value);
-            result.Object2Guid        = new Guid((byte[])row[1].Value);
-            result.MetadataGuid       = new Guid((byte[])row[2].Value);
-            result.Sequence           = row[3].Value is DBNull ? null : (int?) row[3].Value;
-            result.ObjectRelationType = (string) row[4].Value;
-            result.LanguageCode       = (string) row[5].Value;
-            result.MetadataSchemaGuid = new Guid((byte[])row[6].Value);
-            result.MetadataXml        = XDocument.Parse((string)row[7].Value);
+            var result = new ObjectRelationInfo
+                {
+                    Object1Guid          = GetGuid(row[0].Value).Value,
+                    Object2Guid          = GetGuid(row[1].Value).Value,
+                    MetadataGuid         = GetGuid(row[2].Value),
+                    Sequence             = GetInt(row[3].Value),
+                    ObjectRelationTypeID = GetUint(row[4].Value).Value,
+                    ObjectRelationType   = GetString(row[5].Value),
+                    LanguageCode         = GetString(row[6].Value),
+                    MetadataSchemaGuid   = GetGuid(row[7].Value),
+                    MetadataXml          = GetXDocument(row[8].Value)
+                };
 
             return result;
+        }
+
+        private static Guid? GetGuid(object cell)
+        {
+            var value = cell;
+
+            if (value is DBNull) return null;
+
+            return new Guid((byte[])value);
+        }
+
+        private static XDocument GetXDocument(object cell)
+        {
+            if (cell is DBNull) return null;
+
+            return XDocument.Parse((string)cell);
+        }
+
+        private static uint? GetUint(object value)
+        {
+            return (uint?)GetValue(value);
+        }
+
+        private static int? GetInt(object cell)
+        {
+            return (int?)GetValue(cell);
+        }
+
+        private static string GetString(object cell)
+        {
+            return (string)GetValue(cell);
+        }
+
+        private static object GetValue(object cell)
+        {
+            return cell is DBNull ? null : cell;
         }
     }
 }
