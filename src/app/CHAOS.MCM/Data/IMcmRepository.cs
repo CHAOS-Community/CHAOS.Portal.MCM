@@ -28,5 +28,6 @@ namespace Chaos.Mcm.Data
         IEnumerable<MetadataSchema> GetMetadataSchema(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission );
 
         uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence);
+        uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid);
     }
 }

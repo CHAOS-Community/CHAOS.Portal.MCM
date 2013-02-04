@@ -14,8 +14,6 @@ namespace Chaos.Mcm.Data.Connection
     using Chaos.Mcm.Permission;
     using Chaos.Portal.Exceptions;
 
-    using Metadata = Chaos.Mcm.Data.Dto.Standard.Metadata;
-
     public class McmRepository : IMcmRepository
     {
         #region Fields
