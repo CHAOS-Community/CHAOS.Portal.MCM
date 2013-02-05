@@ -2,7 +2,11 @@
 {
     using System;
 
+    using CHAOS;
+    using CHAOS.Extensions;
+
     using Chaos.Mcm.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto.Standard;
 
     using Moq;
 
@@ -41,10 +45,11 @@
             var editingUserGuid       = new Guid("00000000-0000-0000-0000-000000000010");
             var sequence              = 0;
             uint objectRelationTypeID = 1;
-
+            var metadata              = new Metadata{GUID = new UUID("00000000-0000-0000-0000-000000000100")};
+            CallContext.SetupGet(p => p.User).Returns(new UserInfo { GUID = editingUserGuid.ToUUID() });
             McmRepository.Setup(m => m.ObjectRelationSet(It.IsAny<ObjectRelationInfo>(), editingUserGuid)).Returns(1);
-            
-            var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, new Metadata(), objectRelationTypeID, sequence);
+
+            var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, metadata, objectRelationTypeID, sequence);
 
             McmRepository.Verify(m => m.ObjectRelationSet(It.IsAny<ObjectRelationInfo>(), editingUserGuid));
             Assert.AreEqual(1, result.Value);

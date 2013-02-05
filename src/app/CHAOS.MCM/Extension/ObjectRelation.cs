@@ -3,6 +3,10 @@
     using System;
     using System.Linq;
 
+    using CHAOS;
+    using CHAOS.Extensions;
+
+    using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
@@ -11,7 +15,26 @@
     {
         public ScalarResult Set(ICallContext callContext, Guid object1GUID, Guid object2GUID, Data.Dto.Standard.Metadata metadata, uint objectRelationTypeID, int? sequence)
         {
-            var result = McmRepository.ObjectRelationSet(object1GUID, object2GUID, objectRelationTypeID, sequence);
+            uint result;
+
+            if (metadata.GUID.ToString() != UUID.Empty.ToString())
+            {
+                var objectRelationInfo = new ObjectRelationInfo
+                    {
+                        Object1Guid          = object1GUID,
+                        Object2Guid          = object2GUID,
+                        ObjectRelationTypeID = objectRelationTypeID,
+                        Sequence             = sequence,
+                        MetadataGuid         = metadata.GUID.ToGuid(),
+                        MetadataSchemaGuid   = metadata.MetadataSchemaGUID.ToGuid(),
+                        MetadataXml          = metadata.MetadataXML,
+                        LanguageCode         = metadata.LanguageCode
+                    };
+
+                result = this.McmRepository.ObjectRelationSet(objectRelationInfo, callContext.User.GUID.ToGuid());
+            }
+            else
+                result = McmRepository.ObjectRelationSet(object1GUID, object2GUID, objectRelationTypeID, sequence);
 
             return new ScalarResult((int)result);
         }
