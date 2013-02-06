@@ -3,6 +3,7 @@ namespace Chaos.Mcm.Data.Connection
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Xml.Linq;
 
     using CHAOS.Extensions;
 
@@ -55,19 +56,19 @@ namespace Chaos.Mcm.Data.Connection
             return _gateway.ExecuteQuery<NewMetadata>("Metadata_Get", new MySqlParameter("Guid", guid.ToByteArray()));
         }
 
-        public uint MetadataSet(Guid objectGuid, NewMetadata metadata, Guid editingUserGuid)
+        public uint MetadataSet(Guid objectGuid, Guid metadataGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml, Guid editingUserGuid)
         {
-            var result = _gateway.ExecuteNonQuery("Metadata_Set", new []
+            var result = _gateway.ExecuteNonQuery("Metadata_Set", new[]
                 {
-                    new MySqlParameter("GUID", metadata.Guid.ToByteArray()),
+                    new MySqlParameter("GUID", metadataGuid.ToByteArray()),
                     new MySqlParameter("ObjectGUID", objectGuid.ToByteArray()),
-                    new MySqlParameter("MetadataSchemaGUID", metadata.MetadataSchemaGuid.ToByteArray()),
-                    new MySqlParameter("LanguageCode", metadata.LanguageCode),
-                    new MySqlParameter("RevisionID", metadata.RevisionID),
-                    new MySqlParameter("MetadataXML", metadata.MetadataXml),
+                    new MySqlParameter("MetadataSchemaGUID", metadataSchemaGuid.ToByteArray()),
+                    new MySqlParameter("LanguageCode", languageCode),
+                    new MySqlParameter("RevisionID", revisionID),
+                    new MySqlParameter("MetadataXML", metadataXml),
                     new MySqlParameter("EditingUserGUID", editingUserGuid.ToByteArray())
                 });
-            
+
             return (uint)result;
         }
 

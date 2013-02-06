@@ -7,6 +7,8 @@ using Object = Chaos.Mcm.Data.Dto.Standard.Object;
 
 namespace Chaos.Mcm.Data
 {
+    using System.Xml.Linq;
+
     public interface IMcmRepository
     {
         IMcmRepository WithConfiguration(string connectionString);
@@ -29,5 +31,9 @@ namespace Chaos.Mcm.Data
 
         uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence);
         uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid);
+
+        IEnumerable<NewMetadata> MetadataGet(Guid guid);
+
+        uint MetadataSet(Guid objectGuid, Guid metadataGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml, Guid userGuid);
     }
 }

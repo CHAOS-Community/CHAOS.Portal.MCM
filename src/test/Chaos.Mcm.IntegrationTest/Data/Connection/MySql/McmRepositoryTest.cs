@@ -16,7 +16,7 @@
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["mcm"].ConnectionString;
 
-        #region ObjectRelationInfo_Get
+        #region ObjectRelationInfo
 
         [Test]
         public void ObjectRelationInfoGet_GivenAnObjectGuidThatDoesntExist_ReturnsAEmptyList()
@@ -40,9 +40,6 @@
             Assert.IsNotEmpty(result);
             Assert.AreEqual(existentObjectRelationInfo, result.First());
         }
-
-        #endregion
-        #region ObjectRelation_Set
 
         [Test]
         public void ObjectRelationCreate_ExclutingMetadata_CreateInDatabaseAndReturnOne()
@@ -84,7 +81,7 @@
         }
 
         #endregion
-        #region NewMetadata
+        #region Metadata
 
         [Test]
         public void MetadataGet_GivenAGuidThatExist_ReturnsTheRequestedMetadata()
@@ -114,7 +111,7 @@
             var someUserGuid         = new Guid("10000000-0000-0000-0000-000000000000");
             nonexistentMetadata.Guid = new Guid("00000000-0000-0000-0000-000000000030"); // change to nonexistent guid
 
-            var result = repository.MetadataSet(existingObjectGuid, nonexistentMetadata, someUserGuid);
+            var result = repository.MetadataSet(existingObjectGuid, nonexistentMetadata.Guid, nonexistentMetadata.MetadataSchemaGuid, nonexistentMetadata.LanguageCode, nonexistentMetadata.RevisionID, nonexistentMetadata.MetadataXml, someUserGuid);
 
             Assert.AreEqual(1, result);
             var rowSavedInDB = repository.MetadataGet(nonexistentMetadata.Guid).First();

@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extension\FolderTest.cs" />
+    <Compile Include="Extension\MetadataTest.cs" />
     <Compile Include="Extension\ObjectRelationTest.cs" />
     <Compile Include="Extension\TestBase.cs" />
     <Compile Include="Permission\InMemoryPermissionManagerTest.cs" />
