@@ -64,7 +64,7 @@
 
         public new IExtension WithPortalApplication(IPortalApplication portalApplication)
         {
-            portalApplication.Bindings.Add(typeof(Data.Dto.Standard.Metadata), new MetadataBinding());
+            portalApplication.Bindings.Add(typeof(Data.Dto.NewMetadata), new MetadataBinding());
 
             return base.WithPortalApplication(portalApplication);
         }

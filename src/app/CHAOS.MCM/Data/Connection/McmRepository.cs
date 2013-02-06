@@ -16,6 +16,7 @@ namespace Chaos.Mcm.Data.Connection
 
     using global::MySql.Data.MySqlClient;
 
+    // todo: Remove dependency to MySql
     public class McmRepository : IMcmRepository
     {
         #region Fields

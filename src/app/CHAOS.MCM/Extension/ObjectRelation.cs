@@ -7,18 +7,17 @@
     using CHAOS.Extensions;
 
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
 
     public class ObjectRelation : AMcmExtension
     {
-        public ScalarResult Set(ICallContext callContext, Guid object1GUID, Guid object2GUID, Data.Dto.Standard.Metadata metadata, uint objectRelationTypeID, int? sequence)
+        public ScalarResult Set(ICallContext callContext, Guid object1GUID, Guid object2GUID, NewMetadata metadata, uint objectRelationTypeID, int? sequence)
         {
             uint result;
 
-            if (metadata.GUID.ToString() != UUID.Empty.ToString())
+            if (metadata.Guid.ToString() != UUID.Empty.ToString())
             {
                 var objectRelationInfo = new ObjectRelationInfo
                     {
@@ -26,9 +25,9 @@
                         Object2Guid          = object2GUID,
                         ObjectRelationTypeID = objectRelationTypeID,
                         Sequence             = sequence,
-                        MetadataGuid         = metadata.GUID.ToGuid(),
-                        MetadataSchemaGuid   = metadata.MetadataSchemaGUID.ToGuid(),
-                        MetadataXml          = metadata.MetadataXML,
+                        MetadataGuid         = metadata.Guid,
+                        MetadataSchemaGuid   = metadata.MetadataSchemaGuid,
+                        MetadataXml          = metadata.MetadataXml,
                         LanguageCode         = metadata.LanguageCode
                     };
 
