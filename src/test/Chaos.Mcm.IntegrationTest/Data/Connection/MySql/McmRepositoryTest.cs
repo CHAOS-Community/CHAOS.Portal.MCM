@@ -5,8 +5,6 @@
     using System.Linq;
     using System.Xml.Linq;
 
-    using CHAOS;
-
     using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Data.Connection.MySql;
     using Chaos.Mcm.Data.Dto;
@@ -24,7 +22,7 @@
         public void ObjectRelationInfoGet_GivenAnObjectGuidThatDoesntExist_ReturnsAEmptyList()
         {
             var connection            = Make_McmRepository();
-            var nonExistantObjectGuid = FromUuid("77777777-7777-7777-7777-777777777777");
+            var nonExistantObjectGuid = new Guid("77777777-7777-7777-7777-777777777777");
 
             var result = connection.ObjectRelationInfoGet(nonExistantObjectGuid);
 
@@ -70,7 +68,7 @@
             var connection             = Make_McmRepository();
             var repo                   = Make_McmRepository();
             var expectedObjectRelation = Make_ObjectRelationInfoNonExistent();
-            var someUserGuid           = FromUuid("00000000-0000-0000-0000-000000001000");
+            var someUserGuid           = new Guid("00000000-0000-0000-0000-000000001000");
 
             var result = repo.ObjectRelationSet(expectedObjectRelation, someUserGuid);
 
@@ -112,9 +110,9 @@
         {
             var repository           = Make_McmRepository();
             var nonexistentMetadata  = Make_Metadata();
-            var existingObjectGuid   = FromUuid("00000000-0000-0000-0000-000000000003");
-            var someUserGuid         = FromUuid("10000000-0000-0000-0000-000000000000");
-            nonexistentMetadata.Guid = FromUuid("00000000-0000-0000-0000-000000000030"); // change to nonexistent guid
+            var existingObjectGuid   = new Guid("00000000-0000-0000-0000-000000000003");
+            var someUserGuid         = new Guid("10000000-0000-0000-0000-000000000000");
+            nonexistentMetadata.Guid = new Guid("00000000-0000-0000-0000-000000000030"); // change to nonexistent guid
 
             var result = repository.MetadataSet(existingObjectGuid, nonexistentMetadata, someUserGuid);
 
@@ -146,8 +144,8 @@
         {
             return new ObjectRelation
             {
-                Object1Guid          = FromUuid("00000000-0000-0000-0000-000000000003"),
-                Object2Guid          = FromUuid("00000000-0000-0000-0000-000000000002"),
+                Object1Guid          = new Guid("00000000-0000-0000-0000-000000000003"),
+                Object2Guid          = new Guid("00000000-0000-0000-0000-000000000002"),
                 MetadataGuid         = null,
                 Sequence             = null,
                 ObjectRelationTypeID = 1
@@ -158,14 +156,14 @@
         {
             return new ObjectRelationInfo
             {
-                Object1Guid          = FromUuid("00000000-0000-0000-0000-000000000003"),
-                Object2Guid          = FromUuid("00000000-0000-0000-0000-000000000002"),
-                MetadataGuid         = FromUuid("00000000-0000-0000-0000-000000000020"),
+                Object1Guid          = new Guid("00000000-0000-0000-0000-000000000003"),
+                Object2Guid          = new Guid("00000000-0000-0000-0000-000000000002"),
+                MetadataGuid         = new Guid("00000000-0000-0000-0000-000000000020"),
                 Sequence             = null,
                 ObjectRelationTypeID = 1,
                 ObjectRelationType   = "test relation type",
                 LanguageCode         = "en",
-                MetadataSchemaGuid   = FromUuid("00000000-0000-0000-0000-000000000100"),
+                MetadataSchemaGuid   = new Guid("00000000-0000-0000-0000-000000000100"),
                 MetadataXml          = XDocument.Parse("<xml>test xml</xml>")
             };
         }
@@ -174,14 +172,14 @@
         {
             return new ObjectRelationInfo
             {
-                Object1Guid          = FromUuid("00000000-0000-0000-0000-000000000001"),
-                Object2Guid          = FromUuid("00000000-0000-0000-0000-000000000002"),
-                MetadataGuid         = FromUuid("00000000-0000-0000-0000-000000000010"),
+                Object1Guid          = new Guid("00000000-0000-0000-0000-000000000001"),
+                Object2Guid          = new Guid("00000000-0000-0000-0000-000000000002"),
+                MetadataGuid         = new Guid("00000000-0000-0000-0000-000000000010"),
                 Sequence             = null,
                 ObjectRelationTypeID = 1,
                 ObjectRelationType   = "test relation type",
                 LanguageCode         = "en",
-                MetadataSchemaGuid   = FromUuid("00000000-0000-0000-0000-000000000100"),
+                MetadataSchemaGuid   = new Guid("00000000-0000-0000-0000-000000000100"),
                 MetadataXml          = XDocument.Parse("<xml>test xml</xml>")
             };
         }
@@ -190,22 +188,14 @@
         {
             return new NewMetadata
                 {
-                    Guid               = FromUuid("00000000-0000-0000-0000-000000000010"),
-                    MetadataSchemaGuid = FromUuid("00000000-0000-0000-0000-000000000100"),
-                    EditingUserGuid    = FromUuid("00000000-0000-0000-0000-000000000000"),
+                    Guid               = new Guid("00000000-0000-0000-0000-000000000010"),
+                    MetadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100"),
+                    EditingUserGuid    = new Guid("00000000-0000-0000-0000-000000000000"),
                     RevisionID         = 0,
                     LanguageCode       = "en",
                     MetadataXml        = XDocument.Parse("<xml>test xml</xml>"),
                     DateCreated        = new DateTime(1990, 10, 01, 23, 59, 59) 
                 };
-        }
-
-        #endregion
-        #region Utilities
-
-        private static Guid FromUuid(string uuid)
-        {
-            return new Guid(new UUID(uuid).ToByteArray());
         }
 
         #endregion

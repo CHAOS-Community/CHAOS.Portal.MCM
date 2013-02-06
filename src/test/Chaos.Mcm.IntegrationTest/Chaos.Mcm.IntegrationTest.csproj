@@ -33,16 +33,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CHAOS, Version=1.0.4734.2259, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\app\CHAOS.MCM\bin\Debug\CHAOS.dll</HintPath>
-    </Reference>
     <Reference Include="Chaos.Deployment.UI.Console">
       <HintPath>..\..\..\tools\chaos.deployment\Chaos.Deployment.UI.Console.exe</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.4.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data, Version=6.6.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\app\CHAOS.MCM\bin\Debug\MySql.Data.dll</HintPath>
+      <HintPath>..\..\..\lib\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\..\tools\NUnit-2.6.0.12051\bin\nunit.framework.dll</HintPath>
