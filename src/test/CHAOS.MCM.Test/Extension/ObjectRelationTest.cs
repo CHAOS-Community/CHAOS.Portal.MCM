@@ -5,6 +5,7 @@
     using CHAOS;
     using CHAOS.Extensions;
 
+    using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Portal.Data.Dto.Standard;
 

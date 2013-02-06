@@ -1,6 +1,7 @@
 CREATE PROCEDURE Metadata_Set
 (
     GUID                BINARY(16),
+	ObjectGUID          BINARY(16),
     MetadataSchemaGUID  BINARY(16),
     LanguageCode        VARCHAR(10),
     RevisionID          INT UNSIGNED,
@@ -9,7 +10,6 @@ CREATE PROCEDURE Metadata_Set
 )
 BEGIN
 
-    DECLARE Result INT DEFAULT 11;
     DECLARE EXIT HANDLER
     FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
     BEGIN
@@ -19,62 +19,46 @@ BEGIN
 
     START TRANSACTION;
 
-        IF( RevisionID IS NULL ) THEN
-            IF ( SELECT COUNT(*)
-                   FROM Metadata AS M1
-                  WHERE M1.ObjectGUID         = ObjectGUID         AND
-                        M1.MetadataSchemaGUID = MetadataSchemaGUID AND
-                        M1.LanguageCode       = LanguageCode ) = 0 THEN
+     IF NOT EXISTS(SELECT
+						*
+					FROM
+						Object_Metadata_Join AS omj
+						INNER JOIN Metadata AS m ON omj.MetadataGuid = m.GUID
+					WHERE
+							omj.ObjectGuid       = ObjectGUID
+						AND	m.MetadataSchemaGUID = MetadataSchemaGUID
+						AND	m.LanguageCode       = LanguageCode ) THEN
                                   
-                INSERT INTO Metadata( GUID, ObjectGUID, LanguageCode, MetadataSchemaGUID, MetadataXml, DateCreated, EditingUserGUID )
-                              VALUES( GUID, ObjectGUID, LanguageCode, MetadataSchemaGUID, MetadataXML, NOW()      , EditingUserGUID );
+        INSERT INTO Metadata
+			( GUID, LanguageCode, MetadataSchemaGUID, MetadataXml, DateCreated, EditingUserGUID )
+        VALUES
+			( GUID, LanguageCode, MetadataSchemaGUID, MetadataXML, NOW()      , EditingUserGUID );
                 
-                SET Result = 1;
-            ELSE
-                -- Trying to insert metadata without revision ID, while other metadata already exist
-                SET Result = -350;
-            END IF;
-        ELSE
-    
-            IF( SELECT COUNT(*)
-                  FROM Object AS O
-                       JOIN Metadata AS M1 ON O.GUID  = M1.ObjectGUID AND
-                                              M1.GUID = ( SELECT M2.GUID
-                                                            FROM Metadata AS M2
-                                                           WHERE M2.ObjectGUID         = M1.ObjectGUID   AND
-                                                                 M2.LanguageCode       = M1.LanguageCode AND
-                                                                 M2.MetadataSchemaGUID = M1.MetadataSchemaGUID
-                                                           ORDER BY M2.RevisionID DESC
-                                                           LIMIT 1 )
-                 WHERE M1.ObjectGUID         = ObjectGUID         AND
-                       M1.MetadataSchemaGUID = MetadataSchemaGUID AND
-                       M1.LanguageCode       = LanguageCode       AND
-                       M1.RevisionID         = RevisionID ) > 0 THEN
+		INSERT INTO Object_Metadata_Join
+			(ObjectGuid,MetadataGuid)
+		VALUES
+			(ObjectGUID,GUID);
 
-               -- INSERT INTO Metadata( GUID, ObjectGUID, LanguageCode, MetadataSchemaGUID, MetadataXml, DateCreated, EditingUserGUID )
-               --               VALUES( GUID, ObjectGUID, LanguageCode, MetadataSchemaGUID, MetadataXML, NOW()      , EditingUserGUID );
-               
-                UPDATE 
-                    Metadata
-                SET 
-                    Metadata.MetadataXml = MetadataXML,
-                    Metadata.DateCreated = NOW(),
-                    Metadata.EditingUserGUID = EditingUserGUID
-                WHERE 
-                    Metadata.ObjectGUID         = ObjectGUID         AND
-                    Metadata.MetadataSchemaGUID = MetadataSchemaGUID AND
-                    Metadata.LanguageCode       = LanguageCode;
-                                
-                SET Result = 1;
+		SELECT 1;
 
-            ELSE
-                -- RevisionID has been changed, so metadata cannot be saved
-                SET Result = -300;
-            END IF;
-        END IF;
+    ELSE
+  
+        UPDATE 
+            Metadata AS m
+			LEFT JOIN Object_Metadata_Join AS omj ON m.GUID = omj.MetadataGuid
+        SET 
+            m.MetadataXml     = MetadataXML,
+            m.DateCreated     = NOW(),
+            m.EditingUserGUID = EditingUserGUID
+        WHERE 
+				omj.ObjectGUID       = ObjectGUID
+            AND	m.MetadataSchemaGUID = MetadataSchemaGUID
+            AND	m.LanguageCode       = LanguageCode;
+           
+		   SELECT 1;
+		                        
+    END IF;
        
     COMMIT;
-       
-    SELECT Result;
 
 END

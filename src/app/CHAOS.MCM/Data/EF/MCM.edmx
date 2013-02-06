@@ -22,10 +22,10 @@
           <EntitySet Name="FormatCategory" EntityType="MCMModel.Store.FormatCategory" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="FormatType" EntityType="MCMModel.Store.FormatType" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="Language" EntityType="MCMModel.Store.Language" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="Metadata" EntityType="MCMModel.Store.Metadata" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="MetadataSchema" EntityType="MCMModel.Store.MetadataSchema" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="MetadataSchema_Group_Join" EntityType="MCMModel.Store.MetadataSchema_Group_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
-          <EntitySet Name="MetadataSchema_User_Join" EntityType="MCMModel.Store.MetadataSchema_User_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="NewMetadata" EntityType="MCMModel.Store.NewMetadata" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="NewMetadataSchema" EntityType="MCMModel.Store.NewMetadataSchema" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="NewMetadataSchema_Group_Join" EntityType="MCMModel.Store.NewMetadataSchema_Group_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
+          <EntitySet Name="NewMetadataSchema_User_Join" EntityType="MCMModel.Store.NewMetadataSchema_User_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="Object" EntityType="MCMModel.Store.Object" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="Object_Folder_Join" EntityType="MCMModel.Store.Object_Folder_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
           <EntitySet Name="Object_Object_Join" EntityType="MCMModel.Store.Object_Object_Join" store:Type="Tables" Schema="MCM" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" />
@@ -152,21 +152,21 @@
             <End Role="FormatType" EntitySet="FormatType" />
             <End Role="FormatCategory" EntitySet="FormatCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK_Language_LanguageCode_Metadata_LanguageCode" Association="MCMModel.Store.FK_Language_LanguageCode_Metadata_LanguageCode">
+          <AssociationSet Name="FK_Language_LanguageCode_NewMetadata_LanguageCode" Association="MCMModel.Store.FK_Language_LanguageCode_NewMetadata_LanguageCode">
             <End Role="Language" EntitySet="Language" />
-            <End Role="Metadata" EntitySet="Metadata" />
+            <End Role="NewMetadata" EntitySet="NewMetadata" />
           </AssociationSet>
-          <AssociationSet Name="FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" Association="MCMModel.Store.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
-            <End Role="MetadataSchema" EntitySet="MetadataSchema" />
-            <End Role="Metadata" EntitySet="Metadata" />
+          <AssociationSet Name="FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID" Association="MCMModel.Store.FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID">
+            <End Role="NewMetadataSchema" EntitySet="NewMetadataSchema" />
+            <End Role="NewMetadata" EntitySet="NewMetadata" />
           </AssociationSet>
           <AssociationSet Name="FK_MS_GUID_MS_Group_Join_MSGUID" Association="MCMModel.Store.FK_MS_GUID_MS_Group_Join_MSGUID">
-            <End Role="MetadataSchema" EntitySet="MetadataSchema" />
-            <End Role="MetadataSchema_Group_Join" EntitySet="MetadataSchema_Group_Join" />
+            <End Role="NewMetadataSchema" EntitySet="NewMetadataSchema" />
+            <End Role="NewMetadataSchema_Group_Join" EntitySet="NewMetadataSchema_Group_Join" />
           </AssociationSet>
-          <AssociationSet Name="FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" Association="MCMModel.Store.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID">
-            <End Role="MetadataSchema" EntitySet="MetadataSchema" />
-            <End Role="MetadataSchema_User_Join" EntitySet="MetadataSchema_User_Join" />
+          <AssociationSet Name="FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID" Association="MCMModel.Store.FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID">
+            <End Role="NewMetadataSchema" EntitySet="NewMetadataSchema" />
+            <End Role="NewMetadataSchema_User_Join" EntitySet="NewMetadataSchema_User_Join" />
           </AssociationSet>
           <AssociationSet Name="FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID" Association="MCMModel.Store.FK_Object_GUID_AccessPoint_Object_Join_ObjectGUID">
             <End Role="Object" EntitySet="Object" />
@@ -176,9 +176,9 @@
             <End Role="Object" EntitySet="Object" />
             <End Role="File" EntitySet="File" />
           </AssociationSet>
-          <AssociationSet Name="FK_Object_GUID_Metadata_ObjectGUID" Association="MCMModel.Store.FK_Object_GUID_Metadata_ObjectGUID">
+          <AssociationSet Name="FK_Object_GUID_NewMetadata_ObjectGUID" Association="MCMModel.Store.FK_Object_GUID_NewMetadata_ObjectGUID">
             <End Role="Object" EntitySet="Object" />
-            <End Role="Metadata" EntitySet="Metadata" />
+            <End Role="NewMetadata" EntitySet="NewMetadata" />
           </AssociationSet>
           <AssociationSet Name="FK_Object_GUID_Object_Folder_Join_ObjectGUID" Association="MCMModel.Store.FK_Object_GUID_Object_Folder_Join_ObjectGUID">
             <End Role="Object" EntitySet="Object" />
@@ -363,7 +363,7 @@
           <Property Name="LanguageCode" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="Name" Type="varchar" MaxLength="255" />
         </EntityType>
-        <EntityType Name="Metadata">
+        <EntityType Name="NewMetadata">
           <Key>
             <PropertyRef Name="GUID" />
             <PropertyRef Name="DateCreated" />
@@ -371,13 +371,13 @@
           <Property Name="GUID" Type="guid" Nullable="false" />
           <Property Name="ObjectGUID" Type="guid" Nullable="false" />
           <Property Name="LanguageCode" Type="varchar" MaxLength="10" />
-          <Property Name="MetadataSchemaGUID" Type="guid" Nullable="false" />
+          <Property Name="NewMetadataSchemaGUID" Type="guid" Nullable="false" />
           <Property Name="RevisionID" Type="uint" Nullable="false" />
-          <Property Name="MetadataXML" Type="text" Nullable="false" />
+          <Property Name="NewMetadataXML" Type="text" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="EditingUserGUID" Type="guid" Nullable="false" />
         </EntityType>
-        <EntityType Name="MetadataSchema">
+        <EntityType Name="NewMetadataSchema">
           <Key>
             <PropertyRef Name="GUID" />
           </Key>
@@ -386,22 +386,22 @@
           <Property Name="SchemaXML" Type="text" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="MetadataSchema_Group_Join">
+        <EntityType Name="NewMetadataSchema_Group_Join">
           <Key>
-            <PropertyRef Name="MetadataSchemaGUID" />
+            <PropertyRef Name="NewMetadataSchemaGUID" />
             <PropertyRef Name="GroupGUID" />
           </Key>
-          <Property Name="MetadataSchemaGUID" Type="guid" Nullable="false" />
+          <Property Name="NewMetadataSchemaGUID" Type="guid" Nullable="false" />
           <Property Name="GroupGUID" Type="guid" Nullable="false" />
           <Property Name="Permission" Type="uint" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="MetadataSchema_User_Join">
+        <EntityType Name="NewMetadataSchema_User_Join">
           <Key>
-            <PropertyRef Name="MetadataSchemaGUID" />
+            <PropertyRef Name="NewMetadataSchemaGUID" />
             <PropertyRef Name="UserGUID" />
           </Key>
-          <Property Name="MetadataSchemaGUID" Type="guid" Nullable="false" />
+          <Property Name="NewMetadataSchemaGUID" Type="guid" Nullable="false" />
           <Property Name="UserGUID" Type="guid" Nullable="false" />
           <Property Name="Permission" Type="uint" Nullable="false" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
@@ -769,51 +769,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Language_LanguageCode_Metadata_LanguageCode">
+        <Association Name="FK_Language_LanguageCode_NewMetadata_LanguageCode">
           <End Role="Language" Type="MCMModel.Store.Language" Multiplicity="0..1" />
-          <End Role="Metadata" Type="MCMModel.Store.Metadata" Multiplicity="*" />
+          <End Role="NewMetadata" Type="MCMModel.Store.NewMetadata" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Language">
               <PropertyRef Name="LanguageCode" />
             </Principal>
-            <Dependent Role="Metadata">
+            <Dependent Role="NewMetadata">
               <PropertyRef Name="LanguageCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
-          <End Role="MetadataSchema" Type="MCMModel.Store.MetadataSchema" Multiplicity="1" />
-          <End Role="Metadata" Type="MCMModel.Store.Metadata" Multiplicity="*" />
+        <Association Name="FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID">
+          <End Role="NewMetadataSchema" Type="MCMModel.Store.NewMetadataSchema" Multiplicity="1" />
+          <End Role="NewMetadata" Type="MCMModel.Store.NewMetadata" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MetadataSchema">
+            <Principal Role="NewMetadataSchema">
               <PropertyRef Name="GUID" />
             </Principal>
-            <Dependent Role="Metadata">
-              <PropertyRef Name="MetadataSchemaGUID" />
+            <Dependent Role="NewMetadata">
+              <PropertyRef Name="NewMetadataSchemaGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MS_GUID_MS_Group_Join_MSGUID">
-          <End Role="MetadataSchema" Type="MCMModel.Store.MetadataSchema" Multiplicity="1" />
-          <End Role="MetadataSchema_Group_Join" Type="MCMModel.Store.MetadataSchema_Group_Join" Multiplicity="*" />
+          <End Role="NewMetadataSchema" Type="MCMModel.Store.NewMetadataSchema" Multiplicity="1" />
+          <End Role="NewMetadataSchema_Group_Join" Type="MCMModel.Store.NewMetadataSchema_Group_Join" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MetadataSchema">
+            <Principal Role="NewMetadataSchema">
               <PropertyRef Name="GUID" />
             </Principal>
-            <Dependent Role="MetadataSchema_Group_Join">
-              <PropertyRef Name="MetadataSchemaGUID" />
+            <Dependent Role="NewMetadataSchema_Group_Join">
+              <PropertyRef Name="NewMetadataSchemaGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MS_GUID_MS_User_Join_MetadataSchemaGUID">
-          <End Role="MetadataSchema" Type="MCMModel.Store.MetadataSchema" Multiplicity="1" />
-          <End Role="MetadataSchema_User_Join" Type="MCMModel.Store.MetadataSchema_User_Join" Multiplicity="*" />
+        <Association Name="FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID">
+          <End Role="NewMetadataSchema" Type="MCMModel.Store.NewMetadataSchema" Multiplicity="1" />
+          <End Role="NewMetadataSchema_User_Join" Type="MCMModel.Store.NewMetadataSchema_User_Join" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MetadataSchema">
+            <Principal Role="NewMetadataSchema">
               <PropertyRef Name="GUID" />
             </Principal>
-            <Dependent Role="MetadataSchema_User_Join">
-              <PropertyRef Name="MetadataSchemaGUID" />
+            <Dependent Role="NewMetadataSchema_User_Join">
+              <PropertyRef Name="NewMetadataSchemaGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -841,14 +841,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Object_GUID_Metadata_ObjectGUID">
+        <Association Name="FK_Object_GUID_NewMetadata_ObjectGUID">
           <End Role="Object" Type="MCMModel.Store.Object" Multiplicity="1" />
-          <End Role="Metadata" Type="MCMModel.Store.Metadata" Multiplicity="*" />
+          <End Role="NewMetadata" Type="MCMModel.Store.NewMetadata" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Object">
               <PropertyRef Name="GUID" />
             </Principal>
-            <Dependent Role="Metadata">
+            <Dependent Role="NewMetadata">
               <PropertyRef Name="ObjectGUID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1084,38 +1084,38 @@
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="LanguageCode" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="MetadataSchema_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+        <Function Name="NewMetadataSchema_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="SchemaXML" Type="text" Mode="In" />
           <Parameter Name="UserGUID" Type="binary" Mode="In" />
         </Function>
-        <Function Name="MetadataSchema_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+        <Function Name="NewMetadataSchema_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
         </Function>
-        <Function Name="MetadataSchema_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+        <Function Name="NewMetadataSchema_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="UserGUID" Type="binary" Mode="In" />
           <Parameter Name="GroupGUIDs" Type="varchar" Mode="In" />
-          <Parameter Name="MetadataSchemaGUID" Type="binary" Mode="In" />
+          <Parameter Name="NewMetadataSchemaGUID" Type="binary" Mode="In" />
           <Parameter Name="PermissionRequired" Type="int" Mode="In" />
         </Function>
-        <Function Name="MetadataSchema_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+        <Function Name="NewMetadataSchema_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="SchemaXML" Type="text" Mode="In" />
         </Function>
-        <Function Name="Metadata_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+        <Function Name="NewMetadata_Get" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
-          <Parameter Name="MetadataSchemaGUID" Type="binary" Mode="In" />
+          <Parameter Name="NewMetadataSchemaGUID" Type="binary" Mode="In" />
           <Parameter Name="LanguageCode" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="Metadata_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
+        <Function Name="NewMetadata_Set" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUID" Type="binary" Mode="In" />
           <Parameter Name="ObjectGUID" Type="binary" Mode="In" />
-          <Parameter Name="MetadataSchemaGUID" Type="binary" Mode="In" />
+          <Parameter Name="NewMetadataSchemaGUID" Type="binary" Mode="In" />
           <Parameter Name="LanguageCode" Type="varchar" Mode="In" />
           <Parameter Name="RevisionID" Type="int" Mode="In" />
-          <Parameter Name="MetadataXML" Type="text" Mode="In" />
+          <Parameter Name="NewMetadataXML" Type="text" Mode="In" />
           <Parameter Name="EditingUserGUID" Type="binary" Mode="In" />
         </Function>
         <Function Name="ObjectFolderType_Create" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
@@ -1186,7 +1186,7 @@
         </Function>
         <Function Name="Object_GetByFolderID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="FolderID" Type="int" Mode="In" />
-          <Parameter Name="IncludeMetadata" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeNewMetadata" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeFiles" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeObjectRelations" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeFolders" Type="tinyint" Mode="In" />
@@ -1196,7 +1196,7 @@
         </Function>
         <Function Name="Object_GetByGUIDs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="GUIDs" Type="varchar" Mode="In" />
-          <Parameter Name="IncludeMetadata" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeNewMetadata" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeFiles" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeObjectRelations" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeFolders" Type="tinyint" Mode="In" />
@@ -1205,7 +1205,7 @@
         <Function Name="Object_GetByRelatedObjectGUID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="MCM">
           <Parameter Name="RelatedObjectGUID" Type="binary" Mode="In" />
           <Parameter Name="ObjectRelationTypeID" Type="int" Mode="In" />
-          <Parameter Name="IncludeMetadata" Type="tinyint" Mode="In" />
+          <Parameter Name="IncludeNewMetadata" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeFiles" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeFolders" Type="tinyint" Mode="In" />
           <Parameter Name="IncludeAccessPoints" Type="tinyint" Mode="In" />
@@ -1235,9 +1235,9 @@
           <EntitySet Name="FolderType" EntityType="MCMModel.FolderType" />
           <EntitySet Name="Format" EntityType="MCMModel.Format" />
           <EntitySet Name="Language" EntityType="MCMModel.Language" />
-          <EntitySet Name="MetadataSchema" EntityType="MCMModel.MetadataSchema" />
-          <EntitySet Name="MetadataSchema_Group_Join" EntityType="MCMModel.MetadataSchema_Group_Join" />
-          <EntitySet Name="MetadataSchema_User_Join" EntityType="MCMModel.MetadataSchema_User_Join" />
+          <EntitySet Name="NewMetadataSchema" EntityType="MCMModel.NewMetadataSchema" />
+          <EntitySet Name="NewMetadataSchema_Group_Join" EntityType="MCMModel.NewMetadataSchema_Group_Join" />
+          <EntitySet Name="NewMetadataSchema_User_Join" EntityType="MCMModel.NewMetadataSchema_User_Join" />
           <EntitySet Name="ObjectFolderType" EntityType="MCMModel.ObjectFolderType" />
           <EntitySet Name="ObjectRelationType" EntityType="MCMModel.ObjectRelationType" />
           <EntitySet Name="ObjectType" EntityType="MCMModel.ObjectType" />
@@ -1295,12 +1295,12 @@
             <End Role="Folder" EntitySet="Folder" />
           </AssociationSet>
           <AssociationSet Name="FK_MS_GUID_MS_Group_Join_MSGUID" Association="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID">
-            <End Role="MetadataSchema" EntitySet="MetadataSchema" />
-            <End Role="MetadataSchema_Group_Join" EntitySet="MetadataSchema_Group_Join" />
+            <End Role="NewMetadataSchema" EntitySet="NewMetadataSchema" />
+            <End Role="NewMetadataSchema_Group_Join" EntitySet="NewMetadataSchema_Group_Join" />
           </AssociationSet>
-          <AssociationSet Name="FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" Association="MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID">
-            <End Role="MetadataSchema" EntitySet="MetadataSchema" />
-            <End Role="MetadataSchema_User_Join" EntitySet="MetadataSchema_User_Join" />
+          <AssociationSet Name="FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID" Association="MCMModel.FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID">
+            <End Role="NewMetadataSchema" EntitySet="NewMetadataSchema" />
+            <End Role="NewMetadataSchema_User_Join" EntitySet="NewMetadataSchema_User_Join" />
           </AssociationSet>
           <EntitySet Name="DestinationInfo" EntityType="MCMModel.DestinationInfo" />
           <FunctionImport Name="Folder_Create" ReturnType="Collection(Int32)">
@@ -1404,16 +1404,16 @@
             <Parameter Name="StringFormat" Mode="In" Type="String" />
             <Parameter Name="Token" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MetadataSchema_Create" ReturnType="Collection(Int32)">
+          <FunctionImport Name="NewMetadataSchema_Create" ReturnType="Collection(Int32)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="SchemaXML" Mode="In" Type="String" />
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="MetadataSchema_Get" EntitySet="MetadataSchema" ReturnType="Collection(MCMModel.MetadataSchema)">
+          <FunctionImport Name="NewMetadataSchema_Get" EntitySet="NewMetadataSchema" ReturnType="Collection(MCMModel.NewMetadataSchema)">
             <Parameter Name="UserGUID" Mode="In" Type="Binary" />
             <Parameter Name="GroupGUIDs" Mode="In" Type="String" />
-            <Parameter Name="MetadataSchemaGUID" Mode="In" Type="Binary" />
+            <Parameter Name="NewMetadataSchemaGUID" Mode="In" Type="Binary" />
             <Parameter Name="PermissionRequired" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Object_Create" ReturnType="Collection(Int32)">
@@ -1425,13 +1425,13 @@
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="Metadata_Set" ReturnType="Collection(Int32)">
+          <FunctionImport Name="NewMetadata_Set" ReturnType="Collection(Int32)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
             <Parameter Name="ObjectGUID" Mode="In" Type="Binary" />
-            <Parameter Name="MetadataSchemaGUID" Mode="In" Type="Binary" />
+            <Parameter Name="NewMetadataSchemaGUID" Mode="In" Type="Binary" />
             <Parameter Name="LanguageCode" Mode="In" Type="String" />
             <Parameter Name="RevisionID" Mode="In" Type="Int32" />
-            <Parameter Name="MetadataXML" Mode="In" Type="String" />
+            <Parameter Name="NewMetadataXML" Mode="In" Type="String" />
             <Parameter Name="EditingUserGUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <FunctionImport Name="Language_Create" ReturnType="Collection(Int32)">
@@ -1471,18 +1471,18 @@
             <Parameter Name="Object2GUID" Mode="In" Type="Binary" />
             <Parameter Name="ObjectRelationTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="Metadata" EntityType="MCMModel.Metadata" />
-          <AssociationSet Name="FK_Language_LanguageCode_Metadata_LanguageCode" Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode">
+          <EntitySet Name="NewMetadata" EntityType="MCMModel.NewMetadata" />
+          <AssociationSet Name="FK_Language_LanguageCode_NewMetadata_LanguageCode" Association="MCMModel.FK_Language_LanguageCode_NewMetadata_LanguageCode">
             <End Role="Language" EntitySet="Language" />
-            <End Role="Metadata" EntitySet="Metadata" />
+            <End Role="NewMetadata" EntitySet="NewMetadata" />
           </AssociationSet>
-          <AssociationSet Name="FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" Association="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
-            <End Role="MetadataSchema" EntitySet="MetadataSchema" />
-            <End Role="Metadata" EntitySet="Metadata" />
+          <AssociationSet Name="FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID" Association="MCMModel.FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID">
+            <End Role="NewMetadataSchema" EntitySet="NewMetadataSchema" />
+            <End Role="NewMetadata" EntitySet="NewMetadata" />
           </AssociationSet>
-          <AssociationSet Name="FK_Object_GUID_Metadata_ObjectGUID" Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID">
+          <AssociationSet Name="FK_Object_GUID_NewMetadata_ObjectGUID" Association="MCMModel.FK_Object_GUID_NewMetadata_ObjectGUID">
             <End Role="Object" EntitySet="Object" />
-            <End Role="Metadata" EntitySet="Metadata" />
+            <End Role="NewMetadata" EntitySet="NewMetadata" />
           </AssociationSet>
           <EntitySet Name="Object_Folder_Join" EntityType="MCMModel.Object_Folder_Join" />
           <AssociationSet Name="FK_Folder_ID_Object_Folder_Join_FolderID" Association="MCMModel.FK_Folder_ID_Object_Folder_Join_FolderID">
@@ -1579,12 +1579,12 @@
             <Parameter Name="ID" Mode="In" Type="Int32" />
             <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MetadataSchema_Update" ReturnType="Collection(Int32)">
+          <FunctionImport Name="NewMetadataSchema_Update" ReturnType="Collection(Int32)">
             <Parameter Name="GUID" Mode="In" Type="Binary" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="SchemaXML" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="MetadataSchema_Delete" ReturnType="Collection(Int32)">
+          <FunctionImport Name="NewMetadataSchema_Delete" ReturnType="Collection(Int32)">
           <Parameter Name="GUID" Mode="In" Type="Binary" />
           </FunctionImport>
           <EntitySet Name="FileInfo" EntityType="MCMModel.FileInfo" />
@@ -1765,9 +1765,9 @@
           </Key>
           <Property Name="LanguageCode" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
           <Property Name="Name" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" FromRole="Language" ToRole="Metadata" />
+          <NavigationProperty Name="NewMetadata" Relationship="MCMModel.FK_Language_LanguageCode_NewMetadata_LanguageCode" FromRole="Language" ToRole="NewMetadata" />
         </EntityType>
-        <EntityType Name="MetadataSchema">
+        <EntityType Name="NewMetadataSchema">
           <Key>
             <PropertyRef Name="GUID" />
           </Key>
@@ -1775,31 +1775,31 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
           <Property Name="SchemaXML" Type="String" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="MetadataSchema_Group_Join" Relationship="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID" FromRole="MetadataSchema" ToRole="MetadataSchema_Group_Join" />
-          <NavigationProperty Name="MetadataSchema_User_Join" Relationship="MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" FromRole="MetadataSchema" ToRole="MetadataSchema_User_Join" />
-          <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" FromRole="MetadataSchema" ToRole="Metadata" />
+          <NavigationProperty Name="NewMetadataSchema_Group_Join" Relationship="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID" FromRole="NewMetadataSchema" ToRole="NewMetadataSchema_Group_Join" />
+          <NavigationProperty Name="NewMetadataSchema_User_Join" Relationship="MCMModel.FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID" FromRole="NewMetadataSchema" ToRole="NewMetadataSchema_User_Join" />
+          <NavigationProperty Name="NewMetadata" Relationship="MCMModel.FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID" FromRole="NewMetadataSchema" ToRole="NewMetadata" />
         </EntityType>
-        <EntityType Name="MetadataSchema_Group_Join">
+        <EntityType Name="NewMetadataSchema_Group_Join">
           <Key>
-            <PropertyRef Name="MetadataSchemaGUID" />
+            <PropertyRef Name="NewMetadataSchemaGUID" />
             <PropertyRef Name="GroupGUID" />
           </Key>
-          <Property Name="MetadataSchemaGUID" Type="Guid" Nullable="false" />
+          <Property Name="NewMetadataSchemaGUID" Type="Guid" Nullable="false" />
           <Property Name="GroupGUID" Type="Guid" Nullable="false" />
           <Property Name="Permission" Type="Int64" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="MetadataSchema" Relationship="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID" FromRole="MetadataSchema_Group_Join" ToRole="MetadataSchema" />
+          <NavigationProperty Name="NewMetadataSchema" Relationship="MCMModel.FK_MS_GUID_MS_Group_Join_MSGUID" FromRole="NewMetadataSchema_Group_Join" ToRole="NewMetadataSchema" />
         </EntityType>
-        <EntityType Name="MetadataSchema_User_Join">
+        <EntityType Name="NewMetadataSchema_User_Join">
           <Key>
-            <PropertyRef Name="MetadataSchemaGUID" />
+            <PropertyRef Name="NewMetadataSchemaGUID" />
             <PropertyRef Name="UserGUID" />
           </Key>
-          <Property Name="MetadataSchemaGUID" Type="Guid" Nullable="false" />
+          <Property Name="NewMetadataSchemaGUID" Type="Guid" Nullable="false" />
           <Property Name="UserGUID" Type="Guid" Nullable="false" />
           <Property Name="Permission" Type="Int64" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="MetadataSchema" Relationship="MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" FromRole="MetadataSchema_User_Join" ToRole="MetadataSchema" />
+          <NavigationProperty Name="NewMetadataSchema" Relationship="MCMModel.FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID" FromRole="NewMetadataSchema_User_Join" ToRole="NewMetadataSchema" />
         </EntityType>
         <EntityType Name="ObjectFolderType">
           <Key>
@@ -1992,26 +1992,26 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_MS_GUID_MS_Group_Join_MSGUID">
-          <End Role="MetadataSchema" Type="MCMModel.MetadataSchema" Multiplicity="1" />
-          <End Role="MetadataSchema_Group_Join" Type="MCMModel.MetadataSchema_Group_Join" Multiplicity="*" />
+          <End Role="NewMetadataSchema" Type="MCMModel.NewMetadataSchema" Multiplicity="1" />
+          <End Role="NewMetadataSchema_Group_Join" Type="MCMModel.NewMetadataSchema_Group_Join" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MetadataSchema">
+            <Principal Role="NewMetadataSchema">
               <PropertyRef Name="GUID" />
             </Principal>
-            <Dependent Role="MetadataSchema_Group_Join">
-              <PropertyRef Name="MetadataSchemaGUID" />
+            <Dependent Role="NewMetadataSchema_Group_Join">
+              <PropertyRef Name="NewMetadataSchemaGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MS_GUID_MS_User_Join_MetadataSchemaGUID">
-          <End Role="MetadataSchema" Type="MCMModel.MetadataSchema" Multiplicity="1" />
-          <End Role="MetadataSchema_User_Join" Type="MCMModel.MetadataSchema_User_Join" Multiplicity="*" />
+        <Association Name="FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID">
+          <End Role="NewMetadataSchema" Type="MCMModel.NewMetadataSchema" Multiplicity="1" />
+          <End Role="NewMetadataSchema_User_Join" Type="MCMModel.NewMetadataSchema_User_Join" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MetadataSchema">
+            <Principal Role="NewMetadataSchema">
               <PropertyRef Name="GUID" />
             </Principal>
-            <Dependent Role="MetadataSchema_User_Join">
-              <PropertyRef Name="MetadataSchemaGUID" />
+            <Dependent Role="NewMetadataSchema_User_Join">
+              <PropertyRef Name="NewMetadataSchemaGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2042,7 +2042,7 @@
           <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <NavigationProperty Name="File" Relationship="MCMModel.FK_Object_GUID_File_ObjectGUID" FromRole="Object" ToRole="File" />
           <NavigationProperty Name="ObjectType" Relationship="MCMModel.FK_ObjectType_ID_Object_ObjectTypeID" FromRole="Object" ToRole="ObjectType" />
-          <NavigationProperty Name="Metadata" Relationship="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" FromRole="Object" ToRole="Metadata" />
+          <NavigationProperty Name="NewMetadata" Relationship="MCMModel.FK_Object_GUID_NewMetadata_ObjectGUID" FromRole="Object" ToRole="NewMetadata" />
           <NavigationProperty Name="Object_Folder_Join" Relationship="MCMModel.FK_Object_GUID_Object_Folder_Join_ObjectGUID" FromRole="Object" ToRole="Object_Folder_Join" />
           <NavigationProperty Name="Object_Object_Join" Relationship="MCMModel.FK_Object_GUID_Object_Object_Join_Object1GUID" FromRole="Object" ToRole="Object_Object_Join" />
           <NavigationProperty Name="Object_Object_Join1" Relationship="MCMModel.FK_Object_GUID_Object_Object_Join_Object2GUID" FromRole="Object" ToRole="Object_Object_Join" />
@@ -2143,7 +2143,7 @@
           <Property Type="Int64" Name="NumberOfSubFolders" />
           <Property Type="Int64" Name="NumberOfObjects" />
         </EntityType>
-        <EntityType Name="Metadata">
+        <EntityType Name="NewMetadata">
           <Key>
             <PropertyRef Name="GUID" />
             <PropertyRef Name="DateCreated" />
@@ -2151,47 +2151,47 @@
           <Property Type="Guid" Name="GUID" Nullable="false" />
           <Property Type="Guid" Name="ObjectGUID" Nullable="false" />
           <Property Type="String" Name="LanguageCode" MaxLength="10" Unicode="false" FixedLength="false" />
-          <Property Type="Guid" Name="MetadataSchemaGUID" Nullable="false" />
+          <Property Type="Guid" Name="NewMetadataSchemaGUID" Nullable="false" />
           <Property Type="Int64" Name="RevisionID" Nullable="false" />
-          <Property Type="String" Name="MetadataXML" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="NewMetadataXML" Nullable="false" MaxLength="65535" Unicode="false" FixedLength="false" />
           <Property Type="DateTime" Name="DateCreated" Nullable="false" Precision="3" />
           <Property Type="Guid" Name="EditingUserGUID" Nullable="false" />
-          <NavigationProperty Name="Language" Relationship="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode" FromRole="Metadata" ToRole="Language" />
-          <NavigationProperty Name="MetadataSchema" Relationship="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID" FromRole="Metadata" ToRole="MetadataSchema" />
-          <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_Metadata_ObjectGUID" FromRole="Metadata" ToRole="Object" />
+          <NavigationProperty Name="Language" Relationship="MCMModel.FK_Language_LanguageCode_NewMetadata_LanguageCode" FromRole="NewMetadata" ToRole="Language" />
+          <NavigationProperty Name="NewMetadataSchema" Relationship="MCMModel.FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID" FromRole="NewMetadata" ToRole="NewMetadataSchema" />
+          <NavigationProperty Name="Object" Relationship="MCMModel.FK_Object_GUID_NewMetadata_ObjectGUID" FromRole="NewMetadata" ToRole="Object" />
         </EntityType>
-        <Association Name="FK_Language_LanguageCode_Metadata_LanguageCode">
+        <Association Name="FK_Language_LanguageCode_NewMetadata_LanguageCode">
           <End Type="MCMModel.Language" Role="Language" Multiplicity="0..1" />
-          <End Type="MCMModel.Metadata" Role="Metadata" Multiplicity="*" />
+          <End Type="MCMModel.NewMetadata" Role="NewMetadata" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Language">
               <PropertyRef Name="LanguageCode" />
             </Principal>
-            <Dependent Role="Metadata">
+            <Dependent Role="NewMetadata">
               <PropertyRef Name="LanguageCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
-          <End Type="MCMModel.MetadataSchema" Role="MetadataSchema" Multiplicity="1" />
-          <End Type="MCMModel.Metadata" Role="Metadata" Multiplicity="*" />
+        <Association Name="FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID">
+          <End Type="MCMModel.NewMetadataSchema" Role="NewMetadataSchema" Multiplicity="1" />
+          <End Type="MCMModel.NewMetadata" Role="NewMetadata" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MetadataSchema">
+            <Principal Role="NewMetadataSchema">
               <PropertyRef Name="GUID" />
             </Principal>
-            <Dependent Role="Metadata">
-              <PropertyRef Name="MetadataSchemaGUID" />
+            <Dependent Role="NewMetadata">
+              <PropertyRef Name="NewMetadataSchemaGUID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Object_GUID_Metadata_ObjectGUID">
+        <Association Name="FK_Object_GUID_NewMetadata_ObjectGUID">
           <End Type="MCMModel.Object" Role="Object" Multiplicity="1" />
-          <End Type="MCMModel.Metadata" Role="Metadata" Multiplicity="*" />
+          <End Type="MCMModel.NewMetadata" Role="NewMetadata" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Object">
               <PropertyRef Name="GUID" />
             </Principal>
-            <Dependent Role="Metadata">
+            <Dependent Role="NewMetadata">
               <PropertyRef Name="ObjectGUID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2470,20 +2470,20 @@
             <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
             <ScalarProperty Name="Name" ColumnName="Name" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="MetadataSchema"><EntityTypeMapping TypeName="MCMModel.MetadataSchema"><MappingFragment StoreEntitySet="MetadataSchema">
+          <EntitySetMapping Name="NewMetadataSchema"><EntityTypeMapping TypeName="MCMModel.NewMetadataSchema"><MappingFragment StoreEntitySet="NewMetadataSchema">
             <ScalarProperty Name="GUID" ColumnName="GUID" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="SchemaXML" ColumnName="SchemaXML" />
             <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="MetadataSchema_Group_Join"><EntityTypeMapping TypeName="MCMModel.MetadataSchema_Group_Join"><MappingFragment StoreEntitySet="MetadataSchema_Group_Join">
-            <ScalarProperty Name="MetadataSchemaGUID" ColumnName="MetadataSchemaGUID" />
+          <EntitySetMapping Name="NewMetadataSchema_Group_Join"><EntityTypeMapping TypeName="MCMModel.NewMetadataSchema_Group_Join"><MappingFragment StoreEntitySet="NewMetadataSchema_Group_Join">
+            <ScalarProperty Name="NewMetadataSchemaGUID" ColumnName="NewMetadataSchemaGUID" />
             <ScalarProperty Name="GroupGUID" ColumnName="GroupGUID" />
             <ScalarProperty Name="Permission" ColumnName="Permission" />
             <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="MetadataSchema_User_Join"><EntityTypeMapping TypeName="MCMModel.MetadataSchema_User_Join"><MappingFragment StoreEntitySet="MetadataSchema_User_Join">
-            <ScalarProperty Name="MetadataSchemaGUID" ColumnName="MetadataSchemaGUID" />
+          <EntitySetMapping Name="NewMetadataSchema_User_Join"><EntityTypeMapping TypeName="MCMModel.NewMetadataSchema_User_Join"><MappingFragment StoreEntitySet="NewMetadataSchema_User_Join">
+            <ScalarProperty Name="NewMetadataSchemaGUID" ColumnName="NewMetadataSchemaGUID" />
             <ScalarProperty Name="UserGUID" ColumnName="UserGUID" />
             <ScalarProperty Name="Permission" ColumnName="Permission" />
             <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -2564,11 +2564,11 @@
           <FunctionImportMapping FunctionImportName="Destination_Create" FunctionName="MCMModel.Store.Destination_Create" />
           <FunctionImportMapping FunctionImportName="DestinationInfo_Get" FunctionName="MCMModel.Store.DestinationInfo_Get" />
           <FunctionImportMapping FunctionImportName="AccessProvider_Create" FunctionName="MCMModel.Store.AccessProvider_Create" />
-          <FunctionImportMapping FunctionImportName="MetadataSchema_Create" FunctionName="MCMModel.Store.MetadataSchema_Create" />
-          <FunctionImportMapping FunctionImportName="MetadataSchema_Get" FunctionName="MCMModel.Store.MetadataSchema_Get" />
+          <FunctionImportMapping FunctionImportName="NewMetadataSchema_Create" FunctionName="MCMModel.Store.NewMetadataSchema_Create" />
+          <FunctionImportMapping FunctionImportName="NewMetadataSchema_Get" FunctionName="MCMModel.Store.NewMetadataSchema_Get" />
           <FunctionImportMapping FunctionImportName="Object_Create" FunctionName="MCMModel.Store.Object_Create" />
           <FunctionImportMapping FunctionImportName="ObjectFolderType_Create" FunctionName="MCMModel.Store.ObjectFolderType_Create" />
-          <FunctionImportMapping FunctionImportName="Metadata_Set" FunctionName="MCMModel.Store.Metadata_Set" />
+          <FunctionImportMapping FunctionImportName="NewMetadata_Set" FunctionName="MCMModel.Store.NewMetadata_Set" />
           <FunctionImportMapping FunctionImportName="Language_Create" FunctionName="MCMModel.Store.Language_Create" />
           <FunctionImportMapping FunctionImportName="Language_Get" FunctionName="MCMModel.Store.Language_Get" />
           <FunctionImportMapping FunctionImportName="File_Create" FunctionName="MCMModel.Store.File_Create" />
@@ -2590,14 +2590,14 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="Set" FunctionName="MCMModel.Store.Set" />
           <FunctionImportMapping FunctionImportName="ObjectRelation_Delete" FunctionName="MCMModel.Store.ObjectRelation_Delete" />
-          <EntitySetMapping Name="Metadata">
-            <EntityTypeMapping TypeName="MCMModel.Metadata">
-              <MappingFragment StoreEntitySet="Metadata">
+          <EntitySetMapping Name="NewMetadata">
+            <EntityTypeMapping TypeName="MCMModel.NewMetadata">
+              <MappingFragment StoreEntitySet="NewMetadata">
                 <ScalarProperty Name="EditingUserGUID" ColumnName="EditingUserGUID" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="MetadataXML" ColumnName="MetadataXML" />
+                <ScalarProperty Name="NewMetadataXML" ColumnName="NewMetadataXML" />
                 <ScalarProperty Name="RevisionID" ColumnName="RevisionID" />
-                <ScalarProperty Name="MetadataSchemaGUID" ColumnName="MetadataSchemaGUID" />
+                <ScalarProperty Name="NewMetadataSchemaGUID" ColumnName="NewMetadataSchemaGUID" />
                 <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
                 <ScalarProperty Name="ObjectGUID" ColumnName="ObjectGUID" />
                 <ScalarProperty Name="GUID" ColumnName="GUID" />
@@ -2649,8 +2649,8 @@
           <FunctionImportMapping FunctionImportName="AccessPoint_User_Join_Set" FunctionName="MCMModel.Store.AccessPoint_User_Join_Set" />
           <FunctionImportMapping FunctionImportName="ObjectType_Update" FunctionName="MCMModel.Store.ObjectType_Update" />
           <FunctionImportMapping FunctionImportName="ObjectType_Delete" FunctionName="MCMModel.Store.ObjectType_Delete" />
-          <FunctionImportMapping FunctionImportName="MetadataSchema_Update" FunctionName="MCMModel.Store.MetadataSchema_Update" />
-          <FunctionImportMapping FunctionImportName="MetadataSchema_Delete" FunctionName="MCMModel.Store.MetadataSchema_Delete" />
+          <FunctionImportMapping FunctionImportName="NewMetadataSchema_Update" FunctionName="MCMModel.Store.NewMetadataSchema_Update" />
+          <FunctionImportMapping FunctionImportName="NewMetadataSchema_Delete" FunctionName="MCMModel.Store.NewMetadataSchema_Delete" />
           <EntitySetMapping Name="FileInfo">
             <EntityTypeMapping TypeName="MCMModel.FileInfo">
               <MappingFragment StoreEntitySet="FileInfo">
@@ -2689,7 +2689,7 @@
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <StoredProcedures>
       <DesignerInfoPropertySet>
-        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+        <DesignerProperty Name="NewMetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
       </DesignerInfoPropertySet>
     </StoredProcedures>
     <Options>
@@ -2715,9 +2715,9 @@
         <EntityTypeShape EntityType="MCMModel.FolderType" Width="1.5" PointX="0.75" PointY="4.625" Height="1.7879850260416745" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.Format" Width="1.5" PointX="7.75" PointY="8.75" Height="2.5571907552083388" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.Language" Width="1.5" PointX="0.75" PointY="13.125" Height="1.5956835937500031" IsExpanded="true" />
-        <EntityTypeShape EntityType="MCMModel.MetadataSchema" Width="1.5" PointX="0.75" PointY="15.625" Height="2.3648893229166692" IsExpanded="true" />
-        <EntityTypeShape EntityType="MCMModel.MetadataSchema_Group_Join" Width="1.5" PointX="3" PointY="18" Height="1.9802864583333388" IsExpanded="true" />
-        <EntityTypeShape EntityType="MCMModel.MetadataSchema_User_Join" Width="1.5" PointX="3" PointY="20.75" Height="1.9802864583333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="MCMModel.NewMetadataSchema" Width="1.5" PointX="0.75" PointY="15.625" Height="2.3648893229166692" IsExpanded="true" />
+        <EntityTypeShape EntityType="MCMModel.NewMetadataSchema_Group_Join" Width="1.5" PointX="3" PointY="18" Height="1.9802864583333388" IsExpanded="true" />
+        <EntityTypeShape EntityType="MCMModel.NewMetadataSchema_User_Join" Width="1.5" PointX="3" PointY="20.75" Height="1.9802864583333388" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.ObjectFolderType" Width="1.5" PointX="6" PointY="0.75" Height="1.595683593749996" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.ObjectRelationType" Width="1.5" PointX="10.75" PointY="1.75" Height="1.595683593749996" IsExpanded="true" />
         <EntityTypeShape EntityType="MCMModel.ObjectType" Width="1.5" PointX="0.75" PointY="1.25" Height="1.4033821614583246" IsExpanded="true" />
@@ -2805,7 +2805,7 @@
           <ConnectorPoint PointX="3.75" PointY="16.807444661458334" />
           <ConnectorPoint PointX="3.75" PointY="18" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_MS_GUID_MS_User_Join_MetadataSchemaGUID" ManuallyRouted="false">
+        <AssociationConnector Association="MCMModel.FK_MS_GUID_MS_User_Join_NewMetadataSchemaGUID" ManuallyRouted="false">
           <ConnectorPoint PointX="1.5" PointY="17.989889322916667" />
           <ConnectorPoint PointX="1.5" PointY="21.740143229166669" />
           <ConnectorPoint PointX="3" PointY="21.740143229166669" />
@@ -2851,19 +2851,19 @@
           <ConnectorPoint PointX="5.5" PointY="12.422841796874998" />
         </AssociationConnector>
         <EntityTypeShape EntityType="MCMModel.FolderInfo" Width="1.5" PointX="12.375" PointY="8.75" Height="2.5771907552083331" />
-        <EntityTypeShape EntityType="MCMModel.Metadata" Width="1.5" PointX="5.25" PointY="14.75" Height="3.1340950520833246" />
-        <AssociationConnector Association="MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode">
+        <EntityTypeShape EntityType="MCMModel.NewMetadata" Width="1.5" PointX="5.25" PointY="14.75" Height="3.1340950520833246" />
+        <AssociationConnector Association="MCMModel.FK_Language_LanguageCode_NewMetadata_LanguageCode">
           <ConnectorPoint PointX="2.25" PointY="14.102885742187505" />
           <ConnectorPoint PointX="4.916666666666667" PointY="14.102885742187505" />
           <ConnectorPoint PointX="5.083333333333333" PointY="14.102885742187505" />
           <ConnectorPoint PointX="6" PointY="14.102885742187505" />
           <ConnectorPoint PointX="6" PointY="14.75" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID">
+        <AssociationConnector Association="MCMModel.FK_NewMetadataSchema_GUID_NewMetadata_NewMetadataSchemaGUID">
           <ConnectorPoint PointX="2.25" PointY="16.153722330729167" />
           <ConnectorPoint PointX="5.25" PointY="16.153722330729167" />
         </AssociationConnector>
-        <AssociationConnector Association="MCMModel.FK_Object_GUID_Metadata_ObjectGUID">
+        <AssociationConnector Association="MCMModel.FK_Object_GUID_NewMetadata_ObjectGUID">
           <ConnectorPoint PointX="4.5" PointY="2.2208968098958337" />
           <ConnectorPoint PointX="5" PointY="2.2208968098958337" />
           <ConnectorPoint PointX="5" PointY="14.375" />

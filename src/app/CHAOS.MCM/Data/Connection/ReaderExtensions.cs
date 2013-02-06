@@ -2,102 +2,55 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Xml.Linq;
 
-    using Chaos.Mcm.Data.Dto.Standard;
-
     public static class ReaderExtensions
     {
-        #region Fields
-
-        private static IDictionary<Type, IMapping> _mappings;
-
-        #endregion
-        #region Initialization
-
-        static ReaderExtensions()
+        public static IList<TResultType> ToDto<TResultType>(this IList<KeyValuePair<string, object>[]> readerData) where TResultType : IKeyValueMapper, new()
         {
-            _mappings = new Dictionary<Type, IMapping>();
-
-            _mappings.Add(typeof(ObjectRelationInfo), new ObjectRelationInfoMapper());
+            return readerData.Select(Map<TResultType>).ToList();
         }
 
-        #endregion
-
-        public static IList<TResultType> ToDto<TResultType>(this IList<KeyValuePair<string, object>[]> readerData)
+        private static TResultType Map<TResultType>(KeyValuePair<string, object>[] row) where TResultType : IKeyValueMapper, new()
         {
-            var type = typeof(TResultType);
+            var dto = new TResultType();
 
-            return readerData.Select(item => (TResultType) ToDto(item, type)).ToList();
+            dto.Map(row);
+
+            return dto;
         }
 
-        public static TResultType ToDto<TResultType>(this KeyValuePair<string, object>[] readerData)
+        public static string GetString(this object value)
         {
-            return (TResultType) ToDto(readerData, typeof(TResultType));
+            return value as string;
         }
 
-        private static object ToDto(KeyValuePair<string, object>[] readerData, Type type)
+        public static Guid? GetGuid(this object value)
         {
-            return _mappings[type].Map(readerData);
-        }
-    }
-
-    public class ObjectRelationInfoMapper : IMapping
-    {
-        public object Map(KeyValuePair<string, object>[] row)
-        {
-            var result = new ObjectRelationInfo
-                {
-                    Object1Guid          = GetGuid(row[0].Value).Value,
-                    Object2Guid          = GetGuid(row[1].Value).Value,
-                    MetadataGuid         = GetGuid(row[2].Value),
-                    Sequence             = GetInt(row[3].Value),
-                    ObjectRelationTypeID = GetUint(row[4].Value).Value,
-                    ObjectRelationType   = GetString(row[5].Value),
-                    LanguageCode         = GetString(row[6].Value),
-                    MetadataSchemaGuid   = GetGuid(row[7].Value),
-                    MetadataXml          = GetXDocument(row[8].Value)
-                };
-
-            return result;
+            return Convert.IsDBNull(value) ? (Guid?)null : new Guid(value as byte[]);
         }
 
-        private static Guid? GetGuid(object cell)
+        public static XDocument GetXDocument(this object value)
         {
-            var value = cell;
-
             if (value is DBNull) return null;
 
-            return new Guid((byte[])value);
+            return XDocument.Parse(value as string);
         }
 
-        private static XDocument GetXDocument(object cell)
+        public static uint? GetUint(this object value)
         {
-            if (cell is DBNull) return null;
-
-            return XDocument.Parse((string)cell);
+            return value as uint?;
         }
 
-        private static uint? GetUint(object value)
+        public static int? GetInt(this object value)
         {
-            return (uint?)GetValue(value);
+            return value as int?;
         }
 
-        private static int? GetInt(object cell)
+        public static DateTime? GetDateTime(this object value)
         {
-            return (int?)GetValue(cell);
-        }
-
-        private static string GetString(object cell)
-        {
-            return (string)GetValue(cell);
-        }
-
-        private static object GetValue(object cell)
-        {
-            return cell is DBNull ? null : cell;
+            return value as DateTime?;
         }
     }
 }

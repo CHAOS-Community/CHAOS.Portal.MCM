@@ -18,7 +18,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 		[Serialize]
 		public UUID EditingUserGUID { get; set; }
 
-		public UUID ObjectGUID { get; set; }
+		public UUID ObjectGUID { get; set; } //todo: remove objectGuid
 
 		[Serialize]
 		public string LanguageCode { get; set; }
@@ -50,7 +50,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 			DateCreated        = dateCreated;
 		    RevisionID         = revisionID;
 			EditingUserGUID    = editingUserGUID.ToUUID();
-            Fullname           = "Chaos.Mcm.Data.DTO.Metadata";
+            Fullname           = "Chaos.Mcm.Data.DTO.NewMetadata";
 		}
 
 		public Metadata() : this(Guid.Empty, Guid.Empty,null,Guid.Empty,uint.MinValue,null,DateTime.MinValue,Guid.Empty)

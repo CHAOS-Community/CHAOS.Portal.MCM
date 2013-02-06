@@ -33,6 +33,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHAOS, Version=1.0.4734.2259, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\app\CHAOS.MCM\bin\Debug\CHAOS.dll</HintPath>
+    </Reference>
     <Reference Include="Chaos.Deployment.UI.Console">
       <HintPath>..\..\..\tools\chaos.deployment\Chaos.Deployment.UI.Console.exe</HintPath>
     </Reference>
@@ -66,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="integraion_tests_base_data.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

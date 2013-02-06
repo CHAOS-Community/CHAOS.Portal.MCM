@@ -17,7 +17,7 @@ using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
-#region EDM Relationship Metadata
+#region EDM Relationship NewMetadata
 
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_AccessPoint_AccessPoint_Group_Join", "AccessPoint", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.AccessPoint), "AccessPoint_Group_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.AccessPoint_Group_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_AccessPoint_AccessPoint_User_Join", "AccessPoint", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.AccessPoint), "AccessPoint_User_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.AccessPoint_User_Join), true)]
@@ -39,9 +39,9 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatCategory_ID_Conversion_FormatCategoryID", "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.FormatCategory), "Conversion", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Conversion), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatCategory_ID_Format_FormatCategoryID", "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.FormatCategory), "Format", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Format), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_FormatType_ID_FormatCategory_FormatTypeID", "FormatType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.FormatType), "FormatCategory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.FormatCategory), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_Language_LanguageCode_Metadata_LanguageCode", "Language", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Chaos.Mcm.Data.EF.Language), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Metadata), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.MetadataSchema), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Metadata), true)]
-[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.Object), "Metadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Metadata), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Language_LanguageCode_Metadata_LanguageCode", "Language", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(Chaos.Mcm.Data.EF.Language), "NewMetadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Metadata), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "MetadataSchema", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.MetadataSchema), "NewMetadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Metadata), true)]
+[assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.Object), "NewMetadata", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Metadata), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Folder_ID_Object_Folder_Join_FolderID", "Folder", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.Folder), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_Object_GUID_Object_Folder_Join_ObjectGUID", "Object", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.Object), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Object_Folder_Join), true)]
 [assembly: EdmRelationshipAttribute("MCMModel", "FK_ObjectFolderType_ID_Object_Folder_Join_ObjectFolderTypeID", "ObjectFolderType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(Chaos.Mcm.Data.EF.ObjectFolderType), "Object_Folder_Join", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(Chaos.Mcm.Data.EF.Object_Folder_Join), true)]
@@ -58,7 +58,7 @@ namespace Chaos.Mcm.Data.EF
     #region Contexts
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     public partial class MCMEntities : ObjectContext
     {
@@ -102,7 +102,7 @@ namespace Chaos.Mcm.Data.EF
         #region ObjectSet Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<AccessPoint> AccessPoint
         {
@@ -118,7 +118,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<AccessPoint> _AccessPoint;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<AccessPoint_Group_Join> AccessPoint_Group_Join
         {
@@ -134,7 +134,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<AccessPoint_Group_Join> _AccessPoint_Group_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<AccessPoint_User_Join> AccessPoint_User_Join
         {
@@ -150,7 +150,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<AccessPoint_User_Join> _AccessPoint_User_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<AccessProvider> AccessProvider
         {
@@ -166,7 +166,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<AccessProvider> _AccessProvider;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Conversion> Conversion
         {
@@ -182,7 +182,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Conversion> _Conversion;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Destination> Destination
         {
@@ -198,7 +198,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Destination> _Destination;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<File> File
         {
@@ -214,7 +214,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<File> _File;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Folder> Folder
         {
@@ -230,7 +230,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Folder> _Folder;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Folder_Group_Join> Folder_Group_Join
         {
@@ -246,7 +246,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Folder_Group_Join> _Folder_Group_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Folder_User_Join> Folder_User_Join
         {
@@ -262,7 +262,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Folder_User_Join> _Folder_User_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<FolderType> FolderType
         {
@@ -278,7 +278,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<FolderType> _FolderType;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Format> Format
         {
@@ -294,7 +294,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Format> _Format;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Language> Language
         {
@@ -310,7 +310,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Language> _Language;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<MetadataSchema> MetadataSchema
         {
@@ -326,7 +326,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<MetadataSchema> _MetadataSchema;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<MetadataSchema_Group_Join> MetadataSchema_Group_Join
         {
@@ -342,7 +342,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<MetadataSchema_Group_Join> _MetadataSchema_Group_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<MetadataSchema_User_Join> MetadataSchema_User_Join
         {
@@ -358,7 +358,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<MetadataSchema_User_Join> _MetadataSchema_User_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<ObjectFolderType> ObjectFolderType
         {
@@ -374,7 +374,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<ObjectFolderType> _ObjectFolderType;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<ObjectRelationType> ObjectRelationType
         {
@@ -390,7 +390,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<ObjectRelationType> _ObjectRelationType;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<ObjectType> ObjectType
         {
@@ -406,7 +406,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<ObjectType> _ObjectType;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Permission> Permission
         {
@@ -422,7 +422,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Permission> _Permission;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<DestinationInfo> DestinationInfo
         {
@@ -438,7 +438,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<DestinationInfo> _DestinationInfo;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Object> Object
         {
@@ -454,7 +454,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Object> _Object;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<FormatCategory> FormatCategory
         {
@@ -470,7 +470,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<FormatCategory> _FormatCategory;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<FormatType> FormatType
         {
@@ -486,7 +486,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<FormatType> _FormatType;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<FolderInfo> FolderInfo
         {
@@ -502,7 +502,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<FolderInfo> _FolderInfo;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Metadata> Metadata
         {
@@ -510,7 +510,7 @@ namespace Chaos.Mcm.Data.EF
             {
                 if ((_Metadata == null))
                 {
-                    _Metadata = base.CreateObjectSet<Metadata>("Metadata");
+                    _Metadata = base.CreateObjectSet<Metadata>("NewMetadata");
                 }
                 return _Metadata;
             }
@@ -518,7 +518,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Metadata> _Metadata;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Object_Folder_Join> Object_Folder_Join
         {
@@ -534,7 +534,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Object_Folder_Join> _Object_Folder_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<Object_Object_Join> Object_Object_Join
         {
@@ -550,7 +550,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<Object_Object_Join> _Object_Object_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<AccessPoint_Object_Join> AccessPoint_Object_Join
         {
@@ -566,7 +566,7 @@ namespace Chaos.Mcm.Data.EF
         private ObjectSet<AccessPoint_Object_Join> _AccessPoint_Object_Join;
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public ObjectSet<FileInfo> FileInfo
         {
@@ -786,11 +786,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Metadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the NewMetadata EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMetadata(Metadata metadata)
         {
-            base.AddObject("Metadata", metadata);
+            base.AddObject("NewMetadata", metadata);
         }
     
         /// <summary>
@@ -830,13 +830,13 @@ namespace Chaos.Mcm.Data.EF
         #region Function Imports
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="subscriptionGUID">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="parentID">No Metadata Documentation available.</param>
-        /// <param name="folderTypeID">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="subscriptionGUID">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
+        /// <param name="parentID">No NewMetadata Documentation available.</param>
+        /// <param name="folderTypeID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Folder_Create(global::System.Byte[] userGUID, global::System.Byte[] subscriptionGUID, global::System.String name, Nullable<global::System.Int32> parentID, Nullable<global::System.Int32> folderTypeID)
         {
             ObjectParameter userGUIDParameter;
@@ -893,9 +893,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> FolderType_Create(global::System.String name)
         {
             ObjectParameter nameParameter;
@@ -912,7 +912,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         public int PreTest()
         {
@@ -920,12 +920,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="tableIdentifier">No Metadata Documentation available.</param>
-        /// <param name="permission">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="description">No Metadata Documentation available.</param>
+        /// <param name="tableIdentifier">No NewMetadata Documentation available.</param>
+        /// <param name="permission">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
+        /// <param name="description">No NewMetadata Documentation available.</param>
         public int Permission_Create(global::System.String tableIdentifier, Nullable<global::System.Int32> permission, global::System.String name, global::System.String description)
         {
             ObjectParameter tableIdentifierParameter;
@@ -972,10 +972,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<FolderType> FolderType_Get(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -1001,11 +1001,11 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<FolderType>("FolderType_Get", iDParameter, nameParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<FolderType> FolderType_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
         {
             ObjectParameter iDParameter;
@@ -1032,10 +1032,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
         public ObjectResult<Folder> Folder_Get(Nullable<global::System.Int32> iD, global::System.Byte[] objectGUID)
         {
             ObjectParameter iDParameter;
@@ -1061,11 +1061,11 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<Folder>("Folder_Get", iDParameter, objectGUIDParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
         public ObjectResult<Folder> Folder_Get(Nullable<global::System.Int32> iD, global::System.Byte[] objectGUID, MergeOption mergeOption)
         {
             ObjectParameter iDParameter;
@@ -1092,9 +1092,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> ObjectType_Create(global::System.String name)
         {
             ObjectParameter nameParameter;
@@ -1111,10 +1111,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<ObjectType> ObjectType_Get(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -1140,11 +1140,11 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<ObjectType>("ObjectType_Get", iDParameter, nameParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<ObjectType> ObjectType_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
         {
             ObjectParameter iDParameter;
@@ -1171,9 +1171,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> ObjectRelationType_Create(global::System.String name)
         {
             ObjectParameter nameParameter;
@@ -1190,10 +1190,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<ObjectRelationType> ObjectRelationType_Get(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -1219,11 +1219,11 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<ObjectRelationType>("ObjectRelationType_Get", iDParameter, nameParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<ObjectRelationType> ObjectRelationType_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
         {
             ObjectParameter iDParameter;
@@ -1250,9 +1250,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> FormatType_Create(global::System.String name)
         {
             ObjectParameter nameParameter;
@@ -1269,10 +1269,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<FormatType> FormatType_Get(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -1298,11 +1298,11 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<FormatType>("FormatType_Get", iDParameter, nameParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<FormatType> FormatType_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
         {
             ObjectParameter iDParameter;
@@ -1329,10 +1329,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Format> Format_Get(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -1358,11 +1358,11 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<Format>("Format_Get", iDParameter, nameParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Format> Format_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
         {
             ObjectParameter iDParameter;
@@ -1389,13 +1389,13 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="formatCategoryID">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="formatXML">No Metadata Documentation available.</param>
-        /// <param name="mimeType">No Metadata Documentation available.</param>
-        /// <param name="extension">No Metadata Documentation available.</param>
+        /// <param name="formatCategoryID">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
+        /// <param name="formatXML">No NewMetadata Documentation available.</param>
+        /// <param name="mimeType">No NewMetadata Documentation available.</param>
+        /// <param name="extension">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Format_Create(Nullable<global::System.Int32> formatCategoryID, global::System.String name, global::System.String formatXML, global::System.String mimeType, global::System.String extension)
         {
             ObjectParameter formatCategoryIDParameter;
@@ -1452,10 +1452,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<FormatCategory> FormatCategory_Get(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -1481,11 +1481,11 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<FormatCategory>("FormatCategory_Get", iDParameter, nameParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<FormatCategory> FormatCategory_Get(Nullable<global::System.Int32> iD, global::System.String name, MergeOption mergeOption)
         {
             ObjectParameter iDParameter;
@@ -1512,10 +1512,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="formatTypeID">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="formatTypeID">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> FormatCategory_Create(Nullable<global::System.Int32> formatTypeID, global::System.String name)
         {
             ObjectParameter formatTypeIDParameter;
@@ -1542,10 +1542,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="subscriptionGUID">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="subscriptionGUID">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Destination_Create(global::System.Byte[] subscriptionGUID, global::System.String name)
         {
             ObjectParameter subscriptionGUIDParameter;
@@ -1572,9 +1572,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="destinationID">No Metadata Documentation available.</param>
+        /// <param name="destinationID">No NewMetadata Documentation available.</param>
         public ObjectResult<DestinationInfo> DestinationInfo_Get(Nullable<global::System.Int32> destinationID)
         {
             ObjectParameter destinationIDParameter;
@@ -1590,10 +1590,10 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<DestinationInfo>("DestinationInfo_Get", destinationIDParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="destinationID">No Metadata Documentation available.</param>
+        /// <param name="destinationID">No NewMetadata Documentation available.</param>
         public ObjectResult<DestinationInfo> DestinationInfo_Get(Nullable<global::System.Int32> destinationID, MergeOption mergeOption)
         {
             ObjectParameter destinationIDParameter;
@@ -1610,12 +1610,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="destinationID">No Metadata Documentation available.</param>
-        /// <param name="basePath">No Metadata Documentation available.</param>
-        /// <param name="stringFormat">No Metadata Documentation available.</param>
-        /// <param name="token">No Metadata Documentation available.</param>
+        /// <param name="destinationID">No NewMetadata Documentation available.</param>
+        /// <param name="basePath">No NewMetadata Documentation available.</param>
+        /// <param name="stringFormat">No NewMetadata Documentation available.</param>
+        /// <param name="token">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> AccessProvider_Create(Nullable<global::System.Int32> destinationID, global::System.String basePath, global::System.String stringFormat, global::System.String token)
         {
             ObjectParameter destinationIDParameter;
@@ -1662,12 +1662,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="schemaXML">No Metadata Documentation available.</param>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
+        /// <param name="gUID">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
+        /// <param name="schemaXML">No NewMetadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Create(global::System.Byte[] gUID, global::System.String name, global::System.String schemaXML, global::System.Byte[] userGUID)
         {
             ObjectParameter gUIDParameter;
@@ -1714,12 +1714,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
-        /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
-        /// <param name="permissionRequired">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="groupGUIDs">No NewMetadata Documentation available.</param>
+        /// <param name="metadataSchemaGUID">No NewMetadata Documentation available.</param>
+        /// <param name="permissionRequired">No NewMetadata Documentation available.</param>
         public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] userGUID, global::System.String groupGUIDs, global::System.Byte[] metadataSchemaGUID, Nullable<global::System.Int32> permissionRequired)
         {
             ObjectParameter userGUIDParameter;
@@ -1765,13 +1765,13 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<MetadataSchema>("MetadataSchema_Get", userGUIDParameter, groupGUIDsParameter, metadataSchemaGUIDParameter, permissionRequiredParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
-        /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
-        /// <param name="permissionRequired">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="groupGUIDs">No NewMetadata Documentation available.</param>
+        /// <param name="metadataSchemaGUID">No NewMetadata Documentation available.</param>
+        /// <param name="permissionRequired">No NewMetadata Documentation available.</param>
         public ObjectResult<MetadataSchema> MetadataSchema_Get(global::System.Byte[] userGUID, global::System.String groupGUIDs, global::System.Byte[] metadataSchemaGUID, Nullable<global::System.Int32> permissionRequired, MergeOption mergeOption)
         {
             ObjectParameter userGUIDParameter;
@@ -1818,11 +1818,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        /// <param name="objectTypeID">No Metadata Documentation available.</param>
-        /// <param name="folderID">No Metadata Documentation available.</param>
+        /// <param name="gUID">No NewMetadata Documentation available.</param>
+        /// <param name="objectTypeID">No NewMetadata Documentation available.</param>
+        /// <param name="folderID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Object_Create(global::System.Byte[] gUID, Nullable<global::System.Int32> objectTypeID, Nullable<global::System.Int32> folderID)
         {
             ObjectParameter gUIDParameter;
@@ -1859,10 +1859,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> ObjectFolderType_Create(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -1889,15 +1889,15 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
-        /// <param name="metadataSchemaGUID">No Metadata Documentation available.</param>
-        /// <param name="languageCode">No Metadata Documentation available.</param>
-        /// <param name="revisionID">No Metadata Documentation available.</param>
-        /// <param name="metadataXML">No Metadata Documentation available.</param>
-        /// <param name="editingUserGUID">No Metadata Documentation available.</param>
+        /// <param name="gUID">No NewMetadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
+        /// <param name="metadataSchemaGUID">No NewMetadata Documentation available.</param>
+        /// <param name="languageCode">No NewMetadata Documentation available.</param>
+        /// <param name="revisionID">No NewMetadata Documentation available.</param>
+        /// <param name="metadataXML">No NewMetadata Documentation available.</param>
+        /// <param name="editingUserGUID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Metadata_Set(global::System.Byte[] gUID, global::System.Byte[] objectGUID, global::System.Byte[] metadataSchemaGUID, global::System.String languageCode, Nullable<global::System.Int32> revisionID, global::System.String metadataXML, global::System.Byte[] editingUserGUID)
         {
             ObjectParameter gUIDParameter;
@@ -1974,10 +1974,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="languageCode">No Metadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
+        /// <param name="languageCode">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Language_Create(global::System.String name, global::System.String languageCode)
         {
             ObjectParameter nameParameter;
@@ -2004,10 +2004,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="languageCode">No Metadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
+        /// <param name="languageCode">No NewMetadata Documentation available.</param>
         public ObjectResult<Language> Language_Get(global::System.String name, global::System.String languageCode)
         {
             ObjectParameter nameParameter;
@@ -2033,11 +2033,11 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<Language>("Language_Get", nameParameter, languageCodeParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="languageCode">No Metadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
+        /// <param name="languageCode">No NewMetadata Documentation available.</param>
         public ObjectResult<Language> Language_Get(global::System.String name, global::System.String languageCode, MergeOption mergeOption)
         {
             ObjectParameter nameParameter;
@@ -2064,15 +2064,15 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
-        /// <param name="parentFileID">No Metadata Documentation available.</param>
-        /// <param name="formatID">No Metadata Documentation available.</param>
-        /// <param name="destinationID">No Metadata Documentation available.</param>
-        /// <param name="filename">No Metadata Documentation available.</param>
-        /// <param name="originalFilename">No Metadata Documentation available.</param>
-        /// <param name="folderPath">No Metadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
+        /// <param name="parentFileID">No NewMetadata Documentation available.</param>
+        /// <param name="formatID">No NewMetadata Documentation available.</param>
+        /// <param name="destinationID">No NewMetadata Documentation available.</param>
+        /// <param name="filename">No NewMetadata Documentation available.</param>
+        /// <param name="originalFilename">No NewMetadata Documentation available.</param>
+        /// <param name="folderPath">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> File_Create(global::System.Byte[] objectGUID, Nullable<global::System.Int32> parentFileID, Nullable<global::System.Int32> formatID, Nullable<global::System.Int32> destinationID, global::System.String filename, global::System.String originalFilename, global::System.String folderPath)
         {
             ObjectParameter objectGUIDParameter;
@@ -2149,9 +2149,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="fileID">No Metadata Documentation available.</param>
+        /// <param name="fileID">No NewMetadata Documentation available.</param>
         public ObjectResult<File> File_Get(Nullable<global::System.Int32> fileID)
         {
             ObjectParameter fileIDParameter;
@@ -2167,10 +2167,10 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<File>("File_Get", fileIDParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="fileID">No Metadata Documentation available.</param>
+        /// <param name="fileID">No NewMetadata Documentation available.</param>
         public ObjectResult<File> File_Get(Nullable<global::System.Int32> fileID, MergeOption mergeOption)
         {
             ObjectParameter fileIDParameter;
@@ -2187,11 +2187,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="requiredPermission">No Metadata Documentation available.</param>
+        /// <param name="groupGUIDs">No NewMetadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="requiredPermission">No NewMetadata Documentation available.</param>
         public ObjectResult<Folder> Folder_Get_DirectFolderAssociations(global::System.String groupGUIDs, global::System.Byte[] userGUID, Nullable<global::System.Int32> requiredPermission)
         {
             ObjectParameter groupGUIDsParameter;
@@ -2227,12 +2227,12 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<Folder>("Folder_Get_DirectFolderAssociations", groupGUIDsParameter, userGUIDParameter, requiredPermissionParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="requiredPermission">No Metadata Documentation available.</param>
+        /// <param name="groupGUIDs">No NewMetadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="requiredPermission">No NewMetadata Documentation available.</param>
         public ObjectResult<Folder> Folder_Get_DirectFolderAssociations(global::System.String groupGUIDs, global::System.Byte[] userGUID, Nullable<global::System.Int32> requiredPermission, MergeOption mergeOption)
         {
             ObjectParameter groupGUIDsParameter;
@@ -2269,12 +2269,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="object1GUID">No Metadata Documentation available.</param>
-        /// <param name="object2GUID">No Metadata Documentation available.</param>
-        /// <param name="objectRelationTypeID">No Metadata Documentation available.</param>
-        /// <param name="sequence">No Metadata Documentation available.</param>
+        /// <param name="object1GUID">No NewMetadata Documentation available.</param>
+        /// <param name="object2GUID">No NewMetadata Documentation available.</param>
+        /// <param name="objectRelationTypeID">No NewMetadata Documentation available.</param>
+        /// <param name="sequence">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> ObjectRelation_Create(global::System.Byte[] object1GUID, global::System.Byte[] object2GUID, Nullable<global::System.Int32> objectRelationTypeID, Nullable<global::System.Int32> sequence)
         {
             ObjectParameter object1GUIDParameter;
@@ -2321,11 +2321,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="object1GUID">No Metadata Documentation available.</param>
-        /// <param name="object2GUID">No Metadata Documentation available.</param>
-        /// <param name="objectRelationTypeID">No Metadata Documentation available.</param>
+        /// <param name="object1GUID">No NewMetadata Documentation available.</param>
+        /// <param name="object2GUID">No NewMetadata Documentation available.</param>
+        /// <param name="objectRelationTypeID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> ObjectRelation_Delete(global::System.Byte[] object1GUID, global::System.Byte[] object2GUID, Nullable<global::System.Int32> objectRelationTypeID)
         {
             ObjectParameter object1GUIDParameter;
@@ -2362,11 +2362,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
-        /// <param name="folderID">No Metadata Documentation available.</param>
-        /// <param name="objectFolderTypeID">No Metadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
+        /// <param name="folderID">No NewMetadata Documentation available.</param>
+        /// <param name="objectFolderTypeID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Object_Folder_Join_Create(global::System.Byte[] objectGUID, Nullable<global::System.Int32> folderID, Nullable<global::System.Int32> objectFolderTypeID)
         {
             ObjectParameter objectGUIDParameter;
@@ -2403,10 +2403,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
-        /// <param name="folderID">No Metadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
+        /// <param name="folderID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Object_Folder_Join_Delete(global::System.Byte[] objectGUID, Nullable<global::System.Int32> folderID)
         {
             ObjectParameter objectGUIDParameter;
@@ -2433,11 +2433,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
-        /// <param name="folderID">No Metadata Documentation available.</param>
-        /// <param name="newFolderID">No Metadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
+        /// <param name="folderID">No NewMetadata Documentation available.</param>
+        /// <param name="newFolderID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Object_Folder_Join_Update(global::System.Byte[] objectGUID, Nullable<global::System.Int32> folderID, Nullable<global::System.Int32> newFolderID)
         {
             ObjectParameter objectGUIDParameter;
@@ -2474,11 +2474,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        /// <param name="subscriptionGuid">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="gUID">No NewMetadata Documentation available.</param>
+        /// <param name="subscriptionGuid">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public int AccessPoint_Create(global::System.Byte[] gUID, global::System.Byte[] subscriptionGuid, global::System.String name)
         {
             ObjectParameter gUIDParameter;
@@ -2515,12 +2515,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
-        /// <param name="startDate">No Metadata Documentation available.</param>
-        /// <param name="endDate">No Metadata Documentation available.</param>
+        /// <param name="accessPointGUID">No NewMetadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
+        /// <param name="startDate">No NewMetadata Documentation available.</param>
+        /// <param name="endDate">No NewMetadata Documentation available.</param>
         public int AccessPoint_Object_Join_Create(global::System.Byte[] accessPointGUID, global::System.Byte[] objectGUID, Nullable<global::System.DateTime> startDate, Nullable<global::System.DateTime> endDate)
         {
             ObjectParameter accessPointGUIDParameter;
@@ -2567,12 +2567,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
-        /// <param name="permission">No Metadata Documentation available.</param>
+        /// <param name="accessPointGUID">No NewMetadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="groupGUIDs">No NewMetadata Documentation available.</param>
+        /// <param name="permission">No NewMetadata Documentation available.</param>
         public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, global::System.String groupGUIDs, Nullable<global::System.Int32> permission)
         {
             ObjectParameter accessPointGUIDParameter;
@@ -2618,13 +2618,13 @@ namespace Chaos.Mcm.Data.EF
             return base.ExecuteFunction<AccessPoint>("AccessPoint_Get", accessPointGUIDParameter, userGUIDParameter, groupGUIDsParameter, permissionParameter);
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="groupGUIDs">No Metadata Documentation available.</param>
-        /// <param name="permission">No Metadata Documentation available.</param>
+        /// <param name="accessPointGUID">No NewMetadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="groupGUIDs">No NewMetadata Documentation available.</param>
+        /// <param name="permission">No NewMetadata Documentation available.</param>
         public ObjectResult<AccessPoint> AccessPoint_Get(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, global::System.String groupGUIDs, Nullable<global::System.Int32> permission, MergeOption mergeOption)
         {
             ObjectParameter accessPointGUIDParameter;
@@ -2671,11 +2671,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="groupGUID">No Metadata Documentation available.</param>
-        /// <param name="folderID">No Metadata Documentation available.</param>
-        /// <param name="permission">No Metadata Documentation available.</param>
+        /// <param name="groupGUID">No NewMetadata Documentation available.</param>
+        /// <param name="folderID">No NewMetadata Documentation available.</param>
+        /// <param name="permission">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Folder_Group_Join_Set(global::System.Byte[] groupGUID, Nullable<global::System.Int32> folderID, Nullable<global::System.Int32> permission)
         {
             ObjectParameter groupGUIDParameter;
@@ -2712,11 +2712,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="folderID">No Metadata Documentation available.</param>
-        /// <param name="permission">No Metadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="folderID">No NewMetadata Documentation available.</param>
+        /// <param name="permission">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Folder_User_Join_Set(global::System.Byte[] userGUID, Nullable<global::System.Int32> folderID, Nullable<global::System.Int32> permission)
         {
             ObjectParameter userGUIDParameter;
@@ -2753,12 +2753,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
-        /// <param name="objectGUID">No Metadata Documentation available.</param>
-        /// <param name="startDate">No Metadata Documentation available.</param>
-        /// <param name="endDate">No Metadata Documentation available.</param>
+        /// <param name="accessPointGUID">No NewMetadata Documentation available.</param>
+        /// <param name="objectGUID">No NewMetadata Documentation available.</param>
+        /// <param name="startDate">No NewMetadata Documentation available.</param>
+        /// <param name="endDate">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> AccessPoint_Object_Join_Set(global::System.Byte[] accessPointGUID, global::System.Byte[] objectGUID, Nullable<global::System.DateTime> startDate, Nullable<global::System.DateTime> endDate)
         {
             ObjectParameter accessPointGUIDParameter;
@@ -2805,11 +2805,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="accessPointGUID">No Metadata Documentation available.</param>
-        /// <param name="userGUID">No Metadata Documentation available.</param>
-        /// <param name="permission">No Metadata Documentation available.</param>
+        /// <param name="accessPointGUID">No NewMetadata Documentation available.</param>
+        /// <param name="userGUID">No NewMetadata Documentation available.</param>
+        /// <param name="permission">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> AccessPoint_User_Join_Set(global::System.Byte[] accessPointGUID, global::System.Byte[] userGUID, Nullable<global::System.Int32> permission)
         {
             ObjectParameter accessPointGUIDParameter;
@@ -2846,10 +2846,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> ObjectType_Update(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -2876,10 +2876,10 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> ObjectType_Delete(Nullable<global::System.Int32> iD, global::System.String name)
         {
             ObjectParameter iDParameter;
@@ -2906,11 +2906,11 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
-        /// <param name="name">No Metadata Documentation available.</param>
-        /// <param name="schemaXML">No Metadata Documentation available.</param>
+        /// <param name="gUID">No NewMetadata Documentation available.</param>
+        /// <param name="name">No NewMetadata Documentation available.</param>
+        /// <param name="schemaXML">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Update(global::System.Byte[] gUID, global::System.String name, global::System.String schemaXML)
         {
             ObjectParameter gUIDParameter;
@@ -2947,9 +2947,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="gUID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> MetadataSchema_Delete(global::System.Byte[] gUID)
         {
             ObjectParameter gUIDParameter;
@@ -2966,9 +2966,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="gUID">No Metadata Documentation available.</param>
+        /// <param name="gUID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Object_Delete(global::System.Byte[] gUID)
         {
             ObjectParameter gUIDParameter;
@@ -2985,12 +2985,12 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
-        /// <param name="newName">No Metadata Documentation available.</param>
-        /// <param name="newParentID">No Metadata Documentation available.</param>
-        /// <param name="newFolderTypeID">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
+        /// <param name="newName">No NewMetadata Documentation available.</param>
+        /// <param name="newParentID">No NewMetadata Documentation available.</param>
+        /// <param name="newFolderTypeID">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Folder_Update(Nullable<global::System.Int32> iD, global::System.String newName, Nullable<global::System.Int32> newParentID, Nullable<global::System.Int32> newFolderTypeID)
         {
             ObjectParameter iDParameter;
@@ -3037,9 +3037,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> File_Delete(Nullable<global::System.Int32> iD)
         {
             ObjectParameter iDParameter;
@@ -3056,9 +3056,9 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
-        /// <param name="iD">No Metadata Documentation available.</param>
+        /// <param name="iD">No NewMetadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> Folder_Delete(Nullable<global::System.Int32> iD)
         {
             ObjectParameter iDParameter;
@@ -3083,7 +3083,7 @@ namespace Chaos.Mcm.Data.EF
     #region Entities
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="AccessPoint")]
     [Serializable()]
@@ -3114,7 +3114,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3141,7 +3141,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3165,7 +3165,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnSubscriptionGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3189,7 +3189,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3217,7 +3217,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -3239,7 +3239,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -3261,7 +3261,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -3283,7 +3283,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -3309,7 +3309,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="AccessPoint_Group_Join")]
     [Serializable()]
@@ -3340,7 +3340,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3367,7 +3367,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnAccessPointGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3394,7 +3394,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnGroupGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3418,7 +3418,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnPermissionChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3446,7 +3446,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -3464,7 +3464,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -3488,7 +3488,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="AccessPoint_Object_Join")]
     [Serializable()]
@@ -3517,7 +3517,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3544,7 +3544,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnAccessPointGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3571,7 +3571,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObjectGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -3595,7 +3595,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnStartDateChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -3619,7 +3619,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnEndDateChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3643,7 +3643,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDateCreatedChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -3671,7 +3671,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -3689,7 +3689,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -3709,7 +3709,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -3727,7 +3727,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -3751,7 +3751,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="AccessPoint_User_Join")]
     [Serializable()]
@@ -3782,7 +3782,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3809,7 +3809,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnAccessPointGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3836,7 +3836,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnUserGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3860,7 +3860,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnPermissionChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3888,7 +3888,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -3906,7 +3906,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -3930,7 +3930,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="AccessProvider")]
     [Serializable()]
@@ -3965,7 +3965,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -3992,7 +3992,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4016,7 +4016,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDestinationIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4040,7 +4040,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnBasePathChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4064,7 +4064,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnStringFormatChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4088,7 +4088,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDateCreatedChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4116,7 +4116,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -4134,7 +4134,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -4158,7 +4158,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Conversion")]
     [Serializable()]
@@ -4193,7 +4193,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4220,7 +4220,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4244,7 +4244,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnAccessPointGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4268,7 +4268,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatCategoryIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4292,7 +4292,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4316,7 +4316,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDestinationIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4344,7 +4344,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -4362,7 +4362,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -4382,7 +4382,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -4400,7 +4400,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -4420,7 +4420,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -4438,7 +4438,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -4458,7 +4458,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -4476,7 +4476,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -4500,7 +4500,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Destination")]
     [Serializable()]
@@ -4531,7 +4531,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4558,7 +4558,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4582,7 +4582,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnSubscriptionGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4606,7 +4606,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4634,7 +4634,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -4656,7 +4656,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -4678,7 +4678,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -4704,7 +4704,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="DestinationInfo")]
     [Serializable()]
@@ -4741,7 +4741,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4768,7 +4768,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4795,7 +4795,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnSubscriptionGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4822,7 +4822,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4849,7 +4849,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDateCreatedChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4876,7 +4876,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnBasePathChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4903,7 +4903,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnStringFormatChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -4934,7 +4934,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="File")]
     [Serializable()]
@@ -4973,7 +4973,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5000,7 +5000,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5024,7 +5024,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObjectGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -5048,7 +5048,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnParentIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5072,7 +5072,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5096,7 +5096,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDestinationIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5120,7 +5120,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFileNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5144,7 +5144,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnOriginalFileNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5168,7 +5168,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFolderPathChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5196,7 +5196,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -5214,7 +5214,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -5234,7 +5234,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -5256,7 +5256,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -5274,7 +5274,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -5294,7 +5294,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -5312,7 +5312,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -5332,7 +5332,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -5350,7 +5350,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -5374,7 +5374,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="FileInfo")]
     [Serializable()]
@@ -5433,7 +5433,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5460,7 +5460,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFileIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5487,7 +5487,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObjectGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -5511,7 +5511,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnParentIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5538,7 +5538,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDestinationIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5565,7 +5565,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFileNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5592,7 +5592,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnOriginalFileNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5619,7 +5619,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFolderPathChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5646,7 +5646,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFileDateCreatedChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5673,7 +5673,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnBasePathChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5700,7 +5700,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnStringFormatChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5727,7 +5727,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnAccessProviderDateCreatedChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5754,7 +5754,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnTokenChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5781,7 +5781,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5808,7 +5808,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -5832,7 +5832,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatXMLChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5859,7 +5859,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnMimeTypeChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5886,7 +5886,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatCategoryIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5913,7 +5913,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatCategoryNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5940,7 +5940,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatTypeIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -5971,7 +5971,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Folder")]
     [Serializable()]
@@ -6002,7 +6002,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6029,7 +6029,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -6053,7 +6053,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnParentIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6077,7 +6077,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFolderTypeIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -6101,7 +6101,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnSubscriptionGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6125,7 +6125,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6153,7 +6153,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -6175,7 +6175,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -6197,7 +6197,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -6215,7 +6215,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -6235,7 +6235,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -6257,7 +6257,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -6275,7 +6275,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -6295,7 +6295,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -6321,7 +6321,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Folder_Group_Join")]
     [Serializable()]
@@ -6352,7 +6352,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6379,7 +6379,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFolderIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6406,7 +6406,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnGroupGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6430,7 +6430,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnPermissionChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6458,7 +6458,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -6476,7 +6476,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -6500,7 +6500,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Folder_User_Join")]
     [Serializable()]
@@ -6531,7 +6531,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6558,7 +6558,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFolderIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6585,7 +6585,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnUserGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6609,7 +6609,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnPermissionChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6637,7 +6637,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -6655,7 +6655,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -6679,7 +6679,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="FolderInfo")]
     [Serializable()]
@@ -6710,7 +6710,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6737,7 +6737,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -6761,7 +6761,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnParentIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6788,7 +6788,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFolderTypeIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -6812,7 +6812,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnSubscriptionGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6839,7 +6839,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6866,7 +6866,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDateCreatedChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -6890,7 +6890,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNumberOfSubFoldersChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -6918,7 +6918,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="FolderType")]
     [Serializable()]
@@ -6947,7 +6947,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6974,7 +6974,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -6998,7 +6998,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7026,7 +7026,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7052,7 +7052,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Format")]
     [Serializable()]
@@ -7083,7 +7083,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7110,7 +7110,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7134,7 +7134,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatCategoryIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7158,7 +7158,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -7182,7 +7182,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatXMLChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7206,7 +7206,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnMimeTypeChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -7234,7 +7234,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7256,7 +7256,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7278,7 +7278,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7296,7 +7296,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -7320,7 +7320,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="FormatCategory")]
     [Serializable()]
@@ -7349,7 +7349,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7376,7 +7376,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7400,7 +7400,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFormatTypeIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7428,7 +7428,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7450,7 +7450,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7472,7 +7472,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7490,7 +7490,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -7514,7 +7514,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="FormatType")]
     [Serializable()]
@@ -7541,7 +7541,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7568,7 +7568,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7596,7 +7596,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7622,7 +7622,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Language")]
     [Serializable()]
@@ -7647,7 +7647,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7674,7 +7674,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnLanguageCodeChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -7702,23 +7702,23 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Language_LanguageCode_Metadata_LanguageCode", "Metadata")]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Language_LanguageCode_Metadata_LanguageCode", "NewMetadata")]
         public EntityCollection<Metadata> Metadata
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode", "Metadata");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode", "NewMetadata");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode", "Metadata", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_Language_LanguageCode_Metadata_LanguageCode", "NewMetadata", value);
                 }
             }
         }
@@ -7728,9 +7728,9 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Metadata")]
+    [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="NewMetadata")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Metadata : EntityObject
@@ -7738,7 +7738,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Metadata object.
+        /// Create a new NewMetadata object.
         /// </summary>
         /// <param name="gUID">Initial value of the GUID property.</param>
         /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
@@ -7765,7 +7765,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7792,7 +7792,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7816,7 +7816,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObjectGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -7840,7 +7840,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnLanguageCodeChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7864,7 +7864,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnMetadataSchemaGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7888,7 +7888,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnRevisionIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7912,7 +7912,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnMetadataXMLChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7939,7 +7939,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnDateCreatedChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -7967,7 +7967,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -7985,7 +7985,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -8005,7 +8005,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8023,7 +8023,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -8043,7 +8043,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8061,7 +8061,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -8085,7 +8085,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="MetadataSchema")]
     [Serializable()]
@@ -8116,7 +8116,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8143,7 +8143,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8167,7 +8167,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8191,7 +8191,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnSchemaXMLChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8219,7 +8219,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8241,7 +8241,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8263,23 +8263,23 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata")]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "NewMetadata")]
         public EntityCollection<Metadata> Metadata
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "NewMetadata");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "Metadata", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_MetadataSchema_GUID_Metadata_MetadataSchemaGUID", "NewMetadata", value);
                 }
             }
         }
@@ -8289,7 +8289,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="MetadataSchema_Group_Join")]
     [Serializable()]
@@ -8320,7 +8320,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8347,7 +8347,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnMetadataSchemaGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8374,7 +8374,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnGroupGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8398,7 +8398,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnPermissionChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8426,7 +8426,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8444,7 +8444,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -8468,7 +8468,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="MetadataSchema_User_Join")]
     [Serializable()]
@@ -8499,7 +8499,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8526,7 +8526,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnMetadataSchemaGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8553,7 +8553,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnUserGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8577,7 +8577,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnPermissionChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8605,7 +8605,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8623,7 +8623,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -8647,7 +8647,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Object")]
     [Serializable()]
@@ -8676,7 +8676,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8703,7 +8703,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8727,7 +8727,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObjectTypeIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8755,7 +8755,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8777,7 +8777,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8795,7 +8795,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -8815,29 +8815,29 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "Metadata")]
+        [EdmRelationshipNavigationPropertyAttribute("MCMModel", "FK_Object_GUID_Metadata_ObjectGUID", "NewMetadata")]
         public EntityCollection<Metadata> Metadata
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "NewMetadata");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "Metadata", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Metadata>("MCMModel.FK_Object_GUID_Metadata_ObjectGUID", "NewMetadata", value);
                 }
             }
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8859,7 +8859,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8881,7 +8881,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8903,7 +8903,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -8929,7 +8929,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Object_Folder_Join")]
     [Serializable()]
@@ -8960,7 +8960,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -8987,7 +8987,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObjectGUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9014,7 +9014,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnFolderIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9038,7 +9038,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObjectFolderTypeIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9066,7 +9066,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9084,7 +9084,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -9104,7 +9104,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9122,7 +9122,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -9142,7 +9142,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9160,7 +9160,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -9184,7 +9184,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Object_Object_Join")]
     [Serializable()]
@@ -9215,7 +9215,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9242,7 +9242,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObject1GUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9269,7 +9269,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObject2GUIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9293,7 +9293,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnObjectRelationTypeIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -9317,7 +9317,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnSequenceChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9345,7 +9345,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9363,7 +9363,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -9383,7 +9383,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9401,7 +9401,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -9421,7 +9421,7 @@ namespace Chaos.Mcm.Data.EF
         }
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9439,7 +9439,7 @@ namespace Chaos.Mcm.Data.EF
             }
         }
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
@@ -9463,7 +9463,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="ObjectFolderType")]
     [Serializable()]
@@ -9490,7 +9490,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9517,7 +9517,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9545,7 +9545,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9571,7 +9571,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="ObjectRelationType")]
     [Serializable()]
@@ -9598,7 +9598,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9625,7 +9625,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9653,7 +9653,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9679,7 +9679,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="ObjectType")]
     [Serializable()]
@@ -9706,7 +9706,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9733,7 +9733,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnIDChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9761,7 +9761,7 @@ namespace Chaos.Mcm.Data.EF
         #region Navigation Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
@@ -9787,7 +9787,7 @@ namespace Chaos.Mcm.Data.EF
     }
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="MCMModel", Name="Permission")]
     [Serializable()]
@@ -9816,7 +9816,7 @@ namespace Chaos.Mcm.Data.EF
         #region Simple Properties
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9843,7 +9843,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnTableIdentifierChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9870,7 +9870,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnPermission1Changed();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
@@ -9894,7 +9894,7 @@ namespace Chaos.Mcm.Data.EF
         partial void OnNameChanged();
     
         /// <summary>
-        /// No Metadata Documentation available.
+        /// No NewMetadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
@@ -9926,7 +9926,7 @@ namespace Chaos.Mcm.Data.EF
     #region ComplexTypes
     
     /// <summary>
-    /// No Metadata Documentation available.
+    /// No NewMetadata Documentation available.
     /// </summary>
     [EdmComplexTypeAttribute(NamespaceName="MCMModel", Name="Object_GetByRelatedObjectGUID_Result")]
     [DataContractAttribute(IsReference=true)]

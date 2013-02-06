@@ -62,12 +62,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding\MetadataBinding.cs" />
-    <Compile Include="Data\Connection\IMapping.cs" />
+    <Compile Include="Data\Connection\IKeyValueMapper.cs" />
     <Compile Include="Data\Connection\McmRepository.cs" />
     <Compile Include="Data\Connection\MySql\Gateway.cs" />
     <Compile Include="Data\Connection\ReaderExtensions.cs" />
     <Compile Include="Data\Dto\IAccessPoint.cs" />
     <Compile Include="Data\Dto\IObject.cs" />
+    <Compile Include="Data\Dto\NewMetadata.cs" />
+    <Compile Include="Data\Dto\ObjectRelation.cs" />
+    <Compile Include="Data\Dto\ObjectRelationInfo.cs" />
     <Compile Include="Data\Dto\Standard\AccessPoint.cs" />
     <Compile Include="Data\Dto\Standard\AccessPoint_Object_Join.cs" />
     <Compile Include="Data\Dto\Standard\MetadataSchemaInfo.cs" />
@@ -95,8 +98,6 @@
     <Compile Include="Data\Dto\Standard\MetadataSchema.cs" />
     <Compile Include="Data\Dto\Standard\Object.cs" />
     <Compile Include="Data\Dto\Standard\ObjectObjectJoin.cs" />
-    <Compile Include="Data\Dto\Standard\ObjectRelation.cs" />
-    <Compile Include="Data\Dto\Standard\ObjectRelationInfo.cs" />
     <Compile Include="Data\Dto\Standard\ObjectRelationType.cs" />
     <Compile Include="Data\Dto\Standard\ObjectType.cs" />
     <Compile Include="Data\Dto\Standard\Permission.cs" />

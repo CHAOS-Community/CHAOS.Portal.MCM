@@ -25,7 +25,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 		public DateTime DateCreated { get; set; }
 
 		/// <summary>
-		/// This property is used to Serialize Metadata relations
+		/// This property is used to Serialize NewMetadata relations
 		/// </summary>
 		[Serialize("Metadatas" )]
 		public IEnumerable<Metadata> Metadatas { get; set; }
@@ -94,7 +94,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 					yield return new KeyValuePair<string, string>("FolderTree", folderID.ToString(CultureInfo.InvariantCulture) );
 				}
 
-			// TODO: Implement Metadata XML converter
+			// TODO: Implement NewMetadata XML converter
 
 			// Convert to all field
 			if( Metadatas != null )

@@ -14,6 +14,8 @@ namespace Chaos.Mcm.Data.Connection
     using Chaos.Mcm.Permission;
     using Chaos.Portal.Exceptions;
 
+    using global::MySql.Data.MySqlClient;
+
     public class McmRepository : IMcmRepository
     {
         #region Fields
@@ -45,6 +47,30 @@ namespace Chaos.Mcm.Data.Connection
         #endregion
         #region Business Logic
 
+        #region Metadata
+
+        public IEnumerable<NewMetadata> MetadataGet(Guid guid)
+        {
+            return _gateway.ExecuteQuery<NewMetadata>("Metadata_Get", new MySqlParameter("Guid", guid.ToByteArray()));
+        }
+
+        public uint MetadataSet(Guid objectGuid, NewMetadata metadata, Guid editingUserGuid)
+        {
+            var result = _gateway.ExecuteNonQuery("Metadata_Set", new []
+                {
+                    new MySqlParameter("GUID", metadata.Guid.ToByteArray()),
+                    new MySqlParameter("ObjectGUID", objectGuid.ToByteArray()),
+                    new MySqlParameter("MetadataSchemaGUID", metadata.MetadataSchemaGuid.ToByteArray()),
+                    new MySqlParameter("LanguageCode", metadata.LanguageCode),
+                    new MySqlParameter("RevisionID", metadata.RevisionID),
+                    new MySqlParameter("MetadataXML", metadata.MetadataXml),
+                    new MySqlParameter("EditingUserGUID", editingUserGuid.ToByteArray())
+                });
+            
+            return (uint)result;
+        }
+
+        #endregion
         #region Folder
 
         public int DeleteFolder(uint id)
@@ -97,7 +123,7 @@ namespace Chaos.Mcm.Data.Connection
         }
 
         #endregion
-        #region Metadata Schema
+        #region NewMetadata Schema
 
         public IEnumerable<Dto.Standard.MetadataSchema> GetMetadataSchema(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission )
         {
@@ -121,16 +147,21 @@ namespace Chaos.Mcm.Data.Connection
 
         #endregion
         #region Object Relation
-    
+
+        public IList<ObjectRelationInfo> ObjectRelationInfoGet(Guid objectGuid)
+        {
+            return _gateway.ExecuteQuery<ObjectRelationInfo>("ObjectRelationInfo_Get", new MySqlParameter("Object1Guid", objectGuid.ToByteArray()));
+        }
+
         public uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence)
         {
-            var result = _gateway.ObjectRelationSet(new ObjectRelation
-            {
-                Object1Guid = object1Guid,
-                Object2Guid = object2Guid,
-                ObjectRelationTypeID = objectRelationTypeID,
-                Sequence = sequence
-            });
+            var result = _gateway.ExecuteNonQuery("ObjectRelation_Set",new[]
+                    {
+                        new MySqlParameter("Object1Guid", object1Guid.ToByteArray()),
+                        new MySqlParameter("Object2Guid", object2Guid.ToByteArray()),
+                        new MySqlParameter("ObjectRelationTypeID", objectRelationTypeID),
+                        new MySqlParameter("Sequence", sequence)
+                    });
 
             if (result == -100)
                 throw new InsufficientPermissionsException("The user do not have permission to create object relations");
@@ -143,7 +174,18 @@ namespace Chaos.Mcm.Data.Connection
 
         public uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid)
         {
-            var result = _gateway.ObjectRelationSetMetadata(objectRelationInfo, editingUserGuid);
+            var result = _gateway.ExecuteNonQuery("ObjectRelation_SetMetadata", new[]
+                {
+                    new MySqlParameter("Object1Guid", objectRelationInfo.Object1Guid.ToByteArray()),
+                    new MySqlParameter("Object2Guid", objectRelationInfo.Object2Guid.ToByteArray()),
+                    new MySqlParameter("ObjectRelationTypeID", objectRelationInfo.ObjectRelationTypeID),
+                    new MySqlParameter("Sequence", objectRelationInfo.Sequence),
+                    new MySqlParameter("MetadataGuid", objectRelationInfo.MetadataGuid.Value.ToByteArray()),
+                    new MySqlParameter("MetadataSchemaGuid", objectRelationInfo.MetadataSchemaGuid.Value.ToByteArray()),
+                    new MySqlParameter("MetadataXml", objectRelationInfo.MetadataXml),
+                    new MySqlParameter("LanguageCode", objectRelationInfo.LanguageCode),
+                    new MySqlParameter("EditingUserGuid", editingUserGuid.ToByteArray()),
+                });
 
             if (result == -100)
                 throw new InsufficientPermissionsException("The user do not have permission to create object relations");

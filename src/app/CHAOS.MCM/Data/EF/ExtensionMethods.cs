@@ -202,7 +202,7 @@ namespace Chaos.Mcm.Data.EF
 		}
 
 		#endregion
-		#region Metadata
+		#region NewMetadata
 
 		public static IEnumerable<Dto.Standard.Metadata> ToDto( this IEnumerable<Metadata> metadatas )
 		{

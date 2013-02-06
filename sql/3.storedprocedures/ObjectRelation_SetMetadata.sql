@@ -11,7 +11,6 @@ CREATE PROCEDURE ObjectRelation_SetMetadata
 )
 BEGIN
 
-    DECLARE Result INT DEFAULT 11;
     DECLARE EXIT HANDLER
     FOR SQLEXCEPTION, SQLWARNING, NOT FOUND
     BEGIN
@@ -32,8 +31,6 @@ BEGIN
 		THEN
             
 			CALL ObjectRelation_Set(Object1Guid, Object2Guid, ObjectRelationTypeID, null);
-			
-			SET Result = 1;
 
 		ELSE
 			                       
@@ -45,8 +42,6 @@ BEGIN
 					ooj.Object1Guid          = Object1Guid
 				AND ooj.Object2Guid          = Object2Guid
 				AND	ooj.ObjectRelationTypeID = ObjectRelationTypeID;
-
-            SET Result = 1;
         
         END IF;
 
@@ -68,8 +63,6 @@ BEGIN
 				AND ooj.Object2Guid          = Object2Guid
 				AND	ooj.ObjectRelationTypeID = ObjectRelationTypeID;
 
-			SET Result = 1;
-
 		ELSE
 			UPDATE
 				Metadata AS m
@@ -82,13 +75,11 @@ BEGIN
 					ooj.Object1Guid          = Object1Guid
 				AND ooj.Object2Guid          = Object2Guid
 				AND	ooj.ObjectRelationTypeID = ObjectRelationTypeID;
-                                
-                SET Result = 1;
 
 		END IF;
 
     COMMIT;
        
-    SELECT Result;
+	SELECT 1;
 
 END

@@ -1,4 +1,4 @@
-﻿namespace Chaos.Mcm.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto
 {
     using System;
 
