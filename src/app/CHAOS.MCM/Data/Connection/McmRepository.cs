@@ -69,6 +69,8 @@ namespace Chaos.Mcm.Data.Connection
                     new MySqlParameter("EditingUserGUID", editingUserGuid.ToByteArray())
                 });
 
+            if (result == -200) throw new UnhandledException("NewMetadata set failed on the database and was rolled back");
+
             return (uint)result;
         }
 
