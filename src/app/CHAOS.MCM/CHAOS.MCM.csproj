@@ -40,11 +40,11 @@
     <Reference Include="EntityFramework">
       <HintPath>..\..\..\lib\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.6.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity, Version=6.6.2.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data.Entity, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySql.Data.Entity.dll</HintPath>
     </Reference>
@@ -64,6 +64,9 @@
     <Compile Include="Binding\MetadataBinding.cs" />
     <Compile Include="Data\Connection\IKeyValueMapper.cs" />
     <Compile Include="Data\Connection\IReaderMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\FileInfoMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\ObjectMetadataMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\ObjectMapping.cs" />
     <Compile Include="Data\Connection\Mapping\MetadataMapping.cs" />
     <Compile Include="Data\Connection\Mapping\ObjectRelationInfoMapping.cs" />
     <Compile Include="Data\Connection\McmRepository.cs" />
@@ -73,6 +76,8 @@
     <Compile Include="Data\Dto\IAccessPoint.cs" />
     <Compile Include="Data\Dto\IObject.cs" />
     <Compile Include="Data\Dto\NewMetadata.cs" />
+    <Compile Include="Data\Dto\NewObject.cs" />
+    <Compile Include="Data\Dto\ObjectMetadata.cs" />
     <Compile Include="Data\Dto\ObjectRelation.cs" />
     <Compile Include="Data\Dto\ObjectRelationInfo.cs" />
     <Compile Include="Data\Dto\Standard\AccessPoint.cs" />

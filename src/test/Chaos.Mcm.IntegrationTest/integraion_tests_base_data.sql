@@ -1,5 +1,6 @@
-﻿INSERT INTO ObjectType(ID,Name)VALUES(1,'Test Type');
-INSERT INTO ObjectRelationType(ID,Name)VALUES(1,'test relation type');
+﻿INSERT INTO Destination(ID, SubscriptionGUID, Name, DateCreated) VALUES (1, unhex('01000000000000000000000000000000'),'test dest','1990-10-01 23:59:59');
+INSERT INTO AccessProvider(ID, DestinationID, BasePath, StringFormat, DateCreated, Token ) VALUES(1,1,'http://bogus.com','{BASE_PATH}{FOLDER_PATH}{FILE_NAME}','1990-10-01 23:59:59','HTTP Download');
+
 
 INSERT INTO Object(GUID,ObjectTypeID,DateCreated)VALUES(unhex('00000000000000000000000000000001'),1,'1990-10-01 23:59:59');
 INSERT INTO Object(GUID,ObjectTypeID,DateCreated)VALUES(unhex('00000000000000000000000000000002'),1,'1990-10-01 23:59:59');
@@ -18,3 +19,6 @@ INSERT INTO Object_Metadata_Join (ObjectGuid,MetadataGuid) VALUES (unhex('000000
 
 INSERT INTO Object_Object_Join(Object1Guid,Object2Guid,MetadataGuid,ObjectRelationTypeID,Sequence,DateCreated)VALUES
 (unhex('00000000000000000000000000000001'),unhex('00000000000000000000000000000002'),unhex('00000000000000000000000000000010'),1,null,'1990-10-01 23:59:59');
+
+INSERT INTO File(ID, ObjectGUID, ParentID, FormatID, DestinationID, FileName, OriginalFileName, FolderPath, DateCreated)VALUES
+(1, unhex('00000000000000000000000000000002'),null,1,1,'file.ext','orig.ext','/','1990-10-03 23:59:59');

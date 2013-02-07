@@ -6,8 +6,8 @@
     using System.Xml.Linq;
 
     using Chaos.Mcm.Data.Connection;
-    using Chaos.Mcm.Data.Connection.MySql;
     using Chaos.Mcm.Data.Dto;
+    using Chaos.Mcm.Data.Dto.Standard;
 
     using NUnit.Framework;
 
@@ -32,13 +32,21 @@
         [Test]
         public void ObjectRelationInfoGet_GivenAnObjectGuidThatExist_ReturnsAListWithOneObjectRelationInfo()
         {
-            var connection                 = Make_McmRepository();
-            var existentObjectRelationInfo = Make_ObjectRelationInfo();
+            var connection = Make_McmRepository();
+            var expected   = Make_ObjectRelationInfo();
 
-            var result = connection.ObjectRelationInfoGet(existentObjectRelationInfo.Object1Guid);
+            var result = connection.ObjectRelationInfoGet(expected.Object1Guid);
+            var actual = result.First();
 
             Assert.IsNotEmpty(result);
-            Assert.AreEqual(existentObjectRelationInfo, result.First());
+            Assert.AreEqual(expected.Object1Guid, actual.Object1Guid);
+            Assert.AreEqual(expected.Object2Guid, actual.Object2Guid);
+            Assert.AreEqual(expected.MetadataGuid, actual.MetadataGuid);
+            Assert.AreEqual(expected.Sequence, actual.Sequence);
+            Assert.AreEqual(expected.ObjectRelationType, actual.ObjectRelationType);
+            Assert.AreEqual(expected.ObjectRelationTypeID, actual.ObjectRelationTypeID);
+            Assert.AreEqual(expected.LanguageCode, actual.LanguageCode);
+            Assert.AreEqual(expected.MetadataSchemaGuid, actual.MetadataSchemaGuid);
         }
 
         [Test]
@@ -125,15 +133,87 @@
         
         #endregion
         #region Object
-        
-        
+        // expect null if there is no object with the given Guid
+
+        [Test]
+        public void ObjectGet_ByObjectGuidAndIncludeMetadata_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository         = this.Make_McmRepository();
+            var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
+            var metadataGuid       = new Guid("00000000-0000-0000-0000-000000000050");
+            var metadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100");
+            var languageCode       = "en";
+            var metadataXml        = "<xml>test xml</xml>";
+            
+            var result = repository.ObjectGet(objectGuid, true);
+
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(metadataGuid, result.Metadatas[0].Guid);
+            Assert.AreEqual(metadataSchemaGuid, result.Metadatas[0].MetadataSchemaGuid);
+            Assert.AreEqual(languageCode, result.Metadatas[0].LanguageCode);
+            Assert.AreEqual(metadataXml, result.Metadatas[0].MetadataXml.ToString());
+        }
+
+        [Test]
+        public void ObjectGet_ByObjectGuidAndIncludeFiles_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository   = this.Make_McmRepository();
+            var objectGuid   = new Guid("00000000-0000-0000-0000-000000000002");
+            var expectedFile = Make_File();
+
+            var result = repository.ObjectGet(objectGuid, false, true);
+            
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(expectedFile.ID, result.Files[0].ID);
+            Assert.AreEqual(expectedFile.ObjectGUID, result.Files[0].ObjectGUID);
+            Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
+            Assert.AreEqual(expectedFile.DestinationID, result.Files[0].DestinationID);
+            Assert.AreEqual(expectedFile.Filename, result.Files[0].Filename);
+            Assert.AreEqual(expectedFile.OriginalFilename, result.Files[0].OriginalFilename);
+            Assert.AreEqual(expectedFile.FolderPath, result.Files[0].FolderPath);
+            Assert.AreEqual(expectedFile.BasePath, result.Files[0].BasePath);
+            Assert.AreEqual(expectedFile.StringFormat, result.Files[0].StringFormat);
+            Assert.AreEqual(expectedFile.Token, result.Files[0].Token);
+            Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
+            Assert.AreEqual(expectedFile.FormatTypeName, result.Files[0].FormatTypeName);
+            Assert.AreEqual(expectedFile.FormatXML, result.Files[0].FormatXML);
+            Assert.AreEqual(expectedFile.MimeType, result.Files[0].MimeType);
+            Assert.AreEqual(expectedFile.FormatCategoryID, result.Files[0].FormatCategoryID);
+            Assert.AreEqual(expectedFile.FormatCategory, result.Files[0].FormatCategory);
+            Assert.AreEqual(expectedFile.FormatTypeID, result.Files[0].FormatTypeID);
+            Assert.AreEqual(expectedFile.FormatType, result.Files[0].FormatType);
+        }
 
         #endregion
+
         #region Helpers
 
-        private Gateway Make_StoredProcedure()
+        private FileInfo Make_File()
         {
-            return new Gateway(this._connectionString);
+            return new FileInfo
+                {
+                    ID               = 1,
+                    ObjectGUID       = new Guid("00000000-0000-0000-0000-000000000002"),
+                    FormatID         = 1,
+                    DestinationID    = 1,
+                    Filename         = "file.ext",
+                    OriginalFilename = "orig.ext",
+                    FolderPath       = "/",
+                    BasePath         = "http://bogus.com",
+                    StringFormat     = "{BASE_PATH}{FOLDER_PATH}{FILE_NAME}",
+                    Token            = "HTTP Download",
+                    FormatTypeName   = "Unknown Video",
+                    FormatXML        = null,
+                    MimeType         = "application/octet-stream",
+                    FormatCategoryID = 1,
+                    FormatCategory   = "Video Source",
+                    FormatTypeID     = 1,
+                    FormatType       = "Video"
+                };
         }
 
         private McmRepository Make_McmRepository()
@@ -162,7 +242,7 @@
                 MetadataGuid         = new Guid("00000000-0000-0000-0000-000000000020"),
                 Sequence             = null,
                 ObjectRelationTypeID = 1,
-                ObjectRelationType   = "test relation type",
+                ObjectRelationType   = "Contains",
                 LanguageCode         = "en",
                 MetadataSchemaGuid   = new Guid("00000000-0000-0000-0000-000000000100"),
                 MetadataXml          = XDocument.Parse("<xml>test xml</xml>")
@@ -178,7 +258,7 @@
                 MetadataGuid         = new Guid("00000000-0000-0000-0000-000000000010"),
                 Sequence             = null,
                 ObjectRelationTypeID = 1,
-                ObjectRelationType   = "test relation type",
+                ObjectRelationType   = "Contains",
                 LanguageCode         = "en",
                 MetadataSchemaGuid   = new Guid("00000000-0000-0000-0000-000000000100"),
                 MetadataXml          = XDocument.Parse("<xml>test xml</xml>")

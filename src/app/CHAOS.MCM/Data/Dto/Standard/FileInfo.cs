@@ -15,7 +15,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 		[Serialize]
 		public uint? ParentID { get; set; }
 
-		public UUID ObjectGUID { get; set; }
+		public Guid ObjectGUID { get; set; }
 
 		[Serialize]
 		public string Filename { get; set; }
@@ -59,7 +59,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
         public string FolderPath { get; set; }
         public DateTime FileDateCreated { get; set; }
         public string BasePath { get; set; }
-        public DateTime AccessPointDateCreated { get; set; }
+        public DateTime AccessProviderDateCreated { get; set; }
         public string FormatXML { get; set; }
         public string MimeType { get; set; }
         public uint FormatCategoryID { get; set; }
@@ -76,7 +76,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
         {
             ID                     = fileId;
             ParentID               = parentId;
-            ObjectGUID             = new UUID(objectGUID.ToByteArray());
+            ObjectGUID             = objectGUID;
             Filename               = fileName;
             OriginalFilename       = originalFileName;
             Token                  = token;
@@ -88,7 +88,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
             FolderPath             = folderPath;
             FileDateCreated        = fileDateCreated;
             BasePath               = basePath;
-            AccessPointDateCreated = accessProviderDateCreated;
+            this.AccessProviderDateCreated = accessProviderDateCreated;
             FormatXML              = formatXML;
             MimeType               = mimeType;
             FormatCategoryID       = formatCategoryId;

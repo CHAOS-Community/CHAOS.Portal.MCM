@@ -3,44 +3,33 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Linq;
     using System.Xml.Linq;
 
     using Chaos.Mcm.Data.Connection.Mapping;
     using Chaos.Mcm.Data.Dto;
+    using Chaos.Mcm.Data.Dto.Standard;
 
     public static class ReaderExtensions
     {
-        private static readonly IDictionary<Type, IReaderMapping> _mappings;
+        private static readonly IDictionary<Type, IReaderMapping<object>> _mappings;
  
         //todo: add proper error handling when there is no mapping for the requested type
         static ReaderExtensions()
         {
-            _mappings = new Dictionary<Type, IReaderMapping>();
+            _mappings = new Dictionary<Type, IReaderMapping<object>>();
 
             _mappings.Add(typeof(ObjectRelationInfo), new ObjectRelationInfoMapping());
             _mappings.Add(typeof(NewMetadata), new MetadataMapping());
+            _mappings.Add(typeof(ObjectMetadata), new ObjectMetadataMapping());
+            _mappings.Add(typeof(NewObject), new ObjectMapping());
+            _mappings.Add(typeof(FileInfo), new FileInfoMapping());
         }
 
-        public static TResultType Map<TResultType>(this IDataReader reader)
+        public static IEnumerable<object> Map<TResultType>(this IDataReader reader)
         {
             var mapping = _mappings[typeof(TResultType)];
 
-            return (TResultType)mapping.Map(reader);
-        }
-
-        public static IList<TResultType> Map<TResultType>(this IList<KeyValuePair<string, object>[]> readerData) where TResultType : IKeyValueMapper, new()
-        {
-            return readerData.Select(Map<TResultType>).ToList();
-        }
-
-        private static TResultType Map<TResultType>(KeyValuePair<string, object>[] row) where TResultType : IKeyValueMapper, new()
-        {
-            var dto = new TResultType();
-
-            dto.Map(row);
-
-            return dto;
+            return mapping.Map(reader);
         }
 
         public static string GetString(this IDataReader reader, string name)
@@ -50,17 +39,17 @@
 
         public static Guid GetGuid(this IDataReader reader, string name)
         {
-            return ConvertToGuidNullable(reader, name).Value;
+            return GetGuidNullable(reader, name).Value;
         }
 
-        public static Guid? ConvertToGuidNullable(this IDataReader reader, string name)
+        public static Guid? GetGuidNullable(this IDataReader reader, string name)
         {
             var value = reader.GetValue(reader.GetOrdinal(name));
 
             return Convert.IsDBNull(value) ? (Guid?)null : new Guid(value as byte[]);
         }
 
-        public static XDocument ConvertToXDocument(this IDataReader reader, string name)
+        public static XDocument GetXDocument(this IDataReader reader, string name)
         {
             var value = reader.GetValue(reader.GetOrdinal(name));
 
@@ -69,27 +58,27 @@
             return XDocument.Parse(value as string);
         }
 
-        public static uint ConvertToUint32(this IDataReader reader, string name)
+        public static uint GetUint32(this IDataReader reader, string name)
         {
-            return ConvertToUint32Nullable(reader, name).Value;
+            return GetUint32Nullable(reader, name).Value;
         }
 
-        public static uint? ConvertToUint32Nullable(this IDataReader reader, string name)
+        public static uint? GetUint32Nullable(this IDataReader reader, string name)
         {
             return reader.GetValue(reader.GetOrdinal(name)) as uint?;
         }
 
-        public static int? ConvertToInt32Nullable(this IDataReader reader, string name)
+        public static int? GetInt32Nullable(this IDataReader reader, string name)
         {
             return reader.GetValue(reader.GetOrdinal(name)) as int?;
         }
 
-        public static DateTime ConvertToDateTime(this IDataReader reader, string name)
+        public static DateTime GetDateTime(this IDataReader reader, string name)
         {
-            return ConvertToDateTimeNullable(reader, name).Value;
+            return GetDateTimeNullable(reader, name).Value;
         }
 
-        public static DateTime? ConvertToDateTimeNullable(this IDataReader reader, string name)
+        public static DateTime? GetDateTimeNullable(this IDataReader reader, string name)
         {
             return reader.GetValue(reader.GetOrdinal(name)) as DateTime?;
         }

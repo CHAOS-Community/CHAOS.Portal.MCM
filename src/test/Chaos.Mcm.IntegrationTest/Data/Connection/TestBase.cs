@@ -17,6 +17,10 @@
 
             importer.Run();
 
+            importer.Parameters.Path = @"..\..\..\..\..\sql\6.data\optional_types.sql";
+
+            importer.Run();
+
             importer.Parameters.Path = "integraion_tests_base_data.sql";
 
             importer.Run();

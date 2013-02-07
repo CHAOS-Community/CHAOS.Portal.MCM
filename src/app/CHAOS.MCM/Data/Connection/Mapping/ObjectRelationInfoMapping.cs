@@ -1,25 +1,29 @@
 ﻿namespace Chaos.Mcm.Data.Connection.Mapping
 {
+    using System.Collections.Generic;
     using System.Data;
 
     using Chaos.Mcm.Data.Dto;
 
-    public class ObjectRelationInfoMapping : IReaderMapping
+    public class ObjectRelationInfoMapping : IReaderMapping<ObjectRelationInfo>
     {
-        public object Map(IDataReader reader)
+        public IEnumerable<ObjectRelationInfo> Map(IDataReader reader)
         {
-            return new ObjectRelationInfo
+            while(reader.Read())
+            {
+                yield return new ObjectRelationInfo
                 {
                     Object1Guid          = reader.GetGuid("Object1Guid"),
                     Object2Guid          = reader.GetGuid("Object2Guid"),
-                    MetadataGuid         = reader.ConvertToGuidNullable("MetadataGuid"),
-                    Sequence             = reader.ConvertToInt32Nullable("Sequence"),
-                    ObjectRelationTypeID = reader.ConvertToUint32("ObjectRelationTypeID"),
+                    MetadataGuid         = reader.GetGuidNullable("MetadataGuid"),
+                    Sequence             = reader.GetInt32Nullable("Sequence"),
+                    ObjectRelationTypeID = reader.GetUint32("ObjectRelationTypeID"),
                     ObjectRelationType   = reader.GetString("ObjectRelationType"),
                     LanguageCode         = reader.GetString("LanguageCode"),
-                    MetadataSchemaGuid   = reader.ConvertToGuidNullable("MetadataSchemaGuid"),
-                    MetadataXml          = reader.ConvertToXDocument("MetadataXml")
+                    MetadataSchemaGuid   = reader.GetGuidNullable("MetadataSchemaGuid"),
+                    MetadataXml          = reader.GetXDocument("MetadataXml")
                 };
+            }
         }
     }
 }

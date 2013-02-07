@@ -283,8 +283,6 @@ namespace Chaos.Mcm.Data.Connection
             }
         }
 
-        #region AccessPoint
-
         public IEnumerable<Dto.Standard.AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
         {
             var groupGuidsString = string.Join(",", groupGuids);
@@ -308,8 +306,11 @@ namespace Chaos.Mcm.Data.Connection
             }
         }
 
-        #endregion
         #region Object
+
+        #endregion
+
+        #region AccessPoint
 
         public IEnumerable<Dto.Standard.Object> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint)
         {
@@ -333,6 +334,23 @@ namespace Chaos.Mcm.Data.Connection
             {
                 return db.Object_Get(relatedToObjectWithGuid, objectRelationTypeID, true, true, true, true).ToList().ToDto();
             }
+        }
+
+        public NewObject ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
+        {
+            // String.Join(",", guids.Select(item => item.ToString().Replace("-", "")));
+            
+            var parameters = new MySqlParameter[]
+                {
+                    new MySqlParameter("GUIDs", objectGuid.ToString().Replace("-", "")),
+                    new MySqlParameter("IncludeMetadata", includeMetadata),
+                    new MySqlParameter("IncludeFiles", includeFiles),
+                    new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
+                    new MySqlParameter("IncludeFolders", includeFolders),
+                    new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
+                };
+            
+            return this._gateway.ExecuteQuery<NewObject>("Object_GetByGUIDs", parameters).FirstOrDefault();
         }
 
         #endregion

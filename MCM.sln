@@ -91,6 +91,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.views", "4.views", "{5D7F
 		sql\4.views\1.DestinationInfo.sql = sql\4.views\1.DestinationInfo.sql
 		sql\4.views\1.FileInfo.sql = sql\4.views\1.FileInfo.sql
 		sql\4.views\1.FolderInfo.sql = sql\4.views\1.FolderInfo.sql
+		sql\4.views\1.ObjectMetadata.sql = sql\4.views\1.ObjectMetadata.sql
 		sql\4.views\1.ObjectRelationInfo.sql = sql\4.views\1.ObjectRelationInfo.sql
 	EndProjectSection
 EndProject
