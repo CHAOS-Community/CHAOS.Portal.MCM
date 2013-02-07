@@ -30,7 +30,7 @@
 
         #region Business Logic
 
-        public IList<TResultType> ExecuteQuery<TResultType>(string storedProcedure, params MySqlParameter[] parameters) where TResultType : IKeyValueMapper, new()
+        public IList<TResultType> ExecuteQuery<TResultType>(string storedProcedure, params MySqlParameter[] parameters)
         {
             using (var connnection = new MySqlConnection(this._connectionString))
             using (var command     = new MySqlCommand())
@@ -45,22 +45,38 @@
 
                 using (var reader = command.ExecuteReader())
                 {
-                    var list = new List<KeyValuePair<string, object>[]>();
-
-                    while (reader.Read())
-                    {
-                        var row = new KeyValuePair<string, object>[reader.FieldCount];
-
-                        for (var i = 0; i < reader.FieldCount; i++)
-                            row[i] = new KeyValuePair<string, object>(reader.GetName(i), reader.GetValue(i));
-
-                        list.Add(row);
-                    }
-
-                    return list.ToDto<TResultType>();
+                    return ExtractFromReader<TResultType>(reader);
                 }
             }
         }
+
+        private static IList<TResultType> ExtractFromReader<TResultType>(IDataReader reader)
+        {
+            var list = new List<TResultType>();
+
+            while (reader.Read())
+            {
+                list.Add(reader.Map<TResultType>());
+            }
+
+            return list;
+        }
+
+//        private static IList<TResultType> ExtractFromReader<TResultType>(IDataReader reader) where TResultType : IKeyValueMapper, new()
+//        {
+//            var list = new List<KeyValuePair<string, object>[]>();
+//
+//            while(reader.Read())
+//            {
+//                var row = new KeyValuePair<string, object>[reader.FieldCount];
+//
+//                for(var i = 0; i < reader.FieldCount; i++) row[i] = new KeyValuePair<string, object>(reader.GetName(i), reader.GetValue(i));
+//
+//                list.Add(row);
+//            }
+//
+//            return list.Map<TResultType>();
+//        }
 
         public long ExecuteNonQuery(string storedProcedure, params MySqlParameter[] parameters)
         {

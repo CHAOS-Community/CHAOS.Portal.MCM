@@ -63,6 +63,9 @@
   <ItemGroup>
     <Compile Include="Binding\MetadataBinding.cs" />
     <Compile Include="Data\Connection\IKeyValueMapper.cs" />
+    <Compile Include="Data\Connection\IReaderMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\MetadataMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\ObjectRelationInfoMapping.cs" />
     <Compile Include="Data\Connection\McmRepository.cs" />
     <Compile Include="Data\Connection\MySql\Gateway.cs" />
     <Compile Include="Data\Connection\PermissionRepository.cs" />
