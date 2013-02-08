@@ -65,8 +65,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
     <None Include="App.Config.sample" />
+    <None Include="App.Config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="integraion_tests_base_data.sql">
