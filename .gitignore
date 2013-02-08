@@ -19,3 +19,6 @@ Thumbs.db
 *.bak
 *.dat
 App.Config
+*.ncrunchsolution
+*.ncrunchproject
+_NCrunch*
