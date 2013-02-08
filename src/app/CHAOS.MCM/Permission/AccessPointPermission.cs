@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CHAOS.MCM.Permission
+namespace Chaos.Mcm.Permission
 {
     [Flags]
     public enum AccessPointPermission : uint

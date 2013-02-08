@@ -1,31 +1,32 @@
 ﻿using System;
-using CHAOS.Portal.DTO.Standard;
+using CHAOS;
 using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public  class File : Result
 	{
 		#region Properties
 
-		[Serialize("ID")]
+		[Serialize]
 		public uint ID { get; set; }
 
-		[Serialize("ParentID")]
+		[Serialize]
 		public uint? ParentID { get; set; }
 
 		public UUID ObjectGUID { get; set; }
 
-		[Serialize("Filename")]
+		[Serialize]
 		public string Filename { get; set; }
 
-		[Serialize("OriginalFilename")]
+		[Serialize]
 		public string OriginalFilename { get; set; }
 
-		[Serialize("FormatID")]
+		[Serialize]
 		public uint FormatID { get; set; }
 
-        [Serialize("OriginalFilename")]
+        [Serialize]
 		public string FolderPath { get; set; }
 
 		#endregion

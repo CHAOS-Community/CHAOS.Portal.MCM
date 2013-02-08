@@ -1,0 +1,7 @@
+Look into refactoring IKeyValueMapper so it can be used for Mapping both ways, and maybe replace IIndexable interface, as they basically do the same thing
+
+Perform MetadataSchema permission check on object get result
+
+Eliminate duplication (MetadataMapping)
+
+Remove dependencies on default types in tests

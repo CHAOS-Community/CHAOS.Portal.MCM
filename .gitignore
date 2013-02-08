@@ -17,8 +17,12 @@ Thumbs.db
 *.xap
 
 *.bak
+
 *.dat
-App.Config
+*.log
+*.Cache
+*.StyleCop
 *.ncrunchsolution
 *.ncrunchproject
 _NCrunch*
+App.Config

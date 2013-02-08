@@ -2,7 +2,7 @@ using System;
 using CHAOS.Extensions;
 using CHAOS.Serialization;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
     public class EntityPermission : IEntityPermission
     {
@@ -10,7 +10,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
         public string pGuid{ get { return Guid.ToUUID().ToString(); }}
         
         public Guid Guid { get; set; }
-        public MCM.Permission.FolderPermission Permission { get; set; }
+        public Mcm.Permission.FolderPermission Permission { get; set; }
 
         [Serialize("Permission")]
         public uint PermissionUint{ get { return (uint) Permission; }}

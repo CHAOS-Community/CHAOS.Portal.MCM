@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace CHAOS.MCM.Permission.Specification
+namespace Chaos.Mcm.Permission.Specification
 {
     public class IntervalSpecification : ISynchronizationSpecification
     {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CHAOS.MCM.Data.Dto;
+using Chaos.Mcm.Data.Dto;
 
-namespace CHAOS.MCM.Permission
+namespace Chaos.Mcm.Permission
 {
     public interface IFolder : Data.Dto.IFolder
     {

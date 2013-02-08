@@ -1,16 +1,16 @@
-﻿using CHAOS.Portal.DTO.Standard;
-using CHAOS.Serialization;
+﻿using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public  class ObjectType : Result
 	{
 		#region Properties
 
-		[Serialize("ID")]
+		[Serialize]
 		public uint ID { get; set; }
 
-		[Serialize("Name")]
+		[Serialize]
 		public string Name{ get; set; }
 
 		#endregion

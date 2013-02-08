@@ -1,7 +1,7 @@
-﻿using CHAOS.MCM.Permission.Specification;
+﻿using Chaos.Mcm.Permission.Specification;
 using NUnit.Framework;
 
-namespace CHAOS.MCM.Test.Permission
+namespace Chaos.Mcm.Test.Permission
 {
     [TestFixture]
     public class IntervalSpecificationTest

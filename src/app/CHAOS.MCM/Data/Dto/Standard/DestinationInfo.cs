@@ -1,8 +1,9 @@
 ﻿using System;
-using CHAOS.Portal.DTO.Standard;
+using CHAOS;
 using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public class DestinationInfo : Result
 	{

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<configuration>
+  <connectionStrings>
+    <add name="mcm" 
+         connectionString="server=;user id=;password=;persist security info=True;database=" />
+  </connectionStrings>
+</configuration>

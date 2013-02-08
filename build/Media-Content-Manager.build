@@ -14,7 +14,7 @@
       <arg value="/t:Rebuild" />
     </msbuild>
 
-    <ilmerge outputfile="CHAOS.MCM.Module.dll"
+    <ilmerge outputfile="Chaos.Mcm.Extension.dll"
              targetkind="dll"
              logfile="ilmerge.log"
              targetplatform="v4"
@@ -22,20 +22,23 @@
 		
 		<librarypath>
 			<include name="..\lib\" />
-      <include name="..\tools\nunit\" />
 		</librarypath>
 		
 		<inputassemblies>
-      
-      <include name="..\src\app\CHAOS.MCM.Core.Exception\bin\Release\CHAOS.MCM.Core.Exception.dll" />
-			<include name="..\src\app\CHAOS.MCM.Data.DTO\bin\Release\CHAOS.MCM.Data.DTO.dll" />
-			<include name="..\src\app\CHAOS.MCM.Data.EF\bin\Release\CHAOS.MCM.Data.EF.dll" />
-			<include name="..\src\app\CHAOS.MCM.Module\bin\Release\CHAOS.MCM.Module.dll" />
-			<include name="..\src\test\CHAOS.MCM.Test\bin\Release\CHAOS.MCM.Test.dll" />
-      <include name="..\src\test\CHAOS.MCM.Test\bin\Release\CHAOS.MCM.dll" />
+      <include name="..\src\test\Chaos.Mcm.Test\bin\Release\Chaos.Mcm.dll" />
 		</inputassemblies>
 		
     </ilmerge>
+    
+    <nunit2>
+      <formatter type="Plain" />
+      <test assemblyname="..\src\test\Chaos.Mcm.Test\bin\Release\Chaos.Mcm.Test.dll">
+        <references>
+          <include name="Chaos.Mcm.Extension.dll"/>
+          <include name="..\lib\*.dll"/>
+        </references>
+      </test>
+    </nunit2>
     
   </target>
   

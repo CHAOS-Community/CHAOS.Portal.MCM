@@ -1,31 +1,32 @@
 ﻿using System;
-using CHAOS.Portal.DTO.Standard;
+using CHAOS;
 using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public  class FileInfo : Result
 	{
 		#region Properties
 
-		[Serialize("ID")]
+		[Serialize]
 		public uint ID { get; set; }
 
-		[Serialize("ParentID")]
+		[Serialize]
 		public uint? ParentID { get; set; }
 
-		public UUID ObjectGUID { get; set; }
+		public Guid ObjectGUID { get; set; }
 
-		[Serialize("Filename")]
+		[Serialize]
 		public string Filename { get; set; }
 
-		[Serialize("OriginalFilename")]
+		[Serialize]
 		public string OriginalFilename { get; set; }
 
-		[Serialize("Token")]
+		[Serialize]
 		public string Token { get; set; }
 
-	    [Serialize("URL")]
+	    [Serialize]
 	    public string URL
 	    {
 	        get
@@ -42,23 +43,23 @@ namespace CHAOS.MCM.Data.Dto.Standard
 	        }
 	    }
 
-		[Serialize("FormatID")]
+		[Serialize]
 		public uint FormatID { get; set; }
 
-		[Serialize("Format")]
+		[Serialize]
 		public string Format { get; set; }
 
-		[Serialize("FormatCategory")]
+		[Serialize]
 		public string FormatCategory { get; set; }
 
-		[Serialize("FormatType")]
+		[Serialize]
 		public string FormatType { get; set; }
 
         public uint DestinationID { get; set; }
         public string FolderPath { get; set; }
         public DateTime FileDateCreated { get; set; }
         public string BasePath { get; set; }
-        public DateTime AccessPointDateCreated { get; set; }
+        public DateTime AccessProviderDateCreated { get; set; }
         public string FormatXML { get; set; }
         public string MimeType { get; set; }
         public uint FormatCategoryID { get; set; }
@@ -75,7 +76,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
         {
             ID                     = fileId;
             ParentID               = parentId;
-            ObjectGUID             = new UUID(objectGUID.ToByteArray());
+            ObjectGUID             = objectGUID;
             Filename               = fileName;
             OriginalFilename       = originalFileName;
             Token                  = token;
@@ -87,14 +88,14 @@ namespace CHAOS.MCM.Data.Dto.Standard
             FolderPath             = folderPath;
             FileDateCreated        = fileDateCreated;
             BasePath               = basePath;
-            AccessPointDateCreated = accessProviderDateCreated;
+            this.AccessProviderDateCreated = accessProviderDateCreated;
             FormatXML              = formatXML;
             MimeType               = mimeType;
             FormatCategoryID       = formatCategoryId;
             FormatCategory         = formatCategoryName;
             FormatTypeID           = formatTypeId;
             FormatTypeName         = formatTypeName;
-            Fullname               = "CHAOS.MCM.Data.DTO.FileInfo";
+            Fullname               = "Chaos.Mcm.Data.DTO.FileInfo";
         }
 
         public FileInfo( uint fileId, Guid objectGUID, uint? parentId, uint destinationId, string fileName, string originalFileName, string folderPath, DateTime fileDateCreated, string basePath, string stringFormat, DateTime accessProviderDateCreated, string token, uint formatId, string formatName, string formatXML, string mimeType, uint formatCategoryId, string formatCategoryName, uint formatTypeId, string formatTypeName, UUID sessionGUID ) : this ( fileId,objectGUID, parentId,destinationId,fileName,originalFileName,folderPath,fileDateCreated,basePath,stringFormat, accessProviderDateCreated, token,formatId,formatName,formatXML,mimeType,formatCategoryId,formatCategoryName,formatTypeId,formatTypeName )

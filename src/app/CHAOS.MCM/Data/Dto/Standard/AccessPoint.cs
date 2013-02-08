@@ -1,23 +1,23 @@
 ﻿using System;
-using CHAOS.Portal.DTO.Standard;
 using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
     public class AccessPoint : Result, IAccessPoint
     {
         #region Properties
 
-        [Serialize("GUID")]
+        [Serialize]
         public Guid Guid { get; set; }
 
-        [Serialize("SubscriptionGUID")]
+        [Serialize]
         public Guid SubscriptionGuid { get; set; }
 
-        [Serialize("Name")]
+        [Serialize]
         public string Name { get; set; }
 
-        [Serialize("DateCreated")]
+        [Serialize]
         public DateTime DateCreated { get; set; }
 
         #endregion

@@ -1,4 +1,4 @@
-﻿namespace CHAOS.MCM.Permission
+﻿namespace Chaos.Mcm.Permission
 {
     public interface ISynchronizationSpecification
     {

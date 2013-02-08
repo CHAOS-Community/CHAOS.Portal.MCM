@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using CHAOS.MCM.Data.Dto;
+using Chaos.Mcm.Data.Dto;
 
-namespace CHAOS.MCM.Data
+namespace Chaos.Mcm.Data
 {
     public interface IPermissionRepository
     {

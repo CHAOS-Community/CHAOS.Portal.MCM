@@ -1,6 +1,7 @@
 ﻿using System;
+using CHAOS;
 
-namespace CHAOS.MCM.Data.Dto
+namespace Chaos.Mcm.Data.Dto
 {
     public interface IFolder
     {

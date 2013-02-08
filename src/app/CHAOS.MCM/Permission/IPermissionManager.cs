@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CHAOS.MCM.Data;
-using CHAOS.Portal.Core;
+using Chaos.Mcm.Data;
 
-namespace CHAOS.MCM.Permission
+namespace Chaos.Mcm.Permission
 {
     public interface IPermissionManager
     {

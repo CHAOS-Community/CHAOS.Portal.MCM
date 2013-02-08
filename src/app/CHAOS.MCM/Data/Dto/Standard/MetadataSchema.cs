@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Xml.Linq;
-using CHAOS.Portal.DTO.Standard;
+using CHAOS;
 using CHAOS.Serialization;
 using CHAOS.Serialization.XML;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public class MetadataSchema : Result
 	{

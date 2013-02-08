@@ -1,26 +1,27 @@
 ﻿using System;
-using CHAOS.Portal.DTO.Standard;
+using CHAOS;
 using CHAOS.Serialization;
+using Chaos.Portal.Data.Dto.Standard;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
 	public class Object_Object_Join : Result
 	{
 		#region Properties
 
-		[Serialize("Object1GUID")]
+		[Serialize]
 		public UUID Object1GUID { get; set; }
 
-		[Serialize("Object2GUID")]
+		[Serialize]
 		public UUID Object2GUID { get; set; }
 
-		[Serialize("ObjectRelationTypeID")]
+		[Serialize]
 		public uint ObjectRelationTypeID { get; set; }
 
-		[Serialize("Sequence")]
+		[Serialize]
 		public int? Sequence { get; set; }
 
-		[Serialize("DateCreated")]
+		[Serialize]
 		public DateTime DateCreated { get; set; }
 
 		#endregion

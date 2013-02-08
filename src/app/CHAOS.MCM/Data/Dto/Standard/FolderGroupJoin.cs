@@ -1,6 +1,6 @@
 using System;
 
-namespace CHAOS.MCM.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto.Standard
 {
     public class FolderGroupJoin : IFolderGroupJoin
     {
