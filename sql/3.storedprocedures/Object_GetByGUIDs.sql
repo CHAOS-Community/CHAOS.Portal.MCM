@@ -35,7 +35,7 @@ BEGIN
     DEALLOCATE PREPARE stmt;    
                 
 
-    SET @sql_text := concat( 'SELECT DISTINCT Object_Object_Join.* FROM Object INNER JOIN  Object_Object_Join ON Object_Object_Join.Object1GUID = Object.GUID OR Object_Object_Join.Object2GUID = Object.GUID WHERE ', IncludeObjectRelations ,' = 1 AND ( Object.GUID = unhex(''', REPLACE(GUIDs,',',''') OR Object.GUID = unhex('''), ''') ); ');
+    SET @sql_text := concat( 'SELECT DISTINCT ObjectRelationInfo.* FROM Object INNER JOIN  ObjectRelationInfo ON ObjectRelationInfo.Object1Guid = Object.GUID OR ObjectRelationInfo.Object2Guid = Object.GUID WHERE ', IncludeObjectRelations ,' = 1 AND ( Object.GUID = unhex(''', REPLACE(GUIDs,',',''') OR Object.GUID = unhex('''), ''') ); ');
     PREPARE stmt FROM @sql_text;
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;

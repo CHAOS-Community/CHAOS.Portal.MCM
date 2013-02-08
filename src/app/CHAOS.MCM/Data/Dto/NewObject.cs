@@ -18,7 +18,9 @@
         public uint ObjectTypeID { get; set; }
 
         public DateTime DateCreated { get; set; }
-        
+
+        public IList<ObjectRelationInfo> ObjectRelationInfos { get; set; }
+
         #endregion
         #region Initialization
 

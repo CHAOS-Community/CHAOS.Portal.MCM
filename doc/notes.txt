@@ -5,3 +5,5 @@ Perform MetadataSchema permission check on object get result
 Eliminate duplication (MetadataMapping)
 
 Remove dependencies on default types in tests
+
+Refactor stored procedures Object_GetByGUIDs and Object_GetByFolderID (the inner join between object and ObjectRelationInfo is not necessary)

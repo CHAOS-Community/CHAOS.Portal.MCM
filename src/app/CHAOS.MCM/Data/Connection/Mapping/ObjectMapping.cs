@@ -42,6 +42,15 @@
             {
                 o.Files = (from f in files where f.ObjectGUID == o.Guid select f).ToList();
             }
+
+            reader.NextResult();
+
+            var objectRelations = new ObjectRelationInfoMapping().Map( reader );
+
+            foreach(var o in objects)
+            {
+                o.ObjectRelationInfos = ( from or in objectRelations where or.Object1Guid == o.Guid || or.Object2Guid == o.Guid select or ).ToList();
+            }
             
             return objects;
         }

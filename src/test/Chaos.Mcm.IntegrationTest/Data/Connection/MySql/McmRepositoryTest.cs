@@ -187,6 +187,27 @@
             Assert.AreEqual(expectedFile.FormatTypeID, result.Files[0].FormatTypeID);
             Assert.AreEqual(expectedFile.FormatType, result.Files[0].FormatType);
         }
+        
+        [Test]
+        public void ObjectGet_ByObjectGuidAndIncludeObjectRelations_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository                 = Make_McmRepository();
+            var objectGuid                 = new Guid("00000000-0000-0000-0000-000000000002");
+            var expectedObjectRelationInfo = Make_ObjectRelationInfo();
+
+            var result = repository.ObjectGet(objectGuid, false, false, true);
+            
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual( expectedObjectRelationInfo.Object1Guid, result.ObjectRelationInfos[0].Object1Guid );
+            Assert.AreEqual( expectedObjectRelationInfo.Object2Guid, result.ObjectRelationInfos[0].Object2Guid );
+            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRelationInfos[0].ObjectRelationTypeID );
+            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationType, result.ObjectRelationInfos[0].ObjectRelationType );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataGuid, result.ObjectRelationInfos[0].MetadataGuid );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRelationInfos[0].MetadataSchemaGuid );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRelationInfos[0].MetadataXml.ToString() );
+        }
 
         #endregion
 
