@@ -13,6 +13,8 @@ using Chaos.Portal.Exceptions;
 
 namespace Chaos.Mcm.Extension
 {
+    using Chaos.Mcm.Data.Dto;
+
     public class Object : AMcmExtension
     {
 		public IPagedResult<IResult> Get( ICallContext callContext, IQuery query, UUID accessPointGUID, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
@@ -138,5 +140,11 @@ namespace Chaos.Mcm.Extension
 		//        return new ScalarResult( result );
 		//    }
 		//}
+        public IEnumerable<NewObject> Get(ICallContext callContext, IEnumerable<Guid> objectGuid, bool includeAccessPoints, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders)
+        {
+            var objectsWithPermission = objectGuid.Where(item => HasPermissionToObject(callContext, item.ToUUID(), FolderPermission.Read));
+            
+            return McmRepository.ObjectGet(objectsWithPermission, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints);
+        }
     }
 }

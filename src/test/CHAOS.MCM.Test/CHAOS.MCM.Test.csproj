@@ -55,6 +55,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extension\ObjectTest.cs" />
     <Compile Include="Extension\FolderTest.cs" />
     <Compile Include="Extension\MetadataTest.cs" />
     <Compile Include="Extension\ObjectRelationTest.cs" />
