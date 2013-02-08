@@ -28,11 +28,11 @@
             _mappings.Add(typeof(AccessPoint_Object_Join), new AccesspointObjectJoinMapping());
         }
 
-        public static IEnumerable<object> Map<TResultType>(this IDataReader reader)
+        public static IEnumerable<TResultType> Map<TResultType>(this IDataReader reader)
         {
             var mapping = _mappings[typeof(TResultType)];
 
-            return mapping.Map(reader);
+            return (IEnumerable<TResultType>)mapping.Map(reader);
         }
 
         public static string GetString(this IDataReader reader, string name)

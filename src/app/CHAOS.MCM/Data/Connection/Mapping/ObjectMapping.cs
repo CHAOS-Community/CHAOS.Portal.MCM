@@ -6,6 +6,7 @@
 
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Connection;
+    using Chaos.Mcm.Data.Dto.Standard;
 
     public class ObjectMapping : IReaderMapping<NewObject>
     {
@@ -26,8 +27,8 @@
             }
             
             reader.NextResult();
-            
-            var metadatas = new ObjectMetadataMapping().Map(reader).ToList();
+
+            var metadatas = reader.Map<ObjectMetadata>().ToList();
             
             foreach (var o in objects)
             {
@@ -36,7 +37,7 @@
             
             reader.NextResult();
 
-            var files = new FileInfoMapping().Map(reader).ToList();
+            var files = reader.Map<FileInfo>().ToList();
 
             foreach (var o in objects)
             {
@@ -45,7 +46,7 @@
 
             reader.NextResult();
 
-            var objectRelations = new ObjectRelationInfoMapping().Map( reader ).ToList();
+            var objectRelations = reader.Map<ObjectRelationInfo>().ToList();
 
             foreach(var o in objects)
             {
@@ -54,7 +55,7 @@
             
             reader.NextResult();
 
-            var objectFolders = new ObjectFolderMapping().Map( reader ).ToList();
+            var objectFolders = reader.Map<ObjectFolder>().ToList();
 
             foreach(var o in objects)
             {
@@ -63,7 +64,7 @@
 
             reader.NextResult();
 
-            var accessPoints = new AccesspointObjectJoinMapping().Map( reader ).ToList();
+            var accessPoints = reader.Map<AccessPoint_Object_Join>().ToList();
 
             foreach(var o in objects)
             {
