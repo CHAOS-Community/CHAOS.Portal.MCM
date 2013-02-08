@@ -60,6 +60,15 @@
             {
                 o.ObjectFolders = ( from of in objectFolders where of.ObjectGuid == o.Guid select of ).ToList();
             }
+
+            reader.NextResult();
+
+            var accessPoints = new AccesspointObjectJoinMapping().Map( reader );
+
+            foreach(var o in objects)
+            {
+                o.AccessPoints = ( from ap in accessPoints where ap.ObjectGuid == o.Guid select ap ).ToList();
+            }
             
             return objects;
         }

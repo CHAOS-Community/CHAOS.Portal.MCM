@@ -1,5 +1,5 @@
 ﻿using System;
-using CHAOS;
+
 using CHAOS.Serialization;
 
 namespace Chaos.Mcm.Data.Dto.Standard
@@ -9,10 +9,10 @@ namespace Chaos.Mcm.Data.Dto.Standard
         #region Properties
 
         [Serialize("AccessPointGUID")]
-        public UUID AccessPointGUID { get; set; }
+        public Guid AccessPointGuid { get; set; }
 
         [Serialize("ObjectGUID")]
-        public UUID ObjectGUID { get; set; }
+        public Guid ObjectGuid { get; set; }
 
         [Serialize("StartDate")]
         public DateTime? StartDate { get; set; }
@@ -31,12 +31,17 @@ namespace Chaos.Mcm.Data.Dto.Standard
 
         public AccessPoint_Object_Join(Guid accessPointGUID, Guid objectGUID, DateTime? startDate, DateTime? endDate, DateTime dateCreated, DateTime? dateModified)
         {
-            AccessPointGUID = new UUID( accessPointGUID.ToByteArray() );
-            ObjectGUID      = new UUID( objectGUID.ToByteArray() );
+            AccessPointGuid = accessPointGUID;
+            ObjectGuid      = objectGUID;
             StartDate       = startDate;
             EndDate         = endDate;
             DateCreated     = dateCreated;
             DateModified    = dateModified;
+        }
+
+        public AccessPoint_Object_Join()
+        {
+            
         }
 
         #endregion

@@ -1,11 +1,11 @@
-﻿namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
+﻿/* Note
+ */
+namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
 {
     using System;
     using System.Configuration;
     using System.Linq;
     using System.Xml.Linq;
-
-    using CHAOS;
 
     using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Data.Dto;
@@ -118,8 +118,8 @@
             var repository           = Make_McmRepository();
             var nonexistentMetadata  = Make_Metadata();
             var existingObjectGuid   = new Guid("00000000-0000-0000-0000-000000000003");
-            var someUserGuid         = new Guid("10000000-0000-0000-0000-000000000000");
-            nonexistentMetadata.Guid = new Guid("00000000-0000-0000-0000-000000000030"); // change to nonexistent guid
+            var someUserGuid         = new Guid("00000010-0000-0000-0000-000000000000");
+            nonexistentMetadata.Guid = new Guid("00000000-0000-0000-0000-000000000030");
 
             var result = repository.MetadataSet(existingObjectGuid, nonexistentMetadata.Guid, nonexistentMetadata.MetadataSchemaGuid, nonexistentMetadata.LanguageCode, nonexistentMetadata.RevisionID, nonexistentMetadata.MetadataXml, someUserGuid);
 
@@ -140,7 +140,7 @@
         [Test]
         public void ObjectGet_ByObjectGuidAndIncludeMetadata_ASingleObjectDtoCreatedFromMultipleDataResults()
         {
-            var repository         = this.Make_McmRepository();
+            var repository         = Make_McmRepository();
             var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
             var metadataGuid       = new Guid("00000000-0000-0000-0000-000000000050");
             var metadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100");
@@ -229,10 +229,43 @@
             Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
             Assert.AreEqual(expectedFolderInfo.SubscriptionGUID, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
         }
+        
+        [Test]
+        public void ObjectGet_ByObjectGuidAndIncludeAccessPoints_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository          = Make_McmRepository();
+            var objectGuid          = new Guid("00000000-0000-0000-0000-000000000002");
+            var expectedAccessPoint = Make_AccessPoint();
+
+            var result = repository.ObjectGet(objectGuid, false, false, false, false, true);
+
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(expectedAccessPoint.AccessPointGuid, result.AccessPoints[0].AccessPointGuid);
+            Assert.AreEqual(expectedAccessPoint.ObjectGuid, result.AccessPoints[0].ObjectGuid);
+            Assert.AreEqual(expectedAccessPoint.StartDate, result.AccessPoints[0].StartDate);
+            Assert.AreEqual(expectedAccessPoint.EndDate, result.AccessPoints[0].EndDate);
+            Assert.AreEqual(expectedAccessPoint.DateCreated, result.AccessPoints[0].DateCreated);
+            Assert.AreEqual(expectedAccessPoint.DateModified, result.AccessPoints[0].DateModified);
+        }
 
         #endregion
 
         #region Helpers
+
+        private AccessPoint_Object_Join Make_AccessPoint()
+        {
+            return new AccessPoint_Object_Join
+                       {
+                           AccessPointGuid = new Guid("00001000-0010-0000-0000-000000000000"),
+                           ObjectGuid      = new Guid("00000000-0000-0000-0000-000000000002"),
+                           StartDate       = new DateTime(1990, 10, 01, 23, 59, 59),
+                           EndDate         = null,
+                           DateCreated     = new DateTime(1990, 10, 01, 23, 59, 59),
+                           DateModified    = null
+                       };
+        }
 
         private FolderInfo Make_FolderInfo()
         {
@@ -242,7 +275,7 @@
                            ParentID = null,
                            FolderTypeID = 1,
                            Name = "test",
-                           SubscriptionGUID = new Guid( new UUID( "01000000-0000-0000-0000-000000000000" ).ToByteArray() )
+                           SubscriptionGUID = new Guid("00000001-0000-0000-0000-000000000000")
                        };
         }
 

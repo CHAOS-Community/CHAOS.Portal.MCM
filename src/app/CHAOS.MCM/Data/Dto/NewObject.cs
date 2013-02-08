@@ -23,6 +23,8 @@
 
         public IList<ObjectFolder> ObjectFolders { get; set; }
 
+        public IList<AccessPoint_Object_Join> AccessPoints { get; set; }
+
         #endregion
         #region Initialization
 
