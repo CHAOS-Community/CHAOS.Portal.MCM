@@ -27,7 +27,7 @@
             
             reader.NextResult();
             
-            var metadatas = new ObjectMetadataMapping().Map(reader);
+            var metadatas = new ObjectMetadataMapping().Map(reader).ToList();
             
             foreach (var o in objects)
             {
@@ -36,7 +36,7 @@
             
             reader.NextResult();
 
-            var files = new FileInfoMapping().Map(reader);
+            var files = new FileInfoMapping().Map(reader).ToList();
 
             foreach (var o in objects)
             {
@@ -45,7 +45,7 @@
 
             reader.NextResult();
 
-            var objectRelations = new ObjectRelationInfoMapping().Map( reader );
+            var objectRelations = new ObjectRelationInfoMapping().Map( reader ).ToList();
 
             foreach(var o in objects)
             {
@@ -54,7 +54,7 @@
             
             reader.NextResult();
 
-            var objectFolders = new ObjectFolderMapping().Map( reader );
+            var objectFolders = new ObjectFolderMapping().Map( reader ).ToList();
 
             foreach(var o in objects)
             {
@@ -63,7 +63,7 @@
 
             reader.NextResult();
 
-            var accessPoints = new AccesspointObjectJoinMapping().Map( reader );
+            var accessPoints = new AccesspointObjectJoinMapping().Map( reader ).ToList();
 
             foreach(var o in objects)
             {

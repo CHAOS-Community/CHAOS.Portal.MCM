@@ -250,6 +250,25 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
             Assert.AreEqual(expectedAccessPoint.DateModified, result.AccessPoints[0].DateModified);
         }
 
+        [Test]
+        public void ObjectGet_ByObjectGuidsIncludingMetadata_TwoObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository         = Make_McmRepository();
+            var objectGuids        = new[]{ new Guid("00000000-0000-0000-0000-000000000002"), new Guid("00000000-0000-0000-0000-000000000004")};
+
+            var result = repository.ObjectGet(objectGuids, true);
+
+            Assert.AreEqual(2, result.Count, "expecting two results");
+            Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000050"), result[0].Metadatas[0].Guid);
+            Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000100"), result[0].Metadatas[0].MetadataSchemaGuid);
+            Assert.AreEqual("en", result[0].Metadatas[0].LanguageCode);
+            Assert.AreEqual("<xml>test xml</xml>", result[0].Metadatas[0].MetadataXml.ToString());
+            Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000060"), result[1].Metadatas[0].Guid);
+            Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000100"), result[1].Metadatas[0].MetadataSchemaGuid);
+            Assert.AreEqual("en", result[1].Metadatas[0].LanguageCode);
+            Assert.AreEqual("<xml>test xml 2</xml>", result[1].Metadatas[0].MetadataXml.ToString());
+        }
+
         #endregion
 
         #region Helpers

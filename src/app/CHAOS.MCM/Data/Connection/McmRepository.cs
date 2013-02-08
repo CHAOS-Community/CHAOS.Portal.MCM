@@ -338,11 +338,16 @@ namespace Chaos.Mcm.Data.Connection
 
         public NewObject ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
         {
-            // String.Join(",", guids.Select(item => item.ToString().Replace("-", "")));
+            return ObjectGet(new[] {objectGuid}, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints).FirstOrDefault();
+        }
+
+        public IList<NewObject> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false )
+        {
+            var guids = String.Join(",", objectGuids.Select(item => item.ToString().Replace("-", "")));
             
             var parameters = new MySqlParameter[]
                 {
-                    new MySqlParameter("GUIDs", objectGuid.ToString().Replace("-", "")),
+                    new MySqlParameter("GUIDs", guids),
                     new MySqlParameter("IncludeMetadata", includeMetadata),
                     new MySqlParameter("IncludeFiles", includeFiles),
                     new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
@@ -350,7 +355,7 @@ namespace Chaos.Mcm.Data.Connection
                     new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
                 };
             
-            return this._gateway.ExecuteQuery<NewObject>("Object_GetByGUIDs", parameters).FirstOrDefault();
+            return _gateway.ExecuteQuery<NewObject>("Object_GetByGUIDs", parameters);
         }
 
         #endregion
