@@ -240,16 +240,16 @@ namespace CHAOS.MCM.Data.Dto.Standard
 					yield return new KeyValuePair<string, string>( string.Format( "m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode ), GetXmlContent( metadata.MetadataXML.Root ) );
 				}
 
-            //if (RelatedObjects != null)
-            //{
-            //    foreach (var obj in RelatedObjects)
-            //    {
-            //        foreach (var relatedMetadata in obj.Metadatas)
-            //        {
-            //            yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode), GetXmlContent(relatedMetadata.MetadataXML.Root));
-            //        }
-            //    }
-            //}
+            if (RelatedObjects != null)
+            {
+                foreach (var obj in RelatedObjects)
+                {
+                    foreach (var relatedMetadata in obj.Metadatas)
+                    {
+                        yield return new KeyValuePair<string, string>(string.Format("rm{0}_{1}_all", relatedMetadata.MetadataSchemaGUID, relatedMetadata.LanguageCode), GetXmlContent(relatedMetadata.MetadataXML.Root));
+                    }
+                }
+            }
 
 			//if( AccessPoints != null )
 			//	foreach( var accessPoint in AccessPoints )
