@@ -64,6 +64,8 @@
     <Compile Include="Binding\MetadataBinding.cs" />
     <Compile Include="Data\Connection\IKeyValueMapper.cs" />
     <Compile Include="Data\Connection\IReaderMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\ObjectFolderMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\FolderInfoMapping.cs" />
     <Compile Include="Data\Connection\Mapping\FileInfoMapping.cs" />
     <Compile Include="Data\Connection\Mapping\ObjectMetadataMapping.cs" />
     <Compile Include="Data\Connection\Mapping\ObjectMapping.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Data\Dto\IObject.cs" />
     <Compile Include="Data\Dto\NewMetadata.cs" />
     <Compile Include="Data\Dto\NewObject.cs" />
+    <Compile Include="Data\Dto\ObjectFolder.cs" />
     <Compile Include="Data\Dto\ObjectMetadata.cs" />
     <Compile Include="Data\Dto\ObjectRelation.cs" />
     <Compile Include="Data\Dto\ObjectRelationInfo.cs" />

@@ -33,6 +33,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CHAOS">
+      <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
+    </Reference>
     <Reference Include="Chaos.Deployment.UI.Console">
       <HintPath>..\..\..\tools\chaos.deployment\Chaos.Deployment.UI.Console.exe</HintPath>
     </Reference>

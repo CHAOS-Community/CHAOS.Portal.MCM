@@ -19,7 +19,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 		public uint FolderTypeID{ get; set; }
 
 		[Serialize]
-		public UUID SubscriptionGUID{ get; set; }
+		public Guid SubscriptionGUID{ get; set; }
 
 		[Serialize]
 		public string Name{ get; set; }
@@ -41,7 +41,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 			ID                 = id;
 			FolderTypeID       = folderTypeID;
 			ParentID           = parentID;
-			SubscriptionGUID   = subscriptionGUID.HasValue ? new UUID( subscriptionGUID.Value.ToByteArray() ) : null;
+			SubscriptionGUID   = subscriptionGUID.Value;
 			Name               = name;
 			DateCreated        = dateCreated;
 			NumberOfSubFolders = numberOfSubFolders;

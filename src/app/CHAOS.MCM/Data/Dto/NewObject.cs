@@ -21,6 +21,8 @@
 
         public IList<ObjectRelationInfo> ObjectRelationInfos { get; set; }
 
+        public IList<ObjectFolder> ObjectFolders { get; set; }
+
         #endregion
         #region Initialization
 

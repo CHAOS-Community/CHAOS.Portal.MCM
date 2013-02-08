@@ -23,6 +23,8 @@
             _mappings.Add(typeof(ObjectMetadata), new ObjectMetadataMapping());
             _mappings.Add(typeof(NewObject), new ObjectMapping());
             _mappings.Add(typeof(FileInfo), new FileInfoMapping());
+            _mappings.Add(typeof(FolderInfo), new FolderInfoMapping());
+            _mappings.Add(typeof(ObjectFolder), new ObjectFolderMapping());
         }
 
         public static IEnumerable<object> Map<TResultType>(this IDataReader reader)

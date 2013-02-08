@@ -52,6 +52,15 @@
                 o.ObjectRelationInfos = ( from or in objectRelations where or.Object1Guid == o.Guid || or.Object2Guid == o.Guid select or ).ToList();
             }
             
+            reader.NextResult();
+
+            var objectFolders = new ObjectFolderMapping().Map( reader );
+
+            foreach(var o in objects)
+            {
+                o.ObjectFolders = ( from of in objectFolders where of.ObjectGuid == o.Guid select of ).ToList();
+            }
+            
             return objects;
         }
     }

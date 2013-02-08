@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Xml.Linq;
 
+    using CHAOS;
+
     using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
@@ -209,9 +211,40 @@
             Assert.AreEqual( expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRelationInfos[0].MetadataXml.ToString() );
         }
 
+        [Test]
+        public void ObjectGet_ByObjectGuidAndIncludeFolders_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository         = Make_McmRepository();
+            var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
+            var expectedFolderInfo = Make_FolderInfo();
+
+            var result = repository.ObjectGet(objectGuid, false, false, false, true);
+            
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(expectedFolderInfo.ID, result.ObjectFolders[0].ID);
+            Assert.AreEqual(expectedFolderInfo.ParentID, result.ObjectFolders[0].ParentID);
+            Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
+            Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
+            Assert.AreEqual(expectedFolderInfo.SubscriptionGUID, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
+        }
+
         #endregion
 
         #region Helpers
+
+        private FolderInfo Make_FolderInfo()
+        {
+            return new FolderInfo
+                       {
+                           ID = 1,
+                           ParentID = null,
+                           FolderTypeID = 1,
+                           Name = "test",
+                           SubscriptionGUID = new Guid( new UUID( "01000000-0000-0000-0000-000000000000" ).ToByteArray() )
+                       };
+        }
 
         private FileInfo Make_File()
         {

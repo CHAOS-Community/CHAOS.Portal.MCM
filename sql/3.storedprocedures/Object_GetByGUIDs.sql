@@ -40,7 +40,7 @@ BEGIN
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;
     
-    SET @sql_text := concat( 'SELECT Object_Folder_Join.* FROM Object INNER JOIN Object_Folder_Join ON Object.GUID = Object_Folder_Join.ObjectGUID WHERE ', IncludeFolders ,' = 1 AND ( Object.GUID = unhex(''', REPLACE(GUIDs,',',''') OR Object.GUID = unhex('''), ''') ); ');
+    SET @sql_text := concat( 'SELECT ObjectFolder.* FROM ObjectFolder WHERE ', IncludeFolders ,' = 1 AND ( ObjectFolder.ObjectGuid = unhex(''', REPLACE(GUIDs,',',''') OR ObjectFolder.ObjectGuid = unhex('''), ''') ); ');
     PREPARE stmt FROM @sql_text;
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;
