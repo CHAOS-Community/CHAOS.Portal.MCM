@@ -15,16 +15,8 @@ BEGIN
     DEALLOCATE PREPARE stmt;
 
     SET @sql_text := concat( 'SELECT OM.* ',
-                                'FROM  ObjectMetadata AS OM ' ,
-                            --        'JOIN Metadata AS M1 ON omj1.MetadataGuid = M1.Guid ',
-                            --          ' AND M1.GUID = ( SELECT GUID ',
-                            --                        'FROM Metadata AS M2 ',
-                            --                       'WHERE M2.ObjectGUID         = M1.ObjectGUID   AND ',
-                            --                             'M2.LanguageCode       = M1.LanguageCode AND ',
-                            --                             'M2.MetadataSchemaGUID = M1.MetadataSchemaGUID ',
-                            --                       'ORDER BY M2.RevisionID DESC ',
-                            --                       'LIMIT 1) ',
-                                'WHERE ', IncludeMetadata ,' = 1 AND ( OM.ObjectGuid = unhex(''', REPLACE(GUIDs,',',''') OR OM.ObjectGuid = unhex('''), ''') ); ');
+                             'FROM  ObjectMetadata AS OM ' ,
+                             'WHERE ', IncludeMetadata ,' = 1 AND ( OM.ObjectGuid = unhex(''', REPLACE(GUIDs,',',''') OR OM.ObjectGuid = unhex('''), ''') ); ');
     PREPARE stmt FROM @sql_text;
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;

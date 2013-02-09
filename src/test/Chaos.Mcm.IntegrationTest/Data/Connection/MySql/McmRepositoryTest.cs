@@ -135,7 +135,6 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
         
         #endregion
         #region Object
-        // expect null if there is no object with the given Guid
 
         [Test]
         public void ObjectGet_ByObjectGuidAndIncludeMetadata_ASingleObjectDtoCreatedFromMultipleDataResults()
@@ -267,6 +266,138 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
             Assert.AreEqual(new Guid("00000000-0000-0000-0000-000000000100"), result[1].Metadatas[0].MetadataSchemaGuid);
             Assert.AreEqual("en", result[1].Metadatas[0].LanguageCode);
             Assert.AreEqual("<xml>test xml 2</xml>", result[1].Metadatas[0].MetadataXml.ToString());
+        }
+
+        [Test]
+        public void ObjectGet_ByFolderID_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository = Make_McmRepository();
+            var objectGuid = new Guid("00000000-0000-0000-0000-000000000002");
+            var folderID   = (uint?) 1;
+
+            var result = repository.ObjectGet(folderID).First();
+
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+        }
+        
+        [Test]
+        public void ObjectGet_ByFolderIDAndMetadata_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository         = Make_McmRepository();
+            var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
+            var folderID           = (uint?) 1;
+            var metadataGuid       = new Guid("00000000-0000-0000-0000-000000000050");
+            var metadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100");
+            var languageCode       = "en";
+            var metadataXml        = "<xml>test xml</xml>";
+
+            var result = repository.ObjectGet(folderID, includeMetadata: true ).First();
+
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(metadataGuid, result.Metadatas[0].Guid);
+            Assert.AreEqual(metadataSchemaGuid, result.Metadatas[0].MetadataSchemaGuid);
+            Assert.AreEqual(languageCode, result.Metadatas[0].LanguageCode);
+            Assert.AreEqual(metadataXml, result.Metadatas[0].MetadataXml.ToString());
+        }
+
+        [Test]
+        public void ObjectGet_ByFolderIDAndIncludeFiles_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository   = this.Make_McmRepository();
+            var objectGuid   = new Guid("00000000-0000-0000-0000-000000000002");
+            var expectedFile = Make_File();
+            var folderID     = (uint?)1;
+
+            var result = repository.ObjectGet(folderID, includeFiles: true).First();
+
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(expectedFile.ID, result.Files[0].ID);
+            Assert.AreEqual(expectedFile.ObjectGUID, result.Files[0].ObjectGUID);
+            Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
+            Assert.AreEqual(expectedFile.DestinationID, result.Files[0].DestinationID);
+            Assert.AreEqual(expectedFile.Filename, result.Files[0].Filename);
+            Assert.AreEqual(expectedFile.OriginalFilename, result.Files[0].OriginalFilename);
+            Assert.AreEqual(expectedFile.FolderPath, result.Files[0].FolderPath);
+            Assert.AreEqual(expectedFile.BasePath, result.Files[0].BasePath);
+            Assert.AreEqual(expectedFile.StringFormat, result.Files[0].StringFormat);
+            Assert.AreEqual(expectedFile.Token, result.Files[0].Token);
+            Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
+            Assert.AreEqual(expectedFile.FormatTypeName, result.Files[0].FormatTypeName);
+            Assert.AreEqual(expectedFile.FormatXML, result.Files[0].FormatXML);
+            Assert.AreEqual(expectedFile.MimeType, result.Files[0].MimeType);
+            Assert.AreEqual(expectedFile.FormatCategoryID, result.Files[0].FormatCategoryID);
+            Assert.AreEqual(expectedFile.FormatCategory, result.Files[0].FormatCategory);
+            Assert.AreEqual(expectedFile.FormatTypeID, result.Files[0].FormatTypeID);
+            Assert.AreEqual(expectedFile.FormatType, result.Files[0].FormatType);
+        }
+
+        [Test]
+        public void ObjectGet_ByFolderIDAndIncludeObjectRelations_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository = Make_McmRepository();
+            var objectGuid = new Guid("00000000-0000-0000-0000-000000000002");
+            var expectedObjectRelationInfo = Make_ObjectRelationInfo();
+            var folderID = (uint?)1;
+
+            var result = repository.ObjectGet(folderID, includeObjectRelations: true).First();
+
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(expectedObjectRelationInfo.Object1Guid, result.ObjectRelationInfos[0].Object1Guid);
+            Assert.AreEqual(expectedObjectRelationInfo.Object2Guid, result.ObjectRelationInfos[0].Object2Guid);
+            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRelationInfos[0].ObjectRelationTypeID);
+            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationType, result.ObjectRelationInfos[0].ObjectRelationType);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataGuid, result.ObjectRelationInfos[0].MetadataGuid);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRelationInfos[0].MetadataSchemaGuid);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRelationInfos[0].MetadataXml.ToString());
+        }
+
+        [Test]
+        public void ObjectGet_ByFolderIDAndIncludeFolders_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository         = Make_McmRepository();
+            var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
+            var expectedFolderInfo = Make_FolderInfo();
+            var folderID = (uint?)1;
+
+            var result = repository.ObjectGet(folderID, includeFolders: true).First();
+            
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(expectedFolderInfo.ID, result.ObjectFolders[0].ID);
+            Assert.AreEqual(expectedFolderInfo.ParentID, result.ObjectFolders[0].ParentID);
+            Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
+            Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
+            Assert.AreEqual(expectedFolderInfo.SubscriptionGUID, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
+        }
+
+        [Test]
+        public void ObjectGet_ByFolderIDAndIncludeAccessPoints_ASingleObjectDtoCreatedFromMultipleDataResults()
+        {
+            var repository = Make_McmRepository();
+            var objectGuid = new Guid("00000000-0000-0000-0000-000000000002");
+            var expected   = Make_AccessPoint();
+            var folderID   = (uint?)1;
+
+            var result = repository.ObjectGet(folderID, includeAccessPoints: true).First();
+
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+            Assert.AreEqual(expected.AccessPointGuid, result.AccessPoints[0].AccessPointGuid);
+            Assert.AreEqual(expected.ObjectGuid, result.AccessPoints[0].ObjectGuid);
+            Assert.AreEqual(expected.StartDate, result.AccessPoints[0].StartDate);
+            Assert.AreEqual(expected.EndDate, result.AccessPoints[0].EndDate);
+            Assert.AreEqual(expected.DateCreated, result.AccessPoints[0].DateCreated);
+            Assert.AreEqual(expected.DateModified, result.AccessPoints[0].DateModified);
         }
 
         #endregion

@@ -17,6 +17,8 @@ namespace Chaos.Mcm.Data.Connection
 
     using global::MySql.Data.MySqlClient;
 
+    using Folder = Chaos.Mcm.Data.Dto.Standard.Folder;
+
     // todo: Remove dependency to MySql
     public class McmRepository : IMcmRepository
     {
@@ -234,38 +236,41 @@ namespace Chaos.Mcm.Data.Connection
         }
 
         #endregion
+        #region Folder
 
-
-        public IEnumerable<Dto.Standard.FolderGroupJoin> GetFolderGroupJoin()
+        public IEnumerable<FolderGroupJoin> GetFolderGroupJoin()
         {
-            using (var db = this.CreateMcmEntities())
+            using(var db = this.CreateMcmEntities())
             {
-                return db.Folder_Group_Join.ToList().Select(item => new FolderGroupJoin
-                                                               {
-                                                                   FolderID    = (uint) item.FolderID,
-                                                                   GroupGuid   = item.GroupGUID,
-                                                                   Permission  = (uint) item.Permission,
-                                                                   DateCreated = item.DateCreated
-                                                               });
+                return
+                    db.Folder_Group_Join.ToList().Select(
+                        item =>
+                        new FolderGroupJoin
+                            {
+                                FolderID = (uint)item.FolderID,
+                                GroupGuid = item.GroupGUID,
+                                Permission = (uint)item.Permission,
+                                DateCreated = item.DateCreated
+                            });
             }
         }
 
         public uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission)
         {
-            using (var db = this.CreateMcmEntities())
+            using(var db = this.CreateMcmEntities())
             {
-                var result = db.Folder_Group_Join_Set(groupGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
-                
-                if(!result.HasValue)
-                    throw new UnhandledException("Folder_Group_Join_Set failed on the database and was rolled back");
+                var result =
+                    db.Folder_Group_Join_Set(groupGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
 
-                return (uint) result.Value;
+                if(!result.HasValue) throw new UnhandledException("Folder_Group_Join_Set failed on the database and was rolled back");
+
+                return (uint)result.Value;
             }
         }
 
-        public IEnumerable<Dto.Standard.Folder> GetFolder()
+        public IEnumerable<Folder> GetFolder()
         {
-            using (var db = this.CreateMcmEntities())
+            using(var db = this.CreateMcmEntities())
             {
                 return db.Folder_Get(null, null).ToList().ToDto();
             }
@@ -273,46 +278,36 @@ namespace Chaos.Mcm.Data.Connection
 
         public IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids)
         {
-            var folderIDs = ids.Select(item => (long) item);
+            var folderIDs = ids.Select(item => (long)item);
             var folderIDStrings = string.Join(",", ids);
 
             // TODO: optimize folder retrival form the database
-            using (var db = this.CreateMcmEntities())
+            using(var db = this.CreateMcmEntities())
             {
-                return db.FolderInfo.Where( fi => folderIDs.Contains( fi.ID ) ).ToList().ToDto();
+                return db.FolderInfo.Where(fi => folderIDs.Contains(fi.ID)).ToList().ToDto();
             }
         }
-
-        public IEnumerable<Dto.Standard.AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
-        {
-            var groupGuidsString = string.Join(",", groupGuids);
-
-            using (var db = this.CreateMcmEntities())
-            {
-                return db.AccessPoint_Get(accessPointGuid.ToByteArray(), userGuid.ToByteArray(), groupGuidsString, (int?)permission).ToList().ToDto();
-            }
-        }
-
-        public uint SetAccessPointPublishSettings( Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate )
-        {
-            using (var db = this.CreateMcmEntities())
-            {
-                var result = db.AccessPoint_Object_Join_Set(accessPointGuid.ToByteArray(), objectGuid.ToByteArray(), startDate, endDate).FirstOrDefault();
-
-                if(!result.HasValue)
-                    throw new UnhandledException("SetAccessPointPublishSettings failed on the database, and was rolled back");
-
-                return (uint) result.Value;
-            }
-        }
-
-        #region Object
 
         #endregion
 
-        #region AccessPoint
+        #region Object
 
-        public IEnumerable<Dto.Standard.Object> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint)
+        public IEnumerable<NewObject> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
+        {
+            return _gateway.ExecuteQuery<NewObject>("Object_GetByFolderID", new[]
+                {
+                    new MySqlParameter("FolderID", folderID),
+                    new MySqlParameter("PageIndex", pageIndex),
+                    new MySqlParameter("PageSize", pageSize),
+                    new MySqlParameter("IncludeMetadata", includeMetadata),
+                    new MySqlParameter("IncludeFiles", includeFiles),
+                    new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
+                    new MySqlParameter("IncludeFolders", includeFolders),
+                    new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
+                });
+        }
+
+        public IEnumerable<Dto.Standard.Object> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints)
         {
             using (var db = this.CreateMcmEntities())
             {
@@ -320,7 +315,7 @@ namespace Chaos.Mcm.Data.Connection
             }
         }
 
-        public IEnumerable<Dto.Standard.Object> GetObject(IEnumerable<Guid> objectGuids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoint)
+        public IEnumerable<Dto.Standard.Object> GetObject(IEnumerable<Guid> objectGuids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints)
         {
             using (var db = this.CreateMcmEntities())
             {
@@ -344,8 +339,8 @@ namespace Chaos.Mcm.Data.Connection
         public IList<NewObject> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false )
         {
             var guids = String.Join(",", objectGuids.Select(item => item.ToString().Replace("-", "")));
-            
-            var parameters = new MySqlParameter[]
+
+            return _gateway.ExecuteQuery<NewObject>("Object_GetByGUIDs", new[]
                 {
                     new MySqlParameter("GUIDs", guids),
                     new MySqlParameter("IncludeMetadata", includeMetadata),
@@ -353,9 +348,34 @@ namespace Chaos.Mcm.Data.Connection
                     new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
                     new MySqlParameter("IncludeFolders", includeFolders),
                     new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
-                };
-            
-            return _gateway.ExecuteQuery<NewObject>("Object_GetByGUIDs", parameters);
+                });
+        }
+
+        #endregion
+
+        #region AccessPoint
+
+        public IEnumerable<Dto.Standard.AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
+        {
+            var groupGuidsString = string.Join(",", groupGuids);
+
+            using (var db = this.CreateMcmEntities())
+            {
+                return db.AccessPoint_Get(accessPointGuid.ToByteArray(), userGuid.ToByteArray(), groupGuidsString, (int?)permission).ToList().ToDto();
+            }
+        }
+
+        public uint SetAccessPointPublishSettings( Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate )
+        {
+            using (var db = this.CreateMcmEntities())
+            {
+                var result = db.AccessPoint_Object_Join_Set(accessPointGuid.ToByteArray(), objectGuid.ToByteArray(), startDate, endDate).FirstOrDefault();
+
+                if(!result.HasValue)
+                    throw new UnhandledException("SetAccessPointPublishSettings failed on the database, and was rolled back");
+
+                return (uint) result.Value;
+            }
         }
 
         #endregion
