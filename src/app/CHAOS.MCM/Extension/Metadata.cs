@@ -5,6 +5,7 @@
 
     using CHAOS.Extensions;
 
+    using Chaos.Mcm.Data.Connection;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Extension;
@@ -18,11 +19,11 @@
             var userGuid     = callContext.User.GUID.ToGuid();
 
             var result  = McmRepository.MetadataSet(objectGuid, metadataGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, userGuid);
-            var objects = McmRepository.GetObject(objectGuid, true, false, false, true, true);
+            var objects = McmRepository.ObjectGet(objectGuid, true, false, false, true, true);
             
             //todo: replace with view indexing
-            if(callContext.IndexManager != null)
-                PutObjectInIndex(callContext.IndexManager.GetIndex<Mcm>(), objects);
+//            if(callContext.IndexManager != null)
+//                PutObjectInIndex(callContext.IndexManager.GetIndex<Mcm>(), objects);
 
             return new ScalarResult((int)result);
         }

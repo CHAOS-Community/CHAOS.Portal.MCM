@@ -140,31 +140,31 @@ namespace Chaos.Mcm.Extension
 		#endregion
 		#region Test
 
-		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
-		{
-            var index = (Solr)callContext.IndexManager.GetIndex<Mcm>();
-
-            if (clearIndex.HasValue && clearIndex.Value)
-                index.RemoveAll(false);
-
-            const uint pageSize = 1000;
-
-            for (uint i = 0; ; i++)
-            {
-                // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
-                using (var db = DefaultMCMEntities)
-                {
-                    var objects = db.Object_Get(folderID, true, false, true, true, true, i, pageSize).ToDto().ToList();
-
-                    PutObjectInIndex(index, objects);
-
-                    if (objects.Count() != pageSize)
-                        break;
-                }
-            }
-
-            return new ScalarResult(1);
-		}
+//		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
+//		{
+//            var index = (Solr)callContext.IndexManager.GetIndex<Mcm>();
+//
+//            if (clearIndex.HasValue && clearIndex.Value)
+//                index.RemoveAll(false);
+//
+//            const uint pageSize = 1000;
+//
+//            for (uint i = 0; ; i++)
+//            {
+//                // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
+//                using (var db = DefaultMCMEntities)
+//                {
+//                    var objects = db.Object_Get(folderID, true, false, true, true, true, i, pageSize).ToDto().ToList();
+//
+//                    PutObjectInIndex(index, objects);
+//
+//                    if (objects.Count() != pageSize)
+//                        break;
+//                }
+//            }
+//
+//            return new ScalarResult(1);
+//		}
 
 		#endregion
         #region Link
@@ -185,7 +185,7 @@ namespace Chaos.Mcm.Extension
                 if( result.Value == -100 )
                     throw new InsufficientPermissionsException( "User can only create links" );
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
+//                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
 
                 return new ScalarResult( result.Value );
             }
@@ -200,7 +200,7 @@ namespace Chaos.Mcm.Extension
 
                 int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
+//                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
 
                 return new ScalarResult( result );
             }
@@ -218,7 +218,7 @@ namespace Chaos.Mcm.Extension
                 if(!result.HasValue)
                     throw new UnhandledException("Link delete failed on the database and was rolled back");
 
-                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
+//                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
 
                 return new ScalarResult( result.Value );
             }

@@ -13,6 +13,7 @@ using Chaos.Portal.Exceptions;
 
 namespace Chaos.Mcm.Extension
 {
+    using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Data.Dto;
 
     public class Object : AMcmExtension
@@ -82,7 +83,7 @@ namespace Chaos.Mcm.Extension
 
 		        var newObject = db.Object_Get( guid, true, true, true, true, true ).ToDto().ToList();
 
-		        PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), newObject );
+		    //    PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), newObject );
 
 		        return newObject.First();
 		    }
@@ -100,7 +101,7 @@ namespace Chaos.Mcm.Extension
 
             var result = McmRepository.SetAccessPointPublishSettings(accessPointGuid, objectGuid, startDate, endDate);
                 
-            PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), McmRepository.GetObject(objectGuid, true, true, true, true, true) );
+        //    PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), McmRepository.GetObject(objectGuid, true, true, true, true, true) );
 
             return new ScalarResult( (int) result );
         }

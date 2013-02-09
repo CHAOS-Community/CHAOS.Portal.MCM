@@ -26,20 +26,19 @@ namespace Chaos.Mcm.Data.Connection
 
         private string _connectionString;
 
-        private Gateway _gateway;
-
         #endregion
         #region Properties
 
-
+        private Gateway Gateway { get; set; }
 
         #endregion
+
         #region Construction
 
         public IMcmRepository WithConfiguration(string connectionString)
         {
             _connectionString = connectionString;
-            _gateway          = new Gateway(connectionString);
+            Gateway           = new Gateway(connectionString);
             return this;
         }
 
@@ -55,12 +54,12 @@ namespace Chaos.Mcm.Data.Connection
 
         public IEnumerable<NewMetadata> MetadataGet(Guid guid)
         {
-            return _gateway.ExecuteQuery<NewMetadata>("Metadata_Get", new MySqlParameter("Guid", guid.ToByteArray()));
+            return this.Gateway.ExecuteQuery<NewMetadata>("Metadata_Get", new MySqlParameter("Guid", guid.ToByteArray()));
         }
 
         public uint MetadataSet(Guid objectGuid, Guid metadataGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml, Guid editingUserGuid)
         {
-            var result = _gateway.ExecuteNonQuery("Metadata_Set", new[]
+            var result = this.Gateway.ExecuteNonQuery("Metadata_Set", new[]
                 {
                     new MySqlParameter("GUID", metadataGuid.ToByteArray()),
                     new MySqlParameter("ObjectGUID", objectGuid.ToByteArray()),
@@ -156,12 +155,12 @@ namespace Chaos.Mcm.Data.Connection
 
         public IList<ObjectRelationInfo> ObjectRelationInfoGet(Guid objectGuid)
         {
-            return _gateway.ExecuteQuery<ObjectRelationInfo>("ObjectRelationInfo_Get", new MySqlParameter("Object1Guid", objectGuid.ToByteArray()));
+            return this.Gateway.ExecuteQuery<ObjectRelationInfo>("ObjectRelationInfo_Get", new MySqlParameter("Object1Guid", objectGuid.ToByteArray()));
         }
 
         public uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence)
         {
-            var result = _gateway.ExecuteNonQuery("ObjectRelation_Set",new[]
+            var result = this.Gateway.ExecuteNonQuery("ObjectRelation_Set",new[]
                     {
                         new MySqlParameter("Object1Guid", object1Guid.ToByteArray()),
                         new MySqlParameter("Object2Guid", object2Guid.ToByteArray()),
@@ -180,7 +179,7 @@ namespace Chaos.Mcm.Data.Connection
 
         public uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid)
         {
-            var result = _gateway.ExecuteNonQuery("ObjectRelation_SetMetadata", new[]
+            var result = this.Gateway.ExecuteNonQuery("ObjectRelation_SetMetadata", new[]
                 {
                     new MySqlParameter("Object1Guid", objectRelationInfo.Object1Guid.ToByteArray()),
                     new MySqlParameter("Object2Guid", objectRelationInfo.Object2Guid.ToByteArray()),
@@ -289,70 +288,6 @@ namespace Chaos.Mcm.Data.Connection
         }
 
         #endregion
-
-        #region Object
-
-        public IEnumerable<NewObject> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
-        {
-            return _gateway.ExecuteQuery<NewObject>("Object_GetByFolderID", new[]
-                {
-                    new MySqlParameter("FolderID", folderID),
-                    new MySqlParameter("PageIndex", pageIndex),
-                    new MySqlParameter("PageSize", pageSize),
-                    new MySqlParameter("IncludeMetadata", includeMetadata),
-                    new MySqlParameter("IncludeFiles", includeFiles),
-                    new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
-                    new MySqlParameter("IncludeFolders", includeFolders),
-                    new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
-                });
-        }
-
-        public IEnumerable<Dto.Standard.Object> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints)
-        {
-            using (var db = this.CreateMcmEntities())
-            {
-                return db.Object_Get(objectGuid, true, true, true, true, true).ToDto();
-            }
-        }
-
-        public IEnumerable<Dto.Standard.Object> GetObject(IEnumerable<Guid> objectGuids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints)
-        {
-            using (var db = this.CreateMcmEntities())
-            {
-                return db.Object_Get(objectGuids, true, true, true, true, true).ToDto();
-            }
-        }
-
-        public IEnumerable<Dto.Standard.Object> GetObject(Guid relatedToObjectWithGuid, uint? objectRelationTypeID)
-        {
-            using (var db = this.CreateMcmEntities())
-            {
-                return db.Object_Get(relatedToObjectWithGuid, objectRelationTypeID, true, true, true, true).ToList().ToDto();
-            }
-        }
-
-        public NewObject ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
-        {
-            return ObjectGet(new[] {objectGuid}, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints).FirstOrDefault();
-        }
-
-        public IList<NewObject> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false )
-        {
-            var guids = String.Join(",", objectGuids.Select(item => item.ToString().Replace("-", "")));
-
-            return _gateway.ExecuteQuery<NewObject>("Object_GetByGUIDs", new[]
-                {
-                    new MySqlParameter("GUIDs", guids),
-                    new MySqlParameter("IncludeMetadata", includeMetadata),
-                    new MySqlParameter("IncludeFiles", includeFiles),
-                    new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
-                    new MySqlParameter("IncludeFolders", includeFolders),
-                    new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
-                });
-        }
-
-        #endregion
-
         #region AccessPoint
 
         public IEnumerable<Dto.Standard.AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
@@ -376,6 +311,44 @@ namespace Chaos.Mcm.Data.Connection
 
                 return (uint) result.Value;
             }
+        }
+
+        #endregion
+        #region Object
+
+        public IList<NewObject> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
+        {
+            return Gateway.ExecuteQuery<NewObject>("Object_GetByFolderID", new[]
+                {
+                    new MySqlParameter("FolderID", folderID),
+                    new MySqlParameter("PageIndex", pageIndex),
+                    new MySqlParameter("PageSize", pageSize),
+                    new MySqlParameter("IncludeMetadata", includeMetadata),
+                    new MySqlParameter("IncludeFiles", includeFiles),
+                    new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
+                    new MySqlParameter("IncludeFolders", includeFolders),
+                    new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
+                });
+        }
+
+        public NewObject ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
+        {
+            return ObjectGet(new[] { objectGuid }, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints).FirstOrDefault();
+        }
+
+        public IList<NewObject> ObjectGet(IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
+        {
+            var guids = String.Join(",", objectGuids.Select(item => item.ToString().Replace("-", "")));
+
+            return Gateway.ExecuteQuery<NewObject>("Object_GetByGUIDs", new[]
+                {
+                    new MySqlParameter("GUIDs", guids),
+                    new MySqlParameter("IncludeMetadata", includeMetadata),
+                    new MySqlParameter("IncludeFiles", includeFiles),
+                    new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
+                    new MySqlParameter("IncludeFolders", includeFolders),
+                    new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
+                });
         }
 
         #endregion

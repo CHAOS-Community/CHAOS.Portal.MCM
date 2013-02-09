@@ -9,6 +9,8 @@ namespace Chaos.Mcm.Data
 {
     using System.Xml.Linq;
 
+    using Chaos.Mcm.Data.Connection.MySql;
+
     public interface IMcmRepository
     {
         IMcmRepository WithConfiguration(string connectionString);
@@ -27,9 +29,8 @@ namespace Chaos.Mcm.Data
         
         NewObject ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
         IList<NewObject> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false );
-        IEnumerable<Object> GetObject(IEnumerable<Guid> objectGuids, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints);
-        IEnumerable<Object> GetObject(Guid objectGuid, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders, bool includeAccessPoints);
-        IEnumerable<Object> GetObject(Guid relatedToObjectWithGuid, uint? objectRelationTypeID);
+        IList<NewObject> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
+
         IEnumerable<MetadataSchema> GetMetadataSchema(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission );
 
         uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence);

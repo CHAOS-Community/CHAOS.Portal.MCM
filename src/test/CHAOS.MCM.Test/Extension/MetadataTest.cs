@@ -4,6 +4,7 @@
 
     using CHAOS;
 
+    using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Extension;
     using Chaos.Portal.Data.Dto.Standard;
 
@@ -37,7 +38,7 @@
 
             extension.Metadata_Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
-            McmRepository.Verify(m => m.GetObject(objectGuid, true, false, false, true, true));
+            McmRepository.Verify(m => m.ObjectGet(objectGuid, true, false, false, true, true));
         }
 //
 //        [Test]

@@ -72,21 +72,21 @@
     	#endregion
         #region Business Logic
 
-        protected void PutObjectInIndex( IIndex index, IEnumerable<Data.Dto.Standard.Object> newObject )
-        {
-            foreach( var o in newObject )
-            {
-                foreach (var ancestorFolder in o.Folders.Where(item => item.ObjectFolderTypeID == 1).SelectMany(folder => PermissionManager.GetFolders(folder.FolderID).GetAncestorFolders()))
-                {
-                    o.FolderTree.Add(ancestorFolder.ID);
-                }
-
-                if (o.ObjectRealtions.Any())
-                    o.RelatedObjects = McmRepository.GetObject(o.GUID.ToGuid(), null).ToList();
-            }
-
-            index.Set( newObject.Select(item => item as Data.Dto.Standard.Object), false );
-        }
+//        protected void PutObjectInIndex( IIndex index, IEnumerable<Data.Dto.Standard.Object> newObject )
+//        {
+//            foreach( var o in newObject )
+//            {
+//                foreach (var ancestorFolder in o.Folders.Where(item => item.ObjectFolderTypeID == 1).SelectMany(folder => PermissionManager.GetFolders(folder.FolderID).GetAncestorFolders()))
+//                {
+//                    o.FolderTree.Add(ancestorFolder.ID);
+//                }
+//
+//                if (o.ObjectRealtions.Any())
+//                    o.RelatedObjects = McmRepository.GetObject(o.GUID.ToGuid(), null).ToList();
+//            }
+//
+//            index.Set( newObject.Select(item => item as Data.Dto.Standard.Object), false );
+//        }
 
         protected void RemoveObjectFromIndex( IIndex index, Data.Dto.Standard.Object delObject )
         {
