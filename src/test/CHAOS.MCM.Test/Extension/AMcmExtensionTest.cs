@@ -12,8 +12,6 @@
 
     using NUnit.Framework;
 
-    using Folder = Chaos.Mcm.Permission.InMemory.Folder;
-
     [TestFixture]
     public class AMcmExtensionTest : TestBase
     {
@@ -24,10 +22,11 @@
             var objectGuid = new Guid("af40f5e3-2cbf-944f-b833-6c444ad760e1");
             var userInfo   = new UserInfo { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") };
             var groups     = new IGroup[] { new Group { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") } };
-            var folders    = new IFolder[]{ new Folder() };
+            var folderDtos = new List<Data.Dto.Standard.Folder> { new Data.Dto.Standard.Folder { ID = 1 } };
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Groups).Returns(groups);
-            PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), FolderPermission.Read, folders));
+            McmRepository.Setup(m => m.FolderGet(null, objectGuid)).Returns(folderDtos);
+            PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), FolderPermission.Read, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
 
             var result = extension.HasPermissionToObject(CallContext.Object, objectGuid, FolderPermission.Read);
 
