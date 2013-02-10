@@ -1,10 +1,8 @@
 ﻿namespace Chaos.Mcm.Extension
 {
     using System;
-    using System.Linq;
 
     using CHAOS;
-    using CHAOS.Extensions;
 
     using Chaos.Mcm.Data.Dto;
     using Chaos.Portal;
@@ -31,7 +29,7 @@
                         LanguageCode         = metadata.LanguageCode
                     };
 
-                result = this.McmRepository.ObjectRelationSet(objectRelationInfo, callContext.User.GUID.ToGuid());
+                result = this.McmRepository.ObjectRelationSet(objectRelationInfo, callContext.User.Guid);
             }
             else
                 result = McmRepository.ObjectRelationSet(object1GUID, object2GUID, objectRelationTypeID, sequence);

@@ -11,15 +11,15 @@ namespace Chaos.Mcm.Data.Dto.Standard
 	{
 		#region Properties
 
-		[Serialize("GUID")]
-		public UUID GUID { get; set; }
+		[Serialize("Guid")]
+		public Guid Guid { get; set; }
 
 		[Serialize("Name")]
 		public string Name { get; set; }
 
 		[SerializeXML(false, true)]
-		[Serialize("SchemaXML")]
-		public XDocument SchemaXML { get; set; }
+		[Serialize("SchemaXml")]
+		public XDocument SchemaXml { get; set; }
 
 		[Serialize("DateCreated")]
 		public DateTime DateCreated { get; set; }
@@ -29,9 +29,9 @@ namespace Chaos.Mcm.Data.Dto.Standard
 
 		public MetadataSchema( Guid guid, string name, string schemaXML, DateTime dateCreated) 
 		{
-			GUID        = new UUID( guid.ToByteArray() );
+			Guid        = guid;
 			Name        = name;
-			SchemaXML   = XDocument.Parse( schemaXML );
+			SchemaXml   = XDocument.Parse( schemaXML );
 			DateCreated = dateCreated;
 		}
 

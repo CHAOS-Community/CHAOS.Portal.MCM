@@ -15,7 +15,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 	{
 		#region Properties
 
-		[Serialize("GUID" )]
+		[Serialize("Guid" )]
 		public UUID GUID { get; set; }
 
 		[Serialize("ObjectTypeID" )]
@@ -46,7 +46,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 
         public KeyValuePair<string, string> UniqueIdentifier
         {
-            get { return new KeyValuePair<string, string>( "GUID", GUID.ToString() ); }
+            get { return new KeyValuePair<string, string>( "Guid", GUID.ToString() ); }
         }
 
 		#endregion
@@ -78,7 +78,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 
 		public IEnumerable<KeyValuePair<string, string>> GetIndexableFields( )
 		{
-			yield return new KeyValuePair<string, string>("GUID", GUID.ToString( ) );
+			yield return new KeyValuePair<string, string>("Guid", GUID.ToString( ) );
 			yield return new KeyValuePair<string, string>("ObjectTypeID", ObjectTypeID.ToString(CultureInfo.InvariantCulture) );
 			yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
 

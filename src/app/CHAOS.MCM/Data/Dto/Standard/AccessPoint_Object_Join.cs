@@ -11,7 +11,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
         [Serialize("AccessPointGUID")]
         public Guid AccessPointGuid { get; set; }
 
-        [Serialize("ObjectGUID")]
+        [Serialize("ObjectGuid")]
         public Guid ObjectGuid { get; set; }
 
         [Serialize("StartDate")]

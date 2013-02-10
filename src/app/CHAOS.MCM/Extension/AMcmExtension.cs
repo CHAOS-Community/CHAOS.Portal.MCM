@@ -1,5 +1,6 @@
 ﻿namespace Chaos.Mcm.Extension
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
@@ -27,8 +28,6 @@
         private static string ConnectionString { get; set; }
 
         protected static IPermissionManager PermissionManager { get; set; }
-
-        protected MCMEntities DefaultMCMEntities { get { return new MCMEntities(ConnectionString); } }
 
         protected IMcmRepository McmRepository { get; set; }
 
@@ -82,7 +81,7 @@
 //                }
 //
 //                if (o.ObjectRealtions.Any())
-//                    o.RelatedObjects = McmRepository.GetObject(o.GUID.ToGuid(), null).ToList();
+//                    o.RelatedObjects = McmRepository.GetObject(o.Guid, null).ToList();
 //            }
 //
 //            index.Set( newObject.Select(item => item as Data.Dto.Standard.Object), false );
@@ -93,17 +92,14 @@
             index.Remove( delObject, false );
         }
 
-        public bool HasPermissionToObject(ICallContext callContext, UUID objectGUID, FolderPermission permissions)
+        public bool HasPermissionToObject(ICallContext callContext, Guid objectGuid, FolderPermission permissions)
 	    {
-		    using( var db = DefaultMCMEntities )
-		    {
-				var folders    = db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => PermissionManager.GetFolders((uint) item.ID) );
-				var userGUID   = callContext.User.GUID.ToGuid();
-				var groupGUIDs = callContext.Groups.Select( item => item.GUID.ToGuid() );
-                
-                return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGUID, groupGUIDs, permissions, folders);
-		    }
+            //review: look into using the folder returned from the database directly for the permission check
+            var folders    = McmRepository.FolderGet(null, objectGuid).Select(item => PermissionManager.GetFolders((uint)item.ID));
+            var userGuid   = callContext.User.Guid;
+			var groupGuids = callContext.Groups.Select( item => item.Guid );
 
+            return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, permissions, folders);
 	    }
 
         #endregion

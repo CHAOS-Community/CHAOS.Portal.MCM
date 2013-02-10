@@ -17,7 +17,10 @@ namespace Chaos.Mcm.Data.Connection
 
     using global::MySql.Data.MySqlClient;
 
+    using File = Chaos.Mcm.Data.Dto.Standard.File;
     using Folder = Chaos.Mcm.Data.Dto.Standard.Folder;
+    using Format = Chaos.Mcm.Data.Dto.Standard.Format;
+    using ObjectType = Chaos.Mcm.Data.Dto.Standard.ObjectType;
 
     // todo: Remove dependency to MySql
     public class McmRepository : IMcmRepository
@@ -32,7 +35,6 @@ namespace Chaos.Mcm.Data.Connection
         private Gateway Gateway { get; set; }
 
         #endregion
-
         #region Construction
 
         public IMcmRepository WithConfiguration(string connectionString)
@@ -61,8 +63,8 @@ namespace Chaos.Mcm.Data.Connection
         {
             var result = this.Gateway.ExecuteNonQuery("Metadata_Set", new[]
                 {
-                    new MySqlParameter("GUID", metadataGuid.ToByteArray()),
-                    new MySqlParameter("ObjectGUID", objectGuid.ToByteArray()),
+                    new MySqlParameter("Guid", metadataGuid.ToByteArray()),
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()),
                     new MySqlParameter("MetadataSchemaGUID", metadataSchemaGuid.ToByteArray()),
                     new MySqlParameter("LanguageCode", languageCode),
                     new MySqlParameter("RevisionID", revisionID),
@@ -127,10 +129,85 @@ namespace Chaos.Mcm.Data.Connection
             }
         }
 
+        public IList<Folder> FolderGet(Guid? userGuid = null, Guid? objectGuid = null)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var folders = db.Folder_Get(null, objectGuid.ToByteArray()).Select(item => PermissionManager.GetFolders((uint)item.ID));
+
+
+                return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGUID, groupGUIDs, permissions, folders);
+            }
+        }
+
+        public IList<Format> FormatGet(uint? id = null, string name = null)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                return db.Format_Get((int?)ID, name).ToDto().ToList();
+            }
+        }
+
+        public uint FormatCreate(uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var result = db.Format_Create((int?)formatCategoryID, name, formatXml, mimeType, extension).FirstOrDefault();
+
+                if (result == null)
+                    throw new UnhandledException("No result was received from the database");
+
+                return new result.Value;
+            }
+        }
+
+        public uint ObjectTypeDelete(uint id)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var result = db.ObjectType_Delete((int?)id, null).First();
+
+                if (result.Value == -100)
+                    throw new InsufficientPermissionsException("User does not have permission to delete an Object Type");
+
+                return result.Value;
+            }
+        }
+
+        public uint ObjectTypeSet(string name)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                return db.ObjectType_Create(name).First().Value;
+            }
+
+        }
+
+        public IList<ObjectType> ObjectTypeGet(uint? expectedID, string name)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                return db.ObjectType_Get(result, null).ToDto().First();
+            }
+        }
+
+        public uint FileDelete(uint id)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var result = db.File_Delete((int?)id).FirstOrDefault();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("File delete failed in the database and was rolled back");
+
+                return result.Value;
+            }
+        }
+
         #endregion
         #region NewMetadata Schema
 
-        public IEnumerable<Dto.Standard.MetadataSchema> GetMetadataSchema(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission )
+        public IEnumerable<Dto.Standard.MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission )
         {
             using( var db = this.CreateMcmEntities() )
             {
@@ -140,15 +217,31 @@ namespace Chaos.Mcm.Data.Connection
 			}
         }
 
-        //public IEnumerable<Dto.Standard.MetadataSchemaInfo> GetMetadataSchemaInfo(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission)
-        //{
-        //    using (var db = CreateMcmEntities())
-        //    {
-        //        var sGroupGuids = string.Join(",", groupGuids.Select(guid => guid.ToString().Replace("-", "")));
+        public uint MetadataSchemaSet(string name, XDocument schemaXml, Guid userGuid, Guid guid)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var result = db.MetadataSchema_Set(guid.ToByteArray(), name, schemaXml, callContext.User.Guid.ToByteArray()).FirstOrDefault();
 
-        //        return db.MetadataSchema_Get(userGuid.ToByteArray(), sGroupGuids, metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null, (int?)permission).ToList().ToDTO();
-        //    }
-        //}
+                if (!result.HasValue || result.Value != 1)
+                    throw new UnhandledException("MetadataSchema was not created");
+
+                return result;
+            }
+        }
+
+        public uint MetadataSchemaDelete(Guid guid)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var result = db.MetadataSchema_Delete(guid.ToByteArray()).FirstOrDefault();
+
+                if (result == null || !result.HasValue || result.Value != 1)
+                    throw new UnhandledException("MetadataSchema was not deleted");
+
+                return new ScalarResult(result.Value);
+            }
+        }
 
         #endregion
         #region Object Relation
@@ -316,6 +409,32 @@ namespace Chaos.Mcm.Data.Connection
         #endregion
         #region Object
 
+        public uint ObjectDelete(Guid guid)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var result = db.Object_Delete(guid.ToByteArray()).FirstOrDefault();
+
+                if (!result.HasValue || result.Value == -200)
+                    throw new UnhandledException("Object was not deleted, database rolled back");
+
+                return result;
+            }
+        }
+
+        public uint ObjectCreate(Guid guid, uint objectTypeID, uint folderID)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var result = db.Object_Create(guid.ToByteArray(), (int)objectTypeID, (int)folderID).FirstOrDefault();
+
+                if (result.HasValue && result.Value == -200)
+                    throw new UnhandledException("Unhandled exception, Set was rolled back");
+
+                return (uint)result;
+            }
+        }
+
         public IList<NewObject> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
         {
             return Gateway.ExecuteQuery<NewObject>("Object_GetByFolderID", new[]
@@ -349,6 +468,30 @@ namespace Chaos.Mcm.Data.Connection
                     new MySqlParameter("IncludeFolders", includeFolders),
                     new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
                 });
+        }
+
+        #endregion
+        #region File
+
+        public uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var result = db.File_Create(objectGUID.ToByteArray(), (int?)parentFileID, (int)formatID, (int)destinationID, filename, originalFilename, folderPath).FirstOrDefault();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("The creating the file failed in the database and was rolled back");
+
+                return result;
+            }
+        }
+
+        public IList<File> FileGet(uint id)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                return db.File_Get(result.Value).First().ToDto();
+            }
         }
 
         #endregion

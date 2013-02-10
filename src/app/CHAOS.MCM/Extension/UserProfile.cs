@@ -31,7 +31,7 @@ namespace Chaos.Mcm.Extension
 			/*
 			using (var db = DefaultMCMEntities)
 			{
-				var result = db.Metadata_Set(new UUID().ToByteArray(), callContext.User.GUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), null, (int?)revisionID, profileXML, callContext.User.GUID.ToByteArray()).First().Value;
+				var result = db.Metadata_Set(new UUID().ToByteArray(), callContext.User.Guid.ToByteArray(), metadataSchemaGUID.ToByteArray(), null, (int?)revisionID, profileXML, callContext.User.Guid.ToByteArray()).First().Value;
 
 				if (result <= 0)
 					throw new UnhandledException("UserProfile Set was rolledback due to an unhandled exception");

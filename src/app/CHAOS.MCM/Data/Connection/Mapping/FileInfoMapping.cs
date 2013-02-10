@@ -14,7 +14,7 @@
                 yield return new FileInfo
                     {
                         ID                        = reader.GetUint32("FileID"),
-                        ObjectGUID                = reader.GetGuid("ObjectGUID"),
+                        ObjectGUID                = reader.GetGuid("ObjectGuid"),
                         ParentID                  = reader.GetUint32Nullable("ParentID"),
                         DestinationID             = reader.GetUint32("DestinationID"),
                         Filename                  = reader.GetString("FileName"),
@@ -27,7 +27,7 @@
                         Token                     = reader.GetString("Token"),
                         FormatID                  = reader.GetUint32("FormatID"),
                         FormatTypeName            = reader.GetString("FormatName"),
-                        FormatXML                 = reader.GetString("FormatXML"),
+                        FormatXML                 = reader.GetString("FormatXml"),
                         MimeType                  = reader.GetString("MimeType"),
                         FormatCategoryID          = reader.GetUint32("FormatCategoryID"),
                         FormatCategory            = reader.GetString("FormatCategoryName"),

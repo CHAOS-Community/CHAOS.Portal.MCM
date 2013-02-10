@@ -1,35 +1,26 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Chaos.Mcm.Data.EF;
+
 using Chaos.Portal;
 using Chaos.Portal.Data.Dto.Standard;
-using Chaos.Portal.Exceptions;
 
 namespace Chaos.Mcm.Extension
 {
+    using System.Xml.Linq;
+
     public class Format : AMcmExtension
     {
         #region Business Logic
 
-        public IEnumerable<Data.Dto.Standard.Format> Get(ICallContext callContext, uint? ID, string name)
+        public IEnumerable<Data.Dto.Standard.Format> Get(ICallContext callContext, uint? id, string name)
         {
-            using (var db = DefaultMCMEntities)
-            {
-                return db.Format_Get((int?) ID, name).ToDto().ToList();
-            }
+            return McmRepository.FormatGet(id, name);
         }
 
-        public ScalarResult Create(ICallContext callContext, uint? formatCategoryID, string name, string formatXML, string mimeType, string extension )
+        public ScalarResult Create(ICallContext callContext, uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension )
         {
-            using (var db = DefaultMCMEntities)
-            {
-                var result = db.Format_Create((int?)formatCategoryID, name, formatXML, mimeType, extension).FirstOrDefault();
+            var result = McmRepository.FormatCreate(formatCategoryID, name, formatXml, mimeType, extension);
 
-                if(result == null)
-                    throw new UnhandledException("No result was received from the database");
-
-                return new ScalarResult( result.Value );
-            }
+            return new ScalarResult((int)result);
         }
 
         #endregion

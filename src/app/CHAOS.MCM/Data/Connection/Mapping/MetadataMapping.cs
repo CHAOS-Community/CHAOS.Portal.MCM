@@ -13,7 +13,7 @@
             {
                 yield return new NewMetadata
                     {
-                        Guid               = reader.GetGuid("GUID"),
+                        Guid               = reader.GetGuid("Guid"),
                         MetadataSchemaGuid = reader.GetGuid("MetadataSchemaGUID"),
                         RevisionID         = reader.GetUint32("RevisionID"),
                         MetadataXml        = reader.GetXDocument("MetadataXML"),

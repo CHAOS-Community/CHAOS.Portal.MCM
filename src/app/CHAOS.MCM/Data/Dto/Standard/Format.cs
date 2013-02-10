@@ -19,7 +19,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 
 		[SerializeXML(false, true)]
 		[Serialize]
-		public XDocument FormatXML { get; set; }
+		public XDocument FormatXml { get; set; }
 
 		[Serialize]
 		public string MimeType { get; set; }
@@ -35,7 +35,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 			ID               = id;
 			FormatCategoryID = formatCategoryID;
 			Name             = name;
-			FormatXML        = string.IsNullOrEmpty( formatXML ) ? null : XDocument.Parse( formatXML );
+			this.FormatXml        = string.IsNullOrEmpty( formatXML ) ? null : XDocument.Parse( formatXML );
 			MimeType         = mimeType;
             Extension        = extenison;
 		}

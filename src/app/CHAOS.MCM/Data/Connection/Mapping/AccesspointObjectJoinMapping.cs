@@ -14,7 +14,7 @@
                 yield return new AccessPoint_Object_Join
                                  {
                                     AccessPointGuid = reader.GetGuid("AccessPointGUID"),
-                                    ObjectGuid      = reader.GetGuid("ObjectGUID"),
+                                    ObjectGuid      = reader.GetGuid("ObjectGuid"),
                                     StartDate       = reader.GetDateTime("StartDate"),
                                     EndDate         = reader.GetDateTimeNullable("EndDate"),
                                     DateCreated     = reader.GetDateTime("DateCreated"),

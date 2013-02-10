@@ -6,7 +6,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 {
     public class EntityPermission : IEntityPermission
     {
-        [Serialize("GUID")]
+        [Serialize("Guid")]
         public string pGuid{ get { return Guid.ToUUID().ToString(); }}
         
         public Guid Guid { get; set; }

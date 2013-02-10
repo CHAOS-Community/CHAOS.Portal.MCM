@@ -15,7 +15,10 @@ namespace Chaos.Mcm.Data.Dto.Standard
 		[Serialize]
 		public uint? ParentID { get; set; }
 
-		public UUID ObjectGUID { get; set; }
+		public Guid ObjectGuid { get; set; }
+
+        [Serialize]
+        public uint DestinationID { get; set; }
 
 		[Serialize]
 		public string Filename { get; set; }
@@ -32,11 +35,11 @@ namespace Chaos.Mcm.Data.Dto.Standard
 		#endregion
 		#region Constructor
 
-		public File( uint id, uint? parentID, Guid objectGUID, string filename, string originalFilename, uint formatID, string folderPath )
+		public File( uint id, uint? parentID, Guid objectGuid, string filename, string originalFilename, uint formatID, string folderPath )
 		{
 			ID               = id;
 			ParentID         = parentID;
-			ObjectGUID       = new UUID( objectGUID.ToByteArray() );
+			ObjectGuid       = objectGuid;
 			Filename         = filename;
 			OriginalFilename = originalFilename;
 			FormatID	     = formatID;

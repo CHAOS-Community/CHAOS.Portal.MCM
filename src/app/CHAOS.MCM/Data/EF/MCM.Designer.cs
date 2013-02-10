@@ -1051,11 +1051,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<Folder>("Folder_Get", iDParameter, objectGUIDParameter);
@@ -1081,11 +1081,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<Folder>("Folder_Get", mergeOption, iDParameter, objectGUIDParameter);
@@ -1421,11 +1421,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter formatXMLParameter;
             if (formatXML != null)
             {
-                formatXMLParameter = new ObjectParameter("FormatXML", formatXML);
+                formatXMLParameter = new ObjectParameter("FormatXml", formatXML);
             }
             else
             {
-                formatXMLParameter = new ObjectParameter("FormatXML", typeof(global::System.String));
+                formatXMLParameter = new ObjectParameter("FormatXml", typeof(global::System.String));
             }
     
             ObjectParameter mimeTypeParameter;
@@ -1673,11 +1673,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                gUIDParameter = new ObjectParameter("Guid", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter nameParameter;
@@ -1693,11 +1693,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter schemaXMLParameter;
             if (schemaXML != null)
             {
-                schemaXMLParameter = new ObjectParameter("SchemaXML", schemaXML);
+                schemaXMLParameter = new ObjectParameter("SchemaXml", schemaXML);
             }
             else
             {
-                schemaXMLParameter = new ObjectParameter("SchemaXML", typeof(global::System.String));
+                schemaXMLParameter = new ObjectParameter("SchemaXml", typeof(global::System.String));
             }
     
             ObjectParameter userGUIDParameter;
@@ -1828,11 +1828,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                gUIDParameter = new ObjectParameter("Guid", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter objectTypeIDParameter;
@@ -1903,21 +1903,21 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                gUIDParameter = new ObjectParameter("Guid", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter metadataSchemaGUIDParameter;
@@ -2078,11 +2078,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter parentFileIDParameter;
@@ -2372,11 +2372,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter folderIDParameter;
@@ -2412,11 +2412,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter folderIDParameter;
@@ -2443,11 +2443,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter folderIDParameter;
@@ -2484,11 +2484,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                gUIDParameter = new ObjectParameter("Guid", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter subscriptionGuidParameter;
@@ -2536,11 +2536,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter startDateParameter;
@@ -2774,11 +2774,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter objectGUIDParameter;
             if (objectGUID != null)
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", objectGUID);
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", objectGUID);
             }
             else
             {
-                objectGUIDParameter = new ObjectParameter("ObjectGUID", typeof(global::System.Byte[]));
+                objectGUIDParameter = new ObjectParameter("ObjectGuid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter startDateParameter;
@@ -2916,11 +2916,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                gUIDParameter = new ObjectParameter("Guid", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
             }
     
             ObjectParameter nameParameter;
@@ -2936,11 +2936,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter schemaXMLParameter;
             if (schemaXML != null)
             {
-                schemaXMLParameter = new ObjectParameter("SchemaXML", schemaXML);
+                schemaXMLParameter = new ObjectParameter("SchemaXml", schemaXML);
             }
             else
             {
-                schemaXMLParameter = new ObjectParameter("SchemaXML", typeof(global::System.String));
+                schemaXMLParameter = new ObjectParameter("SchemaXml", typeof(global::System.String));
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Update", gUIDParameter, nameParameter, schemaXMLParameter);
@@ -2955,11 +2955,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                gUIDParameter = new ObjectParameter("Guid", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("MetadataSchema_Delete", gUIDParameter);
@@ -2974,11 +2974,11 @@ namespace Chaos.Mcm.Data.EF
             ObjectParameter gUIDParameter;
             if (gUID != null)
             {
-                gUIDParameter = new ObjectParameter("GUID", gUID);
+                gUIDParameter = new ObjectParameter("Guid", gUID);
             }
             else
             {
-                gUIDParameter = new ObjectParameter("GUID", typeof(global::System.Byte[]));
+                gUIDParameter = new ObjectParameter("Guid", typeof(global::System.Byte[]));
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("Object_Delete", gUIDParameter);
@@ -3093,9 +3093,9 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new AccessPoint object.
+        /// Set a new AccessPoint object.
         /// </summary>
-        /// <param name="gUID">Initial value of the GUID property.</param>
+        /// <param name="gUID">Initial value of the Guid property.</param>
         /// <param name="subscriptionGUID">Initial value of the SubscriptionGUID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
@@ -3129,9 +3129,9 @@ namespace Chaos.Mcm.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("GUID");
-                    _GUID = StructuralObject.SetValidValue(value, "GUID");
-                    ReportPropertyChanged("GUID");
+                    ReportPropertyChanging("Guid");
+                    _GUID = StructuralObject.SetValidValue(value, "Guid");
+                    ReportPropertyChanged("Guid");
                     OnGUIDChanged();
                 }
             }
@@ -3319,7 +3319,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new AccessPoint_Group_Join object.
+        /// Set a new AccessPoint_Group_Join object.
         /// </summary>
         /// <param name="accessPointGUID">Initial value of the AccessPointGUID property.</param>
         /// <param name="groupGUID">Initial value of the GroupGUID property.</param>
@@ -3498,10 +3498,10 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new AccessPoint_Object_Join object.
+        /// Set a new AccessPoint_Object_Join object.
         /// </summary>
         /// <param name="accessPointGUID">Initial value of the AccessPointGUID property.</param>
-        /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
+        /// <param name="objectGUID">Initial value of the ObjectGuid property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static AccessPoint_Object_Join CreateAccessPoint_Object_Join(global::System.Guid accessPointGUID, global::System.Guid objectGUID, global::System.DateTime dateCreated)
         {
@@ -3559,9 +3559,9 @@ namespace Chaos.Mcm.Data.EF
                 if (_ObjectGUID != value)
                 {
                     OnObjectGUIDChanging(value);
-                    ReportPropertyChanging("ObjectGUID");
-                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
-                    ReportPropertyChanged("ObjectGUID");
+                    ReportPropertyChanging("ObjectGuid");
+                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGuid");
+                    ReportPropertyChanged("ObjectGuid");
                     OnObjectGUIDChanged();
                 }
             }
@@ -3761,7 +3761,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new AccessPoint_User_Join object.
+        /// Set a new AccessPoint_User_Join object.
         /// </summary>
         /// <param name="accessPointGUID">Initial value of the AccessPointGUID property.</param>
         /// <param name="userGUID">Initial value of the UserGUID property.</param>
@@ -3940,7 +3940,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new AccessProvider object.
+        /// Set a new AccessProvider object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="destinationID">Initial value of the DestinationID property.</param>
@@ -4168,7 +4168,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Conversion object.
+        /// Set a new Conversion object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="accessPointGUID">Initial value of the AccessPointGUID property.</param>
@@ -4510,7 +4510,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Destination object.
+        /// Set a new Destination object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="subscriptionGUID">Initial value of the SubscriptionGUID property.</param>
@@ -4714,7 +4714,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new DestinationInfo object.
+        /// Set a new DestinationInfo object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="subscriptionGUID">Initial value of the SubscriptionGUID property.</param>
@@ -4944,10 +4944,10 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new File object.
+        /// Set a new File object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
-        /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
+        /// <param name="objectGUID">Initial value of the ObjectGuid property.</param>
         /// <param name="formatID">Initial value of the FormatID property.</param>
         /// <param name="destinationID">Initial value of the DestinationID property.</param>
         /// <param name="fileName">Initial value of the FileName property.</param>
@@ -5013,9 +5013,9 @@ namespace Chaos.Mcm.Data.EF
             set
             {
                 OnObjectGUIDChanging(value);
-                ReportPropertyChanging("ObjectGUID");
-                _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
-                ReportPropertyChanged("ObjectGUID");
+                ReportPropertyChanging("ObjectGuid");
+                _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGuid");
+                ReportPropertyChanged("ObjectGuid");
                 OnObjectGUIDChanged();
             }
         }
@@ -5384,10 +5384,10 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new FileInfo object.
+        /// Set a new FileInfo object.
         /// </summary>
         /// <param name="fileID">Initial value of the FileID property.</param>
-        /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
+        /// <param name="objectGUID">Initial value of the ObjectGuid property.</param>
         /// <param name="destinationID">Initial value of the DestinationID property.</param>
         /// <param name="fileName">Initial value of the FileName property.</param>
         /// <param name="originalFileName">Initial value of the OriginalFileName property.</param>
@@ -5475,9 +5475,9 @@ namespace Chaos.Mcm.Data.EF
                 if (_ObjectGUID != value)
                 {
                     OnObjectGUIDChanging(value);
-                    ReportPropertyChanging("ObjectGUID");
-                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
-                    ReportPropertyChanged("ObjectGUID");
+                    ReportPropertyChanging("ObjectGuid");
+                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGuid");
+                    ReportPropertyChanged("ObjectGuid");
                     OnObjectGUIDChanged();
                 }
             }
@@ -5821,9 +5821,9 @@ namespace Chaos.Mcm.Data.EF
             set
             {
                 OnFormatXMLChanging(value);
-                ReportPropertyChanging("FormatXML");
-                _FormatXML = StructuralObject.SetValidValue(value, true, "FormatXML");
-                ReportPropertyChanged("FormatXML");
+                ReportPropertyChanging("FormatXml");
+                _FormatXML = StructuralObject.SetValidValue(value, true, "FormatXml");
+                ReportPropertyChanged("FormatXml");
                 OnFormatXMLChanged();
             }
         }
@@ -5981,7 +5981,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Folder object.
+        /// Set a new Folder object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="folderTypeID">Initial value of the FolderTypeID property.</param>
@@ -6331,7 +6331,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Folder_Group_Join object.
+        /// Set a new Folder_Group_Join object.
         /// </summary>
         /// <param name="folderID">Initial value of the FolderID property.</param>
         /// <param name="groupGUID">Initial value of the GroupGUID property.</param>
@@ -6510,7 +6510,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Folder_User_Join object.
+        /// Set a new Folder_User_Join object.
         /// </summary>
         /// <param name="folderID">Initial value of the FolderID property.</param>
         /// <param name="userGUID">Initial value of the UserGUID property.</param>
@@ -6689,7 +6689,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new FolderInfo object.
+        /// Set a new FolderInfo object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="folderTypeID">Initial value of the FolderTypeID property.</param>
@@ -6928,7 +6928,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new FolderType object.
+        /// Set a new FolderType object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
@@ -7062,7 +7062,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Format object.
+        /// Set a new Format object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="formatCategoryID">Initial value of the FormatCategoryID property.</param>
@@ -7171,9 +7171,9 @@ namespace Chaos.Mcm.Data.EF
             set
             {
                 OnFormatXMLChanging(value);
-                ReportPropertyChanging("FormatXML");
-                _FormatXML = StructuralObject.SetValidValue(value, true, "FormatXML");
-                ReportPropertyChanged("FormatXML");
+                ReportPropertyChanging("FormatXml");
+                _FormatXML = StructuralObject.SetValidValue(value, true, "FormatXml");
+                ReportPropertyChanged("FormatXml");
                 OnFormatXMLChanged();
             }
         }
@@ -7330,7 +7330,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new FormatCategory object.
+        /// Set a new FormatCategory object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="formatTypeID">Initial value of the FormatTypeID property.</param>
@@ -7524,7 +7524,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new FormatType object.
+        /// Set a new FormatType object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
@@ -7632,7 +7632,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Language object.
+        /// Set a new Language object.
         /// </summary>
         /// <param name="languageCode">Initial value of the LanguageCode property.</param>
         public static Language CreateLanguage(global::System.String languageCode)
@@ -7738,10 +7738,10 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new NewMetadata object.
+        /// Set a new NewMetadata object.
         /// </summary>
-        /// <param name="gUID">Initial value of the GUID property.</param>
-        /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
+        /// <param name="gUID">Initial value of the Guid property.</param>
+        /// <param name="objectGUID">Initial value of the ObjectGuid property.</param>
         /// <param name="metadataSchemaGUID">Initial value of the MetadataSchemaGUID property.</param>
         /// <param name="revisionID">Initial value of the RevisionID property.</param>
         /// <param name="metadataXML">Initial value of the MetadataXML property.</param>
@@ -7780,9 +7780,9 @@ namespace Chaos.Mcm.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("GUID");
-                    _GUID = StructuralObject.SetValidValue(value, "GUID");
-                    ReportPropertyChanged("GUID");
+                    ReportPropertyChanging("Guid");
+                    _GUID = StructuralObject.SetValidValue(value, "Guid");
+                    ReportPropertyChanged("Guid");
                     OnGUIDChanged();
                 }
             }
@@ -7805,9 +7805,9 @@ namespace Chaos.Mcm.Data.EF
             set
             {
                 OnObjectGUIDChanging(value);
-                ReportPropertyChanging("ObjectGUID");
-                _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
-                ReportPropertyChanged("ObjectGUID");
+                ReportPropertyChanging("ObjectGuid");
+                _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGuid");
+                ReportPropertyChanged("ObjectGuid");
                 OnObjectGUIDChanged();
             }
         }
@@ -8095,11 +8095,11 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new MetadataSchema object.
+        /// Set a new MetadataSchema object.
         /// </summary>
-        /// <param name="gUID">Initial value of the GUID property.</param>
+        /// <param name="gUID">Initial value of the Guid property.</param>
         /// <param name="name">Initial value of the Name property.</param>
-        /// <param name="schemaXML">Initial value of the SchemaXML property.</param>
+        /// <param name="schemaXML">Initial value of the SchemaXml property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static MetadataSchema CreateMetadataSchema(global::System.Guid gUID, global::System.String name, global::System.String schemaXML, global::System.DateTime dateCreated)
         {
@@ -8131,9 +8131,9 @@ namespace Chaos.Mcm.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("GUID");
-                    _GUID = StructuralObject.SetValidValue(value, "GUID");
-                    ReportPropertyChanged("GUID");
+                    ReportPropertyChanging("Guid");
+                    _GUID = StructuralObject.SetValidValue(value, "Guid");
+                    ReportPropertyChanged("Guid");
                     OnGUIDChanged();
                 }
             }
@@ -8180,9 +8180,9 @@ namespace Chaos.Mcm.Data.EF
             set
             {
                 OnSchemaXMLChanging(value);
-                ReportPropertyChanging("SchemaXML");
-                _SchemaXML = StructuralObject.SetValidValue(value, false, "SchemaXML");
-                ReportPropertyChanged("SchemaXML");
+                ReportPropertyChanging("SchemaXml");
+                _SchemaXML = StructuralObject.SetValidValue(value, false, "SchemaXml");
+                ReportPropertyChanged("SchemaXml");
                 OnSchemaXMLChanged();
             }
         }
@@ -8299,7 +8299,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new MetadataSchema_Group_Join object.
+        /// Set a new MetadataSchema_Group_Join object.
         /// </summary>
         /// <param name="metadataSchemaGUID">Initial value of the MetadataSchemaGUID property.</param>
         /// <param name="groupGUID">Initial value of the GroupGUID property.</param>
@@ -8478,7 +8478,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new MetadataSchema_User_Join object.
+        /// Set a new MetadataSchema_User_Join object.
         /// </summary>
         /// <param name="metadataSchemaGUID">Initial value of the MetadataSchemaGUID property.</param>
         /// <param name="userGUID">Initial value of the UserGUID property.</param>
@@ -8657,9 +8657,9 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Object object.
+        /// Set a new Object object.
         /// </summary>
-        /// <param name="gUID">Initial value of the GUID property.</param>
+        /// <param name="gUID">Initial value of the Guid property.</param>
         /// <param name="objectTypeID">Initial value of the ObjectTypeID property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
         public static Object CreateObject(global::System.Guid gUID, global::System.Int64 objectTypeID, global::System.DateTime dateCreated)
@@ -8691,9 +8691,9 @@ namespace Chaos.Mcm.Data.EF
                 if (_GUID != value)
                 {
                     OnGUIDChanging(value);
-                    ReportPropertyChanging("GUID");
-                    _GUID = StructuralObject.SetValidValue(value, "GUID");
-                    ReportPropertyChanged("GUID");
+                    ReportPropertyChanging("Guid");
+                    _GUID = StructuralObject.SetValidValue(value, "Guid");
+                    ReportPropertyChanged("Guid");
                     OnGUIDChanged();
                 }
             }
@@ -8939,9 +8939,9 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Object_Folder_Join object.
+        /// Set a new Object_Folder_Join object.
         /// </summary>
-        /// <param name="objectGUID">Initial value of the ObjectGUID property.</param>
+        /// <param name="objectGUID">Initial value of the ObjectGuid property.</param>
         /// <param name="folderID">Initial value of the FolderID property.</param>
         /// <param name="objectFolderTypeID">Initial value of the ObjectFolderTypeID property.</param>
         /// <param name="dateCreated">Initial value of the DateCreated property.</param>
@@ -8975,9 +8975,9 @@ namespace Chaos.Mcm.Data.EF
                 if (_ObjectGUID != value)
                 {
                     OnObjectGUIDChanging(value);
-                    ReportPropertyChanging("ObjectGUID");
-                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGUID");
-                    ReportPropertyChanged("ObjectGUID");
+                    ReportPropertyChanging("ObjectGuid");
+                    _ObjectGUID = StructuralObject.SetValidValue(value, "ObjectGuid");
+                    ReportPropertyChanged("ObjectGuid");
                     OnObjectGUIDChanged();
                 }
             }
@@ -9194,7 +9194,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Object_Object_Join object.
+        /// Set a new Object_Object_Join object.
         /// </summary>
         /// <param name="object1GUID">Initial value of the Object1GUID property.</param>
         /// <param name="object2GUID">Initial value of the Object2GUID property.</param>
@@ -9473,7 +9473,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new ObjectFolderType object.
+        /// Set a new ObjectFolderType object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
@@ -9581,7 +9581,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new ObjectRelationType object.
+        /// Set a new ObjectRelationType object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
@@ -9689,7 +9689,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new ObjectType object.
+        /// Set a new ObjectType object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
         /// <param name="name">Initial value of the Name property.</param>
@@ -9797,7 +9797,7 @@ namespace Chaos.Mcm.Data.EF
         #region Factory Method
     
         /// <summary>
-        /// Create a new Permission object.
+        /// Set a new Permission object.
         /// </summary>
         /// <param name="tableIdentifier">Initial value of the TableIdentifier property.</param>
         /// <param name="permission1">Initial value of the Permission1 property.</param>

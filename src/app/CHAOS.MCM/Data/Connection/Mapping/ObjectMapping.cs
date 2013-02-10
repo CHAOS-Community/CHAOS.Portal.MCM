@@ -18,7 +18,7 @@
             {
                 var o = new NewObject
                     {
-                        Guid         = reader.GetGuid("GUID"),
+                        Guid         = reader.GetGuid("Guid"),
                         ObjectTypeID = reader.GetUint32("ObjectTypeID"),
                         DateCreated  = reader.GetDateTime("DateCreated")
                     };

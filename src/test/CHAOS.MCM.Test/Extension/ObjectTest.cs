@@ -37,7 +37,39 @@
             Assert.AreEqual(expected, result.First());
         }
 
+        [Test]
+        public void Create_WithPermissionToFolder_CallMcmRepositoryAndReturnTheObject()
+        {
+            var extension = Make_ObjectExtension();
+            var expected  = Make_Object();
+            var folderID  = 1u;
+            
+            var result = extension.Create(CallContext.Object, expected.Guid, expected.ObjectTypeID, folderID);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void Delete_WithPermissions_CallMcmRepositoryAndReturnOne()
+        {
+            var extension = Make_ObjectExtension();
+            var expected  = Make_Object();
+
+            var result = extension.Delete(CallContext.Object, expected.Guid);
+
+            Assert.AreEqual(1, result.Value);
+        }
+
         #region Helpers
+
+        private NewObject Make_Object()
+        {
+            return new NewObject
+                {
+                    Guid = Guid.NewGuid(),
+                    ObjectTypeID = 1u
+                };
+        }
 
         private Mcm.Extension.Object Make_ObjectExtension()
         {

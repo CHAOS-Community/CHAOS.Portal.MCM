@@ -15,7 +15,7 @@
 
                 yield return new ObjectMetadata
                     {
-                        Guid               = reader.GetGuid("GUID"),
+                        Guid               = reader.GetGuid("Guid"),
                         ObjectGuid         = reader.GetGuid("ObjectGuid"),
                         MetadataSchemaGuid = reader.GetGuid("MetadataSchemaGUID"),
                         RevisionID         = reader.GetUint32("RevisionID"),

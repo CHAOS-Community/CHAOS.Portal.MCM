@@ -46,7 +46,7 @@ namespace Chaos.Mcm.Extension
         //        {
         //            //TODO: Implement Folder Permissions Enum Flags (GET OBJECT FLAG)
 
-        //            var folders = PermissionManager.GetFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ) ).ToList();
+        //            var folders = PermissionManager.GetFolders( callContext.User.Guid, callContext.Groups.Select( group => group.Guid ) ).ToList();
 
         //            //TODO: Refactor building of queries
         //            var sb = new System.Text.StringBuilder(query.Query);
@@ -79,20 +79,20 @@ namespace Chaos.Mcm.Extension
         //    throw new NotImplementedException("No implmentation for Object Get without solr parameters");
         //}
 
-        //[Datatype("Object","Create")]
-        //public Object Create( ICallContext callContext, UUID GUID, uint objectTypeID, uint folderID )
+        //[Datatype("Object","Set")]
+        //public Object Set( ICallContext callContext, UUID Guid, uint objectTypeID, uint folderID )
         //{
         //    using( var db = DefaultMCMEntities )
         //    {
-        //        if( !PermissionManager.GetFolder( folderID ).DoesUserOrGroupHavePersmission( callContext.User.GUID.ToGuid(), callContext.Groups.Select( item => item.GUID.ToGuid() ), FolderPermissions.CreateUpdateObjects ) )
+        //        if( !PermissionManager.GetFolder( folderID ).DoesUserOrGroupHavePersmission( callContext.User.Guid, callContext.Groups.Select( item => item.Guid ), FolderPermissions.CreateUpdateObjects ) )
         //            throw new InsufficientPermissionsException( "User does not have permissions to create object" );
 
-        //        var guid = GUID ?? new UUID();
+        //        var guid = Guid ?? new UUID();
 
-        //        int result = db.Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
+        //        int result = db.Set( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
 
         //        if( result == -200 )
-        //            throw new UnhandledException("Unhandled exception, Create was rolled back");
+        //            throw new UnhandledException("Unhandled exception, Set was rolled back");
 
         //        var newObject = db.Get( guid, true, true, true, true, true ).ToDTO().ToList();
 
@@ -106,32 +106,32 @@ namespace Chaos.Mcm.Extension
         //}
 
 		//[Datatype("Object", "Delete")]
-		//public ScalarResult Object_Delete( CallContext callContext, Guid GUID, int folderID )
+		//public ScalarResult Object_Delete( CallContext callContext, Guid Guid, int folderID )
 		//{
 		//    using( MCMEntities db = DefaultMCMEntities )
 		//    {
-		//        int result = db.Object_Delete( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, GUID, folderID );
+		//        int result = db.Object_Delete( callContext.Groups.Select( group => group.Guid ).ToList(), callContext.User.Guid, Guid, folderID );
 
 		//        if( result == -100 )
 		//            throw new InsufficientPermissionsException( "User does not have permissions to delete object" );
 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ GUID }, true, false, true, true ) );
+		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ Guid }, true, false, true, true ) );
 
 		//        return new ScalarResult( result );
 		//    }
 		//}
 
 		//[Datatype("Object", "PutInFolder")]
-		//public ScalarResult Object_PutInFolder(CallContext callContext, Guid GUID, int folderID, int objectFolderTypeID)
+		//public ScalarResult Object_PutInFolder(CallContext callContext, Guid Guid, int folderID, int objectFolderTypeID)
 		//{
 		//    using( MCMEntities db = DefaultMCMEntities )
 		//    {
-		//        int result = db.Object_PutInFolder( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, GUID, folderID, objectFolderTypeID );
+		//        int result = db.Object_PutInFolder( callContext.Groups.Select( group => group.Guid ).ToList(), callContext.User.Guid, Guid, folderID, objectFolderTypeID );
 
 		//        if( result == -100 )
 		//            throw new InsufficientPermissionsException( "User does not have permissions to put object into folder" );
 
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ GUID }, true, false, true, true ) );
+		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ Guid }, true, false, true, true ) );
 
 		//        return new ScalarResult( result );
 		//    }

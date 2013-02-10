@@ -114,7 +114,7 @@ namespace Chaos.Mcm.Data.EF
 			                foreach( var o in objects )
 			                {
 			                    o.pMetadatas = (from m in metadatas
-                                                where m.ObjectGUID == o.GUID && (!metadataSchemas.Any() || metadataSchemas.Any( meta => meta.GUID.ToByteArray().SequenceEqual( m.MetadataSchemaGUID.ToByteArray() ) ) )
+                                                where m.ObjectGUID == o.GUID && (!metadataSchemas.Any() || metadataSchemas.Any( meta => meta.Guid.ToByteArray().SequenceEqual( m.MetadataSchemaGUID.ToByteArray() ) ) )
                                                 select m ).ToList();
 			                }
 			            }

@@ -55,10 +55,15 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extension\AMcmExtensionTest.cs" />
+    <Compile Include="Extension\FileTest.cs" />
+    <Compile Include="Extension\FormatTest.cs" />
+    <Compile Include="Extension\MetadataSchemaTest.cs" />
     <Compile Include="Extension\ObjectTest.cs" />
     <Compile Include="Extension\FolderTest.cs" />
     <Compile Include="Extension\MetadataTest.cs" />
     <Compile Include="Extension\ObjectRelationTest.cs" />
+    <Compile Include="Extension\ObjectTypeTest.cs" />
     <Compile Include="Extension\TestBase.cs" />
     <Compile Include="Permission\InMemoryPermissionManagerTest.cs" />
     <Compile Include="Permission\IntervalSpecificationTest.cs" />
@@ -70,7 +75,9 @@
       <Name>Chaos.Mcm</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Data\Dto\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
