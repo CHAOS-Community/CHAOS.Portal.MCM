@@ -5,7 +5,6 @@
     using System.Linq;
 
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Portal.Data.Dto.Standard;
 
     using Moq;
@@ -48,10 +47,19 @@
             var extension = Make_ObjectExtension();
             var expected  = Make_Object();
             var folderID  = 1u;
-            
+            var userInfo  = new UserInfo { Guid = new Guid("f280d42b-163e-41d3-b0a2-cd59a9ab8fda") };
+            var groups    = new Group[0];
+            var folder    = new Mock<IFolder>();
+            CallContext.SetupGet(p => p.User).Returns(userInfo);
+            CallContext.SetupGet(p => p.Groups).Returns(groups);
+            PermissionManager.Setup(m => m.GetFolders(folderID)).Returns(folder.Object);
+            folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.CreateUpdateObjects)).Returns(true);
+            McmRepository.Setup(m => m.ObjectGet(expected.Guid, false, false,false,false,false)).Returns(expected);
+
             var result = extension.Create(CallContext.Object, expected.Guid, expected.ObjectTypeID, folderID);
 
             Assert.AreEqual(expected, result);
+            McmRepository.Verify(m => m.ObjectCreate(expected.Guid, expected.ObjectTypeID, folderID));
         }
 
         [Test]
@@ -63,13 +71,14 @@
             var groups     = new Group[0];
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Groups).Returns(groups);
-            PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, new Guid[0], FolderPermission.DeleteObject, It.IsAny<IFolder[]>())).Returns(true);
+            PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, new Guid[0], FolderPermission.DeleteObject, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
             McmRepository.Setup(m => m.ObjectGet(expected.Guid, false, false, false, true, false)).Returns(expected);
+            McmRepository.Setup(m => m.ObjectDelete(expected.Guid)).Returns(1);
 
             var result = extension.Delete(CallContext.Object, expected.Guid);
 
             Assert.AreEqual(1, result.Value);
-            McmRepository.VerifyAll();
+            McmRepository.Verify(m => m.ObjectDelete(expected.Guid));
         }
 
         #region Helpers

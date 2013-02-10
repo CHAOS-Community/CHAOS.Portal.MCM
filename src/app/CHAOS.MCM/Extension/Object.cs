@@ -66,7 +66,10 @@ namespace Chaos.Mcm.Extension
 
 		public NewObject Create( ICallContext callContext, Guid? guid, uint objectTypeID, uint folderID )
 		{
-            if (!PermissionManager.GetFolders(folderID).DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), FolderPermission.CreateUpdateObjects))
+            var userGuid   = callContext.User.Guid;
+            var groupGuids = callContext.Groups.Select(group => group.Guid);
+
+            if (!PermissionManager.GetFolders(folderID).DoesUserOrGroupHavePermission(userGuid, groupGuids, FolderPermission.CreateUpdateObjects))
                 throw new InsufficientPermissionsException("User does not have permissions to create object");
 
 		    guid = guid.HasValue ? guid : Guid.NewGuid();
@@ -97,7 +100,7 @@ namespace Chaos.Mcm.Extension
         {
             var objToDel   = McmRepository.ObjectGet(guid, includeFolders: true);
             var userGuid   = callContext.User.Guid;
-            var groupGuids = callContext.Groups.Select(group => @group.Guid);
+            var groupGuids = callContext.Groups.Select(group => group.Guid);
             var folders    = objToDel.ObjectFolders.Select(folder => PermissionManager.GetFolders(folder.ID));
 
             if (!PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, FolderPermission.DeleteObject, folders))
