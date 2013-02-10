@@ -38,9 +38,9 @@
         public override IExtension WithConfiguration( string configuration )
         {
             var mcmDefaultRepository = new McmRepository();
-            var permissionManager    = PermissionManager ?? new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(mcmDefaultRepository), new IntervalSpecification(10000));
+//            var permissionManager    = PermissionManager ?? new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(mcmDefaultRepository), new IntervalSpecification(10000));
 
-            return WithConfiguration(configuration, permissionManager, mcmDefaultRepository);
+            return WithConfiguration(configuration, null, mcmDefaultRepository);
         }
 
         public IExtension WithConfiguration( string configuration, IPermissionManager permissionManager, IMcmRepository mcmRepository )

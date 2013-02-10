@@ -18,50 +18,50 @@ namespace Chaos.Mcm.Extension
 
     public class Object : AMcmExtension
     {
-		public IPagedResult<IResult> Get( ICallContext callContext, IQuery query, UUID accessPointGUID, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
-		{ 
-            // TODO: Implement AccessPointGUID for queries when user isnt logged in
-            using( var db = DefaultMCMEntities )
-			{
-			    if( query != null )
-			    {
-			        var metadataSchemas = new List<Chaos.Mcm.Data.EF.MetadataSchema>();
-
-                    if( accessPointGUID != null )
-                        query.Query = string.Format( "({0})+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+TO+*])", query.Query );
-                    else
-                    {
-						if( callContext.IsAnonymousUser )
-							throw new InsufficientPermissionsException("User must be logged in or use accessPointGUID" );
-
-                        var userGuid   = callContext.User.GUID.ToGuid();
-                        var groupGuids = callContext.Groups.Select(group => group.GUID.ToGuid()).ToList();
-                        var folders    = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
-
-						if( folders.Count == 0 )
-							throw new InsufficientPermissionsException("User does not have access to any folders" );
-
-                        query.Query = string.Format( "({0})+AND+({1})", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
-
-                        metadataSchemas = db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",", callContext.Groups.Select( group => group.GUID.ToString().Replace("-","") ) ), null, 0x1 ).ToList();
-                    }
-
-					var indexResult = callContext.IndexManager.GetIndex<Object>().Get<UUIDResult>( query );
-					var resultPage  = indexResult.QueryResult.Results.Select(result => ((UUIDResult)result).Guid);
-
-					// if solr doesnt return anything there is no need to continue, so just return an empty list
-					if( !resultPage.Any() )
-                        return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, 0, new List<Data.Dto.Standard.Object>() );
-
-                    var objects      = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDto() ).ToDto( callContext.GetSessionFromDatabase() == null ? null : callContext.Session.GUID ).ToList();
-                    var sortedResult = ReArrange( objects, resultPage );
-
-					return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, query.PageIndex, sortedResult );
-				}
-			}
-
-			throw new NotImplementedException("No implmentation for Object Get without solr parameters");
-		}
+//		public IPagedResult<IResult> Get( ICallContext callContext, IQuery query, UUID accessPointGUID, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
+//		{ 
+//            // TODO: Implement AccessPointGUID for queries when user isnt logged in
+//            using( var db = DefaultMCMEntities )
+//			{
+//			    if( query != null )
+//			    {
+//			        var metadataSchemas = new List<Chaos.Mcm.Data.EF.MetadataSchema>();
+//
+//                    if( accessPointGUID != null )
+//                        query.Query = string.Format( "({0})+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+TO+*])", query.Query );
+//                    else
+//                    {
+//						if( callContext.IsAnonymousUser )
+//							throw new InsufficientPermissionsException("User must be logged in or use accessPointGUID" );
+//
+//                        var userGuid   = callContext.User.GUID.ToGuid();
+//                        var groupGuids = callContext.Groups.Select(group => group.GUID.ToGuid()).ToList();
+//                        var folders    = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
+//
+//						if( folders.Count == 0 )
+//							throw new InsufficientPermissionsException("User does not have access to any folders" );
+//
+//                        query.Query = string.Format( "({0})+AND+({1})", query.Query, string.Join( "+OR+", folders.Select( folder => string.Format( "FolderTree:{0}", folder.ID ) ) ) );
+//
+//                        metadataSchemas = db.MetadataSchema_Get( callContext.User.GUID.ToByteArray(), string.Join( ",", callContext.Groups.Select( group => group.GUID.ToString().Replace("-","") ) ), null, 0x1 ).ToList();
+//                    }
+//
+//					var indexResult = callContext.IndexManager.GetIndex<Object>().Get<UUIDResult>( query );
+//					var resultPage  = indexResult.QueryResult.Results.Select(result => ((UUIDResult)result).Guid);
+//
+//					// if solr doesnt return anything there is no need to continue, so just return an empty list
+//					if( !resultPage.Any() )
+//                        return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, 0, new List<Data.Dto.Standard.Object>() );
+//
+//                    var objects      = db.Object_Get(resultPage, includeMetadata ?? false, includeFiles ?? false, includeObjectRelations ?? false, false, includeAccessPoints ?? false, metadataSchemas.ToDto() ).ToDto( callContext.GetSessionFromDatabase() == null ? null : callContext.Session.GUID ).ToList();
+//                    var sortedResult = ReArrange( objects, resultPage );
+//
+//					return new PagedResult<IResult>( indexResult.QueryResult.FoundCount, query.PageIndex, sortedResult );
+//				}
+//			}
+//
+//			throw new NotImplementedException("No implmentation for Object Get without solr parameters");
+//		}
 
         private static IEnumerable<Data.Dto.Standard.Object> ReArrange(IEnumerable<Data.Dto.Standard.Object> objects, IEnumerable<UUID> resultPage)
         {
@@ -141,11 +141,12 @@ namespace Chaos.Mcm.Extension
 		//        return new ScalarResult( result );
 		//    }
 		//}
-        public IEnumerable<NewObject> Get(ICallContext callContext, IEnumerable<Guid> objectGuid, bool includeAccessPoints, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders)
+        public IEnumerable<NewObject> Get(ICallContext callContext, IEnumerable<Guid> objectGuids, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false)
         {
-            var objectsWithPermission = objectGuid.Where(item => HasPermissionToObject(callContext, item.ToUUID(), FolderPermission.Read));
+            //todo: uncomment this
+           // var objectsWithPermission = objectGuids.Where(item => HasPermissionToObject(callContext, item.ToUUID(), FolderPermission.Read));
             
-            return McmRepository.ObjectGet(objectsWithPermission, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints);
+            return McmRepository.ObjectGet(objectGuids, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints);
         }
     }
 }

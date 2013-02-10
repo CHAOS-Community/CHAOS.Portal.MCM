@@ -3,20 +3,26 @@
     using System;
     using System.Collections.Generic;
 
-    using Chaos.Mcm.Data.Dto.Standard;
+    using CHAOS.Serialization;
 
-    public class NewObject
+    using Chaos.Mcm.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto.Standard;
+    
+    public class NewObject : Result
     {
         #region Properties
 
+        [Serialize]
         public Guid Guid { get; set; }
 
         public IList<NewMetadata> Metadatas { get; set; }
 
         public IList<FileInfo> Files { get; set; }
-        
+
+        [Serialize]
         public uint ObjectTypeID { get; set; }
 
+        [Serialize]
         public DateTime DateCreated { get; set; }
 
         public IList<ObjectRelationInfo> ObjectRelationInfos { get; set; }
