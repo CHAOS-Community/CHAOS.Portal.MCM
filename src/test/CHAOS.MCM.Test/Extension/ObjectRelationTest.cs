@@ -45,7 +45,7 @@
             var sequence              = 0;
             uint objectRelationTypeID = 1;
             var metadata              = new NewMetadata{Guid = new Guid("00000000-0000-0000-0000-000000000100")};
-            CallContext.SetupGet(p => p.User).Returns(new UserInfo { GUID = editingUserGuid.ToUUID() });
+            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = editingUserGuid });
             McmRepository.Setup(m => m.ObjectRelationSet(It.IsAny<ObjectRelationInfo>(), editingUserGuid)).Returns(1);
 
             var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, metadata, objectRelationTypeID, sequence);

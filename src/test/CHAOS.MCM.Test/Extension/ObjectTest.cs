@@ -5,10 +5,15 @@
     using System.Linq;
 
     using Chaos.Mcm.Data.Dto;
+    using Chaos.Mcm.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto.Standard;
 
     using Moq;
 
     using NUnit.Framework;
+
+    using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
+    using IFolder = Chaos.Mcm.Permission.IFolder;
 
     [TestFixture]
     public class ObjectTest : TestBase
@@ -52,12 +57,19 @@
         [Test]
         public void Delete_WithPermissions_CallMcmRepositoryAndReturnOne()
         {
-            var extension = Make_ObjectExtension();
-            var expected  = Make_Object();
+            var extension  = Make_ObjectExtension();
+            var expected   = Make_Object();
+            var userInfo   = new UserInfo { Guid = new Guid("f280d42b-163e-41d3-b0a2-cd59a9ab8fda") };
+            var groups     = new Group[0];
+            CallContext.SetupGet(p => p.User).Returns(userInfo);
+            CallContext.SetupGet(p => p.Groups).Returns(groups);
+            PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, new Guid[0], FolderPermission.DeleteObject, It.IsAny<IFolder[]>())).Returns(true);
+            McmRepository.Setup(m => m.ObjectGet(expected.Guid, false, false, false, true, false)).Returns(expected);
 
             var result = extension.Delete(CallContext.Object, expected.Guid);
 
             Assert.AreEqual(1, result.Value);
+            McmRepository.VerifyAll();
         }
 
         #region Helpers

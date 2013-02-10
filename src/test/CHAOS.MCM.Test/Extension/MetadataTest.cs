@@ -2,9 +2,6 @@
 {
     using System;
 
-    using CHAOS;
-
-    using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Extension;
     using Chaos.Portal.Data.Dto.Standard;
 
@@ -21,7 +18,7 @@
             var extension  = Make_MetadataExtension();
             var metadata   = Make_MetadataDto();
             var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
-            CallContext.SetupGet(p => p.User).Returns(new UserInfo { GUID = new UUID("905c48db-5632-4c57-9a1a-a158deba6ab4") });
+            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = new Guid("905c48db-5632-4c57-9a1a-a158deba6ab4") });
             
             extension.Metadata_Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
@@ -34,7 +31,7 @@
             var extension = Make_MetadataExtension();
             var metadata = Make_MetadataDto();
             var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
-            CallContext.SetupGet(p => p.User).Returns(new UserInfo { GUID = new UUID("905c48db-5632-4c57-9a1a-a158deba6ab4") });
+            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = new Guid("905c48db-5632-4c57-9a1a-a158deba6ab4") });
 
             extension.Metadata_Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 

@@ -95,9 +95,12 @@ namespace Chaos.Mcm.Extension
 
         public ScalarResult Delete( ICallContext callContext, Guid guid )
         {
-            var objToDel = McmRepository.ObjectGet(guid, includeFolders: true);
+            var objToDel   = McmRepository.ObjectGet(guid, includeFolders: true);
+            var userGuid   = callContext.User.Guid;
+            var groupGuids = callContext.Groups.Select(group => @group.Guid);
+            var folders    = objToDel.ObjectFolders.Select(folder => PermissionManager.GetFolders(folder.ID));
 
-            if (!PermissionManager.DoesUserOrGroupHavePermissionToFolders(callContext.User.Guid, callContext.Groups.Select(group => group.Guid), FolderPermission.DeleteObject, objToDel.ObjectFolders.Select(folder => PermissionManager.GetFolders(folder.ID))))
+            if (!PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, FolderPermission.DeleteObject, folders))
                 throw new InsufficientPermissionsException("User does not have permissions to remove object");
 
             var result = McmRepository.ObjectDelete(guid);

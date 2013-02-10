@@ -401,7 +401,9 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
         }
 
         #endregion
+        #region Folders
 
+        #endregion
         #region Helpers
 
         private AccessPoint_Object_Join Make_AccessPoint()

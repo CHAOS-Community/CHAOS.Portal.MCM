@@ -1,6 +1,7 @@
 namespace Chaos.Mcm.Test.Extension
 {
     using System;
+    using System.Collections.Generic;
     using System.Xml.Linq;
 
     using Chaos.Mcm.Data;
@@ -55,8 +56,21 @@ namespace Chaos.Mcm.Test.Extension
             return new NewObject
             {
                 Guid         = new Guid("00000000-0000-0000-0000-000000000001"),
-                ObjectTypeID = 1u
+                ObjectTypeID = 1u,
+                ObjectFolders = new List<ObjectFolder>{Make_ObjectFolder()}
             };
+        }
+
+        protected ObjectFolder Make_ObjectFolder()
+        {
+            return new ObjectFolder
+                {
+                    ID           = 1,
+                    ParentID     = null,
+                    Name         = "some name",
+                    FolderTypeID = 1,
+                    DateCreated  = new DateTime(1990, 10, 01, 23, 59, 59) 
+                };
         }
 
         protected FolderInfo Make_FolderInfo()

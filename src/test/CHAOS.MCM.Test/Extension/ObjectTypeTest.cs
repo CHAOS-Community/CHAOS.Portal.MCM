@@ -18,6 +18,7 @@
             var expected  = Make_ObjectType();
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { SystemPermissonsEnum = SystemPermissons.Manage });
             McmRepository.Setup(m => m.ObjectTypeSet(expected.Name)).Returns(expected.ID);
+            McmRepository.Setup(m => m.ObjectTypeGet(expected.ID, null)).Returns(new []{expected});
 
             var result = extension.Set(CallContext.Object, expected.Name);
 
@@ -51,7 +52,6 @@
 
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.ObjectTypeDelete(expected.ID));
-            CallContext.Verify(p => p.User.SystemPermissonsEnum.HasFlag(SystemPermissons.Manage));
         }
 
         #region Helpers
