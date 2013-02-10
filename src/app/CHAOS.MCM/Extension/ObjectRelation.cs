@@ -37,22 +37,12 @@
             return new ScalarResult((int)result);
         }
 
-        public ScalarResult Delete(ICallContext callContext, Guid object1GUID, Guid object2GUID, uint objectRelationTypeID)
+        // todo: implement permision on Delete
+        public ScalarResult Delete(ICallContext callContext, Guid object1Guid, Guid object2Guid, uint objectRelationTypeID)
         {
-            using (var db = DefaultMCMEntities)
-            {
-                int? result = db.ObjectRelation_Delete(object1GUID.ToByteArray(),
-                                                        object2GUID.ToByteArray(),
-                                                        (int)objectRelationTypeID).First();
+            var result = McmRepository.ObjectRelationDelete(object1Guid, object2Guid, objectRelationTypeID);
 
-                if (!result.HasValue)
-                    throw new UnhandledException("ObjectRelation Delete failed on the database");
-
-                if (result == -100)
-                    throw new InsufficientPermissionsException("The user do not have permission to delete object relations");
-
-                return new ScalarResult(result.Value);
-            }
+            return new ScalarResult((int)result);
         } 
     }
 }

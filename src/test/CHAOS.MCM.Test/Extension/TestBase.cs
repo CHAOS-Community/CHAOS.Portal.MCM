@@ -5,6 +5,7 @@ namespace Chaos.Mcm.Test.Extension
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
+    using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
 
@@ -47,6 +48,27 @@ namespace Chaos.Mcm.Test.Extension
                     MetadataXml        = XDocument.Parse("<xml>test xml</xml>"),
                     DateCreated        = new DateTime(1990, 10, 01, 23, 59, 59) 
                 };
+        }
+
+        protected NewObject Make_Object()
+        {
+            return new NewObject
+            {
+                Guid         = new Guid("00000000-0000-0000-0000-000000000001"),
+                ObjectTypeID = 1u
+            };
+        }
+
+        protected FolderInfo Make_FolderInfo()
+        {
+            return new FolderInfo
+            {
+                ID = 1,
+                ParentID = null,
+                FolderTypeID = 1,
+                Name = "test",
+                SubscriptionGUID = new Guid("00000001-0000-0000-0000-000000000000")
+            };
         }
 
         #endregion

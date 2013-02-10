@@ -17,6 +17,7 @@ namespace Chaos.Mcm.Data.Connection
 
     using global::MySql.Data.MySqlClient;
 
+    using DestinationInfo = Chaos.Mcm.Data.Dto.Standard.DestinationInfo;
     using File = Chaos.Mcm.Data.Dto.Standard.File;
     using Folder = Chaos.Mcm.Data.Dto.Standard.Folder;
     using Format = Chaos.Mcm.Data.Dto.Standard.Format;
@@ -246,6 +247,24 @@ namespace Chaos.Mcm.Data.Connection
         #endregion
         #region Object Relation
 
+        public uint ObjectRelationDelete(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                int? result = db.ObjectRelation_Delete(object1Guid.ToByteArray(),
+                                                        object2Guid.ToByteArray(),
+                                                        (int)objectRelationTypeID).First();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("ObjectRelation Delete failed on the database");
+
+                if (result == -100)
+                    throw new InsufficientPermissionsException("The user do not have permission to delete object relations");
+
+                return result;
+            }
+        }
+
         public IList<ObjectRelationInfo> ObjectRelationInfoGet(Guid objectGuid)
         {
             return this.Gateway.ExecuteQuery<ObjectRelationInfo>("ObjectRelationInfo_Get", new MySqlParameter("Object1Guid", objectGuid.ToByteArray()));
@@ -403,6 +422,61 @@ namespace Chaos.Mcm.Data.Connection
                     throw new UnhandledException("SetAccessPointPublishSettings failed on the database, and was rolled back");
 
                 return (uint) result.Value;
+            }
+        }
+
+        #endregion
+        #region Link
+
+        public uint LinkCreate(Guid objectGuid, uint folderID, int objectFolderTypeID)
+        {
+            using (MCMEntities db = DefaultMCMEntities)
+            {
+                var result = db.Object_Folder_Join_Create(objectGuid.ToByteArray(), (int)folderID, 2).FirstOrDefault();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("Link create failed on the database and was rolled back");
+
+                if (result.Value == -100)
+                    throw new InsufficientPermissionsException("User can only create links");
+
+                //                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGuid , true, true, true, true, true ).ToDto().ToList() );
+
+                return result;
+            }
+        }
+
+        public uint LinkUpdate(Guid objectGuid, uint folderID, uint newFolderID)
+        {
+            using (MCMEntities db = DefaultMCMEntities)
+            {
+                var result = db.Object_Folder_Join_Update(objectGuid.ToByteArray(), (int)folderID, (int)newFolderID).First().Value;
+
+                return (uint)result;
+            }
+        }
+
+        public uint LinkDelete(Guid objectGuid, uint folderID)
+        {
+            using (MCMEntities db = DefaultMCMEntities)
+            {
+                var result = db.Object_Folder_Join_Delete(objectGuid.ToByteArray(), (int)folderID).FirstOrDefault();
+
+                if (!result.HasValue)
+                    throw new UnhandledException("Link delete failed on the database and was rolled back");
+
+                return (uint)result;
+            }
+        }
+
+        #endregion
+        #region Destination
+
+        public IEnumerable<DestinationInfo> DestinationGet(uint id)
+        {
+            using (MCMEntities db = DefaultMCMEntities)
+            {
+                return db.DestinationInfo_Get((int?)id).ToDto().ToList();
             }
         }
 

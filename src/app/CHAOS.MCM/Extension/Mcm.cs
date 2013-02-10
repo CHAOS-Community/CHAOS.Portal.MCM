@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using CHAOS;
 using CHAOS.Index.Solr;
-using Chaos.Mcm.Data.EF;
+
 using Chaos.Mcm.Permission;
 using Chaos.Mcm.Exception;
-using Chaos.Portal;
 using Chaos.Portal.Data.Dto.Standard;
 using Chaos.Portal.Exceptions;
-using DestinationInfo = Chaos.Mcm.Data.Dto.Standard.DestinationInfo;
+
 using FolderType = Chaos.Mcm.Data.Dto.Standard.FolderType;
 using FormatType = Chaos.Mcm.Data.Dto.Standard.FormatType;
 using Language = Chaos.Mcm.Data.Dto.Standard.Language;
@@ -169,75 +166,15 @@ namespace Chaos.Mcm.Extension
 		#endregion
         #region Link
 
-        public ScalarResult Link_Create( ICallContext callContext, UUID objectGUID, uint folderID)
-        {
-            using( MCMEntities db = DefaultMCMEntities )
-            {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateLink ) )
-                    throw new InsufficientPermissionsException("User can only create links");
-                
-                // TODO: Manage magical number better (ObjectFolderTypeID:2 is link by default)
-                var result = db.Object_Folder_Join_Create( objectGUID.ToByteArray(), (int) folderID, 2 ).FirstOrDefault();
-
-                if(!result.HasValue)
-                    throw new UnhandledException("Link create failed on the database and was rolled back");
-
-                if( result.Value == -100 )
-                    throw new InsufficientPermissionsException( "User can only create links" );
-
-//                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
-
-                return new ScalarResult( result.Value );
-            }
-        }
-
-        public ScalarResult Link_Update( ICallContext callContext, UUID objectGUID, uint folderID, uint newFolderID )
-        {
-            using( MCMEntities db = DefaultMCMEntities )
-            {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateLink ) )
-                    throw new InsufficientPermissionsException("User does not have permission to update link");
-
-                int result = db.Object_Folder_Join_Update( objectGUID.ToByteArray(), (int) folderID, (int) newFolderID ).First().Value;
-
-//                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
-
-                return new ScalarResult( result );
-            }
-        }
-
-        public ScalarResult Link_Delete( ICallContext callContext, UUID objectGUID, uint folderID )
-        {
-            using( MCMEntities db = DefaultMCMEntities )
-            {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateLink ) )
-                    throw new InsufficientPermissionsException("User does not have permission to delete link");
-
-                var result = db.Object_Folder_Join_Delete( objectGUID.ToByteArray(), (int) folderID ).FirstOrDefault();
-
-                if(!result.HasValue)
-                    throw new UnhandledException("Link delete failed on the database and was rolled back");
-
-//                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGUID , true, true, true, true, true ).ToDto().ToList() );
-
-                return new ScalarResult( result.Value );
-            }
-        }
+        
 
         #endregion
         #region Destination
 
-        public IEnumerable<DestinationInfo> Destination_Get(ICallContext callContext, uint destinationID)
-        {
-            using( MCMEntities db = DefaultMCMEntities )
-            {
-                return db.DestinationInfo_Get( (int?) destinationID ).ToDto().ToList();
-            }
-        }
+        
 
         #endregion
 
 		#endregion
     }
-
 }

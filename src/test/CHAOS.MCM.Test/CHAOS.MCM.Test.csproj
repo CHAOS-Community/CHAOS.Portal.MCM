@@ -56,8 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extension\AMcmExtensionTest.cs" />
+    <Compile Include="Extension\DestinationTest.cs" />
     <Compile Include="Extension\FileTest.cs" />
     <Compile Include="Extension\FormatTest.cs" />
+    <Compile Include="Extension\LinkTest.cs" />
     <Compile Include="Extension\MetadataSchemaTest.cs" />
     <Compile Include="Extension\ObjectTest.cs" />
     <Compile Include="Extension\FolderTest.cs" />

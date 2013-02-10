@@ -56,6 +56,25 @@
 
 
         #endregion
+        #region Delete
+
+        [Test]
+        public void Delete_WithPermission_CallMcmRepositoryReturnOne()
+        {
+            var objectRelation        = this.Make_ObjectRelation();
+            var object1Guid           = new Guid("00000000-0000-0000-0000-000000000001");
+            var object2Guid           = new Guid("00000000-0000-0000-0000-000000000002");
+            uint objectRelationTypeID = 1;
+            
+            McmRepository.Setup(m => m.ObjectRelationDelete(object1Guid, object2Guid, objectRelationTypeID)).Returns(1);
+            
+            var result = objectRelation.Delete(CallContext.Object, object1Guid, object2Guid, objectRelationTypeID);
+
+            McmRepository.Verify(m => m.ObjectRelationDelete(object1Guid, object2Guid, objectRelationTypeID));
+            Assert.AreEqual(1, result.Value);
+        }
+
+        #endregion
         #region Helpers
 
         private ObjectRelation Make_ObjectRelation()

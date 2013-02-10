@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-
-using Chaos.Portal;
-using Chaos.Portal.Data.Dto.Standard;
-using Chaos.Portal.Exceptions;
-
-namespace Chaos.Mcm.Extension
+﻿namespace Chaos.Mcm.Extension
 {
+    using System.Collections.Generic;
+
+    using Chaos.Portal;
+    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Exceptions;
+
     public class ObjectType : AMcmExtension
     {
         #region Business Logic

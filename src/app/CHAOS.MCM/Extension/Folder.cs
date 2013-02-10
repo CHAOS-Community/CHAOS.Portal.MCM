@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CHAOS;
-using CHAOS.Extensions;
-using Chaos.Mcm.Data.Dto;
-using Chaos.Mcm.Data.Dto.Standard;
-using Chaos.Portal;
-using Chaos.Portal.Data.Dto.Standard;
-using Chaos.Portal.Exceptions;
-using FolderPermission = Chaos.Mcm.Data.Dto.Standard.FolderPermission;
-using IFolder = Chaos.Mcm.Permission.IFolder;
-
-namespace Chaos.Mcm.Extension
+﻿namespace Chaos.Mcm.Extension
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    using Chaos.Mcm.Data.Dto;
+    using Chaos.Mcm.Data.Dto.Standard;
+    using Chaos.Portal;
+    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Exceptions;
+    using FolderPermission = Chaos.Mcm.Data.Dto.Standard.FolderPermission;
+    using IFolder = Chaos.Mcm.Permission.IFolder;
+    
     public class Folder : AMcmExtension
     {
         #region Permission
@@ -43,7 +42,7 @@ namespace Chaos.Mcm.Extension
             var folder = PermissionManager.GetFolders(folderID);
 
             // REVIEW: What permissions are required to remove a permission?
-            if (!folder.DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), (Permission.FolderPermission)permission))
+            if (!folder.DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), (Chaos.Mcm.Permission.FolderPermission)permission))
                 throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
             if (userGuid.HasValue)
@@ -61,7 +60,7 @@ namespace Chaos.Mcm.Extension
             if (parentID.HasValue && id.HasValue)
                 throw new ArgumentException("It does not make sense to specficy both ID and ParentID in the same query");
 
-            var permissionEnum = (Permission.FolderPermission) ( permission ?? (uint) Permission.FolderPermission.Read ) | Permission.FolderPermission.Read;
+            var permissionEnum = (Chaos.Mcm.Permission.FolderPermission)(permission ?? (uint)Chaos.Mcm.Permission.FolderPermission.Read) | Chaos.Mcm.Permission.FolderPermission.Read;
             var userGuid       = callContext.User.Guid;
             var groupGuids     = callContext.Groups.Select( group => group.Guid ).ToList();
 
@@ -100,7 +99,7 @@ namespace Chaos.Mcm.Extension
 
 		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID, uint? newParentID )
 		{
-            if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), Permission.FolderPermission.Update))
+            if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), Chaos.Mcm.Permission.FolderPermission.Update))
 				throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
 			var result = McmRepository.UpdateFolder(id, newTitle, newFolderTypeID, newParentID);

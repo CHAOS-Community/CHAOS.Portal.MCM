@@ -62,15 +62,6 @@
 
         #region Helpers
 
-        private NewObject Make_Object()
-        {
-            return new NewObject
-                {
-                    Guid = Guid.NewGuid(),
-                    ObjectTypeID = 1u
-                };
-        }
-
         private Mcm.Extension.Object Make_ObjectExtension()
         {
             return (Mcm.Extension.Object)new Mcm.Extension.Object().WithConfiguration(PermissionManager.Object, McmRepository.Object);

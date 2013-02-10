@@ -8,7 +8,6 @@
     using Chaos.Portal.Exceptions;
     using Chaos.Portal.Extension;
 
-    [PortalExtension(configurationName : "MCM")]
     public class File : AMcmExtension
     {
         #region Business Logic

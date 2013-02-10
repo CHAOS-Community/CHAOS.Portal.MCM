@@ -24,11 +24,13 @@
         uint SetAccessPointPublishSettings(Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate);
         uint UpdateFolder(uint id, string newTitle, uint? newParentID, uint? newFolderTypeID);
 
+        uint ObjectDelete(Guid guid);
         uint ObjectCreate(Guid guid, uint objectTypeID, uint folderID);
         NewObject ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
         IList<NewObject> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false );
         IList<NewObject> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
 
+        uint ObjectRelationDelete(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID);
         uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence);
         uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid);
 
@@ -53,6 +55,10 @@
         uint MetadataSchemaDelete(Guid guid);
         IEnumerable<MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission);
 
-        uint ObjectDelete(Guid guid);
+        uint LinkCreate(Guid objectGuid, uint folderID, int objectFolderTypeID);
+        uint LinkUpdate(Guid objectGuid, uint folderID, uint newFolderID);
+        uint LinkDelete(Guid objectGuid, uint folderID);
+
+        IEnumerable<DestinationInfo> DestinationGet(uint id);
     }
 }
