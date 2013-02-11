@@ -204,16 +204,15 @@ namespace Chaos.Mcm.Data
         #endregion
         #region Folder
 
-        public IList<Folder> FolderGet(Guid? userGuid = null, Guid? objectGuid = null)
+        public IList<Folder> FolderGet(uint? id = null, Guid? userGuid = null, Guid? objectGuid = null)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                var folders = db.Folder_Get(null, objectGuid.ToByteArray()).Select(item => PermissionManager.GetFolders((uint)item.ID));
-            //
-            //
-            //                return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGUID, groupGUIDs, permissions, folders);
-            //            }
+            if (userGuid.HasValue) throw new NotImplementedException("Folder get by userGuid is not implemented");
+
+            return Gateway.ExecuteQuery<Folder>("Folder_Get", new[]
+                   {
+                       new MySqlParameter("ID", id), 
+                       new MySqlParameter("ObjectGuid", objectGuid.HasValue ? objectGuid.Value.ToByteArray() : null), 
+                   });
         }
 
         public int FolderDelete(uint id)
@@ -442,15 +441,6 @@ namespace Chaos.Mcm.Data
 //                if(!result.HasValue) throw new UnhandledException("Folder_Group_Join_Set failed on the database and was rolled back");
 //
 //                return (uint)result.Value;
-//            }
-        }
-
-        public IEnumerable<Folder> GetFolder()
-        {
-            throw new NotImplementedException();
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                return db.Folder_Get(null, null).ToList().ToDto();
 //            }
         }
 

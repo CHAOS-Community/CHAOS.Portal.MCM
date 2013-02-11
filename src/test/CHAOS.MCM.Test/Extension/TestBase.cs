@@ -98,7 +98,7 @@ namespace Chaos.Mcm.Test.Extension
         {
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Groups).Returns(groups);
-            McmRepository.Setup(m => m.FolderGet(null, objectGuid)).Returns(folderDtos);
+            McmRepository.Setup(m => m.FolderGet(null, null, objectGuid)).Returns(folderDtos);
             PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders( userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), FolderPermission.Read, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
         }
 
@@ -106,11 +106,11 @@ namespace Chaos.Mcm.Test.Extension
         {
             var userInfo    = new UserInfo { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") };
             var groups     = new IGroup[] { new Group { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") } };
-            var folderDtos = new List<Data.Dto.Standard.Folder> { new Data.Dto.Standard.Folder { ID = 1 } };
+            var folderDtos = new List<Folder> { new Folder { ID = 1 } };
 
             this.CallContext.SetupGet(p => p.User).Returns(userInfo);
             this.CallContext.SetupGet(p => p.Groups).Returns(groups);
-            this.McmRepository.Setup(m => m.FolderGet(null, It.IsAny<Guid>())).Returns(folderDtos);
+            this.McmRepository.Setup(m => m.FolderGet(null, null, It.IsAny<Guid>())).Returns(folderDtos);
             this.PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), permission, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
         }
 

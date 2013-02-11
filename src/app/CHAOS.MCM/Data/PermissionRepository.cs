@@ -23,7 +23,7 @@ namespace Chaos.Mcm.Data
 
         public IEnumerable<IFolder> GetFolder()
         {
-            return this._mcmRepository.GetFolder();
+            return this._mcmRepository.FolderGet();
         }
 
         public IEnumerable<IFolderUserJoin> GetFolderUserJoin()

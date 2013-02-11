@@ -153,7 +153,7 @@
         {
             var repository     = Make_McmRepository();
             var objToCreate    = Make_ObjectTheDoesntExist();
-            var existingFolder = Make_FolderTheExist();
+            var existingFolder = this.Make_FolderThatExist();
 
             var result = repository.ObjectCreate(objToCreate.Guid, objToCreate.ObjectTypeID, existingFolder.ID);
 
@@ -255,7 +255,7 @@
         {
             var repository         = Make_McmRepository();
             var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
-            var expectedFolderInfo = this.Make_FolderTheExist();
+            var expectedFolderInfo = this.Make_FolderThatExist();
 
             var result = repository.ObjectGet(objectGuid, false, false, false, true);
             
@@ -404,7 +404,7 @@
         {
             var repository         = Make_McmRepository();
             var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
-            var expectedFolderInfo = this.Make_FolderTheExist();
+            var expectedFolderInfo = this.Make_FolderThatExist();
             var folderID = (uint?)1;
 
             var result = repository.ObjectGet(folderID, includeFolders: true).First();
@@ -443,11 +443,26 @@
         #endregion
         #region Folders
 
-//        [Test]
-//        public void FolderGet_()
-//        {
-//            
-//        }
+        [Test]
+        public void FolderGet_GivenObjectGuid_ReturnFoldersWhereTheObjectIsLocated()
+        {
+            var repository     = Make_McmRepository();
+            var objectInFolder = Make_ObjectWithRelations();
+            var expected       = Make_FolderThatExist();
+
+            var results = repository.FolderGet(null, objectInFolder.Guid);
+            Assert.AreEqual(expected.ID, results[0].ID);
+        }
+
+        [Test]
+        public void FolderGet_GivenNoParameters_ReturnAllFolders()
+        {
+            var repository = Make_McmRepository();
+            var expected   = Make_FolderThatExist();
+
+            var results = repository.FolderGet();
+            Assert.AreEqual(expected.ID, results[0].ID);
+        }
 
         #endregion
         #region Helpers
@@ -460,6 +475,16 @@
                     ObjectTypeID = 1,
                     DateCreated  = new DateTime(1990, 10, 01, 23, 59, 59)
                 };
+        }
+
+        private Object Make_ObjectWithRelations()
+        {
+            return new Object
+            {
+                Guid = new Guid("00000000-0000-0000-0000-000000000002"),
+                ObjectTypeID = 1,
+                DateCreated = new DateTime(1990, 10, 01, 23, 59, 59)
+            };
         }
 
         private Object Make_ObjectTheDoesntExist()
@@ -485,7 +510,7 @@
                        };
         }
 
-        private FolderInfo Make_FolderTheExist()
+        private FolderInfo Make_FolderThatExist()
         {
             return new FolderInfo
                        {

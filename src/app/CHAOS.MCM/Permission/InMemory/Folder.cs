@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using CHAOS;
-using Chaos.Mcm.Data.Dto;
+﻿using Chaos.Mcm.Data.Dto;
 
 namespace Chaos.Mcm.Permission.InMemory
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class Folder : IFolder
     {
         #region Properties
@@ -13,7 +13,7 @@ namespace Chaos.Mcm.Permission.InMemory
         public uint ID { get; set; }
         public uint? ParentID { get; set; }
         public uint FolderTypeID { get; set; }
-        public UUID SubscriptionGUID { get; set; }
+        public Guid? SubscriptionGuid { get; set; }
         public string Name { get; set; }
         public DateTime DateCreated { get; set; }        
         public IList<IFolder> SubFolders { get; private set; }

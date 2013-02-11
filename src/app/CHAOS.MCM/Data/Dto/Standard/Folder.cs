@@ -1,10 +1,10 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto.Standard;
-
-namespace Chaos.Mcm.Data.Dto.Standard
+﻿namespace Chaos.Mcm.Data.Dto.Standard
 {
+    using System;
+
+    using CHAOS.Serialization;
+    using Chaos.Portal.Data.Dto.Standard;
+
 	public class Folder : Result, IFolder
 	{
 		#region Properties
@@ -19,7 +19,7 @@ namespace Chaos.Mcm.Data.Dto.Standard
 		public uint FolderTypeID { get; set; }
 
 		[Serialize]
-		public UUID SubscriptionGUID { get; set; }
+		public Guid? SubscriptionGuid { get; set; }
 
 		[Serialize]
 		public string Name { get; set; }
@@ -30,12 +30,12 @@ namespace Chaos.Mcm.Data.Dto.Standard
 		#endregion
 		#region constructors
 
-		public Folder( uint id, uint folderTypeID, uint? parentID, Guid? subscriptionGUID, string name, DateTime dateCreated)
+		public Folder( uint id, uint folderTypeID, uint? parentID, Guid? subscriptionGuid, string name, DateTime dateCreated)
 		{
 			ID               = id;
 			FolderTypeID     = folderTypeID;
 			ParentID         = parentID;
-			SubscriptionGUID = subscriptionGUID.HasValue ? new UUID( subscriptionGUID.Value.ToByteArray() ) : null;
+			SubscriptionGuid = subscriptionGuid;
 			Name             = name;
 			DateCreated      = dateCreated;
 		}

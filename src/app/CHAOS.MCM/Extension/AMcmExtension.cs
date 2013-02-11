@@ -85,10 +85,10 @@
         public bool HasPermissionToObject(ICallContext callContext, Guid objectGuid, FolderPermission permissions)
 	    {
             //review: look into using the folder returned from the database directly for the permission check
-            var folders    = McmRepository.FolderGet(null, objectGuid).Select(item => PermissionManager.GetFolders(item.ID));
+            var folders    = McmRepository.FolderGet(null, null, objectGuid).Select(item => PermissionManager.GetFolders(item.ID));
             var userGuid   = callContext.User.Guid;
 			var groupGuids = callContext.Groups.Select( item => item.Guid );
-
+                   
             return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, permissions, folders);
 	    }
 

@@ -18,9 +18,11 @@
         uint SetFolderUserJoin(Guid userGuid, uint folderID, uint permission);
         IEnumerable<FolderGroupJoin> GetFolderGroupJoin();
         uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission);
-        IEnumerable<Folder> GetFolder();
-        int FolderDelete(uint id);
+
         uint CreateFolder(Guid userGuid, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID);
+        int FolderDelete(uint id);
+        IList<Folder> FolderGet(uint? id = null, Guid? userGuid = null, Guid? objectGuid = null);
+
         IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids);
         IEnumerable<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission);
         uint SetAccessPointPublishSettings(Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate);
@@ -39,8 +41,6 @@
         IEnumerable<Metadata> MetadataGet(Guid guid);
 
         uint MetadataSet(Guid objectGuid, Guid metadataGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml, Guid userGuid);
-
-        IList<Folder> FolderGet(Guid? userGuid = null, Guid? objectGuid = null);
 
         IList<Format> FormatGet(uint? id = null, string name = null);
         uint FormatCreate(uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension);

@@ -28,6 +28,7 @@
             _mappings.Add(typeof(FolderInfo), new FolderInfoMapping());
             _mappings.Add(typeof(ObjectFolder), new ObjectFolderMapping());
             _mappings.Add(typeof(ObjectAccessPoint), new AccesspointObjectJoinMapping());
+            _mappings.Add(typeof(Folder), new FolderMapping());
         }
 
         public static IEnumerable<TResultType> Map<TResultType>(this IDataReader reader)
