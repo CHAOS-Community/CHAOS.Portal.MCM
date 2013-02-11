@@ -30,6 +30,7 @@
             _mappings.Add(typeof(ObjectAccessPoint), new AccesspointObjectJoinMapping());
             _mappings.Add(typeof(Folder), new FolderMapping());
             _mappings.Add(typeof(Format), new FormatMapping());
+            _mappings.Add(typeof(ObjectType), new ObjectTypeMapping());
         }
 
         public static IEnumerable<TResultType> Map<TResultType>(this IDataReader reader)

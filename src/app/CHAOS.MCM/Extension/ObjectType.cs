@@ -10,7 +10,7 @@
     {
         #region Business Logic
 
-        public Data.Dto.Standard.ObjectType Set(ICallContext callContext, string name)
+        public Data.Dto.ObjectType Set(ICallContext callContext, string name)
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
@@ -24,7 +24,7 @@
             return result[0];
 		}
 
-		public IEnumerable<Data.Dto.Standard.ObjectType> Get( ICallContext callContext )
+		public IEnumerable<Data.Dto.ObjectType> Get( ICallContext callContext )
 		{
 		    return McmRepository.ObjectTypeGet(null, null);
 		}

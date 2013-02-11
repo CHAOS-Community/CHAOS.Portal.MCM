@@ -537,6 +537,20 @@
         }
 
         #endregion
+        #region ObjectType
+
+        [Test]
+        public void ObjectTypeGet_GivenNoParameters_ReturnObjectType()
+        {
+            var repository = this.Make_McmRepository();
+
+            var results = repository.ObjectTypeGet(null, null);
+
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual("Asset", results[0].Name);
+        }
+
+        #endregion
         #region Helpers
 
         private Format Make_FormatThatExist()

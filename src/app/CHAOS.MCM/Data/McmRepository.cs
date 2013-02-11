@@ -309,13 +309,13 @@ namespace Chaos.Mcm.Data
 
         }
 
-        public IList<ObjectType> ObjectTypeGet(uint? expectedID, string name)
+        public IList<ObjectType> ObjectTypeGet(uint? id, string name)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                return db.ObjectType_Get(result, null).ToDto().First();
-            //            }
+            return Gateway.ExecuteQuery<ObjectType>("ObjectType_Get", new[]
+                   {
+                       new MySqlParameter("ID", id), 
+                       new MySqlParameter("Name", name), 
+                   });
         }
 
         #endregion

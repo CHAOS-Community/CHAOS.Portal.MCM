@@ -47,7 +47,7 @@
 
         uint ObjectTypeDelete(uint id);
         uint ObjectTypeSet(string name);
-        IList<ObjectType> ObjectTypeGet(uint? expectedID, string name);
+        IList<ObjectType> ObjectTypeGet(uint? id, string name);
 
         uint FileDelete(uint id);
         uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID);

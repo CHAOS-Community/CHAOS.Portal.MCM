@@ -8,6 +8,8 @@
 
     using NUnit.Framework;
 
+    using ObjectType = Chaos.Mcm.Data.Dto.ObjectType;
+
     [TestFixture]
     public class ObjectTypeTest : TestBase
     {
@@ -32,7 +34,7 @@
         {
             var extension = Make_ObjectTypeExtension();
             var expected  = Make_ObjectType();
-            McmRepository.Setup(m => m.ObjectTypeGet(null, null)).Returns(new List<Data.Dto.Standard.ObjectType>{expected});
+            McmRepository.Setup(m => m.ObjectTypeGet(null, null)).Returns(new List<ObjectType>{expected});
 
             var results   = extension.Get(CallContext.Object);
 
@@ -56,18 +58,18 @@
 
         #region Helpers
 
-        private Data.Dto.Standard.ObjectType Make_ObjectType()
+        private ObjectType Make_ObjectType()
         {
-            return new Data.Dto.Standard.ObjectType
+            return new ObjectType
                 {
                     ID = 1,
                     Name = "some type"
                 };
         }
 
-        private ObjectType Make_ObjectTypeExtension()
+        private Chaos.Mcm.Extension.ObjectType Make_ObjectTypeExtension()
         {
-            return (ObjectType)new ObjectType().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object); ;
+            return (Chaos.Mcm.Extension.ObjectType)new Chaos.Mcm.Extension.ObjectType().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object); ;
         }
 
         #endregion
