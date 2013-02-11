@@ -321,15 +321,17 @@ namespace Chaos.Mcm.Data
         #endregion
         #region Metadata Schema
 
-        public IEnumerable<Dto.Standard.MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission )
+        public IList<MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission )
         {
-            throw new NotImplementedException();
-//            using( var db = this.CreateMcmEntities() )
-//            {
-//                var sGroupGuids = string.Join(",", groupGuids.Select(guid => guid.ToUUID().ToString().Replace("-", "")));
-//
-//                return db.MetadataSchema_Get(userGuid.ToByteArray(), sGroupGuids, metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null, (int?)permission).ToList().ToDto();
-//			}
+            var guids = String.Join(",", groupGuids.Select(item => item.ToString().Replace("-", "")));
+
+            return Gateway.ExecuteQuery<MetadataSchema>("MetadataSchema_Get", new[]
+                {
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("GroupGuids", guids), 
+                    new MySqlParameter("MetadataSchemaGuid", metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null), 
+                    new MySqlParameter("PermissionRequired", (int?)permission), 
+                });
         }
 
         public uint MetadataSchemaSet(string name, XDocument schemaXml, Guid userGuid, Guid guid)

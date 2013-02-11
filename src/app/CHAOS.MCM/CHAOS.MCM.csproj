@@ -64,7 +64,8 @@
     <Compile Include="Binding\MetadataBinding.cs" />
     <Compile Include="Data\Connection\IReaderMapping.cs" />
     <Compile Include="Data\Connection\Mapping\AccesspointObjectJoinMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\Copy of AccesspointObjectJoinMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\MetadataSchemaMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\ObjectTypeMapping.cs" />
     <Compile Include="Data\Connection\Mapping\FormatMapping.cs" />
     <Compile Include="Data\Connection\Mapping\FolderMapping.cs" />
     <Compile Include="Data\Connection\Mapping\ObjectFolderMapping.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Data\Connection\MySql\Gateway.cs" />
     <Compile Include="Data\Connection\ReaderExtensions.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
+    <Compile Include="Data\Dto\MetadataSchema.cs" />
     <Compile Include="Data\Dto\ObjectAccessPoint.cs" />
     <Compile Include="Data\Dto\FileInfo.cs" />
     <Compile Include="Data\Dto\Metadata.cs" />
@@ -106,7 +108,6 @@
     <Compile Include="Data\Dto\IFolderUserJoin.cs" />
     <Compile Include="Data\Dto\Standard\Language.cs" />
     <Compile Include="Data\Dto\Standard\Link.cs" />
-    <Compile Include="Data\Dto\Standard\MetadataSchema.cs" />
     <Compile Include="Data\Dto\Standard\ObjectRelationType.cs" />
     <Compile Include="Data\Dto\Standard\Permission.cs" />
     <Compile Include="Data\IMcmRepository.cs" />

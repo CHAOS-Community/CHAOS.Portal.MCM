@@ -1,8 +1,8 @@
 CREATE PROCEDURE MetadataSchema_Get
 (
-    IN  UserGUID            BINARY(16),
-    IN  GroupGUIDs          VARCHAR(21845),
-    IN  MetadataSchemaGUID  BINARY(16),
+    IN  UserGuid            BINARY(16),
+    IN  GroupGuids          VARCHAR(21845),
+    IN  MetadataSchemaGuid  BINARY(16),
     IN  PermissionRequired  INTEGER UNSIGNED
 )
 BEGIN
@@ -12,28 +12,28 @@ BEGIN
                                      'LEFT OUTER JOIN MetadataSchema_Group_Join ON MS.GUID = MetadataSchema_Group_Join.MetadataSchemaGUID ',
                                      'LEFT OUTER JOIN MetadataSchema_User_Join  ON MS.GUID = MetadataSchema_User_Join.MetadataSchemaGUID ',
                               'WHERE  (1=1) ');
-    IF( MetadataSchemaGUID IS NOT NULL ) THEN
+    IF( MetadataSchemaGuid IS NOT NULL ) THEN
         SET @sql_text := concat( @sql_text, 
-                                     'AND (unhex(''',hex(MetadataSchemaGUID),''') = MS.GUID ) ' );
+                                     'AND (unhex(''',hex(MetadataSchemaGuid),''') = MS.GUID ) ' );
     END IF;
-    IF( GroupGUIDs IS NOT NULL ) THEN
+    IF( GroupGuids IS NOT NULL ) THEN
         SET @sql_text := concat( @sql_text, 
                                      'AND '
                                      '((  ',
                                         'MetadataSchema_Group_Join.Permission & ',PermissionRequired,' = ',PermissionRequired,' AND '
-                                        '(MetadataSchema_Group_Join.GroupGUID = unhex(''', REPLACE(GroupGUIDs,',',''') OR MetadataSchema_Group_Join.GroupGUID = unhex('''), ''')) ',
+                                        '(MetadataSchema_Group_Join.GroupGUID = unhex(''', REPLACE(GroupGuids,',',''') OR MetadataSchema_Group_Join.GroupGUID = unhex('''), ''')) ',
                                      ') OR ',
                                      '(',
-                                         'MetadataSchema_User_Join.UserGUID = unhex(''',hex(UserGUID),''') AND ',
+                                         'MetadataSchema_User_Join.UserGUID = unhex(''',hex(UserGuid),''') AND ',
                                          'MetadataSchema_User_Join.Permission & ',PermissionRequired,' = ',PermissionRequired,
 
                                      ')); ');
 
-    ELSEIF( UserGUID IS NOT NULL ) THEN
+    ELSEIF( UserGuid IS NOT NULL ) THEN
         SET @sql_text :=  concat( @sql_text,
                                      'AND ',
                                      '(',
-                                         'MetadataSchema_User_Join.UserGUID = unhex(''',hex(UserGUID),''') AND ',
+                                         'MetadataSchema_User_Join.UserGUID = unhex(''',hex(UserGuid),''') AND ',
                                          'MetadataSchema_User_Join.Permission & ',PermissionRequired,' = ',PermissionRequired,
                                      '); ');
     ELSE

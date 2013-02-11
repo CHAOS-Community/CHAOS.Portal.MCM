@@ -31,6 +31,7 @@
             _mappings.Add(typeof(Folder), new FolderMapping());
             _mappings.Add(typeof(Format), new FormatMapping());
             _mappings.Add(typeof(ObjectType), new ObjectTypeMapping());
+            _mappings.Add(typeof(MetadataSchema), new MetadataSchemaMapping());
         }
 
         public static IEnumerable<TResultType> Map<TResultType>(this IDataReader reader)

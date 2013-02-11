@@ -1,6 +1,7 @@
 ﻿namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
 {
     using System;
+    using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
     using System.Xml.Linq;
@@ -8,6 +9,7 @@
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
+    using Chaos.Mcm.Permission;
 
     using NUnit.Framework;
 
@@ -577,7 +579,35 @@
         }
 
         #endregion
+        #region MetadataSchema
+
+        [Test]
+        public void MetadataSchemaGet_GivenUserGuid_ReturnTheMetadataSchemasTheUserHasReadPermissionTo()
+        {
+            var repository = Make_McmRepository();
+            var userGuid   = new Guid("00000000-0000-0000-0000-000000001000");
+            var groupGuids = new Guid[0];
+            var expected   = Make_MetadataSchemaThatExist();
+
+            var results = repository.MetadataSchemaGet(userGuid, groupGuids, null, MetadataSchemaPermission.Read);
+
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(expected.Name, results[0].Name);
+        }
+
+        #endregion
         #region Helpers
+
+        private MetadataSchema Make_MetadataSchemaThatExist()
+        {
+            return new MetadataSchema
+            {
+                Guid = new Guid("00000000-0000-0000-0000-000000000100"),
+                Name = "test schema",
+                SchemaXml = XDocument.Parse("<xml/>"),
+                DateCreated = new DateTime(1990, 10, 01, 23, 59, 59),
+            };
+        }
 
         private ObjectType Make_ObjectTypeThatExist()
         {

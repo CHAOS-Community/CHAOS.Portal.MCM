@@ -78,9 +78,9 @@
             return new MetadataSchema().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object) as MetadataSchema;
         }
 
-        private static Data.Dto.Standard.MetadataSchema Make_MetadataSchema()
+        private static Data.Dto.MetadataSchema Make_MetadataSchema()
         {
-            return new Data.Dto.Standard.MetadataSchema
+            return new Data.Dto.MetadataSchema
                 {
                     Guid        = new Guid("463c7500-a154-5a46-b11b-f96f9b3df920"),
                     Name        = "some name",

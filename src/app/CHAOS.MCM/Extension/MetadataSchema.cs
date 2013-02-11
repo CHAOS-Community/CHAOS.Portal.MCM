@@ -14,7 +14,7 @@
     {
         #region Business Logic
 
-		public IEnumerable<Data.Dto.Standard.MetadataSchema> Get( ICallContext callContext, Guid? guid )
+		public IEnumerable<Data.Dto.MetadataSchema> Get( ICallContext callContext, Guid? guid )
 		{
 		    var userGuid   = callContext.User.Guid;
 		    var groupGuids = callContext.Groups.Select(item => item.Guid);
@@ -22,7 +22,7 @@
 		    return McmRepository.MetadataSchemaGet(userGuid, groupGuids, guid, MetadataSchemaPermission.Read);
 		}
 
-        public Data.Dto.Standard.MetadataSchema Set(ICallContext callContext, string name, XDocument schemaXml, Guid guid = new Guid())
+        public Data.Dto.MetadataSchema Set(ICallContext callContext, string name, XDocument schemaXml, Guid guid = new Guid())
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "Manage permissions are required to create metadata schemas" );
