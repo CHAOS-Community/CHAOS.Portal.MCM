@@ -542,7 +542,7 @@
         [Test]
         public void ObjectTypeGet_GivenNoParameters_ReturnObjectType()
         {
-            var repository = this.Make_McmRepository();
+            var repository = Make_McmRepository();
 
             var results = repository.ObjectTypeGet(null, null);
 
@@ -553,7 +553,7 @@
         [Test]
         public void ObjectTypeSet_GivenName_ReturnIDShouldSetObjectTypeInDatabase()
         {
-            var repository   = this.Make_McmRepository();
+            var repository   = Make_McmRepository();
             var expectedName = "name";
 
             var id = repository.ObjectTypeSet(expectedName);
@@ -563,8 +563,30 @@
             Assert.AreEqual(expectedName, results[0].Name);
         }
 
+        [Test]
+        public void ObjectTypeDelete_GivenID_ReturnOneAndShouldDeleteOnDatabase()
+        {
+            var repository   = Make_McmRepository();
+            var typeToDelete = Make_ObjectTypeThatExist();
+
+            var result = repository.ObjectTypeDelete(typeToDelete.ID);
+
+            Assert.AreEqual(1, result);
+            var results = repository.ObjectTypeGet(typeToDelete.ID, null);
+            Assert.IsEmpty(results);
+        }
+
         #endregion
         #region Helpers
+
+        private ObjectType Make_ObjectTypeThatExist()
+        {
+            return new ObjectType
+            {
+                ID = 10,
+                Name = "testtype"
+            };
+        }
 
         private Format Make_FormatThatExist()
         {

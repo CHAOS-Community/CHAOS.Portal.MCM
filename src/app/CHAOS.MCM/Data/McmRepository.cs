@@ -287,16 +287,15 @@ namespace Chaos.Mcm.Data
 
         public uint ObjectTypeDelete(uint id)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                var result = db.ObjectType_Delete((int?)id, null).First();
-            //
-            //                if (result.Value == -100)
-            //                    throw new InsufficientPermissionsException("User does not have permission to delete an Object Type");
-            //
-            //                return result.Value;
-            //            }
+            var result = Gateway.ExecuteNonQuery("ObjectType_Delete", new[]
+                {
+                    new MySqlParameter("ID", id),
+                    new MySqlParameter("Name", null) 
+                });
+
+            if (result == -100) throw new InsufficientPermissionsException("User does not have permission to delete an Object Type");
+
+            return (uint)result;
         }
 
         public uint ObjectTypeSet(string name, uint? id = null)

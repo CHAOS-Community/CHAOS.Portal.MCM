@@ -38,3 +38,5 @@ INSERT INTO Object_Folder_Join(ObjectGUID, FolderID, ObjectFolderTypeID, DateCre
 
 INSERT INTO AccessPoint_Object_Join(AccessPointGUID, ObjectGUID ,StartDate, EndDate, DateCreated, DateModified)VALUES
 (unhex('00100000100000000000000000000000'),unhex('00000000000000000000000000000002'),'1990-10-01 23:59:59',NULL,'1990-10-01 23:59:59',NULL);
+
+INSERT INTO ObjectType( ID, Name ) VALUES( 10, 'testtype' );
