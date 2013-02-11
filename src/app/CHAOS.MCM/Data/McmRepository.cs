@@ -350,16 +350,11 @@ namespace Chaos.Mcm.Data
 
         public uint MetadataSchemaDelete(Guid guid)
         {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var result = db.MetadataSchema_Delete(guid.ToByteArray()).FirstOrDefault();
-//
-//                if (result == null || !result.HasValue || result.Value != 1)
-//                    throw new UnhandledException("MetadataSchema was not deleted");
-//
-//                return new ScalarResult(result.Value);
-//            }
+            var result = Gateway.ExecuteNonQuery("MetadataSchema_Delete", new MySqlParameter("Guid", guid.ToByteArray()));
+
+            if (result == -200) throw new UnhandledException("MetadataSchema_Delete failed on the database, and was rolled back");
+
+            return (uint)result;
         }
 
         #endregion

@@ -1,6 +1,6 @@
 CREATE PROCEDURE MetadataSchema_Delete
 (
-    GUID        BINARY(16)
+    Guid	BINARY(16)
 )
 BEGIN
     DECLARE EXIT HANDLER
@@ -14,15 +14,15 @@ BEGIN
 
         DELETE FROM MetadataSchema_User_Join
         WHERE  
-            MetadataSchemaGUID = GUID;
+            MetadataSchemaGUID = Guid;
          
         DELETE FROM MetadataSchema_Group_Join
         WHERE
-            MetadataSchemaGUID = GUID;
+            MetadataSchemaGUID = Guid;
           
         DELETE FROM MetadataSchema
         WHERE 
-            MetadataSchema.GUID = GUID;
+            MetadataSchema.GUID = Guid;
          
     COMMIT;
          

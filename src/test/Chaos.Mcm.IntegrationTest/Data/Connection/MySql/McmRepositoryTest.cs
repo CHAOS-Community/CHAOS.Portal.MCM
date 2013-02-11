@@ -595,6 +595,21 @@
             Assert.AreEqual(expected.Name, results[0].Name);
         }
 
+        [Test]
+        public void MetadataDelete_GivenGuid_ReturnOneAndShouldDeleteFromDatabase()
+        {
+            var repository = Make_McmRepository();
+            var userGuid = new Guid("00000000-0000-0000-0000-000000001000");
+            var groupGuids = new Guid[0];
+            var expected = Make_MetadataSchemaThatExist();
+
+            var result = repository.MetadataSchemaDelete(expected.Guid);
+
+            Assert.AreEqual(1, result);
+            var shouldBeEmpty = repository.MetadataSchemaGet(userGuid, groupGuids, null, MetadataSchemaPermission.Read);
+            Assert.IsEmpty(shouldBeEmpty);
+        }
+
         #endregion
         #region Helpers
 
@@ -602,7 +617,7 @@
         {
             return new MetadataSchema
             {
-                Guid = new Guid("00000000-0000-0000-0000-000000000100"),
+                Guid = new Guid("00000000-0000-0000-0000-000000000200"),
                 Name = "test schema",
                 SchemaXml = XDocument.Parse("<xml/>"),
                 DateCreated = new DateTime(1990, 10, 01, 23, 59, 59),
