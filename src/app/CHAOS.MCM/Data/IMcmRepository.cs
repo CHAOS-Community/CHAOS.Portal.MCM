@@ -19,7 +19,7 @@
         IEnumerable<FolderGroupJoin> GetFolderGroupJoin();
         uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission);
 
-        uint CreateFolder(Guid userGuid, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID);
+        uint FolderCreate(Guid userGuid, Guid? subscriptionGuid, string name, uint? parentID, uint folderTypeID);
         int FolderDelete(uint id);
         IList<Folder> FolderGet(uint? id = null, Guid? userGuid = null, Guid? objectGuid = null);
 

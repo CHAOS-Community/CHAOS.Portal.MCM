@@ -2,6 +2,7 @@
 VALUES(unhex('00100000100000000000000000000000'),unhex('01000000000000000000000000000000'),'test','1990-10-01 23:59:59');
 
 INSERT INTO Folder(ID, ParentID, FolderTypeID, SubscriptionGUID, Name, DateCreated) VALUES(1,NULL,1,unhex('01000000000000000000000000000000'),'test','1990-10-01 23:59:59');
+INSERT INTO Folder(ID, ParentID, FolderTypeID, SubscriptionGUID, Name, DateCreated) VALUES(2,1,1,null,'sub test','1990-10-01 23:59:59');
 
 INSERT INTO Destination(ID, SubscriptionGUID, Name, DateCreated) VALUES (1, unhex('01000000000000000000000000000000'),'test dest','1990-10-01 23:59:59');
 INSERT INTO AccessProvider(ID, DestinationID, BasePath, StringFormat, DateCreated, Token ) VALUES(1,1,'http://bogus.com','{BASE_PATH}{FOLDER_PATH}{FILENAME}','1990-10-01 23:59:59','HTTP Download');

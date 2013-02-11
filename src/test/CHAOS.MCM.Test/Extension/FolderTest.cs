@@ -263,7 +263,7 @@
             var subscriptionGuid  = new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661");
 
             PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
-            McmRepository.Setup(m => m.CreateFolder(userInfo.Guid, subscriptionGuid, "title", null, 1)).Returns(folderInfo.ID);
+            McmRepository.Setup(m => m.FolderCreate(userInfo.Guid, subscriptionGuid, "name", null, 1)).Returns(folderInfo.ID);
             McmRepository.Setup(m => m.GetFolderInfo(new[] { folderInfo.ID })).Returns(new[] { folderInfo });
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Subscriptions).Returns(new[] { new SubscriptionInfo { Guid = subscriptionGuid, Permission = SubscriptionPermission.CreateFolder }, });
@@ -272,7 +272,7 @@
             var extension = new Mcm.Extension.Folder();
             extension.WithConfiguration(PermissionManager.Object, McmRepository.Object);
 
-            var result = extension.Create(CallContext.Object, subscriptionGuid, "title", null, 1);
+            var result = extension.Create(CallContext.Object, subscriptionGuid, "name", null, 1);
 
             Assert.AreEqual(1001, result.ID);
         }
@@ -291,7 +291,7 @@
 
             PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
             folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.Write)).Returns(true);
-            McmRepository.Setup(m => m.CreateFolder(userInfo.Guid, null, "title", 100, 1)).Returns(folderInfo.ID);
+            McmRepository.Setup(m => m.FolderCreate(userInfo.Guid, null, "name", 100, 1)).Returns(folderInfo.ID);
             McmRepository.Setup(m => m.GetFolderInfo(new[] { folderInfo.ID })).Returns(new[] { folderInfo });
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Subscriptions).Returns(new SubscriptionInfo[0]);
@@ -300,7 +300,7 @@
             var module = new Chaos.Mcm.Extension.Folder();
             module.WithConfiguration(PermissionManager.Object, McmRepository.Object);
 
-            var result = module.Create(CallContext.Object, null, "title", 100, 1);
+            var result = module.Create(CallContext.Object, null, "name", 100, 1);
 
             Assert.AreEqual(1001, result.ID);
         }

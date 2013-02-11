@@ -217,40 +217,30 @@ namespace Chaos.Mcm.Data
 
         public int FolderDelete(uint id)
         {
-            throw new NotImplementedException();
-//            using (var db = this.CreateMcmEntities())
-//            {
-//                var result = db.Folder_Delete((int?) id).FirstOrDefault();
-//
-//                if(result.HasValue && result.Value == -200)
-//                    throw new UnhandledException("An unknown error occured on folder_delete and was rolled back");
-//
-//                if(result.HasValue && result.Value == -50)
-//                    throw new InsufficientPermissionsException("The folder has to be empty to be deleted");
-//
-//                return result.Value;
-//            }
+            var result = Gateway.ExecuteNonQuery("Folder_Delete", new MySqlParameter("ID", id));
+
+            if (result == -200) throw new UnhandledException("An unknown error occured on folder_delete and was rolled back");
+            if (result == -50) throw new FolderNotEmptyException("The folder has to be empty to be deleted");
+
+            return (int)result;
         }
 
-        public uint CreateFolder(Guid userGuid, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID )
+        public uint FolderCreate(Guid userGuid, Guid? subscriptionGuid, string name, uint? parentID, uint folderTypeID )
         {
-            throw new NotImplementedException();
-//            using (var db = this.CreateMcmEntities())
-//            {
-//                var result = db.Folder_Create(userGuid.ToByteArray(),
-//                                              subscriptionGuid.HasValue ? subscriptionGuid.Value.ToByteArray() : null,
-//                                              title,
-//                                              (int?) parentID,
-//                                              (int?) folderTypeID).FirstOrDefault();
-//
-//                if(result.HasValue && result == -200)
-//                    throw new UnhandledException("An unknown error occured on Folder_Create and was rolled back");
-//
-//                if(result.HasValue && result == -10)
-//                    throw new UnhandledException("Invalid input parameters");
-//
-//                return (uint) result.Value;
-//            }
+            var result = Gateway.ExecuteNonQuery("Folder_Create", new[]
+                {
+                   new MySqlParameter("UserGuid", userGuid.ToByteArray()),  
+                   new MySqlParameter("SubscriptionGuid", subscriptionGuid.HasValue ? subscriptionGuid.Value.ToByteArray() : null),  
+                   new MySqlParameter("Name", name),  
+                   new MySqlParameter("ParentID", parentID),  
+                   new MySqlParameter("FolderTypeID", folderTypeID),  
+                });
+
+            if (result == -200) throw new UnhandledException("An unknown error occured on Folder_Create and was rolled back");
+
+            if (result == -10) throw new UnhandledException("Invalid input parameters");
+
+            return (uint)result;
         }
 
         public uint UpdateFolder(uint id, string newTitle, uint? newParentID, uint? newFolderTypeID)

@@ -63,8 +63,7 @@
 
                 connnection.Open();
 
-                var executeScalar = command.ExecuteScalar();
-                return (long) executeScalar;
+                return System.Convert.ToInt64(command.ExecuteScalar());
             }
         }
 

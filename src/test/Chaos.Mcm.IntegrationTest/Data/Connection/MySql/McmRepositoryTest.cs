@@ -266,7 +266,7 @@
             Assert.AreEqual(expectedFolderInfo.ParentID, result.ObjectFolders[0].ParentID);
             Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
             Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
-            Assert.AreEqual(expectedFolderInfo.SubscriptionGUID, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
+            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
         }
         
         [Test]
@@ -416,7 +416,7 @@
             Assert.AreEqual(expectedFolderInfo.ParentID, result.ObjectFolders[0].ParentID);
             Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
             Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
-            Assert.AreEqual(expectedFolderInfo.SubscriptionGUID, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
+            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
         }
 
         [Test]
@@ -450,7 +450,8 @@
             var objectInFolder = Make_ObjectWithRelations();
             var expected       = Make_FolderThatExist();
 
-            var results = repository.FolderGet(null, objectInFolder.Guid);
+            var results = repository.FolderGet(null, null, objectInFolder.Guid);
+            
             Assert.AreEqual(expected.ID, results[0].ID);
         }
 
@@ -461,7 +462,35 @@
             var expected   = Make_FolderThatExist();
 
             var results = repository.FolderGet();
+            
             Assert.AreEqual(expected.ID, results[0].ID);
+        }
+
+        [Test]
+        public void FolderDelete_GivenIDAndNoSubfolders_ReturnOneAndFolderShouldBeDeletedInDatabase()
+        {
+            var repository     = Make_McmRepository();
+            var folderToDelete = Make_FolderThatExistAndIsEmpty();
+
+            var result = repository.FolderDelete(folderToDelete.ID);
+
+            Assert.AreEqual(1, result);
+            var results = repository.FolderGet(folderToDelete.ID);
+            Assert.IsEmpty(results);
+        }
+
+        [Test]
+        public void FolderCreate_GivenAllParameters_ReturnOneAndFolderShouldBeCreatedInDatabase()
+        {
+            var repository = Make_McmRepository();
+            var expected   = Make_FolderThatDoesntExist();
+            var userGuid   = new Guid("674c7562-dabc-49fb-8baa-e48cb865f851");
+
+            var id = repository.FolderCreate(userGuid, expected.SubscriptionGuid, expected.Name, expected.ParentID, expected.FolderTypeID);
+
+            var results = repository.FolderGet(id, null, null);
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(id, results[0].ID);
         }
 
         #endregion
@@ -518,8 +547,31 @@
                            ParentID = null,
                            FolderTypeID = 1,
                            Name = "test",
-                           SubscriptionGUID = new Guid("00000001-0000-0000-0000-000000000000")
+                           SubscriptionGuid = new Guid("00000001-0000-0000-0000-000000000000")
                        };
+        }
+
+        private FolderInfo Make_FolderThatDoesntExist()
+        {
+            return new FolderInfo
+            {
+                ID               = 100,
+                ParentID         = null,
+                FolderTypeID     = 1,
+                Name             = "test",
+                SubscriptionGuid = new Guid("00000001-0000-0000-0000-000000000000")
+            };
+        }
+
+        private FolderInfo Make_FolderThatExistAndIsEmpty()
+        {
+            return new FolderInfo
+            {
+                ID = 2,
+                ParentID = 1,
+                FolderTypeID = 1,
+                Name = "sub test"
+            };
         }
 
         private FileInfo Make_File()

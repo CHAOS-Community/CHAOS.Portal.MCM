@@ -122,7 +122,7 @@
             if(parentID.HasValue &&!PermissionManager.GetFolders((uint) parentID).DoesUserOrGroupHavePermission(userGuid, groupGuids, Chaos.Mcm.Permission.FolderPermission.Write))
                 throw new InsufficientPermissionsException("User does not have permission to create subfolders");
 
-            var result = McmRepository.CreateFolder(userGuid, subscription == null ? (Guid?) null : subscription.Guid, title, parentID, folderTypeID);
+            var result = McmRepository.FolderCreate(userGuid, subscription == null ? (Guid?) null : subscription.Guid, title, parentID, folderTypeID);
 
 		    if( result == -100 )
 		        throw new InsufficientPermissionsException( "User does not have permission to Set the folder" );

@@ -87,7 +87,7 @@ namespace Chaos.Mcm.Test.Extension
                 ParentID = null,
                 FolderTypeID = 1,
                 Name = "test",
-                SubscriptionGUID = new Guid("00000001-0000-0000-0000-000000000000")
+                SubscriptionGuid = new Guid("00000001-0000-0000-0000-000000000000")
             };
         }
 

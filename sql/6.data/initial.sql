@@ -11,7 +11,7 @@ DELETE FROM Object;
 DELETE FROM MetadataSchema_User_Join;
 DELETE FROM MetadataSchema_Group_Join;
 DELETE FROM FormatCategory;
-DELETE FROM Folder;
+DELETE FROM Folder ORDER BY ParentID DESC;
 DELETE FROM AccessProvider;
 DELETE FROM AccessPoint_User_Join;
 DELETE FROM AccessPoint_Group_Join;

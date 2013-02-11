@@ -19,7 +19,7 @@
 		public uint FolderTypeID{ get; set; }
 
 		[Serialize]
-		public Guid SubscriptionGUID{ get; set; }
+		public Guid SubscriptionGuid{ get; set; }
 
 		[Serialize]
 		public string Name{ get; set; }
@@ -41,7 +41,7 @@
 			ID                 = id;
 			FolderTypeID       = folderTypeID;
 			ParentID           = parentID;
-			SubscriptionGUID   = subscriptionGUID.Value;
+			this.SubscriptionGuid   = subscriptionGUID.Value;
 			Name               = name;
 			DateCreated        = dateCreated;
 			NumberOfSubFolders = numberOfSubFolders;
