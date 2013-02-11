@@ -550,6 +550,19 @@
             Assert.AreEqual("Asset", results[0].Name);
         }
 
+        [Test]
+        public void ObjectTypeSet_GivenName_ReturnIDShouldSetObjectTypeInDatabase()
+        {
+            var repository   = this.Make_McmRepository();
+            var expectedName = "name";
+
+            var id = repository.ObjectTypeSet(expectedName);
+
+            var results = repository.ObjectTypeGet(id, null);
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(expectedName, results[0].Name);
+        }
+
         #endregion
         #region Helpers
 

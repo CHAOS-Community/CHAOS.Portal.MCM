@@ -46,7 +46,7 @@
         uint FormatCreate(uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension);
 
         uint ObjectTypeDelete(uint id);
-        uint ObjectTypeSet(string name);
+        uint ObjectTypeSet(string name, uint? id = null);
         IList<ObjectType> ObjectTypeGet(uint? id, string name);
 
         uint FileDelete(uint id);

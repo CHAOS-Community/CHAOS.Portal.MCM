@@ -74,10 +74,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.sto
 		sql\3.storedprocedures\ObjectRelationType_Delete.sql = sql\3.storedprocedures\ObjectRelationType_Delete.sql
 		sql\3.storedprocedures\ObjectRelationType_Get.sql = sql\3.storedprocedures\ObjectRelationType_Get.sql
 		sql\3.storedprocedures\ObjectRelationType_Update.sql = sql\3.storedprocedures\ObjectRelationType_Update.sql
-		sql\3.storedprocedures\ObjectType_Create.sql = sql\3.storedprocedures\ObjectType_Create.sql
 		sql\3.storedprocedures\ObjectType_Delete.sql = sql\3.storedprocedures\ObjectType_Delete.sql
 		sql\3.storedprocedures\ObjectType_Get.sql = sql\3.storedprocedures\ObjectType_Get.sql
-		sql\3.storedprocedures\ObjectType_Update.sql = sql\3.storedprocedures\ObjectType_Update.sql
+		sql\3.storedprocedures\ObjectType_Set.sql = sql\3.storedprocedures\ObjectType_Set.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chaos.Mcm", "src\app\CHAOS.MCM\Chaos.Mcm.csproj", "{461EF48B-BBEB-4A4C-9968-66ACE8D3D43D}"

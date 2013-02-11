@@ -299,14 +299,15 @@ namespace Chaos.Mcm.Data
             //            }
         }
 
-        public uint ObjectTypeSet(string name)
+        public uint ObjectTypeSet(string name, uint? id = null)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                return db.ObjectType_Create(name).First().Value;
-            //            }
+            var result = Gateway.ExecuteNonQuery("ObjectType_Set", new[]
+                {
+                    new MySqlParameter("ID", id), 
+                    new MySqlParameter("Name", name) 
+                });
 
+            return (uint)result;
         }
 
         public IList<ObjectType> ObjectTypeGet(uint? id, string name)

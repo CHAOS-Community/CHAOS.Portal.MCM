@@ -19,7 +19,7 @@
             var extension = Make_ObjectTypeExtension();
             var expected  = Make_ObjectType();
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { SystemPermissonsEnum = SystemPermissons.Manage });
-            McmRepository.Setup(m => m.ObjectTypeSet(expected.Name)).Returns(expected.ID);
+            McmRepository.Setup(m => m.ObjectTypeSet(expected.Name, null)).Returns(expected.ID);
             McmRepository.Setup(m => m.ObjectTypeGet(expected.ID, null)).Returns(new []{expected});
 
             var result = extension.Set(CallContext.Object, expected.Name);
