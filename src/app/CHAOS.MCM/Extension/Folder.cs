@@ -92,7 +92,7 @@
             if(!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(userGuid, groupGuids, Chaos.Mcm.Permission.FolderPermission.Delete))
                 throw new InsufficientPermissionsException("User does not have permission to delete the folder");
 
-            var result = McmRepository.DeleteFolder(id);
+            var result = McmRepository.FolderDelete(id);
 
             return new ScalarResult(result);
         }

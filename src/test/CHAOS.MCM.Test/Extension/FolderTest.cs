@@ -237,7 +237,7 @@
 
             PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
             folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.Delete)).Returns(true);
-            McmRepository.Setup(m => m.DeleteFolder(folder.Object.ID)).Returns(1);
+            McmRepository.Setup(m => m.FolderDelete(folder.Object.ID)).Returns(1);
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
 

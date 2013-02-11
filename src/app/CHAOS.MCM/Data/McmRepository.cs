@@ -50,21 +50,14 @@ namespace Chaos.Mcm.Data
 
         public uint ObjectRelationDelete(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID)
         {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                int? result = db.ObjectRelation_Delete(object1Guid.ToByteArray(),
-//                                                        object2Guid.ToByteArray(),
-//                                                        (int)objectRelationTypeID).First();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("ObjectRelation Delete failed on the database");
-//
-//                if (result == -100)
-//                    throw new InsufficientPermissionsException("The user do not have permission to delete object relations");
-//
-//                return result;
-//            }
+            var result = Gateway.ExecuteNonQuery("ObjectRelation_Delete", new[]
+                {
+                    new MySqlParameter("Object1Guid", object1Guid.ToByteArray()), 
+                    new MySqlParameter("Object2Guid", object2Guid.ToByteArray()), 
+                    new MySqlParameter("ObjectRelationTypeID", objectRelationTypeID )
+                });
+
+            return (uint)result;
         }
 
         public IList<ObjectRelationInfo> ObjectRelationInfoGet(Guid objectGuid)
@@ -75,12 +68,12 @@ namespace Chaos.Mcm.Data
         public uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence)
         {
             var result = this.Gateway.ExecuteNonQuery("ObjectRelation_Set", new[]
-                    {
-                        new MySqlParameter("Object1Guid", object1Guid.ToByteArray()),
-                        new MySqlParameter("Object2Guid", object2Guid.ToByteArray()),
-                        new MySqlParameter("ObjectRelationTypeID", objectRelationTypeID),
-                        new MySqlParameter("Sequence", sequence)
-                    });
+                {
+                    new MySqlParameter("Object1Guid", object1Guid.ToByteArray()),
+                    new MySqlParameter("Object2Guid", object2Guid.ToByteArray()),
+                    new MySqlParameter("ObjectRelationTypeID", objectRelationTypeID),
+                    new MySqlParameter("Sequence", sequence)
+                });
 
             if (result == -100)
                 throw new InsufficientPermissionsException("The user do not have permission to create object relations");
@@ -211,7 +204,19 @@ namespace Chaos.Mcm.Data
         #endregion
         #region Folder
 
-        public int DeleteFolder(uint id)
+        public IList<Folder> FolderGet(Guid? userGuid = null, Guid? objectGuid = null)
+        {
+            throw new NotImplementedException();
+            //            using (var db = DefaultMCMEntities)
+            //            {
+            //                var folders = db.Folder_Get(null, objectGuid.ToByteArray()).Select(item => PermissionManager.GetFolders((uint)item.ID));
+            //
+            //
+            //                return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGUID, groupGUIDs, permissions, folders);
+            //            }
+        }
+
+        public int FolderDelete(uint id)
         {
             throw new NotImplementedException();
 //            using (var db = this.CreateMcmEntities())
@@ -263,86 +268,66 @@ namespace Chaos.Mcm.Data
 //            }
         }
 
-        public IList<Folder> FolderGet(Guid? userGuid = null, Guid? objectGuid = null)
-        {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var folders = db.Folder_Get(null, objectGuid.ToByteArray()).Select(item => PermissionManager.GetFolders((uint)item.ID));
-//
-//
-//                return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGUID, groupGUIDs, permissions, folders);
-//            }
-        }
+        #endregion
+        #region Format
 
         public IList<Format> FormatGet(uint? id = null, string name = null)
         {
             throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                return db.Format_Get((int?)ID, name).ToDto().ToList();
-//            }
+            //            using (var db = DefaultMCMEntities)
+            //            {
+            //                return db.Format_Get((int?)ID, name).ToDto().ToList();
+            //            }
         }
 
         public uint FormatCreate(uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)
         {
             throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var result = db.Format_Create((int?)formatCategoryID, name, formatXml, mimeType, extension).FirstOrDefault();
-//
-//                if (result == null)
-//                    throw new UnhandledException("No result was received from the database");
-//
-//                return result;
-//            }
+            //            using (var db = DefaultMCMEntities)
+            //            {
+            //                var result = db.Format_Create((int?)formatCategoryID, name, formatXml, mimeType, extension).FirstOrDefault();
+            //
+            //                if (result == null)
+            //                    throw new UnhandledException("No result was received from the database");
+            //
+            //                return result;
+            //            }
         }
+
+        #endregion
+        #region ObjectType
 
         public uint ObjectTypeDelete(uint id)
         {
             throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var result = db.ObjectType_Delete((int?)id, null).First();
-//
-//                if (result.Value == -100)
-//                    throw new InsufficientPermissionsException("User does not have permission to delete an Object Type");
-//
-//                return result.Value;
-//            }
+            //            using (var db = DefaultMCMEntities)
+            //            {
+            //                var result = db.ObjectType_Delete((int?)id, null).First();
+            //
+            //                if (result.Value == -100)
+            //                    throw new InsufficientPermissionsException("User does not have permission to delete an Object Type");
+            //
+            //                return result.Value;
+            //            }
         }
 
         public uint ObjectTypeSet(string name)
         {
             throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                return db.ObjectType_Create(name).First().Value;
-//            }
+            //            using (var db = DefaultMCMEntities)
+            //            {
+            //                return db.ObjectType_Create(name).First().Value;
+            //            }
 
         }
 
         public IList<ObjectType> ObjectTypeGet(uint? expectedID, string name)
         {
             throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                return db.ObjectType_Get(result, null).ToDto().First();
-//            }
-        }
-
-        public uint FileDelete(uint id)
-        {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var result = db.File_Delete((int?)id).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("File delete failed in the database and was rolled back");
-//
-//                return result.Value;
-//            }
+            //            using (var db = DefaultMCMEntities)
+            //            {
+            //                return db.ObjectType_Get(result, null).ToDto().First();
+            //            }
         }
 
         #endregion
@@ -571,6 +556,20 @@ namespace Chaos.Mcm.Data
 
         #endregion
         #region File
+
+        public uint FileDelete(uint id)
+        {
+            throw new NotImplementedException();
+            //            using (var db = DefaultMCMEntities)
+            //            {
+            //                var result = db.File_Delete((int?)id).FirstOrDefault();
+            //
+            //                if (!result.HasValue)
+            //                    throw new UnhandledException("File delete failed in the database and was rolled back");
+            //
+            //                return result.Value;
+            //            }
+        }
 
         public uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID)
         {

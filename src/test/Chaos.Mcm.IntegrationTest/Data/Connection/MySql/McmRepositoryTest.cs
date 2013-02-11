@@ -18,7 +18,19 @@
     {
         private readonly string _connectionString = ConfigurationManager.ConnectionStrings["mcm"].ConnectionString;
 
-        #region ObjectRelationInfo
+        #region ObjectRelation
+
+        [Test]
+        public void ObjectRelationDelete_GivenGuidsThatExist_ReturnsOneAndDeletesTheObjectRelation()
+        {
+            var repository     = Make_McmRepository();
+            var objectRelation = Make_ObjectRelationExistent();
+
+            var result = repository.ObjectRelationDelete(objectRelation.Object1Guid, objectRelation.Object2Guid, objectRelation.ObjectRelationTypeID);
+            Assert.AreEqual(1, result);
+            var shouldBeEmpty = repository.ObjectRelationInfoGet(objectRelation.Object1Guid);
+            Assert.IsEmpty(shouldBeEmpty);
+        }
 
         [Test]
         public void ObjectRelationInfoGet_GivenAnObjectGuidThatDoesntExist_ReturnsAEmptyList()
@@ -35,7 +47,7 @@
         public void ObjectRelationInfoGet_GivenAnObjectGuidThatExist_ReturnsAListWithOneObjectRelationInfo()
         {
             var connection = Make_McmRepository();
-            var expected   = Make_ObjectRelationInfo();
+            var expected   = Make_ObjectRelationExistent();
 
             var result = connection.ObjectRelationInfoGet(expected.Object1Guid);
             var actual = result.First();
@@ -222,7 +234,7 @@
         {
             var repository                 = Make_McmRepository();
             var objectGuid                 = new Guid("00000000-0000-0000-0000-000000000002");
-            var expectedObjectRelationInfo = Make_ObjectRelationInfo();
+            var expectedObjectRelationInfo = Make_ObjectRelationExistent();
 
             var result = repository.ObjectGet(objectGuid, false, false, true);
             
@@ -370,7 +382,7 @@
         {
             var repository = Make_McmRepository();
             var objectGuid = new Guid("00000000-0000-0000-0000-000000000002");
-            var expectedObjectRelationInfo = Make_ObjectRelationInfo();
+            var expectedObjectRelationInfo = Make_ObjectRelationExistent();
             var folderID = (uint?)1;
 
             var result = repository.ObjectGet(folderID, includeObjectRelations: true).First();
@@ -430,6 +442,12 @@
 
         #endregion
         #region Folders
+
+//        [Test]
+//        public void FolderGet_()
+//        {
+//            
+//        }
 
         #endregion
         #region Helpers
@@ -536,7 +554,7 @@
             };
         }
 
-        private static ObjectRelationInfo Make_ObjectRelationInfo()
+        private static ObjectRelationInfo Make_ObjectRelationExistent()
         {
             return new ObjectRelationInfo
             {
