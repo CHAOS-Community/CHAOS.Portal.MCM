@@ -8,15 +8,15 @@
     using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Data.Dto.Standard;
 
-    public class ObjectMapping : IReaderMapping<NewObject>
+    public class ObjectMapping : IReaderMapping<Object>
     {
-        public IEnumerable<NewObject> Map(IDataReader reader)
+        public IEnumerable<Object> Map(IDataReader reader)
         {
-            var objects = new List<NewObject>();
+            var objects = new List<Object>();
 
             while(reader.Read())
             {
-                var o = new NewObject
+                var o = new Object
                     {
                         Guid         = reader.GetGuid("Guid"),
                         ObjectTypeID = reader.GetUint32("ObjectTypeID"),
@@ -32,7 +32,7 @@
             
             foreach (var o in objects)
             {
-                o.Metadatas = (from m in metadatas where m.ObjectGuid == o.Guid select (NewMetadata) m).ToList();
+                o.Metadatas = (from m in metadatas where m.ObjectGuid == o.Guid select (Metadata) m).ToList();
             }
             
             reader.NextResult();

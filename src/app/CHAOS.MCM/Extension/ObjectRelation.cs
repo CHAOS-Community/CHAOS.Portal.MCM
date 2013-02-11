@@ -11,7 +11,7 @@
 
     public class ObjectRelation : AMcmExtension
     {
-        public ScalarResult Set(ICallContext callContext, Guid object1GUID, Guid object2GUID, NewMetadata metadata, uint objectRelationTypeID, int? sequence)
+        public ScalarResult Set(ICallContext callContext, Guid object1GUID, Guid object2GUID, Data.Dto.Metadata metadata, uint objectRelationTypeID, int? sequence)
         {
             uint result;
 

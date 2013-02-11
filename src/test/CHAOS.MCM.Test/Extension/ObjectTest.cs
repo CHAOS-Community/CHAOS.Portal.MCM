@@ -13,6 +13,7 @@
 
     using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
     using IFolder = Chaos.Mcm.Permission.IFolder;
+    using Object = Chaos.Mcm.Data.Dto.Object;
 
     [TestFixture]
     public class ObjectTest : TestBase
@@ -32,7 +33,7 @@
         public void Get_WithSingleGuid_ShouldReturnObjectRecievedFromRepository()
         {
             var extension  = Make_ObjectExtension();
-            var expected   = new NewObject();
+            var expected   = new Object();
             var objectGuid = new List<Guid> { Guid.NewGuid() };
             McmRepository.Setup(m => m.ObjectGet(It.IsAny<IEnumerable<Guid>>(), false, false, false, false, false)).Returns(new[] { expected });
 

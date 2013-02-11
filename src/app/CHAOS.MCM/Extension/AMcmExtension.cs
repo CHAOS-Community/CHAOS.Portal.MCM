@@ -1,22 +1,12 @@
 ﻿namespace Chaos.Mcm.Extension
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Binding;
-    using Chaos.Mcm.Data.Connection;
-    using Chaos.Mcm.Data.EF;
     using Chaos.Mcm.Permission;
-    using Chaos.Mcm.Permission.InMemory;
-    using Chaos.Mcm.Permission.Specification;
-
-    using CHAOS;
-    using CHAOS.Extensions;
-    using CHAOS.Index;
-
     using Chaos.Portal;
     using Chaos.Portal.Extension;
 
@@ -63,7 +53,7 @@
 
         public new IExtension WithPortalApplication(IPortalApplication portalApplication)
         {
-            portalApplication.Bindings.Add(typeof(Data.Dto.NewMetadata), new MetadataBinding());
+            portalApplication.Bindings.Add(typeof(Data.Dto.Metadata), new MetadataBinding());
 
             return base.WithPortalApplication(portalApplication);
         }
@@ -87,10 +77,10 @@
 //            index.Set( newObject.Select(item => item as Data.Dto.Standard.Object), false );
 //        }
 
-        protected void RemoveObjectFromIndex( IIndex index, Data.Dto.Standard.Object delObject )
-        {
-            index.Remove( delObject, false );
-        }
+//        protected void RemoveObjectFromIndex( IIndex index, Data.Dto.Standard.Object delObject )
+//        {
+//            index.Remove( delObject, false );
+//        }
 
         public bool HasPermissionToObject(ICallContext callContext, Guid objectGuid, FolderPermission permissions)
 	    {

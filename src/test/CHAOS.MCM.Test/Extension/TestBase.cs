@@ -18,6 +18,7 @@ namespace Chaos.Mcm.Test.Extension
 
     using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
     using IFolder = Chaos.Mcm.Permission.IFolder;
+    using Object = Chaos.Mcm.Data.Dto.Object;
 
     public class TestBase
     {
@@ -42,9 +43,9 @@ namespace Chaos.Mcm.Test.Extension
             McmRepository.Setup(m => m.WithConfiguration(It.IsAny<string>())).Returns(McmRepository.Object);
         }
 
-        protected NewMetadata Make_MetadataDto()
+        protected Metadata Make_MetadataDto()
         {
-            return new NewMetadata
+            return new Metadata
                 {
                     Guid               = new Guid("00000000-0000-0000-0000-000000000010"),
                     MetadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100"),
@@ -56,9 +57,9 @@ namespace Chaos.Mcm.Test.Extension
                 };
         }
 
-        protected NewObject Make_Object()
+        protected Object Make_Object()
         {
-            return new NewObject
+            return new Object
             {
                 Guid         = new Guid("00000000-0000-0000-0000-000000000001"),
                 ObjectTypeID = 1u,

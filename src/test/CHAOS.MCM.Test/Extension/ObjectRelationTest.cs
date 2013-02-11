@@ -29,7 +29,7 @@
             
             McmRepository.Setup(m => m.ObjectRelationSet(object1Guid, object2Guid, objectRelationTypeID, sequence)).Returns(1);
             
-            var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, new NewMetadata(), objectRelationTypeID, sequence);
+            var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, new Metadata(), objectRelationTypeID, sequence);
 
             McmRepository.Verify(m => m.ObjectRelationSet(object1Guid, object2Guid, objectRelationTypeID, sequence));
             Assert.AreEqual(1, result.Value);
@@ -44,7 +44,7 @@
             var editingUserGuid       = new Guid("00000000-0000-0000-0000-000000000010");
             var sequence              = 0;
             uint objectRelationTypeID = 1;
-            var metadata              = new NewMetadata{Guid = new Guid("00000000-0000-0000-0000-000000000100")};
+            var metadata              = new Metadata{Guid = new Guid("00000000-0000-0000-0000-000000000100")};
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = editingUserGuid });
             McmRepository.Setup(m => m.ObjectRelationSet(It.IsAny<ObjectRelationInfo>(), editingUserGuid)).Returns(1);
 

@@ -1,11 +1,11 @@
-﻿using System;
-using CHAOS;
-using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto.Standard;
-
-namespace Chaos.Mcm.Data.Dto.Standard
+﻿namespace Chaos.Mcm.Data.Dto.Standard
 {
-	public class FolderInfo : Result, IFolderInfo
+    using System;
+
+    using CHAOS.Serialization;
+    using Chaos.Portal.Data.Dto.Standard;
+    
+    public class FolderInfo : Result, IFolderInfo
 	{
 		#region Properties
 

@@ -1,4 +1,4 @@
-namespace Chaos.Mcm.Data.Connection
+namespace Chaos.Mcm.Data
 {
     using System.Collections.Generic;
 

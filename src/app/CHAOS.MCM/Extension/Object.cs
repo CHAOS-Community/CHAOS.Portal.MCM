@@ -59,12 +59,12 @@ namespace Chaos.Mcm.Extension
 //			throw new NotImplementedException("No implmentation for Object Get without solr parameters");
 //		}
 
-        private static IEnumerable<Data.Dto.Standard.Object> ReArrange(IEnumerable<Data.Dto.Standard.Object> objects, IEnumerable<UUID> resultPage)
-        {
-            return resultPage.Select(uuid => objects.First(item => item.GUID.ToString() == uuid.ToString()));
-        }
+//        private static IEnumerable<Data.Dto.Standard.Object> ReArrange(IEnumerable<Data.Dto.Standard.Object> objects, IEnumerable<UUID> resultPage)
+//        {
+//            return resultPage.Select(uuid => objects.First(item => item.GUID.ToString() == uuid.ToString()));
+//        }
 
-		public NewObject Create( ICallContext callContext, Guid? guid, uint objectTypeID, uint folderID )
+		public Data.Dto.Object Create( ICallContext callContext, Guid? guid, uint objectTypeID, uint folderID )
 		{
             var userGuid   = callContext.User.Guid;
             var groupGuids = callContext.Groups.Select(group => group.Guid);
@@ -112,7 +112,7 @@ namespace Chaos.Mcm.Extension
             //RemoveObjectFromIndex( callContext.IndexManager.GetIndex<Mcm>(), delObject );
         }
 
-        public IEnumerable<NewObject> Get(ICallContext callContext, IEnumerable<Guid> objectGuids, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false)
+        public IEnumerable<Data.Dto.Object> Get(ICallContext callContext, IEnumerable<Guid> objectGuids, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false)
         {
             //todo: uncomment this
            // var objectsWithPermission = objectGuids.Where(item => HasPermissionToObject(callContext, item.ToUUID(), FolderPermission.Read));

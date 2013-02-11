@@ -5,13 +5,13 @@
 
     using Chaos.Mcm.Data.Dto;
 
-    public class MetadataMapping : IReaderMapping<NewMetadata>
+    public class MetadataMapping : IReaderMapping<Metadata>
     {
-        public IEnumerable<NewMetadata> Map(IDataReader reader)
+        public IEnumerable<Metadata> Map(IDataReader reader)
         {
             while(reader.Read())
             {
-                yield return new NewMetadata
+                yield return new Metadata
                     {
                         Guid               = reader.GetGuid("Guid"),
                         MetadataSchemaGuid = reader.GetGuid("MetadataSchemaGUID"),

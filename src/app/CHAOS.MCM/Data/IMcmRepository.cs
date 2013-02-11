@@ -8,6 +8,8 @@
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Permission;
 
+    using Object = Chaos.Mcm.Data.Dto.Object;
+
     public interface IMcmRepository
     {
         IMcmRepository WithConfiguration(string connectionString);
@@ -26,15 +28,15 @@
 
         uint ObjectDelete(Guid guid);
         uint ObjectCreate(Guid guid, uint objectTypeID, uint folderID);
-        NewObject ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
-        IList<NewObject> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false );
-        IList<NewObject> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
+        Object ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
+        IList<Object> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false );
+        IList<Object> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
 
         uint ObjectRelationDelete(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID);
         uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence);
         uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid);
 
-        IEnumerable<NewMetadata> MetadataGet(Guid guid);
+        IEnumerable<Metadata> MetadataGet(Guid guid);
 
         uint MetadataSet(Guid objectGuid, Guid metadataGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml, Guid userGuid);
 

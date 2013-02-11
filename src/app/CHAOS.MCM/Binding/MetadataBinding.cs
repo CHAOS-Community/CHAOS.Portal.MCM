@@ -13,7 +13,7 @@
         public object Bind(ICallContext callContext, ParameterInfo parameterInfo)
         {
             var param    = callContext.Request.Parameters;
-            var metadata = new NewMetadata();
+            var metadata = new Metadata();
 
             if(param.ContainsKey("metadataSchemaGUID")) metadata.MetadataSchemaGuid = new Guid(param["metadataSchemaGUID"]);
             if(param.ContainsKey("languageCode"))       metadata.LanguageCode       = param["languageCode"];

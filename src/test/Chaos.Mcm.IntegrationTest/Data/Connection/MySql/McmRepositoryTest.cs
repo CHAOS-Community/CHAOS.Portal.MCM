@@ -7,6 +7,7 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
     using System.Linq;
     using System.Xml.Linq;
 
+    using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
@@ -443,7 +444,7 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
                     OriginalFilename = "orig.ext",
                     FolderPath       = "/",
                     BasePath         = "http://bogus.com",
-                    StringFormat     = "{BASE_PATH}{FOLDER_PATH}{FILE_NAME}",
+                    StringFormat     = "{BASE_PATH}{FOLDER_PATH}{FILENAME}",
                     Token            = "HTTP Download",
                     FormatTypeName   = "Unknown Video",
                     FormatXML        = null,
@@ -504,9 +505,9 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
             };
         }
 
-        private static NewMetadata Make_Metadata()
+        private static Metadata Make_Metadata()
         {
-            return new NewMetadata
+            return new Metadata
                 {
                     Guid               = new Guid("00000000-0000-0000-0000-000000000010"),
                     MetadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100"),

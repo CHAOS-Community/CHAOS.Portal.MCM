@@ -9,6 +9,8 @@
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
 
+    using Object = Chaos.Mcm.Data.Dto.Object;
+
     public static class ReaderExtensions
     {
         private static readonly IDictionary<Type, IReaderMapping<object>> _mappings;
@@ -19,9 +21,9 @@
             _mappings = new Dictionary<Type, IReaderMapping<object>>();
 
             _mappings.Add(typeof(ObjectRelationInfo), new ObjectRelationInfoMapping());
-            _mappings.Add(typeof(NewMetadata), new MetadataMapping());
+            _mappings.Add(typeof(Metadata), new MetadataMapping());
             _mappings.Add(typeof(ObjectMetadata), new ObjectMetadataMapping());
-            _mappings.Add(typeof(NewObject), new ObjectMapping());
+            _mappings.Add(typeof(Object), new ObjectMapping());
             _mappings.Add(typeof(FileInfo), new FileInfoMapping());
             _mappings.Add(typeof(FolderInfo), new FolderInfoMapping());
             _mappings.Add(typeof(ObjectFolder), new ObjectFolderMapping());

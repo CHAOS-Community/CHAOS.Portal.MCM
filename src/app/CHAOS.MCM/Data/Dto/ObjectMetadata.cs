@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class ObjectMetadata : NewMetadata
+    public class ObjectMetadata : Metadata
     {
         #region Properties
 
