@@ -6,7 +6,6 @@
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
-    using Chaos.Portal.Extension;
 
     public class File : AMcmExtension
     {

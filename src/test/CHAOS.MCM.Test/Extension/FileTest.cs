@@ -3,6 +3,7 @@
     using System;
 
     using Chaos.Mcm.Extension;
+    using Chaos.Mcm.Permission;
 
     using NUnit.Framework;
 
@@ -14,6 +15,7 @@
         {
             var extension = Make_FileExtension();
             var file      = Make_File();
+            SetupHasPermissionToObject(FolderPermission.CreateUpdateObjects);
             McmRepository.Setup(m => m.FileCreate(file.ObjectGuid, file.ParentID, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath, file.FormatID)).Returns(file.ID);
             McmRepository.Setup(m => m.FileGet(file.ID)).Returns(new [] { file });
 
@@ -29,7 +31,9 @@
         {
             var extension = Make_FileExtension();
             var file      = Make_File();
+            SetupHasPermissionToObject(FolderPermission.CreateUpdateObjects);
             McmRepository.Setup(m => m.FileDelete(file.ID)).Returns(1u);
+            McmRepository.Setup(m => m.FileGet(file.ID)).Returns(new[] { file });
 
             var result = extension.Delete(CallContext.Object, file.ID);
 

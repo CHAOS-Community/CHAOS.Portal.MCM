@@ -9,10 +9,15 @@ namespace Chaos.Mcm.Test.Extension
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
+    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Data.Dto.Standard;
 
     using Moq;
 
     using NUnit.Framework;
+
+    using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
+    using IFolder = Chaos.Mcm.Permission.IFolder;
 
     public class TestBase
     {
@@ -83,6 +88,29 @@ namespace Chaos.Mcm.Test.Extension
                 Name = "test",
                 SubscriptionGUID = new Guid("00000001-0000-0000-0000-000000000000")
             };
+        }
+
+        #endregion
+        #region Helpers
+
+        protected void SetupHasPermissionToObject(IUserInfo userInfo, IGroup[] groups, Guid objectGuid, IList<Folder> folderDtos)
+        {
+            CallContext.SetupGet(p => p.User).Returns(userInfo);
+            CallContext.SetupGet(p => p.Groups).Returns(groups);
+            McmRepository.Setup(m => m.FolderGet(null, objectGuid)).Returns(folderDtos);
+            PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders( userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), FolderPermission.Read, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
+        }
+
+        protected void SetupHasPermissionToObject(FolderPermission permission)
+        {
+            var userInfo    = new UserInfo { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") };
+            var groups     = new IGroup[] { new Group { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") } };
+            var folderDtos = new List<Data.Dto.Standard.Folder> { new Data.Dto.Standard.Folder { ID = 1 } };
+
+            this.CallContext.SetupGet(p => p.User).Returns(userInfo);
+            this.CallContext.SetupGet(p => p.Groups).Returns(groups);
+            this.McmRepository.Setup(m => m.FolderGet(null, It.IsAny<Guid>())).Returns(folderDtos);
+            this.PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), permission, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
         }
 
         #endregion
