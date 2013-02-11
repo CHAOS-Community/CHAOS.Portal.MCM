@@ -1,7 +1,6 @@
 ﻿namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
 {
     using System;
-    using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
     using System.Xml.Linq;
@@ -643,6 +642,9 @@
             Assert.AreEqual(exptectedName, actual[0].Name);
         }
 
+        #endregion
+        #region FolderUserInfo
+        
         #endregion
         #region Helpers
 

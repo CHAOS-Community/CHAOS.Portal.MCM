@@ -78,6 +78,7 @@
     <Compile Include="Data\Connection\MySql\Gateway.cs" />
     <Compile Include="Data\Connection\ReaderExtensions.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
+    <Compile Include="Data\Dto\Format.cs" />
     <Compile Include="Data\Dto\MetadataSchema.cs" />
     <Compile Include="Data\Dto\ObjectAccessPoint.cs" />
     <Compile Include="Data\Dto\FileInfo.cs" />
@@ -98,7 +99,6 @@
     <Compile Include="Data\Dto\Standard\FolderPermission.cs" />
     <Compile Include="Data\Dto\Standard\FolderType.cs" />
     <Compile Include="Data\Dto\Standard\FolderUserJoin.cs" />
-    <Compile Include="Data\Dto\Standard\Format.cs" />
     <Compile Include="Data\Dto\Standard\FormatCategory.cs" />
     <Compile Include="Data\Dto\Standard\FormatType.cs" />
     <Compile Include="Data\Dto\IEntityPermission.cs" />

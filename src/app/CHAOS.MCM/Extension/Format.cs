@@ -11,12 +11,12 @@ namespace Chaos.Mcm.Extension
     {
         #region Business Logic
 
-        public IEnumerable<Data.Dto.Standard.Format> Get(ICallContext callContext, uint? id, string name)
+        public IEnumerable<Data.Dto.Format> Get(ICallContext callContext, uint? id, string name)
         {
             return McmRepository.FormatGet(id, name);
         }
 
-        public Data.Dto.Standard.Format Create(ICallContext callContext, uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)
+        public Data.Dto.Format Create(ICallContext callContext, uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)
         {
             var result = McmRepository.FormatCreate(formatCategoryID, name, formatXml, mimeType, extension);
 

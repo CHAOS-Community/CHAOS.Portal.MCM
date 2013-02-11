@@ -1,10 +1,13 @@
-﻿using System.Xml.Linq;
-using CHAOS.Serialization;
-using CHAOS.Serialization.XML;
-
-namespace Chaos.Mcm.Data.Dto.Standard
+namespace Chaos.Mcm.Data.Dto
 {
-	public class Format
+    using System.Xml.Linq;
+
+    using CHAOS.Serialization;
+    using CHAOS.Serialization.XML;
+
+    using Chaos.Portal.Data.Dto.Standard;
+
+    public class Format : Result
 	{
 		#region Properties
 
@@ -32,12 +35,12 @@ namespace Chaos.Mcm.Data.Dto.Standard
 
 		public Format( uint id, uint formatCategoryID, string name, string formatXML, string mimeType, string extenison )
 		{
-			ID               = id;
-			FormatCategoryID = formatCategoryID;
-			Name             = name;
+			this.ID               = id;
+			this.FormatCategoryID = formatCategoryID;
+			this.Name             = name;
 			this.FormatXml        = string.IsNullOrEmpty( formatXML ) ? null : XDocument.Parse( formatXML );
-			MimeType         = mimeType;
-            Extension        = extenison;
+			this.MimeType         = mimeType;
+            this.Extension        = extenison;
 		}
 
 		public Format()

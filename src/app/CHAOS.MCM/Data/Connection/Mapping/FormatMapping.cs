@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Data;
 
+    using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
 
     public class FormatMapping : IReaderMapping<Format>

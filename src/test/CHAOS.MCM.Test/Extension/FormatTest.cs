@@ -7,7 +7,7 @@
 
     using NUnit.Framework;
 
-    using Format = Chaos.Mcm.Data.Dto.Standard.Format;
+    using Format = Chaos.Mcm.Data.Dto.Format;
 
     [TestFixture]
     public class FormatTest : TestBase
