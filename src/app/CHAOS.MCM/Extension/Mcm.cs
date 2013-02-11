@@ -76,8 +76,8 @@ namespace Chaos.Mcm.Extension
         //    throw new NotImplementedException("No implmentation for Object Get without solr parameters");
         //}
 
-        //[Datatype("Object","Set")]
-        //public Object Set( ICallContext callContext, UUID Guid, uint objectTypeID, uint folderID )
+        //[Datatype("Object","Create")]
+        //public Object Create( ICallContext callContext, UUID Guid, uint objectTypeID, uint folderID )
         //{
         //    using( var db = DefaultMCMEntities )
         //    {
@@ -86,10 +86,10 @@ namespace Chaos.Mcm.Extension
 
         //        var guid = Guid ?? new UUID();
 
-        //        int result = db.Set( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
+        //        int result = db.Create( guid.ToByteArray(), (int) objectTypeID, (int) folderID ).First().Value;
 
         //        if( result == -200 )
-        //            throw new UnhandledException("Unhandled exception, Set was rolled back");
+        //            throw new UnhandledException("Unhandled exception, Create was rolled back");
 
         //        var newObject = db.Get( guid, true, true, true, true, true ).ToDTO().ToList();
 

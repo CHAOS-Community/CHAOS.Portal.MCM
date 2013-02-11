@@ -16,7 +16,7 @@
     [TestFixture]
     public class ObjectRelationTest : TestBase
     {
-        #region Set
+        #region Create
 
         [Test]
         public void Set_WithoutMetadata_ShouldCallMcmRepository()

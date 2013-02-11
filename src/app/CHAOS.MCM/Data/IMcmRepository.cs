@@ -53,7 +53,8 @@
         uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID);
         IList<File> FileGet(uint id);
 
-        uint MetadataSchemaSet(string name, XDocument schemaXml, Guid userGuid, Guid guid);
+        uint MetadataSchemaUpdate(string name, XDocument schemaXml, Guid userGuid, Guid guid);
+        uint MetadataSchemaCreate(string name, XDocument schemaXml, Guid userGuid, Guid guid);
         uint MetadataSchemaDelete(Guid guid);
         IList<MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission);
 

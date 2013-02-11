@@ -125,7 +125,7 @@
             var result = McmRepository.FolderCreate(userGuid, subscription == null ? (Guid?) null : subscription.Guid, title, parentID, folderTypeID);
 
 		    if( result == -100 )
-		        throw new InsufficientPermissionsException( "User does not have permission to Set the folder" );
+		        throw new InsufficientPermissionsException( "User does not have permission to Create the folder" );
 
             return McmRepository.GetFolderInfo(new[] { result }).First();
 		}

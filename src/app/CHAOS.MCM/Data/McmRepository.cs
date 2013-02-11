@@ -160,7 +160,7 @@ namespace Chaos.Mcm.Data
                          });
 
             if (result == -200)
-                throw new UnhandledException("Unhandled exception, Set was rolled back");
+                throw new UnhandledException("Unhandled exception, Create was rolled back");
 
 
             return (uint)result;
@@ -334,18 +334,31 @@ namespace Chaos.Mcm.Data
                 });
         }
 
-        public uint MetadataSchemaSet(string name, XDocument schemaXml, Guid userGuid, Guid guid)
+        public uint MetadataSchemaUpdate(string name, XDocument schemaXml, Guid userGuid, Guid guid)
         {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var result = db.MetadataSchema_Set(guid.ToByteArray(), name, schemaXml, callContext.User.Guid.ToByteArray()).FirstOrDefault();
-//
-//                if (!result.HasValue || result.Value != 1)
-//                    throw new UnhandledException("MetadataSchema was not created");
-//
-//                return result;
-//            }
+            var result = Gateway.ExecuteNonQuery("MetadataSchema_Update", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()),
+                    new MySqlParameter("Name", name), 
+                    new MySqlParameter("SchemaXml", schemaXml)
+                });
+
+            return (uint)result;
+        }
+
+        public uint MetadataSchemaCreate(string name, XDocument schemaXml, Guid userGuid, Guid guid)
+        {
+            var result = Gateway.ExecuteNonQuery("MetadataSchema_Create", new[]
+                {
+                    new MySqlParameter("Guid", guid.ToByteArray()),
+                    new MySqlParameter("Name", name), 
+                    new MySqlParameter("SchemaXml", schemaXml), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray())
+                });
+
+            if (result == -200) throw new UnhandledException("MetadataSchema_Create failed on the database, and was rolled back");
+
+            return (uint)result;
         }
 
         public uint MetadataSchemaDelete(Guid guid)

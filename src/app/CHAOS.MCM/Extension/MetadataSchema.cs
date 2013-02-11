@@ -22,24 +22,29 @@
 		    return McmRepository.MetadataSchemaGet(userGuid, groupGuids, guid, MetadataSchemaPermission.Read);
 		}
 
-        public Data.Dto.MetadataSchema Set(ICallContext callContext, string name, XDocument schemaXml, Guid guid = new Guid())
+        public Data.Dto.MetadataSchema Create(ICallContext callContext, string name, XDocument schemaXml, Guid? guid = null)
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "Manage permissions are required to create metadata schemas" );
 
-            McmRepository.MetadataSchemaSet(name, schemaXml, callContext.User.Guid, guid);
+            McmRepository.MetadataSchemaCreate(name, schemaXml, callContext.User.Guid, guid ?? Guid.NewGuid());
 
             return Get(callContext, guid).First();
 		}
 
+        public Data.Dto.MetadataSchema Update(ICallContext callContext, string name, XDocument schemaXml, Guid guid)
+        {
+            if (HasPermissionToMetadataSchema(callContext, guid, MetadataSchemaPermission.Write)) 
+                throw new InsufficientPermissionsException("User does not have permission to delete MetadataSchema");
+
+            McmRepository.MetadataSchemaUpdate(name, schemaXml, callContext.User.Guid, guid);
+
+            return Get(callContext, guid).First();
+        }
+
 		public ScalarResult Delete( ICallContext callContext, Guid guid )
 		{
-            var userGuid   = callContext.User.Guid;
-            var groupGuids = callContext.Groups.Select(item => item.Guid);
-
-            var results = McmRepository.MetadataSchemaGet(userGuid, groupGuids, guid, MetadataSchemaPermission.Delete);
-
-            if (!results.Any())
+            if (HasPermissionToMetadataSchema(callContext, guid, MetadataSchemaPermission.Delete))
                 throw new InsufficientPermissionsException("User does not have permission to delete MetadataSchema");
 
 		    var result = McmRepository.MetadataSchemaDelete(guid);
@@ -47,7 +52,16 @@
             return new ScalarResult((int)result);
 		}
 
-		#endregion
+        private bool HasPermissionToMetadataSchema(ICallContext callContext, Guid guid, MetadataSchemaPermission permission)
+        {
+            var userGuid   = callContext.User.Guid;
+            var groupGuids = callContext.Groups.Select(item => item.Guid);
+
+            var metadataSchemaGet = McmRepository.MetadataSchemaGet(userGuid, groupGuids, guid, permission);
+            return metadataSchemaGet.Count == 0;
+        }
+
+        #endregion
     }
 
 }

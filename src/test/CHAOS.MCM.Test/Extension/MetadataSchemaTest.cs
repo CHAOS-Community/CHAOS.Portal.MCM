@@ -9,6 +9,8 @@
     using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Dto.Standard;
 
+    using Moq;
+
     using NUnit.Framework;
 
     [TestFixture]
@@ -32,7 +34,7 @@
         }
 
         [Test]
-        public void Set_WithPermission_CallMcmRepositoryAndReturnTheSchema()
+        public void Create_WithPermission_CallMcmRepositoryAndReturnTheSchema()
         {
             var extension = this.Make_MetadMetadataSchemaExtension();
             var schema    = Make_MetadataSchema();
@@ -46,10 +48,10 @@
             CallContext.SetupGet(p => p.Groups).Returns(new IGroup[0]);
             McmRepository.Setup(m => m.MetadataSchemaGet(userInfo.Guid, groupGuids, schema.Guid, MetadataSchemaPermission.Read)).Returns(new[] { schema });
 
-            var result = extension.Set(CallContext.Object, schema.Name, schema.SchemaXml, schema.Guid);
+            var result = extension.Create(CallContext.Object, schema.Name, schema.SchemaXml, schema.Guid);
 
             Assert.AreEqual(schema, result);
-            McmRepository.Verify(m => m.MetadataSchemaSet(schema.Name, schema.SchemaXml, userInfo.Guid, schema.Guid));
+            McmRepository.Verify(m => m.MetadataSchemaCreate(schema.Name, schema.SchemaXml, userInfo.Guid, schema.Guid));
         }
 
         [Test]
@@ -69,6 +71,25 @@
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.MetadataSchemaGet(userGuid, groupGuids, schema.Guid, MetadataSchemaPermission.Delete));
             McmRepository.Verify(m => m.MetadataSchemaDelete(schema.Guid));
+        }
+
+        [Test]
+        public void Update_WithPermission_CallMcmRepositoryAndReturnOne()
+        {
+            var extension  = this.Make_MetadMetadataSchemaExtension();
+            var schema     = Make_MetadataSchema();
+            var userGuid   = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352");
+            var groupGuids = new Guid[0];
+            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = userGuid });
+            CallContext.SetupGet(p => p.Groups).Returns(new IGroup[0]);
+            McmRepository.Setup(m => m.MetadataSchemaGet(userGuid, groupGuids, schema.Guid, It.IsAny<MetadataSchemaPermission>())).Returns(new []{schema});
+            McmRepository.Setup(m => m.MetadataSchemaUpdate(schema.Name, schema.SchemaXml, userGuid, schema.Guid)).Returns(1);
+
+            var result = extension.Update(CallContext.Object, schema.Name, schema.SchemaXml, schema.Guid);
+
+            Assert.AreEqual(schema, result);
+            McmRepository.Verify(m => m.MetadataSchemaGet(userGuid, groupGuids, schema.Guid, MetadataSchemaPermission.Write));
+            McmRepository.Verify(m => m.MetadataSchemaUpdate(schema.Name, schema.SchemaXml, userGuid, schema.Guid));
         }
 
         #region Helpers

@@ -599,15 +599,48 @@
         public void MetadataDelete_GivenGuid_ReturnOneAndShouldDeleteFromDatabase()
         {
             var repository = Make_McmRepository();
-            var userGuid = new Guid("00000000-0000-0000-0000-000000001000");
+            var userGuid   = new Guid("00000000-0000-0000-0000-000000001000");
             var groupGuids = new Guid[0];
-            var expected = Make_MetadataSchemaThatExist();
+            var expected   = Make_MetadataSchemaThatExist();
 
             var result = repository.MetadataSchemaDelete(expected.Guid);
 
             Assert.AreEqual(1, result);
-            var shouldBeEmpty = repository.MetadataSchemaGet(userGuid, groupGuids, null, MetadataSchemaPermission.Read);
+            var shouldBeEmpty = repository.MetadataSchemaGet(userGuid, groupGuids, expected.Guid, MetadataSchemaPermission.Read);
             Assert.IsEmpty(shouldBeEmpty);
+        }
+
+        [Test]
+        public void MetadataSchemaCreate_GivenAllParametersCalledForTheFirstTime_ReturnOneAndShouldBeCreatedOnTheDatabase()
+        {
+            var repository = Make_McmRepository();
+            var userGuid   = new Guid("00000000-0000-0000-0000-000000001000");
+            var groupGuids = new Guid[0];
+            var expected   = Make_MetadataSchemaThatDoesntExist();
+
+            var result = repository.MetadataSchemaCreate(expected.Name, expected.SchemaXml, userGuid, expected.Guid);
+
+            Assert.AreEqual(1, result);
+            var actual = repository.MetadataSchemaGet(userGuid, groupGuids, expected.Guid, MetadataSchemaPermission.Read);
+            Assert.IsNotEmpty(actual);
+            Assert.AreEqual(expected.Name, actual[0].Name);
+        }
+
+        [Test]
+        public void MetadataSchemaUpdate_GivenAllParametersAndAlreadyExist_ReturnOneAndSchemaNameShouldBeUpdatedInTheDatabase()
+        {
+            var repository    = Make_McmRepository();
+            var userGuid      = new Guid("00000000-0000-0000-0000-000000001000");
+            var groupGuids    = new Guid[0];
+            var expected      = Make_MetadataSchemaThatExist();
+            var exptectedName = "new name";
+
+            var result = repository.MetadataSchemaUpdate(exptectedName, expected.SchemaXml, userGuid, expected.Guid);
+
+            Assert.AreEqual(1, result);
+            var actual = repository.MetadataSchemaGet(userGuid, groupGuids, expected.Guid, MetadataSchemaPermission.Read);
+            Assert.IsNotEmpty(actual);
+            Assert.AreEqual(exptectedName, actual[0].Name);
         }
 
         #endregion
@@ -620,6 +653,17 @@
                 Guid = new Guid("00000000-0000-0000-0000-000000000200"),
                 Name = "test schema",
                 SchemaXml = XDocument.Parse("<xml/>"),
+                DateCreated = new DateTime(1990, 10, 01, 23, 59, 59),
+            };
+        }
+
+        private MetadataSchema Make_MetadataSchemaThatDoesntExist()
+        {
+            return new MetadataSchema
+            {
+                Guid = new Guid("00000000-0000-0000-0000-000000000300"),
+                Name = "test schema 2",
+                SchemaXml = XDocument.Parse("<xml2/>"),
                 DateCreated = new DateTime(1990, 10, 01, 23, 59, 59),
             };
         }

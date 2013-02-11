@@ -1,8 +1,8 @@
 CREATE PROCEDURE MetadataSchema_Update
 (
-    GUID        BINARY(16),
+    Guid        BINARY(16),
     Name        VARCHAR(255),
-    SchemaXML   TEXT
+    SchemaXml   TEXT
 )
 BEGIN
 
@@ -10,9 +10,9 @@ BEGIN
     	MetadataSchema
 	SET  
 		MetadataSchema.Name      = Name,
-		MetadataSchema.SchemaXML = SchemaXML
+		MetadataSchema.SchemaXML = SchemaXml
 	WHERE
-		MetadataSchema.GUID = GUID;
+		MetadataSchema.GUID = Guid;
 
     SELECT ROW_COUNT();
 

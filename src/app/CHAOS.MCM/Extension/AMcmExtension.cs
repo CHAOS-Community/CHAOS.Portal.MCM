@@ -74,7 +74,7 @@
 //                    o.RelatedObjects = McmRepository.GetObject(o.Guid, null).ToList();
 //            }
 //
-//            index.Set( newObject.Select(item => item as Data.Dto.Standard.Object), false );
+//            index.Create( newObject.Select(item => item as Data.Dto.Standard.Object), false );
 //        }
 
 //        protected void RemoveObjectFromIndex( IIndex index, Data.Dto.Standard.Object delObject )

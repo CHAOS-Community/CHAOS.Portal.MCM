@@ -1,9 +1,9 @@
 CREATE PROCEDURE MetadataSchema_Create
 (
-    GUID        BINARY(16), 
+    Guid        BINARY(16), 
     Name        VARCHAR(255), 
-    SchemaXML   TEXT,
-    UserGUID    BINARY(16)
+    SchemaXml   TEXT,
+    UserGuid    BINARY(16)
 )
 BEGIN
 
@@ -19,12 +19,12 @@ DECLARE EXIT HANDLER
         INSERT INTO MetadataSchema
             ( GUID, Name, SchemaXML, DateCreated ) 
         VALUES
-            ( GUID, Name, SchemaXML, NOW() );
+            ( Guid, Name, SchemaXml, NOW() );
                             
         INSERT INTO MetadataSchema_User_Join
             ( MetadataSchemaGUID, UserGUID, Permission, DateCreated ) 
         VALUES
-            ( GUID, UserGUID, 4294967295, NOW() );
+            ( Guid, UserGuid, 4294967295, NOW() );
          
     COMMIT;
          
