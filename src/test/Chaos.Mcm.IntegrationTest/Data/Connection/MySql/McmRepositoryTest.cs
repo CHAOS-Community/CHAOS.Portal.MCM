@@ -480,7 +480,7 @@
         }
 
         [Test]
-        public void FolderCreate_GivenAllParameters_ReturnOneAndFolderShouldBeCreatedInDatabase()
+        public void FolderCreate_GivenAllParameters_ReturnIDAndFolderShouldBeCreatedInDatabase()
         {
             var repository = Make_McmRepository();
             var expected   = Make_FolderThatDoesntExist();
@@ -491,6 +491,21 @@
             var results = repository.FolderGet(id, null, null);
             Assert.IsNotEmpty(results);
             Assert.AreEqual(id, results[0].ID);
+        }
+
+        [Test]
+        public void FolderUpdate_GivenAllParameters_ReturnOneAndFolderShouldBeUpdatedInDatabase()
+        {
+            var repository = Make_McmRepository();
+            var folder     = Make_FolderThatExist();
+            var newTitle   = "new name";
+
+            var result = repository.FolderUpdate(folder.ID, newTitle, folder.ParentID, folder.FolderTypeID);
+
+            Assert.AreEqual(1, result);
+            var results = repository.FolderGet(folder.ID, null, null);
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(newTitle, results[0].Name);
         }
 
         #endregion

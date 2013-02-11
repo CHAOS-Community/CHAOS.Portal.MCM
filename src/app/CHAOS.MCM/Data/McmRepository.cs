@@ -243,18 +243,17 @@ namespace Chaos.Mcm.Data
             return (uint)result;
         }
 
-        public uint UpdateFolder(uint id, string newTitle, uint? newParentID, uint? newFolderTypeID)
+        public uint FolderUpdate(uint id, string newName, uint? newParentID, uint? newFolderTypeID)
         {
-            throw new NotImplementedException();
-//            using (var db = this.CreateMcmEntities())
-//            {
-//                var result = db.Folder_Update((int)id, newTitle, (int?)newParentID, (int?)newFolderTypeID).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("Folder_Update finished without a value");
-//
-//                return (uint)result;
-//            }
+            var result = Gateway.ExecuteNonQuery("Folder_Update", new[]
+                {
+                    new MySqlParameter("ID", id), 
+                    new MySqlParameter("NewName", newName), 
+                    new MySqlParameter("NewParentID", newParentID), 
+                    new MySqlParameter("NewFolderTypeID", newFolderTypeID), 
+                });
+
+            return (uint)result;
         }
 
         #endregion

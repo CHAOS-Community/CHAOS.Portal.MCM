@@ -26,7 +26,7 @@
         IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids);
         IEnumerable<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission);
         uint SetAccessPointPublishSettings(Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate);
-        uint UpdateFolder(uint id, string newTitle, uint? newParentID, uint? newFolderTypeID);
+        uint FolderUpdate(uint id, string newName, uint? newParentID, uint? newFolderTypeID);
 
         uint ObjectDelete(Guid guid);
         uint ObjectCreate(Guid guid, uint objectTypeID, uint folderID);

@@ -1,9 +1,9 @@
 CREATE PROCEDURE Folder_Update
 (
-    IN  ID              INT,
-    IN  NewName         VARCHAR(255),
-    IN  NewParentID     INT,
-    IN  NewFolderTypeID INT
+	ID              INT,
+	NewName         VARCHAR(255),
+	NewParentID     INT,
+	NewFolderTypeID INT
 )
 BEGIN
 
