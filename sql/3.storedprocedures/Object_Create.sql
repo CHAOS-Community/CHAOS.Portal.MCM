@@ -1,6 +1,6 @@
 CREATE PROCEDURE Object_Create
 (
-    GUID            BINARY(16),
+    Guid            BINARY(16),
     ObjectTypeID    INT UNSIGNED,
     FolderID        INT UNSIGNED
 )
@@ -18,12 +18,12 @@ BEGIN
         INSERT INTO Object
             ( GUID, ObjectTypeID, DateCreated )
         VALUES
-            ( GUID, ObjectTypeID, NOW() );
+            ( Guid, ObjectTypeID, NOW() );
                
         INSERT INTO Object_Folder_Join
             ( ObjectGUID, FolderID, ObjectFolderTypeID, DateCreated )
         VALUES
-            ( GUID, FolderID, 1, NOW() );
+            ( Guid, FolderID, 1, NOW() );
          
     COMMIT;
          

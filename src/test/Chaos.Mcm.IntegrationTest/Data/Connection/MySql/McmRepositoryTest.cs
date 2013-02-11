@@ -137,15 +137,30 @@
         #region Object
 
         [Test]
-        public void ObjectDelete_ByGuidNoRelationsToOtherTables_ReturnsOneAndObjectShouldBeMissingFromDatabaseAfterwards()
+        public void ObjectCrate_WithValidObjectTypeAndFolder_ReturnOneAndObjectShouldBeCreatedInTheDatabase()
         {
-            var repository = Make_McmRepository();
-            var objToDel   = Make_ObjectWithNoRelations();
+            var repository     = Make_McmRepository();
+            var objToCreate    = Make_ObjectTheDoesntExist();
+            var existingFolder = Make_FolderTheExist();
 
-            var result =repository.ObjectDelete(objToDel.Guid);
+            var result = repository.ObjectCreate(objToCreate.Guid, objToCreate.ObjectTypeID, existingFolder.ID);
 
             Assert.AreEqual(1, result);
-            var shouldBeNull = repository.ObjectGet(objToDel.Guid);
+            var actual = repository.ObjectGet(objToCreate.Guid);
+            Assert.AreEqual(objToCreate.Guid, actual.Guid);
+            Assert.AreEqual(objToCreate.ObjectTypeID, actual.ObjectTypeID);
+        }
+
+        [Test]
+        public void ObjectDelete_ByGuidNoRelationsToOtherTables_ReturnsOneAndObjectShouldBeMissingFromDatabaseAfterwards()
+        {
+            var repository  = Make_McmRepository();
+            var objToDelete = Make_ObjectWithNoRelations();
+
+            var result = repository.ObjectDelete(objToDelete.Guid);
+
+            Assert.AreEqual(1, result);
+            var shouldBeNull = repository.ObjectGet(objToDelete.Guid);
             Assert.IsNull(shouldBeNull);
         }
 
@@ -228,7 +243,7 @@
         {
             var repository         = Make_McmRepository();
             var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
-            var expectedFolderInfo = Make_FolderInfo();
+            var expectedFolderInfo = this.Make_FolderTheExist();
 
             var result = repository.ObjectGet(objectGuid, false, false, false, true);
             
@@ -377,7 +392,7 @@
         {
             var repository         = Make_McmRepository();
             var objectGuid         = new Guid("00000000-0000-0000-0000-000000000002");
-            var expectedFolderInfo = Make_FolderInfo();
+            var expectedFolderInfo = this.Make_FolderTheExist();
             var folderID = (uint?)1;
 
             var result = repository.ObjectGet(folderID, includeFolders: true).First();
@@ -429,6 +444,16 @@
                 };
         }
 
+        private Object Make_ObjectTheDoesntExist()
+        {
+            return new Object
+            {
+                Guid         = new Guid("00000000-0000-0000-0000-000000000009"),
+                ObjectTypeID = 1,
+                DateCreated  = new DateTime(2000, 10, 01, 23, 59, 59)
+            };
+        }
+
         private ObjectAccessPoint Make_AccessPoint()
         {
             return new ObjectAccessPoint
@@ -442,7 +467,7 @@
                        };
         }
 
-        private FolderInfo Make_FolderInfo()
+        private FolderInfo Make_FolderTheExist()
         {
             return new FolderInfo
                        {

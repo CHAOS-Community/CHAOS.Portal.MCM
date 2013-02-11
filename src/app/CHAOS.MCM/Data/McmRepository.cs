@@ -159,16 +159,18 @@ namespace Chaos.Mcm.Data
 
         public uint ObjectCreate(Guid guid, uint objectTypeID, uint folderID)
         {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var result = db.Object_Create(guid.ToByteArray(), (int)objectTypeID, (int)folderID).FirstOrDefault();
-//
-//                if (result.HasValue && result.Value == -200)
-//                    throw new UnhandledException("Unhandled exception, Set was rolled back");
-//
-//                return (uint)result;
-//            }
+            var result = Gateway.ExecuteNonQuery("Object_Create", new[]
+                         {
+                             new MySqlParameter("Guid", guid.ToByteArray()),
+                             new MySqlParameter("ObjectTypeID", objectTypeID),
+                             new MySqlParameter("FolderID", folderID) 
+                         });
+
+            if (result == -200)
+                throw new UnhandledException("Unhandled exception, Set was rolled back");
+
+
+            return (uint)result;
         }
 
         public IList<Object> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
