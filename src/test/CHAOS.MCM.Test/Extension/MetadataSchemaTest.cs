@@ -41,8 +41,10 @@
                     SystemPermissonsEnum = SystemPermissons.Manage,
                     Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352")
                 };
+            var groupGuids = new Guid[0];
             CallContext.SetupGet(p => p.User).Returns(userInfo);
-            McmRepository.Setup(m => m.MetadataSchemaGet(userInfo.Guid, null, schema.Guid, MetadataSchemaPermission.Read)).Returns(new [] {schema});
+            CallContext.SetupGet(p => p.Groups).Returns(new IGroup[0]);
+            McmRepository.Setup(m => m.MetadataSchemaGet(userInfo.Guid, groupGuids, schema.Guid, MetadataSchemaPermission.Read)).Returns(new[] { schema });
 
             var result = extension.Set(CallContext.Object, schema.Name, schema.SchemaXml, schema.Guid);
 
@@ -59,12 +61,13 @@
             var groupGuids = new Guid[0];
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = userGuid });
             CallContext.SetupGet(p => p.Groups).Returns(new IGroup[0]);
-            McmRepository.Setup(m => m.MetadataSchemaGet(userGuid, groupGuids, null, MetadataSchemaPermission.Delete));
+            McmRepository.Setup(m => m.MetadataSchemaGet(userGuid, groupGuids, schema.Guid, MetadataSchemaPermission.Delete)).Returns(new []{schema});
+            McmRepository.Setup(m => m.MetadataSchemaDelete(schema.Guid)).Returns(1);
 
             var result = extension.Delete(CallContext.Object, schema.Guid);
 
             Assert.AreEqual(1, result.Value);
-            McmRepository.Verify(m => m.MetadataSchemaGet(userGuid, groupGuids, null, MetadataSchemaPermission.Delete));
+            McmRepository.Verify(m => m.MetadataSchemaGet(userGuid, groupGuids, schema.Guid, MetadataSchemaPermission.Delete));
             McmRepository.Verify(m => m.MetadataSchemaDelete(schema.Guid));
         }
 

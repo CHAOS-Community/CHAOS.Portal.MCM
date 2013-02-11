@@ -37,7 +37,7 @@
             var userGuid   = callContext.User.Guid;
             var groupGuids = callContext.Groups.Select(item => item.Guid);
 
-            var results = McmRepository.MetadataSchemaGet(userGuid, groupGuids, guid, MetadataSchemaPermission.Read);
+            var results = McmRepository.MetadataSchemaGet(userGuid, groupGuids, guid, MetadataSchemaPermission.Delete);
 
             if (!results.Any())
                 throw new InsufficientPermissionsException("User does not have permission to delete MetadataSchema");
