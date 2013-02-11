@@ -5,7 +5,9 @@ namespace Chaos.Mcm.Data.Dto
 
     using CHAOS.Serialization;
 
-    public class Metadata
+    using Chaos.Portal.Data.Dto.Standard;
+
+    public class Metadata : Result
     {
         [Serialize]
         public Guid Guid { get; set; }

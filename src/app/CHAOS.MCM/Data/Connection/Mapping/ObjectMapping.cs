@@ -64,7 +64,7 @@
 
             reader.NextResult();
 
-            var accessPoints = reader.Map<AccessPoint_Object_Join>().ToList();
+            var accessPoints = reader.Map<ObjectAccessPoint>().ToList();
 
             foreach(var o in objects)
             {

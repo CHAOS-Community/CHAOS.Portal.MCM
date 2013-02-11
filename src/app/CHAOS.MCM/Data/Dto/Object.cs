@@ -31,7 +31,7 @@
         public IList<FileInfo> Files { get; set; }
 
         [Serialize]
-        public IList<AccessPoint_Object_Join> AccessPoints { get; set; }
+        public IList<ObjectAccessPoint> AccessPoints { get; set; }
 
         [Serialize]
         public IList<ObjectFolder> ObjectFolders { get; set; }

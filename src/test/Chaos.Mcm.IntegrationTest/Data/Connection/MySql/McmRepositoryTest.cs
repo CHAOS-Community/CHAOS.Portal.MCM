@@ -407,9 +407,9 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
         #endregion
         #region Helpers
 
-        private AccessPoint_Object_Join Make_AccessPoint()
+        private ObjectAccessPoint Make_AccessPoint()
         {
-            return new AccessPoint_Object_Join
+            return new ObjectAccessPoint
                        {
                            AccessPointGuid = new Guid("00001000-0010-0000-0000-000000000000"),
                            ObjectGuid      = new Guid("00000000-0000-0000-0000-000000000002"),
