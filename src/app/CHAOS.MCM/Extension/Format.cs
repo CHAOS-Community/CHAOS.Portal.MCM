@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
 using Chaos.Portal;
-using Chaos.Portal.Data.Dto.Standard;
 
 namespace Chaos.Mcm.Extension
 {
+    using System.Linq;
     using System.Xml.Linq;
 
     public class Format : AMcmExtension
@@ -16,11 +16,11 @@ namespace Chaos.Mcm.Extension
             return McmRepository.FormatGet(id, name);
         }
 
-        public ScalarResult Create(ICallContext callContext, uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension )
+        public Data.Dto.Standard.Format Create(ICallContext callContext, uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)
         {
             var result = McmRepository.FormatCreate(formatCategoryID, name, formatXml, mimeType, extension);
 
-            return new ScalarResult((int)result);
+            return Get(callContext, result, null).First();
         }
 
         #endregion

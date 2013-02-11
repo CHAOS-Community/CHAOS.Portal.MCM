@@ -30,11 +30,14 @@
         {
             var extension = Make_FormatExtension();
             var expected  = Make_Format();
-            McmRepository.Setup(m => m.FormatCreate(expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension)).Returns(1);
+            var id        = 1u;
+
+            McmRepository.Setup(m => m.FormatCreate(expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension)).Returns(id);
+            McmRepository.Setup(m => m.FormatGet(id, null)).Returns(new[] { expected });
 
             var result = extension.Create(CallContext.Object, expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension);
 
-            Assert.AreEqual(1, result.Value);
+            Assert.AreEqual(expected.Name, result.Name);
         }
 
         #region Helpers

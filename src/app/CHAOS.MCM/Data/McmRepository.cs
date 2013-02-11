@@ -270,16 +270,16 @@ namespace Chaos.Mcm.Data
 
         public uint FormatCreate(uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                var result = db.Format_Create((int?)formatCategoryID, name, formatXml, mimeType, extension).FirstOrDefault();
-            //
-            //                if (result == null)
-            //                    throw new UnhandledException("No result was received from the database");
-            //
-            //                return result;
-            //            }
+            var result = Gateway.ExecuteNonQuery("Format_Create", new[]
+                {
+                    new MySqlParameter("Name", name), 
+                    new MySqlParameter("FormatCategoryID", formatCategoryID), 
+                    new MySqlParameter("FormatXml", formatXml), 
+                    new MySqlParameter("MimeType", mimeType), 
+                    new MySqlParameter("Extension", extension), 
+                });
+
+            return (uint)result;
         }
 
         #endregion

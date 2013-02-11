@@ -1,17 +1,17 @@
 CREATE PROCEDURE Format_Create
 (
-    IN  FormatCategoryID    INT,
-    IN  Name                VARCHAR(255),
-    IN  FormatXML           TEXT,
-    IN  MimeType            VARCHAR(255), 
-    IN  Extension           VARCHAR(255)
+	FormatCategoryID    INT,
+	Name                VARCHAR(255),
+	FormatXml           TEXT,
+	MimeType            VARCHAR(255), 
+	Extension           VARCHAR(255)
 )
 BEGIN
 
     INSERT INTO Format
     	( FormatCategoryID, Name, FormatXML, MimeType, Extension )
     VALUES
-    	( FormatCategoryID, Name, FormatXML, MimeType, Extension );
+    	( FormatCategoryID, Name, FormatXml, MimeType, Extension );
     
     SELECT last_insert_id();
     

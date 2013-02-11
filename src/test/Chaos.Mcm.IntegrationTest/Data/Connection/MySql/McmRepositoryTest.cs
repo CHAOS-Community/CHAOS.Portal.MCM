@@ -523,6 +523,19 @@
             Assert.AreEqual(expected.Name, results[0].Name);
         }
 
+        [Test]
+        public void FormatCreate_GivenAllParameters_ReturnIDAndShouldBeGreatedInDatabase()
+        {
+            var repository = Make_McmRepository();
+            var expected   = Make_FormatThatDoesntExist();
+
+            var id = repository.FormatCreate(expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension);
+
+            var results = repository.FormatGet(id, null);
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(expected.Name, results[0].Name);
+        }
+
         #endregion
         #region Helpers
 
@@ -532,6 +545,18 @@
             {
                 ID               = 5,
                 Name             = "PNG",
+                FormatCategoryID = 9,
+                FormatXml        = null,
+                MimeType         = "image/png",
+                Extension        = ".png"
+            };
+        }
+        
+        private Format Make_FormatThatDoesntExist()
+        {
+            return new Format
+            {
+                Name             = "doesntexist",
                 FormatCategoryID = 9,
                 FormatXml        = null,
                 MimeType         = "image/png",
