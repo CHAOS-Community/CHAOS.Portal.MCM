@@ -261,11 +261,11 @@ namespace Chaos.Mcm.Data
 
         public IList<Format> FormatGet(uint? id = null, string name = null)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                return db.Format_Get((int?)ID, name).ToDto().ToList();
-            //            }
+            return Gateway.ExecuteQuery<Format>("Format_Get", new []
+                   {
+                       new MySqlParameter("ID", id), 
+                       new MySqlParameter("Name", name), 
+                   });
         }
 
         public uint FormatCreate(uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)

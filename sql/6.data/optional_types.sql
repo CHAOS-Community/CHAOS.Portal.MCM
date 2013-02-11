@@ -16,7 +16,7 @@ INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 1, 
 INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 2, 2, 'Unknown Audio', null, 'application/octet-stream');
 INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 3, 3, 'Unknown Image', null, 'application/octet-stream');
 INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 4, 4, 'Unknown Other', null, 'application/octet-stream');
-INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 5, 9, 'PNG', null, 'image/png');
+INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType,Extension )VALUES( 5, 9, 'PNG', null, 'image/png', '.png');
 INSERT INTO ObjectRelationType( ID, Name ) VALUES( 1, 'Contains' );
 INSERT INTO ObjectRelationType( ID, Name ) VALUES( 2, 'Part of' );
 

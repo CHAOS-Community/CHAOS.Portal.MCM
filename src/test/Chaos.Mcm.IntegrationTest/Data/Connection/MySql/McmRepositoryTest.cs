@@ -509,7 +509,35 @@
         }
 
         #endregion
+        #region Format
+
+        [Test]
+        public void FormatGet_GivenID_ReturnFormat()
+        {
+            var repository = Make_McmRepository();
+            var expected   = Make_FormatThatExist();
+
+            var results = repository.FormatGet(expected.ID, null);
+
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(expected.Name, results[0].Name);
+        }
+
+        #endregion
         #region Helpers
+
+        private Format Make_FormatThatExist()
+        {
+            return new Format
+            {
+                ID               = 5,
+                Name             = "PNG",
+                FormatCategoryID = 9,
+                FormatXml        = null,
+                MimeType         = "image/png",
+                Extension        = ".png"
+            };
+        }
 
         private Object Make_ObjectWithNoRelations()
         {
