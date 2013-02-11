@@ -1,11 +1,8 @@
 ﻿namespace Chaos.Mcm.Data.Connection.MySql
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-
-    using Chaos.Mcm.Data.Dto;
 
     using global::MySql.Data.MySqlClient;
 
@@ -48,7 +45,7 @@
 
                 using (var reader = command.ExecuteReader())
                 {
-                    return reader.Map<TResultType>().Select(item => (TResultType)item).ToList();
+                    return reader.Map<TResultType>().Select(item => item).ToList();
                 }
             }
         }
@@ -65,8 +62,9 @@
                 command.Parameters.AddRange(parameters.ToArray());
 
                 connnection.Open();
-                
-                return (long) command.ExecuteScalar();
+
+                var executeScalar = command.ExecuteScalar();
+                return (long) executeScalar;
             }
         }
 

@@ -1,6 +1,4 @@
-﻿/* Note
- */
-namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
+﻿namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
 {
     using System;
     using System.Configuration;
@@ -8,11 +6,12 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
     using System.Xml.Linq;
 
     using Chaos.Mcm.Data;
-    using Chaos.Mcm.Data.Connection;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
 
     using NUnit.Framework;
+
+    using Object = Chaos.Mcm.Data.Dto.Object;
 
     [TestFixture]
     public class McmRepositoryTest : TestBase
@@ -136,6 +135,19 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
         
         #endregion
         #region Object
+
+        [Test]
+        public void ObjectDelete_ByGuidNoRelationsToOtherTables_ReturnsOneAndObjectShouldBeMissingFromDatabaseAfterwards()
+        {
+            var repository = Make_McmRepository();
+            var objToDel   = Make_ObjectWithNoRelations();
+
+            var result =repository.ObjectDelete(objToDel.Guid);
+
+            Assert.AreEqual(1, result);
+            var shouldBeNull = repository.ObjectGet(objToDel.Guid);
+            Assert.IsNull(shouldBeNull);
+        }
 
         [Test]
         public void ObjectGet_ByObjectGuidAndIncludeMetadata_ASingleObjectDtoCreatedFromMultipleDataResults()
@@ -406,6 +418,16 @@ namespace Chaos.Mcm.IntegrationTest.Data.Connection.MySql
 
         #endregion
         #region Helpers
+
+        private Object Make_ObjectWithNoRelations()
+        {
+            return new Object
+                {
+                    Guid         = new Guid("00000000-0000-0000-0000-000000000005"),
+                    ObjectTypeID = 1,
+                    DateCreated  = new DateTime(1990, 10, 01, 23, 59, 59)
+                };
+        }
 
         private ObjectAccessPoint Make_AccessPoint()
         {

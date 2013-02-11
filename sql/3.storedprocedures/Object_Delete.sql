@@ -1,6 +1,6 @@
 CREATE PROCEDURE Object_Delete
 (
-    GUID        BINARY(16)
+    Guid	BINARY(16)
 )
 BEGIN
 
@@ -13,30 +13,31 @@ BEGIN
 
     START TRANSACTION;
 
+		DELETE FROM
+			Object_Metadata_Join
+		WHERE
+			Object_Metadata_Join.ObjectGuid = Guid;
+
         DELETE FROM Object_Folder_Join
         WHERE
-            Object_Folder_Join.ObjectGUID = GUID;
-                
-        DELETE FROM Metadata
-        WHERE
-            Metadata.ObjectGUID = GUID;
-                 
+            Object_Folder_Join.ObjectGUID = Guid;
+                                 
         DELETE FROM AccessPoint_Object_Join
          WHERE  
-            AccessPoint_Object_Join.ObjectGUID = GUID;
+            AccessPoint_Object_Join.ObjectGUID = Guid;
         
         DELETE FROM File
         WHERE  
-            File.ObjectGUID = GUID;
+            File.ObjectGUID = Guid;
          
         DELETE FROM Object_Object_Join
         WHERE 
-                Object_Object_Join.Object1GUID = GUID
-            OR  Object_Object_Join.Object2GUID = GUID;
+                Object_Object_Join.Object1GUID = Guid
+            OR  Object_Object_Join.Object2GUID = Guid;
         
         DELETE FROM Object
         WHERE  
-            Object.GUID = GUID;
+            Object.GUID = Guid;
               
     COMMIT;
     

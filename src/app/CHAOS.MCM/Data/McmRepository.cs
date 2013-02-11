@@ -146,16 +146,15 @@ namespace Chaos.Mcm.Data
 
         public uint ObjectDelete(Guid guid)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                var result = db.Object_Delete(guid.ToByteArray()).FirstOrDefault();
-            //
-            //                if (!result.HasValue || result.Value == -200)
-            //                    throw new UnhandledException("Object was not deleted, database rolled back");
-            //
-            //                return result;
-            //            }
+            var result = Gateway.ExecuteNonQuery("Object_Delete", new[]
+                         {
+                             new MySqlParameter("Guid", guid.ToByteArray()) 
+                         });
+
+            if (result == -200)
+                throw new UnhandledException("Object was not deleted, database rolled back");
+
+            return (uint)result;
         }
 
         public uint ObjectCreate(Guid guid, uint objectTypeID, uint folderID)
