@@ -1,5 +1,6 @@
 ﻿namespace Chaos.Mcm.Test.Extension
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using Moq;
@@ -16,7 +17,7 @@
         {
             var extension = Make_FormatExtension();
             var expected  = Make_Format();
-            McmRepository.Setup(m => m.FormatGet(It.IsAny<uint?>(), It.IsAny<string>()));
+            McmRepository.Setup(m => m.FormatGet(null, null)).Returns(new []{expected});
 
             var result = extension.Get(CallContext.Object, null, null);
 
@@ -29,6 +30,7 @@
         {
             var extension = Make_FormatExtension();
             var expected  = Make_Format();
+            McmRepository.Setup(m => m.FormatCreate(expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension)).Returns(1);
 
             var result = extension.Create(CallContext.Object, expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension);
 
