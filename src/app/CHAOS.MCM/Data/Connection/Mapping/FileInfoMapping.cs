@@ -14,7 +14,7 @@
                 yield return new FileInfo
                     {
                         ID                        = reader.GetUint32("FileID"),
-                        ObjectGUID                = reader.GetGuid("ObjectGuid"),
+                        ObjectGuid                = reader.GetGuid("ObjectGuid"),
                         ParentID                  = reader.GetUint32Nullable("ParentID"),
                         DestinationID             = reader.GetUint32("DestinationID"),
                         Filename                  = reader.GetString("FileName"),

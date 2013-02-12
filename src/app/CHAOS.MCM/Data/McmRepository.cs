@@ -507,16 +507,18 @@ namespace Chaos.Mcm.Data
 
         public uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID)
         {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var result = db.File_Create(objectGUID.ToByteArray(), (int?)parentFileID, (int)formatID, (int)destinationID, filename, originalFilename, folderPath).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("The creating the file failed in the database and was rolled back");
-//
-//                return result;
-//            }
+            var result = Gateway.ExecuteNonQuery("File_Create", new[]
+                {
+                    new MySqlParameter("ObjectGuid",objectGuid.ToByteArray()),       
+                    new MySqlParameter("ParentFileID",parentID),    
+                    new MySqlParameter("FormatID",formatID),        
+                    new MySqlParameter("DestinationID",destinationID),   
+                    new MySqlParameter("Filename",filename),        
+                    new MySqlParameter("OriginalFilename",originalFilename),
+                    new MySqlParameter("FolderPath",folderPath)      
+                });
+
+            return (uint)result;
         }
 
         public IList<File> FileGet(uint id)

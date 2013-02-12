@@ -40,7 +40,7 @@
 
             foreach (var o in objects)
             {
-                o.Files = (from f in files where f.ObjectGUID == o.Guid select f).ToList();
+                o.Files = (from f in files where f.ObjectGuid == o.Guid select f).ToList();
             }
 
             reader.NextResult();

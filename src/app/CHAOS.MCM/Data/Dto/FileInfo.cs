@@ -17,7 +17,7 @@ namespace Chaos.Mcm.Data.Dto
 		[Serialize]
 		public uint? ParentID { get; set; }
 
-		public Guid ObjectGUID { get; set; }
+		public Guid ObjectGuid { get; set; }
 
 		[Serialize]
 		public string Filename { get; set; }
@@ -39,7 +39,7 @@ namespace Chaos.Mcm.Data.Dto
                 url.Replace( "{FOLDER_PATH}", string.IsNullOrEmpty( System.IO.Path.GetPathRoot( this.BasePath ) ) ? this.FolderPath.Replace( "\\", "/" ) : this.FolderPath.Replace( "/", "\\" ) );
                 url.Replace( "{FILENAME}", this.Filename ?? "{FILENAME_MISSING}");
                 url.Replace( "{SESSION_GUID}", this.SessionGUID == null ? "{SESSION_GUID_MISSING}" : this.SessionGUID.ToString() );
-                url.Replace( "{OBJECT_GUID}", this.ObjectGUID == null ? "{OBJECT_GUID_MISSING}" : this.ObjectGUID.ToString() );
+                url.Replace( "{OBJECT_GUID}", this.ObjectGuid == null ? "{OBJECT_GUID_MISSING}" : this.ObjectGuid.ToString() );
 
 	            return url.ToString();
 	        }
@@ -78,7 +78,7 @@ namespace Chaos.Mcm.Data.Dto
         {
             this.ID                     = fileId;
             this.ParentID               = parentId;
-            this.ObjectGUID             = objectGUID;
+            this.ObjectGuid             = objectGUID;
             this.Filename               = fileName;
             this.OriginalFilename       = originalFileName;
             this.Token                  = token;

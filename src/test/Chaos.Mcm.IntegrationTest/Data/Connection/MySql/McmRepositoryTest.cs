@@ -212,7 +212,7 @@
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
             Assert.AreEqual(expectedFile.ID, result.Files[0].ID);
-            Assert.AreEqual(expectedFile.ObjectGUID, result.Files[0].ObjectGUID);
+            Assert.AreEqual(expectedFile.ObjectGuid, result.Files[0].ObjectGuid);
             Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
             Assert.AreEqual(expectedFile.DestinationID, result.Files[0].DestinationID);
             Assert.AreEqual(expectedFile.Filename, result.Files[0].Filename);
@@ -360,7 +360,7 @@
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
             Assert.AreEqual(expectedFile.ID, result.Files[0].ID);
-            Assert.AreEqual(expectedFile.ObjectGUID, result.Files[0].ObjectGUID);
+            Assert.AreEqual(expectedFile.ObjectGuid, result.Files[0].ObjectGuid);
             Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
             Assert.AreEqual(expectedFile.DestinationID, result.Files[0].DestinationID);
             Assert.AreEqual(expectedFile.Filename, result.Files[0].Filename);
@@ -797,6 +797,20 @@
         }
 
         #endregion
+        #region File
+
+        [Test]
+        public void FileCreate_NoParentID_ReturnTheNewFolderID()
+        {
+            var repository = Make_McmRepository();
+            var file       = Make_FileTheDoesntExist();
+
+            var result = repository.FileCreate(file.ObjectGuid, null, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath, file.FormatID);
+
+            Assert.Greater(result, 0);
+        }
+
+        #endregion
         #region Helpers
 
         private MetadataSchema Make_MetadataSchemaThatExist()
@@ -949,11 +963,35 @@
             return new FileInfo
                 {
                     ID               = 1,
-                    ObjectGUID       = new Guid("00000000-0000-0000-0000-000000000002"),
+                    ObjectGuid       = new Guid("00000000-0000-0000-0000-000000000002"),
                     FormatID         = 1,
                     DestinationID    = 1,
                     Filename         = "file.ext",
                     OriginalFilename = "orig.ext",
+                    FolderPath       = "/",
+                    BasePath         = "http://bogus.com",
+                    StringFormat     = "{BASE_PATH}{FOLDER_PATH}{FILENAME}",
+                    Token            = "HTTP Download",
+                    FormatTypeName   = "Unknown Video",
+                    FormatXML        = null,
+                    MimeType         = "application/octet-stream",
+                    FormatCategoryID = 1,
+                    FormatCategory   = "Video Source",
+                    FormatTypeID     = 1,
+                    FormatType       = "Video"
+                };
+        }
+
+        private FileInfo Make_FileTheDoesntExist()
+        {
+            return new FileInfo
+                {
+                    ID               = 2,
+                    ObjectGuid       = new Guid("00000000-0000-0000-0000-000000000002"),
+                    FormatID         = 1,
+                    DestinationID    = 1,
+                    Filename         = "file2.ext",
+                    OriginalFilename = "orig2.ext",
                     FolderPath       = "/",
                     BasePath         = "http://bogus.com",
                     StringFormat     = "{BASE_PATH}{FOLDER_PATH}{FILENAME}",
