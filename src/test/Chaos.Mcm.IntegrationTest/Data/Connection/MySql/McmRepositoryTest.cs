@@ -9,6 +9,7 @@
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Permission;
+    using Chaos.Portal.Exceptions;
 
     using NUnit.Framework;
 
@@ -723,6 +724,33 @@
             var startDate   = new DateTime(1990, 10, 01, 23, 59, 59);
 
             var result = repository.AccessPointPublishSettingsSet(accessPoint.Guid, obj.Guid, startDate, null);
+
+            Assert.AreEqual(1, result);
+        }
+
+        #endregion
+        #region Link
+
+        [Test, ExpectedException(typeof(InsufficientPermissionsException))]
+        public void LinkCreate_TryingToCreateAPhysicalLink_ReturnOne()
+        {
+            var repository       = Make_McmRepository();
+            var obj              = Make_ObjectWithNoRelations();
+            var folder           = Make_FolderThatExistAndIsEmpty();
+            var objectFolderType = 1;
+
+            repository.LinkCreate(obj.Guid, folder.ID, objectFolderType);
+        }
+
+        [Test]
+        public void LinkCreate_AddObjectToFolder_ReturnOne()
+        {
+            var repository       = Make_McmRepository();
+            var obj              = Make_ObjectWithNoRelations();
+            var folder           = Make_FolderThatExistAndIsEmpty();
+            var objectFolderType = 2;
+
+            var result = repository.LinkCreate(obj.Guid, folder.ID, objectFolderType);
 
             Assert.AreEqual(1, result);
         }

@@ -1,6 +1,6 @@
 CREATE PROCEDURE Object_Folder_Join_Create
 (
-    ObjectGUID          BINARY(16),
+    ObjectGuid          BINARY(16),
     FolderID            INT,
     ObjectFolderTypeID  INT
 )
@@ -13,7 +13,7 @@ BEGIN
     INSERT INTO Object_Folder_Join
     	( ObjectGUID, FolderID, ObjectFolderTypeID, DateCreated )
 	VALUES
-		( ObjectGUID, FolderID, ObjectFolderTypeID, NOW() );
+		( ObjectGuid, FolderID, ObjectFolderTypeID, NOW() );
  
     SELECT ROW_COUNT();
 

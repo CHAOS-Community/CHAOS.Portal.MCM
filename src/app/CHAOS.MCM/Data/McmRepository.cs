@@ -441,21 +441,16 @@ namespace Chaos.Mcm.Data
 
         public uint LinkCreate(Guid objectGuid, uint folderID, int objectFolderTypeID)
         {
-            throw new NotImplementedException();
-//            using (MCMEntities db = DefaultMCMEntities)
-//            {
-//                var result = db.Object_Folder_Join_Create(objectGuid.ToByteArray(), (int)folderID, 2).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("Link create failed on the database and was rolled back");
-//
-//                if (result.Value == -100)
-//                    throw new InsufficientPermissionsException("User can only create links");
-//
-//                //                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGuid , true, true, true, true, true ).ToDto().ToList() );
-//
-//                return result;
-//            }
+            var result = Gateway.ExecuteNonQuery("Object_Folder_Join_Create", new[]
+                {
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                    new MySqlParameter("ObjectFolderTypeID", objectFolderTypeID), 
+                });
+
+            if (result == -100) throw new InsufficientPermissionsException("User can only create links");
+
+            return (uint)result;
         }
 
         public uint LinkUpdate(Guid objectGuid, uint folderID, uint newFolderID)
