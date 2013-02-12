@@ -4,7 +4,7 @@ namespace Chaos.Mcm.Extension
 
     using Chaos.Portal;
 
-    using DestinationInfo = Chaos.Mcm.Data.Dto.Standard.DestinationInfo;
+    using DestinationInfo = Chaos.Mcm.Data.Dto.DestinationInfo;
 
     public class Destination : AMcmExtension
     {

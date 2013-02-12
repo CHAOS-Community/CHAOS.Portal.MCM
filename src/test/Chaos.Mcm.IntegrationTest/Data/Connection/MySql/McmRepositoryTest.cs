@@ -785,9 +785,15 @@
         #region Destination
 
         [Test]
-        public void UnitUnderTest_Scenario_ExpectedResult()
+        public void DestinationGet_All_ReturnListOfDestinationInfos()
         {
-            
+            var repository    = Make_McmRepository();
+            var destinationID = 1u;
+
+            var results = repository.DestinationGet(null);
+
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(destinationID, results[0].ID);
         }
 
         #endregion

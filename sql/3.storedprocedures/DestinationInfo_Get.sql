@@ -1,6 +1,6 @@
 CREATE PROCEDURE DestinationInfo_Get
 (
-    DestinationID   INT UNSIGNED
+    ID   INT UNSIGNED
 )
 BEGIN
 
@@ -9,6 +9,6 @@ BEGIN
       FROM	
       	DestinationInfo
      WHERE	
-     	DestinationInfo.ID = DestinationID;
+     	( ID IS NULL OR DestinationInfo.ID = ID );
 
 END

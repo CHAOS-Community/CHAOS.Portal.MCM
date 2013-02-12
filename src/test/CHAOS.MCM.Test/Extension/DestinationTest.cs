@@ -2,6 +2,7 @@
 {
     using System.Linq;
 
+    using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Extension;
 

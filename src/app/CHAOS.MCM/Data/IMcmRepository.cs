@@ -62,6 +62,6 @@
         uint LinkUpdate(Guid objectGuid, uint folderID, uint newFolderID);
         uint LinkDelete(Guid objectGuid, uint folderID);
 
-        IEnumerable<DestinationInfo> DestinationGet(uint id);
+        IList<DestinationInfo> DestinationGet(uint? id);
     }
 }

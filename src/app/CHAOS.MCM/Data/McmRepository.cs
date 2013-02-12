@@ -483,13 +483,9 @@ namespace Chaos.Mcm.Data
         #endregion
         #region Destination
 
-        public IEnumerable<DestinationInfo> DestinationGet(uint id)
+        public IList<DestinationInfo> DestinationGet(uint? id)
         {
-            throw new NotImplementedException();
-//            using (MCMEntities db = DefaultMCMEntities)
-//            {
-//                return db.DestinationInfo_Get((int?)id).ToDto().ToList();
-//            }
+            return Gateway.ExecuteQuery<DestinationInfo>("DestinationInfo_Get", new MySqlParameter("ID", id));
         }
 
         #endregion
