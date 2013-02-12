@@ -33,6 +33,7 @@
             _mappings.Add(typeof(ObjectType), new ObjectTypeMapping());
             _mappings.Add(typeof(MetadataSchema), new MetadataSchemaMapping());
             _mappings.Add(typeof(FolderPermission), new FolderPermissionMapping());
+            _mappings.Add(typeof(AccessPoint), new AccessPointMapping());
         }
 
         public static IEnumerable<TResultType> Map<TResultType>(this IDataReader reader)

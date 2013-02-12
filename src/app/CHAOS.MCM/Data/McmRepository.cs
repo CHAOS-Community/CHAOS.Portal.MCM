@@ -408,22 +408,19 @@ namespace Chaos.Mcm.Data
         }
 
         #endregion
-        #region Folder
-        
-        
-
-        #endregion
         #region AccessPoint
 
-        public IEnumerable<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
+        public IList<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
         {
-            throw new NotImplementedException();
-//            var groupGuidsString = string.Join(",", groupGuids);
-//
-//            using (var db = this.CreateMcmEntities())
-//            {
-//                return db.AccessPoint_Get(accessPointGuid.ToByteArray(), userGuid.ToByteArray(), groupGuidsString, (int?)permission).ToList().ToDto();
-//            }
+            var groupGuidsString = String.Join(",", groupGuids.Select(item => item.ToString().Replace("-", "")));
+
+            return Gateway.ExecuteQuery<AccessPoint>("AccessPoint_Get", new[]
+                {
+                    new MySqlParameter("AccessPointGuid", accessPointGuid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("GroupGuids", groupGuidsString), 
+                    new MySqlParameter("Permission", permission) 
+                });
         }
 
         public uint SetAccessPointPublishSettings( Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate )

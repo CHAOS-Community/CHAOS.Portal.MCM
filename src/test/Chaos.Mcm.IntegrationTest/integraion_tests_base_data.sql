@@ -1,5 +1,5 @@
-﻿INSERT INTO AccessPoint(GUID, SubscriptionGUID, Name, DateCreated) 
-VALUES(unhex('00100000100000000000000000000000'),unhex('01000000000000000000000000000000'),'test','1990-10-01 23:59:59');
+﻿INSERT INTO AccessPoint(GUID, SubscriptionGUID, Name, DateCreated) VALUES
+(unhex('00100000100000000000000000000000'),unhex('01000000000000000000000000000000'),'test','1990-10-01 23:59:59');
 
 INSERT INTO Folder(ID, ParentID, FolderTypeID, SubscriptionGUID, Name, DateCreated) VALUES(1,NULL,1,unhex('01000000000000000000000000000000'),'test','1990-10-01 23:59:59');
 INSERT INTO Folder(ID, ParentID, FolderTypeID, SubscriptionGUID, Name, DateCreated) VALUES(2,1,1,null,'sub test','1990-10-01 23:59:59');
@@ -51,3 +51,6 @@ INSERT INTO Folder_User_Join(FolderID, UserGUID, Permission, DateCreated) VALUES
 
 INSERT INTO Folder_Group_Join(FolderID, GroupGUID, Permission, DateCreated) VALUES
 (1, unhex('00000000000000000000000000010000'),255,'1990-10-01 23:59:59');
+
+INSERT INTO AccessPoint_User_Join( AccessPointGUID, UserGUID, Permission, DateCreated) VALUES
+(unhex('00100000100000000000000000000000'),unhex('00000000000000000000000000001000'),15,'1990-10-01 23:59:59');

@@ -24,7 +24,7 @@
         IList<Folder> FolderGet(uint? id = null, Guid? userGuid = null, Guid? objectGuid = null);
         IList<FolderInfo> GetFolderInfo(IEnumerable<uint> ids);
         
-        IEnumerable<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission);
+        IList<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission);
         uint SetAccessPointPublishSettings(Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate);
         uint FolderUpdate(uint id, string newName, uint? newParentID, uint? newFolderTypeID);
 

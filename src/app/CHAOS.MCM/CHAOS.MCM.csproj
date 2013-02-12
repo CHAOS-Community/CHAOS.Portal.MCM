@@ -64,6 +64,7 @@
     <Compile Include="Binding\MetadataBinding.cs" />
     <Compile Include="Data\Connection\IReaderMapping.cs" />
     <Compile Include="Data\Connection\Mapping\AccesspointObjectJoinMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\Copy of AccesspointObjectJoinMapping.cs" />
     <Compile Include="Data\Connection\Mapping\FolderPermissionMapping.cs" />
     <Compile Include="Data\Connection\Mapping\MetadataSchemaMapping.cs" />
     <Compile Include="Data\Connection\Mapping\ObjectTypeMapping.cs" />

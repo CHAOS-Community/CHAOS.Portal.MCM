@@ -275,7 +275,7 @@
         {
             var repository          = Make_McmRepository();
             var objectGuid          = new Guid("00000000-0000-0000-0000-000000000002");
-            var expectedAccessPoint = Make_AccessPoint();
+            var expectedAccessPoint = this.Make_ObjectAccessPoint();
 
             var result = repository.ObjectGet(objectGuid, false, false, false, false, true);
 
@@ -425,7 +425,7 @@
         {
             var repository = Make_McmRepository();
             var objectGuid = new Guid("00000000-0000-0000-0000-000000000002");
-            var expected   = Make_AccessPoint();
+            var expected   = this.Make_ObjectAccessPoint();
             var folderID   = (uint?)1;
 
             var result = repository.ObjectGet(folderID, includeAccessPoints: true).First();
@@ -699,6 +699,22 @@
         }
 
         #endregion
+        #region AccessPoint
+
+        [Test]
+        public void AccessPointGet_GivenReadPermission_ReturnAnAccessPoint()
+        {
+            var repository  = Make_McmRepository();
+            var accessPoint = Make_AccessPoint();
+            var userGuid    = new Guid("00000000-0000-0000-0000-000000001000");
+
+            var results = repository.GetAccessPoint(accessPoint.Guid, userGuid, new Guid[0], 1);
+
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(accessPoint.Guid, results[0].Guid);
+        }
+
+        #endregion
         #region Helpers
 
         private MetadataSchema Make_MetadataSchemaThatExist()
@@ -787,7 +803,7 @@
             };
         }
 
-        private ObjectAccessPoint Make_AccessPoint()
+        private ObjectAccessPoint Make_ObjectAccessPoint()
         {
             return new ObjectAccessPoint
                        {
@@ -798,6 +814,17 @@
                            DateCreated     = new DateTime(1990, 10, 01, 23, 59, 59),
                            DateModified    = null
                        };
+        }
+
+        private AccessPoint Make_AccessPoint()
+        {
+            return new AccessPoint
+            {
+                Guid             = new Guid("00001000-0010-0000-0000-000000000000"),
+                SubscriptionGuid = new Guid("01000000-0000-0000-0000-000000000000"),
+                Name             = "test",
+                DateCreated      = new DateTime(1990, 10, 01, 23, 59, 59),
+            };
         }
 
         private FolderInfo Make_FolderThatExist()
