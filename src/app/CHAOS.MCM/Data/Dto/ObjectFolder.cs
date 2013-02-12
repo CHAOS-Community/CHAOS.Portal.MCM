@@ -22,6 +22,9 @@
         [Serialize]
         public Guid ObjectGuid { get; set; }
 
+        [Serialize]
+        public uint ObjectFolderTypeID { get; set; }
+
 		[Serialize]
 		public Guid? SubscriptionGuid{ get; set; }
 

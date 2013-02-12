@@ -5,6 +5,7 @@ AS
 		f.ParentID AS ParentID,
 		f.FolderTypeID AS FolderTypeID,
 		ofj.ObjectGUID AS ObjectGuid,
+		ofj.ObjectFolderTypeID,
 		f.SubscriptionGUID AS SubscriptionGUID,
 		f.Name AS Name,
 		f.DateCreated AS DateCreated

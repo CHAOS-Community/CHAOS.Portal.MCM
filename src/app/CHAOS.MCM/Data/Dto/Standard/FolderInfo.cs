@@ -33,7 +33,7 @@
 		[Serialize]
 		public long? NumberOfObjects { get; set; }
 
-		#endregion
+        #endregion
 		#region constructors
 
 		public FolderInfo( uint id, uint folderTypeID, uint? parentID, Guid? subscriptionGUID, string name, DateTime dateCreated, long? numberOfSubFolders, long? numberOfObjects )

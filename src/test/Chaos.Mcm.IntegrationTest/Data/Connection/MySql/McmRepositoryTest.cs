@@ -419,6 +419,7 @@
             Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
             Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
             Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGuid, "SubscriptionGuid");
+            Assert.AreEqual(1, result.ObjectFolders[0].ObjectFolderTypeID, "ObjectFolderTypeID");
         }
 
         [Test]
@@ -783,7 +784,11 @@
         #endregion
         #region Destination
 
-
+        [Test]
+        public void UnitUnderTest_Scenario_ExpectedResult()
+        {
+            
+        }
 
         #endregion
         #region Helpers
