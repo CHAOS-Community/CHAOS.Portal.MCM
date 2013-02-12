@@ -810,6 +810,17 @@
             Assert.Greater(result, 0);
         }
 
+        [Test]
+        public void FileDelete_NoChildFiles_ReturnOne()
+        {
+            var repository = Make_McmRepository();
+            var file       = Make_File();
+
+            var result = repository.FileDelete(file.ID);
+
+            Assert.AreEqual(1, result);
+        }
+
         #endregion
         #region Helpers
 

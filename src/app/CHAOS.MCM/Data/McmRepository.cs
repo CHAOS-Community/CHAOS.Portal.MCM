@@ -493,16 +493,9 @@ namespace Chaos.Mcm.Data
 
         public uint FileDelete(uint id)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                var result = db.File_Delete((int?)id).FirstOrDefault();
-            //
-            //                if (!result.HasValue)
-            //                    throw new UnhandledException("File delete failed in the database and was rolled back");
-            //
-            //                return result.Value;
-            //            }
+            var result = Gateway.ExecuteNonQuery("File_Delete", new MySqlParameter("ID", id));
+
+            return (uint)result;
         }
 
         public uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID)
