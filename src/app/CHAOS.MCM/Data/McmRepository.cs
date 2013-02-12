@@ -410,7 +410,7 @@ namespace Chaos.Mcm.Data
         #endregion
         #region AccessPoint
 
-        public IList<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
+        public IList<AccessPoint> AccessPointGet(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
         {
             var groupGuidsString = String.Join(",", groupGuids.Select(item => item.ToString().Replace("-", "")));
 
@@ -423,18 +423,17 @@ namespace Chaos.Mcm.Data
                 });
         }
 
-        public uint SetAccessPointPublishSettings( Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate )
+        public uint AccessPointPublishSettingsSet( Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate )
         {
-            throw new NotImplementedException();
-//            using (var db = this.CreateMcmEntities())
-//            {
-//                var result = db.AccessPoint_Object_Join_Set(accessPointGuid.ToByteArray(), objectGuid.ToByteArray(), startDate, endDate).FirstOrDefault();
-//
-//                if(!result.HasValue)
-//                    throw new UnhandledException("SetAccessPointPublishSettings failed on the database, and was rolled back");
-//
-//                return (uint) result.Value;
-//            }
+            var result = Gateway.ExecuteNonQuery("AccessPoint_Object_Join_Set", new[]
+                {
+                    new MySqlParameter("AccessPointGuid", accessPointGuid.ToByteArray()), 
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()), 
+                    new MySqlParameter("StartDate", startDate), 
+                    new MySqlParameter("EndDate", endDate)
+                });
+
+            return (uint)result;
         }
 
         #endregion

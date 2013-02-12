@@ -708,10 +708,23 @@
             var accessPoint = Make_AccessPoint();
             var userGuid    = new Guid("00000000-0000-0000-0000-000000001000");
 
-            var results = repository.GetAccessPoint(accessPoint.Guid, userGuid, new Guid[0], 1);
+            var results = repository.AccessPointGet(accessPoint.Guid, userGuid, new Guid[0], 1);
 
             Assert.IsNotEmpty(results);
             Assert.AreEqual(accessPoint.Guid, results[0].Guid);
+        }
+
+        [Test]
+        public void AccessPointPublishSettingsSet_GivenAStartDate_ReturnOne()
+        {
+            var repository  = Make_McmRepository();
+            var accessPoint = Make_AccessPoint();
+            var obj         = Make_ObjectWithNoRelations();
+            var startDate   = new DateTime(1990, 10, 01, 23, 59, 59);
+
+            var result = repository.AccessPointPublishSettingsSet(accessPoint.Guid, obj.Guid, startDate, null);
+
+            Assert.AreEqual(1, result);
         }
 
         #endregion
