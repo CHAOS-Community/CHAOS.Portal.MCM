@@ -1,16 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using CHAOS;
-
-using Chaos.Mcm.Permission;
-using Chaos.Portal;
-using Chaos.Portal.Data.Dto.Standard;
-using Chaos.Portal.Exceptions;
-
-namespace Chaos.Mcm.Extension
+﻿namespace Chaos.Mcm.Extension
 {
-    using Chaos.Mcm.Data.Dto;
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
+
+    using Chaos.Mcm.Permission;
+    using Chaos.Portal;
+    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Exceptions;
 
     using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
 

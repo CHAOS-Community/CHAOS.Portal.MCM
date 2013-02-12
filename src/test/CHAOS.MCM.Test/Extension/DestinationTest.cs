@@ -18,7 +18,7 @@
             var expected  = Make_Detination();
             McmRepository.Setup(m => m.DestinationGet(expected.ID)).Returns(new[] { expected });
 
-            var result = extension.Destination_Get(CallContext.Object, expected.ID);
+            var result = extension.Get(CallContext.Object, expected.ID);
 
             Assert.AreEqual(expected, result.First());
             McmRepository.Verify(m => m.DestinationGet(expected.ID));
