@@ -516,11 +516,7 @@ namespace Chaos.Mcm.Data
 
         public IList<File> FileGet(uint id)
         {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                return db.File_Get(result.Value).First().ToDto();
-//            }
+            return Gateway.ExecuteQuery<File>("File_Get", new MySqlParameter("ID", id));
         }
 
         #endregion

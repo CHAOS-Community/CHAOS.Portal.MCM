@@ -11,7 +11,7 @@
     {
         #region Business Logic
 
-        public Data.Dto.Standard.File Create(ICallContext callContext, Guid objectGuid, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath)
+        public Data.Dto.File Create(ICallContext callContext, Guid objectGuid, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath)
 		{
             if (!HasPermissionToObject(callContext, objectGuid, FolderPermission.CreateUpdateObjects))
                 throw new InsufficientPermissionsException("User does not have permissions to create a file for this object");

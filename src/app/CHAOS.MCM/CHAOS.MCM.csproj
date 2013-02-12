@@ -65,6 +65,7 @@
     <Compile Include="Data\Connection\IReaderMapping.cs" />
     <Compile Include="Data\Connection\Mapping\AccesspointObjectJoinMapping.cs" />
     <Compile Include="Data\Connection\Mapping\AccessPointMapping.cs" />
+    <Compile Include="Data\Connection\Mapping\FileMapping.cs" />
     <Compile Include="Data\Connection\Mapping\DestinationInfoMapping.cs" />
     <Compile Include="Data\Connection\Mapping\FolderPermissionMapping.cs" />
     <Compile Include="Data\Connection\Mapping\MetadataSchemaMapping.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Data\Connection\ReaderExtensions.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
+    <Compile Include="Data\Dto\File.cs" />
     <Compile Include="Data\Dto\FolderPermission.cs" />
     <Compile Include="Data\Dto\Format.cs" />
     <Compile Include="Data\Dto\MetadataSchema.cs" />
@@ -96,7 +98,6 @@
     <Compile Include="Data\Dto\ObjectType.cs" />
     <Compile Include="Data\Dto\Standard\MetadataSchemaInfo.cs" />
     <Compile Include="Data\Dto\Standard\EntityPermission.cs" />
-    <Compile Include="Data\Dto\Standard\File.cs" />
     <Compile Include="Data\Dto\Standard\Folder.cs" />
     <Compile Include="Data\Dto\Standard\FolderGroupJoin.cs" />
     <Compile Include="Data\Dto\Standard\FolderInfo.cs" />

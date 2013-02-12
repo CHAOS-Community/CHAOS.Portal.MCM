@@ -821,6 +821,18 @@
             Assert.AreEqual(1, result);
         }
 
+        [Test]
+        public void FileGet_GivenID_ReturnFileWithID()
+        {
+            var repository = Make_McmRepository();
+            var file       = Make_File();
+
+            var result = repository.FileGet(file.ID);
+
+            Assert.IsNotEmpty(result);
+            Assert.AreEqual(file.Filename, result[0].Filename);
+        }
+
         #endregion
         #region Helpers
 

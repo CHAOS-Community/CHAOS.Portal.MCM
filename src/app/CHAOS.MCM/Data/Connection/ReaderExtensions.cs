@@ -35,6 +35,7 @@
             _mappings.Add(typeof(FolderPermission), new FolderPermissionMapping());
             _mappings.Add(typeof(AccessPoint), new AccessPointMapping());
             _mappings.Add(typeof(DestinationInfo), new DestinationInfoMapping());
+            _mappings.Add(typeof(File), new FileMapping());
         }
 
         public static IEnumerable<TResultType> Map<TResultType>(this IDataReader reader)
