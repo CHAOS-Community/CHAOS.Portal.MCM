@@ -7,8 +7,8 @@
     using CHAOS;
     using CHAOS.Extensions;
 
+    using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
-    using Chaos.Mcm.Permission;
     using Chaos.Mcm.Data;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
@@ -19,6 +19,7 @@
 
     using Folder = Chaos.Mcm.Permission.InMemory.Folder;
     using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
+    using IFolder = Chaos.Mcm.Permission.IFolder;
 
     [TestFixture]
     public class FolderTest : TestBase

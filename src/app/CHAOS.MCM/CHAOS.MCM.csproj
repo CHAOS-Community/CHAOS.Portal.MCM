@@ -83,7 +83,9 @@
     <Compile Include="Data\Connection\ReaderExtensions.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
+    <Compile Include="Data\Dto\EntityPermission.cs" />
     <Compile Include="Data\Dto\File.cs" />
+    <Compile Include="Data\Dto\FolderInfo.cs" />
     <Compile Include="Data\Dto\FolderPermission.cs" />
     <Compile Include="Data\Dto\Format.cs" />
     <Compile Include="Data\Dto\MetadataSchema.cs" />
@@ -97,10 +99,8 @@
     <Compile Include="Data\Dto\ObjectRelationInfo.cs" />
     <Compile Include="Data\Dto\ObjectType.cs" />
     <Compile Include="Data\Dto\Standard\MetadataSchemaInfo.cs" />
-    <Compile Include="Data\Dto\Standard\EntityPermission.cs" />
     <Compile Include="Data\Dto\Standard\Folder.cs" />
     <Compile Include="Data\Dto\Standard\FolderGroupJoin.cs" />
-    <Compile Include="Data\Dto\Standard\FolderInfo.cs" />
     <Compile Include="Data\Dto\Standard\FolderType.cs" />
     <Compile Include="Data\Dto\Standard\FolderUserJoin.cs" />
     <Compile Include="Data\Dto\Standard\FormatCategory.cs" />
