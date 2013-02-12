@@ -15,7 +15,7 @@
                 {
                     Guid             = reader.GetGuid("GUID"),
                     Name             = reader.GetString("Name"),
-                    SubscriptionGuid = reader.GetGuid("SubscriptionGUID"),
+                    SubscriptionGuid = reader.GetGuid("SubscriptionGuid"),
                     DateCreated      = reader.GetDateTime("DateCreated")
                 };
             }

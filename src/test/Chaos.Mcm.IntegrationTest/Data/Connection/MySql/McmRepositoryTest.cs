@@ -268,7 +268,7 @@
             Assert.AreEqual(expectedFolderInfo.ParentID, result.ObjectFolders[0].ParentID);
             Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
             Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
-            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
+            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGuid, "SubscriptionGuid");
         }
         
         [Test]
@@ -418,7 +418,7 @@
             Assert.AreEqual(expectedFolderInfo.ParentID, result.ObjectFolders[0].ParentID);
             Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
             Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
-            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
+            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGuid, "SubscriptionGuid");
         }
 
         [Test]
@@ -767,6 +767,23 @@
 
             Assert.AreEqual(1, result);
         }
+
+        [Test]
+        public void LinkDelete_RemoveReferenceFromFolder_ReturnOne()
+        {
+            var repository   = Make_McmRepository();
+            var obj          = Make_ObjectWithRelations();
+            var fromFolderID = 3u;
+
+            var result = repository.LinkDelete(obj.Guid, fromFolderID);
+
+            Assert.AreEqual(1, result);
+        }
+
+        #endregion
+        #region Destination
+
+
 
         #endregion
         #region Helpers

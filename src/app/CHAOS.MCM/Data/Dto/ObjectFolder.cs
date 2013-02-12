@@ -23,7 +23,7 @@
         public Guid ObjectGuid { get; set; }
 
 		[Serialize]
-		public Guid SubscriptionGUID{ get; set; }
+		public Guid? SubscriptionGuid{ get; set; }
 
 		[Serialize]
 		public string Name{ get; set; }

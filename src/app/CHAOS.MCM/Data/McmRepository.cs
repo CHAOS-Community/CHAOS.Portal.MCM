@@ -469,16 +469,15 @@ namespace Chaos.Mcm.Data
 
         public uint LinkDelete(Guid objectGuid, uint folderID)
         {
-            throw new NotImplementedException();
-//            using (MCMEntities db = DefaultMCMEntities)
-//            {
-//                var result = db.Object_Folder_Join_Delete(objectGuid.ToByteArray(), (int)folderID).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("Link delete failed on the database and was rolled back");
-//
-//                return (uint)result;
-//            }
+            var result = Gateway.ExecuteNonQuery("Object_Folder_Join_Delete", new[]
+                {
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                });
+
+            if (result == -100) throw new InsufficientPermissionsException("User can only create links");
+
+            return (uint)result;
         }
 
         #endregion
