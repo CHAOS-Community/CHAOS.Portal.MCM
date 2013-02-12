@@ -9,7 +9,7 @@
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
-    using FolderPermission = Chaos.Mcm.Data.Dto.Standard.FolderPermission;
+    using FolderPermission = Chaos.Mcm.Data.Dto.FolderPermission;
     using IFolder = Chaos.Mcm.Permission.IFolder;
     
     public class Folder : AMcmExtension
@@ -46,9 +46,9 @@
                 throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
             if (userGuid.HasValue)
-                result += (int) McmRepository.SetFolderUserJoin(userGuid.Value, folderID, permission);
+                result += (int) McmRepository.FolderUserJoinSet(userGuid.Value, folderID, permission);
             if (groupGuid.HasValue)
-                result += (int) McmRepository.SetFolderGroupJoin(groupGuid.Value, folderID, permission);
+                result += (int) McmRepository.FolderGroupJoinSet(groupGuid.Value, folderID, permission);
 
             return new ScalarResult( result );
         }

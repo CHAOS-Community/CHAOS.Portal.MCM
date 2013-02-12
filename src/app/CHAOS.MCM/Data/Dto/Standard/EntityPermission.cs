@@ -1,15 +1,14 @@
-using System;
-using CHAOS.Extensions;
-using CHAOS.Serialization;
-
 namespace Chaos.Mcm.Data.Dto.Standard
 {
+    using System;
+
+    using CHAOS.Serialization;
+
     public class EntityPermission : IEntityPermission
     {
         [Serialize("Guid")]
-        public string pGuid{ get { return Guid.ToUUID().ToString(); }}
-        
         public Guid Guid { get; set; }
+
         public Mcm.Permission.FolderPermission Permission { get; set; }
 
         [Serialize("Permission")]

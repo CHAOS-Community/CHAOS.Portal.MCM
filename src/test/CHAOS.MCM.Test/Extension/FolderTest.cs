@@ -188,7 +188,7 @@
             CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
             PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
             folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.Read)).Returns(true);
-            McmRepository.Setup(m => m.SetFolderUserJoin(userGuid, folder.Object.ID, (uint)FolderPermission.Read)).Returns(1);
+            McmRepository.Setup(m => m.FolderUserJoinSet(userGuid, folder.Object.ID, (uint)FolderPermission.Read)).Returns(1);
 
             var module = new Chaos.Mcm.Extension.Folder();
             module.WithConfiguration(PermissionManager.Object, McmRepository.Object);
@@ -214,7 +214,7 @@
             CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
             PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
             folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.None)).Returns(true);
-            McmRepository.Setup(m => m.SetFolderUserJoin(userGuid, folder.Object.ID, (uint)FolderPermission.None)).Returns(1);
+            McmRepository.Setup(m => m.FolderUserJoinSet(userGuid, folder.Object.ID, (uint)FolderPermission.None)).Returns(1);
 
             var module = new Chaos.Mcm.Extension.Folder();
             module.WithConfiguration(PermissionManager.Object, McmRepository.Object);

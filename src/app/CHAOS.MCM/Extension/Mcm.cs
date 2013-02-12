@@ -81,7 +81,7 @@ namespace Chaos.Mcm.Extension
         //{
         //    using( var db = DefaultMCMEntities )
         //    {
-        //        if( !PermissionManager.GetFolder( folderID ).DoesUserOrGroupHavePersmission( callContext.User.Guid, callContext.Groups.Select( item => item.Guid ), FolderPermissions.CreateUpdateObjects ) )
+        //        if( !PermissionManager.FolderGet( folderID ).DoesUserOrGroupHavePersmission( callContext.User.Guid, callContext.Groups.Select( item => item.Guid ), FolderPermissions.CreateUpdateObjects ) )
         //            throw new InsufficientPermissionsException( "User does not have permissions to create object" );
 
         //        var guid = Guid ?? new UUID();

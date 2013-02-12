@@ -14,6 +14,7 @@ namespace Chaos.Mcm.Data
 
     using MySql.Data.MySqlClient;
 
+    using FolderPermission = Chaos.Mcm.Data.Dto.FolderPermission;
     using Object = Chaos.Mcm.Data.Dto.Object;
 
     // todo: Remove dependency to MySql
@@ -371,77 +372,41 @@ namespace Chaos.Mcm.Data
         }
 
         #endregion
-        #region Folder User Join
+        #region Folder Permission
 
-        public IEnumerable<FolderUserJoin> GetFolderUserJoin()
+        public IList<FolderPermission> FolderPermissionGet()
         {
-            throw new NotImplementedException();
-//
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                return
-//                    db.Folder_User_Join.ToList().Select(
-//                        item =>
-//                        new FolderUserJoin
-//                            {
-//                                FolderID = (uint)item.FolderID,
-//                                UserGuid = item.UserGUID,
-//                                Permission = (uint)item.Permission,
-//                                DateCreated = item.DateCreated
-//                            });
-//            }
+            return Gateway.ExecuteQuery<FolderPermission>("FolderPermission_Get");
         }
 
-        public uint SetFolderUserJoin(Guid userGuid, uint folderID, uint permission)
+        public uint FolderUserJoinSet(Guid userGuid, uint folderID, uint permission)
         {
-            throw new NotImplementedException();
-//
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                var result =
-//                    db.Folder_User_Join_Set(userGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
-//
-//                if(!result.HasValue) throw new UnhandledException("Folder_User_Join_Set failed on the database and was rolled back");
-//
-//                return (uint)result.Value;
-//            }
+            var result = Gateway.ExecuteNonQuery("Folder_User_Join_Set", new[]
+                {
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                    new MySqlParameter("Permission", permission) 
+                });
+
+            return (uint)result;
+        }
+
+        public uint FolderGroupJoinSet(Guid groupGuid, uint folderID, uint permission)
+        {
+            var result = Gateway.ExecuteNonQuery("Folder_Group_Join_Set", new[]
+                {
+                    new MySqlParameter("GroupGuid", groupGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                    new MySqlParameter("Permission", permission) 
+                });
+
+            return (uint)result;
         }
 
         #endregion
         #region Folder
 
-        public IEnumerable<FolderGroupJoin> GetFolderGroupJoin()
-        {
-            throw new NotImplementedException();
 
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                return
-//                    db.Folder_Group_Join.ToList().Select(
-//                        item =>
-//                        new FolderGroupJoin
-//                            {
-//                                FolderID = (uint)item.FolderID,
-//                                GroupGuid = item.GroupGUID,
-//                                Permission = (uint)item.Permission,
-//                                DateCreated = item.DateCreated
-//                            });
-//            }
-        }
-
-        public uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission)
-        {
-            throw new NotImplementedException();
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                var result =
-//                    db.Folder_Group_Join_Set(groupGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
-//
-//                if(!result.HasValue) throw new UnhandledException("Folder_Group_Join_Set failed on the database and was rolled back");
-//
-//                return (uint)result.Value;
-//            }
-        }
 
         public IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids)
         {

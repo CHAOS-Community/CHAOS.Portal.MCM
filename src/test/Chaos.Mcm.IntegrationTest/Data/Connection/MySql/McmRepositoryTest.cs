@@ -644,7 +644,47 @@
 
         #endregion
         #region FolderUserInfo
-        
+
+        [Test]
+        public void FolderPermissionGet_GivenNoParameters_ReturnAllFromDatabase()
+        {
+            var repository        = Make_McmRepository();
+            var expectedUserGuid  = new Guid("00000000-0000-0000-0000-000000001000");
+            var expectedGroupGuid = new Guid("00000000-0000-0000-0000-000000010000");
+
+            var result = repository.FolderPermissionGet();
+
+            Assert.IsNotEmpty(result);
+            Assert.AreEqual(expectedUserGuid, result[0].UserPermissions[0].Guid);
+            Assert.AreEqual(expectedGroupGuid, result[0].GroupPermissions[0].Guid);
+        }
+
+        [Test]
+        public void FolderUserJoinSet_GivenUserGuidWithNoPermissionToFolder_ReturnOne()
+        {
+            var repository       = Make_McmRepository();
+            var expectedUserGuid = new Guid("00000000-0000-0000-0000-000000001000");
+            var folder           = Make_FolderThatExist();
+            var somePermission   = 15u;
+
+            var result = repository.FolderUserJoinSet(expectedUserGuid, folder.ID, somePermission);
+
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void FolderGroupJoinSet_GivenGroupGuidWithNoPerission_ReturnOne()
+        {
+            var repository        = Make_McmRepository();
+            var expectedGroupGuid = new Guid("00000000-0000-0000-0000-000000001000");
+            var folder            = Make_FolderThatExist();
+            var somePermission    = 15u;
+
+            var result = repository.FolderGroupJoinSet(expectedGroupGuid, folder.ID, somePermission);
+
+            Assert.AreEqual(1, result);
+        }
+
         #endregion
         #region Helpers
 

@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.sto
 		sql\3.storedprocedures\Folder_Group_Join_Set.sql = sql\3.storedprocedures\Folder_Group_Join_Set.sql
 		sql\3.storedprocedures\Folder_Update.sql = sql\3.storedprocedures\Folder_Update.sql
 		sql\3.storedprocedures\Folder_User_Join_Set.sql = sql\3.storedprocedures\Folder_User_Join_Set.sql
+		sql\3.storedprocedures\FolderPermission_Get.sql = sql\3.storedprocedures\FolderPermission_Get.sql
 		sql\3.storedprocedures\FolderType_Create.sql = sql\3.storedprocedures\FolderType_Create.sql
 		sql\3.storedprocedures\FolderType_Delete.sql = sql\3.storedprocedures\FolderType_Delete.sql
 		sql\3.storedprocedures\FolderType_Get.sql = sql\3.storedprocedures\FolderType_Get.sql

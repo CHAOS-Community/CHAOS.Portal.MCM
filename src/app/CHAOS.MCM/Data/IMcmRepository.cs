@@ -8,16 +8,16 @@
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Permission;
 
+    using FolderPermission = Chaos.Mcm.Data.Dto.FolderPermission;
     using Object = Chaos.Mcm.Data.Dto.Object;
 
     public interface IMcmRepository
     {
         IMcmRepository WithConfiguration(string connectionString);
 
-        IEnumerable<FolderUserJoin> GetFolderUserJoin();
-        uint SetFolderUserJoin(Guid userGuid, uint folderID, uint permission);
-        IEnumerable<FolderGroupJoin> GetFolderGroupJoin();
-        uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission);
+        uint FolderUserJoinSet(Guid userGuid, uint folderID, uint permission);
+        uint FolderGroupJoinSet(Guid groupGuid, uint folderID, uint permission);
+        IList<FolderPermission> FolderPermissionGet();
 
         uint FolderCreate(Guid userGuid, Guid? subscriptionGuid, string name, uint? parentID, uint folderTypeID);
         int FolderDelete(uint id);

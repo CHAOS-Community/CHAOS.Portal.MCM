@@ -12,6 +12,8 @@ namespace Chaos.Mcm.Extension
 {
     using Chaos.Mcm.Data.Dto;
 
+    using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
+
     public class Object : AMcmExtension
     {
 //		public IPagedResult<IResult> Get( ICallContext callContext, IQuery query, UUID accessPointGuid, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )

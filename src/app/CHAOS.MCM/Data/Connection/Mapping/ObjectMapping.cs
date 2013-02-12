@@ -6,7 +6,6 @@
 
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Connection;
-    using Chaos.Mcm.Data.Dto.Standard;
 
     public class ObjectMapping : IReaderMapping<Object>
     {

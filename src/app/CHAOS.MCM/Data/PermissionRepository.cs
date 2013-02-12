@@ -21,19 +21,14 @@ namespace Chaos.Mcm.Data
         #endregion
         #region Business Logic
 
-        public IEnumerable<IFolder> GetFolder()
+        public IEnumerable<IFolder> FolderGet()
         {
             return this._mcmRepository.FolderGet();
         }
 
-        public IEnumerable<IFolderUserJoin> GetFolderUserJoin()
+        public IEnumerable<FolderPermission> FolderPermissionGet()
         {
-            return this._mcmRepository.GetFolderUserJoin();
-        }
-
-        public IEnumerable<IFolderGroupJoin> GetFolderGroupJoin()
-        {
-            return this._mcmRepository.GetFolderGroupJoin();
+            return this._mcmRepository.FolderPermissionGet();
         }
 
         #endregion
