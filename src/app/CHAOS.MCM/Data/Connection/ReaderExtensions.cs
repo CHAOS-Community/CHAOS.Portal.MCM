@@ -75,12 +75,16 @@
 
         public static uint? GetUint32Nullable(this IDataReader reader, string name)
         {
-            return reader.GetValue(reader.GetOrdinal(name)) as uint?;
+            var value = reader.GetValue(reader.GetOrdinal(name));
+
+            return value is DBNull ? (uint?)null : Convert.ToUInt32(value);
         }
 
         public static int? GetInt32Nullable(this IDataReader reader, string name)
         {
-            return reader.GetValue(reader.GetOrdinal(name)) as int?;
+            var value = reader.GetValue(reader.GetOrdinal(name));
+
+            return value is DBNull ? (int?)null : Convert.ToInt32(value);
         }
 
         public static DateTime GetDateTime(this IDataReader reader, string name)

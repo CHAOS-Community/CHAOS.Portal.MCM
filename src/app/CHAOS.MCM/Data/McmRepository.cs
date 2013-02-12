@@ -216,6 +216,11 @@ namespace Chaos.Mcm.Data
                    });
         }
 
+        public IList<FolderInfo> GetFolderInfo(IEnumerable<uint> ids)
+        {
+            return Gateway.ExecuteQuery<FolderInfo>("FolderInfo_Get", new MySqlParameter("FolderIDs", string.Join(",", ids)));
+        }
+
         public int FolderDelete(uint id)
         {
             var result = Gateway.ExecuteNonQuery("Folder_Delete", new MySqlParameter("ID", id));
@@ -238,7 +243,6 @@ namespace Chaos.Mcm.Data
                 });
 
             if (result == -200) throw new UnhandledException("An unknown error occured on Folder_Create and was rolled back");
-
             if (result == -10) throw new UnhandledException("Invalid input parameters");
 
             return (uint)result;
@@ -405,21 +409,8 @@ namespace Chaos.Mcm.Data
 
         #endregion
         #region Folder
-
-
-
-        public IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids)
-        {
-            throw new NotImplementedException();
-//            var folderIDs = ids.Select(item => (long)item);
-//            var folderIDStrings = string.Join(",", ids);
-//
-//            // TODO: optimize folder retrival form the database
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                return db.FolderInfo.Where(fi => folderIDs.Contains(fi.ID)).ToList().ToDto();
-//            }
-        }
+        
+        
 
         #endregion
         #region AccessPoint

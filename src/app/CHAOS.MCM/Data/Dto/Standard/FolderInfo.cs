@@ -19,7 +19,7 @@
 		public uint FolderTypeID{ get; set; }
 
 		[Serialize]
-		public Guid SubscriptionGuid{ get; set; }
+		public Guid? SubscriptionGuid{ get; set; }
 
 		[Serialize]
 		public string Name{ get; set; }

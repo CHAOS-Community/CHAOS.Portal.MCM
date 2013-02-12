@@ -13,10 +13,10 @@
             {
                 yield return new FolderInfo
                     {
-                        ID                 = reader.GetUint32("FileID"),
+                        ID                 = reader.GetUint32("ID"),
                         ParentID           = reader.GetUint32Nullable("ParentID"),
                         FolderTypeID       = reader.GetUint32("FolderTypeID"),
-                        SubscriptionGuid   = reader.GetGuid("SubscriptionGuid"),
+                        SubscriptionGuid   = reader.GetGuidNullable("SubscriptionGuid"),
                         Name               = reader.GetString("Name"),
                         DateCreated        = reader.GetDateTime("DateCreated"),
                         NumberOfObjects    = reader.GetUint32("NumberOfObjects"), 
