@@ -732,7 +732,7 @@
         #region Link
 
         [Test, ExpectedException(typeof(InsufficientPermissionsException))]
-        public void LinkCreate_TryingToCreateAPhysicalLink_ReturnOne()
+        public void LinkCreate_TryingToCreateAPhysicalLink_ThrowInsufficientPermissionsException()
         {
             var repository       = Make_McmRepository();
             var obj              = Make_ObjectWithNoRelations();
@@ -751,6 +751,19 @@
             var objectFolderType = 2;
 
             var result = repository.LinkCreate(obj.Guid, folder.ID, objectFolderType);
+
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void LinkUpdate_MoveToAnotherFolder_ReturnOne()
+        {
+            var repository   = Make_McmRepository();
+            var obj          = Make_ObjectWithRelations();
+            var fromFolderID = 3u;
+            var toFolderID   = 2u;
+
+            var result = repository.LinkUpdate(obj.Guid, fromFolderID, toFolderID);
 
             Assert.AreEqual(1, result);
         }

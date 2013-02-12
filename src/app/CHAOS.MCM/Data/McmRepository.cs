@@ -455,13 +455,16 @@ namespace Chaos.Mcm.Data
 
         public uint LinkUpdate(Guid objectGuid, uint folderID, uint newFolderID)
         {
-            throw new NotImplementedException();
-//            using (MCMEntities db = DefaultMCMEntities)
-//            {
-//                var result = db.Object_Folder_Join_Update(objectGuid.ToByteArray(), (int)folderID, (int)newFolderID).First().Value;
-//
-//                return (uint)result;
-//            }
+            var result = Gateway.ExecuteNonQuery("Object_Folder_Join_Update", new[]
+                {
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                    new MySqlParameter("NewFolderID", newFolderID), 
+                });
+
+            if (result == -100) throw new InsufficientPermissionsException("User can only create links");
+
+            return (uint)result;
         }
 
         public uint LinkDelete(Guid objectGuid, uint folderID)
