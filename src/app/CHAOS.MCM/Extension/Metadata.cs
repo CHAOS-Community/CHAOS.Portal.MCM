@@ -18,9 +18,7 @@
             var result  = McmRepository.MetadataSet(objectGuid, metadataGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, userGuid);
             var objects = McmRepository.ObjectGet(objectGuid, true, false, false, true, true);
             
-            //todo: replace with view indexing
-//            if(callContext.IndexManager != null)
-//                PutObjectInIndex(callContext.IndexManager.GetIndex<Mcm>(), objects);
+            callContext.ViewManager.Index(objects);
 
             return new ScalarResult((int)result);
         }

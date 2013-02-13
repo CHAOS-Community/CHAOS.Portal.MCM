@@ -11,6 +11,7 @@ namespace Chaos.Mcm.Test.Extension
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Index;
 
     using Moq;
 
@@ -40,6 +41,7 @@ namespace Chaos.Mcm.Test.Extension
             McmRepository     = new Mock<IMcmRepository>();
             CallContext       = new Mock<ICallContext>();
 
+            CallContext.SetupGet(m => m.ViewManager).Returns(new ViewManager());
             McmRepository.Setup(m => m.WithConfiguration(It.IsAny<string>())).Returns(McmRepository.Object);
         }
 

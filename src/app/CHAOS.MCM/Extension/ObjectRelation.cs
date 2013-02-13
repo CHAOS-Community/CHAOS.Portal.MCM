@@ -28,7 +28,7 @@
                         LanguageCode         = metadata.LanguageCode
                     };
 
-                result = this.McmRepository.ObjectRelationSet(objectRelationInfo, callContext.User.Guid);
+                result = McmRepository.ObjectRelationSet(objectRelationInfo, callContext.User.Guid);
             }
             else
                 result = McmRepository.ObjectRelationSet(object1GUID, object2GUID, objectRelationTypeID, sequence);
