@@ -20,7 +20,7 @@
             var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = new Guid("905c48db-5632-4c57-9a1a-a158deba6ab4") });
             
-            extension.Metadata_Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
+            extension.Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
             McmRepository.Verify(m => m.MetadataSet(objectGuid, It.IsAny<Guid>(), metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml, It.IsAny<Guid>()));
         }
@@ -33,7 +33,7 @@
             var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = new Guid("905c48db-5632-4c57-9a1a-a158deba6ab4") });
 
-            extension.Metadata_Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
+            extension.Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
             McmRepository.Verify(m => m.ObjectGet(objectGuid, true, false, false, true, true));
         }

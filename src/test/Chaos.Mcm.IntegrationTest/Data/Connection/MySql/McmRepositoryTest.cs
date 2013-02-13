@@ -7,7 +7,6 @@
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Permission;
     using Chaos.Portal.Exceptions;
 
@@ -670,6 +669,7 @@
             var result = repository.FolderPermissionGet();
 
             Assert.IsNotEmpty(result);
+            Assert.AreEqual(1,result[0].FolderID);
             Assert.AreEqual(expectedUserGuid, result[0].UserPermissions[0].Guid);
             Assert.AreEqual(expectedGroupGuid, result[0].GroupPermissions[0].Guid);
         }
