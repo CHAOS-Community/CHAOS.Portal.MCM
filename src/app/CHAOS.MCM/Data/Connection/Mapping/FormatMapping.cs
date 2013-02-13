@@ -3,8 +3,9 @@
     using System.Collections.Generic;
     using System.Data;
 
+    using CHAOS.Data;
+
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Data.Dto.Standard;
 
     public class FormatMapping : IReaderMapping<Format>
     {
@@ -18,8 +19,8 @@
                                     FormatCategoryID = reader.GetUint32("FormatCategoryID"),
                                     Name             = reader.GetString("Name"),
                                     FormatXml        = reader.GetXDocument("FormatXML"),
-                                    MimeType = reader.GetString("MimeType"),
-                                    Extension = reader.GetString("Extension")
+                                    MimeType         = reader.GetString("MimeType"),
+                                    Extension        = reader.GetString("Extension")
                                  };
             }
         }

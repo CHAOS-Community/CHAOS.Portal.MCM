@@ -5,7 +5,10 @@ namespace Chaos.Mcm.Data
     using System.Linq;
     using System.Xml.Linq;
 
-    using Chaos.Mcm.Data.Connection.MySql;
+    using CHAOS.Data;
+    using CHAOS.Data.MySql;
+
+    using Chaos.Mcm.Data.Connection.Mapping;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Exception;
@@ -21,8 +24,6 @@ namespace Chaos.Mcm.Data
     {
         #region Fields
 
-        private string _connectionString;
-
         #endregion
         #region Properties
 
@@ -31,17 +32,27 @@ namespace Chaos.Mcm.Data
         #endregion
         #region Construction
 
-        public IMcmRepository WithConfiguration(string connectionString)
+        static McmRepository()
         {
-            this._connectionString = connectionString;
-            this.Gateway           = new Gateway(connectionString);
-            return this;
+            ReaderExtensions.Mappings.Add( typeof( Folder ), new FolderMapping() );
+            ReaderExtensions.Mappings.Add( typeof( Format ), new FormatMapping() );
+            ReaderExtensions.Mappings.Add( typeof( Object ), new ObjectMapping() );
+            ReaderExtensions.Mappings.Add( typeof( Metadata ), new MetadataMapping() );
+            ReaderExtensions.Mappings.Add( typeof( FileInfo ), new FileInfoMapping() );
+            ReaderExtensions.Mappings.Add( typeof( ObjectType ), new ObjectTypeMapping() );
+            ReaderExtensions.Mappings.Add( typeof( FolderInfo ), new FolderInfoMapping() );
+            ReaderExtensions.Mappings.Add( typeof( ObjectFolder ), new ObjectFolderMapping() );
+            ReaderExtensions.Mappings.Add( typeof( ObjectMetadata ), new ObjectMetadataMapping() );
+            ReaderExtensions.Mappings.Add( typeof( MetadataSchema ), new MetadataSchemaMapping() );
+            ReaderExtensions.Mappings.Add( typeof( ObjectAccessPoint ), new AccesspointObjectJoinMapping() );
+            ReaderExtensions.Mappings.Add( typeof( ObjectRelationInfo ), new ObjectRelationInfoMapping() );
         }
 
-//        private MCMEntities CreateMcmEntities()
-//        {
-//            return new MCMEntities(this._connectionString);
-//        }
+        public IMcmRepository WithConfiguration(string connectionString)
+        {
+            Gateway = new Gateway(connectionString);
+            return this;
+        }
 
         #endregion
         #region Business Logic

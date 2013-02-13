@@ -62,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding\MetadataBinding.cs" />
-    <Compile Include="Data\Connection\IReaderMapping.cs" />
     <Compile Include="Data\Connection\Mapping\AccesspointObjectJoinMapping.cs" />
     <Compile Include="Data\Connection\Mapping\MetadataSchemaMapping.cs" />
     <Compile Include="Data\Connection\Mapping\ObjectTypeMapping.cs" />
@@ -75,8 +74,6 @@
     <Compile Include="Data\Connection\Mapping\ObjectMapping.cs" />
     <Compile Include="Data\Connection\Mapping\MetadataMapping.cs" />
     <Compile Include="Data\Connection\Mapping\ObjectRelationInfoMapping.cs" />
-    <Compile Include="Data\Connection\MySql\Gateway.cs" />
-    <Compile Include="Data\Connection\ReaderExtensions.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\Format.cs" />
     <Compile Include="Data\Dto\MetadataSchema.cs" />

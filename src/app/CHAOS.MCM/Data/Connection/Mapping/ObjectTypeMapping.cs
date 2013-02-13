@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Data;
 
+    using CHAOS.Data;
+
     using Chaos.Mcm.Data.Dto;
 
     public class ObjectTypeMapping : IReaderMapping<ObjectType>
