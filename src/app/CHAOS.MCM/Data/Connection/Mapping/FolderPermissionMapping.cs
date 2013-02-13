@@ -6,7 +6,6 @@
     using CHAOS.Data;
 
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Data.Dto.Standard;
 
     public class FolderPermissionMapping : IReaderMapping<FolderPermission>
     {
@@ -19,12 +18,12 @@
                 var folderID = reader.GetUint32("FolderID");
 
                 if (!folderPermissions.ContainsKey(folderID))
-                    folderPermissions.Add(folderID, new FolderPermission());
+                    folderPermissions.Add( folderID, new FolderPermission { FolderID = folderID } );
                     
                 folderPermissions[folderID].UserPermissions.Add(new EntityPermission
                     {
                         Guid       = reader.GetGuid("UserGUID"),
-                        Permission = (Mcm.Permission.FolderPermission)reader.GetUint32("Permission")
+                        Permission = (Permission.FolderPermission)reader.GetUint32("Permission")
                     });
             }
 
@@ -35,12 +34,12 @@
                 var folderID = reader.GetUint32("FolderID");
 
                 if (!folderPermissions.ContainsKey(folderID))
-                    folderPermissions.Add(folderID, new FolderPermission());
+                    folderPermissions.Add( folderID, new FolderPermission { FolderID = folderID } );
                     
                 folderPermissions[folderID].GroupPermissions.Add(new EntityPermission
                     {
                         Guid       = reader.GetGuid("GroupGUID"),
-                        Permission = (Mcm.Permission.FolderPermission)reader.GetUint32("Permission")
+                        Permission = (Permission.FolderPermission)reader.GetUint32("Permission")
                     });
             }
 

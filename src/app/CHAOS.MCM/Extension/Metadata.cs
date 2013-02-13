@@ -10,7 +10,7 @@
     [PortalExtension(configurationName: "MCM")]
     public class Metadata : AMcmExtension
     {
-        public ScalarResult Metadata_Set(ICallContext callContext, Guid objectGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml)
+        public ScalarResult Set(ICallContext callContext, Guid objectGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml)
         {
             var metadataGuid = Guid.NewGuid();
             var userGuid     = callContext.User.Guid;

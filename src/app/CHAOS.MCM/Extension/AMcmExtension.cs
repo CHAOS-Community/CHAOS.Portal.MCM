@@ -7,6 +7,8 @@
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Binding;
     using Chaos.Mcm.Permission;
+    using Chaos.Mcm.Permission.InMemory;
+    using Chaos.Mcm.Permission.Specification;
     using Chaos.Portal;
     using Chaos.Portal.Extension;
 
@@ -27,18 +29,14 @@
         public override IExtension WithConfiguration( string configuration )
         {
             var mcmDefaultRepository = new McmRepository();
-//            var permissionManager    = PermissionManager ?? new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(mcmDefaultRepository), new IntervalSpecification(10000));
+            var permissionManager    = PermissionManager ?? new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(mcmDefaultRepository), new IntervalSpecification(10000));
 
-            return WithConfiguration(configuration, null, mcmDefaultRepository);
+            return WithConfiguration(configuration, permissionManager, mcmDefaultRepository);
         }
 
         public IExtension WithConfiguration( string configuration, IPermissionManager permissionManager, IMcmRepository mcmRepository )
         {
-            var connectionString = XDocument.Parse( configuration ).Root.Attribute( "ConnectionString" ).Value;
-
-            // Provides backwards compaitibility with configurations from versino 5 and earlier.
-            ConnectionString = connectionString.Replace( "metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;", 
-                                                         "metadata=res://*/Data.EF.MCM.csdl|res://*/Data.EF.MCM.ssdl|res://*/Data.EF.MCM.msl;" );
+            ConnectionString = XDocument.Parse( configuration ).Root.Attribute( "ConnectionString" ).Value;
 
             return WithConfiguration(permissionManager, mcmRepository);
         }
@@ -84,7 +82,7 @@
 
         public bool HasPermissionToObject(ICallContext callContext, Guid objectGuid, FolderPermission permissions)
 	    {
-            //review: look into using the folder returned from the database directly for the permission check
+            //todo: look into using the folder returned from the database directly for the permission check
             var folders    = McmRepository.FolderGet(null, null, objectGuid).Select(item => PermissionManager.GetFolders(item.ID));
             var userGuid   = callContext.User.Guid;
 			var groupGuids = callContext.Groups.Select( item => item.Guid );

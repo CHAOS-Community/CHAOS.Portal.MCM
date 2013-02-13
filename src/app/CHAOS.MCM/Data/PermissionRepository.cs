@@ -15,7 +15,7 @@ namespace Chaos.Mcm.Data
 
         public PermissionRepository(IMcmRepository mcmRepository)
         {
-            this._mcmRepository = mcmRepository;
+            _mcmRepository = mcmRepository;
         }
 
         #endregion
@@ -23,12 +23,12 @@ namespace Chaos.Mcm.Data
 
         public IEnumerable<IFolder> FolderGet()
         {
-            return this._mcmRepository.FolderGet();
+            return _mcmRepository.FolderGet();
         }
 
         public IEnumerable<FolderPermission> FolderPermissionGet()
         {
-            return this._mcmRepository.FolderPermissionGet();
+            return _mcmRepository.FolderPermissionGet();
         }
 
         #endregion

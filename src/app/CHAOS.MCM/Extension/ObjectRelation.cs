@@ -7,7 +7,6 @@
     using Chaos.Mcm.Data.Dto;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
-    using Chaos.Portal.Exceptions;
 
     public class ObjectRelation : AMcmExtension
     {
