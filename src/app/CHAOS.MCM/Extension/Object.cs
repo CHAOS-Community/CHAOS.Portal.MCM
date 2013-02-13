@@ -1,16 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using CHAOS;
-
-using Chaos.Mcm.Permission;
-using Chaos.Portal;
-using Chaos.Portal.Data.Dto.Standard;
-using Chaos.Portal.Exceptions;
-
-namespace Chaos.Mcm.Extension
+﻿namespace Chaos.Mcm.Extension
 {
-    using Chaos.Mcm.Data.Dto;
+    using System;
+    using System.Linq;
+    using System.Collections.Generic;
+
+    using Chaos.Mcm.Permission;
+    using Chaos.Portal;
+    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Exceptions;
+
+    using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
 
     public class Object : AMcmExtension
     {
@@ -86,10 +85,10 @@ namespace Chaos.Mcm.Extension
             var userGuid   = callContext.User.Guid;
             var groupGuids = callContext.Groups.Select(item => item.Guid);
 
-            if (McmRepository.GetAccessPoint(accessPointGuid, userGuid, groupGuids, (uint) AccessPointPermission.Write).FirstOrDefault() == null)
+            if (McmRepository.AccessPointGet(accessPointGuid, userGuid, groupGuids, (uint) AccessPointPermission.Write).FirstOrDefault() == null)
                 throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
 
-            var result = McmRepository.SetAccessPointPublishSettings(accessPointGuid, objectGuid, startDate, endDate);
+            var result = McmRepository.AccessPointPublishSettingsSet(accessPointGuid, objectGuid, startDate, endDate);
                 
         //    PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), McmRepository.GetObject(objectGuid, true, true, true, true, true) );
 

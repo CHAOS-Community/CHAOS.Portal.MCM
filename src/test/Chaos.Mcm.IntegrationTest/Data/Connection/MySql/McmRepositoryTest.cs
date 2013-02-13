@@ -9,6 +9,7 @@
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Permission;
+    using Chaos.Portal.Exceptions;
 
     using NUnit.Framework;
 
@@ -211,7 +212,7 @@
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
             Assert.AreEqual(expectedFile.ID, result.Files[0].ID);
-            Assert.AreEqual(expectedFile.ObjectGUID, result.Files[0].ObjectGUID);
+            Assert.AreEqual(expectedFile.ObjectGuid, result.Files[0].ObjectGuid);
             Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
             Assert.AreEqual(expectedFile.DestinationID, result.Files[0].DestinationID);
             Assert.AreEqual(expectedFile.Filename, result.Files[0].Filename);
@@ -267,7 +268,7 @@
             Assert.AreEqual(expectedFolderInfo.ParentID, result.ObjectFolders[0].ParentID);
             Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
             Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
-            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
+            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGuid, "SubscriptionGuid");
         }
         
         [Test]
@@ -275,7 +276,7 @@
         {
             var repository          = Make_McmRepository();
             var objectGuid          = new Guid("00000000-0000-0000-0000-000000000002");
-            var expectedAccessPoint = Make_AccessPoint();
+            var expectedAccessPoint = this.Make_ObjectAccessPoint();
 
             var result = repository.ObjectGet(objectGuid, false, false, false, false, true);
 
@@ -359,7 +360,7 @@
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
             Assert.AreEqual(expectedFile.ID, result.Files[0].ID);
-            Assert.AreEqual(expectedFile.ObjectGUID, result.Files[0].ObjectGUID);
+            Assert.AreEqual(expectedFile.ObjectGuid, result.Files[0].ObjectGuid);
             Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
             Assert.AreEqual(expectedFile.DestinationID, result.Files[0].DestinationID);
             Assert.AreEqual(expectedFile.Filename, result.Files[0].Filename);
@@ -417,7 +418,8 @@
             Assert.AreEqual(expectedFolderInfo.ParentID, result.ObjectFolders[0].ParentID);
             Assert.AreEqual(expectedFolderInfo.FolderTypeID, result.ObjectFolders[0].FolderTypeID);
             Assert.AreEqual(expectedFolderInfo.Name, result.ObjectFolders[0].Name);
-            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGUID, "SubscriptionGuid");
+            Assert.AreEqual(expectedFolderInfo.SubscriptionGuid, result.ObjectFolders[0].SubscriptionGuid, "SubscriptionGuid");
+            Assert.AreEqual(1, result.ObjectFolders[0].ObjectFolderTypeID, "ObjectFolderTypeID");
         }
 
         [Test]
@@ -425,7 +427,7 @@
         {
             var repository = Make_McmRepository();
             var objectGuid = new Guid("00000000-0000-0000-0000-000000000002");
-            var expected   = Make_AccessPoint();
+            var expected   = this.Make_ObjectAccessPoint();
             var folderID   = (uint?)1;
 
             var result = repository.ObjectGet(folderID, includeAccessPoints: true).First();
@@ -507,6 +509,19 @@
             var results = repository.FolderGet(folder.ID, null, null);
             Assert.IsNotEmpty(results);
             Assert.AreEqual(newTitle, results[0].Name);
+        }
+
+        [Test]
+        public void FolderInfoGet_GivenAnArrayOfIDs_ReturnAListOfFolderInfos()
+        {
+            var repository = Make_McmRepository();
+            var folderIDs  = new[] { 1u, 2u, 3u };
+
+            var results = repository.GetFolderInfo(folderIDs);
+
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(folderIDs[0], results[0].ID);
+            Assert.AreEqual(folderIDs[1], results[1].ID);
         }
 
         #endregion
@@ -643,8 +658,181 @@
         }
 
         #endregion
-        #region FolderUserInfo
-        
+        #region Folder Permission
+
+        [Test]
+        public void FolderPermissionGet_GivenNoParameters_ReturnAllFromDatabase()
+        {
+            var repository        = Make_McmRepository();
+            var expectedUserGuid  = new Guid("00000000-0000-0000-0000-000000001000");
+            var expectedGroupGuid = new Guid("00000000-0000-0000-0000-000000010000");
+
+            var result = repository.FolderPermissionGet();
+
+            Assert.IsNotEmpty(result);
+            Assert.AreEqual(expectedUserGuid, result[0].UserPermissions[0].Guid);
+            Assert.AreEqual(expectedGroupGuid, result[0].GroupPermissions[0].Guid);
+        }
+
+        [Test]
+        public void FolderUserJoinSet_GivenUserGuidWithNoPermissionToFolder_ReturnOne()
+        {
+            var repository       = Make_McmRepository();
+            var expectedUserGuid = new Guid("00000000-0000-0000-0000-000000001000");
+            var folder           = Make_FolderThatExist();
+            var somePermission   = 15u;
+
+            var result = repository.FolderUserJoinSet(expectedUserGuid, folder.ID, somePermission);
+
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void FolderGroupJoinSet_GivenGroupGuidWithNoPerission_ReturnOne()
+        {
+            var repository        = Make_McmRepository();
+            var expectedGroupGuid = new Guid("00000000-0000-0000-0000-000000001000");
+            var folder            = Make_FolderThatExist();
+            var somePermission    = 15u;
+
+            var result = repository.FolderGroupJoinSet(expectedGroupGuid, folder.ID, somePermission);
+
+            Assert.AreEqual(1, result);
+        }
+
+        #endregion
+        #region AccessPoint
+
+        [Test]
+        public void AccessPointGet_GivenReadPermission_ReturnAnAccessPoint()
+        {
+            var repository  = Make_McmRepository();
+            var accessPoint = Make_AccessPoint();
+            var userGuid    = new Guid("00000000-0000-0000-0000-000000001000");
+
+            var results = repository.AccessPointGet(accessPoint.Guid, userGuid, new Guid[0], 1);
+
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(accessPoint.Guid, results[0].Guid);
+        }
+
+        [Test]
+        public void AccessPointPublishSettingsSet_GivenAStartDate_ReturnOne()
+        {
+            var repository  = Make_McmRepository();
+            var accessPoint = Make_AccessPoint();
+            var obj         = Make_ObjectWithNoRelations();
+            var startDate   = new DateTime(1990, 10, 01, 23, 59, 59);
+
+            var result = repository.AccessPointPublishSettingsSet(accessPoint.Guid, obj.Guid, startDate, null);
+
+            Assert.AreEqual(1, result);
+        }
+
+        #endregion
+        #region Link
+
+        [Test, ExpectedException(typeof(InsufficientPermissionsException))]
+        public void LinkCreate_TryingToCreateAPhysicalLink_ThrowInsufficientPermissionsException()
+        {
+            var repository       = Make_McmRepository();
+            var obj              = Make_ObjectWithNoRelations();
+            var folder           = Make_FolderThatExistAndIsEmpty();
+            var objectFolderType = 1;
+
+            repository.LinkCreate(obj.Guid, folder.ID, objectFolderType);
+        }
+
+        [Test]
+        public void LinkCreate_AddObjectToFolder_ReturnOne()
+        {
+            var repository       = Make_McmRepository();
+            var obj              = Make_ObjectWithNoRelations();
+            var folder           = Make_FolderThatExistAndIsEmpty();
+            var objectFolderType = 2;
+
+            var result = repository.LinkCreate(obj.Guid, folder.ID, objectFolderType);
+
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void LinkUpdate_MoveToAnotherFolder_ReturnOne()
+        {
+            var repository   = Make_McmRepository();
+            var obj          = Make_ObjectWithRelations();
+            var fromFolderID = 3u;
+            var toFolderID   = 2u;
+
+            var result = repository.LinkUpdate(obj.Guid, fromFolderID, toFolderID);
+
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void LinkDelete_RemoveReferenceFromFolder_ReturnOne()
+        {
+            var repository   = Make_McmRepository();
+            var obj          = Make_ObjectWithRelations();
+            var fromFolderID = 3u;
+
+            var result = repository.LinkDelete(obj.Guid, fromFolderID);
+
+            Assert.AreEqual(1, result);
+        }
+
+        #endregion
+        #region Destination
+
+        [Test]
+        public void DestinationGet_All_ReturnListOfDestinationInfos()
+        {
+            var repository    = Make_McmRepository();
+            var destinationID = 1u;
+
+            var results = repository.DestinationGet(null);
+
+            Assert.IsNotEmpty(results);
+            Assert.AreEqual(destinationID, results[0].ID);
+        }
+
+        #endregion
+        #region File
+
+        [Test]
+        public void FileCreate_NoParentID_ReturnTheNewFolderID()
+        {
+            var repository = Make_McmRepository();
+            var file       = Make_FileTheDoesntExist();
+
+            var result = repository.FileCreate(file.ObjectGuid, null, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath, file.FormatID);
+
+            Assert.Greater(result, 0);
+        }
+
+        [Test]
+        public void FileDelete_NoChildFiles_ReturnOne()
+        {
+            var repository = Make_McmRepository();
+            var file       = Make_File();
+
+            var result = repository.FileDelete(file.ID);
+
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void FileGet_GivenID_ReturnFileWithID()
+        {
+            var repository = Make_McmRepository();
+            var file       = Make_File();
+
+            var result = repository.FileGet(file.ID);
+
+            Assert.IsNotEmpty(result);
+            Assert.AreEqual(file.Filename, result[0].Filename);
+        }
+
         #endregion
         #region Helpers
 
@@ -734,7 +922,7 @@
             };
         }
 
-        private ObjectAccessPoint Make_AccessPoint()
+        private ObjectAccessPoint Make_ObjectAccessPoint()
         {
             return new ObjectAccessPoint
                        {
@@ -745,6 +933,17 @@
                            DateCreated     = new DateTime(1990, 10, 01, 23, 59, 59),
                            DateModified    = null
                        };
+        }
+
+        private AccessPoint Make_AccessPoint()
+        {
+            return new AccessPoint
+            {
+                Guid             = new Guid("00001000-0010-0000-0000-000000000000"),
+                SubscriptionGuid = new Guid("01000000-0000-0000-0000-000000000000"),
+                Name             = "test",
+                DateCreated      = new DateTime(1990, 10, 01, 23, 59, 59),
+            };
         }
 
         private FolderInfo Make_FolderThatExist()
@@ -787,11 +986,35 @@
             return new FileInfo
                 {
                     ID               = 1,
-                    ObjectGUID       = new Guid("00000000-0000-0000-0000-000000000002"),
+                    ObjectGuid       = new Guid("00000000-0000-0000-0000-000000000002"),
                     FormatID         = 1,
                     DestinationID    = 1,
                     Filename         = "file.ext",
                     OriginalFilename = "orig.ext",
+                    FolderPath       = "/",
+                    BasePath         = "http://bogus.com",
+                    StringFormat     = "{BASE_PATH}{FOLDER_PATH}{FILENAME}",
+                    Token            = "HTTP Download",
+                    FormatTypeName   = "Unknown Video",
+                    FormatXML        = null,
+                    MimeType         = "application/octet-stream",
+                    FormatCategoryID = 1,
+                    FormatCategory   = "Video Source",
+                    FormatTypeID     = 1,
+                    FormatType       = "Video"
+                };
+        }
+
+        private FileInfo Make_FileTheDoesntExist()
+        {
+            return new FileInfo
+                {
+                    ID               = 2,
+                    ObjectGuid       = new Guid("00000000-0000-0000-0000-000000000002"),
+                    FormatID         = 1,
+                    DestinationID    = 1,
+                    Filename         = "file2.ext",
+                    OriginalFilename = "orig2.ext",
                     FolderPath       = "/",
                     BasePath         = "http://bogus.com",
                     StringFormat     = "{BASE_PATH}{FOLDER_PATH}{FILENAME}",

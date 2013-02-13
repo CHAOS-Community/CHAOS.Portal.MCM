@@ -1,7 +1,7 @@
 CREATE PROCEDURE AccessPoint_Object_Join_Set
 (
-    AccessPointGUID BINARY(16),
-    ObjectGUID      BINARY(16),
+    AccessPointGuid BINARY(16),
+    ObjectGuid      BINARY(16),
     StartDate       DATETIME,
     EndDate         DATETIME
 )
@@ -19,7 +19,7 @@ BEGIN
         INSERT INTO AccessPoint_Object_Join
           (AccessPointGUID, ObjectGUID, StartDate, EndDate, DateCreated, DateModified)
         VALUES
-          (AccessPointGUID, ObjectGUID, StartDate, EndDate, NOW(), null );
+          (AccessPointGuid, ObjectGuid, StartDate, EndDate, NOW(), null );
 
     ELSE
 
@@ -29,8 +29,8 @@ BEGIN
           AOJ.StartDate = StartDate,
           AOJ.EndDate   = EndDate
         WHERE 
-          AOJ.AccessPointGUID = AccessPointGUID AND
-          AOJ.ObjectGUID      = ObjectGUID;
+          AOJ.AccessPointGUID = AccessPointGuid AND
+          AOJ.ObjectGUID      = ObjectGuid;
 
     END IF;
 

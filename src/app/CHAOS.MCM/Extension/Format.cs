@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-
-using Chaos.Portal;
-
-namespace Chaos.Mcm.Extension
+﻿namespace Chaos.Mcm.Extension
 {
     using System.Linq;
     using System.Xml.Linq;
+    using System.Collections.Generic;
+
+    using Chaos.Portal;
 
     public class Format : AMcmExtension
     {

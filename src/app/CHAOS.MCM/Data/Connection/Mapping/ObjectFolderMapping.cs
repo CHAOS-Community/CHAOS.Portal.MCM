@@ -15,13 +15,14 @@
             {
                 yield return new ObjectFolder
                     {
-                        ID               = reader.GetUint32("ID"),
-                        ParentID         = reader.GetUint32Nullable("ParentID"),
-                        FolderTypeID     = reader.GetUint32("FolderTypeID"),
-                        SubscriptionGUID = reader.GetGuid("SubscriptionGuid"),
-                        Name             = reader.GetString("Name"),
-                        DateCreated      = reader.GetDateTime("DateCreated"),
-                        ObjectGuid       = reader.GetGuid( "ObjectGuid" )
+                        ID                 = reader.GetUint32("ID"),
+                        ParentID           = reader.GetUint32Nullable("ParentID"),
+                        FolderTypeID       = reader.GetUint32("FolderTypeID"),
+                        SubscriptionGuid   = reader.GetGuidNullable("SubscriptionGuid"),
+                        Name               = reader.GetString("Name"),
+                        DateCreated        = reader.GetDateTime("DateCreated"),
+                        ObjectGuid         = reader.GetGuid( "ObjectGuid" ),
+                        ObjectFolderTypeID = reader.GetUint32("ObjectFolderTypeID")
                     };
             }
         }

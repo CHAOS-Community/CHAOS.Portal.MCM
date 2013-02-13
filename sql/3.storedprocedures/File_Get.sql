@@ -1,6 +1,6 @@
 CREATE PROCEDURE File_Get
 (
-    FileID  INT
+    ID  INT
 )
 BEGIN
 
@@ -9,6 +9,6 @@ BEGIN
 	FROM  
 		File
 	WHERE  
-		File.ID = FileID;
+		File.ID = ID;
 
 END

@@ -17,6 +17,7 @@ namespace Chaos.Mcm.Data
 
     using MySql.Data.MySqlClient;
 
+    using FolderPermission = Chaos.Mcm.Data.Dto.FolderPermission;
     using Object = Chaos.Mcm.Data.Dto.Object;
 
     // todo: Remove dependency to MySql
@@ -34,6 +35,7 @@ namespace Chaos.Mcm.Data
 
         static McmRepository()
         {
+            ReaderExtensions.Mappings.Add( typeof( File ), new FileMapping() );
             ReaderExtensions.Mappings.Add( typeof( Folder ), new FolderMapping() );
             ReaderExtensions.Mappings.Add( typeof( Format ), new FormatMapping() );
             ReaderExtensions.Mappings.Add( typeof( Object ), new ObjectMapping() );
@@ -41,9 +43,12 @@ namespace Chaos.Mcm.Data
             ReaderExtensions.Mappings.Add( typeof( FileInfo ), new FileInfoMapping() );
             ReaderExtensions.Mappings.Add( typeof( ObjectType ), new ObjectTypeMapping() );
             ReaderExtensions.Mappings.Add( typeof( FolderInfo ), new FolderInfoMapping() );
+            ReaderExtensions.Mappings.Add( typeof( AccessPoint ), new AccessPointMapping() );
             ReaderExtensions.Mappings.Add( typeof( ObjectFolder ), new ObjectFolderMapping() );
             ReaderExtensions.Mappings.Add( typeof( ObjectMetadata ), new ObjectMetadataMapping() );
             ReaderExtensions.Mappings.Add( typeof( MetadataSchema ), new MetadataSchemaMapping() );
+            ReaderExtensions.Mappings.Add( typeof( DestinationInfo ), new DestinationInfoMapping() );
+            ReaderExtensions.Mappings.Add( typeof( FolderPermission ), new FolderPermissionMapping() );
             ReaderExtensions.Mappings.Add( typeof( ObjectAccessPoint ), new AccesspointObjectJoinMapping() );
             ReaderExtensions.Mappings.Add( typeof( ObjectRelationInfo ), new ObjectRelationInfoMapping() );
         }
@@ -226,6 +231,11 @@ namespace Chaos.Mcm.Data
                    });
         }
 
+        public IList<FolderInfo> GetFolderInfo(IEnumerable<uint> ids)
+        {
+            return Gateway.ExecuteQuery<FolderInfo>("FolderInfo_Get", new MySqlParameter("FolderIDs", string.Join(",", ids)));
+        }
+
         public int FolderDelete(uint id)
         {
             var result = Gateway.ExecuteNonQuery("Folder_Delete", new MySqlParameter("ID", id));
@@ -248,7 +258,6 @@ namespace Chaos.Mcm.Data
                 });
 
             if (result == -200) throw new UnhandledException("An unknown error occured on Folder_Create and was rolled back");
-
             if (result == -10) throw new UnhandledException("Invalid input parameters");
 
             return (uint)result;
@@ -382,117 +391,64 @@ namespace Chaos.Mcm.Data
         }
 
         #endregion
-        #region Folder User Join
+        #region Folder Permission
 
-        public IEnumerable<FolderUserJoin> GetFolderUserJoin()
+        public IList<FolderPermission> FolderPermissionGet()
         {
-            throw new NotImplementedException();
-//
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                return
-//                    db.Folder_User_Join.ToList().Select(
-//                        item =>
-//                        new FolderUserJoin
-//                            {
-//                                FolderID = (uint)item.FolderID,
-//                                UserGuid = item.UserGUID,
-//                                Permission = (uint)item.Permission,
-//                                DateCreated = item.DateCreated
-//                            });
-//            }
+            return Gateway.ExecuteQuery<FolderPermission>("FolderPermission_Get");
         }
 
-        public uint SetFolderUserJoin(Guid userGuid, uint folderID, uint permission)
+        public uint FolderUserJoinSet(Guid userGuid, uint folderID, uint permission)
         {
-            throw new NotImplementedException();
-//
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                var result =
-//                    db.Folder_User_Join_Set(userGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
-//
-//                if(!result.HasValue) throw new UnhandledException("Folder_User_Join_Set failed on the database and was rolled back");
-//
-//                return (uint)result.Value;
-//            }
+            var result = Gateway.ExecuteNonQuery("Folder_User_Join_Set", new[]
+                {
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                    new MySqlParameter("Permission", permission) 
+                });
+
+            return (uint)result;
         }
 
-        #endregion
-        #region Folder
-
-        public IEnumerable<FolderGroupJoin> GetFolderGroupJoin()
+        public uint FolderGroupJoinSet(Guid groupGuid, uint folderID, uint permission)
         {
-            throw new NotImplementedException();
+            var result = Gateway.ExecuteNonQuery("Folder_Group_Join_Set", new[]
+                {
+                    new MySqlParameter("GroupGuid", groupGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                    new MySqlParameter("Permission", permission) 
+                });
 
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                return
-//                    db.Folder_Group_Join.ToList().Select(
-//                        item =>
-//                        new FolderGroupJoin
-//                            {
-//                                FolderID = (uint)item.FolderID,
-//                                GroupGuid = item.GroupGUID,
-//                                Permission = (uint)item.Permission,
-//                                DateCreated = item.DateCreated
-//                            });
-//            }
-        }
-
-        public uint SetFolderGroupJoin(Guid groupGuid, uint folderID, uint permission)
-        {
-            throw new NotImplementedException();
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                var result =
-//                    db.Folder_Group_Join_Set(groupGuid.ToByteArray(), (int?)folderID, (int?)permission).FirstOrDefault();
-//
-//                if(!result.HasValue) throw new UnhandledException("Folder_Group_Join_Set failed on the database and was rolled back");
-//
-//                return (uint)result.Value;
-//            }
-        }
-
-        public IEnumerable<IFolderInfo> GetFolderInfo(IEnumerable<uint> ids)
-        {
-            throw new NotImplementedException();
-//            var folderIDs = ids.Select(item => (long)item);
-//            var folderIDStrings = string.Join(",", ids);
-//
-//            // TODO: optimize folder retrival form the database
-//            using(var db = this.CreateMcmEntities())
-//            {
-//                return db.FolderInfo.Where(fi => folderIDs.Contains(fi.ID)).ToList().ToDto();
-//            }
+            return (uint)result;
         }
 
         #endregion
         #region AccessPoint
 
-        public IEnumerable<AccessPoint> GetAccessPoint(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
+        public IList<AccessPoint> AccessPointGet(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
         {
-            throw new NotImplementedException();
-//            var groupGuidsString = string.Join(",", groupGuids);
-//
-//            using (var db = this.CreateMcmEntities())
-//            {
-//                return db.AccessPoint_Get(accessPointGuid.ToByteArray(), userGuid.ToByteArray(), groupGuidsString, (int?)permission).ToList().ToDto();
-//            }
+            var groupGuidsString = String.Join(",", groupGuids.Select(item => item.ToString().Replace("-", "")));
+
+            return Gateway.ExecuteQuery<AccessPoint>("AccessPoint_Get", new[]
+                {
+                    new MySqlParameter("AccessPointGuid", accessPointGuid.ToByteArray()), 
+                    new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
+                    new MySqlParameter("GroupGuids", groupGuidsString), 
+                    new MySqlParameter("Permission", permission) 
+                });
         }
 
-        public uint SetAccessPointPublishSettings( Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate )
+        public uint AccessPointPublishSettingsSet( Guid accessPointGuid, Guid objectGuid, DateTime? startDate, DateTime? endDate )
         {
-            throw new NotImplementedException();
-//            using (var db = this.CreateMcmEntities())
-//            {
-//                var result = db.AccessPoint_Object_Join_Set(accessPointGuid.ToByteArray(), objectGuid.ToByteArray(), startDate, endDate).FirstOrDefault();
-//
-//                if(!result.HasValue)
-//                    throw new UnhandledException("SetAccessPointPublishSettings failed on the database, and was rolled back");
-//
-//                return (uint) result.Value;
-//            }
+            var result = Gateway.ExecuteNonQuery("AccessPoint_Object_Join_Set", new[]
+                {
+                    new MySqlParameter("AccessPointGuid", accessPointGuid.ToByteArray()), 
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()), 
+                    new MySqlParameter("StartDate", startDate), 
+                    new MySqlParameter("EndDate", endDate)
+                });
+
+            return (uint)result;
         }
 
         #endregion
@@ -500,58 +456,51 @@ namespace Chaos.Mcm.Data
 
         public uint LinkCreate(Guid objectGuid, uint folderID, int objectFolderTypeID)
         {
-            throw new NotImplementedException();
-//            using (MCMEntities db = DefaultMCMEntities)
-//            {
-//                var result = db.Object_Folder_Join_Create(objectGuid.ToByteArray(), (int)folderID, 2).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("Link create failed on the database and was rolled back");
-//
-//                if (result.Value == -100)
-//                    throw new InsufficientPermissionsException("User can only create links");
-//
-//                //                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGuid , true, true, true, true, true ).ToDto().ToList() );
-//
-//                return result;
-//            }
+            var result = Gateway.ExecuteNonQuery("Object_Folder_Join_Create", new[]
+                {
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                    new MySqlParameter("ObjectFolderTypeID", objectFolderTypeID), 
+                });
+
+            if (result == -100) throw new InsufficientPermissionsException("User can only create links");
+
+            return (uint)result;
         }
 
         public uint LinkUpdate(Guid objectGuid, uint folderID, uint newFolderID)
         {
-            throw new NotImplementedException();
-//            using (MCMEntities db = DefaultMCMEntities)
-//            {
-//                var result = db.Object_Folder_Join_Update(objectGuid.ToByteArray(), (int)folderID, (int)newFolderID).First().Value;
-//
-//                return (uint)result;
-//            }
+            var result = Gateway.ExecuteNonQuery("Object_Folder_Join_Update", new[]
+                {
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                    new MySqlParameter("NewFolderID", newFolderID), 
+                });
+
+            if (result == -100) throw new InsufficientPermissionsException("User can only create links");
+
+            return (uint)result;
         }
 
         public uint LinkDelete(Guid objectGuid, uint folderID)
         {
-            throw new NotImplementedException();
-//            using (MCMEntities db = DefaultMCMEntities)
-//            {
-//                var result = db.Object_Folder_Join_Delete(objectGuid.ToByteArray(), (int)folderID).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("Link delete failed on the database and was rolled back");
-//
-//                return (uint)result;
-//            }
+            var result = Gateway.ExecuteNonQuery("Object_Folder_Join_Delete", new[]
+                {
+                    new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()), 
+                    new MySqlParameter("FolderID", folderID), 
+                });
+
+            if (result == -100) throw new InsufficientPermissionsException("User can only create links");
+
+            return (uint)result;
         }
 
         #endregion
         #region Destination
 
-        public IEnumerable<DestinationInfo> DestinationGet(uint id)
+        public IList<DestinationInfo> DestinationGet(uint? id)
         {
-            throw new NotImplementedException();
-//            using (MCMEntities db = DefaultMCMEntities)
-//            {
-//                return db.DestinationInfo_Get((int?)id).ToDto().ToList();
-//            }
+            return Gateway.ExecuteQuery<DestinationInfo>("DestinationInfo_Get", new MySqlParameter("ID", id));
         }
 
         #endregion
@@ -559,39 +508,30 @@ namespace Chaos.Mcm.Data
 
         public uint FileDelete(uint id)
         {
-            throw new NotImplementedException();
-            //            using (var db = DefaultMCMEntities)
-            //            {
-            //                var result = db.File_Delete((int?)id).FirstOrDefault();
-            //
-            //                if (!result.HasValue)
-            //                    throw new UnhandledException("File delete failed in the database and was rolled back");
-            //
-            //                return result.Value;
-            //            }
+            var result = Gateway.ExecuteNonQuery("File_Delete", new MySqlParameter("ID", id));
+
+            return (uint)result;
         }
 
         public uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID)
         {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                var result = db.File_Create(objectGUID.ToByteArray(), (int?)parentFileID, (int)formatID, (int)destinationID, filename, originalFilename, folderPath).FirstOrDefault();
-//
-//                if (!result.HasValue)
-//                    throw new UnhandledException("The creating the file failed in the database and was rolled back");
-//
-//                return result;
-//            }
+            var result = Gateway.ExecuteNonQuery("File_Create", new[]
+                {
+                    new MySqlParameter("ObjectGuid",objectGuid.ToByteArray()),       
+                    new MySqlParameter("ParentFileID",parentID),    
+                    new MySqlParameter("FormatID",formatID),        
+                    new MySqlParameter("DestinationID",destinationID),   
+                    new MySqlParameter("Filename",filename),        
+                    new MySqlParameter("OriginalFilename",originalFilename),
+                    new MySqlParameter("FolderPath",folderPath)      
+                });
+
+            return (uint)result;
         }
 
         public IList<File> FileGet(uint id)
         {
-            throw new NotImplementedException();
-//            using (var db = DefaultMCMEntities)
-//            {
-//                return db.File_Get(result.Value).First().ToDto();
-//            }
+            return Gateway.ExecuteQuery<File>("File_Get", new MySqlParameter("ID", id));
         }
 
         #endregion

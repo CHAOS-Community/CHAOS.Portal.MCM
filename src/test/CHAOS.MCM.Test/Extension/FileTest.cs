@@ -2,10 +2,11 @@
 {
     using System;
 
-    using Chaos.Mcm.Extension;
     using Chaos.Mcm.Permission;
 
     using NUnit.Framework;
+
+    using File = Chaos.Mcm.Data.Dto.File;
 
     [TestFixture]
     public class FileTest : TestBase
@@ -44,9 +45,9 @@
 
         #region Helpers
 
-        private static Data.Dto.Standard.File Make_File()
+        private static File Make_File()
         {
-            return new Data.Dto.Standard.File
+            return new File
                 {
                     ID               = 1,
                     ObjectGuid       = new Guid("00000000-0000-0000-0000-000000000002"),
@@ -58,9 +59,9 @@
                 };
         }
 
-        private File Make_FileExtension()
+        private Chaos.Mcm.Extension.File Make_FileExtension()
         {
-            return (File)new File().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object);
+            return (Chaos.Mcm.Extension.File)new Chaos.Mcm.Extension.File().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object);
         }
 
         #endregion

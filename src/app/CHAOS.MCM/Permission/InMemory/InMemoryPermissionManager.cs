@@ -58,8 +58,8 @@ namespace Chaos.Mcm.Permission.InMemory
         {
             var tmp = new InMemoryPermissionManager();
             
-            // GetFolder has to return folders ordered by ID, otherwise the parent won't be 
-            foreach (var folder in _permissionRepository.GetFolder())
+            // FolderGet has to return folders ordered by ID, otherwise the parent won't be 
+            foreach (var folder in _permissionRepository.FolderGet())
             {
                 var permissionFolder = new Folder
                                            {
@@ -74,22 +74,13 @@ namespace Chaos.Mcm.Permission.InMemory
                 tmp.AddFolder(permissionFolder);
             }
 
-            foreach (var folderUserJoin in _permissionRepository.GetFolderUserJoin())
+            foreach (var permission in _permissionRepository.FolderPermissionGet())
             {
-                tmp.GetFolders(folderUserJoin.FolderID).AddUser(new EntityPermission
-                                                                    {
-                                                                        Guid       = folderUserJoin.UserGuid,
-                                                                        Permission = (FolderPermission) folderUserJoin.Permission
-                                                                    });
-            }
+                foreach(var entityPermission in permission.UserPermissions)
+                    tmp.GetFolders(permission.FolderID).AddUser(entityPermission);
 
-            foreach (var folderGroupJoin in _permissionRepository.GetFolderGroupJoin())
-            {
-                tmp.GetFolders(folderGroupJoin.FolderID).AddGroup(new EntityPermission
-                                                                      {
-                                                                          Guid       = folderGroupJoin.GroupGuid,
-                                                                          Permission = (FolderPermission) folderGroupJoin.Permission
-                                                                      });
+                foreach (var entityPermission in permission.GroupPermissions)
+                    tmp.GetFolders(permission.FolderID).AddGroup(entityPermission);
             }
 
             _folders = tmp._folders;

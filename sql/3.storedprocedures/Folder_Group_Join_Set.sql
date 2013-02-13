@@ -1,6 +1,6 @@
 CREATE PROCEDURE Folder_Group_Join_Set
 (
-    GroupGUID   BINARY(16),
+    GroupGuid   BINARY(16),
     FolderID    INT UNSIGNED,
     Permission  INT UNSIGNED
 )
@@ -11,14 +11,14 @@ BEGIN
         FROM 
             Folder_Group_Join AS FGJ
         WHERE 
-                FGJ.GroupGUID = GroupGUID
-            AND FUJ.FolderID  = FolderID ) = 0 
+                FGJ.GroupGUID = GroupGuid
+            AND FGJ.FolderID  = FolderID ) = 0 
     THEN
 
         INSERT INTO Folder_Group_Join
             ( FolderID, GroupGUID, Permission, DateCreated) 
         VALUES
-            ( FolderID, GroupGUID, Permission, NOW() );
+            ( FolderID, GroupGuid, Permission, NOW() );
 
     ELSE
 
@@ -27,7 +27,7 @@ BEGIN
         SET 
             FGJ.Permission = Permission
         WHERE 
-                FGJ.GroupGUID = GroupGUID
+                FGJ.GroupGUID = GroupGuid
             AND FGJ.FolderID  = FolderID;
 
     END IF;

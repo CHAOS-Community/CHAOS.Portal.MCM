@@ -1,11 +1,11 @@
-﻿namespace Chaos.Mcm.Data.Connection.Mapping
+namespace Chaos.Mcm.Data.Connection.Mapping
 {
     using System.Collections.Generic;
     using System.Data;
 
     using CHAOS.Data;
 
-    using Chaos.Mcm.Data.Dto.Standard;
+    using Chaos.Mcm.Data.Dto;
 
     public class FolderInfoMapping : IReaderMapping<FolderInfo>
     {
@@ -15,10 +15,10 @@
             {
                 yield return new FolderInfo
                     {
-                        ID                 = reader.GetUint32("FileID"),
+                        ID                 = reader.GetUint32("ID"),
                         ParentID           = reader.GetUint32Nullable("ParentID"),
                         FolderTypeID       = reader.GetUint32("FolderTypeID"),
-                        SubscriptionGuid   = reader.GetGuid("SubscriptionGuid"),
+                        SubscriptionGuid   = reader.GetGuidNullable("SubscriptionGuid"),
                         Name               = reader.GetString("Name"),
                         DateCreated        = reader.GetDateTime("DateCreated"),
                         NumberOfObjects    = reader.GetUint32("NumberOfObjects"), 

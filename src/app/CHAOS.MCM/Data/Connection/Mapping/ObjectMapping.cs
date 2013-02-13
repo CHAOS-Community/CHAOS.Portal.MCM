@@ -1,4 +1,4 @@
-﻿namespace Chaos.Mcm.Data.Connection.Mapping
+namespace Chaos.Mcm.Data.Connection.Mapping
 {
     using System.Collections.Generic;
     using System.Data;
@@ -41,7 +41,7 @@
 
             foreach (var o in objects)
             {
-                o.Files = (from f in files where f.ObjectGUID == o.Guid select f).ToList();
+                o.Files = (from f in files where f.ObjectGuid == o.Guid select f).ToList();
             }
 
             reader.NextResult();

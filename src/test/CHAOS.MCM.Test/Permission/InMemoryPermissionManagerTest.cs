@@ -13,6 +13,8 @@ using IFolder = Chaos.Mcm.Permission.IFolder;
 
 namespace Chaos.Mcm.Test.Permission
 {
+    using System.Collections.Generic;
+
     [TestFixture]
     public class InMemoryPermissionManagerTest
     {
@@ -217,19 +219,12 @@ namespace Chaos.Mcm.Test.Permission
             var syncSpecification    = new Mock<ISynchronizationSpecification>();
             entity.SetupProperty(p => p.Guid, new Guid("c86a1cfc-10de-4a51-8d7b-6ba8f985e273"))
                   .SetupProperty(p => p.Permission, FolderPermission.Read);
-
-            permissionRepository.Setup(repo => repo.GetFolder()).Returns(new[] { new Data.Dto.Standard.Folder { ID = 1 } });
-            permissionRepository.Setup(repo => repo.GetFolderUserJoin()).Returns(new[] { new FolderUserJoin { FolderID = 1, Permission = 1 } });
-            permissionRepository.Setup(repo => repo.GetFolderGroupJoin()).Returns(new[] { new FolderGroupJoin { FolderID = 1, Permission = 1 } });
+            permissionRepository.Setup(repo => repo.FolderGet()).Returns(new[] { new Data.Dto.Standard.Folder { ID = 1 } });
+            permissionRepository.Setup(repo => repo.FolderPermissionGet()).Returns(new[] { new Data.Dto.FolderPermission { FolderID = 1, UserPermissions = new List<IEntityPermission> { entity.Object }, GroupPermissions = new List<IEntityPermission> { entity.Object } } });
 
             PermissionManager.WithSynchronization(permissionRepository.Object, syncSpecification.Object);
 
             syncSpecification.Raise(s => s.OnSynchronizationTrigger += null, new EventArgs());
-
-            permissionRepository.Verify(repo => repo.GetFolder(), Times.AtLeastOnce());
-            permissionRepository.Verify(repo => repo.GetFolderGroupJoin(), Times.AtLeastOnce());
-            permissionRepository.Verify(repo => repo.GetFolderUserJoin(), Times.AtLeastOnce());
-
             Assert.AreEqual(1, PermissionManager.GetFolders(1).UserPermissions.Count);
             Assert.AreEqual(1, PermissionManager.GetFolders(1).GroupPermissions.Count);
         }
