@@ -381,7 +381,7 @@ namespace CHAOS.MCM.Module
                 if( result.Value == -200 )
                     throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
 
-                var objects = db.Object_Get( objectGUID, true, false, false, true, true ).ToDTO().ToList();
+                var objects = db.Object_Get(objectGUID, true, false, true, true, true).ToDTO().ToList();
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), objects );
 
