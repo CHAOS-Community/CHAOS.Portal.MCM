@@ -258,6 +258,7 @@ namespace Chaos.Mcm.Data
                 });
 
             if (result == -200) throw new UnhandledException("An unknown error occured on Folder_Create and was rolled back");
+            if (result == -100) throw new InsufficientPermissionsException( "User does not have permission to Create the folder" );
             if (result == -10) throw new UnhandledException("Invalid input parameters");
 
             return (uint)result;

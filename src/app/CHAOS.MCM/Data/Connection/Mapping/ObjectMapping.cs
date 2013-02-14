@@ -29,46 +29,30 @@ namespace Chaos.Mcm.Data.Connection.Mapping
             reader.NextResult();
 
             var metadatas = reader.Map<ObjectMetadata>().ToList();
-            
-            foreach (var o in objects)
-            {
-                o.Metadatas = (from m in metadatas where m.ObjectGuid == o.Guid select (Metadata) m).ToList();
-            }
-            
+
             reader.NextResult();
 
             var files = reader.Map<FileInfo>().ToList();
-
-            foreach (var o in objects)
-            {
-                o.Files = (from f in files where f.ObjectGuid == o.Guid select f).ToList();
-            }
 
             reader.NextResult();
 
             var objectRelations = reader.Map<ObjectRelationInfo>().ToList();
 
-            foreach(var o in objects)
-            {
-                o.ObjectRelationInfos = ( from or in objectRelations where or.Object1Guid == o.Guid || or.Object2Guid == o.Guid select or ).ToList();
-            }
-            
             reader.NextResult();
 
             var objectFolders = reader.Map<ObjectFolder>().ToList();
-
-            foreach(var o in objects)
-            {
-                o.ObjectFolders = ( from of in objectFolders where of.ObjectGuid == o.Guid select of ).ToList();
-            }
 
             reader.NextResult();
 
             var accessPoints = reader.Map<ObjectAccessPoint>().ToList();
 
-            foreach(var o in objects)
+            foreach (var o in objects)
             {
+                o.Files = (from f in files where f.ObjectGuid == o.Guid select f).ToList();
+                o.Metadatas = ( from m in metadatas where m.ObjectGuid == o.Guid select (Metadata)m ).ToList();
                 o.AccessPoints = ( from ap in accessPoints where ap.ObjectGuid == o.Guid select ap ).ToList();
+                o.ObjectFolders = ( from of in objectFolders where of.ObjectGuid == o.Guid select of ).ToList();
+                o.ObjectRelationInfos = ( from or in objectRelations where or.Object1Guid == o.Guid || or.Object2Guid == o.Guid select or ).ToList();
             }
             
             return objects;
