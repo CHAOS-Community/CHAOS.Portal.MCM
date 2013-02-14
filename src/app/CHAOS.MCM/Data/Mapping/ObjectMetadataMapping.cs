@@ -1,4 +1,4 @@
-﻿namespace Chaos.Mcm.Data.Connection.Mapping
+namespace Chaos.Mcm.Data.Mapping
 {
     using System.Collections.Generic;
     using System.Data;
@@ -7,15 +7,18 @@
 
     using Chaos.Mcm.Data.Dto;
 
-    public class MetadataMapping : IReaderMapping<Metadata>
-    {
-        public IEnumerable<Metadata> Map(IDataReader reader)
+    //todo: eliminate duplication (MetadataMapping)
+    public class ObjectMetadataMapping : IReaderMapping<ObjectMetadata>
+    {      
+        public IEnumerable<ObjectMetadata> Map(IDataReader reader)
         {
             while(reader.Read())
             {
-                yield return new Metadata
+
+                yield return new ObjectMetadata
                     {
                         Guid               = reader.GetGuid("Guid"),
+                        ObjectGuid         = reader.GetGuid("ObjectGuid"),
                         MetadataSchemaGuid = reader.GetGuid("MetadataSchemaGUID"),
                         RevisionID         = reader.GetUint32("RevisionID"),
                         MetadataXml        = reader.GetXDocument("MetadataXML"),

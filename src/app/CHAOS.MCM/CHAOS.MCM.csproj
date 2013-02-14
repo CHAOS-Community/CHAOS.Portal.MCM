@@ -62,22 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Binding\MetadataBinding.cs" />
-    <Compile Include="Data\Connection\Mapping\AccesspointObjectJoinMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\AccessPointMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\FileMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\DestinationInfoMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\FolderPermissionMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\MetadataSchemaMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\ObjectTypeMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\FormatMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\FolderMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\ObjectFolderMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\FolderInfoMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\FileInfoMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\ObjectMetadataMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\ObjectMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\MetadataMapping.cs" />
-    <Compile Include="Data\Connection\Mapping\ObjectRelationInfoMapping.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
     <Compile Include="Data\Dto\EntityPermission.cs" />
@@ -113,6 +97,22 @@
     <Compile Include="Data\Dto\Standard\Permission.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
     <Compile Include="Data\IPermissionRepository.cs" />
+    <Compile Include="Data\Mapping\AccessPointMapping.cs" />
+    <Compile Include="Data\Mapping\AccesspointObjectJoinMapping.cs" />
+    <Compile Include="Data\Mapping\DestinationInfoMapping.cs" />
+    <Compile Include="Data\Mapping\FileInfoMapping.cs" />
+    <Compile Include="Data\Mapping\FileMapping.cs" />
+    <Compile Include="Data\Mapping\FolderInfoMapping.cs" />
+    <Compile Include="Data\Mapping\FolderMapping.cs" />
+    <Compile Include="Data\Mapping\FolderPermissionMapping.cs" />
+    <Compile Include="Data\Mapping\FormatMapping.cs" />
+    <Compile Include="Data\Mapping\MetadataMapping.cs" />
+    <Compile Include="Data\Mapping\MetadataSchemaMapping.cs" />
+    <Compile Include="Data\Mapping\ObjectFolderMapping.cs" />
+    <Compile Include="Data\Mapping\ObjectMapping.cs" />
+    <Compile Include="Data\Mapping\ObjectMetadataMapping.cs" />
+    <Compile Include="Data\Mapping\ObjectRelationInfoMapping.cs" />
+    <Compile Include="Data\Mapping\ObjectTypeMapping.cs" />
     <Compile Include="Data\McmRepository.cs" />
     <Compile Include="Data\PermissionRepository.cs" />
     <Compile Include="Exception\FolderNotEmptyException.cs" />
@@ -146,7 +146,9 @@
     <None Include="App.Config.sample" />
     <None Include="App.Config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Data\Connection\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

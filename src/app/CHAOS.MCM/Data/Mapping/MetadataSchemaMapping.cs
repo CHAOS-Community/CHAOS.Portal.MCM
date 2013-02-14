@@ -1,4 +1,4 @@
-﻿namespace Chaos.Mcm.Data.Connection.Mapping
+namespace Chaos.Mcm.Data.Mapping
 {
     using System.Collections.Generic;
     using System.Data;

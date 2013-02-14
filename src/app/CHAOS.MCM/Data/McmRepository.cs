@@ -8,9 +8,9 @@ namespace Chaos.Mcm.Data
     using CHAOS.Data;
     using CHAOS.Data.MySql;
 
-    using Chaos.Mcm.Data.Connection.Mapping;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
+    using Chaos.Mcm.Data.Mapping;
     using Chaos.Mcm.Exception;
     using Chaos.Mcm.Permission;
     using Chaos.Portal.Exceptions;
