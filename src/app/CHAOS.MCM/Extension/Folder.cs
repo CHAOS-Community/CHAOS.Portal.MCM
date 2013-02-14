@@ -5,7 +5,6 @@
     using System.Linq;
 
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
@@ -42,7 +41,7 @@
             var folder = PermissionManager.GetFolders(folderID);
 
             // REVIEW: What permissions are required to remove a permission?
-            if (!folder.DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), (Chaos.Mcm.Permission.FolderPermission)permission))
+            if (!folder.DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), (Permission.FolderPermission)permission))
                 throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
             if (userGuid.HasValue)
@@ -60,7 +59,7 @@
             if (parentID.HasValue && id.HasValue)
                 throw new ArgumentException("It does not make sense to specficy both ID and ParentID in the same query");
 
-            var permissionEnum = (Chaos.Mcm.Permission.FolderPermission)(permission ?? (uint)Chaos.Mcm.Permission.FolderPermission.Read) | Chaos.Mcm.Permission.FolderPermission.Read;
+            var permissionEnum = (Permission.FolderPermission)(permission ?? (uint)Permission.FolderPermission.Read) | Permission.FolderPermission.Read;
             var userGuid       = callContext.User.Guid;
             var groupGuids     = callContext.Groups.Select( group => group.Guid ).ToList();
 
@@ -81,7 +80,7 @@
         {
             var folderIDs = folders.Select(folder => folder.ID).ToList();
 
-            return McmRepository.GetFolderInfo(folderIDs);
+            return McmRepository.FolderInfoGet(folderIDs);
         }
 
         public ScalarResult Delete(ICallContext callContext, uint id)
@@ -89,7 +88,7 @@
             var userGuid   = callContext.User.Guid;
             var groupGuids = callContext.Groups.Select(group => group.Guid).ToList();
 
-            if(!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(userGuid, groupGuids, Chaos.Mcm.Permission.FolderPermission.Delete))
+            if(!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(userGuid, groupGuids, Permission.FolderPermission.Delete))
                 throw new InsufficientPermissionsException("User does not have permission to delete the folder");
 
             var result = McmRepository.FolderDelete(id);
@@ -99,7 +98,7 @@
 
 		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID, uint? newParentID )
 		{
-            if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), Chaos.Mcm.Permission.FolderPermission.Update))
+            if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), Permission.FolderPermission.Update))
 				throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
 			var result = McmRepository.FolderUpdate(id, newTitle, newFolderTypeID, newParentID);
@@ -119,12 +118,12 @@
 		    if( subscription != null && subscription.Permission != SubscriptionPermission.CreateFolder )
 		        throw new InsufficientPermissionsException( "User does not have permission to create topfolders with the subscriptionGuid" );
 		    
-            if(parentID.HasValue &&!PermissionManager.GetFolders((uint) parentID).DoesUserOrGroupHavePermission(userGuid, groupGuids, Chaos.Mcm.Permission.FolderPermission.Write))
+            if(parentID.HasValue &&!PermissionManager.GetFolders((uint) parentID).DoesUserOrGroupHavePermission(userGuid, groupGuids, Permission.FolderPermission.Write))
                 throw new InsufficientPermissionsException("User does not have permission to create subfolders");
 
             var result = McmRepository.FolderCreate(userGuid, subscription == null ? (Guid?) null : subscription.Guid, title, parentID, folderTypeID);
 
-            return McmRepository.GetFolderInfo(new[] { result }).First();
+            return McmRepository.FolderInfoGet(new[] { result }).First();
 		}
     }
 }

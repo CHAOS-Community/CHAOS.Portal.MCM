@@ -231,8 +231,10 @@ namespace Chaos.Mcm.Data
                    });
         }
 
-        public IList<FolderInfo> GetFolderInfo(IEnumerable<uint> ids)
+        public IList<FolderInfo> FolderInfoGet(IEnumerable<uint> ids)
         {
+            if(!ids.Any()) return new List<FolderInfo>();
+
             return Gateway.ExecuteQuery<FolderInfo>("FolderInfo_Get", new MySqlParameter("FolderIDs", string.Join(",", ids)));
         }
 
