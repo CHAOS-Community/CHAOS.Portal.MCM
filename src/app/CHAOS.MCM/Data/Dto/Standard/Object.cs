@@ -226,7 +226,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
                             break;
 
                         //LARM Metadata
-                        case "17D59E41-13FB-469A-A138-BB691F13F2BA":
+                        case "17d59e41-13fb-469a-a138-bb691f13f2ba":
                             if (metadata.MetadataXML.Root.Element("Tags") != null)
                                 foreach (var keyword in metadata.MetadataXML.Root.Element("Tags").Value.Split(' '))
                                 {
