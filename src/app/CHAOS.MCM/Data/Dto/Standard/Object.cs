@@ -166,7 +166,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 yield return new KeyValuePair<string, string>("FIATIFTA-ANP-Publisher", metadata.MetadataXML.Root.Element("Publisher").Value);
                             break;
                         #endregion
-
+                        #region LARM
                         // LARM Program
                         case "00000000-0000-0000-0000-0000df820000":
                             if (metadata.MetadataXML.Root.Element("PublicationDateTime") != null && metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null)
@@ -224,18 +224,35 @@ namespace CHAOS.MCM.Data.Dto.Standard
                             if (metadata.MetadataXML.Root.Element("Title") != null)
                                 yield return new KeyValuePair<string, string>("LARM-Title", metadata.MetadataXML.Root.Element("Title").Value);
                             break;
-                        case "c82a6f6d-b56b-4662-9627-f19410afc309":
-                            if (metadata.MetadataXML.Root.Element("Keywords") != null)
-                                foreach (var keyword in metadata.MetadataXML.Root.Element("Keywords").Value.Split(' '))
+
+                        //LARM Metadata
+                        case "17D59E41-13FB-469A-A138-BB691F13F2BA":
+                            if (metadata.MetadataXML.Root.Element("Tags") != null)
+                                foreach (var keyword in metadata.MetadataXML.Root.Element("Tags").Value.Split(' '))
                                 {
-                                    yield return new KeyValuePair<string, string>("LARM-Test2-Keyword", keyword.Replace("%20", " "));
+                                    yield return new KeyValuePair<string, string>("LARM-Metadata-Tags", keyword.Replace("%20", " "));
                                 }
                             break;
+
+                        #endregion
+                        #region KulturarvNord
                         case "bb615cd5-4470-ce4a-9207-b18e8ae33880":
                             if (metadata.MetadataXML.Root.Element("sequenceIndex") != null)
                                 yield return new KeyValuePair<string, string>("KN-SequenceIndex", metadata.MetadataXML.Root.Element("sequenceIndex").Value);
                             break;
 
+                    
+                        case "614c6ca6-1bb6-4c46-a37f-778b3e978d7e":
+                            if (metadata.MetadataXML.Root.Element("relationSequenceIndex") != null)
+                                yield return new KeyValuePair<string, string>("KN-relationSequenceIndex", metadata.MetadataXML.Root.Element("relationSequenceIndex").Value);
+                            break;
+
+                        case "50fbc42d-981b-344c-8511-e84e21c930d6":
+                            if (metadata.MetadataXML.Root.Element("arkivNr") != null)
+                                yield return new KeyValuePair<string, string>("KN-arkivNr", metadata.MetadataXML.Root.Element("arkivNr").Value);
+                            break;
+
+                        #endregion
                     }
 
                     yield return new KeyValuePair<string, string>(string.Format("m{0}_{1}_all", metadata.MetadataSchemaGUID, metadata.LanguageCode), GetXmlContent(metadata.MetadataXML.Root));
