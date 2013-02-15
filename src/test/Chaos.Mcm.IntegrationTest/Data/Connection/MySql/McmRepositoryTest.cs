@@ -165,6 +165,22 @@
         }
 
         [Test]
+        public void ObjectCrate_WithGuidWhatWouldBeParsedIncorrectlyAsAUUID_ReturnOneAndObjectShouldBeCreatedInTheDatabase()
+        {
+            var repository     = Make_McmRepository();
+            var objToCreate    = Make_ObjectTheDoesntExist();
+            var existingFolder = Make_FolderThatExist();
+            objToCreate.Guid   = new Guid( "10000000-0000-0000-0000-000000000000" ); // set guid with values in the most secnificant end of the string
+
+            var result = repository.ObjectCreate(objToCreate.Guid, objToCreate.ObjectTypeID, existingFolder.ID);
+
+            Assert.AreEqual(1, result);
+            var actual = repository.ObjectGet(objToCreate.Guid);
+            Assert.AreEqual(objToCreate.Guid, actual.Guid);
+            Assert.AreEqual(objToCreate.ObjectTypeID, actual.ObjectTypeID);
+        }
+
+        [Test]
         public void ObjectDelete_ByGuidNoRelationsToOtherTables_ReturnsOneAndObjectShouldBeMissingFromDatabaseAfterwards()
         {
             var repository  = Make_McmRepository();
