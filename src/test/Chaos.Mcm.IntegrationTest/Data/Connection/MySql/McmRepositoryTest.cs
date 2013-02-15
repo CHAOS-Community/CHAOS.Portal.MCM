@@ -516,11 +516,22 @@
             var repository = Make_McmRepository();
             var folderIDs  = new[] { 1u, 2u, 3u };
 
-            var results = repository.GetFolderInfo(folderIDs);
+            var results = repository.FolderInfoGet(folderIDs);
 
             Assert.IsNotEmpty(results);
             Assert.AreEqual(folderIDs[0], results[0].ID);
             Assert.AreEqual(folderIDs[1], results[1].ID);
+        }
+
+        [Test]
+        public void FolderInfoGet_GivenAnEmptyArray_ReturnAListOfFolderInfos()
+        {
+            var repository = Make_McmRepository();
+            var folderIDs = new uint[0];
+
+            var results = repository.FolderInfoGet(folderIDs);
+
+            Assert.IsEmpty(results);
         }
 
         #endregion
