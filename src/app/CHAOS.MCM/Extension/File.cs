@@ -19,8 +19,7 @@
             var id     = McmRepository.FileCreate(objectGuid, parentFileID, destinationID, filename, originalFilename, folderPath, formatID);
             var result = McmRepository.FileGet(id);
 
-            if(result.Count == 0)
-                throw new UnhandledException("File was created but couldn't be retrieved, try to Call Get specifically");
+            if(result.Count == 0) throw new UnhandledException("File was created but couldn't be retrieved, try to Call Get specifically");
 
             return result[0];
 		}
