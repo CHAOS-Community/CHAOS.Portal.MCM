@@ -5,7 +5,6 @@
 
     using CHAOS.Serialization;
 
-    using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Portal.Data.Dto.Standard;
     
     public class Object : Result

@@ -1,4 +1,4 @@
-Issue with Guid not looking the same as in the database (uuids)
+Improve exception test in PermissionManager when a nonexistent folder is accessed
 
 --
 

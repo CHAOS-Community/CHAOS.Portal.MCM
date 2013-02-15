@@ -7,6 +7,7 @@ namespace Chaos.Mcm.Data
 
     using CHAOS.Data;
     using CHAOS.Data.MySql;
+    using CHAOS.Extensions;
 
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Data.Dto.Standard;
@@ -160,8 +161,7 @@ namespace Chaos.Mcm.Data
                              new MySqlParameter("Guid", guid.ToByteArray()) 
                          });
 
-            if (result == -200)
-                throw new UnhandledException("Object was not deleted, database rolled back");
+            if (result == -200) throw new UnhandledException("Object was not deleted, database rolled back");
 
             return (uint)result;
         }
@@ -175,9 +175,7 @@ namespace Chaos.Mcm.Data
                              new MySqlParameter("FolderID", folderID) 
                          });
 
-            if (result == -200)
-                throw new UnhandledException("Unhandled exception, Create was rolled back");
-
+            if (result == -200) throw new UnhandledException("Unhandled exception, Create was rolled back");
 
             return (uint)result;
         }
@@ -204,7 +202,7 @@ namespace Chaos.Mcm.Data
 
         public IList<Object> ObjectGet(IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
         {
-            var guids = String.Join(",", objectGuids.Select(item => item.ToString().Replace("-", "")));
+            var guids = String.Join(",", objectGuids.Select(item => item.ToUUID().ToString().Replace("-", "")));
 
             return this.Gateway.ExecuteQuery<Object>("Object_GetByGUIDs", new[]
                 {

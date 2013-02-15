@@ -109,7 +109,7 @@
 
         public IFolderInfo Create(ICallContext callContext, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID)
 		{
-            if( subscriptionGuid == null && !parentID.HasValue )
+            if( !subscriptionGuid.HasValue == null && !parentID.HasValue )
                 throw new ArgumentException( "Both parentID and subscriptionGuid can't be null" );
 
 		    var userGuid     = callContext.User.Guid;
