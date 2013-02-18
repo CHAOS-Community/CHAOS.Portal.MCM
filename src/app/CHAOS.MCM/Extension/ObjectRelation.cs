@@ -12,7 +12,7 @@
         {
             uint result;
 
-            if (metadata.Guid.ToString() != Guid.Empty.ToString())
+            if (metadata.Guid != Guid.Empty)
             {
                 var objectRelationInfo = new ObjectRelationInfo
                     {
