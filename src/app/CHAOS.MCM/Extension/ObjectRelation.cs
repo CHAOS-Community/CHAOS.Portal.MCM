@@ -2,8 +2,6 @@
 {
     using System;
 
-    using CHAOS;
-
     using Chaos.Mcm.Data.Dto;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
@@ -14,7 +12,7 @@
         {
             uint result;
 
-            if (metadata.Guid.ToString() != UUID.Empty.ToString())
+            if (metadata.Guid.ToString() != Guid.Empty.ToString())
             {
                 var objectRelationInfo = new ObjectRelationInfo
                     {
