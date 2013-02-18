@@ -51,9 +51,7 @@
 
         public new IExtension WithPortalApplication(IPortalApplication portalApplication)
         {
-            portalApplication.Bindings.Add(typeof(Data.Dto.Metadata), new MetadataBinding());
-
-            return base.WithPortalApplication(portalApplication);
+            return WithPortalApplication(portalApplication);
         }
 
     	#endregion

@@ -19,4 +19,5 @@ INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType )VALUES( 4, 
 INSERT INTO Format( ID, FormatCategoryID, Name, FormatXML, MimeType,Extension )VALUES( 5, 9, 'PNG', null, 'image/png', '.png');
 INSERT INTO ObjectRelationType( ID, Name ) VALUES( 1, 'Contains' );
 INSERT INTO ObjectRelationType( ID, Name ) VALUES( 2, 'Part of' );
+INSERT INTO ObjectRelationType( ID, Name ) VALUES( 3, 'Related to' );
 

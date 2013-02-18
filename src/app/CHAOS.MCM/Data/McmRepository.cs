@@ -101,18 +101,18 @@ namespace Chaos.Mcm.Data
             return (uint)result;
         }
 
-        public uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid)
+        public uint ObjectRelationSet( Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence, Guid metadataGuid, Guid metadataSchemaGuid, string languageCode, XDocument metadataXml, Guid editingUserGuid )
         {
-            var result = this.Gateway.ExecuteNonQuery("ObjectRelation_SetMetadata", new[]
+            var result = Gateway.ExecuteNonQuery("ObjectRelation_SetMetadata", new[]
                 {
-                    new MySqlParameter("Object1Guid", objectRelationInfo.Object1Guid.ToByteArray()),
-                    new MySqlParameter("Object2Guid", objectRelationInfo.Object2Guid.ToByteArray()),
-                    new MySqlParameter("ObjectRelationTypeID", objectRelationInfo.ObjectRelationTypeID),
-                    new MySqlParameter("Sequence", objectRelationInfo.Sequence),
-                    new MySqlParameter("MetadataGuid", objectRelationInfo.MetadataGuid.Value.ToByteArray()),
-                    new MySqlParameter("MetadataSchemaGuid", objectRelationInfo.MetadataSchemaGuid.Value.ToByteArray()),
-                    new MySqlParameter("MetadataXml", objectRelationInfo.MetadataXml),
-                    new MySqlParameter("LanguageCode", objectRelationInfo.LanguageCode),
+                    new MySqlParameter("Object1Guid", object1Guid.ToByteArray()),
+                    new MySqlParameter("Object2Guid", object2Guid.ToByteArray()),
+                    new MySqlParameter("ObjectRelationTypeID", objectRelationTypeID),
+                    new MySqlParameter("Sequence", sequence),
+                    new MySqlParameter("MetadataGuid", metadataGuid.ToByteArray()),
+                    new MySqlParameter("MetadataSchemaGuid", metadataSchemaGuid.ToByteArray()),
+                    new MySqlParameter("MetadataXml", metadataXml.ToString()),
+                    new MySqlParameter("LanguageCode", languageCode),
                     new MySqlParameter("EditingUserGuid", editingUserGuid.ToByteArray()),
                 });
 
@@ -130,12 +130,12 @@ namespace Chaos.Mcm.Data
 
         public IEnumerable<Metadata> MetadataGet(Guid guid)
         {
-            return this.Gateway.ExecuteQuery<Metadata>("Metadata_Get", new MySqlParameter("Guid", guid.ToByteArray()));
+            return Gateway.ExecuteQuery<Metadata>("Metadata_Get", new MySqlParameter("Guid", guid.ToByteArray()));
         }
 
         public uint MetadataSet(Guid objectGuid, Guid metadataGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml, Guid editingUserGuid)
         {
-            var result = this.Gateway.ExecuteNonQuery("Metadata_Set", new[]
+            var result = Gateway.ExecuteNonQuery("Metadata_Set", new[]
                 {
                     new MySqlParameter("Guid", metadataGuid.ToByteArray()),
                     new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()),

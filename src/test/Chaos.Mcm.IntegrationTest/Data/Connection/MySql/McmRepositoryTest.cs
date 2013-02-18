@@ -83,14 +83,14 @@
         }
 
         [Test]
-        public void ObjectRelationCreate_IncludingMetadata_CreateRelationAndMetadataInDatabaseAndReturnOne()
+        public void ObjectRelationSet_IncludingMetadata_CreateRelationAndMetadataInDatabaseAndReturnOne()
         {
             var connection             = Make_McmRepository();
             var repo                   = Make_McmRepository();
             var expectedObjectRelation = Make_ObjectRelationInfoNonExistent();
             var someUserGuid           = new Guid("00000000-0000-0000-0000-000000001000");
 
-            var result = repo.ObjectRelationSet(expectedObjectRelation, someUserGuid);
+            var result = repo.ObjectRelationSet( expectedObjectRelation.Object1Guid, expectedObjectRelation.Object2Guid, expectedObjectRelation.ObjectRelationTypeID, expectedObjectRelation.Sequence, expectedObjectRelation.MetadataGuid.Value, expectedObjectRelation.MetadataSchemaGuid.Value, expectedObjectRelation.LanguageCode, expectedObjectRelation.MetadataXml, someUserGuid );
 
             Assert.AreEqual(result, 1);
             var resultObjectRealtionInfo = connection.ObjectRelationInfoGet(expectedObjectRelation.Object1Guid);
@@ -99,10 +99,10 @@
             Assert.AreEqual(expectedObjectRelation.Object2Guid, resultObjectRealtionInfo.First().Object2Guid);
             Assert.AreEqual(expectedObjectRelation.MetadataGuid, resultObjectRealtionInfo.First().MetadataGuid);
             Assert.AreEqual(expectedObjectRelation.MetadataSchemaGuid, resultObjectRealtionInfo.First().MetadataSchemaGuid);
-            Assert.AreEqual(expectedObjectRelation.MetadataXml.Root.Value, resultObjectRealtionInfo.First().MetadataXml.Root.Value);
+            Assert.AreEqual(expectedObjectRelation.MetadataXml.ToString(), resultObjectRealtionInfo.First().MetadataXml.ToString());
             Assert.AreEqual(expectedObjectRelation.Sequence, resultObjectRealtionInfo.First().Sequence);
         }
-
+        
         #endregion
         #region Metadata
 

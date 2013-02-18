@@ -36,7 +36,7 @@
 
         uint ObjectRelationDelete(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID);
         uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence);
-        uint ObjectRelationSet(ObjectRelationInfo objectRelationInfo, Guid editingUserGuid);
+        uint ObjectRelationSet( Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence, Guid metadataGuid, Guid metadataSchemaGuid, string languageCode, XDocument metadataXml, Guid editingUserGuid );
 
         IEnumerable<Metadata> MetadataGet(Guid guid);
 

@@ -16,7 +16,7 @@
     [TestFixture]
     public class ObjectRelationTest : TestBase
     {
-        #region Create
+        #region Set
 
         [Test]
         public void Set_WithoutMetadata_ShouldCallMcmRepository()
@@ -29,7 +29,7 @@
             
             McmRepository.Setup(m => m.ObjectRelationSet(object1Guid, object2Guid, objectRelationTypeID, sequence)).Returns(1);
             
-            var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, new Metadata(), objectRelationTypeID, sequence);
+            var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, objectRelationTypeID, sequence, null, null, null, null);
 
             McmRepository.Verify(m => m.ObjectRelationSet(object1Guid, object2Guid, objectRelationTypeID, sequence));
             Assert.AreEqual(1, result.Value);
@@ -44,16 +44,34 @@
             var editingUserGuid       = new Guid("00000000-0000-0000-0000-000000000010");
             var sequence              = 0;
             uint objectRelationTypeID = 1;
-            var metadata              = new Metadata{Guid = new Guid("00000000-0000-0000-0000-000000000100")};
+            var metadata              = Make_MetadataDto();
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = editingUserGuid });
-            McmRepository.Setup(m => m.ObjectRelationSet(It.IsAny<ObjectRelationInfo>(), editingUserGuid)).Returns(1);
+            McmRepository.Setup(m => m.ObjectRelationSet(object1Guid, object2Guid,objectRelationTypeID, sequence, metadata.Guid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml, editingUserGuid)).Returns(1);
 
-            var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, metadata, objectRelationTypeID, sequence);
+            var result = objectRelation.Set( CallContext.Object, object1Guid, object2Guid, objectRelationTypeID, sequence, metadata.Guid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml );
 
-            McmRepository.Verify(m => m.ObjectRelationSet(It.IsAny<ObjectRelationInfo>(), editingUserGuid));
+            McmRepository.Verify(m => m.ObjectRelationSet(object1Guid, object2Guid,objectRelationTypeID, sequence, metadata.Guid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml, editingUserGuid));
             Assert.AreEqual(1, result.Value);
         }
+        
+        [Test]
+        public void Set_WithoutMetadataGuid_ShouldCallMcmRepository()
+        {
+            var objectRelation        = this.Make_ObjectRelation();
+            var object1Guid           = new Guid("00000000-0000-0000-0000-000000000001");
+            var object2Guid           = new Guid("00000000-0000-0000-0000-000000000002");
+            var editingUserGuid       = new Guid("00000000-0000-0000-0000-000000000010");
+            var sequence              = 0;
+            uint objectRelationTypeID = 1;
+            var metadata              = Make_MetadataDto();
+            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = editingUserGuid });
+            McmRepository.Setup(m => m.ObjectRelationSet(object1Guid, object2Guid,objectRelationTypeID, sequence, It.IsAny<Guid>(), metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml, editingUserGuid)).Returns(1);
 
+            var result = objectRelation.Set( CallContext.Object, object1Guid, object2Guid, objectRelationTypeID, sequence, null, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml );
+
+            McmRepository.Verify(m => m.ObjectRelationSet(object1Guid, object2Guid,objectRelationTypeID, sequence, It.IsAny<Guid>(), metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml, editingUserGuid));
+            Assert.AreEqual(1, result.Value);
+        }
 
         #endregion
         #region Delete
