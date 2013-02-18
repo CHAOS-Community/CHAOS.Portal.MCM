@@ -142,7 +142,7 @@ namespace Chaos.Mcm.Data
                     new MySqlParameter("MetadataSchemaGUID", metadataSchemaGuid.ToByteArray()),
                     new MySqlParameter("LanguageCode", languageCode),
                     new MySqlParameter("RevisionID", revisionID),
-                    new MySqlParameter("MetadataXML", metadataXml),
+                    new MySqlParameter("MetadataXML", metadataXml.ToString()),
                     new MySqlParameter("EditingUserGUID", editingUserGuid.ToByteArray())
                 });
 

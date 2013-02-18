@@ -14,7 +14,7 @@
     {
         public ScalarResult Set(ICallContext callContext, Guid objectGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml)
         {
-            if(!HasPermissionToObject( callContext, objectGuid, FolderPermission.CreateUpdateObjects )) throw new InsufficientPermissionsException( "User does not have permissions to create a file for this object" );
+            if(!HasPermissionToObject( callContext, objectGuid, FolderPermission.CreateUpdateObjects )) throw new InsufficientPermissionsException( "User does not have permissions to set metadata on object or the object doesn't exist" );
 
             var metadataGuid = Guid.NewGuid();
             var userGuid     = callContext.User.Guid;

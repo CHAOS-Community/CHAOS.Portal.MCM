@@ -146,6 +146,26 @@
             Assert.AreEqual(nonexistentMetadata.MetadataXml.Root.Value, rowSavedInDB.MetadataXml.Root.Value, "MetadataXml");
         }
         
+        [Test]
+        public void MetadataSet_GivenXmlWithSpecialCharaters_ShouldCreateTheMetadataInTheDatabase()
+        {
+            var repository           = Make_McmRepository();
+            var nonexistentMetadata  = Make_MetadataWithSpecialCharacters();
+            var existingObjectGuid   = new Guid("00000000-0000-0000-0000-000000000003");
+            var someUserGuid         = new Guid("00000010-0000-0000-0000-000000000000");
+
+            var result = repository.MetadataSet(existingObjectGuid, nonexistentMetadata.Guid, nonexistentMetadata.MetadataSchemaGuid, nonexistentMetadata.LanguageCode, nonexistentMetadata.RevisionID, nonexistentMetadata.MetadataXml, someUserGuid);
+
+            Assert.AreEqual(1, result);
+            var rowSavedInDB = repository.MetadataGet(nonexistentMetadata.Guid).First();
+            Assert.AreEqual(nonexistentMetadata.Guid, rowSavedInDB.Guid, "Guid");
+            Assert.AreEqual(nonexistentMetadata.MetadataSchemaGuid, rowSavedInDB.MetadataSchemaGuid, "MetadataSchemaGuid");
+            Assert.AreEqual(someUserGuid, rowSavedInDB.EditingUserGuid, "EditingUserGuid");
+            Assert.AreEqual(nonexistentMetadata.RevisionID, rowSavedInDB.RevisionID, "RevisionID");
+            Assert.AreEqual(nonexistentMetadata.LanguageCode, rowSavedInDB.LanguageCode, "LanguageCode");
+            Assert.AreEqual(nonexistentMetadata.MetadataXml.Root.Value, rowSavedInDB.MetadataXml.Root.Value, "MetadataXml");
+        }
+
         #endregion
         #region Object
 
@@ -1115,6 +1135,20 @@
                     RevisionID         = 0,
                     LanguageCode       = "en",
                     MetadataXml        = XDocument.Parse("<xml>test xml</xml>"),
+                    DateCreated        = new DateTime(1990, 10, 01, 23, 59, 59) 
+                };
+        }
+
+        private static Metadata Make_MetadataWithSpecialCharacters()
+        {
+            return new Metadata
+                {
+                    Guid               = new Guid("00000000-0000-0000-0000-000000000070"),
+                    MetadataSchemaGuid = new Guid("00000000-0000-0000-0000-000000000100"),
+                    EditingUserGuid    = new Guid("00000000-0000-0000-0000-000000000000"),
+                    RevisionID         = 0,
+                    LanguageCode       = "en",
+                    MetadataXml        = XDocument.Parse("<xml>æ ø å ö</xml>"),
                     DateCreated        = new DateTime(1990, 10, 01, 23, 59, 59) 
                 };
         }
