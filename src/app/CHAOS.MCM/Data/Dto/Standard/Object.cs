@@ -41,6 +41,8 @@ namespace CHAOS.MCM.Data.Dto.Standard
         public IList<Link> Folders { get; set; }
 		public IList<uint> FolderTree { get; set; }
 		public List<Object> RelatedObjects { get; set; }
+
+        [Serialize("AccessPoints")]
         public IList<AccessPoint_Object_Join> AccessPoints { get; set; }
 
         public KeyValuePair<string, string> UniqueIdentifier
