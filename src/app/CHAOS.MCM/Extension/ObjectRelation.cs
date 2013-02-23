@@ -3,11 +3,25 @@
     using System;
     using System.Xml.Linq;
 
+    using Chaos.Mcm.Data;
+    using Chaos.Mcm.Permission;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
 
     public class ObjectRelation : AMcmExtension
     {
+        #region Initialization
+
+        public ObjectRelation(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public ObjectRelation()
+        {
+        }
+
+        #endregion
+
         // todo: implement permission on Set
         public ScalarResult Set( ICallContext callContext, Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence, Guid? metadataGuid, Guid? metadataSchemaGuid, string languageCode, XDocument metadataXml )
         {

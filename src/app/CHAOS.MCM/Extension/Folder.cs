@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
+    using Chaos.Mcm.Permission;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
@@ -13,6 +15,17 @@
     
     public class Folder : AMcmExtension
     {
+        #region Initialization
+
+        public Folder(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public Folder()
+        {
+        }
+
+        #endregion
         #region Permission
 
         public FolderPermission GetPermission( ICallContext callContext, uint folderID )

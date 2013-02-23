@@ -3,6 +3,7 @@
     using System;
     using System.Xml.Linq;
 
+    using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
@@ -12,6 +13,18 @@
     [PortalExtension(configurationName: "MCM")]
     public class Metadata : AMcmExtension
     {
+        #region Initialization
+
+        public Metadata(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public Metadata()
+        {
+        }
+
+        #endregion
+
         public ScalarResult Set(ICallContext callContext, Guid objectGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml)
         {
             if(!HasPermissionToObject( callContext, objectGuid, FolderPermission.CreateUpdateObjects )) throw new InsufficientPermissionsException( "User does not have permissions to set metadata on object or the object doesn't exist" );

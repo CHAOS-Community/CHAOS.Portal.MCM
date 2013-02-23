@@ -2,12 +2,25 @@
 {
     using System.Collections.Generic;
 
+    using Chaos.Mcm.Data;
+    using Chaos.Mcm.Permission;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
 
     public class ObjectType : AMcmExtension
     {
+        #region Initialization
+
+        public ObjectType(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public ObjectType()
+        {
+        }
+
+        #endregion
         #region Business Logic
 
         public Data.Dto.ObjectType Set(ICallContext callContext, string name)

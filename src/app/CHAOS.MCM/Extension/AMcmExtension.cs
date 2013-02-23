@@ -5,7 +5,6 @@
     using System.Xml.Linq;
 
     using Chaos.Mcm.Data;
-    using Chaos.Mcm.Binding;
     using Chaos.Mcm.Permission;
     using Chaos.Mcm.Permission.InMemory;
     using Chaos.Mcm.Permission.Specification;
@@ -25,6 +24,18 @@
 
         #endregion
         #region Construction
+
+        protected AMcmExtension()
+        {
+            
+        }
+
+        protected AMcmExtension(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager)
+        {
+            PortalApplication = portalApplication;
+            McmRepository     = mcmRepository;
+            PermissionManager = permissionManager;
+        }
 
         public override IExtension WithConfiguration( string configuration )
         {

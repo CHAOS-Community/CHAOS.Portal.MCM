@@ -2,14 +2,26 @@
 {
     using System;
 
+    using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Exceptions;
-    using Chaos.Portal.Extension;
 
     public class Link : AMcmExtension
     {
+        #region Initialization
+
+        public Link(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public Link()
+        {
+        }
+
+        #endregion
+
         public ScalarResult Create(ICallContext callContext, Guid objectGuid, uint folderID)
         {
             if (!HasPermissionToObject(callContext, objectGuid, FolderPermission.CreateLink))

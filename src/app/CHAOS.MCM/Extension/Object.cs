@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Collections.Generic;
 
+    using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
@@ -13,6 +14,18 @@
 
     public class Object : AMcmExtension
     {
+        #region Initialization
+
+        public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public Object()
+        {
+        }
+
+        #endregion
+
 //		public IPagedResult<IResult> Get( ICallContext callContext, IQuery query, UUID accessPointGuid, bool? includeMetadata, bool? includeFiles, bool? includeObjectRelations, bool? includeAccessPoints )
 //		{ 
 //            // TODO: Implement AccessPointGUID for queries when user isnt logged in

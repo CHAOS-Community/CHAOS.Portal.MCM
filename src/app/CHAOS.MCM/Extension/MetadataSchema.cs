@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Xml.Linq;
 
+    using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
@@ -12,6 +13,17 @@
     
     public class MetadataSchema : AMcmExtension
     {
+        #region Initialization
+
+        public MetadataSchema(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public MetadataSchema()
+        {
+        }
+
+        #endregion
         #region Business Logic
 
 		public IEnumerable<Data.Dto.MetadataSchema> Get( ICallContext callContext, Guid? guid )

@@ -2,6 +2,7 @@
 {
     using System;
 
+    using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
     using Chaos.Portal.Data.Dto.Standard;
@@ -9,6 +10,17 @@
 
     public class File : AMcmExtension
     {
+        #region Initialization
+
+        public File(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public File()
+        {
+        }
+
+        #endregion
         #region Business Logic
 
         public Data.Dto.File Create(ICallContext callContext, Guid objectGuid, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath)
