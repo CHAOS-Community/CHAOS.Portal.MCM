@@ -14,7 +14,7 @@
       <arg value="/t:Rebuild" />
     </msbuild>
 
-    <ilmerge outputfile="Chaos.Mcm.Extension.dll"
+    <ilmerge outputfile="Chaos.Mcm.dll"
              targetkind="dll"
              logfile="ilmerge.log"
              targetplatform="v4"
@@ -34,7 +34,7 @@
       <formatter type="Plain" />
       <test assemblyname="..\src\test\Chaos.Mcm.Test\bin\Release\Chaos.Mcm.Test.dll">
         <references>
-          <include name="Chaos.Mcm.Extension.dll"/>
+          <include name="Chaos.Mcm.dll"/>
           <include name="..\lib\*.dll"/>
         </references>
       </test>
