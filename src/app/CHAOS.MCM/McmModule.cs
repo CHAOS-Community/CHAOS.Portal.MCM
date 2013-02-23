@@ -60,6 +60,7 @@
             portalApplication.AddExtension("Object", Extensions[7]);
             portalApplication.AddExtension("ObjectRelation", Extensions[8]);
             portalApplication.AddExtension("ObjectType", Extensions[9]);
+            portalApplication.AddExtension("Mcm", new Mcm(portalApplication, McmRepository, PermissionManager));
         }
 
         #endregion

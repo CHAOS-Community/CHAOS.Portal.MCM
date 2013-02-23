@@ -1,8 +1,25 @@
 ﻿namespace Chaos.Mcm.Extension
 {
+    using Chaos.Mcm.Data;
+    using Chaos.Mcm.Permission;
+    using Chaos.Portal;
+
     public class Mcm : AMcmExtension
     {
-//		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
+        #region Initialization
+
+        public Mcm(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+        {
+        }
+
+        public Mcm()
+            : base()
+        {
+        }
+
+        #endregion
+
+        //		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
 //		{
 //            var index = (Solr)callContext.IndexManager.GetIndex<Mcm>();
 //
@@ -27,5 +44,18 @@
 //
 //            return new ScalarResult(1);
 //		}
+        public void Index(ICallContext callContext)
+        {
+            const uint pageSize = 1000;
+            
+            for (uint i = 0; ; i++)
+            {
+                var objects = McmRepository.ObjectGet(null, i, pageSize, true, true, true, true, true);
+                
+                callContext.ViewManager.Index(objects);
+            
+                if (objects.Count != pageSize)  break;
+            }
+        }
     }
 }
