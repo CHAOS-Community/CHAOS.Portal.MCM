@@ -3,6 +3,7 @@
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
+    using Chaos.Portal.Data.Dto.Standard;
 
     public class Mcm : AMcmExtension
     {
@@ -44,7 +45,7 @@
 //
 //            return new ScalarResult(1);
 //		}
-        public void Index(ICallContext callContext)
+        public ScalarResult Index(ICallContext callContext)
         {
             const uint pageSize = 1000;
             
@@ -56,6 +57,8 @@
             
                 if (objects.Count != pageSize)  break;
             }
+
+            return new ScalarResult(1);
         }
     }
 }
