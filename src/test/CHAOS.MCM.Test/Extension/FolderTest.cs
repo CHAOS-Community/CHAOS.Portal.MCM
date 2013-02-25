@@ -31,12 +31,7 @@
 
             folder.SetupProperty(p => p.ID, (uint) 100);
 
-            var userInfo = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
-                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
-                                        1,
-                                        "email",
-                                        new DateTime(2000, 06, 06),
-                                        new DateTime(2010, 06, 06));
+            var userInfo = Make_UserInfo();
             var folderInfo = new FolderInfo(100,
                                             1,
                                             null,
@@ -61,6 +56,19 @@
             Assert.AreEqual(100, result[0].ID);
         }
 
+        private static UserInfo Make_UserInfo()
+        {
+            return new UserInfo
+                {
+                    Guid                = new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
+                    SessionGuid         = new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
+                    SystemPermissions   = 1,
+                    Email               = "email",
+                    SessionDateCreated  = new DateTime(2000, 06, 06),
+                    SessionDateModified = new DateTime(2010, 06, 06)
+                };
+        }
+
         [Test]
         public void Should_Get_folders_by_parentID()
         {
@@ -72,12 +80,16 @@
                    .SetupProperty(p => p.ParentID, (uint) 100)
                    .SetupProperty(p => p.ParentFolder, folder.Object );
 
-            var userInfo = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
-                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
-                                        1,
-                                        "email",
-                                        new DateTime(2000, 06, 06),
-                                        new DateTime(2010, 06, 06));
+            var userInfo = new UserInfo
+                {
+                    Guid                = new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
+                    SessionGuid         = new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
+                    SystemPermissions   = 1,
+                    Email               = "email",
+                    SessionDateCreated  = new DateTime(2000, 06, 06),
+                    SessionDateModified = new DateTime(2010, 06, 06)
+                };
+
             var folderInfo = new FolderInfo(101,
                                             1,
                                             null,
@@ -114,12 +126,7 @@
                    .SetupProperty(p => p.ParentID, (uint)100)
                    .SetupProperty(p => p.ParentFolder, folder.Object);
 
-            var userInfo = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
-                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
-                                        1,
-                                        "email",
-                                        new DateTime(2000, 06, 06),
-                                        new DateTime(2010, 06, 06));
+            var userInfo = Make_UserInfo();
             var folderInfo = new FolderInfo(101,
                                             1,
                                             null,
@@ -178,12 +185,7 @@
         {
             var folder   = new Mock<IFolder>().SetupProperty(p => p.ID, (uint) 100);
             var userGuid = new Guid("8c50786c-e2bf-4014-8694-e964b54cdd2b");
-            var userInfo = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
-                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
-                                        1,
-                                        "email",
-                                        new DateTime(2000, 06, 06),
-                                        new DateTime(2010, 06, 06));
+            var userInfo = Make_UserInfo();
 
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
@@ -204,12 +206,7 @@
         {
             var folder   = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
             var userGuid = new Guid("8c50786c-e2bf-4014-8694-e964b54cdd2b");
-            var userInfo = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
-                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
-                                        1,
-                                        "email",
-                                        new DateTime(2000, 06, 06),
-                                        new DateTime(2010, 06, 06));
+            var userInfo = Make_UserInfo();
 
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
@@ -229,12 +226,7 @@
         public void Should_Delete_Folder()
         {
             var folder   = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
-            var userInfo = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
-                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
-                                        1,
-                                        "email",
-                                        new DateTime(2000, 06, 06),
-                                        new DateTime(2010, 06, 06));
+            var userInfo = Make_UserInfo();
 
             PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
             folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.Delete)).Returns(true);
@@ -254,12 +246,7 @@
         public void Should_Create_Top_Folder()
         {
             var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
-            var userInfo          = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
-                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
-                                        1,
-                                        "email",
-                                        new DateTime(2000, 06, 06),
-                                        new DateTime(2010, 06, 06));
+            var userInfo          = Make_UserInfo();
             var folderInfo        = new FolderInfo {ID = 1001};
             var subscriptionGuid  = new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661");
 
@@ -282,12 +269,7 @@
         public void Should_Create_Sub_Folder()
         {
             var folder            = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
-            var userInfo          = new UserInfo(new Guid("4336c09e-c8fa-4773-9503-43ad59dbce99"),
-                                        new Guid("cb576e41-9e0a-44a0-ab79-753c383b3661"),
-                                        1,
-                                        "email",
-                                        new DateTime(2000, 06, 06),
-                                        new DateTime(2010, 06, 06));
+            var userInfo          = Make_UserInfo();
             var folderInfo        = new FolderInfo { ID = 1001 };
 
             PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
