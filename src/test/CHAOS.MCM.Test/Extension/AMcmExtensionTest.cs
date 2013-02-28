@@ -6,7 +6,6 @@
     using Chaos.Mcm.Extension;
     using Chaos.Mcm.Permission;
     using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Data.Dto.Standard;
 
     using NUnit.Framework;
 
@@ -21,7 +20,7 @@
             var extension  = Make_AMcmExtension();
             var objectGuid = new Guid("af40f5e3-2cbf-944f-b833-6c444ad760e1");
             var userInfo   = new UserInfo { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") };
-            var groups     = new IGroup[] { new Group { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") } };
+            var groups     = new [] { new Group { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") } };
             var folderDtos = new List<Folder> { new Folder { ID = 1 } };
             SetupHasPermissionToObject(userInfo, groups, objectGuid, folderDtos);
 

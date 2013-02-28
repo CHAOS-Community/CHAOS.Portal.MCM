@@ -8,7 +8,7 @@
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
     using Chaos.Portal.Exceptions;
     using FolderPermission = Chaos.Mcm.Data.Dto.FolderPermission;
     using IFolder = Chaos.Mcm.Permission.IFolder;
@@ -121,7 +121,7 @@
 
         public IFolderInfo Create(ICallContext callContext, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID)
 		{
-            if( !subscriptionGuid.HasValue == null && !parentID.HasValue )
+            if( !subscriptionGuid.HasValue && !parentID.HasValue ) 
                 throw new ArgumentException( "Both parentID and subscriptionGuid can't be null" );
 
 		    var userGuid     = callContext.User.Guid;

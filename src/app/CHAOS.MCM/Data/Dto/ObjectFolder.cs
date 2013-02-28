@@ -4,9 +4,9 @@
 
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
-    public class ObjectFolder : Result
+    public class ObjectFolder : AResult
     {
         #region Properties
 

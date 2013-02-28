@@ -1,10 +1,10 @@
 ﻿using System;
 using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto.Standard;
+using Chaos.Portal.Data.Dto;
 
 namespace Chaos.Mcm.Data.Dto.Standard
 {
-	public class FolderType : Result
+	public class FolderType : AResult
 	{
 		public FolderType( uint id, string name, DateTime dateCreated )
 		{

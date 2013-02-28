@@ -5,9 +5,9 @@ namespace Chaos.Mcm.Data.Dto
 
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
-    public class ObjectRelationInfo : Result
+    public class ObjectRelationInfo : AResult
     {
         #region Properties
 

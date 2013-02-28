@@ -5,9 +5,9 @@ namespace Chaos.Mcm.Data.Dto
     using CHAOS.Serialization;
     using CHAOS.Serialization.XML;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
-    public class Format : Result
+    public class Format : AResult
 	{
 		#region Properties
 

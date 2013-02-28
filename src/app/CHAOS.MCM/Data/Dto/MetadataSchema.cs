@@ -6,9 +6,9 @@ namespace Chaos.Mcm.Data.Dto
     using CHAOS.Serialization;
     using CHAOS.Serialization.XML;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
-    public class MetadataSchema : Result
+    public class MetadataSchema : AResult
 	{
 		#region Properties
 

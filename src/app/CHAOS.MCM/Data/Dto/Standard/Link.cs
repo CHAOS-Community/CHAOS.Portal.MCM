@@ -1,11 +1,11 @@
 ﻿using System;
 using CHAOS;
 using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto.Standard;
+using Chaos.Portal.Data.Dto;
 
 namespace Chaos.Mcm.Data.Dto.Standard
 {
-    public class Link : Result
+    public class Link : AResult
     {
         #region Properties
 

@@ -2,9 +2,9 @@ namespace Chaos.Mcm.Data.Dto
 {
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
-    public  class ObjectType : Result
+    public  class ObjectType : AResult
 	{
 		#region Properties
 

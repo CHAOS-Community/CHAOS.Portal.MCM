@@ -4,7 +4,7 @@
 
     using Chaos.Mcm.Extension;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
     using Moq;
 

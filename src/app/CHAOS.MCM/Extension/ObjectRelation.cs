@@ -6,7 +6,7 @@
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
     public class ObjectRelation : AMcmExtension
     {

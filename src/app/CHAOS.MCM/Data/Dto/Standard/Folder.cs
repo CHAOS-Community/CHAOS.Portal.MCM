@@ -3,9 +3,9 @@
     using System;
 
     using CHAOS.Serialization;
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
-	public class Folder : Result, IFolder
+	public class Folder : AResult, IFolder
 	{
 		#region Properties
 

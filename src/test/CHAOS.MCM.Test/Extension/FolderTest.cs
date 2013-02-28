@@ -11,7 +11,7 @@
     using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Data;
     using Chaos.Portal;
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
     using Moq;
 

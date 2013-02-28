@@ -5,7 +5,7 @@
     using System.Linq;
 
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
     using Moq;
 

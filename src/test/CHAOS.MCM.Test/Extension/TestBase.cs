@@ -11,7 +11,6 @@ namespace Chaos.Mcm.Test.Extension
     using Chaos.Portal;
     using Chaos.Portal.Cache;
     using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Data.Dto.Standard;
     using Chaos.Portal.Indexing.View;
 
     using Moq;
@@ -100,7 +99,7 @@ namespace Chaos.Mcm.Test.Extension
         #endregion
         #region Helpers
 
-        protected void SetupHasPermissionToObject(IUserInfo userInfo, IGroup[] groups, Guid objectGuid, IList<Folder> folderDtos)
+        protected void SetupHasPermissionToObject(UserInfo userInfo, Group[] groups, Guid objectGuid, IList<Folder> folderDtos)
         {
             CallContext.SetupGet(p => p.User).Returns(userInfo);
             CallContext.SetupGet(p => p.Groups).Returns(groups);
@@ -110,8 +109,8 @@ namespace Chaos.Mcm.Test.Extension
 
         protected void SetupHasPermissionToObject(FolderPermission permission)
         {
-            var userInfo    = new UserInfo { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") };
-            var groups     = new IGroup[] { new Group { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") } };
+            var userInfo   = new UserInfo { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") };
+            var groups     = new[] { new Group { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") } };
             var folderDtos = new List<Folder> { new Folder { ID = 1 } };
 
             this.CallContext.SetupGet(p => p.User).Returns(userInfo);

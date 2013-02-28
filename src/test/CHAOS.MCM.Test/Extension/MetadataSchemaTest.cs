@@ -7,7 +7,6 @@
     using Chaos.Mcm.Extension;
     using Chaos.Mcm.Permission;
     using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Data.Dto.Standard;
 
     using Moq;
 
@@ -24,7 +23,7 @@
             var userGuid   = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352");
             var groupGuids = new Guid[0];
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = userGuid });
-            CallContext.SetupGet(p => p.Groups).Returns(new IGroup[0]);
+            CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
             McmRepository.Setup(m => m.MetadataSchemaGet(userGuid, groupGuids, null, MetadataSchemaPermission.Read)).Returns(new []{schema});
 
             var results = extension.Get(CallContext.Object, null);
@@ -45,7 +44,7 @@
                 };
             var groupGuids = new Guid[0];
             CallContext.SetupGet(p => p.User).Returns(userInfo);
-            CallContext.SetupGet(p => p.Groups).Returns(new IGroup[0]);
+            CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
             McmRepository.Setup(m => m.MetadataSchemaGet(userInfo.Guid, groupGuids, schema.Guid, MetadataSchemaPermission.Read)).Returns(new[] { schema });
 
             var result = extension.Create(CallContext.Object, schema.Name, schema.SchemaXml, schema.Guid);
@@ -62,7 +61,7 @@
             var userGuid   = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352");
             var groupGuids = new Guid[0];
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = userGuid });
-            CallContext.SetupGet(p => p.Groups).Returns(new IGroup[0]);
+            CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
             McmRepository.Setup(m => m.MetadataSchemaGet(userGuid, groupGuids, schema.Guid, MetadataSchemaPermission.Delete)).Returns(new []{schema});
             McmRepository.Setup(m => m.MetadataSchemaDelete(schema.Guid)).Returns(1);
 
@@ -81,7 +80,7 @@
             var userGuid   = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352");
             var groupGuids = new Guid[0];
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = userGuid });
-            CallContext.SetupGet(p => p.Groups).Returns(new IGroup[0]);
+            CallContext.SetupGet(p => p.Groups).Returns(new Group[0]);
             McmRepository.Setup(m => m.MetadataSchemaGet(userGuid, groupGuids, schema.Guid, It.IsAny<MetadataSchemaPermission>())).Returns(new []{schema});
             McmRepository.Setup(m => m.MetadataSchemaUpdate(schema.Name, schema.SchemaXml, userGuid, schema.Guid)).Returns(1);
 

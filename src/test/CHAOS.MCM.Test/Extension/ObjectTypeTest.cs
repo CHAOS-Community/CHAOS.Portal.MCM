@@ -3,8 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Chaos.Mcm.Extension;
-    using Chaos.Portal.Data.Dto.Standard;
+    using Chaos.Portal.Data.Dto;
 
     using NUnit.Framework;
 
