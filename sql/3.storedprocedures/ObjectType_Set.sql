@@ -8,9 +8,9 @@ BEGIN
 	IF(ID IS NULL) THEN
 
 		INSERT INTO ObjectType
-    		( Name )
+    		( ID, Name )
 		VALUES
-			( Name );
+			( ID, Name );
 
 		SELECT last_insert_id();
 

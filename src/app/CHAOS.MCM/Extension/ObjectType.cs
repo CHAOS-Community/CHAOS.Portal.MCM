@@ -23,16 +23,16 @@
         #endregion
         #region Business Logic
 
-        public Data.Dto.ObjectType Set(ICallContext callContext, string name)
+        public Data.Dto.ObjectType Set(ICallContext callContext, uint id, string name)
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
 
-            var id     = McmRepository.ObjectTypeSet(name);
+            McmRepository.ObjectTypeSet(name, id: id);
+
             var result = McmRepository.ObjectTypeGet(id, null);
             
-            if(result.Count == 0) 
-                throw new UnhandledException("ObjectType was created but couldn't be retrieved, try to Call Get specifically");
+            if(result.Count == 0) throw new UnhandledException("ObjectType was created but couldn't be retrieved, try to Call Get specifically");
 
             return result[0];
 		}

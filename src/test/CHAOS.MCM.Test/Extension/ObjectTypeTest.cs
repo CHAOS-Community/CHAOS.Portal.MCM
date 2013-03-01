@@ -21,7 +21,7 @@
             McmRepository.Setup(m => m.ObjectTypeSet(expected.Name, null)).Returns(expected.ID);
             McmRepository.Setup(m => m.ObjectTypeGet(expected.ID, null)).Returns(new []{expected});
 
-            var result = extension.Set(CallContext.Object, expected.Name);
+            var result = extension.Set(CallContext.Object, expected.ID, expected.Name);
 
             Assert.AreEqual(expected.ID, result.ID);
             Assert.AreEqual(expected.Name, result.Name);
