@@ -25,6 +25,7 @@
 
             McmRepository.Verify(m => m.ObjectGet(null, It.IsAny<uint>(), It.IsAny<uint>(), true, true, true, true, true));
             viewManager.Verify(m => m.Index(It.IsAny<IEnumerable<object>>()));
+            viewManager.Verify(m => m.Delete());
         }
 
         private Mcm Make_McmExtension()

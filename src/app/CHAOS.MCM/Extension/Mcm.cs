@@ -47,6 +47,8 @@
 //		}
         public ScalarResult Index(ICallContext callContext)
         {
+            callContext.ViewManager.Delete();
+            
             const uint pageSize = 1000;
             
             for (uint i = 0; ; i++)
