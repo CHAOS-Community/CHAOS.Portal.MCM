@@ -103,7 +103,6 @@ namespace CHAOS.MCM.Data.Dto.Standard
                 {
                     switch (metadata.MetadataSchemaGUID.ToString())
                     {
-
                         #region Content
                         case "e4ee26e4-94dc-d946-8e23-459c7de51fc0":
                             if (metadata.MetadataXML.Descendants("TotalVotes").FirstOrDefault() != null)

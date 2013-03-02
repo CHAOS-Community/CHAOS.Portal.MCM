@@ -369,19 +369,12 @@ namespace CHAOS.MCM.Module
 
 		        var result = db.Metadata_Set( new UUID().ToByteArray(), objectGUID.ToByteArray(), metadataSchemaGUID.ToByteArray(), languageCode, (int?) revisionID, metadataXML, callContext.User.GUID.ToByteArray() ).FirstOrDefault();
 
-                if (!result.HasValue)
-                    throw new UnhandledException("Metadata set failed on the database and was rolled back");
+                if (!result.HasValue) throw new UnhandledException("Metadata set failed on the database and was rolled back");
+		        if( result.Value == -200 ) throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
+		        if( result.Value == -300 ) throw new InvalidRevisionException( "RevisionID is too old, set metadata with the latest revisionID." );
+		        if( result.Value == -350 ) throw new InvalidRevisionException( "RevisionID can only be null if there is no metadata already on the object" );
 
-                if( result.Value == -300 )
-                    throw new InvalidRevisionException( "RevisionID is too old, set metadata with the latest revisionID." );
-
-                if( result.Value == -350 )
-                    throw new InvalidRevisionException( "RevisionID can only be null if there is no metadata already on the object" );
-
-                if( result.Value == -200 )
-                    throw new UnhandledException( "Metadata Set was rolledback due to an unhandled exception" );
-
-                var objects = db.Object_Get(objectGUID, true, false, true, true, true).ToDTO().ToList();
+		        var objects = db.Object_Get(objectGUID, true, true, true, true, true).ToDTO().ToList();
 
 		        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), objects );
 
