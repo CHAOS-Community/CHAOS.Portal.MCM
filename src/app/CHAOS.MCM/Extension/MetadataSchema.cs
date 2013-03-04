@@ -37,7 +37,7 @@
         public Data.Dto.MetadataSchema Create(ICallContext callContext, string name, XDocument schemaXml, Guid? guid = null)
 		{
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
-                throw new InsufficientPermissionsException( "Manage permissions are required to create metadata schemas" );
+                throw new InsufficientPermissionsException("System Permissions was:" + callContext.User.SystemPermissonsEnum + ", but Manage is required" );
 
             McmRepository.MetadataSchemaCreate(name, schemaXml, callContext.User.Guid, guid ?? Guid.NewGuid());
 

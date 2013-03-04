@@ -4,6 +4,7 @@
     using System.Linq;
 
     using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Exceptions;
 
     using NUnit.Framework;
 
@@ -28,6 +29,16 @@
             McmRepository.Verify(m => m.ObjectTypeGet(expected.ID, null));
         }
 
+        [Test, ExpectedException(typeof(InsufficientPermissionsException))]
+        public void Set_WithoutPermission_ThrowException()
+        {
+            var extension = Make_ObjectTypeExtension();
+            var expected  = Make_ObjectType();
+            CallContext.SetupGet(p => p.User).Returns(new UserInfo { SystemPermissonsEnum = SystemPermissons.None });
+ 
+            extension.Set(CallContext.Object, expected.ID, expected.Name);
+        }
+
         [Test]
         public void Get_GivenNoParameters_CallMcmRepositoryAndReturnTheListOfObjectTypesReceived()
         {
@@ -45,7 +56,7 @@
         public void Delete_GivenID_CallMcmRepositoryWithIdAndReturnOneWhenSuccessful()
         {
             var extension = Make_ObjectTypeExtension();
-            var expected = Make_ObjectType();
+            var expected  = Make_ObjectType();
             CallContext.SetupGet(p => p.User).Returns(new UserInfo { SystemPermissonsEnum = SystemPermissons.Manage });
             McmRepository.Setup(m => m.ObjectTypeDelete(expected.ID)).Returns(expected.ID);
 
@@ -53,6 +64,16 @@
 
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.ObjectTypeDelete(expected.ID));
+        }
+
+        [Test, ExpectedException( typeof( InsufficientPermissionsException ) )]
+        public void Delete_WithoutPermission_ThrowException()
+        {
+            var extension = Make_ObjectTypeExtension();
+            var expected  = Make_ObjectType();
+            CallContext.SetupGet(p => p.User).Returns(new UserInfo { SystemPermissonsEnum = SystemPermissons.None });
+
+            extension.Delete(CallContext.Object, expected.ID);
         }
 
         #region Helpers
