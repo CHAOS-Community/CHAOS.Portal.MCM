@@ -626,6 +626,18 @@
         }
 
         [Test]
+        public void ObjectTypeSet_CreateNewWithID_ReturnIDShouldSetObjectTypeInDatabase()
+        {
+            var repository   = Make_McmRepository();
+            var expectedName = "new name";
+            var id = 1000u;
+
+            var actual = repository.ObjectTypeSet(expectedName, id);
+
+            Assert.That(actual, Is.EqualTo(id));
+        }
+
+        [Test]
         public void ObjectTypeDelete_GivenID_ReturnOneAndShouldDeleteOnDatabase()
         {
             var repository   = Make_McmRepository();
