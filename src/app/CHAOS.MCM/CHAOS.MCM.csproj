@@ -130,6 +130,7 @@
     <Compile Include="Extension\Object.cs" />
     <Compile Include="Extension\ObjectRelation.cs" />
     <Compile Include="Extension\ObjectType.cs" />
+    <Compile Include="IMcmModule.cs" />
     <Compile Include="McmModule.cs" />
     <Compile Include="Permission\AccessPointPermission.cs" />
     <Compile Include="Permission\FolderPermissionExtensions.cs" />

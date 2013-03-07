@@ -9,11 +9,10 @@
     using Chaos.Mcm.Permission.Specification;
     using Chaos.Portal;
     using Chaos.Portal.Extension;
-    using Chaos.Portal.Module;
 
     using Folder = Chaos.Mcm.Extension.Folder;
 
-    public class McmModule : IModule
+    public class McmModule : IMcmModule
     {
         #region Field
 

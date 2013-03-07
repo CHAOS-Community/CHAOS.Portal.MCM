@@ -40,7 +40,11 @@
 
         public Object()
         {
-            Metadatas = new List<Metadata>();
+            Metadatas           = new List<Metadata>();
+            ObjectRelationInfos = new List<ObjectRelationInfo>();
+            Files               = new List<FileInfo>();
+            AccessPoints        = new List<ObjectAccessPoint>();
+            ObjectFolders       = new List<ObjectFolder>();
         }
 
         #endregion
