@@ -14,7 +14,7 @@ BEGIN
 			VALUES
 				( ID, Name );
 
-			SELECT last_insert_id();
+			SELECT ID;
 
 		ELSE 
 

@@ -17,6 +17,8 @@ namespace Chaos.Mcm.Data.Mapping
                 {
                     Object1Guid          = reader.GetGuid("Object1Guid"),
                     Object2Guid          = reader.GetGuid("Object2Guid"),
+                    Object1TypeID        = reader.GetUint32("Object1TypeID"),
+                    Object2TypeID        = reader.GetUint32("Object2TypeID"),
                     MetadataGuid         = reader.GetGuidNullable("MetadataGuid"),
                     Sequence             = reader.GetInt32Nullable("Sequence"),
                     ObjectRelationTypeID = reader.GetUint32("ObjectRelationTypeID"),

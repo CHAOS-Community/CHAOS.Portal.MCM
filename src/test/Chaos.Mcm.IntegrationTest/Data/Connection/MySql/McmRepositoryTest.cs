@@ -56,6 +56,8 @@
             Assert.IsNotEmpty(result);
             Assert.AreEqual(expected.Object1Guid, actual.Object1Guid);
             Assert.AreEqual(expected.Object2Guid, actual.Object2Guid);
+            Assert.AreEqual(expected.Object1TypeID, actual.Object1TypeID);
+            Assert.AreEqual(expected.Object2TypeID, actual.Object2TypeID);
             Assert.AreEqual(expected.MetadataGuid, actual.MetadataGuid);
             Assert.AreEqual(expected.Sequence, actual.Sequence);
             Assert.AreEqual(expected.ObjectRelationType, actual.ObjectRelationType);
@@ -1112,6 +1114,8 @@
                 Object1Guid          = new Guid("00000000-0000-0000-0000-000000000003"),
                 Object2Guid          = new Guid("00000000-0000-0000-0000-000000000002"),
                 MetadataGuid         = new Guid("00000000-0000-0000-0000-000000000020"),
+                Object1TypeID        = 1,
+                Object2TypeID        = 1,
                 Sequence             = null,
                 ObjectRelationTypeID = 1,
                 ObjectRelationType   = "Contains",
@@ -1128,6 +1132,8 @@
                 Object1Guid          = new Guid("00000000-0000-0000-0000-000000000001"),
                 Object2Guid          = new Guid("00000000-0000-0000-0000-000000000002"),
                 MetadataGuid         = new Guid("00000000-0000-0000-0000-000000000010"),
+                Object1TypeID        = 1,
+                Object2TypeID        = 1,
                 Sequence             = null,
                 ObjectRelationTypeID = 1,
                 ObjectRelationType   = "Contains",

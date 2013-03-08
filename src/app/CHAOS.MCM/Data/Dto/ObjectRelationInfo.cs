@@ -21,6 +21,12 @@ namespace Chaos.Mcm.Data.Dto
         public uint ObjectRelationTypeID { get; set; }
 
         [Serialize]
+        public uint Object1TypeID { get; set; }
+
+        [Serialize]
+        public uint Object2TypeID { get; set; }
+
+        [Serialize]
         public string ObjectRelationType { get; set; }
 
         [Serialize]
