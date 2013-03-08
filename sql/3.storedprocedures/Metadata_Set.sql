@@ -5,7 +5,7 @@ CREATE PROCEDURE Metadata_Set
     MetadataSchemaGUID  BINARY(16),
     LanguageCode        VARCHAR(10),
     RevisionID          INT UNSIGNED,
-    MetadataXML         TEXT,
+    MetadataXML         MEDIUMTEXT,
     EditingUserGUID     BINARY(16)
 )
 BEGIN

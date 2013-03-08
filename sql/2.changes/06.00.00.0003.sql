@@ -1,0 +1,1 @@
+ALTER TABLE `test_mcm`.`Metadata` CHANGE COLUMN `MetadataXML` `MetadataXML` MEDIUMTEXT NOT NULL  ;

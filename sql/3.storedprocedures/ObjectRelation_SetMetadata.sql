@@ -6,7 +6,7 @@ CREATE PROCEDURE ObjectRelation_SetMetadata
     ObjectRelationTypeID	INT UNSIGNED,
     MetadataSchemaGUID		BINARY(16),
     LanguageCode		    VARCHAR(10),
-    MetadataXml				TEXT,
+    MetadataXml				MEDIUMTEXT,
     EditingUserGuid			BINARY(16)
 )
 BEGIN
