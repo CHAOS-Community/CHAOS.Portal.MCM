@@ -172,11 +172,11 @@
         #region Object
 
         [Test]
-        public void ObjectCrate_WithValidObjectTypeAndFolder_ReturnOneAndObjectShouldBeCreatedInTheDatabase()
+        public void ObjectCreate_WithValidObjectTypeAndFolder_ReturnOneAndObjectShouldBeCreatedInTheDatabase()
         {
             var repository     = Make_McmRepository();
             var objToCreate    = Make_ObjectTheDoesntExist();
-            var existingFolder = this.Make_FolderThatExist();
+            var existingFolder = Make_FolderThatExist();
 
             var result = repository.ObjectCreate(objToCreate.Guid, objToCreate.ObjectTypeID, existingFolder.ID);
 
@@ -186,8 +186,18 @@
             Assert.AreEqual(objToCreate.ObjectTypeID, actual.ObjectTypeID);
         }
 
+        [Test, ExpectedException(typeof(ArgumentException), ExpectedMessage = "Guid already exist")]
+        public void UnitUnderTest_Scenario_ExpectedBehavior()
+        {
+            var repository      = Make_McmRepository();
+            var objThatExist    = Make_ObjectWithNoRelations();
+            var folderThatExist = Make_FolderThatExist();
+
+            repository.ObjectCreate(objThatExist.Guid, objThatExist.ObjectTypeID, folderThatExist.ID);
+        }
+
         [Test]
-        public void ObjectCrate_WithGuidWhatWouldBeParsedIncorrectlyAsAUUID_ReturnOneAndObjectShouldBeCreatedInTheDatabase()
+        public void ObjectCreate_WithGuidWhatWouldBeParsedIncorrectlyAsAUUID_ReturnOneAndObjectShouldBeCreatedInTheDatabase()
         {
             var repository     = Make_McmRepository();
             var objToCreate    = Make_ObjectTheDoesntExist();
@@ -977,7 +987,7 @@
         {
             return new Object
             {
-                Guid         = new Guid("00000000-0000-0000-0000-000000000009"),
+                Guid         = new Guid("00000000-0000-0000-0000-000000000999"),
                 ObjectTypeID = 1,
                 DateCreated  = new DateTime(2000, 10, 01, 23, 59, 59)
             };

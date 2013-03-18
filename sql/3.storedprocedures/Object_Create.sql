@@ -13,20 +13,24 @@ BEGIN
         SELECT -200;
     END;
 
-    START TRANSACTION;
+	IF EXISTS(SELECT * FROM Object WHERE Object.GUID = Guid) THEN
+		SELECT -1;
+	ELSE
+		START TRANSACTION;
 
-        INSERT INTO Object
-            ( GUID, ObjectTypeID, DateCreated )
-        VALUES
-            ( Guid, ObjectTypeID, NOW() );
+			INSERT INTO Object
+				( GUID, ObjectTypeID, DateCreated )
+			VALUES
+				( Guid, ObjectTypeID, NOW() );
                
-        INSERT INTO Object_Folder_Join
-            ( ObjectGUID, FolderID, ObjectFolderTypeID, DateCreated )
-        VALUES
-            ( Guid, FolderID, 1, NOW() );
+			INSERT INTO Object_Folder_Join
+				( ObjectGUID, FolderID, ObjectFolderTypeID, DateCreated )
+			VALUES
+				( Guid, FolderID, 1, NOW() );
          
-    COMMIT;
+		COMMIT;
          
-    SELECT 1;
+		SELECT 1;
+	END IF;
 
 END

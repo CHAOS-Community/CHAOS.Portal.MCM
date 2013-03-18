@@ -175,7 +175,8 @@ namespace Chaos.Mcm.Data
                              new MySqlParameter("FolderID", folderID) 
                          });
 
-            if (result == -200) throw new UnhandledException("Unhandled exception, Create was rolled back");
+            if(result == -1) throw new ArgumentException("Guid already exist");
+            if(result == -200) throw new UnhandledException("Unhandled exception, Create was rolled back");
 
             return (uint)result;
         }
