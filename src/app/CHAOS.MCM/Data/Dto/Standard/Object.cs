@@ -95,6 +95,14 @@ namespace CHAOS.MCM.Data.Dto.Standard
                     yield return new KeyValuePair<string, string>("FolderTree", folderID.ToString(CultureInfo.InvariantCulture));
                 }
 
+            if (Files != null)
+            {
+                foreach (var file in Files)
+                {
+                    yield return new KeyValuePair<string, string>("FormatTypeName", file.FormatTypeName);
+                }
+            }
+
             // TODO: Implement Metadata XML converter
 
             // Convert to all field
@@ -242,7 +250,6 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 yield return new KeyValuePair<string, string>("KN-SequenceIndex", metadata.MetadataXML.Root.Element("sequenceIndex").Value);
                             break;
 
-                    
                         case "614c6ca6-1bb6-4c46-a37f-778b3e978d7e":
                             if (metadata.MetadataXML.Root.Element("relationSequenceIndex") != null)
                                 yield return new KeyValuePair<string, string>("KN-relationSequenceIndex", metadata.MetadataXML.Root.Element("relationSequenceIndex").Value);
