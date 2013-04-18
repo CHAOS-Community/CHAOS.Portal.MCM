@@ -16,6 +16,8 @@ using Object = CHAOS.MCM.Data.Dto.Standard.Object;
 
 namespace CHAOS.MCM.Module
 {
+    using Amazon.S3;
+
     [Module("MCM")]
     public class ObjectModule : AMCMModule
     {
@@ -128,34 +130,20 @@ namespace CHAOS.MCM.Module
             {
                 var delObject = db.Object_Get( GUID, false, false, false, true, false ).ToDTO().First();
 
-                if( !PermissionManager.DoesUserOrGroupHavePermissionToFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ), Permission.FolderPermission.DeleteObject,delObject.Folders.Select( folder => PermissionManager.GetFolders(folder.FolderID) ) ) )
+                if( !PermissionManager.DoesUserOrGroupHavePermissionToFolders( callContext.User.GUID.ToGuid(), callContext.Groups.Select( group => group.GUID.ToGuid() ), FolderPermission.DeleteObject,delObject.Folders.Select( folder => PermissionManager.GetFolders(folder.FolderID) ) ) )
                     throw new InsufficientPermissionsException( "User does not have permissions to remove object" );
 
+                RemoveFiles(delObject);
+                
                 var result = db.Object_Delete( GUID.ToByteArray() ).FirstOrDefault();
-
+                
                 if( !result.HasValue || result.Value == -200 )
                     throw new UnhandledException( "Object was not deleted, database rolled back" );
 
-                RemoveObjectFromIndex( callContext.IndexManager.GetIndex<MCMModule>(), delObject );
+                RemoveObjectFromIndex(callContext.IndexManager.GetIndex<MCMModule>(), delObject);
 
                 return new ScalarResult( result.Value );
             }
         }
-
-		//[Datatype("Object", "PutInFolder")]
-		//public ScalarResult Object_PutInFolder(CallContext callContext, Guid GUID, int folderID, int objectFolderTypeID)
-		//{
-		//    using( MCMEntities db = DefaultMCMEntities )
-		//    {
-		//        int result = db.Object_PutInFolder( callContext.Groups.Select( group => group.GUID ).ToList(), callContext.User.GUID, GUID, folderID, objectFolderTypeID );
-
-		//        if( result == -100 )
-		//            throw new InsufficientPermissionsException( "User does not have permissions to put object into folder" );
-
-		//        PutObjectInIndex( callContext.IndexManager.GetIndex<MCMModule>(), db.Get( new []{ GUID }, true, false, true, true ) );
-
-		//        return new ScalarResult( result );
-		//    }
-		//}
     }
 }

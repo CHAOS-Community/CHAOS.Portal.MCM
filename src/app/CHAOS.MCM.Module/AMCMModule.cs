@@ -17,12 +17,21 @@ using Object = CHAOS.MCM.Data.Dto.Standard.Object;
 
 namespace CHAOS.MCM.Module
 {
+    using Amazon.S3;
+
+    using CHAOS.Portal.Exception;
+
     [Module("MCM")]
     public class AMCMModule : AModule
     {
         #region Properties
 
         private static string ConnectionString { get; set; }
+        private static string S3Url { get; set; }
+
+        protected static string AccessKey { get; set; }
+
+        protected static string SecretKey { get; set; }
 
 		public static IPermissionManager PermissionManager { get; set; }
 
@@ -44,7 +53,20 @@ namespace CHAOS.MCM.Module
 
         public void Initialize(string configuration, IPermissionManager permissionManager, IMcmRepository mcmRepository)
         {
-            ConnectionString  = XDocument.Parse(configuration).Root.Attribute("ConnectionString").Value;
+            try
+            {
+                var root = XDocument.Parse(configuration).Root;
+
+                ConnectionString  = root.Attribute("ConnectionString").Value;
+                S3Url             = root.Attribute("S3URL").Value;
+                AccessKey         = root.Attribute("AccessKey").Value;
+                SecretKey         = root.Attribute("SecretKey").Value;
+            }
+            catch(NullReferenceException e)
+            {
+                throw new ModuleConfigurationMissingException("No Module configuration found for MCM", e);
+            }
+
             PermissionManager = permissionManager;
             McmRepository     = mcmRepository.WithConfiguration(ConnectionString);
         }
@@ -91,6 +113,30 @@ namespace CHAOS.MCM.Module
 		    }
 
 	    }
+
+        protected void RemoveFiles(Object delObject)
+        {
+            foreach (var fileInfo in delObject.Files.Where(item => item.Token == "S3"))
+            {
+                RemoveFile(fileInfo);
+            }
+        }
+        // todo: how to talk to the underlying infrastructure should be abstracted out of the modules.
+        protected void RemoveFile(Data.Dto.Standard.FileInfo file)
+        {
+            using (var client = new AmazonS3Client(AccessKey, SecretKey))
+            {
+                //bucketname={BASE_PATH};key={FOLDER_PATH}{FILENAME}   
+                var args       = file.URL.Split(';');
+                var bucketname = args[0].Substring(11);
+                var key        = args[1].Substring(4);
+
+                var request = new Amazon.S3.Model.DeleteObjectRequest().WithBucketName(bucketname).WithKey(key);
+                var response = client.DeleteObject(request);
+
+                if (!response.IsDeleteMarker) throw new ModuleConfigurationMissingException(string.Format("File {0} couldn't be deleted", file.ID));
+            }
+        }
 
         #endregion
     }

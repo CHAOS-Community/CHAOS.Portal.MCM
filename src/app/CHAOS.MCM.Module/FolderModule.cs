@@ -5,8 +5,6 @@ using CHAOS.Extensions;
 using CHAOS.MCM.Core.Exception;
 using CHAOS.MCM.Data.Dto;
 using CHAOS.MCM.Data.Dto.Standard;
-using CHAOS.MCM.Data.EF;
-using CHAOS.MCM.Permission;
 using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
@@ -104,8 +102,7 @@ namespace CHAOS.MCM.Module
 
             var result = McmRepository.DeleteFolder(id);
 
-            if (result == -50)
-                throw new FolderNotEmptyException("You cannot delete non empty folder");
+            if (result == -50) throw new FolderNotEmptyException("You cannot delete non empty folder");
 
             return new ScalarResult((int) result);
         }

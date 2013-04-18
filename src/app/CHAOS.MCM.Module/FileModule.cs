@@ -40,10 +40,11 @@ namespace CHAOS.MCM.Module
                 if( !HasPermissionToObject( callContext, file.ObjectGUID, FolderPermission.CreateUpdateObjects) )
                     throw new InsufficientPermissionsException("User does not have permissions to delete a file on this object");
 
+                RemoveFile(db.FileInfo.FirstOrDefault(item => item.FileID == ID && item.Token == "S3").ToDTO());
+
                 var result = db.File_Delete((int?) ID).FirstOrDefault();
 
-                if(!result.HasValue)
-                    throw new UnhandledException("File delete failed in the database and was rolled back");
+                if(!result.HasValue) throw new UnhandledException("File delete failed in the database and was rolled back");
 
 		        return new ScalarResult( result.Value );
             }
