@@ -19,7 +19,20 @@
         private const string CONFIGURATION_NAME = "MCM";
 
         #endregion
+        #region Initialization
 
+        public McmModule()
+        {
+            
+        }
+
+        public McmModule(IMcmRepository mcmRepository, IPermissionManager permissionManager)
+        {
+            McmRepository     = mcmRepository;
+            PermissionManager = permissionManager;
+        }
+
+        #endregion
         #region Properties
 
         public IExtension[]       Extensions { get; private set; }
