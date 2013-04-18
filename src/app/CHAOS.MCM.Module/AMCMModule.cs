@@ -18,6 +18,7 @@ using Object = CHAOS.MCM.Data.Dto.Standard.Object;
 namespace CHAOS.MCM.Module
 {
     using Amazon.S3;
+    using Amazon.S3.Model;
 
     using CHAOS.Portal.Exception;
 
@@ -131,10 +132,12 @@ namespace CHAOS.MCM.Module
                 var bucketname = args[0].Substring(11);
                 var key        = args[1].Substring(4);
 
-                var request = new Amazon.S3.Model.DeleteObjectRequest().WithBucketName(bucketname).WithKey(key);
-                var response = client.DeleteObject(request);
+                var request = new DeleteObjectRequest().WithBucketName(bucketname).WithKey(key);
 
-                if (!response.IsDeleteMarker) throw new ModuleConfigurationMissingException(string.Format("File {0} couldn't be deleted", file.ID));
+                using(var response = client.DeleteObject(request))
+                {
+                    if (!response.IsDeleteMarker) throw new ModuleConfigurationMissingException(string.Format("File {0} couldn't be deleted", file.ID));
+                }
             }
         }
 
