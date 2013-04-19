@@ -219,6 +219,18 @@ namespace CHAOS.MCM.Data.Dto.Standard
 
                             }
 
+                            if (RelatedObjects != null)
+                            {
+                                //Has related Annotation object
+                                if(RelatedObjects.Any(obj => obj.ObjectTypeID == 64))
+                                    yield return new KeyValuePair<string, string>("LARM-Program-Contain", "Annotation");
+
+                                //Has related attached file object
+                                if (RelatedObjects.Any(obj => obj.ObjectTypeID == 89))
+                                    yield return new KeyValuePair<string, string>("LARM-Program-Contain", "AttachedFile");
+                            }
+
+
                             if (metadata.MetadataXML.Root.Element("PublicationChannel") != null)
                                 yield return new KeyValuePair<string, string>("LARM-Channel", metadata.MetadataXML.Root.Element("PublicationChannel").Value);
 
@@ -241,6 +253,11 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 {
                                     yield return new KeyValuePair<string, string>("LARM-Metadata-Tags", keyword.Replace("%20", " "));
                                 }
+
+                            //Has LARM Metadata
+                            if(metadata.MetadataXML.Root.Value != "")
+                                yield return new KeyValuePair<string, string>("LARM-Program-Contain", "LARMMetadata");
+
                             break;
 
                         #endregion
