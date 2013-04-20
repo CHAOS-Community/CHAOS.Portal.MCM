@@ -3,7 +3,6 @@
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
     using Chaos.Portal;
-    using Chaos.Portal.Data.Dto;
 
     public class Mcm : AMcmExtension
     {
@@ -20,47 +19,46 @@
 
         #endregion
 
-        //		public ScalarResult Test_ReIndex( ICallContext callContext, uint? folderID, bool? clearIndex )
-//		{
-//            var index = (Solr)callContext.IndexManager.GetIndex<Mcm>();
-//
-//            if (clearIndex.HasValue && clearIndex.Value)
-//                index.RemoveAll(false);
-//
-//            const uint pageSize = 1000;
-//
-//            for (uint i = 0; ; i++)
-//            {
-//                // using ensure the Database Context is disposed once in a while, to avoid OOM exceptions
-//                using (var db = DefaultMCMEntities)
-//                {
-//                    var objects = db.Object_Get(folderID, true, false, true, true, true, i, pageSize).ToDto().ToList();
-//
-//                    PutObjectInIndex(index, objects);
-//
-//                    if (objects.Count() != pageSize)
-//                        break;
-//                }
-//            }
-//
-//            return new ScalarResult(1);
-//		}
-        public ScalarResult Index(ICallContext callContext)
+        public Trace Index(ICallContext callContext)
         {
+            var deleteStopwatch    = new System.Diagnostics.Stopwatch();
+            var objectGetStopwatch = new System.Diagnostics.Stopwatch();
+            var indexStopwatch     = new System.Diagnostics.Stopwatch();
+            var totalCount         = 0;
+
+            deleteStopwatch.Start();
             callContext.ViewManager.Delete();
-            
-            const uint pageSize = 1000;
+            deleteStopwatch.Stop();
+
+            const uint PageSize = 1000;
             
             for (uint i = 0; ; i++)
             {
-                var objects = McmRepository.ObjectGet(null, i, pageSize, true, true, true, true, true);
-                
+                objectGetStopwatch.Start();
+                var objects = McmRepository.ObjectGet(null, i, PageSize, true, true, true, true, true);
+                objectGetStopwatch.Stop();
+
+                indexStopwatch.Start();
                 callContext.ViewManager.Index(objects);
-            
-                if (objects.Count != pageSize)  break;
+                indexStopwatch.Stop();
+
+                totalCount += objects.Count;
+
+                if (objects.Count != PageSize) break;
             }
 
-            return new ScalarResult(1);
+            var trace = new Trace();
+
+            trace.Lines.Add( "Delete\t" + deleteStopwatch.Elapsed );
+            trace.Lines.Add( "Object\t" + objectGetStopwatch.Elapsed );
+            trace.Lines.Add( "Index\t" + indexStopwatch.Elapsed );
+            trace.Lines.Add( "Objects.Count\t" + totalCount );
+            trace.Lines.Add( "Get/s\t" + ( totalCount / objectGetStopwatch.Elapsed.TotalMilliseconds * 1000 ) );
+            trace.Lines.Add( "Index/s\t" + ( totalCount / indexStopwatch.Elapsed.TotalMilliseconds * 1000 ) );
+            trace.Lines.Add( "Total/s\t" + ( totalCount / ( indexStopwatch.Elapsed.TotalMilliseconds + objectGetStopwatch.Elapsed.TotalMilliseconds ) * 1000 ) );
+
+            return trace;
+            //return new ScalarResult(1);
         }
     }
 }

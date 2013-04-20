@@ -57,8 +57,8 @@ BEGIN
 		DISTINCT 
 		ORI.* 
 	FROM 
-		Object AS O
-		INNER JOIN ObjectRelationInfo AS ORI ON O.GUID = ORI.Object1Guid OR O.GUID = ORI.Object2Guid
+		ObjectGUID_Table AS GT
+		INNER JOIN ObjectRelationInfo AS ORI ON GT.GUID = ORI.Object1Guid OR GT.GUID = ORI.Object2Guid
 	WHERE 
 		IncludeObjectRelations = 1;
     
