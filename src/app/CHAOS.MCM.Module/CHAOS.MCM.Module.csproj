@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AMCMModule.cs" />
+    <Compile Include="DownloadModule.cs" />
     <Compile Include="FileModule.cs" />
     <Compile Include="FormatModule.cs" />
     <Compile Include="MetadataSchemaModule.cs" />

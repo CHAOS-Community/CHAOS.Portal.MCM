@@ -4,7 +4,9 @@ using CHAOS.Serialization;
 
 namespace CHAOS.MCM.Data.Dto.Standard
 {
-	public  class FileInfo : Result
+    using System.Globalization;
+
+    public  class FileInfo : Result
 	{
 		#region Properties
 
@@ -31,7 +33,8 @@ namespace CHAOS.MCM.Data.Dto.Standard
 	        get
 	        {
 	            var url = new System.Text.StringBuilder( StringFormat );
-                
+
+                url.Replace( "{FILE_ID}", ID.ToString(CultureInfo.InvariantCulture));
                 url.Replace( "{BASE_PATH}", BasePath ?? "{BASE_PATH_MISSING}" );
                 url.Replace( "{FOLDER_PATH}", string.IsNullOrEmpty( System.IO.Path.GetPathRoot( BasePath ) ) ? FolderPath.Replace( "\\", "/" ) : FolderPath.Replace( "/", "\\" ) );
                 url.Replace( "{FILENAME}", Filename ?? "{FILENAME_MISSING}");

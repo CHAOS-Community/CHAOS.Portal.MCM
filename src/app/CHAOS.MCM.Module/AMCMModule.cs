@@ -29,9 +29,8 @@ namespace CHAOS.MCM.Module
 
         private static string ConnectionString { get; set; }
         private static string S3Url { get; set; }
-
-        protected static string AccessKey { get; set; }
-
+        
+protected static string AccessKey { get; set; }
         protected static string SecretKey { get; set; }
 
 		public static IPermissionManager PermissionManager { get; set; }
