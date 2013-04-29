@@ -82,7 +82,9 @@ protected static string AccessKey { get; set; }
 
         protected void PutObjectInIndex( IIndex index, IEnumerable<Object> newObject )
         {
-            foreach( var o in newObject )
+            var objects = newObject as List<Object> ?? newObject.ToList();
+
+            foreach( var o in objects )
             {
                 foreach (var ancestorFolder in o.Folders.Where(item => item.ObjectFolderTypeID == 1).SelectMany(folder => PermissionManager.GetFolders(folder.FolderID).GetAncestorFolders()))
                 {
@@ -93,7 +95,7 @@ protected static string AccessKey { get; set; }
                     o.RelatedObjects = McmRepository.GetObject(o.GUID.ToGuid(), null).ToList();
             }
 
-            index.Set( newObject.Select(item => item as Object), false );
+            index.Set(objects, false);
         }
 
         protected void RemoveObjectFromIndex( IIndex index, Object delObject )
