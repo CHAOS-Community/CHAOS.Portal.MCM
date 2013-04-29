@@ -227,7 +227,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
 
                                 //Has related attached file object
                                 if (RelatedObjects.Any(obj => obj.ObjectTypeID == 89))
-                                    yield return new KeyValuePair<string, string>("LARM-Program-Contain", "AttachedFile");
+                                    yield return new KeyValuePair<string, string>("LARM-Program-Contain", "attachedfile");
                             }
 
 
