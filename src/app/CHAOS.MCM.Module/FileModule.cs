@@ -4,10 +4,13 @@ using CHAOS.Portal.Core;
 using CHAOS.Portal.Core.Module;
 using CHAOS.Portal.DTO.Standard;
 using CHAOS.Portal.Exception;
-using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
 
 namespace CHAOS.MCM.Module
 {
+    using CHAOS.MCM.Data.Dto.Standard;
+
+    using FolderPermission = CHAOS.MCM.Permission.FolderPermission;
+
     [Module("MCM")]
     public class FileModule : AMCMModule
     {
@@ -18,7 +21,7 @@ namespace CHAOS.MCM.Module
 		{
             using( var db = DefaultMCMEntities )
             {
-                if( !HasPermissionToObject( callContext, objectGUID, FolderPermission.CreateUpdateObjects) )
+                if( !HasPermissionToObject( callContext, objectGUID, MCM.Permission.FolderPermission.CreateUpdateObjects) )
                     throw new InsufficientPermissionsException("User does not have permissions to create a file for this object");
 
 		        var result = db.File_Create( objectGUID.ToByteArray(), (int?) parentFileID, (int) formatID, (int) destinationID, filename, originalFilename, folderPath ).FirstOrDefault();
@@ -40,13 +43,26 @@ namespace CHAOS.MCM.Module
                 if( !HasPermissionToObject( callContext, file.ObjectGUID, FolderPermission.CreateUpdateObjects) )
                     throw new InsufficientPermissionsException("User does not have permissions to delete a file on this object");
 
-                RemoveFile(db.FileInfo.FirstOrDefault(item => item.FileID == ID && item.Token == "S3").ToDTO());
+                var fileInfo = GetFile(ID);
+
+                if (fileInfo != null) RemoveFile(fileInfo);
 
                 var result = db.File_Delete((int?) ID).FirstOrDefault();
 
                 if(!result.HasValue) throw new UnhandledException("File delete failed in the database and was rolled back");
 
 		        return new ScalarResult( result.Value );
+            }
+        }
+
+        private FileInfo GetFile(uint id)
+        {
+            using (var db = DefaultMCMEntities)
+            {
+                var file = db.File_Get((int?)id).First().ToDTO();
+                var obj = db.Object_Get(file.ObjectGUID, false, true, false, false, false).First().ToDTO();
+
+                return obj.Files.FirstOrDefault(item => item.ID == id && item.Token == "S3");
             }
         }
 
