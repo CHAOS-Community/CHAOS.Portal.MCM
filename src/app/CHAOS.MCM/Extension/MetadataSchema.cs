@@ -39,7 +39,9 @@
             if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
                 throw new InsufficientPermissionsException("System Permissions was:" + callContext.User.SystemPermissonsEnum + ", but Manage is required" );
 
-            McmRepository.MetadataSchemaCreate(name, schemaXml, callContext.User.Guid, guid ?? Guid.NewGuid());
+            guid = guid ?? Guid.NewGuid();
+
+            McmRepository.MetadataSchemaCreate(name, schemaXml, callContext.User.Guid, guid.Value);
 
             return Get(callContext, guid).First();
 		}
