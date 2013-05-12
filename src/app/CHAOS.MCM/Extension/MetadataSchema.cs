@@ -39,6 +39,8 @@
 		{
             if (!Request.User.SystemPermissonsEnum.HasFlag(SystemPermissons.Manage)) throw new InsufficientPermissionsException("System Permissions was:" + Request.User.SystemPermissonsEnum + ", but Manage is required");
 
+            guid = guid ?? Guid.NewGuid();
+
             McmRepository.MetadataSchemaCreate(name, schemaXml, Request.User.Guid, guid ?? Guid.NewGuid());
 
             return Get(guid).First();
