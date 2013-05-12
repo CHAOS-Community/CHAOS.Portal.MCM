@@ -1,9 +1,10 @@
-﻿using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto;
-
-namespace Chaos.Mcm.Data.Dto.Standard
+﻿namespace Chaos.Mcm.Data.Dto.Standard
 {
-	public class FormatType : AResult
+    using CHAOS.Serialization;
+
+    using Chaos.Portal.Core.Data.Model;
+
+    public class FormatType : AResult
 	{
 		#region Properties
 

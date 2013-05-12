@@ -6,7 +6,7 @@
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
+    using Chaos.Portal.Core;
 
     public class Format : AMcmExtension
     {
@@ -16,23 +16,23 @@
         {
         }
 
-        public Format()
+        public Format(IPortalApplication portalApplication) : base(portalApplication)
         {
         }
 
         #endregion
         #region Business Logic
 
-        public IEnumerable<Data.Dto.Format> Get(ICallContext callContext, uint? id, string name)
+        public IEnumerable<Data.Dto.Format> Get(uint? id, string name)
         {
             return McmRepository.FormatGet(id, name);
         }
 
-        public Data.Dto.Format Create(ICallContext callContext, uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)
+        public Data.Dto.Format Create(uint? formatCategoryID, string name, XDocument formatXml, string mimeType, string extension)
         {
             var result = McmRepository.FormatCreate(formatCategoryID, name, formatXml, mimeType, extension);
 
-            return Get(callContext, result, null).First();
+            return Get(result, null).First();
         }
 
         #endregion

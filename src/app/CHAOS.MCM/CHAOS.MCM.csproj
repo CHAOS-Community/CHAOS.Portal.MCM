@@ -40,18 +40,12 @@
     <Reference Include="Chaos.Portal">
       <HintPath>..\..\..\lib\Chaos.Portal.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\..\..\lib\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\MySql.Data.Entity.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -61,7 +55,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Binding\MetadataBinding.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
     <Compile Include="Data\Dto\EntityPermission.cs" />
@@ -150,6 +143,7 @@
     <None Include="App.Config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Binding\" />
     <Folder Include="Data\Connection\" />
     <Folder Include="View\" />
   </ItemGroup>

@@ -6,7 +6,7 @@ namespace Chaos.Mcm.Data.Dto
     using CHAOS.Serialization;
     using CHAOS.Serialization.XML;
 
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
 
     public class MetadataSchema : AResult
 	{

@@ -4,9 +4,9 @@
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
 
     public class ObjectType : AMcmExtension
     {
@@ -16,17 +16,16 @@
         {
         }
 
-        public ObjectType()
+        public ObjectType(IPortalApplication portalApplication): base(portalApplication)
         {
         }
 
         #endregion
         #region Business Logic
 
-        public Data.Dto.ObjectType Set(ICallContext callContext, uint id, string name)
+        public Data.Dto.ObjectType Set(uint id, string name)
 		{
-            if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
-                throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
+            if( !Request.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) ) throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
 
             McmRepository.ObjectTypeSet(name, id: id);
 
@@ -37,15 +36,14 @@
             return result[0];
 		}
 
-		public IEnumerable<Data.Dto.ObjectType> Get( ICallContext callContext )
+		public IEnumerable<Data.Dto.ObjectType> Get()
 		{
 		    return McmRepository.ObjectTypeGet(null, null);
 		}
 
-		public ScalarResult Delete( ICallContext callContext, uint id )
+		public ScalarResult Delete(uint id )
 		{
-            if( !callContext.User.SystemPermissonsEnum.HasFlag( SystemPermissons.Manage ) )
-                throw new InsufficientPermissionsException( "User does not have permission to create an Object Type" );
+            if (!Request.User.SystemPermissonsEnum.HasFlag(SystemPermissons.Manage)) throw new InsufficientPermissionsException("User does not have permission to create an Object Type");
 
 		    var result = McmRepository.ObjectTypeDelete(id);
 

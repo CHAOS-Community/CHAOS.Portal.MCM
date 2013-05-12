@@ -6,9 +6,9 @@
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
 
     using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
 
@@ -20,7 +20,8 @@
         {
         }
 
-        public Object()
+        public Object(IPortalApplication portalApplication)
+            : base(portalApplication)
         {
         }
 
@@ -76,12 +77,12 @@
 //            return resultPage.Select(uuid => objects.First(item => item.GUID.ToString() == uuid.ToString()));
 //        }
 
-		public Data.Dto.Object Create( ICallContext callContext, Guid? guid, uint objectTypeID, uint folderID )
+		public Data.Dto.Object Create(Guid? guid, uint objectTypeID, uint folderID )
 		{
-            var userGuid   = callContext.User.Guid;
-            var groupGuids = callContext.Groups.Select(group => group.Guid);
+            var userGuid   = Request.User.Guid;
+            var groupGuids = Request.Groups.Select(group => group.Guid);
 
-            if (!PermissionManager.GetFolders(folderID).DoesUserOrGroupHavePermission(userGuid, groupGuids, FolderPermission.CreateUpdateObjects))
+            if (!PermissionManager.GetFolders(folderID).DoesUserOrGroupHavePermission(userGuid, groupGuids, FolderPermission.CreateUpdateObjects)) 
                 throw new InsufficientPermissionsException("User does not have permissions to create object");
 
 		    guid = guid.HasValue ? guid : Guid.NewGuid();
@@ -93,10 +94,10 @@
             //    PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), newObject );
 		}
 
-        public ScalarResult SetPublishSettings(ICallContext callContext, Guid objectGuid, Guid accessPointGuid, DateTime? startDate, DateTime? endDate)
+        public ScalarResult SetPublishSettings(Guid objectGuid, Guid accessPointGuid, DateTime? startDate, DateTime? endDate)
         {
-            var userGuid   = callContext.User.Guid;
-            var groupGuids = callContext.Groups.Select(item => item.Guid);
+            var userGuid   = Request.User.Guid;
+            var groupGuids = Request.Groups.Select(item => item.Guid);
 
             if (McmRepository.AccessPointGet(accessPointGuid, userGuid, groupGuids, (uint) AccessPointPermission.Write).FirstOrDefault() == null)
                 throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
@@ -108,11 +109,11 @@
             return new ScalarResult( (int) result );
         }
 
-        public ScalarResult Delete( ICallContext callContext, Guid guid )
+        public ScalarResult Delete( Guid guid )
         {
             var objToDel   = McmRepository.ObjectGet(guid, includeFolders: true);
-            var userGuid   = callContext.User.Guid;
-            var groupGuids = callContext.Groups.Select(group => group.Guid);
+            var userGuid   = Request.User.Guid;
+            var groupGuids = Request.Groups.Select(group => group.Guid);
             var folders    = objToDel.ObjectFolders.Select(folder => PermissionManager.GetFolders(folder.ID));
 
             if (!PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, FolderPermission.DeleteObject, folders))
@@ -124,7 +125,7 @@
             //RemoveObjectFromIndex( callContext.IndexManager.GetIndex<Mcm>(), delObject );
         }
 
-        public IEnumerable<Data.Dto.Object> Get(ICallContext callContext, IEnumerable<Guid> objectGuids, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false)
+        public IEnumerable<Data.Dto.Object> Get(IEnumerable<Guid> objectGuids, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false)
         {
             //todo: uncomment this
            // var objectsWithPermission = objectGuids.Where(item => HasPermissionToObject(callContext, item.ToUUID(), FolderPermission.Read));

@@ -4,9 +4,9 @@
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
 
     public class File : AMcmExtension
     {
@@ -16,16 +16,17 @@
         {
         }
 
-        public File()
+        public File(IPortalApplication portalApplication)
+            : base(portalApplication)
         {
         }
 
         #endregion
         #region Business Logic
 
-        public Data.Dto.File Create(ICallContext callContext, Guid objectGuid, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath)
+        public Data.Dto.File Create(Guid objectGuid, uint? parentFileID, uint formatID, uint destinationID, string filename, string originalFilename, string folderPath)
 		{
-            if (!HasPermissionToObject(callContext, objectGuid, FolderPermission.CreateUpdateObjects))
+            if (!HasPermissionToObject(objectGuid, FolderPermission.CreateUpdateObjects))
                 throw new InsufficientPermissionsException("User does not have permissions to create a file for this object");
 
             var id     = McmRepository.FileCreate(objectGuid, parentFileID, destinationID, filename, originalFilename, folderPath, formatID);
@@ -36,11 +37,11 @@
             return result[0];
 		}
 
-		public ScalarResult Delete( ICallContext callContext, uint id )
+		public ScalarResult Delete(uint id )
 		{
 		    var file = McmRepository.FileGet(id)[0];
             
-            if (!HasPermissionToObject(callContext, file.ObjectGuid, FolderPermission.CreateUpdateObjects))
+            if (!HasPermissionToObject(file.ObjectGuid, FolderPermission.CreateUpdateObjects))
                 throw new InsufficientPermissionsException("User does not have permissions to delete a file on this object");
 
 		    var result = McmRepository.FileDelete(id);

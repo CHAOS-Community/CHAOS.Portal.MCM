@@ -4,8 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using Chaos.Mcm.Data.Dto;
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
 
     using Moq;
 
@@ -24,7 +23,7 @@
             var extension  = Make_ObjectExtension();
             var objectGuid = new List<Guid>{Guid.NewGuid()};
 
-            extension.Get(CallContext.Object, objectGuid, true, true, true, true, true);
+            extension.Get(objectGuid, true, true, true, true, true);
 
             McmRepository.Verify(m => m.ObjectGet(It.IsAny<IEnumerable<Guid>>(), true, true, true, true, true ));
         }
@@ -37,7 +36,7 @@
             var objectGuid = new List<Guid> { Guid.NewGuid() };
             McmRepository.Setup(m => m.ObjectGet(It.IsAny<IEnumerable<Guid>>(), false, false, false, false, false)).Returns(new[] { expected });
 
-            var result = extension.Get( CallContext.Object, objectGuid, false, false, false, false, false);
+            var result = extension.Get(objectGuid, false, false, false, false, false);
 
             Assert.AreEqual(expected, result.First());
         }
@@ -48,16 +47,14 @@
             var extension = Make_ObjectExtension();
             var expected  = Make_Object();
             var folderID  = 1u;
-            var userInfo  = new UserInfo { Guid = new Guid("f280d42b-163e-41d3-b0a2-cd59a9ab8fda") };
-            var groups    = new Group[0];
+            var userInfo  = Make_User();
             var folder    = new Mock<IFolder>();
-            CallContext.SetupGet(p => p.User).Returns(userInfo);
-            CallContext.SetupGet(p => p.Groups).Returns(groups);
+            PortalRequest.SetupGet(p => p.User).Returns(userInfo);
             PermissionManager.Setup(m => m.GetFolders(folderID)).Returns(folder.Object);
             folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.CreateUpdateObjects)).Returns(true);
             McmRepository.Setup(m => m.ObjectGet(expected.Guid, false, false,false,false,false)).Returns(expected);
 
-            var result = extension.Create(CallContext.Object, expected.Guid, expected.ObjectTypeID, folderID);
+            var result = extension.Create(expected.Guid, expected.ObjectTypeID, folderID);
 
             Assert.AreEqual(expected, result);
             McmRepository.Verify(m => m.ObjectCreate(expected.Guid, expected.ObjectTypeID, folderID));
@@ -68,26 +65,19 @@
         {
             var extension  = Make_ObjectExtension();
             var expected   = Make_Object();
-            var userInfo   = new UserInfo { Guid = new Guid("f280d42b-163e-41d3-b0a2-cd59a9ab8fda") };
-            var groups     = new Group[0];
-            CallContext.SetupGet(p => p.User).Returns(userInfo);
-            CallContext.SetupGet(p => p.Groups).Returns(groups);
+            var userInfo   = Make_User();
+            PortalRequest.SetupGet(p => p.User).Returns(userInfo);
             PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, new Guid[0], FolderPermission.DeleteObject, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
             McmRepository.Setup(m => m.ObjectGet(expected.Guid, false, false, false, true, false)).Returns(expected);
             McmRepository.Setup(m => m.ObjectDelete(expected.Guid)).Returns(1);
 
-            var result = extension.Delete(CallContext.Object, expected.Guid);
+            var result = extension.Delete(expected.Guid);
 
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.ObjectDelete(expected.Guid));
         }
 
         #region Helpers
-
-        private Mcm.Extension.Object Make_ObjectExtension()
-        {
-            return (Mcm.Extension.Object)new Mcm.Extension.Object().WithConfiguration(PermissionManager.Object, McmRepository.Object);
-        }
 
         #endregion
 

@@ -2,9 +2,8 @@
 {
     using System;
 
-    using Chaos.Mcm.Extension;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
 
     using Moq;
 
@@ -19,10 +18,10 @@
             var extension  = Make_MetadataExtension();
             var metadata   = Make_MetadataDto();
             var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
-            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = new Guid("905c48db-5632-4c57-9a1a-a158deba6ab4") });
+            PortalRequest.SetupGet(p => p.User).Returns(Make_User());
             SetupHasPermissionToObject(FolderPermission.CreateUpdateObjects);
 
-            extension.Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
+            extension.Set(objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
             McmRepository.Verify(m => m.MetadataSet(objectGuid, It.IsAny<Guid>(), metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml, It.IsAny<Guid>()));
         }
@@ -33,10 +32,10 @@
             var extension = Make_MetadataExtension();
             var metadata = Make_MetadataDto();
             var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
-            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = new Guid("905c48db-5632-4c57-9a1a-a158deba6ab4") });
+            PortalRepository.Setup(m => m.UserInfoGet(null, It.Is<Guid?>(item => item.HasValue), null)).Returns(new[] { new UserInfo { Guid = new Guid("905c48db-5632-4c57-9a1a-a158deba6ab4") } });
             SetupHasPermissionToObject( FolderPermission.CreateUpdateObjects );
 
-            extension.Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
+            extension.Set(objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
             McmRepository.Verify(m => m.ObjectGet(objectGuid, true, false, false, true, true));
         }
@@ -55,11 +54,6 @@
 //        }
 
         #region Helpers
-
-        private Metadata Make_MetadataExtension()
-        {
-            return (Metadata)new Metadata().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object);
-        }
 
         #endregion
 

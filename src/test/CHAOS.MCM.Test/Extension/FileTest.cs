@@ -20,7 +20,7 @@
             McmRepository.Setup(m => m.FileCreate(file.ObjectGuid, file.ParentID, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath, file.FormatID)).Returns(file.ID);
             McmRepository.Setup(m => m.FileGet(file.ID)).Returns(new [] { file });
 
-            var result = extension.Create(CallContext.Object, file.ObjectGuid, file.ParentID, file.FormatID, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath);
+            var result = extension.Create(file.ObjectGuid, file.ParentID, file.FormatID, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath);
 
             Assert.AreEqual(file, result);
             McmRepository.Verify(m => m.FileCreate(file.ObjectGuid, file.ParentID, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath, file.FormatID));
@@ -36,7 +36,7 @@
             McmRepository.Setup(m => m.FileDelete(file.ID)).Returns(1u);
             McmRepository.Setup(m => m.FileGet(file.ID)).Returns(new[] { file });
 
-            var result = extension.Delete(CallContext.Object, file.ID);
+            var result = extension.Delete(file.ID);
 
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.FileDelete(file.ID));
@@ -57,11 +57,6 @@
                     OriginalFilename = "orig.ext",
                     FolderPath       = "/"
                 };
-        }
-
-        private Chaos.Mcm.Extension.File Make_FileExtension()
-        {
-            return (Chaos.Mcm.Extension.File)new Chaos.Mcm.Extension.File().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object);
         }
 
         #endregion

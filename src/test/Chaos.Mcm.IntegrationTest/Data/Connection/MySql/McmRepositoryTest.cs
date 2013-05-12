@@ -8,7 +8,7 @@
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Exceptions;
 
     using NUnit.Framework;
 

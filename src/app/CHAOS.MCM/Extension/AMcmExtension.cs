@@ -2,16 +2,13 @@
 {
     using System;
     using System.Linq;
-    using System.Xml.Linq;
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
-    using Chaos.Mcm.Permission.InMemory;
-    using Chaos.Mcm.Permission.Specification;
-    using Chaos.Portal;
-    using Chaos.Portal.Extension;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Extension;
 
-    [PortalExtension( configurationName: "MCM" )]
     public abstract class AMcmExtension : AExtension
     {
         #region Properties
@@ -25,47 +22,19 @@
         #endregion
         #region Construction
 
-        protected AMcmExtension()
+        protected AMcmExtension(IPortalApplication portalApplication): base(portalApplication)
         {
             
         }
 
         protected AMcmExtension(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager)
+            : base(portalApplication)
         {
-            PortalApplication = portalApplication;
             McmRepository     = mcmRepository;
             PermissionManager = permissionManager;
         }
 
-        public override IExtension WithConfiguration( string configuration )
-        {
-            var mcmDefaultRepository = new McmRepository();
-            var permissionManager    = PermissionManager ?? new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(mcmDefaultRepository), new IntervalSpecification(10000));
-
-            return WithConfiguration(configuration, permissionManager, mcmDefaultRepository);
-        }
-
-        public IExtension WithConfiguration( string configuration, IPermissionManager permissionManager, IMcmRepository mcmRepository )
-        {
-            ConnectionString = XDocument.Parse( configuration ).Root.Attribute( "ConnectionString" ).Value;
-
-            return WithConfiguration(permissionManager, mcmRepository);
-        }
-
-        public IExtension WithConfiguration( IPermissionManager permissionManager, IMcmRepository mcmRepository )
-        {
-            PermissionManager = permissionManager;
-            McmRepository     = mcmRepository.WithConfiguration(ConnectionString);
-
-            return this;
-        }
-
-        public new IExtension WithPortalApplication(IPortalApplication portalApplication)
-        {
-            return WithPortalApplication(portalApplication);
-        }
-
-    	#endregion
+        #endregion
         #region Business Logic
 
 //        protected void PutObjectInIndex( IIndex index, IEnumerable<Data.Dto.Standard.Object> newObject )
@@ -89,13 +58,13 @@
 //            index.Remove( delObject, false );
 //        }
 
-        public bool HasPermissionToObject(ICallContext callContext, Guid objectGuid, FolderPermission permissions)
+        public bool HasPermissionToObject(Guid objectGuid, FolderPermission permissions)
 	    {
             //todo: look into using the folder returned from the database directly for the permission check
-            var folderGet = McmRepository.FolderGet(null, null, objectGuid: objectGuid);
+            var folderGet  = McmRepository.FolderGet(null, null, objectGuid: objectGuid);
             var folders    = folderGet.Select(item => PermissionManager.GetFolders(item.ID));
-            var userGuid   = callContext.User.Guid;
-			var groupGuids = callContext.Groups.Select( item => item.Guid );
+            var userGuid   = Request.User.Guid;
+            var groupGuids = Request.Groups.Select(item => item.Guid);
        
             return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, permissions, folders);
 	    }

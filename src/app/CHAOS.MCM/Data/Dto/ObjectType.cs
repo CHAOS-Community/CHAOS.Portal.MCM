@@ -2,7 +2,7 @@ namespace Chaos.Mcm.Data.Dto
 {
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
 
     public  class ObjectType : AResult
 	{

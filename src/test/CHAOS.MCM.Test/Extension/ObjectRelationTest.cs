@@ -2,13 +2,11 @@
 {
     using System;
 
-    using Chaos.Portal.Data.Dto;
+    using Chaos.Portal.Core.Data.Model;
 
     using Moq;
 
     using NUnit.Framework;
-
-    using ObjectRelation = Chaos.Mcm.Extension.ObjectRelation;
 
     [TestFixture]
     public class ObjectRelationTest : TestBase
@@ -26,7 +24,7 @@
             
             McmRepository.Setup(m => m.ObjectRelationSet(object1Guid, object2Guid, objectRelationTypeID, sequence)).Returns(1);
             
-            var result = objectRelation.Set(CallContext.Object, object1Guid, object2Guid, objectRelationTypeID, sequence, null, null, null, null);
+            var result = objectRelation.Set(object1Guid, object2Guid, objectRelationTypeID, sequence, null, null, null, null);
 
             McmRepository.Verify(m => m.ObjectRelationSet(object1Guid, object2Guid, objectRelationTypeID, sequence));
             Assert.AreEqual(1, result.Value);
@@ -42,10 +40,10 @@
             var sequence              = 0;
             uint objectRelationTypeID = 1;
             var metadata              = Make_MetadataDto();
-            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = editingUserGuid });
+            PortalRequest.SetupGet(p => p.User).Returns(new UserInfo{Guid = editingUserGuid});
             McmRepository.Setup(m => m.ObjectRelationSet(object1Guid, object2Guid,objectRelationTypeID, sequence, metadata.Guid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml, editingUserGuid)).Returns(1);
 
-            var result = objectRelation.Set( CallContext.Object, object1Guid, object2Guid, objectRelationTypeID, sequence, metadata.Guid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml );
+            var result = objectRelation.Set(object1Guid, object2Guid, objectRelationTypeID, sequence, metadata.Guid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml );
 
             McmRepository.Verify(m => m.ObjectRelationSet(object1Guid, object2Guid,objectRelationTypeID, sequence, metadata.Guid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml, editingUserGuid));
             Assert.AreEqual(1, result.Value);
@@ -61,10 +59,10 @@
             var sequence              = 0;
             uint objectRelationTypeID = 1;
             var metadata              = Make_MetadataDto();
-            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = editingUserGuid });
+            PortalRequest.SetupGet(p => p.User).Returns(new UserInfo { Guid = editingUserGuid });
             McmRepository.Setup(m => m.ObjectRelationSet(object1Guid, object2Guid,objectRelationTypeID, sequence, It.IsAny<Guid>(), metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml, editingUserGuid)).Returns(1);
 
-            var result = objectRelation.Set( CallContext.Object, object1Guid, object2Guid, objectRelationTypeID, sequence, null, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml );
+            var result = objectRelation.Set(object1Guid, object2Guid, objectRelationTypeID, sequence, null, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml );
 
             McmRepository.Verify(m => m.ObjectRelationSet(object1Guid, object2Guid,objectRelationTypeID, sequence, It.IsAny<Guid>(), metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.MetadataXml, editingUserGuid));
             Assert.AreEqual(1, result.Value);
@@ -83,7 +81,7 @@
             
             McmRepository.Setup(m => m.ObjectRelationDelete(object1Guid, object2Guid, objectRelationTypeID)).Returns(1);
             
-            var result = objectRelation.Delete(CallContext.Object, object1Guid, object2Guid, objectRelationTypeID);
+            var result = objectRelation.Delete(object1Guid, object2Guid, objectRelationTypeID);
 
             McmRepository.Verify(m => m.ObjectRelationDelete(object1Guid, object2Guid, objectRelationTypeID));
             Assert.AreEqual(1, result.Value);
@@ -91,11 +89,6 @@
 
         #endregion
         #region Helpers
-
-        private ObjectRelation Make_ObjectRelation()
-        {
-            return (ObjectRelation) new ObjectRelation().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object);
-        }
 
         #endregion
     }

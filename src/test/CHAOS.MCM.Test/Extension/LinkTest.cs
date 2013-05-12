@@ -17,7 +17,7 @@
             SetupHasPermissionToObject(FolderPermission.CreateLink);
             McmRepository.Setup(m => m.LinkCreate(obj.Guid, folder.ID, 2)).Returns(1);
 
-            var result = extension.Create(CallContext.Object, obj.Guid, folder.ID);
+            var result = extension.Create(obj.Guid, folder.ID);
 
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.LinkCreate(obj.Guid, folder.ID, 2) );
@@ -33,7 +33,7 @@
             SetupHasPermissionToObject(FolderPermission.CreateLink);
             McmRepository.Setup(m => m.LinkUpdate(obj.Guid, folder.ID, newFolderID)).Returns(1);
 
-            var result = extension.Update(CallContext.Object, obj.Guid, folder.ID, newFolderID);
+            var result = extension.Update(obj.Guid, folder.ID, newFolderID);
 
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.LinkUpdate(obj.Guid, folder.ID, newFolderID));
@@ -48,18 +48,13 @@
             SetupHasPermissionToObject(FolderPermission.CreateLink);
             McmRepository.Setup(m => m.LinkDelete(obj.Guid, folder.ID)).Returns(1);
 
-            var result = extension.Delete(CallContext.Object, obj.Guid, folder.ID);
+            var result = extension.Delete(obj.Guid, folder.ID);
 
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.LinkDelete(obj.Guid, folder.ID));
         }
 
         #region Helpers
-
-        private Link Make_LinkExtension()
-        {
-            return (Link)new Link().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object);
-        }
 
         #endregion
 

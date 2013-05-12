@@ -3,7 +3,6 @@
     using System.Linq;
 
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Data.Dto.Standard;
     using Chaos.Mcm.Extension;
 
     using NUnit.Framework;
@@ -18,7 +17,7 @@
             var expected  = Make_Detination();
             McmRepository.Setup(m => m.DestinationGet(expected.ID)).Returns(new[] { expected });
 
-            var result = extension.Get(CallContext.Object, expected.ID);
+            var result = extension.Get(expected.ID);
 
             Assert.AreEqual(expected, result.First());
             McmRepository.Verify(m => m.DestinationGet(expected.ID));
@@ -28,7 +27,7 @@
         
         private Destination Make_DestinationExtension()
         {
-            return (Destination)new Destination().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object);
+            return (Destination)new Destination(PortalApplication.Object, McmRepository.Object, PermissionManager.Object);
         }
 
         private DestinationInfo Make_Detination()

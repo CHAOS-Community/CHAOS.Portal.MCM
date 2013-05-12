@@ -19,7 +19,7 @@
             var expected  = Make_Format();
             McmRepository.Setup(m => m.FormatGet(null, null)).Returns(new []{expected});
 
-            var result = extension.Get(CallContext.Object, null, null);
+            var result = extension.Get(null, null);
 
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual(expected.ID, result.First().ID);
@@ -35,7 +35,7 @@
             McmRepository.Setup(m => m.FormatCreate(expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension)).Returns(id);
             McmRepository.Setup(m => m.FormatGet(id, null)).Returns(new[] { expected });
 
-            var result = extension.Create(CallContext.Object, expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension);
+            var result = extension.Create(expected.FormatCategoryID, expected.Name, expected.FormatXml, expected.MimeType, expected.Extension);
 
             Assert.AreEqual(expected.Name, result.Name);
         }
@@ -45,11 +45,6 @@
         private static Format Make_Format()
         {
             return new Format { ID = 1 };
-        }
-
-        private Mcm.Extension.Format Make_FormatExtension()
-        {
-            return (Mcm.Extension.Format)new Mcm.Extension.Format().WithConfiguration(this.PermissionManager.Object, this.McmRepository.Object);
         }
 
         #endregion

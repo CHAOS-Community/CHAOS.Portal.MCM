@@ -7,9 +7,10 @@
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
+
     using FolderPermission = Chaos.Mcm.Data.Dto.FolderPermission;
     using IFolder = Chaos.Mcm.Permission.IFolder;
     
@@ -21,14 +22,15 @@
         {
         }
 
-        public Folder()
+        public Folder(IPortalApplication portalApplication)
+            : base(portalApplication)
         {
         }
 
         #endregion
         #region Permission
 
-        public FolderPermission GetPermission( ICallContext callContext, uint folderID )
+        public FolderPermission GetPermission(uint folderID )
         {
             var folder           = PermissionManager.GetFolders(folderID);
             var userPermissions  = folder.UserPermissions.Select(item => new EntityPermission
@@ -45,7 +47,7 @@
             return new FolderPermission( userPermissions, groupPermissions );
         }
 
-        public ScalarResult SetPermission(ICallContext callContext, Guid? userGuid, Guid? groupGuid, uint folderID, uint permission)
+        public ScalarResult SetPermission(Guid? userGuid, Guid? groupGuid, uint folderID, uint permission)
         {
             if (!userGuid.HasValue && !groupGuid.HasValue)
                 throw new ArgumentException("Both userGUID and groupGUID can't be null at the same time");
@@ -54,7 +56,7 @@
             var folder = PermissionManager.GetFolders(folderID);
 
             // REVIEW: What permissions are required to remove a permission?
-            if (!folder.DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), (Permission.FolderPermission)permission))
+            if (!folder.DoesUserOrGroupHavePermission(Request.User.Guid, Request.Groups.Select(item => item.Guid), (Permission.FolderPermission)permission))
                 throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
             if (userGuid.HasValue)
@@ -67,14 +69,14 @@
 
         #endregion
         
-		public IEnumerable<IFolderInfo> Get( ICallContext callContext, uint? id, uint? folderTypeID, uint? parentID, uint? permission )
+		public IEnumerable<IFolderInfo> Get(uint? id, uint? folderTypeID, uint? parentID, uint? permission )
 		{
             if (parentID.HasValue && id.HasValue)
                 throw new ArgumentException("It does not make sense to specficy both ID and ParentID in the same query");
 
             var permissionEnum = (Permission.FolderPermission)(permission ?? (uint)Permission.FolderPermission.Read) | Permission.FolderPermission.Read;
-            var userGuid       = callContext.User.Guid;
-            var groupGuids     = callContext.Groups.Select( group => group.Guid ).ToList();
+            var userGuid       = Request.User.Guid;
+            var groupGuids     = Request.Groups.Select( group => group.Guid ).ToList();
 
             IEnumerable<IFolder> folderResults;
 
@@ -96,10 +98,10 @@
             return McmRepository.FolderInfoGet(folderIDs);
         }
 
-        public ScalarResult Delete(ICallContext callContext, uint id)
+        public ScalarResult Delete(uint id)
         {
-            var userGuid   = callContext.User.Guid;
-            var groupGuids = callContext.Groups.Select(group => group.Guid).ToList();
+            var userGuid   = Request.User.Guid;
+            var groupGuids = Request.Groups.Select(group => group.Guid).ToList();
 
             if(!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(userGuid, groupGuids, Permission.FolderPermission.Delete))
                 throw new InsufficientPermissionsException("User does not have permission to delete the folder");
@@ -109,9 +111,12 @@
             return new ScalarResult(result);
         }
 
-		public ScalarResult Update( ICallContext callContext, uint id, string newTitle, uint? newFolderTypeID, uint? newParentID )
+		public ScalarResult Update( uint id, string newTitle, uint? newFolderTypeID, uint? newParentID )
 		{
-            if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(callContext.User.Guid, callContext.Groups.Select(item => item.Guid), Permission.FolderPermission.Update))
+		    var user   = Request.User;
+            var groups = Request.Groups;
+
+		    if (!PermissionManager.GetFolders(id).DoesUserOrGroupHavePermission(user.Guid, groups.Select(item => item.Guid), Permission.FolderPermission.Update))
 				throw new InsufficientPermissionsException( "User does not have permission to give the requested permissions" );
 
 			var result = McmRepository.FolderUpdate(id, newTitle, newFolderTypeID, newParentID);
@@ -119,14 +124,14 @@
 			return new ScalarResult( (int) result );
 		}
 
-        public IFolderInfo Create(ICallContext callContext, Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID)
+        public IFolderInfo Create(Guid? subscriptionGuid, string title, uint? parentID, uint folderTypeID)
 		{
             if( !subscriptionGuid.HasValue && !parentID.HasValue ) 
                 throw new ArgumentException( "Both parentID and subscriptionGuid can't be null" );
 
-		    var userGuid     = callContext.User.Guid;
-		    var groupGuids   = callContext.Groups.Select(item => item.Guid);
-            var subscription = callContext.Subscriptions.FirstOrDefault( sub => sub.Guid.ToString() == subscriptionGuid.ToString() );
+		    var userGuid     = Request.User.Guid;
+		    var groupGuids   = Request.Groups.Select(item => item.Guid);
+            var subscription = Request.Subscriptions.FirstOrDefault( sub => sub.Guid.ToString() == subscriptionGuid.ToString() );
 
 		    if( subscription != null && subscription.Permission != SubscriptionPermission.CreateFolder )
 		        throw new InsufficientPermissionsException( "User does not have permission to create topfolders with the subscriptionGuid" );

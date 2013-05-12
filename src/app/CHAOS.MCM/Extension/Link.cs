@@ -4,9 +4,9 @@
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
 
     public class Link : AMcmExtension
     {
@@ -16,16 +16,17 @@
         {
         }
 
-        public Link()
+        public Link(IPortalApplication portalApplication)
+            : base(portalApplication)
         {
         }
 
         #endregion
 
-        public ScalarResult Create(ICallContext callContext, Guid objectGuid, uint folderID)
+        //todo: re-add indexing to links
+        public ScalarResult Create(Guid objectGuid, uint folderID)
         {
-            if (!HasPermissionToObject(callContext, objectGuid, FolderPermission.CreateLink))
-                    throw new InsufficientPermissionsException("User can only create links");
+            if (!HasPermissionToObject(objectGuid, FolderPermission.CreateLink)) throw new InsufficientPermissionsException("User can only create links");
 
             // TODO: Manage magical number better (ObjectFolderTypeID:2 is link by default)
             var result = McmRepository.LinkCreate(objectGuid, folderID, 2);
@@ -35,10 +36,9 @@
             return new ScalarResult((int)result);
         }
 
-        public ScalarResult Update(ICallContext callContext, Guid objectGuid, uint folderID, uint newFolderID)
+        public ScalarResult Update(Guid objectGuid, uint folderID, uint newFolderID)
         {
-            if (!HasPermissionToObject(callContext, objectGuid, FolderPermission.CreateLink))
-                throw new InsufficientPermissionsException("User does not have permission to update link");
+            if (!HasPermissionToObject(objectGuid, FolderPermission.CreateLink)) throw new InsufficientPermissionsException("User does not have permission to update link");
 
 //          PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGuid , true, true, true, true, true ).ToDto().ToList() );
 
@@ -47,10 +47,9 @@
             return new ScalarResult((int)result);
         }
 
-        public ScalarResult Delete(ICallContext callContext, Guid objectGuid, uint folderID)
+        public ScalarResult Delete(Guid objectGuid, uint folderID)
         {
-            if (!HasPermissionToObject(callContext, objectGuid, FolderPermission.CreateLink))
-                    throw new InsufficientPermissionsException("User does not have permission to delete link");
+            if (!HasPermissionToObject(objectGuid, FolderPermission.CreateLink)) throw new InsufficientPermissionsException("User does not have permission to delete link");
 
             var result = McmRepository.LinkDelete(objectGuid, folderID);
 

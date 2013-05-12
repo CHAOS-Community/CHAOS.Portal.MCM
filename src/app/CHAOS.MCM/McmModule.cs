@@ -1,5 +1,7 @@
 ﻿namespace Chaos.Mcm
 {
+    using System.Collections.Generic;
+    using System.Configuration;
     using System.Xml.Linq;
 
     using Chaos.Mcm.Data;
@@ -7,8 +9,9 @@
     using Chaos.Mcm.Permission;
     using Chaos.Mcm.Permission.InMemory;
     using Chaos.Mcm.Permission.Specification;
-    using Chaos.Portal;
-    using Chaos.Portal.Extension;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Extension;
 
     using Folder = Chaos.Mcm.Extension.Folder;
 
@@ -35,44 +38,112 @@
         #endregion
         #region Properties
 
-        public IExtension[]       Extensions { get; private set; }
         public IMcmRepository     McmRepository { get; private set; }
         public IPermissionManager PermissionManager { get; private set; }
+        public IPortalApplication PortalApplication { get; private set; }
 
         #endregion
         #region Implementation of IModule
 
         public void Load(IPortalApplication portalApplication)
         {
-            var configuration = portalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME);
+            PortalApplication = portalApplication;
+
+            var configuration = PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME);
             var connectionString = XDocument.Parse(configuration.Configuration).Root.Attribute("ConnectionString").Value;
             
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
+        }
 
-            Extensions = new IExtension[10];
-            Extensions[0] = new Destination(portalApplication, McmRepository, PermissionManager);
-            Extensions[1] = new File(portalApplication, McmRepository, PermissionManager);
-            Extensions[2] = new Folder(portalApplication, McmRepository, PermissionManager);
-            Extensions[3] = new Format(portalApplication, McmRepository, PermissionManager);
-            Extensions[4] = new Link(portalApplication, McmRepository, PermissionManager);
-            Extensions[5] = new Metadata(portalApplication, McmRepository, PermissionManager);
-            Extensions[6] = new MetadataSchema(portalApplication, McmRepository, PermissionManager);
-            Extensions[7] = new Object(portalApplication, McmRepository, PermissionManager);
-            Extensions[8] = new ObjectRelation(portalApplication, McmRepository, PermissionManager);
-            Extensions[9] = new ObjectType(portalApplication, McmRepository, PermissionManager);
+        public IEnumerable<string> GetExtensionNames(Protocol version)
+        {
+            yield return "Destination";
+            yield return "File";
+            yield return "Folder";
+            yield return "Format";
+            yield return "Link";
+            yield return "Metadata";
+            yield return "MetadataSchema";
+            yield return "Object";
+            yield return "ObjectRelation";
+            yield return "ObjectType";
+            yield return "Mcm";
 
-            portalApplication.AddExtension("Destination", Extensions[0]);
-            portalApplication.AddExtension("File", Extensions[1]);
-            portalApplication.AddExtension("Folder", Extensions[2]);
-            portalApplication.AddExtension("Format", Extensions[3]);
-            portalApplication.AddExtension("Link", Extensions[4]);
-            portalApplication.AddExtension("Metadata", Extensions[5]);
-            portalApplication.AddExtension("MetadataSchema", Extensions[6]);
-            portalApplication.AddExtension("Object", Extensions[7]);
-            portalApplication.AddExtension("ObjectRelation", Extensions[8]);
-            portalApplication.AddExtension("ObjectType", Extensions[9]);
-            portalApplication.AddExtension("Mcm", new Mcm(portalApplication, McmRepository, PermissionManager));
+        }
+
+        public IExtension GetExtension<TExtension>(Protocol version) where TExtension : IExtension
+        {
+            return GetExtension(version, typeof(TExtension).Name);
+        }
+
+        public IExtension GetExtension(Protocol version, string name)
+        {
+            if (PortalApplication == null) throw new ConfigurationErrorsException("Load not call on module");
+
+            if (version == Protocol.V5)
+            {
+                switch (name)
+                {
+                    case "Destination": 
+                        return new Destination(PortalApplication, McmRepository, PermissionManager);
+                    case "File": 
+                        return new Folder(PortalApplication, McmRepository, PermissionManager);
+                    case "Folder": 
+                        return new Folder(PortalApplication, McmRepository, PermissionManager);
+                    case "Format": 
+                        return new Format(PortalApplication, McmRepository, PermissionManager);
+                    case "Link": 
+                        return new Link(PortalApplication, McmRepository, PermissionManager);
+                    case "Metadata": 
+                        return new Metadata(PortalApplication, McmRepository, PermissionManager);
+                    case "MetadataSchema": 
+                        return new MetadataSchema(PortalApplication, McmRepository, PermissionManager);
+                    case "Object": 
+                        return new Object(PortalApplication, McmRepository, PermissionManager);
+                    case "ObjectRelation": 
+                        return new ObjectRelation(PortalApplication, McmRepository, PermissionManager);
+                    case "ObjectType": 
+                        return new ObjectType(PortalApplication, McmRepository, PermissionManager);
+                    case "Mcm": 
+                        return new Mcm(PortalApplication, McmRepository, PermissionManager);
+                    default:
+                        throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
+                }
+            }
+
+            if (version == Protocol.V6)
+            {
+                switch (name)
+                {
+                    case "Destination": 
+                        return new Destination(PortalApplication, McmRepository, PermissionManager);
+                    case "File": 
+                        return new Folder(PortalApplication, McmRepository, PermissionManager);
+                    case "Folder": 
+                        return new Folder(PortalApplication, McmRepository, PermissionManager);
+                    case "Format": 
+                        return new Format(PortalApplication, McmRepository, PermissionManager);
+                    case "Link": 
+                        return new Link(PortalApplication, McmRepository, PermissionManager);
+                    case "Metadata": 
+                        return new Metadata(PortalApplication, McmRepository, PermissionManager);
+                    case "MetadataSchema": 
+                        return new MetadataSchema(PortalApplication, McmRepository, PermissionManager);
+                    case "Object": 
+                        return new Object(PortalApplication, McmRepository, PermissionManager);
+                    case "ObjectRelation": 
+                        return new ObjectRelation(PortalApplication, McmRepository, PermissionManager);
+                    case "ObjectType": 
+                        return new ObjectType(PortalApplication, McmRepository, PermissionManager);
+                    case "Mcm": 
+                        return new Mcm(PortalApplication, McmRepository, PermissionManager);
+                    default:
+                        throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
+                }
+            }
+
+            throw new ProtocolVersionException();
         }
 
         #endregion

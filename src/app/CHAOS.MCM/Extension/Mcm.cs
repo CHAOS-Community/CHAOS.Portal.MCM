@@ -2,7 +2,7 @@
 {
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
+    using Chaos.Portal.Core;
 
     public class Mcm : AMcmExtension
     {
@@ -12,14 +12,13 @@
         {
         }
 
-        public Mcm()
-            : base()
+        public Mcm(IPortalApplication portalApplication): base(portalApplication)
         {
         }
 
         #endregion
 
-        public Trace Index(ICallContext callContext)
+        public Trace Index()
         {
             var deleteStopwatch    = new System.Diagnostics.Stopwatch();
             var objectGetStopwatch = new System.Diagnostics.Stopwatch();
@@ -27,7 +26,7 @@
             var totalCount         = 0;
 
             deleteStopwatch.Start();
-            callContext.ViewManager.Delete();
+            ViewManager.Delete();
             deleteStopwatch.Stop();
 
             const uint PageSize = 1000;
@@ -39,7 +38,7 @@
                 objectGetStopwatch.Stop();
 
                 indexStopwatch.Start();
-                callContext.ViewManager.Index(objects);
+                ViewManager.Index(objects);
                 indexStopwatch.Stop();
 
                 totalCount += objects.Count;

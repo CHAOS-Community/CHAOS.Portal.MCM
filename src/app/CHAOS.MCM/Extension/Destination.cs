@@ -5,7 +5,7 @@ namespace Chaos.Mcm.Extension
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
+    using Chaos.Portal.Core;
 
     public class Destination : AMcmExtension
     {
@@ -13,11 +13,11 @@ namespace Chaos.Mcm.Extension
         {
         }
 
-        public Destination() : base()
+        public Destination(IPortalApplication portalApplication) : base(portalApplication)
         {
         }
 
-        public IEnumerable<DestinationInfo> Get(ICallContext callContext, uint? id)
+        public IEnumerable<DestinationInfo> Get(uint? id)
         {
             return McmRepository.DestinationGet(id);
         }

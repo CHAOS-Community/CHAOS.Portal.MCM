@@ -14,7 +14,7 @@ namespace Chaos.Mcm.Data
     using Chaos.Mcm.Data.Mapping;
     using Chaos.Mcm.Exception;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal.Exceptions;
+    using Chaos.Portal.Core.Exceptions;
 
     using MySql.Data.MySqlClient;
 
@@ -92,11 +92,8 @@ namespace Chaos.Mcm.Data
                     new MySqlParameter("Sequence", sequence)
                 });
 
-            if (result == -100)
-                throw new InsufficientPermissionsException("The user do not have permission to create object relations");
-
-            if (result == -200)
-                throw new ObjectRelationAlreadyExistException("The object relation already exists");
+            if (result == -100) throw new InsufficientPermissionsException("The user do not have permission to create object relations");
+            if (result == -200) throw new ObjectRelationAlreadyExistException("The object relation already exists");
 
             return (uint)result;
         }
@@ -116,11 +113,8 @@ namespace Chaos.Mcm.Data
                     new MySqlParameter("EditingUserGuid", editingUserGuid.ToByteArray()),
                 });
 
-            if (result == -100)
-                throw new InsufficientPermissionsException("The user do not have permission to create object relations");
-
-            if (result == -200)
-                throw new ObjectRelationAlreadyExistException("The object relation already exists");
+            if (result == -100) throw new InsufficientPermissionsException("The user do not have permission to create object relations");
+            if (result == -200) throw new ObjectRelationAlreadyExistException("The object relation already exists");
 
             return (uint)result;
         }

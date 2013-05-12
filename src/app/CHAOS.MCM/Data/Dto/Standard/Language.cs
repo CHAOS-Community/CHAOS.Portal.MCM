@@ -1,9 +1,10 @@
 ﻿using CHAOS.Serialization;
-using Chaos.Portal.Data.Dto;
 
 namespace Chaos.Mcm.Data.Dto.Standard
 {
-	public  class Language : AResult
+    using Chaos.Portal.Core.Data.Model;
+
+    public  class Language : AResult
 	{
 		#region Properties
 

@@ -5,12 +5,10 @@
 
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Permission;
-    using Chaos.Portal;
-    using Chaos.Portal.Data.Dto;
-    using Chaos.Portal.Exceptions;
-    using Chaos.Portal.Extension;
+    using Chaos.Portal.Core;
+    using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Exceptions;
 
-    [PortalExtension(configurationName: "MCM")]
     public class Metadata : AMcmExtension
     {
         #region Initialization
@@ -19,23 +17,24 @@
         {
         }
 
-        public Metadata()
+        public Metadata(IPortalApplication portalApplication)
+            : base(portalApplication)
         {
         }
 
         #endregion
 
-        public ScalarResult Set(ICallContext callContext, Guid objectGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml)
+        public ScalarResult Set(Guid objectGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml)
         {
-            if(!HasPermissionToObject( callContext, objectGuid, FolderPermission.CreateUpdateObjects )) throw new InsufficientPermissionsException( "User does not have permissions to set metadata on object or the object doesn't exist" );
+            if(!HasPermissionToObject(objectGuid, FolderPermission.CreateUpdateObjects )) throw new InsufficientPermissionsException( "User does not have permissions to set metadata on object or the object doesn't exist" );
 
             var metadataGuid = Guid.NewGuid();
-            var userGuid     = callContext.User.Guid;
+            var userGuid     = Request.User.Guid;
 
             var result  = McmRepository.MetadataSet(objectGuid, metadataGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, userGuid);
             var objects = McmRepository.ObjectGet(objectGuid, true, false, false, true, true);
             
-            callContext.ViewManager.Index(objects);
+            ViewManager.Index(objects);
 
             return new ScalarResult((int)result);
         }
