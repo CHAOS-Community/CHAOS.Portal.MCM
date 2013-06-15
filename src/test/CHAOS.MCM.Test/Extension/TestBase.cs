@@ -244,7 +244,7 @@ namespace Chaos.Mcm.Test.Extension
 
 		protected UserManagement Make_UserManagementExtension()
 		{
-			return (UserManagement)new UserManagement(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"0\" />").WithPortalRequest(PortalRequest.Object);
+			return (UserManagement)new UserManagement(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"0\" UserObjectTypeId=\"0\" />").WithPortalRequest(PortalRequest.Object);
 		}
     }
 }

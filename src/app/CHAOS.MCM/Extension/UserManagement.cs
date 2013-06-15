@@ -34,9 +34,12 @@ namespace Chaos.Mcm.Extension
 
 			var usersFolder = GetFolderFromPath(false, Configuration.UsersFolderName);
 
-			var id = McmRepository.FolderCreate(Request.User.Guid, null, userGuid.ToString(), usersFolder.ID, Configuration.UserFolderTypeId);
+			var userFolderId = McmRepository.FolderCreate(Request.User.Guid, null, userGuid.ToString(), usersFolder.ID, Configuration.UserFolderTypeId);
 
-			return McmRepository.FolderGet(id).First();
+			if(McmRepository.ObjectCreate(userGuid.Value, Configuration.UserObjectTypeId, userFolderId) != 1)
+				throw new System.Exception("Failed to create user object");
+
+			return McmRepository.FolderGet(userFolderId).First();
 		}
 
 		#endregion

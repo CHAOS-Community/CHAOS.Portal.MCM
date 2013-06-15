@@ -55,7 +55,11 @@ namespace Chaos.Mcm.Test.Extension
 				});
 			McmRepository.Setup(m => m.FolderCreate(userInfo.Guid, null, userInfo.Guid.ToString(), 1, 0)).Returns(2);
 			McmRepository.Setup(m => m.FolderGet(2, null, null)).Returns(new List<Folder>{expected});
+			McmRepository.Setup(m => m.ObjectCreate(userInfo.Guid, 0, 2)).Returns(1);
+
 			var result = extension.GetUserFolder();
+
+			McmRepository.Verify(m => m.ObjectCreate(userInfo.Guid, 0, 2));
 
 			Assert.That(result, Is.EqualTo(expected));
 		}

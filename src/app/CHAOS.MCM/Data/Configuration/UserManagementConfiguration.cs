@@ -11,5 +11,8 @@ namespace Chaos.Mcm.Data.Configuration
 
 		[SerializeXML(true)]
 		public uint UserFolderTypeId { get; set; }
+
+		[SerializeXML(true)]
+		public uint UserObjectTypeId { get; set; }
 	}
 }

@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Configuration\UserManagementConfiguration.cs" />
+    <Compile Include="Data\Configuration\UserProfileConfiguration.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
     <Compile Include="Data\Dto\EntityPermission.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Data\Dto\Standard\Link.cs" />
     <Compile Include="Data\Dto\Standard\ObjectRelationType.cs" />
     <Compile Include="Data\Dto\Standard\Permission.cs" />
+    <Compile Include="Data\Dto\UserProfile.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
     <Compile Include="Data\IPermissionRepository.cs" />
     <Compile Include="Data\Mapping\AccessPointMapping.cs" />
@@ -127,6 +129,7 @@
     <Compile Include="Extension\ObjectType.cs" />
     <Compile Include="Extension\Trace.cs" />
     <Compile Include="Extension\UserManagement.cs" />
+    <Compile Include="Extension\UserProfile.cs" />
     <Compile Include="IMcmModule.cs" />
     <Compile Include="McmModule.cs" />
     <Compile Include="Permission\AccessPointPermission.cs" />
