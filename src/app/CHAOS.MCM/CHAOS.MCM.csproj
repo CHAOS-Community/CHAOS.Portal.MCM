@@ -55,6 +55,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Configuration\UserManagementConfiguration.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
     <Compile Include="Data\Dto\EntityPermission.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Exception\InvalidRevisionException.cs" />
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
     <Compile Include="Extension\AMcmExtension.cs" />
+    <Compile Include="Extension\AMcmExtensionWithConfiguration.cs" />
     <Compile Include="Extension\Destination.cs" />
     <Compile Include="Extension\File.cs" />
     <Compile Include="Extension\Folder.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Extension\ObjectRelation.cs" />
     <Compile Include="Extension\ObjectType.cs" />
     <Compile Include="Extension\Trace.cs" />
+    <Compile Include="Extension\UserManagement.cs" />
     <Compile Include="IMcmModule.cs" />
     <Compile Include="McmModule.cs" />
     <Compile Include="Permission\AccessPointPermission.cs" />

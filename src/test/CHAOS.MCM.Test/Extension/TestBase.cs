@@ -154,6 +154,17 @@ namespace Chaos.Mcm.Test.Extension
             this.PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), permission, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
         }
 
+		protected UserInfo SetupUser()
+		{
+			var userInfo = Make_User();
+
+			PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
+			PortalRequest.SetupGet(p => p.Session).Returns(Make_Session());
+			PortalRequest.SetupGet(p => p.User).Returns(userInfo);
+
+			return userInfo;
+		}
+
         #endregion
 
         protected Chaos.Mcm.Extension.Folder Make_FolderExtension()
@@ -230,5 +241,10 @@ namespace Chaos.Mcm.Test.Extension
         {
             return (AMcmExtensionStub)new AMcmExtensionStub(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
+
+		protected UserManagement Make_UserManagementExtension()
+		{
+			return (UserManagement)new UserManagement(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"0\" />").WithPortalRequest(PortalRequest.Object);
+		}
     }
 }

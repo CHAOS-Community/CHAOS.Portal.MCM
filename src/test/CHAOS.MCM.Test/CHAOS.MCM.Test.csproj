@@ -68,6 +68,7 @@
     <Compile Include="Extension\ObjectRelationTest.cs" />
     <Compile Include="Extension\ObjectTypeTest.cs" />
     <Compile Include="Extension\TestBase.cs" />
+    <Compile Include="Extension\UserManagementTest.cs" />
     <Compile Include="Permission\InMemoryPermissionManagerTest.cs" />
     <Compile Include="Permission\IntervalSpecificationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,9 +83,8 @@
     <Folder Include="Data\Dto\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="App.Config.sample" />
+    <None Include="App.Config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

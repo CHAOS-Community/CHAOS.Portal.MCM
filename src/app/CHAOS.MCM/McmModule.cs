@@ -69,6 +69,7 @@
             yield return "ObjectRelation";
             yield return "ObjectType";
             yield return "Mcm";
+            yield return "UserManagement";
 
         }
 
@@ -107,6 +108,8 @@
                         return new ObjectType(PortalApplication, McmRepository, PermissionManager);
                     case "Mcm": 
                         return new Mcm(PortalApplication, McmRepository, PermissionManager);
+					case "UserManagement":
+						return new UserManagement(PortalApplication, McmRepository, PermissionManager).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"0\" />");
                     default:
                         throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
                 }
@@ -138,6 +141,8 @@
                         return new ObjectType(PortalApplication, McmRepository, PermissionManager);
                     case "Mcm": 
                         return new Mcm(PortalApplication, McmRepository, PermissionManager);
+					case "UserManagement":
+						return new UserManagement(PortalApplication, McmRepository, PermissionManager).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"0\" />");
                     default:
                         throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
                 }
