@@ -5,6 +5,7 @@ using Chaos.Mcm.Data.Configuration;
 using Chaos.Mcm.Permission;
 using Chaos.Portal.Core;
 using Chaos.Portal.Core.Data.Model;
+using System.Linq;
 
 namespace Chaos.Mcm.Extension
 {
@@ -22,7 +23,17 @@ namespace Chaos.Mcm.Extension
 
 		public Data.Dto.UserProfile Get(Guid metadataSchemaGuid, Guid? userGuid = null)
 		{
-			throw new NotImplementedException();
+			if (!userGuid.HasValue)
+				userGuid = Request.User.Guid;
+
+			var userObject = McmRepository.ObjectGet(userGuid.Value, true);
+
+			if (userObject == null || userObject.Metadatas == null)
+				return null;
+
+			var metadata = userObject.Metadatas.FirstOrDefault(m => m.MetadataSchemaGuid == metadataSchemaGuid);
+
+			return metadata == null ? null : new Data.Dto.UserProfile(metadata);
 		}
 
 		#endregion

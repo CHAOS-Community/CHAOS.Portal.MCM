@@ -246,5 +246,10 @@ namespace Chaos.Mcm.Test.Extension
 		{
 			return (UserManagement)new UserManagement(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"0\" UserObjectTypeId=\"0\" />").WithPortalRequest(PortalRequest.Object);
 		}
+
+	    protected Chaos.Mcm.Extension.UserProfile Make_UserProfileExtension()
+	    {
+			return (Chaos.Mcm.Extension.UserProfile)new Chaos.Mcm.Extension.UserProfile(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserProfileConfiguration />").WithPortalRequest(PortalRequest.Object);
+	    }
     }
 }
