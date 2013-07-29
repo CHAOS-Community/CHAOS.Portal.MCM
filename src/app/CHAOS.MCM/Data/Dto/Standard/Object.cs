@@ -131,6 +131,61 @@ namespace CHAOS.MCM.Data.Dto.Standard
                             break;
                         #endregion
                         #region DKA
+
+                        // DKA Crowd
+                        case "a37167e0-e13b-4d29-8a41-b0ffbaa1fe5f":
+                            XNamespace nsDKAC = "http://www.danskkulturarv.dk/DKA-Crowd.xsd";
+
+                            // Views
+                            if (metadata.MetadataXML.Descendants(nsDKAC + "Views").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Views_int", metadata.MetadataXML.Descendants(nsDKAC + "Views").First().Value);
+                            else
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Views_int", "0");
+
+                            // Shares
+                            if (metadata.MetadataXML.Descendants(nsDKAC + "Shares").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Shares_int", metadata.MetadataXML.Descendants(nsDKAC + "Shares").First().Value);
+                            else
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Shares_int", "0");
+
+                            // Likes
+                            if (metadata.MetadataXML.Descendants(nsDKAC + "Likes").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Likes_int", metadata.MetadataXML.Descendants(nsDKAC + "Likes").First().Value);
+                            else
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Likes_int", "0");
+
+                            // Ratings
+                            if (metadata.MetadataXML.Descendants(nsDKAC + "Ratings").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Ratings_int", metadata.MetadataXML.Descendants(nsDKAC + "Ratings").First().Value);
+                            else
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Ratings_int", "0");
+
+                            // AccumulatedRate
+                            if (metadata.MetadataXML.Descendants(nsDKAC + "AccumulatedRate").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-AccumulatedRate_int", metadata.MetadataXML.Descendants(nsDKAC + "AccumulatedRate").First().Value);
+                            else
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-AccumulatedRate_int", "0");
+
+                            // Slug
+                            if (metadata.MetadataXML.Descendants(nsDKAC + "Slug").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Slug_string", metadata.MetadataXML.Descendants(nsDKAC + "Slug").First().Value);
+
+                            // ShortSlug
+                            if (metadata.MetadataXML.Descendants(nsDKAC + "ShortSlug").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-ShortSlug_string", metadata.MetadataXML.Descendants(nsDKAC + "ShortSlug").First().Value);
+
+                            // Tags
+                            if (metadata.MetadataXML.Descendants(nsDKAC + "Tags").FirstOrDefault() != null)
+                                if (metadata.MetadataXML.Descendants(nsDKAC + "Tag").Any())
+                                {
+                                    foreach (var tagElement in metadata.MetadataXML.Descendants(nsDKAC + "Tag"))
+                                    {
+                                        yield return new KeyValuePair<string, string>("DKA-Crowd-Tags_stringmv", tagElement.Value);
+                                    }
+                                }
+
+                            break;
+
                         // DKA2
                         case "5906a41b-feae-48db-bfb7-714b3e105396":
                             var ns = metadata.MetadataXML.Root.GetNamespaceOfPrefix("dka");
@@ -142,11 +197,23 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 yield return new KeyValuePair<string, string>("DKA-ExternalIdentifier", metadata.MetadataXML.Descendants(XName.Get("ExternalIdentifier", defaultNs.NamespaceName)).First().Value);
                             else if (metadata.MetadataXML.Descendants("ExternalIdentifier").FirstOrDefault() != null)
                                 yield return new KeyValuePair<string, string>("DKA-ExternalIdentifier", metadata.MetadataXML.Descendants("ExternalIdentifier").First().Value);
+
+                            //Organization
+                            if (metadata.MetadataXML.Descendants(defaultNs +"Organization").FirstOrDefault() != null)
+                                yield return
+                                    new KeyValuePair<string, string>("DKA-Organization", metadata.MetadataXML.Descendants(defaultNs + "Organization").First().Value);
+                            else
+                                yield return
+                                    new KeyValuePair<string, string>("DKA-Organization",
+                                                                     GetDKAFallbackOrganization(Metadatas));
+                      
                             break;
+
+
                         // DKA
                         // TODO: Remember to add namespace to DKA fields when DKA is replaced by DKA2
                         case "00000000-0000-0000-0000-000063c30000":
-                            if (metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null)
+                            if (metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null && !DoDKA2Exist(Metadatas))
                                 yield return new KeyValuePair<string, string>("DKA-Organization", metadata.MetadataXML.Descendants("Organization").First().Value);
 
                             if (metadata.MetadataXML.Root.Element("Type") != null)
@@ -332,6 +399,23 @@ namespace CHAOS.MCM.Data.Dto.Standard
 
 			return sb.ToString( );
 		}
+
+        private static bool DoDKA2Exist(IEnumerable<Metadata> metadatas)
+        {
+            return metadatas.Any(metadata => metadata.MetadataSchemaGUID.ToString() == "5906a41b-feae-48db-bfb7-714b3e105396");
+        }
+
+	    private static string GetDKAFallbackOrganization(IEnumerable<Metadata> metadatas)
+        {
+            foreach (var metadata in metadatas)
+            {
+                if (metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-000063c30000")
+                    if (metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null)
+                        return metadata.MetadataXML.Descendants("Organization").First().Value;
+ 
+            }
+            return "";
+        }
 
 		#endregion
 	}
