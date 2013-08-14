@@ -131,8 +131,9 @@ namespace CHAOS.MCM.Data.Dto.Standard
                             break;
                         #endregion
                         #region DKA
+                        DateTime dtFirstPublishedDate;
 
-                        // DKA Crowd
+                        #region DKA Crowd
                         case "a37167e0-e13b-4d29-8a41-b0ffbaa1fe5f":
                             XNamespace nsDKAC = "http://www.danskkulturarv.dk/DKA-Crowd.xsd";
 
@@ -185,9 +186,11 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 }
 
                             break;
+                        #endregion
 
-                        // DKA2
+                        #region DKA2
                         case "5906a41b-feae-48db-bfb7-714b3e105396":
+
                             var ns = metadata.MetadataXML.Root.GetNamespaceOfPrefix("dka");
                             var defaultNs = metadata.MetadataXML.Root.GetDefaultNamespace();
 
@@ -205,20 +208,71 @@ namespace CHAOS.MCM.Data.Dto.Standard
                             else
                                 yield return
                                     new KeyValuePair<string, string>("DKA-Organization",
-                                                                     GetDKAFallbackOrganization(Metadatas));
-                      
+                                                                     GetDKAFallbackField(Metadatas, "Organization"));
+
+                            //Title
+                            if(metadata.MetadataXML.Descendants(defaultNs + "Title").FirstOrDefault() != null)
+                                yield return 
+                                    new KeyValuePair<string, string>("DKA-Title_string", metadata.MetadataXML.Descendants(defaultNs + "Title").First().Value);
+                            else
+                                yield return 
+                                    new KeyValuePair<string, string>("DKA-Title_string", GetDKAFallbackField(Metadatas, "Title"));
+
+                            //FirstPublishedDate
+                            if (metadata.MetadataXML.Descendants(defaultNs + "FirstPublishedDate").FirstOrDefault() !=
+                                null)
+                            {
+                                if (
+                                    DateTime.TryParse(
+                                        metadata.MetadataXML.Descendants(defaultNs + "FirstPublishedDate").First().Value,
+                                        out dtFirstPublishedDate))
+                                    yield return
+                                        new KeyValuePair<string, string>("DKA-FirstPublishedDate_date",
+                                                                         DateTime.Parse(
+                                                                             metadata.MetadataXML.Descendants(
+                                                                                 defaultNs + "FirstPublishedDate")
+                                                                                     .First()
+                                                                                     .Value)
+                                                                                 .ToString(
+                                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'",
+                                                                                     CultureInfo.InvariantCulture));
+                            }
+                            else
+                            {
+                                if (DateTime.TryParse(GetDKAFallbackField(Metadatas, "FirstPublishedDate"),
+                                                      out dtFirstPublishedDate))
+                                    yield return
+                                        new KeyValuePair<string, string>("DKA-FirstPublishedDate_date",
+                                                                         DateTime.Parse(GetDKAFallbackField(Metadatas,
+                                                                                                            "FirstPublishedDate"))
+                                                                                 .ToString(
+                                                                                     "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'",
+                                                                                     CultureInfo.InvariantCulture));
+                            }
+
                             break;
 
+                        #endregion
 
                         // DKA
                         // TODO: Remember to add namespace to DKA fields when DKA is replaced by DKA2
                         case "00000000-0000-0000-0000-000063c30000":
+
                             if (metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null && !DoDKA2Exist(Metadatas))
                                 yield return new KeyValuePair<string, string>("DKA-Organization", metadata.MetadataXML.Descendants("Organization").First().Value);
+
+                           //if (metadata.MetadataXML.Descendants("Title").FirstOrDefault() != null && !DoDKA2Exist(Metadatas))
+                           //     yield return new KeyValuePair<string, string>("DKA-Title_string", metadata.MetadataXML.Descendants("Title").First().Value);
+
+                            //if (metadata.MetadataXML.Descendants("FirstPublishedDate").FirstOrDefault() != null && !DoDKA2Exist(Metadatas))
+                              //  if (DateTime.TryParse(metadata.MetadataXML.Descendants("FirstPublishedDate").First().Value, out dtFirstPublishedDate))
+                                //    yield return new KeyValuePair<string, string>("DKA-FirstPublishedDate_date", DateTime.Parse(metadata.MetadataXML.Descendants("FirstPublishedDate").First().Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'", CultureInfo.InvariantCulture));
 
                             if (metadata.MetadataXML.Root.Element("Type") != null)
                                 yield return new KeyValuePair<string, string>("DKA-Type", metadata.MetadataXML.Root.Element("Type").Value);
                             break;
+
+                        //DKA DFI
                         case "d361328e-4fd2-4cb1-a2b4-37ecc7679a6e":
                             if (metadata.MetadataXML.Descendants("ID").FirstOrDefault() != null)
                                 yield return new KeyValuePair<string, string>("DKA-DFI-ID", metadata.MetadataXML.Root.Element("ID").Value);
@@ -402,16 +456,16 @@ namespace CHAOS.MCM.Data.Dto.Standard
 
         private static bool DoDKA2Exist(IEnumerable<Metadata> metadatas)
         {
-            return metadatas.Any(metadata => metadata.MetadataSchemaGUID.ToString() == "5906a41b-feae-48db-bfb7-714b3e105396");
+            return metadatas.Any(metadata => metadata.MetadataSchemaGUID.ToString().ToLower() == "5906a41b-feae-48db-bfb7-714b3e105396");
         }
 
-	    private static string GetDKAFallbackOrganization(IEnumerable<Metadata> metadatas)
+	    private static string GetDKAFallbackField(IEnumerable<Metadata> metadatas, string fieldname)
         {
             foreach (var metadata in metadatas)
             {
-                if (metadata.MetadataSchemaGUID.ToString() == "00000000-0000-0000-0000-000063c30000")
-                    if (metadata.MetadataXML.Descendants("Organization").FirstOrDefault() != null)
-                        return metadata.MetadataXML.Descendants("Organization").First().Value;
+                if (metadata.MetadataSchemaGUID.ToString().ToLower() == "00000000-0000-0000-0000-000063c30000")
+                    if (metadata.MetadataXML.Descendants(fieldname).FirstOrDefault() != null)
+                        return metadata.MetadataXML.Descendants(fieldname).First().Value;
  
             }
             return "";
