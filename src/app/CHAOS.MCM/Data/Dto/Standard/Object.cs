@@ -297,7 +297,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
                             break;
                         #endregion
                         #region LARM
-                        // LARM Program
+                        #region LARM Program
                         case "00000000-0000-0000-0000-0000df820000":
                             if (metadata.MetadataXML.Root.Element("PublicationDateTime") != null && metadata.MetadataXML.Root.Element("PublicationEndDateTime") != null)
                             {
@@ -339,6 +339,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 yield return new KeyValuePair<string, string>("LARM-Annotation-Count", RelatedObjects.Count(item => item.ObjectTypeID == 41 || item.ObjectTypeID == 64).ToString());
 
                             }
+                            
 
                             if (RelatedObjects != null)
                             {
@@ -358,8 +359,8 @@ namespace CHAOS.MCM.Data.Dto.Standard
                             if (metadata.MetadataXML.Root.Element("Title") != null)
                                 yield return new KeyValuePair<string, string>("LARM-Title", metadata.MetadataXML.Root.Element("Title").Value.Trim().TrimStart('"').TrimEnd('"'));
                             break;
-
-                        //LARM Programoversigter
+                        #endregion
+                        #region LARM Programoversigter
                         case "70c26faf-b1ee-41e8-b916-a5a16b25ca69":
                             if (metadata.MetadataXML.Root.Element("Date") != null)
                                 yield return new KeyValuePair<string, string>("LARM-PubStartDate", DateTime.Parse(metadata.MetadataXML.Root.Element("Date").Value).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
@@ -367,7 +368,16 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 yield return new KeyValuePair<string, string>("LARM-Title", metadata.MetadataXML.Root.Element("Title").Value);
                             break;
 
-                        //LARM Metadata
+                        #endregion
+                        #region Radioavis ocr rapporter
+                        case "a3a39145-4b30-4732-80a1-fb9214c53654":
+                            if (metadata.MetadataXML.Root.Element("ParsingValue") != null)
+                                yield return new KeyValuePair<string, string>("LARM-OCR-Report_float", metadata.MetadataXML.Root.Element("ParsingValue").Value.Replace(',', '.'));
+
+                       break;
+
+                        #endregion
+                        #region LARM Metadata
                         case "17d59e41-13fb-469a-a138-bb691f13f2ba":
                             if (metadata.MetadataXML.Root.Element("Tags") != null)
                                 foreach (var keyword in metadata.MetadataXML.Root.Element("Tags").Value.Split(' '))
@@ -380,7 +390,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 yield return new KeyValuePair<string, string>("LARM-Program-Contain", "LARMMetadata");
 
                             break;
-
+                            #endregion
                         #endregion
                         #region KulturarvNord
                         case "bb615cd5-4470-ce4a-9207-b18e8ae33880":
