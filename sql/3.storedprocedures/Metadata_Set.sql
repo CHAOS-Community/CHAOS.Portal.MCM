@@ -55,7 +55,7 @@ BEGIN
         WHERE 
 				omj.ObjectGUID       = ObjectGUID
             AND	m.MetadataSchemaGUID = MetadataSchemaGUID
-            AND	m.LanguageCode       = LanguageCode;
+            AND (LanguageCode IS NULL AND m.LanguageCode IS Null OR m.LanguageCode = LanguageCode);
            
 		   SELECT 1;
 		                        
