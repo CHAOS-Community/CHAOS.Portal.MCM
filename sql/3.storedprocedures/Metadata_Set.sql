@@ -19,7 +19,7 @@ BEGIN
 
     START TRANSACTION;
 
-     IF NOT EXISTS(SELECT
+	IF NOT EXISTS(SELECT
 						*
 					FROM
 						Object_Metadata_Join AS omj
@@ -27,7 +27,9 @@ BEGIN
 					WHERE
 							omj.ObjectGuid       = ObjectGUID
 						AND	m.MetadataSchemaGUID = MetadataSchemaGUID
-						AND	m.LanguageCode       = LanguageCode ) THEN
+						AND	(LanguageCode IS NULL AND m.LanguageCode IS Null OR m.LanguageCode = LanguageCode)
+				)
+	THEN
                                   
         INSERT INTO Metadata
 			( GUID, LanguageCode, MetadataSchemaGUID, MetadataXml, DateCreated, EditingUserGUID )
