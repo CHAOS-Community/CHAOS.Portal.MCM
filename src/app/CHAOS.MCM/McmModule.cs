@@ -69,6 +69,7 @@
             yield return "ObjectRelation";
             yield return "ObjectType";
             yield return "Mcm";
+			yield return "UserProfile";
             yield return "UserManagement";
 
         }
@@ -108,6 +109,8 @@
                         return new ObjectType(PortalApplication, McmRepository, PermissionManager);
                     case "Mcm": 
                         return new Mcm(PortalApplication, McmRepository, PermissionManager);
+					case "UserProfile":
+						return new UserProfile(PortalApplication, McmRepository, PermissionManager);
 					case "UserManagement":
 						return new UserManagement(PortalApplication, McmRepository, PermissionManager).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"1\" UserObjectTypeId=\"0\" />");
                     default:
@@ -141,6 +144,8 @@
                         return new ObjectType(PortalApplication, McmRepository, PermissionManager);
                     case "Mcm": 
                         return new Mcm(PortalApplication, McmRepository, PermissionManager);
+					case "UserProfile":
+						return new UserProfile(PortalApplication, McmRepository, PermissionManager);
 					case "UserManagement":
 						return new UserManagement(PortalApplication, McmRepository, PermissionManager).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"1\" UserObjectTypeId=\"11\" />");
                     default:
