@@ -89,7 +89,7 @@
                     case "Destination": 
                         return new Destination(PortalApplication, McmRepository, PermissionManager);
                     case "File": 
-                        return new Folder(PortalApplication, McmRepository, PermissionManager);
+                        return new File(PortalApplication, McmRepository, PermissionManager);
                     case "Folder": 
                         return new Folder(PortalApplication, McmRepository, PermissionManager);
                     case "Format": 
@@ -122,7 +122,7 @@
                     case "Destination": 
                         return new Destination(PortalApplication, McmRepository, PermissionManager);
                     case "File": 
-                        return new Folder(PortalApplication, McmRepository, PermissionManager);
+                        return new File(PortalApplication, McmRepository, PermissionManager);
                     case "Folder": 
                         return new Folder(PortalApplication, McmRepository, PermissionManager);
                     case "Format": 

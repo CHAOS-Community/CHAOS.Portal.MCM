@@ -146,7 +146,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config.sample" />
-    <None Include="App.Config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Binding\" />
