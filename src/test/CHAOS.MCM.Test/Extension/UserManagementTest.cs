@@ -23,11 +23,12 @@ namespace Chaos.Mcm.Test.Extension
 
 			var result = extension.GetUserFolder();
 
-			Assert.That(result, Is.EqualTo(expected));
+			Assert.That(result.Count, Is.EqualTo(1));
+			Assert.That(result[0], Is.EqualTo(expected));
 		}
 
 		[Test]
-		public void GetUserFolder_UserDoesNotHaveFolderDontCreate_ReturnNull()
+		public void GetUserFolder_UserDoesNotHaveFolderDontCreate_ReturnEmptyList()
 		{
 			var extension = Make_UserManagementExtension();
 			var userInfo = SetupUser();
@@ -39,7 +40,7 @@ namespace Chaos.Mcm.Test.Extension
 
 			var result = extension.GetUserFolder(null, false);
 
-			Assert.That(result, Is.Null);
+			Assert.That(result.Count, Is.EqualTo(0));
 		}
 
 		[Test]
@@ -61,7 +62,8 @@ namespace Chaos.Mcm.Test.Extension
 
 			McmRepository.Verify(m => m.ObjectCreate(userInfo.Guid, 0, 2));
 
-			Assert.That(result, Is.EqualTo(expected));
+			Assert.That(result.Count, Is.EqualTo(1));
+			Assert.That(result[0], Is.EqualTo(expected));
 		}
 	}
 }

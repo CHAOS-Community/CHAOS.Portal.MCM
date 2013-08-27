@@ -75,16 +75,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\CHAOS.MCM\Chaos.Mcm.csproj">
-      <Project>{461ef48b-bbeb-4a4c-9968-66ace8d3d43d}</Project>
-      <Name>Chaos.Mcm</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Data\Dto\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config.sample" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\app\CHAOS.MCM\Chaos.Mcm.csproj">
+      <Project>{461ef48b-bbeb-4a4c-9968-66ace8d3d43d}</Project>
+      <Name>Chaos.Mcm</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
