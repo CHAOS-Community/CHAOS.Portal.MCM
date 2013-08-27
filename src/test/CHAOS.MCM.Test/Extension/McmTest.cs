@@ -16,7 +16,7 @@
             var mcm         = Make_McmExtension();
             McmRepository.Setup(m => m.ObjectGet(null, It.IsAny<uint>(), It.IsAny<uint>(), true, true, true, true, true)).Returns(new Data.Dto.Object[0]);
 
-            mcm.Index();
+            mcm.Index(null);
 
             ViewManager.Verify(m => m.Index(It.IsAny<IEnumerable<object>>()));
             ViewManager.Verify(m => m.Delete());

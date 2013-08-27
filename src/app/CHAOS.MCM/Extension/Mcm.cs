@@ -18,7 +18,7 @@
 
         #endregion
 
-        public Trace Index()
+        public Trace Index(string view)
         {
             var deleteStopwatch    = new System.Diagnostics.Stopwatch();
             var objectGetStopwatch = new System.Diagnostics.Stopwatch();
@@ -26,10 +26,15 @@
             var totalCount         = 0;
 
             deleteStopwatch.Start();
-            ViewManager.Delete();
+            
+            if(string.IsNullOrEmpty(view)) 
+                ViewManager.Delete();
+            else
+                ViewManager.GetView(view).Delete();
+            
             deleteStopwatch.Stop();
 
-            const uint PageSize = 1000;
+            const uint PageSize = 5000;
             
             for (uint i = 0; ; i++)
             {
@@ -38,7 +43,12 @@
                 objectGetStopwatch.Stop();
 
                 indexStopwatch.Start();
-                ViewManager.Index(objects);
+                
+                if (string.IsNullOrEmpty(view))
+                    ViewManager.Index(objects);
+                else
+                    ViewManager.GetView(view).Index(objects);
+                
                 indexStopwatch.Stop();
 
                 totalCount += objects.Count;
