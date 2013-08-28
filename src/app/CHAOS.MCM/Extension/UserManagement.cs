@@ -39,10 +39,30 @@ namespace Chaos.Mcm.Extension
 
 			var userFolderId = McmRepository.FolderCreate(Request.User.Guid, null, userGuid.ToString(), usersFolder.ID, Configuration.UserFolderTypeId);
 
-			if (McmRepository.ObjectCreate(userGuid.Value, Configuration.UserObjectTypeId, userFolderId) != 1)
+			return McmRepository.FolderGet(userFolderId);
+		}
+
+		#endregion
+		#region GetUserObject
+
+		public IList<Data.Dto.Object> GetUserObject(Guid? userGuid = null, bool createIfMissing = true, bool includeMetata = false, bool includeFiles = false)
+		{
+			if (!userGuid.HasValue)
+				userGuid = Request.User.Guid;
+
+			var @object = McmRepository.ObjectGet(userGuid.Value, includeMetata, includeFiles);
+
+			if (@object != null)
+				return new List<Data.Dto.Object> { @object };
+			if (!createIfMissing)
+				return new List<Data.Dto.Object>();
+
+			var userFolder = GetUserFolder(userGuid).First();
+
+			if (McmRepository.ObjectCreate(userGuid.Value, Configuration.UserObjectTypeId, userFolder.ID) != 1)
 				throw new System.Exception("Failed to create user object");
 
-			return McmRepository.FolderGet(userFolderId);
+			return new List<Data.Dto.Object> {McmRepository.ObjectGet(userGuid.Value, includeMetata, includeFiles)};
 		}
 
 		#endregion

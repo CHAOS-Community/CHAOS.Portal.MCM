@@ -112,7 +112,7 @@
 					case "UserProfile":
 						return new UserProfile(PortalApplication, McmRepository, PermissionManager);
 					case "UserManagement":
-						return new UserManagement(PortalApplication, McmRepository, PermissionManager).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"1\" UserObjectTypeId=\"0\" />");
+						return new UserManagement(PortalApplication, McmRepository, PermissionManager).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"1\" UserObjectTypeId=\"11\" />");
                     default:
                         throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
                 }
