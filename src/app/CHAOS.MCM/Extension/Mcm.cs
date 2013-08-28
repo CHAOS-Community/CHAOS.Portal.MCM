@@ -34,7 +34,7 @@
             
             deleteStopwatch.Stop();
 
-            const uint PageSize = 5000;
+            const uint PageSize = 1000;
             
             for (uint i = 0; ; i++)
             {
@@ -67,7 +67,6 @@
             trace.Lines.Add( "Total/s\t" + ( totalCount / ( indexStopwatch.Elapsed.TotalMilliseconds + objectGetStopwatch.Elapsed.TotalMilliseconds ) * 1000 ) );
 
             return trace;
-            //return new ScalarResult(1);
         }
     }
 }
