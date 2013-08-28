@@ -32,12 +32,12 @@ namespace Chaos.Mcm.Test.Extension
 
 			var result = extension.Get(schemaGuid);
 			
-			
-			Assert.That(result.MetadataXml, Is.EqualTo(expected.MetadataXml));
+			Assert.That(result.Count, Is.EqualTo(1));
+			Assert.That(result[0].MetadataXml, Is.EqualTo(expected.MetadataXml));
 		}
 
 		[Test]
-		public void Get_UserDoesNotHaveProfile_ReturnNull()
+		public void Get_UserDoesNotHaveProfile_ReturnEmpty()
 		{
 			var extension = Make_UserProfileExtension();
 			var schemaGuid = Guid.NewGuid();
@@ -55,7 +55,7 @@ namespace Chaos.Mcm.Test.Extension
 			var result = extension.Get(schemaGuid);
 
 
-			Assert.That(result, Is.Null);
+			Assert.That(result.Count, Is.EqualTo(0));
 		}
 
 		[Test]

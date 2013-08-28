@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using Chaos.Mcm.Data;
 using Chaos.Mcm.Data.Configuration;
@@ -22,19 +23,24 @@ namespace Chaos.Mcm.Extension
 
 		#region Get
 
-		public Data.Dto.UserProfile Get(Guid metadataSchemaGuid, Guid? userGuid = null)
+		public IList<Data.Dto.UserProfile> Get(Guid metadataSchemaGuid, Guid? userGuid = null)
 		{
 			if (!userGuid.HasValue)
 				userGuid = Request.User.Guid;
 
 			var userObject = McmRepository.ObjectGet(userGuid.Value, true);
 
+			var result = new List<Data.Dto.UserProfile>();
+
 			if (userObject == null || userObject.Metadatas == null)
-				return null;
+				return result;
 
 			var metadata = userObject.Metadatas.FirstOrDefault(m => m.MetadataSchemaGuid == metadataSchemaGuid);
 
-			return metadata == null ? null : new Data.Dto.UserProfile(metadata);
+			if(metadata != null)
+				result.Add(new Data.Dto.UserProfile(metadata));
+
+			return result;
 		}
 
 		#endregion

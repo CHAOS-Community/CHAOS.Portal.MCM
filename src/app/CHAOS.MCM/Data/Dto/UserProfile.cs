@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Xml.Linq;
+using Chaos.Portal.Core.Data.Model;
 using CHAOS.Serialization;
 
 namespace Chaos.Mcm.Data.Dto
 {
 	[Serialize("UserProfile")]
-	public class UserProfile
+	public class UserProfile : AResult
 	{
 		public UserProfile()
 		{
