@@ -441,7 +441,15 @@ namespace CHAOS.MCM.Data.Dto.Standard
             //		break;
             //	}
 
-            // TODO: Modify accessPoint logic to support multiple accessPoints with different publish settings
+            foreach (var ap in AccessPoints)
+            {
+                var start = ap.StartDate.HasValue ? ap.StartDate.Value : DateTime.MaxValue;
+                var end   = ap.EndDate.HasValue ? ap.EndDate.Value : DateTime.MaxValue;
+
+                yield return new KeyValuePair<string, string>(string.Format("{0}_PubStart", ap.AccessPointGUID), start.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
+                yield return new KeyValuePair<string, string>(string.Format("{0}_PubEnd", ap.AccessPointGUID), end.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
+            }
+            
             var accessPoint = AccessPoints.FirstOrDefault();
 
             if (accessPoint != null && accessPoint.StartDate.HasValue)

@@ -32,7 +32,7 @@ namespace CHAOS.MCM.Module
 			        var metadataSchemas = new List<MetadataSchema>();
 
                     if( accessPointGUID != null )
-                        query.Query = string.Format( "({0})+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+TO+*])", query.Query );
+                        query.Query = string.Format("({0})+AND+({1}_PubStart:[*+TO+NOW]+AND+{1}_PubEnd:[NOW+TO+*])", query.Query, accessPointGUID);
                     else
                     {
                         callContext.Log.Debug("is anonymous user");
