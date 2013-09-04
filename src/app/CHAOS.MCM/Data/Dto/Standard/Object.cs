@@ -425,22 +425,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
                 }
             }
 
-            //if( AccessPoints != null )
-            //	foreach( var accessPoint in AccessPoints )
-            //	{
-            //		if( accessPoint.StartDate.HasValue )
-            //			yield return new KeyValuePair<string, string>( "PubStart", accessPoint.StartDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-            //		else 
-            //			yield return new KeyValuePair<string, string>( "PubStart", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-
-            //		if( accessPoint.EndDate.HasValue )
-            //			yield return new KeyValuePair<string, string>( "PubEnd", accessPoint.EndDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-            //		else
-            //			yield return new KeyValuePair<string, string>( "PubEnd", DateTime.MaxValue.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'" ) );
-
-            //		break;
-            //	}
-
+            if (AccessPoints != null)
             foreach (var ap in AccessPoints)
             {
                 var start = ap.StartDate.HasValue ? ap.StartDate.Value : DateTime.MaxValue;
@@ -449,14 +434,6 @@ namespace CHAOS.MCM.Data.Dto.Standard
                 yield return new KeyValuePair<string, string>(string.Format("{0}_PubStart", ap.AccessPointGUID), start.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
                 yield return new KeyValuePair<string, string>(string.Format("{0}_PubEnd", ap.AccessPointGUID), end.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
             }
-            
-            var accessPoint = AccessPoints.FirstOrDefault();
-
-            if (accessPoint != null && accessPoint.StartDate.HasValue)
-                yield return new KeyValuePair<string, string>("PubStart", accessPoint.StartDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
-
-            if (accessPoint != null && accessPoint.EndDate.HasValue)
-                yield return new KeyValuePair<string, string>("PubEnd", accessPoint.EndDate.Value.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
         }
 
 	    private static string GetXmlContent( XContainer xml )
