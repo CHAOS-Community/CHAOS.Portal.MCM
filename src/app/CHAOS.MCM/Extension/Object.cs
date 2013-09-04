@@ -90,7 +90,11 @@
 
 		    McmRepository.ObjectCreate(guid.Value, objectTypeID, folderID);
 
-		    return McmRepository.ObjectGet(guid.Value);
+		    var result = McmRepository.ObjectGet(guid.Value);
+            
+            ViewManager.Index(result);
+
+		    return result;
 
             //    PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), newObject );
 		}
