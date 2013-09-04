@@ -34,13 +34,27 @@
         public void Get_WithAccessPointGuid_ShouldAddAccessPointToQuery()
         {
             var extension       = Make_ObjectExtension();
-            var accessPointGuid = new Guid("00000000-0000-0000-0000-000000000000");
+            var accessPointGuid = new Guid("00000000-0000-0000-0000-000000000001");
             var view            = new Mock<IView>();
             ViewManager.Setup(m => m.GetView("Object")).Returns(view.Object);
 
             extension.Get(new List<Guid>(), accessPointGuid, true, true, true, true, true);
 
-            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(00000000-0000-0000-0000-000000000000_PubStart:[*+TO+NOW]+AND+00000000-0000-0000-0000-000000000000_PubEnd:[NOW+TO+*])")));
+            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(00000000-0000-0000-0000-000000000001_PubStart:[*+TO+NOW]+AND+00000000-0000-0000-0000-000000000001_PubEnd:[NOW+TO+*])")));
+        }
+        
+        [Test]
+        public void Get_WithAccessPointGuidAndMultipleIds_ShouldAddAccessPointToQuery()
+        {
+            var extension       = Make_ObjectExtension();
+            var accessPointGuid = new Guid("00000000-0000-0000-0000-000000000001");
+            var objectGuids     = new List<Guid> { new Guid("00000000-0000-0000-0000-000000000002"), new Guid("00000000-0000-0000-0000-000000000003") };
+            var view            = new Mock<IView>();
+            ViewManager.Setup(m => m.GetView("Object")).Returns(view.Object);
+
+            extension.Get(objectGuids, accessPointGuid, true, true, true, true, true);
+
+            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(00000000-0000-0000-0000-000000000001_PubStart:[*+TO+NOW]+AND+00000000-0000-0000-0000-000000000001_PubEnd:[NOW+TO+*])")));
         }
 
         [Test]
