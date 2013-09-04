@@ -28,16 +28,13 @@ namespace Chaos.Mcm.Test.Extension
     using ObjectRelation = Chaos.Mcm.Extension.ObjectRelation;
     using ObjectType = Chaos.Mcm.Data.Dto.ObjectType;
 
-    public class TestBase
+    public class TestBase : Test.TestBase
     {
         #region Fields
 
         protected Mock<IPermissionManager> PermissionManager { get; set; }
-        protected Mock<IPortalApplication> PortalApplication { get; set; }
-        protected Mock<IPortalRepository>  PortalRepository { get; set; }
         protected Mock<IMcmRepository>     McmRepository { get; set; }
         protected Mock<IPortalRequest>     PortalRequest { get; set; }
-        protected Mock<IViewManager>       ViewManager { get; set; }
         protected Mock<ICache>             Cache { get; set; }
         
 
@@ -48,14 +45,10 @@ namespace Chaos.Mcm.Test.Extension
         public void SetUp()
         {
             PermissionManager = new Mock<IPermissionManager>();
-            PortalApplication = new Mock<IPortalApplication>();
-            PortalRepository  = new Mock<IPortalRepository>();
             McmRepository     = new Mock<IMcmRepository>();
             PortalRequest     = new Mock<IPortalRequest>();
-            ViewManager       = new Mock<IViewManager>();
             Cache             = new Mock<ICache>();
 
-            PortalApplication.SetupGet(p => p.ViewManager).Returns(ViewManager.Object);
             McmRepository.Setup(m => m.WithConfiguration(It.IsAny<string>())).Returns(McmRepository.Object);
         }
 

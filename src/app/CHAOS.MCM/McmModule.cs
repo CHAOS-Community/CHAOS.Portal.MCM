@@ -9,6 +9,7 @@
     using Chaos.Mcm.Permission;
     using Chaos.Mcm.Permission.InMemory;
     using Chaos.Mcm.Permission.Specification;
+    using Chaos.Mcm.View;
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Extension;
@@ -49,11 +50,13 @@
         {
             PortalApplication = portalApplication;
 
-            var configuration = PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME);
+            var configuration    = PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME);
             var connectionString = XDocument.Parse(configuration.Configuration).Root.Attribute("ConnectionString").Value;
             
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
+
+            portalApplication.ViewManager.AddView(new ObjectView());
         }
 
         public IEnumerable<string> GetExtensionNames(Protocol version)

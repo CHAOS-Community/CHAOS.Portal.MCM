@@ -70,9 +70,12 @@
     <Compile Include="Extension\TestBase.cs" />
     <Compile Include="Extension\UserManagementTest.cs" />
     <Compile Include="Extension\UserProfileTest.cs" />
+    <Compile Include="McmModuleTest.cs" />
     <Compile Include="Permission\InMemoryPermissionManagerTest.cs" />
     <Compile Include="Permission\IntervalSpecificationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestBase.cs" />
+    <Compile Include="View\ObjectIndexTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Dto\" />

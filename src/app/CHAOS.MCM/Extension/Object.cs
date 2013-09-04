@@ -37,7 +37,7 @@
 //			        var metadataSchemas = new List<Chaos.Mcm.Data.EF.MetadataSchema>();
 //
 //                    if( accessPointGuid != null )
-//                        query.Query = string.Format( "({0})+AND+(PubStart:[*+TO+NOW]+AND+PubEnd:[NOW+TO+*])", query.Query );
+//                        query.Query = string.Format("({0})+AND+({1}_PubStart:[*+TO+NOW]+AND+{1}_PubEnd:[NOW+TO+*])", query.Query, accessPointGUID);            
 //                    else
 //                    {
 //						if( callContext.IsAnonymousUser )
