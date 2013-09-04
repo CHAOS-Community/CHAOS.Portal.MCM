@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using CHAOS.Extensions;
     using CHAOS.Serialization;
 
     using Chaos.Mcm.Data.Dto;
@@ -29,6 +30,18 @@
             return new[] { new ObjectViewData(obj) };
 
             
+        }
+
+        public override IPagedResult<IResult> Query(Portal.Core.Indexing.IQuery query)
+        {
+            var result = Core.Query(query);
+
+            var foundCount = result.QueryResult.FoundCount;
+            var startIndex = result.QueryResult.StartIndex;
+            var keys       = result.QueryResult.Results.Select(item => item.Id);
+            var results    = Cache.Get<ObjectViewData>(keys);
+
+            return new PagedResult<IResult>(foundCount, startIndex, results);
         }
 
         #endregion

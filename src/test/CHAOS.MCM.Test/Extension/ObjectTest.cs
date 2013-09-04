@@ -5,6 +5,8 @@
     using System.Linq;
 
     using Chaos.Portal.Core.Data.Model;
+    using Chaos.Portal.Core.Indexing;
+    using Chaos.Portal.Core.Indexing.View;
 
     using Moq;
 
@@ -23,9 +25,22 @@
             var extension  = Make_ObjectExtension();
             var objectGuid = new List<Guid>{Guid.NewGuid()};
 
-            extension.Get(objectGuid, true, true, true, true, true);
+            extension.Get(objectGuid, null, true, true, true, true, true);
 
             McmRepository.Verify(m => m.ObjectGet(It.IsAny<IEnumerable<Guid>>(), true, true, true, true, true ));
+        }
+        
+        [Test]
+        public void Get_WithAccessPointGuid_ShouldAddAccessPointToQuery()
+        {
+            var extension       = Make_ObjectExtension();
+            var accessPointGuid = new Guid("00000000-0000-0000-0000-000000000000");
+            var view            = new Mock<IView>();
+            ViewManager.Setup(m => m.GetView("Object")).Returns(view.Object);
+
+            extension.Get(new List<Guid>(), accessPointGuid, true, true, true, true, true);
+
+            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(00000000-0000-0000-0000-000000000000_PubStart:[*+TO+NOW]+AND+00000000-0000-0000-0000-000000000000_PubEnd:[NOW+TO+*])")));
         }
 
         [Test]
@@ -36,9 +51,9 @@
             var objectGuid = new List<Guid> { Guid.NewGuid() };
             McmRepository.Setup(m => m.ObjectGet(It.IsAny<IEnumerable<Guid>>(), false, false, false, false, false)).Returns(new[] { expected });
 
-            var result = extension.Get(objectGuid, false, false, false, false, false);
+            var result = extension.Get(objectGuid, null, false, false, false, false, false);
 
-            Assert.AreEqual(expected, result.First());
+            Assert.AreEqual(expected, result.Results.First());
         }
 
         [Test]

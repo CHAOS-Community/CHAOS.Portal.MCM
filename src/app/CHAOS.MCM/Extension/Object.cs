@@ -9,6 +9,7 @@
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Indexing.Solr.Request;
 
     using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
 
@@ -125,12 +126,26 @@
             //RemoveObjectFromIndex( callContext.IndexManager.GetIndex<Mcm>(), delObject );
         }
 
-        public IEnumerable<Data.Dto.Object> Get(IEnumerable<Guid> objectGuids, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false)
+        public IPagedResult<IResult> Get(IEnumerable<Guid> objectGuids, Guid? accessPointGuid, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false)
         {
-            //todo: uncomment this
+            if (accessPointGuid == null)
+            {
+                // todo apply folder filter
+                var objectGet = McmRepository.ObjectGet(objectGuids, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints);
+                return new PagedResult<IResult>(0, 0, objectGet);
+            }
+            else
+            {
+                var query = new SolrQuery{Query = "*:*"};
+
+                if (objectGuids.Any()) 
+                    query.Query = string.Format("Id:{0}", string.Join(" ", objectGuids));
+
+                query.Query = string.Format("({0})AND({1}_PubStart:[*+TO+NOW]+AND+{1}_PubEnd:[NOW+TO+*])", query.Query, accessPointGuid);
+
+                return ViewManager.GetView("Object").Query(query);
+            }
            // var objectsWithPermission = objectGuids.Where(item => HasPermissionToObject(callContext, item.ToUUID(), FolderPermission.Read));
-            
-            return McmRepository.ObjectGet(objectGuids, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints);
         }
     }
 }

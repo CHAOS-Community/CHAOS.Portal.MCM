@@ -4,6 +4,8 @@
     using System.Configuration;
     using System.Xml.Linq;
 
+    using CHAOS.Net;
+
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Extension;
     using Chaos.Mcm.Permission;
@@ -13,6 +15,7 @@
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Extension;
+    using Chaos.Portal.Core.Indexing.Solr;
 
     using Folder = Chaos.Mcm.Extension.Folder;
 
@@ -56,7 +59,11 @@
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
 
-            portalApplication.ViewManager.AddView(new ObjectView());
+            var objectView = new ObjectView();
+            portalApplication.ViewManager.AddView(objectView);
+            objectView.WithPortalApplication(portalApplication);
+            objectView.WithCache(portalApplication.Cache);
+            objectView.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), "object"));
         }
 
         public IEnumerable<string> GetExtensionNames(Protocol version)

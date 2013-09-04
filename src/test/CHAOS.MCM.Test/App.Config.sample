@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
-  <connectionStrings>
-    <add name="MCMEntities" 
-         connectionString="metadata=res://*/MCM.csdl|res://*/MCM.ssdl|res://*/MCM.msl;provider=MySql.Data.MySqlClient;provider connection string=&quot;server={SERVER};user id={USER};password={PASSWORD};database={DATABASE};persist security info=True&quot;" 
-         providerName="System.Data.EntityClient" />
-  </connectionStrings>
+  <appSettings>
+    <add key="AnonymousUserGUID" value="12121212-1212-1212-1212-121212121212"/>
+    <add key="SOLR_URL" value="http://localhost:8080/"/>
+  </appSettings>
 </configuration>

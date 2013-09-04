@@ -81,6 +81,7 @@
     <Folder Include="Data\Dto\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <None Include="App.Config.sample" />
   </ItemGroup>
   <ItemGroup>
