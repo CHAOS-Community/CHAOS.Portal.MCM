@@ -7,12 +7,8 @@ namespace Chaos.Mcm.Test.Extension
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
     using Chaos.Mcm.Extension;
-    using Chaos.Mcm.Permission;
-    using Chaos.Portal.Core;
     using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data;
     using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Indexing.View;
     using Chaos.Portal.Core.Request;
 
     using Moq;
@@ -32,7 +28,6 @@ namespace Chaos.Mcm.Test.Extension
     {
         #region Fields
 
-        protected Mock<IPermissionManager> PermissionManager { get; set; }
         protected Mock<IMcmRepository>     McmRepository { get; set; }
         protected Mock<IPortalRequest>     PortalRequest { get; set; }
         protected Mock<ICache>             Cache { get; set; }
@@ -44,10 +39,9 @@ namespace Chaos.Mcm.Test.Extension
         [SetUp]
         public void SetUp()
         {
-            PermissionManager = new Mock<IPermissionManager>();
-            McmRepository     = new Mock<IMcmRepository>();
-            PortalRequest     = new Mock<IPortalRequest>();
-            Cache             = new Mock<ICache>();
+            McmRepository = new Mock<IMcmRepository>();
+            PortalRequest = new Mock<IPortalRequest>();
+            Cache         = new Mock<ICache>();
 
             McmRepository.Setup(m => m.WithConfiguration(It.IsAny<string>())).Returns(McmRepository.Object);
         }

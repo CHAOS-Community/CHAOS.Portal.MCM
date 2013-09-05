@@ -2,22 +2,35 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
-    using CHAOS.Extensions;
     using CHAOS.Serialization;
 
     using Chaos.Mcm.Data.Dto;
+    using Chaos.Mcm.Permission;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Indexing.View;
 
+    using IFolder = Chaos.Mcm.Permission.IFolder;
     using Object = Chaos.Mcm.Data.Dto.Object;
 
     public class ObjectView : AView
     {
-        public ObjectView() : base("Object")
+        #region Initialization
+
+        public ObjectView(IPermissionManager permissionManager) : base("Object")
         {
+            PermissionManager = permissionManager;
         }
+
+        #endregion
+
+        #region Properties
+
+        public IPermissionManager PermissionManager { get; set; }
+
+        #endregion
 
         #region Overrides of AView
 
@@ -27,9 +40,7 @@
 
             if (obj == null) return new List<IViewData>();
 
-            return new[] { new ObjectViewData(obj) };
-
-            
+            return new[] { new ObjectViewData(obj, PermissionManager) };
         }
 
         public override IPagedResult<IResult> Query(Portal.Core.Indexing.IQuery query)
@@ -52,15 +63,18 @@
     {
         #region Initialization
 
-        public ObjectViewData(Object obj)
+        public ObjectViewData(Object obj, IPermissionManager permissionManager)
         {
             Object = obj;
+            PermissionManager = permissionManager;
         }
 
         #endregion
         #region Properties
 
         protected Object Object { get; set; }
+
+        public IPermissionManager PermissionManager { get; set; }
 
         public KeyValuePair<string, string> UniqueIdentifier { get { return new KeyValuePair<string, string>("Id", Object.Guid.ToString()); } }
 
@@ -103,6 +117,17 @@
             
                     yield return new KeyValuePair<string, string>(string.Format("{0}_PubStart", ap.AccessPointGuid), start.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
                     yield return new KeyValuePair<string, string>(string.Format("{0}_PubEnd", ap.AccessPointGuid), end.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
+                }
+
+            if(ObjectFolders != null)
+                foreach(var objectFolder in ObjectFolders)
+                {
+                    yield return new KeyValuePair<string, string>("FolderId", objectFolder.ID.ToString(CultureInfo.InvariantCulture));
+
+                    foreach (var folder in PermissionManager.GetFolders(objectFolder.ID).GetAncestorFolders())
+                    {
+                        yield return new KeyValuePair<string, string>("FolderAncestors", folder.ID.ToString(CultureInfo.InvariantCulture));
+                    }
                 }
         }
         

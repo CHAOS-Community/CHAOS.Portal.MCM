@@ -59,7 +59,7 @@
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
 
-            var objectView = new ObjectView();
+            var objectView = new ObjectView(PermissionManager);
             portalApplication.ViewManager.AddView(objectView);
             objectView.WithPortalApplication(portalApplication);
             objectView.WithCache(portalApplication.Cache);
