@@ -130,26 +130,36 @@
             //RemoveObjectFromIndex( callContext.IndexManager.GetIndex<Mcm>(), delObject );
         }
 
-        public IPagedResult<IResult> Get(IEnumerable<Guid> objectGuids, Guid? accessPointGuid, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false)
+        public IPagedResult<IResult> Get(IEnumerable<Guid> objectGuids, Guid? accessPointGuid, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, uint pageSize = 10, uint pageIndex = 0)
         {
+            var query = new SolrQuery{Query = "*:*"};
+
+            query.PageIndex = pageIndex;
+            query.PageSize  = pageSize;
+
+            if (objectGuids.Any()) query.Query = string.Format("Id:{0}", string.Join(" ", objectGuids));
+
             if (accessPointGuid == null)
             {
-                // todo apply folder filter
-                var objectGet = McmRepository.ObjectGet(objectGuids, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints);
-                return new PagedResult<IResult>(0, 0, objectGet);
+                var userGuid    = Request.User.Guid;
+                var groupGuids  = Request.Groups.Select(group => group.Guid).ToList();
+                var folders     = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
+                var folderQuery = string.Format("FolderAncestors:{0}", string.Join(" ", folders.Select(item => item.ID)));
+
+                if(!folders.Any()) throw new InsufficientPermissionsException("User does not have access to any folders");
+
+                query.Query = string.Format( "({0})AND({1})", query.Query, folderQuery );
+                
+                // todo remove metadata schemas the user doesnt have permission to read
+
+                return ViewManager.GetView("Object").Query(query);
             }
             else
             {
-                var query = new SolrQuery{Query = "*:*"};
-
-                if (objectGuids.Any()) 
-                    query.Query = string.Format("Id:{0}", string.Join(" ", objectGuids));
-
                 query.Query = string.Format("({0})AND({1}_PubStart:[*+TO+NOW]+AND+{1}_PubEnd:[NOW+TO+*])", query.Query, accessPointGuid);
 
                 return ViewManager.GetView("Object").Query(query);
             }
-           // var objectsWithPermission = objectGuids.Where(item => HasPermissionToObject(callContext, item.ToUUID(), FolderPermission.Read));
         }
     }
 }

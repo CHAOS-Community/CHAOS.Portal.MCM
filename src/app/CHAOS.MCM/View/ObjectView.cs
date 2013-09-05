@@ -49,7 +49,7 @@
 
             var foundCount = result.QueryResult.FoundCount;
             var startIndex = result.QueryResult.StartIndex;
-            var keys       = result.QueryResult.Results.Select(item => item.Id);
+            var keys       = result.QueryResult.Results.Select(item => CreateKey(item.Id));
             var results    = Cache.Get<ObjectViewData>(keys);
 
             return new PagedResult<IResult>(foundCount, startIndex, results);
@@ -58,34 +58,68 @@
         #endregion
     }
 
-    [Serialize("Object")]
     public class ObjectViewData : AResult, IViewData
     {
         #region Initialization
 
         public ObjectViewData(Object obj, IPermissionManager permissionManager)
         {
-            Object = obj;
+            Object            = obj;
             PermissionManager = permissionManager;
+        }
+
+        public ObjectViewData()
+        {
+            Object = new Object();
         }
 
         #endregion
         #region Properties
 
-        protected Object Object { get; set; }
+        private Object Object { get; set; }
 
-        public IPermissionManager PermissionManager { get; set; }
+        private IPermissionManager PermissionManager { get; set; }
 
         public KeyValuePair<string, string> UniqueIdentifier { get { return new KeyValuePair<string, string>("Id", Object.Guid.ToString()); } }
 
         [Serialize]
-        public string Id { get { return Object.Guid.ToString(); } }
+        public string Id
+        {
+            get
+            {
+                return Object.Guid.ToString();
+            }
+            set
+            {
+                Object.Guid = Guid.Parse(value);
+            }
+        }
 
         [Serialize]
-        public uint ObjectTypeId { get { return Object.ObjectTypeID; } }
+        public uint ObjectTypeId
+        {
+            get
+            {
+                return Object.ObjectTypeID;
+            }
+            set
+            {
+                Object.ObjectTypeID = value;
+            }
+        }
 
         [Serialize]
-        public DateTime DateCreated { get { return Object.DateCreated; } }
+        public DateTime DateCreated
+        {
+            get
+            {
+                return Object.DateCreated;
+            }
+            set
+            {
+                Object.DateCreated = value;
+            }
+        }
 
         [Serialize]
         public IList<Metadata> Metadatas { get { return Object.Metadatas; } }

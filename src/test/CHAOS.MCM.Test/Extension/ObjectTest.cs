@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Chaos.Mcm.Permission.InMemory;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Indexing;
     using Chaos.Portal.Core.Indexing.View;
@@ -20,14 +21,37 @@
     public class ObjectTest : TestBase
     {
         [Test]
-        public void Get_WithSingleGuid_ShouldCallMcmRepositoryWithGuid()
+        public void Get_WithSingleGuid_ShouldQueryViewWithIdAndFolders()
         {
             var extension  = Make_ObjectExtension();
-            var objectGuid = new List<Guid>{Guid.NewGuid()};
+            var objectGuid = new List<Guid>{new Guid("00000000-0000-0000-0000-000000000001")};
+            var view       = new Mock<IView>();
+            var folder     = new Folder{ID = 1};
+            var user       = Make_User();
+            ViewManager.Setup(m => m.GetView("Object")).Returns(view.Object);
+            PortalRequest.SetupGet(p => p.User).Returns(user);
+            PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
 
             extension.Get(objectGuid, null, true, true, true, true, true);
 
-            McmRepository.Verify(m => m.ObjectGet(It.IsAny<IEnumerable<Guid>>(), true, true, true, true, true ));
+            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001)AND(FolderAncestors:1)")));
+        }
+
+        [Test]
+        public void Get_WithMultipleGuids_ShouldQueryViewWithIdsAndFolders()
+        {
+            var extension  = Make_ObjectExtension();
+            var objectGuid = new List<Guid> { new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000002"), new Guid("00000000-0000-0000-0000-000000000003") };
+            var view       = new Mock<IView>();
+            var folder     = new Folder{ID = 1};
+            var user       = Make_User();
+            ViewManager.Setup(m => m.GetView("Object")).Returns(view.Object);
+            PortalRequest.SetupGet(p => p.User).Returns(user);
+            PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
+
+            extension.Get(objectGuid, null, true, true, true, true, true);
+
+            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001 00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(FolderAncestors:1)")));
         }
         
         [Test]
@@ -55,19 +79,6 @@
             extension.Get(objectGuids, accessPointGuid, true, true, true, true, true);
 
             view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(00000000-0000-0000-0000-000000000001_PubStart:[*+TO+NOW]+AND+00000000-0000-0000-0000-000000000001_PubEnd:[NOW+TO+*])")));
-        }
-
-        [Test]
-        public void Get_WithSingleGuid_ShouldReturnObjectRecievedFromRepository()
-        {
-            var extension  = Make_ObjectExtension();
-            var expected   = new Object();
-            var objectGuid = new List<Guid> { Guid.NewGuid() };
-            McmRepository.Setup(m => m.ObjectGet(It.IsAny<IEnumerable<Guid>>(), false, false, false, false, false)).Returns(new[] { expected });
-
-            var result = extension.Get(objectGuid, null, false, false, false, false, false);
-
-            Assert.AreEqual(expected, result.Results.First());
         }
 
         [Test]
