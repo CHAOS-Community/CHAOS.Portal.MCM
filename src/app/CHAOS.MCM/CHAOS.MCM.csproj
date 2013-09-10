@@ -111,6 +111,7 @@
     <Compile Include="Data\Mapping\ObjectTypeMapping.cs" />
     <Compile Include="Data\McmRepository.cs" />
     <Compile Include="Data\PermissionRepository.cs" />
+    <Compile Include="EmailServiceExtensions.cs" />
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
