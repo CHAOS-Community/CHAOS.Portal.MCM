@@ -4,4 +4,8 @@
     <add name="mcm" 
          connectionString="server=;user id=;password=;persist security info=True;database=" />
   </connectionStrings>
+	<appSettings>
+		<add key="AWSKey" value="MyKey"/>
+		<add key="AWSSecret" value="MySecret"/>
+	</appSettings>
 </configuration>

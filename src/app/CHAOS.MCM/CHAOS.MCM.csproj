@@ -64,6 +64,7 @@
     <Compile Include="Data\Dto\FolderInfo.cs" />
     <Compile Include="Data\Dto\FolderPermission.cs" />
     <Compile Include="Data\Dto\Format.cs" />
+    <Compile Include="Data\Dto\MetadataIdentifier.cs" />
     <Compile Include="Data\Dto\MetadataSchema.cs" />
     <Compile Include="Data\Dto\ObjectAccessPoint.cs" />
     <Compile Include="Data\Dto\FileInfo.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Data\Mapping\ObjectTypeMapping.cs" />
     <Compile Include="Data\McmRepository.cs" />
     <Compile Include="Data\PermissionRepository.cs" />
+    <Compile Include="EmailServiceExtensions.cs" />
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
