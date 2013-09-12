@@ -12,10 +12,6 @@ namespace Chaos.Mcm.Extension
 	{
 		#region Constructor
 
-		public UserManagement(IPortalApplication portalApplication) : base(portalApplication)
-		{
-		}
-
 		public UserManagement(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
 		{
 		}

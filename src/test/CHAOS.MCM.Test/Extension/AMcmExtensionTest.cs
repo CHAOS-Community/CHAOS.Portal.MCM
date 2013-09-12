@@ -35,11 +35,6 @@
 
     public class AMcmExtensionStub : AMcmExtension
     {
-        public AMcmExtensionStub(IPortalApplication portalApplication)
-            : base(portalApplication)
-        {
-        }
-
         public AMcmExtensionStub(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager)
             : base(portalApplication, mcmRepository, permissionManager)
         {

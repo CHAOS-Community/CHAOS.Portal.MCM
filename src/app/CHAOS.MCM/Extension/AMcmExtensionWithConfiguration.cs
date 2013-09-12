@@ -13,11 +13,6 @@ namespace Chaos.Mcm.Extension
 {
 	public abstract class AMcmExtensionWithConfiguration<T> : AMcmExtension
 	{
-		protected AMcmExtensionWithConfiguration(IPortalApplication portalApplication) : base(portalApplication)
-		{
-			
-		}
-
 		protected AMcmExtensionWithConfiguration(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
 		{
 		}

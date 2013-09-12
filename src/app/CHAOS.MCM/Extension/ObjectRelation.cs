@@ -16,10 +16,6 @@
         {
         }
 
-        public ObjectRelation(IPortalApplication portalApplication): base(portalApplication)
-        {
-        }
-
         #endregion
 
         // todo: implement permission on Set

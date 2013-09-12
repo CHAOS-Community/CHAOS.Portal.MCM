@@ -72,6 +72,7 @@
     <Compile Include="Extension\TestBase.cs" />
     <Compile Include="Extension\UserManagementTest.cs" />
     <Compile Include="Extension\UserProfileTest.cs" />
+    <Compile Include="Extension\v5\ObjectTest.cs" />
     <Compile Include="McmModuleTest.cs" />
     <Compile Include="Permission\InMemoryPermissionManagerTest.cs" />
     <Compile Include="Permission\IntervalSpecificationTest.cs" />

@@ -22,11 +22,6 @@
         {
         }
 
-        public Folder(IPortalApplication portalApplication)
-            : base(portalApplication)
-        {
-        }
-
         #endregion
         #region Permission
 
