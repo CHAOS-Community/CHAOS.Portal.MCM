@@ -29,13 +29,14 @@
             query.Query = query.Query.Replace("GUID:", "Id:");
             query.Query = query.Query.Replace("ObjectTypeID:", "ObjectTypeId:");
 
-            return ViewManager.GetObjects( query,
-                                           accessPointGUID,
-                                           GetFoldersWithAccess(),
-                                           includeAccessPoints,
-                                           includeMetadata,
-                                           includeFiles,
-                                           includeObjectRelations );
+            var pagedResult = ViewManager.GetObjects(query, accessPointGUID, GetFoldersWithAccess(), includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations);
+
+            // todo map to v5 object
+
+
+            // todo filter based on include parameters
+
+            return pagedResult;
         }
 
         #endregion
