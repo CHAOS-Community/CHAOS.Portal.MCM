@@ -117,6 +117,7 @@
     <Compile Include="Extension\AMcmExtension.cs" />
     <Compile Include="Extension\AMcmExtensionWithConfiguration.cs" />
     <Compile Include="Extension\Destination.cs" />
+    <Compile Include="Extension\Domain\ObjectExtensions.cs" />
     <Compile Include="Extension\File.cs" />
     <Compile Include="Extension\Folder.cs" />
     <Compile Include="Extension\Format.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Extension\Trace.cs" />
     <Compile Include="Extension\UserManagement.cs" />
     <Compile Include="Extension\UserProfile.cs" />
+    <Compile Include="Extension\v5\Object.cs" />
     <Compile Include="IMcmModule.cs" />
     <Compile Include="McmModule.cs" />
     <Compile Include="Permission\AccessPointPermission.cs" />

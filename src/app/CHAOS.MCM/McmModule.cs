@@ -16,6 +16,7 @@
     using Chaos.Portal.Core.Exceptions;
     using Chaos.Portal.Core.Extension;
     using Chaos.Portal.Core.Indexing.Solr;
+    using Chaos.Portal.Core.Indexing.View;
 
     using Folder = Chaos.Mcm.Extension.Folder;
 
@@ -59,11 +60,17 @@
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
 
-            var objectView = new ObjectView(PermissionManager);
-            portalApplication.ViewManager.AddView(objectView);
-            objectView.WithPortalApplication(portalApplication);
-            objectView.WithCache(portalApplication.Cache);
+            var objectView = CreateObjectView();
+            objectView.WithPortalApplication(PortalApplication);
+            objectView.WithCache(PortalApplication.Cache);
             objectView.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), "object"));
+
+            portalApplication.ViewManager.AddView(objectView);
+        }
+
+        protected virtual IView CreateObjectView()
+        {
+            return new ObjectView(PermissionManager);
         }
 
         public IEnumerable<string> GetExtensionNames(Protocol version)
@@ -112,7 +119,7 @@
                     case "MetadataSchema": 
                         return new MetadataSchema(PortalApplication, McmRepository, PermissionManager);
                     case "Object": 
-                        return new Object(PortalApplication, McmRepository, PermissionManager);
+                        return new Extension.v5.Object(PortalApplication, McmRepository, PermissionManager);
                     case "ObjectRelation": 
                         return new ObjectRelation(PortalApplication, McmRepository, PermissionManager);
                     case "ObjectType": 

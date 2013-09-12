@@ -76,9 +76,9 @@
         #endregion
         #region Properties
 
-        private Object Object { get; set; }
+        protected Object Object { get; set; }
 
-        private IPermissionManager PermissionManager { get; set; }
+        protected IPermissionManager PermissionManager { get; set; }
 
         public KeyValuePair<string, string> UniqueIdentifier { get { return new KeyValuePair<string, string>("Id", Object.Guid.ToString()); } }
 
@@ -139,10 +139,12 @@
         #endregion
         #region Business Logic
 
-        public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
+        public virtual IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
         {
             yield return UniqueIdentifier;
-        
+            
+            yield return new KeyValuePair<string, string>("ObjectTypeId", ObjectTypeId.ToString(CultureInfo.InvariantCulture));
+
             if (AccessPoints != null)
                 foreach (var ap in AccessPoints)
                 {

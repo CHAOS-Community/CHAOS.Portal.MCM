@@ -13,10 +13,6 @@ namespace Chaos.Mcm.Extension
         {
         }
 
-        public Destination(IPortalApplication portalApplication) : base(portalApplication)
-        {
-        }
-
         public IEnumerable<DestinationInfo> Get(uint? id)
         {
             return McmRepository.DestinationGet(id);

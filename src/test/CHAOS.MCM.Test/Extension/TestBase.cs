@@ -173,7 +173,12 @@ namespace Chaos.Mcm.Test.Extension
                 };
         }
 
-        protected Chaos.Mcm.Extension.Object Make_ObjectExtension()
+        protected Chaos.Mcm.Extension.v5.Object Make_ObjectV5Extension()
+        {
+            return (Chaos.Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+        }
+
+        protected Chaos.Mcm.Extension.Object Make_ObjectV6Extension()
         {
             return (Chaos.Mcm.Extension.Object)new Chaos.Mcm.Extension.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }

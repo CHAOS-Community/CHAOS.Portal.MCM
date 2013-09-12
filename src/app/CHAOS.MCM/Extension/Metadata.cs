@@ -17,11 +17,6 @@
         {
         }
 
-        public Metadata(IPortalApplication portalApplication)
-            : base(portalApplication)
-        {
-        }
-
         #endregion
 
         public ScalarResult Set(Guid objectGuid, Guid metadataSchemaGuid, string languageCode, uint revisionID, XDocument metadataXml)
