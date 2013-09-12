@@ -36,19 +36,27 @@
 			if (templateMetadata == null)
 				throw new System.Exception(string.Format("Failed to get template. ObjectGuid: {0} SchemaGuid: {1} LanguageCode: {2}", template.ObjectGuid, template.MetadataSchemaGuid, template.LanguageCode));
 
-			var dataMetadatas = new List<XElement>();
-
-			foreach (var metadataIdentifier in datas)
-			{
-				var metadata = GetMetadata(repository, metadataIdentifier);
-
-				if(metadata == null)
-					throw new System.Exception(string.Format("Failed to data. ObjectGuid: {0} SchemaGuid: {1} LanguageCode: {2}", metadataIdentifier.ObjectGuid, metadataIdentifier.MetadataSchemaGuid, metadataIdentifier.LanguageCode));
-
-				dataMetadatas.Add(metadata);
-			}
+			var dataMetadatas = GetDatas(repository, datas);
 
 			emailService.SendTemplate(from, to, bcc, subject, templateMetadata, dataMetadatas);
+		}
+
+		public static void SendFromEmailSchema(this IEmailService emailService, string to, IMcmRepository repository, MetadataIdentifier template, IList<MetadataIdentifier> datas)
+		{
+			var templateMetadata = GetEmailTemplate(repository, template);
+
+			var dataMetadatas = GetDatas(repository, datas);
+
+			emailService.SendTemplate(templateMetadata.From, to, templateMetadata.Subject, templateMetadata.Body, dataMetadatas);
+		}
+
+		public static void SendFromEmailSchema(this IEmailService emailService, IEnumerable<string> to, IEnumerable<string> bcc, IMcmRepository repository, MetadataIdentifier template, IList<MetadataIdentifier> datas)
+		{
+			var templateMetadata = GetEmailTemplate(repository, template);
+
+			var dataMetadatas = GetDatas(repository, datas);
+
+			emailService.SendTemplate(templateMetadata.From, to, bcc, templateMetadata.Subject, templateMetadata.Body, dataMetadatas);
 		}
 
 		private static XElement GetMetadata(IMcmRepository repository, MetadataIdentifier metadata)
@@ -64,6 +72,45 @@
 				return null;
 
 			return templateMetadata.MetadataXml.Root;
+		}
+
+		private static IList<XElement> GetDatas(IMcmRepository repository, IEnumerable<MetadataIdentifier> metadatas)
+		{
+			var dataMetadatas = new List<XElement>();
+
+			foreach (var metadataIdentifier in metadatas)
+			{
+				var metadata = GetMetadata(repository, metadataIdentifier);
+
+				if (metadata == null)
+					throw new System.Exception(string.Format("Failed to data. ObjectGuid: {0} SchemaGuid: {1} LanguageCode: {2}", metadataIdentifier.ObjectGuid, metadataIdentifier.MetadataSchemaGuid, metadataIdentifier.LanguageCode));
+
+				dataMetadatas.Add(metadata);
+			}
+
+			return dataMetadatas;
+		}
+
+		private static EmailTemplate GetEmailTemplate(IMcmRepository repository, MetadataIdentifier template)
+		{
+			var templateMetadata = GetMetadata(repository, template);
+
+			if (templateMetadata == null)
+				throw new System.Exception(string.Format("Failed to get template. ObjectGuid: {0} SchemaGuid: {1} LanguageCode: {2}", template.ObjectGuid, template.MetadataSchemaGuid, template.LanguageCode));
+
+			var from = templateMetadata.Element("From");
+			var subject = templateMetadata.Element("Subject");
+			var body = templateMetadata.Element("Body");
+
+			if(from == null || subject == null || body == null)
+				throw new System.Exception(string.Format("Metadata did not match email template. ObjectGuid: {0} SchemaGuid: {1} LanguageCode: {2}", template.ObjectGuid, template.MetadataSchemaGuid, template.LanguageCode));
+
+			return new EmailTemplate
+						{
+							From = from.Value,
+							Subject = subject.Value,
+							Body = body.Elements().First()
+						};
 		}
 	}
 }
