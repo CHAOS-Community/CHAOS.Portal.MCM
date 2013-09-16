@@ -69,6 +69,8 @@
 
         public IEnumerable<IFolder> GetFoldersWithAccess()
         {
+            if(Request.IsAnonymousUser) return new List<IFolder>();
+
             var userGuid   = Request.User.Guid;
             var groupGuids = Request.Groups.Select(group => @group.Guid).ToList();
             

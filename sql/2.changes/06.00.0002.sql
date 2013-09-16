@@ -11,3 +11,6 @@ ALTER TABLE `Object_Metadata_Join`
   ON DELETE CASCADE
 
   ON UPDATE RESTRICT;
+
+  INSERT INTO `Version`(`Major`,`Minor`,`Release`,`ScriptName`,`DateCreated`)
+VALUES ('06','00','0002','06.00.0002.sql',NOW());

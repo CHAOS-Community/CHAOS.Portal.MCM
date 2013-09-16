@@ -2,6 +2,8 @@
 {
     using System;
 
+    using CHAOS;
+
     using Chaos.Mcm.Data;
     using Chaos.Mcm.Extension.Domain;
     using Chaos.Mcm.Permission;
@@ -24,12 +26,14 @@
         #endregion
         #region Business Logic
 
-        public IPagedResult<IResult> Get(IQuery query, Guid? accessPointGUID, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeAccessPoints = false)
+        public IPagedResult<IResult> Get(IQuery query, UUID accessPointGUID, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeAccessPoints = false)
         {
+            var accesspointGuid = accessPointGUID != null ? CHAOS.Extensions.GuidExtensions.ToGuid(accessPointGUID) : (Guid?)null;
+
             query.Query = query.Query.Replace("GUID:", "Id:");
             query.Query = query.Query.Replace("ObjectTypeID:", "ObjectTypeId:");
-
-            var pagedResult = ViewManager.GetObjects(query, accessPointGUID, GetFoldersWithAccess(), includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations);
+            
+            var pagedResult = ViewManager.GetObjects(query, accesspointGuid, GetFoldersWithAccess(), includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations);
 
             // todo map to v5 object
 

@@ -25,7 +25,7 @@
                 query.Query = string.Format("({0})AND({1})", query.Query, folderQuery);
             }
             else
-                query.Query = string.Format("({0})AND({1}_PubStart:[*+TO+NOW]+AND+{1}_PubEnd:[NOW+TO+*])", query.Query, accessPointGuid);
+                query.Query = string.Format("({0})AND({1}_PubStart:[* TO NOW] AND {1}_PubEnd:[NOW TO *])", query.Query, accessPointGuid);
 
             // todo remove metadata schemas the user doesnt have permission to read
             return manager.GetView("Object").Query(query);
