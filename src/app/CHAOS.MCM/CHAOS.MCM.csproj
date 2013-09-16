@@ -59,6 +59,7 @@
     <Compile Include="Data\Configuration\UserProfileConfiguration.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
+    <Compile Include="Data\Dto\EmailTemplate.cs" />
     <Compile Include="Data\Dto\EntityPermission.cs" />
     <Compile Include="Data\Dto\File.cs" />
     <Compile Include="Data\Dto\FolderInfo.cs" />
