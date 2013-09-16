@@ -9,6 +9,8 @@
 
 	public static class EmailServiceExtensions
 	{
+		#region SendTemplate
+
 		public static void SendTemplate(this IEmailService emailService, string from, string to, string subject, IMcmRepository repository, MetadataIdentifier template, XElement data)
 		{
 			emailService.SendTemplate(from, new List<string> { to }, null, subject, repository, template, data);
@@ -41,6 +43,35 @@
 			emailService.SendTemplate(from, to, bcc, subject, templateMetadata, dataMetadatas);
 		}
 
+		#endregion
+		#region SendFromEmailSchema
+		#region Data from XElement
+
+		public static void SendFromEmailSchema(this IEmailService emailService, string to, IMcmRepository repository, MetadataIdentifier template, XElement data)
+		{
+			emailService.SendFromEmailSchema(new List<string>{to}, null, repository, template, data);
+		}
+
+		public static void SendFromEmailSchema(this IEmailService emailService, IList<string> to, IEnumerable<string> bcc, IMcmRepository repository, MetadataIdentifier template, XElement data)
+		{
+			emailService.SendFromEmailSchema(to, bcc, repository, template, new List<XElement> { data });
+		}
+
+		public static void SendFromEmailSchema(this IEmailService emailService, string to, IMcmRepository repository, MetadataIdentifier template, IList<XElement> datas)
+		{
+			emailService.SendFromEmailSchema(new List<string> { to }, null, repository, template, datas);
+		}
+
+		public static void SendFromEmailSchema(this IEmailService emailService, IList<string> to, IEnumerable<string> bcc, IMcmRepository repository, MetadataIdentifier template, IList<XElement> datas)
+		{
+			var templateMetadata = GetEmailTemplate(repository, template);
+
+			emailService.SendTemplate(templateMetadata.From, to, bcc, templateMetadata.Subject, templateMetadata.Body, datas);
+		}
+
+		#endregion
+		#region Data from Objects
+
 		public static void SendFromEmailSchema(this IEmailService emailService, string to, IMcmRepository repository, MetadataIdentifier template, IList<MetadataIdentifier> datas)
 		{
 			var templateMetadata = GetEmailTemplate(repository, template);
@@ -58,6 +89,10 @@
 
 			emailService.SendTemplate(templateMetadata.From, to, bcc, templateMetadata.Subject, templateMetadata.Body, dataMetadatas);
 		}
+		
+		#endregion
+		#endregion
+		#region Utility
 
 		private static XElement GetMetadata(IMcmRepository repository, MetadataIdentifier metadata)
 		{
@@ -102,15 +137,17 @@
 			var subject = templateMetadata.Element("Subject");
 			var body = templateMetadata.Element("Body");
 
-			if(from == null || subject == null || body == null)
+			if (from == null || subject == null || body == null)
 				throw new System.Exception(string.Format("Metadata did not match email template. ObjectGuid: {0} SchemaGuid: {1} LanguageCode: {2}", template.ObjectGuid, template.MetadataSchemaGuid, template.LanguageCode));
 
 			return new EmailTemplate
-						{
-							From = from.Value,
-							Subject = subject.Value,
-							Body = body.Elements().First()
-						};
+			{
+				From = from.Value,
+				Subject = subject.Value,
+				Body = body.Elements().First()
+			};
 		}
+
+		#endregion
 	}
 }
