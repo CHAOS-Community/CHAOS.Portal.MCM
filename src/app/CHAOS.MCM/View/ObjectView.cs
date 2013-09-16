@@ -122,19 +122,69 @@
         }
 
         [Serialize]
-        public IList<Metadata> Metadatas { get { return Object.Metadatas; } }
+        public IList<Metadata> Metadatas
+        {
+            get
+            {
+                return Object.Metadatas;
+            }
+            set
+            {
+                Object.Metadatas = value;
+            }
+        }
 
         [Serialize]
-        public IList<ObjectFolder> ObjectFolders { get { return Object.ObjectFolders; } }
-        
-        [Serialize]
-        public IList<ObjectRelationInfo> ObjectRelationInfos { get { return Object.ObjectRelationInfos; } }
+        public IList<ObjectFolder> ObjectFolders
+        {
+            get
+            {
+                return Object.ObjectFolders;
+            }
+            set
+            {
+                Object.ObjectFolders = value;
+            }
+        }
 
         [Serialize]
-        public IList<FileInfo> Files { get { return Object.Files; } }
+        public IList<ObjectRelationInfo> ObjectRelationInfos
+        {
+            get
+            {
+                return Object.ObjectRelationInfos;
+            }
+            set
+            {
+                Object.ObjectRelationInfos = value;
+            }
+        }
 
         [Serialize]
-        public IList<ObjectAccessPoint> AccessPoints { get { return Object.AccessPoints; } }
+        public IList<FileInfo> Files
+        {
+            get
+            {
+                return Object.Files;
+            }
+            set
+            {
+                Object.Files = value;
+            }
+        }
+
+        [Serialize]
+        public IList<ObjectAccessPoint> AccessPoints
+        {
+            get
+            {
+                return Object.AccessPoints;
+            }
+            set
+            {
+                Object.AccessPoints = value;
+            }
+        }
 
         #endregion
         #region Business Logic
@@ -165,6 +215,9 @@
                         yield return new KeyValuePair<string, string>("FolderAncestors", folder.ID.ToString(CultureInfo.InvariantCulture));
                     }
                 }
+
+            yield return new KeyValuePair<string, string>("Files.Count", Files.Count.ToString(CultureInfo.InvariantCulture));
+            yield return new KeyValuePair<string, string>("ObjectRelations.Count", ObjectRelationInfos.Count.ToString(CultureInfo.InvariantCulture));
         }
         
         #endregion

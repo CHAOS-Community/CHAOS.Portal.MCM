@@ -56,6 +56,7 @@
 
             var configuration    = PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME);
             var connectionString = XDocument.Parse(configuration.Configuration).Root.Attribute("ConnectionString").Value;
+            var objectCoreName   = XDocument.Parse(configuration.Configuration).Root.Attribute("ObjectCoreName").Value;
             
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
@@ -63,7 +64,7 @@
             var objectView = CreateObjectView();
             objectView.WithPortalApplication(PortalApplication);
             objectView.WithCache(PortalApplication.Cache);
-            objectView.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), "object"));
+            objectView.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), objectCoreName));
 
             portalApplication.ViewManager.AddView(objectView);
         }

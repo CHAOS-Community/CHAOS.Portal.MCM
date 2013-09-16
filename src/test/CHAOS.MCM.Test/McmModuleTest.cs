@@ -14,7 +14,7 @@
         public void Load_Default_ObjectViewShouldBeLoaded()
         {
             var module = new McmModule();
-            PortalRepository.Setup(m => m.ModuleGet("MCM")).Returns(new Module { Configuration = "<Settings ConnectionString=\"\" />" });
+            PortalRepository.Setup(m => m.ModuleGet("MCM")).Returns(new Module { Configuration = "<Settings ConnectionString=\"\" ObjectCoreName=\"\" />" });
 
             module.Load(PortalApplication.Object);
 

@@ -9,6 +9,8 @@ namespace Chaos.Mcm.Data.Dto
 
     public class ObjectRelationInfo : AResult
     {
+        private XDocument _metadataXml;
+
         #region Properties
 
         [Serialize]
@@ -39,13 +41,24 @@ namespace Chaos.Mcm.Data.Dto
         public Guid? MetadataSchemaGuid { get; set; }
 
         [Serialize]
-        public XDocument MetadataXml { get; set; }
+        public XDocument MetadataXml
+        {
+            get
+            {
+                return _metadataXml;
+            }
+            set
+            {
+                _metadataXml = value;
+            }
+        }
 
         [Serialize]
         public int? Sequence { get; set; }
 
         #endregion
         #region Business Logic
+
 
         #endregion
     }

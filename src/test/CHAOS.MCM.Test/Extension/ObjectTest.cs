@@ -66,7 +66,7 @@
 
             extension.Get(new List<Guid>(), accessPointGuid, true, true, true, true, true);
 
-            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(00000000-0000-0000-0000-000000000001_PubStart:[*+TO+NOW]+AND+00000000-0000-0000-0000-000000000001_PubEnd:[NOW+TO+*])")));
+            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(00000000-0000-0000-0000-000000000001_PubStart:[* TO NOW] AND 00000000-0000-0000-0000-000000000001_PubEnd:[NOW TO *])")));
         }
         
         [Test]
@@ -82,7 +82,7 @@
 
             extension.Get(objectGuids, accessPointGuid, true, true, true, true, true);
 
-            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(00000000-0000-0000-0000-000000000001_PubStart:[*+TO+NOW]+AND+00000000-0000-0000-0000-000000000001_PubEnd:[NOW+TO+*])")));
+            view.Verify(m => m.Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(00000000-0000-0000-0000-000000000001_PubStart:[* TO NOW] AND 00000000-0000-0000-0000-000000000001_PubEnd:[NOW TO *])")));
         }
 
         [Test]
