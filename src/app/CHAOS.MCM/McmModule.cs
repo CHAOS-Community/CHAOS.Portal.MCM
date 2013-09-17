@@ -50,7 +50,7 @@
         #endregion
         #region Implementation of IModule
 
-        public void Load(IPortalApplication portalApplication)
+        public virtual void Load(IPortalApplication portalApplication)
         {
             PortalApplication = portalApplication;
 
