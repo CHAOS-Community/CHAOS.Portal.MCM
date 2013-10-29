@@ -54,9 +54,9 @@
         {
             PortalApplication = portalApplication;
 
-            var configuration    = PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME);
-            var connectionString = XDocument.Parse(configuration.Configuration).Root.Attribute("ConnectionString").Value;
-            var objectCoreName   = XDocument.Parse(configuration.Configuration).Root.Attribute("ObjectCoreName").Value;
+            var configuration    =  XDocument.Parse(PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME).Configuration);
+	        var connectionString = GetConfigurationAttribute(configuration, "ConnectionString");
+			var objectCoreName = GetConfigurationAttribute(configuration, "ObjectCoreName");
             
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
@@ -68,6 +68,16 @@
 
             portalApplication.ViewManager.AddView(objectView);
         }
+
+	    private string GetConfigurationAttribute(XDocument configuration, string name)
+	    {
+		    var attribute = configuration.Root.Attribute(name);
+		    
+			if(attribute == null)
+				throw new ConfigurationErrorsException(string.Format("Attribute {0} was not found in configuration", name));
+
+		    return attribute.Value;
+	    }
 
         protected virtual IView CreateObjectView()
         {
