@@ -218,6 +218,7 @@
 
             yield return new KeyValuePair<string, string>("Files.Count", Files.Count.ToString(CultureInfo.InvariantCulture));
             yield return new KeyValuePair<string, string>("ObjectRelations.Count", ObjectRelationInfos.Count.ToString(CultureInfo.InvariantCulture));
+            yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
         }
         
         #endregion
