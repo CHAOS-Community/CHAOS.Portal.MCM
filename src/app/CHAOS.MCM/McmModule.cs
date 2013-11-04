@@ -60,8 +60,6 @@ namespace Chaos.Mcm
 	        var connectionString = GetConfigurationAttribute(configuration, "ConnectionString");
 			var objectCoreName   = GetConfigurationAttribute(configuration, "ObjectCoreName");
 
-            ObjectExtensions.ObjectViewName = objectCoreName;
-
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
 
@@ -69,6 +67,8 @@ namespace Chaos.Mcm
             objectView.WithPortalApplication(PortalApplication);
             objectView.WithCache(PortalApplication.Cache);
             objectView.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), objectCoreName));
+
+            ObjectExtensions.ObjectViewName = objectView.Name;
 
             portalApplication.ViewManager.AddView(objectView);
         }

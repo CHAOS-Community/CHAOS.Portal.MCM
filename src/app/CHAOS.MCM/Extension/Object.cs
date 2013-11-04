@@ -41,8 +41,6 @@
             ViewManager.Index(result);
 
 		    return result;
-
-            //    PutObjectInIndex( callContext.IndexManager.GetIndex<Object>(), newObject );
 		}
 
         public ScalarResult SetPublishSettings(Guid objectGuid, Guid accessPointGuid, DateTime? startDate, DateTime? endDate)
@@ -54,8 +52,13 @@
                 throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
 
             var result = McmRepository.AccessPointPublishSettingsSet(accessPointGuid, objectGuid, startDate, endDate);
-                
 
+            if (result == 1)
+            {
+                var obj = McmRepository.ObjectGet(objectGuid, true, true, true, true, true);
+
+                ViewManager.Index(obj);
+            }
 
             return new ScalarResult( (int) result );
         }

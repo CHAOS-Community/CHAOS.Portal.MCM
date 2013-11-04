@@ -1,4 +1,7 @@
-﻿namespace Chaos.Mcm.Test.Extension
+﻿using Chaos.Mcm.Data.Dto;
+using Chaos.Mcm.Permission;
+
+namespace Chaos.Mcm.Test.Extension
 {
     using System;
     using System.Collections.Generic;
@@ -120,6 +123,34 @@
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.ObjectDelete(expected.Guid));
             ViewManager.Verify(m => m.Delete("Id:" + expected.Guid));
+        }
+
+        [Test]
+        public void SetPublishSettings_WithPermission_CallMcmRepositoryAndReturnOne()
+        {
+            var extension = Make_ObjectV6Extension();
+            var obj = Make_Object();
+            var userInfo = Make_User();
+            var accesspoint = MakeAccessPoint();
+            var startDate = DateTime.Now;
+            var endDate = DateTime.MaxValue;
+            PortalRequest.SetupGet(p => p.User).Returns(userInfo);
+            McmRepository.Setup(m => m.AccessPointGet(accesspoint.Guid, It.IsAny<Guid>(), It.IsAny<IEnumerable<Guid>>(), (uint) AccessPointPermission.Write)).Returns(new [] {accesspoint});
+            McmRepository.Setup(m => m.ObjectGet(obj.Guid, true, true, true, true, true)).Returns(obj);
+            McmRepository.Setup(m => m.AccessPointPublishSettingsSet(accesspoint.Guid, obj.Guid, startDate, endDate)).Returns(1u);
+
+            var result = extension.SetPublishSettings(obj.Guid, accesspoint.Guid, startDate, endDate);
+
+            Assert.AreEqual(1, result.Value);
+            ViewManager.Verify(m => m.Index(obj));
+        }
+
+        private AccessPoint MakeAccessPoint()
+        {
+            return new AccessPoint
+            {
+                Guid = new Guid("00000000-0000-0000-0000-000000000001")
+            };
         }
 
         #region Helpers
