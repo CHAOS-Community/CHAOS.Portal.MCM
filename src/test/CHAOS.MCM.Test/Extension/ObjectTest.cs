@@ -119,6 +119,7 @@
 
             Assert.AreEqual(1, result.Value);
             McmRepository.Verify(m => m.ObjectDelete(expected.Guid));
+            ViewManager.Verify(m => m.Delete("Id:" + expected.Guid));
         }
 
         #region Helpers

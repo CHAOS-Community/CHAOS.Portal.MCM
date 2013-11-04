@@ -1,4 +1,6 @@
-﻿namespace Chaos.Mcm
+﻿using Chaos.Mcm.Extension.Domain;
+
+namespace Chaos.Mcm
 {
     using System.Collections.Generic;
     using System.Configuration;
@@ -56,8 +58,10 @@
 
             var configuration    =  XDocument.Parse(PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME).Configuration);
 	        var connectionString = GetConfigurationAttribute(configuration, "ConnectionString");
-			var objectCoreName = GetConfigurationAttribute(configuration, "ObjectCoreName");
-            
+			var objectCoreName   = GetConfigurationAttribute(configuration, "ObjectCoreName");
+
+            ObjectExtensions.ObjectViewName = objectCoreName;
+
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
 
