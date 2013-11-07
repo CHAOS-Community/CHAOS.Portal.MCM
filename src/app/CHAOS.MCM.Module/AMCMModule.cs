@@ -107,10 +107,11 @@ protected static string AccessKey { get; set; }
 	    {
 		    using( var db = DefaultMCMEntities )
 		    {
-				var folders    = db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => PermissionManager.GetFolders((uint) item.ID) );
-				var userGUID   = callContext.User.GUID.ToGuid();
+				var folders    = db.Folder_Get( null, objectGUID.ToByteArray() ).Select( item => PermissionManager.GetFolders((uint) item.ID) ).ToList();
+                callContext.Log.Debug("folders count: " + folders.Count().ToString());
+                var userGUID   = callContext.User.GUID.ToGuid();
 				var groupGUIDs = callContext.Groups.Select( item => item.GUID.ToGuid() );
-                
+                callContext.Log.Debug("userGUID: " + userGUID.ToString());
                 return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGUID, groupGUIDs, permissions, folders);
 		    }
 
