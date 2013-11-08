@@ -12,10 +12,6 @@
         {
         }
 
-        public Mcm(IPortalApplication portalApplication): base(portalApplication)
-        {
-        }
-
         #endregion
 
         public Trace Index(string view)

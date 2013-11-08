@@ -1,6 +1,7 @@
 ﻿namespace Chaos.Mcm.Extension
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using Chaos.Mcm.Data;
@@ -21,11 +22,6 @@
 
         #endregion
         #region Construction
-
-        protected AMcmExtension(IPortalApplication portalApplication): base(portalApplication)
-        {
-            
-        }
 
         protected AMcmExtension(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager)
             : base(portalApplication)
@@ -70,5 +66,13 @@
 	    }
 
         #endregion
+
+        public IEnumerable<IFolder> GetFoldersWithAccess()
+        {
+            var userGuid   = Request.User.Guid;
+            var groupGuids = Request.Groups.Select(group => @group.Guid).ToList();
+            
+            return PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
+        }
     }
 }

@@ -3,5 +3,7 @@
   <appSettings>
     <add key="AnonymousUserGUID" value="12121212-1212-1212-1212-121212121212"/>
     <add key="SOLR_URL" value="http://localhost:8080/"/>
+	<add key="AWSKey" value="MyKey"/>
+	<add key="AWSSecret" value="MySecret"/>
   </appSettings>
 </configuration>

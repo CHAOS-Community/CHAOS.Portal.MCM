@@ -1,4 +1,9 @@
-﻿namespace Chaos.Mcm.View
+﻿using System;
+using System.Globalization;
+using CHAOS.Serialization;
+using Chaos.Mcm.Data.Dto;
+
+namespace Chaos.Mcm.View
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -31,7 +36,7 @@
         public override IList<IViewData> Index(object objectsToIndex)
         {
             var obj = objectsToIndex as Object;
-
+            
             if (obj == null) return new List<IViewData>();
 
             return new[] { new ObjectViewData(obj, PermissionManager) };
@@ -39,14 +44,7 @@
 
         public override IPagedResult<IResult> Query(Portal.Core.Indexing.IQuery query)
         {
-            var result = Core.Query(query);
-
-            var foundCount = result.QueryResult.FoundCount;
-            var startIndex = result.QueryResult.StartIndex;
-            var keys       = result.QueryResult.Results.Select(item => CreateKey(item.Id));
-            var results    = Cache.Get<ObjectViewData>(keys);
-
-            return new PagedResult<IResult>(foundCount, startIndex, results);
+            return Query<ObjectViewData>(query);
         }
 
         #endregion

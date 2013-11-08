@@ -94,7 +94,7 @@ namespace Chaos.Mcm.View
         public IEnumerable<KeyValuePair<string, string>> GetIndexableFields()
         {
             yield return UniqueIdentifier;
-        
+
             if (AccessPoints != null)
                 foreach (var ap in AccessPoints)
                 {

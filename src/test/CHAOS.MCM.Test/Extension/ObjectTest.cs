@@ -23,7 +23,7 @@
         [Test]
         public void Get_WithSingleGuid_ShouldQueryViewWithIdAndFolders()
         {
-            var extension  = Make_ObjectExtension();
+            var extension  = Make_ObjectV6Extension();
             var objectGuid = new List<Guid>{new Guid("00000000-0000-0000-0000-000000000001")};
             var view       = new Mock<IView>();
             var folder     = new Folder{ID = 1};
@@ -40,7 +40,7 @@
         [Test]
         public void Get_WithMultipleGuids_ShouldQueryViewWithIdsAndFolders()
         {
-            var extension  = Make_ObjectExtension();
+            var extension  = Make_ObjectV6Extension();
             var objectGuid = new List<Guid> { new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000002"), new Guid("00000000-0000-0000-0000-000000000003") };
             var view       = new Mock<IView>();
             var folder     = new Folder{ID = 1};
@@ -57,10 +57,12 @@
         [Test]
         public void Get_WithAccessPointGuid_ShouldAddAccessPointToQuery()
         {
-            var extension       = Make_ObjectExtension();
+            var extension       = Make_ObjectV6Extension();
             var accessPointGuid = new Guid("00000000-0000-0000-0000-000000000001");
             var view            = new Mock<IView>();
+            var user            = Make_User();
             ViewManager.Setup(m => m.GetView("Object")).Returns(view.Object);
+            PortalRequest.SetupGet(p => p.User).Returns(user);
 
             extension.Get(new List<Guid>(), accessPointGuid, true, true, true, true, true);
 
@@ -70,11 +72,13 @@
         [Test]
         public void Get_WithAccessPointGuidAndMultipleIds_ShouldAddAccessPointToQuery()
         {
-            var extension       = Make_ObjectExtension();
+            var extension       = Make_ObjectV6Extension();
             var accessPointGuid = new Guid("00000000-0000-0000-0000-000000000001");
             var objectGuids     = new List<Guid> { new Guid("00000000-0000-0000-0000-000000000002"), new Guid("00000000-0000-0000-0000-000000000003") };
             var view            = new Mock<IView>();
+            var user            = Make_User();
             ViewManager.Setup(m => m.GetView("Object")).Returns(view.Object);
+            PortalRequest.SetupGet(p => p.User).Returns(user);
 
             extension.Get(objectGuids, accessPointGuid, true, true, true, true, true);
 
@@ -84,7 +88,7 @@
         [Test]
         public void Create_WithPermissionToFolder_CallMcmRepositoryAndReturnTheObject()
         {
-            var extension = Make_ObjectExtension();
+            var extension = Make_ObjectV6Extension();
             var expected  = Make_Object();
             var folderID  = 1u;
             var userInfo  = Make_User();
@@ -103,7 +107,7 @@
         [Test]
         public void Delete_WithPermissions_CallMcmRepositoryAndReturnOne()
         {
-            var extension  = Make_ObjectExtension();
+            var extension  = Make_ObjectV6Extension();
             var expected   = Make_Object();
             var userInfo   = Make_User();
             PortalRequest.SetupGet(p => p.User).Returns(userInfo);

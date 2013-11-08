@@ -13,10 +13,6 @@ namespace Chaos.Mcm.Extension
 {
 	public class UserProfile : AMcmExtensionWithConfiguration<UserProfileConfiguration>
 	{
-		public UserProfile(IPortalApplication portalApplication) : base(portalApplication)
-		{
-		}
-
 		public UserProfile(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
 		{
 		}

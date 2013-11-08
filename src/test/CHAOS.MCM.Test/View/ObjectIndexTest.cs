@@ -56,6 +56,17 @@
         }
 
         [Test]
+        public void GetIndexableFields_GivenObject_ReturnObjectTypeId()
+        {
+            var obj  = Make_Object();
+            var data = new ObjectViewData(obj, PermissionManager.Object);
+
+            var results = data.GetIndexableFields().ToList();
+
+            Assert.That(results.First(item => item.Key == "ObjectTypeId").Value, Is.EqualTo("1"));
+        }
+
+        [Test]
         public void GetIndexableFields_GivenObjectWithFolders_ReturnFolders()
         {
             var obj  = Make_Object();
@@ -71,6 +82,7 @@
         {
             return new Object
                 {
+                    ObjectTypeID = 1,
                     AccessPoints = new []
                         {
                             new ObjectAccessPoint

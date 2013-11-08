@@ -16,10 +16,6 @@
         {
         }
 
-        public ObjectType(IPortalApplication portalApplication): base(portalApplication)
-        {
-        }
-
         #endregion
         #region Business Logic
 

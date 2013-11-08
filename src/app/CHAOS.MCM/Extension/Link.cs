@@ -16,12 +16,8 @@
         {
         }
 
-        public Link(IPortalApplication portalApplication)
-            : base(portalApplication)
-        {
-        }
-
         #endregion
+
 
         //todo: re-add indexing to links
         public ScalarResult Create(Guid objectGuid, uint folderID)

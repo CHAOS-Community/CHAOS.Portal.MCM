@@ -5,10 +5,12 @@
     using System.Collections.Generic;
 
     using Chaos.Mcm.Data;
+    using Chaos.Mcm.Extension.Domain;
     using Chaos.Mcm.Permission;
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Exceptions;
+    using Chaos.Portal.Core.Indexing;
     using Chaos.Portal.Core.Indexing.Solr.Request;
 
     using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
@@ -18,11 +20,6 @@
         #region Initialization
 
         public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
-        {
-        }
-
-        public Object(IPortalApplication portalApplication)
-            : base(portalApplication)
         {
         }
 
@@ -139,27 +136,14 @@
 
             if (objectGuids.Any()) query.Query = string.Format("Id:{0}", string.Join(" ", objectGuids));
 
-            if (accessPointGuid == null)
-            {
-                var userGuid    = Request.User.Guid;
-                var groupGuids  = Request.Groups.Select(group => group.Guid).ToList();
-                var folders     = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
-                var folderQuery = string.Format("FolderAncestors:{0}", string.Join(" ", folders.Select(item => item.ID)));
-
-                if(!folders.Any()) throw new InsufficientPermissionsException("User does not have access to any folders");
-
-                query.Query = string.Format( "({0})AND({1})", query.Query, folderQuery );
-                
-                // todo remove metadata schemas the user doesnt have permission to read
-
-                return ViewManager.GetView("Object").Query(query);
-            }
-            else
-            {
-                query.Query = string.Format("({0})AND({1}_PubStart:[*+TO+NOW]+AND+{1}_PubEnd:[NOW+TO+*])", query.Query, accessPointGuid);
-
-                return ViewManager.GetView("Object").Query(query);
-            }
+            return ViewManager.GetObjects( query,
+                                           accessPointGuid,
+                                           GetFoldersWithAccess(),
+                                           includeAccessPoints,
+                                           includeMetadata,
+                                           includeFiles,
+                                           includeObjectRelations,
+                                           includeFolders);
         }
     }
 }

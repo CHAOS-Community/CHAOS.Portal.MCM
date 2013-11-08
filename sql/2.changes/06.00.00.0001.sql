@@ -1,15 +1,29 @@
+-- Create join between object and metadata
 CREATE  TABLE Object_Metadata_Join
 (
 	ObjectGuid		BINARY(16) NOT NULL,
 	MetadataGuid	BINARY(16) NOT NULL,
 
-	PRIMARY KEY (ObjectGuid, MetadataGuid) 
+	PRIMARY KEY (ObjectGuid, MetadataGuid), 
 	KEY fk_Object_Metadata_Join_Metadata_MetadataGuid_idx (MetadataGuid),
 	KEY fk_Object_Metadata_Join_Object_ObjectGuid_idx (ObjectGuid),
 	CONSTRAINT fk_Object_Metadata_Join_Metadata_MetadataGuid FOREIGN KEY (MetadataGuid) REFERENCES Metadata (GUID),
 	CONSTRAINT fk_Object_Metadata_Join_Object_ObjectGuid FOREIGN KEY (ObjectGuid) REFERENCES Object (GUID)
 );
 
+INSERT INTO Object_Metadata_Join(ObjectGuid, MetadataGuid)
+	SELECT
+		Metadata.ObjectGUID, Metadata.GUID
+	FROM
+		Metadata;
+
+ALTER TABLE `Metadata` DROP FOREIGN KEY `FK_Object_GUID_Metadata_ObjectGUID` ;
+
+ALTER TABLE `Metadata` DROP COLUMN `ObjectGUID` , CHANGE COLUMN `LanguageCode` `LanguageCode` VARCHAR(10) NULL  
+
+, DROP INDEX `FK_Object_GUID_Metadata_ObjectGUID` ;
+
+-- Add MetadataGuid to Object object join
 ALTER TABLE `Object_Object_Join` ADD COLUMN `MetadataGuid` BINARY(16) NULL  AFTER `Object2GUID` , 
 
   ADD CONSTRAINT `fk_Object_Object_Join_Metadata_MetadataGuid`
@@ -51,11 +65,3 @@ ALTER TABLE `Object_Object_Join` CHANGE COLUMN `Object1GUID` `Object1Guid` BINAR
 , DROP INDEX `FK_Object_GUID_Object_Object_Join_Object2GUID` 
 
 , ADD INDEX `fk_Object_GUID_Object_Object_Join_Object2Guid` (`Object2Guid` ASC) ;
-
-
-ALTER TABLE `Metadata` DROP FOREIGN KEY `FK_Object_GUID_Metadata_ObjectGUID` ;
-
-ALTER TABLE `Metadata` DROP COLUMN `ObjectGUID` , CHANGE COLUMN `LanguageCode` `LanguageCode` VARCHAR(10) NULL  
-
-, DROP INDEX `FK_Object_GUID_Metadata_ObjectGUID` ;
-

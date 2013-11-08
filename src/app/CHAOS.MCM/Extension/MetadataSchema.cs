@@ -19,11 +19,6 @@
         {
         }
 
-        public MetadataSchema(IPortalApplication portalApplication)
-            : base(portalApplication)
-        {
-        }
-
         #endregion
         #region Business Logic
 

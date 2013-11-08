@@ -59,11 +59,13 @@
     <Compile Include="Data\Configuration\UserProfileConfiguration.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
+    <Compile Include="Data\Dto\EmailTemplate.cs" />
     <Compile Include="Data\Dto\EntityPermission.cs" />
     <Compile Include="Data\Dto\File.cs" />
     <Compile Include="Data\Dto\FolderInfo.cs" />
     <Compile Include="Data\Dto\FolderPermission.cs" />
     <Compile Include="Data\Dto\Format.cs" />
+    <Compile Include="Data\Dto\MetadataIdentifier.cs" />
     <Compile Include="Data\Dto\MetadataSchema.cs" />
     <Compile Include="Data\Dto\ObjectAccessPoint.cs" />
     <Compile Include="Data\Dto\FileInfo.cs" />
@@ -111,12 +113,14 @@
     <Compile Include="Data\Mapping\ObjectTypeMapping.cs" />
     <Compile Include="Data\McmRepository.cs" />
     <Compile Include="Data\PermissionRepository.cs" />
+    <Compile Include="EmailServiceExtensions.cs" />
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
     <Compile Include="Extension\AMcmExtension.cs" />
     <Compile Include="Extension\AMcmExtensionWithConfiguration.cs" />
     <Compile Include="Extension\Destination.cs" />
+    <Compile Include="Extension\Domain\ObjectExtensions.cs" />
     <Compile Include="Extension\File.cs" />
     <Compile Include="Extension\Folder.cs" />
     <Compile Include="Extension\Format.cs" />
@@ -130,6 +134,7 @@
     <Compile Include="Extension\Trace.cs" />
     <Compile Include="Extension\UserManagement.cs" />
     <Compile Include="Extension\UserProfile.cs" />
+    <Compile Include="Extension\v5\Object.cs" />
     <Compile Include="IMcmModule.cs" />
     <Compile Include="McmModule.cs" />
     <Compile Include="Permission\AccessPointPermission.cs" />
@@ -145,6 +150,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\ObjectView.cs" />
     <Compile Include="View\ObjectViewData.cs" />
+    <Compile Include="View\SearchView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config.sample" />
