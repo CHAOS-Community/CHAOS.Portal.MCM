@@ -4,7 +4,7 @@ CREATE TABLE Metadata
   LanguageCode        varchar(10),
   MetadataSchemaGUID  binary(16) NOT NULL,
   RevisionID          int(10) unsigned NOT NULL DEFAULT '0',
-  MetadataXML         text NOT NULL,
+  MetadataXML         MEDIUMTEXT NOT NULL,
   DateCreated         datetime NOT NULL,
   EditingUserGUID     binary(16) NOT NULL,
 

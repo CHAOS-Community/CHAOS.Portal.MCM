@@ -1,4 +1,6 @@
-﻿namespace Chaos.Mcm
+﻿using Chaos.Mcm.Extension.Domain;
+
+namespace Chaos.Mcm
 {
     using System.Collections.Generic;
     using System.Configuration;
@@ -50,23 +52,36 @@
         #endregion
         #region Implementation of IModule
 
-        public void Load(IPortalApplication portalApplication)
+        public virtual void Load(IPortalApplication portalApplication)
         {
             PortalApplication = portalApplication;
 
-            var configuration    = PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME);
-            var connectionString = XDocument.Parse(configuration.Configuration).Root.Attribute("ConnectionString").Value;
-            
+            var configuration    =  XDocument.Parse(PortalApplication.PortalRepository.ModuleGet(CONFIGURATION_NAME).Configuration);
+	        var connectionString = GetConfigurationAttribute(configuration, "ConnectionString");
+			var objectCoreName   = GetConfigurationAttribute(configuration, "ObjectCoreName");
+
             McmRepository     = new McmRepository().WithConfiguration(connectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
 
             var objectView = CreateObjectView();
             objectView.WithPortalApplication(PortalApplication);
             objectView.WithCache(PortalApplication.Cache);
-            objectView.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), "object"));
+            objectView.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), objectCoreName));
+
+            ObjectExtensions.ObjectViewName = objectView.Name;
 
             portalApplication.ViewManager.AddView(objectView);
         }
+
+	    private string GetConfigurationAttribute(XDocument configuration, string name)
+	    {
+		    var attribute = configuration.Root.Attribute(name);
+		    
+			if(attribute == null)
+				throw new ConfigurationErrorsException(string.Format("Attribute {0} was not found in configuration", name));
+
+		    return attribute.Value;
+	    }
 
         protected virtual IView CreateObjectView()
         {

@@ -150,7 +150,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\ObjectView.cs" />
     <Compile Include="View\ObjectViewData.cs" />
-    <Compile Include="View\SearchView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config.sample" />

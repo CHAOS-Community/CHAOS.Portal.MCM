@@ -47,6 +47,8 @@ namespace Chaos.Mcm.View
             return Query<ObjectViewData>(query);
         }
 
+        
+        
         #endregion
     }
 }

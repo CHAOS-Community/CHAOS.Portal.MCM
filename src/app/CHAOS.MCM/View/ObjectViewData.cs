@@ -95,18 +95,20 @@ namespace Chaos.Mcm.View
         {
             yield return UniqueIdentifier;
 
+            yield return new KeyValuePair<string, string>("ObjectTypeId", ObjectTypeId.ToString(CultureInfo.InvariantCulture));
+
             if (AccessPoints != null)
                 foreach (var ap in AccessPoints)
                 {
                     var start = ap.StartDate.HasValue ? ap.StartDate.Value : DateTime.MaxValue;
                     var end = ap.EndDate.HasValue ? ap.EndDate.Value : DateTime.MaxValue;
-            
+
                     yield return new KeyValuePair<string, string>(string.Format("{0}_PubStart", ap.AccessPointGuid), start.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
                     yield return new KeyValuePair<string, string>(string.Format("{0}_PubEnd", ap.AccessPointGuid), end.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
                 }
 
-            if(ObjectFolders != null)
-                foreach(var objectFolder in ObjectFolders)
+            if (ObjectFolders != null)
+                foreach (var objectFolder in ObjectFolders)
                 {
                     yield return new KeyValuePair<string, string>("FolderId", objectFolder.ID.ToString(CultureInfo.InvariantCulture));
 
@@ -115,6 +117,10 @@ namespace Chaos.Mcm.View
                         yield return new KeyValuePair<string, string>("FolderAncestors", folder.ID.ToString(CultureInfo.InvariantCulture));
                     }
                 }
+
+            yield return new KeyValuePair<string, string>("Files.Count", Files.Count.ToString(CultureInfo.InvariantCulture));
+            yield return new KeyValuePair<string, string>("ObjectRelations.Count", ObjectRelationInfos.Count.ToString(CultureInfo.InvariantCulture));
+            yield return new KeyValuePair<string, string>("DateCreated", DateCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
         }
         
         #endregion
