@@ -11,8 +11,8 @@ namespace Chaos.Mcm.Data.Dto
 	{
 		#region Properties
 
-		[Serialize]
-		public uint ID { get; set; }
+		[Serialize("ID")]
+		public uint Id { get; set; }
 
 		[Serialize]
 		public uint? ParentID { get; set; }
@@ -76,27 +76,27 @@ namespace Chaos.Mcm.Data.Dto
 
         public FileInfo( uint fileId, Guid objectGUID, uint? parentId, uint destinationId, string fileName, string originalFileName, string folderPath, DateTime fileDateCreated, string basePath, string stringFormat, DateTime accessProviderDateCreated, string token, uint formatId, string formatName, string formatXML, string mimeType, uint formatCategoryId, string formatCategoryName, uint formatTypeId, string formatTypeName )
         {
-            this.ID                     = fileId;
-            this.ParentID               = parentId;
-            this.ObjectGuid             = objectGUID;
-            this.Filename               = fileName;
-            this.OriginalFilename       = originalFileName;
-            this.Token                  = token;
-            this.FormatID               = formatId;
-            this.Format                 = formatName;
-            this.StringFormat           = stringFormat;
-            this.FormatType             = formatTypeName;
-            this.DestinationID          = destinationId;
-            this.FolderPath             = folderPath;
-            this.FileDateCreated        = fileDateCreated;
-            this.BasePath               = basePath;
-            this.AccessProviderDateCreated = accessProviderDateCreated;
-            this.FormatXML              = formatXML;
-            this.MimeType               = mimeType;
-            this.FormatCategoryID       = formatCategoryId;
-            this.FormatCategory         = formatCategoryName;
-            this.FormatTypeID           = formatTypeId;
-            this.FormatTypeName         = formatTypeName;
+            Id                     = fileId;
+            ParentID               = parentId;
+            ObjectGuid             = objectGUID;
+            Filename               = fileName;
+            OriginalFilename       = originalFileName;
+            Token                  = token;
+            FormatID               = formatId;
+            Format                 = formatName;
+            StringFormat           = stringFormat;
+            FormatType             = formatTypeName;
+            DestinationID          = destinationId;
+            FolderPath             = folderPath;
+            FileDateCreated        = fileDateCreated;
+            BasePath               = basePath;
+            AccessProviderDateCreated = accessProviderDateCreated;
+            FormatXML              = formatXML;
+            MimeType               = mimeType;
+            FormatCategoryID       = formatCategoryId;
+            FormatCategory         = formatCategoryName;
+            FormatTypeID           = formatTypeId;
+            FormatTypeName         = formatTypeName;
         }
 
         public FileInfo( uint fileId, Guid objectGUID, uint? parentId, uint destinationId, string fileName, string originalFileName, string folderPath, DateTime fileDateCreated, string basePath, string stringFormat, DateTime accessProviderDateCreated, string token, uint formatId, string formatName, string formatXML, string mimeType, uint formatCategoryId, string formatCategoryName, uint formatTypeId, string formatTypeName, UUID sessionGUID ) : this ( fileId,objectGUID, parentId,destinationId,fileName,originalFileName,folderPath,fileDateCreated,basePath,stringFormat, accessProviderDateCreated, token,formatId,formatName,formatXML,mimeType,formatCategoryId,formatCategoryName,formatTypeId,formatTypeName )

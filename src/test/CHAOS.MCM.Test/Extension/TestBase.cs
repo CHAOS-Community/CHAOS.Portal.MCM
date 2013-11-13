@@ -1,3 +1,6 @@
+using Chaos.Mcm.Extension.v6;
+using Chaos.Mcm.Test.Extension.v6;
+
 namespace Chaos.Mcm.Test.Extension
 {
     using System;
@@ -19,9 +22,9 @@ namespace Chaos.Mcm.Test.Extension
     using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
     using IFolder = Chaos.Mcm.Permission.IFolder;
     using Metadata = Chaos.Mcm.Data.Dto.Metadata;
-    using MetadataSchema = Chaos.Mcm.Extension.MetadataSchema;
+    using MetadataSchema = MetadataSchema;
     using Object = Chaos.Mcm.Data.Dto.Object;
-    using ObjectRelation = Chaos.Mcm.Extension.ObjectRelation;
+    using ObjectRelation = ObjectRelation;
     using ObjectType = Chaos.Mcm.Data.Dto.ObjectType;
 
     public class TestBase : Test.TestBase
@@ -64,9 +67,39 @@ namespace Chaos.Mcm.Test.Extension
         {
             return new Object
             {
-                Guid         = new Guid("00000000-0000-0000-0000-000000000001"),
+                Guid         = new Guid("10000000-0000-0000-0000-000000000001"),
                 ObjectTypeID = 1u,
                 ObjectFolders = new List<ObjectFolder>{Make_ObjectFolder()}
+            };
+        }
+
+        protected File Make_File()
+        {
+            return new File
+            {
+                Id = 1u,
+                Filename = "actualfile.name",
+                OriginalFilename = "originalfile.name",
+                ObjectGuid = new Guid("30000000-0000-0000-0000-000000000003"),
+                FolderPath = "/1/2/3/"
+            };
+        }
+
+        protected FileInfo Make_FileInfo()
+        {
+            var file = Make_File();
+
+            return new FileInfo
+            {
+                Id = file.Id,
+                Filename = file.Filename,
+                OriginalFilename = file.OriginalFilename,
+                ObjectGuid = file.ObjectGuid,
+                FolderPath = file.FolderPath,
+                BasePath = "mybucket",
+                StringFormat = "bucketname={BASE_PATH};key={FOLDER_PATH}{FILENAME}",
+                Token = "S3",
+                MimeType = "mp4/video"
             };
         }
 
@@ -154,14 +187,14 @@ namespace Chaos.Mcm.Test.Extension
 
         #endregion
 
-        protected Chaos.Mcm.Extension.Folder Make_FolderExtension()
+        protected Mcm.Extension.v6.Folder Make_FolderExtension()
         {
-            return (Chaos.Mcm.Extension.Folder)new Chaos.Mcm.Extension.Folder(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v6.Folder)new Mcm.Extension.v6.Folder(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
-        protected Chaos.Mcm.Extension.ObjectType Make_ObjectTypeExtension()
+        protected Mcm.Extension.v6.ObjectType Make_ObjectTypeExtension()
         {
-            return (Chaos.Mcm.Extension.ObjectType)new Chaos.Mcm.Extension.ObjectType(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v6.ObjectType)new Mcm.Extension.v6.ObjectType(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
         protected ObjectType Make_ObjectType()
@@ -178,9 +211,9 @@ namespace Chaos.Mcm.Test.Extension
             return (Chaos.Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
-        protected Chaos.Mcm.Extension.Object Make_ObjectV6Extension()
+        protected Mcm.Extension.v6.Object Make_ObjectV6Extension()
         {
-            return (Chaos.Mcm.Extension.Object)new Chaos.Mcm.Extension.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v6.Object)new Mcm.Extension.v6.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
         protected ObjectRelation Make_ObjectRelation()
@@ -188,9 +221,9 @@ namespace Chaos.Mcm.Test.Extension
             return (ObjectRelation)new ObjectRelation(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
-        protected Chaos.Mcm.Extension.Metadata Make_MetadataExtension()
+        protected Mcm.Extension.v6.Metadata Make_MetadataExtension()
         {
-            return (Chaos.Mcm.Extension.Metadata)new Chaos.Mcm.Extension.Metadata(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v6.Metadata)new Mcm.Extension.v6.Metadata(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
         protected MetadataSchema Make_MetadMetadataSchemaExtension()
@@ -209,9 +242,9 @@ namespace Chaos.Mcm.Test.Extension
                 };
         }
 
-        protected Mcm Make_McmExtension()
+        protected Mcm.Extension.v6.Mcm Make_McmExtension()
         {
-            return (Mcm)new Mcm(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v6.Mcm)new Mcm.Extension.v6.Mcm(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
         protected Link Make_LinkExtension()
@@ -219,14 +252,14 @@ namespace Chaos.Mcm.Test.Extension
             return (Link)new Link(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
-        protected Chaos.Mcm.Extension.Format Make_FormatExtension()
+        protected Mcm.Extension.v6.Format Make_FormatExtension()
         {
-            return (Chaos.Mcm.Extension.Format)new Chaos.Mcm.Extension.Format(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v6.Format)new Mcm.Extension.v6.Format(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
-        protected Chaos.Mcm.Extension.File Make_FileExtension()
+        protected Mcm.Extension.v6.File Make_FileExtension()
         {
-            return (Chaos.Mcm.Extension.File)new Chaos.Mcm.Extension.File(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v6.File)new Mcm.Extension.v6.File(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
         protected AMcmExtensionStub Make_AMcmExtension()
@@ -239,9 +272,9 @@ namespace Chaos.Mcm.Test.Extension
 			return (UserManagement)new UserManagement(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"0\" UserObjectTypeId=\"0\" />").WithPortalRequest(PortalRequest.Object);
 		}
 
-	    protected Chaos.Mcm.Extension.UserProfile Make_UserProfileExtension()
+	    protected Mcm.Extension.v6.UserProfile Make_UserProfileExtension()
 	    {
-			return (Chaos.Mcm.Extension.UserProfile)new Chaos.Mcm.Extension.UserProfile(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserProfileConfiguration />").WithPortalRequest(PortalRequest.Object);
+			return (Mcm.Extension.v6.UserProfile)new Mcm.Extension.v6.UserProfile(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserProfileConfiguration />").WithPortalRequest(PortalRequest.Object);
 	    }
     }
 }

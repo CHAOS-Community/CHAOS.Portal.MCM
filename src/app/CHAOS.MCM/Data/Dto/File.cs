@@ -11,7 +11,7 @@ namespace Chaos.Mcm.Data.Dto
 		#region Properties
 
 		[Serialize]
-		public uint ID { get; set; }
+		public uint Id { get; set; }
 
 		[Serialize]
 		public uint? ParentID { get; set; }
@@ -38,13 +38,13 @@ namespace Chaos.Mcm.Data.Dto
 
 		public File( uint id, uint? parentID, Guid objectGuid, string filename, string originalFilename, uint formatID, string folderPath )
 		{
-			this.ID               = id;
-			this.ParentID         = parentID;
-			this.ObjectGuid       = objectGuid;
-			this.Filename         = filename;
-			this.OriginalFilename = originalFilename;
-			this.FormatID	     = formatID;
-            this.FolderPath       = folderPath;
+			Id               = id;
+			ParentID         = parentID;
+			ObjectGuid       = objectGuid;
+			Filename         = filename;
+			OriginalFilename = originalFilename;
+			FormatID	     = formatID;
+            FolderPath       = folderPath;
 		}
 
 		public File()

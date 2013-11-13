@@ -1,4 +1,6 @@
-﻿namespace Chaos.Mcm.Extension.v5
+﻿using Chaos.Mcm.Extension.v6;
+
+namespace Chaos.Mcm.Extension.v5
 {
     using System;
 

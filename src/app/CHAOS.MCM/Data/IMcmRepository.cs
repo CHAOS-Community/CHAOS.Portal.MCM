@@ -51,7 +51,7 @@
 
         uint FileDelete(uint id);
         uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID);
-        IList<File> FileGet(uint id);
+        File FileGet(uint id);
 
         uint MetadataSchemaUpdate(string name, XDocument schemaXml, Guid userGuid, Guid guid);
         uint MetadataSchemaCreate(string name, XDocument schemaXml, Guid userGuid, Guid guid);

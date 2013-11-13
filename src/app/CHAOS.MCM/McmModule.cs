@@ -1,4 +1,5 @@
 ﻿using Chaos.Mcm.Extension.Domain;
+using Chaos.Mcm.Extension.v6;
 
 namespace Chaos.Mcm
 {
@@ -20,7 +21,7 @@ namespace Chaos.Mcm
     using Chaos.Portal.Core.Indexing.Solr;
     using Chaos.Portal.Core.Indexing.View;
 
-    using Folder = Chaos.Mcm.Extension.Folder;
+    using Folder = Folder;
 
     public class McmModule : IMcmModule
     {
@@ -140,7 +141,7 @@ namespace Chaos.Mcm
                     case "ObjectType": 
                         return new ObjectType(PortalApplication, McmRepository, PermissionManager);
                     case "Mcm": 
-                        return new Mcm(PortalApplication, McmRepository, PermissionManager);
+                        return new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager);
 					case "UserProfile":
 						return new UserProfile(PortalApplication, McmRepository, PermissionManager);
 					case "UserManagement":
@@ -175,7 +176,7 @@ namespace Chaos.Mcm
                     case "ObjectType": 
                         return new ObjectType(PortalApplication, McmRepository, PermissionManager);
                     case "Mcm": 
-                        return new Mcm(PortalApplication, McmRepository, PermissionManager);
+                        return new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager);
 					case "UserProfile":
 						return new UserProfile(PortalApplication, McmRepository, PermissionManager);
 					case "UserManagement":

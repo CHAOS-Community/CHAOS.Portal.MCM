@@ -525,9 +525,14 @@ namespace Chaos.Mcm.Data
             return (uint)result;
         }
 
-        public IList<File> FileGet(uint id)
+        public File FileGet(uint id)
         {
-            return Gateway.ExecuteQuery<File>("File_Get", new MySqlParameter("ID", id));
+            var result = Gateway.ExecuteQuery<File>("File_Get", new MySqlParameter("ID", id)).FirstOrDefault();
+
+            if(result == null)
+                throw new ChaosDatabaseException("No File by that Id");
+
+            return result;
         }
 
         #endregion
