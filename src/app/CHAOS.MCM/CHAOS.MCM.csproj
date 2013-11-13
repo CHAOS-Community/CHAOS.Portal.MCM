@@ -150,6 +150,7 @@
     <Compile Include="Permission\Specification\IntervalSpecification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\ObjectView.cs" />
+    <Compile Include="View\ObjectViewData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config.sample" />
