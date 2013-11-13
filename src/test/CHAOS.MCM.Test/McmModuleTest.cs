@@ -1,7 +1,7 @@
 ﻿namespace Chaos.Mcm.Test
 {
-    using Chaos.Mcm.View;
-    using Chaos.Portal.Core.Data.Model;
+    using Mcm.View;
+    using Portal.Core.Data.Model;
 
     using Moq;
 
@@ -14,7 +14,7 @@
         public void Load_Default_ObjectViewShouldBeLoaded()
         {
             var module = new McmModule();
-            PortalRepository.Setup(m => m.ModuleGet("MCM")).Returns(new Module { Configuration = "<Settings ConnectionString=\"\" ObjectCoreName=\"\" />" });
+            PortalRepository.Setup(m => m.ModuleGet("MCM")).Returns(new Module { Configuration = "<Settings ConnectionString=\"connectionstring\" ObjectCoreName=\"objectcorename\"><AWS AccessKey=\"accesskey\" SecretKey=\"secretkey\"></AWS></Settings>" });
 
             module.Load(PortalApplication.Object);
 

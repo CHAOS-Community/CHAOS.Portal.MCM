@@ -4,7 +4,8 @@
     using Chaos.Portal.Core;
     using Chaos.Portal.Core.Data;
     using Chaos.Portal.Core.Indexing.View;
-
+    using Configuration;
+    using Mcm.Extension.v5.Download;
     using Moq;
 
     using NUnit.Framework;
@@ -15,6 +16,7 @@
         protected Mock<IPortalApplication> PortalApplication { get; set; }
         protected Mock<IPortalRepository>  PortalRepository { get; set; }
         protected Mock<IViewManager>       ViewManager { get; set; }
+        protected Mock<IDownloadStrategy>  DownloadStrategy { get; set; }
 
         protected Mock<IPermissionManager> PermissionManager { get; set; }
 
@@ -25,9 +27,24 @@
             PortalApplication = new Mock<IPortalApplication>();
             PortalRepository  = new Mock<IPortalRepository>();
             ViewManager       = new Mock<IViewManager>();
+            DownloadStrategy  = new Mock<IDownloadStrategy>();
 
             PortalApplication.SetupGet(p => p.ViewManager).Returns(ViewManager.Object);
             PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
+        }
+
+        protected McmModuleConfiguration Make_McmModuleConfiguration()
+        {
+            return new McmModuleConfiguration
+            {
+                ConnectionString = "connection string",
+                ObjectCoreName = "object core name",
+                Aws = new AwsConfiguration
+                {
+                    AccessKey = "access key",
+                    SecretKey = "secret key"
+                }
+            };
         }
     }
 }
