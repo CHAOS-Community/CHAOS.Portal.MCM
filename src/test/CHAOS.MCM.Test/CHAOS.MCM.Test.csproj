@@ -61,22 +61,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmailServiceExtensionsTest.cs" />
-    <Compile Include="Extension\AMcmExtensionTest.cs" />
-    <Compile Include="Extension\DestinationTest.cs" />
-    <Compile Include="Extension\FileTest.cs" />
-    <Compile Include="Extension\FormatTest.cs" />
-    <Compile Include="Extension\LinkTest.cs" />
-    <Compile Include="Extension\MetadataSchemaTest.cs" />
-    <Compile Include="Extension\McmTest.cs" />
-    <Compile Include="Extension\ObjectTest.cs" />
-    <Compile Include="Extension\FolderTest.cs" />
-    <Compile Include="Extension\MetadataTest.cs" />
-    <Compile Include="Extension\ObjectRelationTest.cs" />
-    <Compile Include="Extension\ObjectTypeTest.cs" />
     <Compile Include="Extension\TestBase.cs" />
-    <Compile Include="Extension\UserManagementTest.cs" />
-    <Compile Include="Extension\UserProfileTest.cs" />
+    <Compile Include="Extension\v5\DownloadTest.cs" />
     <Compile Include="Extension\v5\ObjectTest.cs" />
+    <Compile Include="Extension\v6\AMcmExtensionTest.cs" />
+    <Compile Include="Extension\v6\DestinationTest.cs" />
+    <Compile Include="Extension\v6\FileTest.cs" />
+    <Compile Include="Extension\v6\FolderTest.cs" />
+    <Compile Include="Extension\v6\FormatTest.cs" />
+    <Compile Include="Extension\v6\LinkTest.cs" />
+    <Compile Include="Extension\v6\McmTest.cs" />
+    <Compile Include="Extension\v6\MetadataSchemaTest.cs" />
+    <Compile Include="Extension\v6\MetadataTest.cs" />
+    <Compile Include="Extension\v6\ObjectRelationTest.cs" />
+    <Compile Include="Extension\v6\ObjectTest.cs" />
+    <Compile Include="Extension\v6\ObjectTypeTest.cs" />
+    <Compile Include="Extension\v6\UserManagementTest.cs" />
+    <Compile Include="Extension\v6\UserProfileTest.cs" />
     <Compile Include="McmModuleTest.cs" />
     <Compile Include="Permission\InMemoryPermissionManagerTest.cs">
       <SubType>Code</SubType>

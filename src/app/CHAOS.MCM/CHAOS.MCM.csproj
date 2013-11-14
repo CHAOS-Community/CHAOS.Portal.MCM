@@ -33,6 +33,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AWSSDK, Version=1.5.5.1, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\AWSSDK.dll</HintPath>
+    </Reference>
     <Reference Include="CHAOS, Version=1.0.4687.26568, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\CHAOS.dll</HintPath>
@@ -55,6 +59,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AwsConfiguration.cs" />
+    <Compile Include="Configuration\McmModuleConfiguration.cs" />
     <Compile Include="Data\Configuration\UserManagementConfiguration.cs" />
     <Compile Include="Data\Configuration\UserProfileConfiguration.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
@@ -117,24 +123,28 @@
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
-    <Compile Include="Extension\AMcmExtension.cs" />
-    <Compile Include="Extension\AMcmExtensionWithConfiguration.cs" />
-    <Compile Include="Extension\Destination.cs" />
     <Compile Include="Extension\Domain\ObjectExtensions.cs" />
-    <Compile Include="Extension\File.cs" />
-    <Compile Include="Extension\Folder.cs" />
-    <Compile Include="Extension\Format.cs" />
-    <Compile Include="Extension\Link.cs" />
-    <Compile Include="Extension\Mcm.cs" />
-    <Compile Include="Extension\Metadata.cs" />
-    <Compile Include="Extension\MetadataSchema.cs" />
-    <Compile Include="Extension\Object.cs" />
-    <Compile Include="Extension\ObjectRelation.cs" />
-    <Compile Include="Extension\ObjectType.cs" />
-    <Compile Include="Extension\Trace.cs" />
-    <Compile Include="Extension\UserManagement.cs" />
-    <Compile Include="Extension\UserProfile.cs" />
+    <Compile Include="Extension\v5\Download\BucketInfo.cs" />
+    <Compile Include="Extension\v5\Download\Download.cs" />
+    <Compile Include="Extension\v5\Download\IDownloadStrategy.cs" />
+    <Compile Include="Extension\v5\Download\S3DownloadStrategy.cs" />
     <Compile Include="Extension\v5\Object.cs" />
+    <Compile Include="Extension\v6\AMcmExtension.cs" />
+    <Compile Include="Extension\v6\AMcmExtensionWithConfiguration.cs" />
+    <Compile Include="Extension\v6\Destination.cs" />
+    <Compile Include="Extension\v6\File.cs" />
+    <Compile Include="Extension\v6\Folder.cs" />
+    <Compile Include="Extension\v6\Format.cs" />
+    <Compile Include="Extension\v6\Link.cs" />
+    <Compile Include="Extension\v6\Mcm.cs" />
+    <Compile Include="Extension\v6\Metadata.cs" />
+    <Compile Include="Extension\v6\MetadataSchema.cs" />
+    <Compile Include="Extension\v6\Object.cs" />
+    <Compile Include="Extension\v6\ObjectRelation.cs" />
+    <Compile Include="Extension\v6\ObjectType.cs" />
+    <Compile Include="Extension\v6\Trace.cs" />
+    <Compile Include="Extension\v6\UserManagement.cs" />
+    <Compile Include="Extension\v6\UserProfile.cs" />
     <Compile Include="IMcmModule.cs" />
     <Compile Include="McmModule.cs" />
     <Compile Include="Permission\AccessPointPermission.cs" />

@@ -258,7 +258,7 @@
             Assert.AreEqual(objectGuid, result.Guid);
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
-            Assert.AreEqual(expectedFile.ID, result.Files[0].ID);
+            Assert.AreEqual(expectedFile.Id, result.Files[0].Id);
             Assert.AreEqual(expectedFile.ObjectGuid, result.Files[0].ObjectGuid);
             Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
             Assert.AreEqual(expectedFile.DestinationID, result.Files[0].DestinationID);
@@ -406,7 +406,7 @@
             Assert.AreEqual(objectGuid, result.Guid);
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
-            Assert.AreEqual(expectedFile.ID, result.Files[0].ID);
+            Assert.AreEqual(expectedFile.Id, result.Files[0].Id);
             Assert.AreEqual(expectedFile.ObjectGuid, result.Files[0].ObjectGuid);
             Assert.AreEqual(expectedFile.FormatID, result.Files[0].FormatID);
             Assert.AreEqual(expectedFile.DestinationID, result.Files[0].DestinationID);
@@ -887,7 +887,7 @@
             var repository = Make_McmRepository();
             var file       = Make_File();
 
-            var result = repository.FileDelete(file.ID);
+            var result = repository.FileDelete(file.Id);
 
             Assert.AreEqual(1, result);
         }
@@ -898,10 +898,9 @@
             var repository = Make_McmRepository();
             var file       = Make_File();
 
-            var result = repository.FileGet(file.ID);
+            var result = repository.FileGet(file.Id);
 
-            Assert.IsNotEmpty(result);
-            Assert.AreEqual(file.Filename, result[0].Filename);
+            Assert.AreEqual(file.Filename, result.Filename);
         }
 
         #endregion
@@ -1056,7 +1055,7 @@
         {
             return new FileInfo
                 {
-                    ID               = 1,
+                    Id               = 1,
                     ObjectGuid       = new Guid("00000000-0000-0000-0000-000000000002"),
                     FormatID         = 1,
                     DestinationID    = 1,
@@ -1080,7 +1079,7 @@
         {
             return new FileInfo
                 {
-                    ID               = 2,
+                    Id               = 2,
                     ObjectGuid       = new Guid("00000000-0000-0000-0000-000000000002"),
                     FormatID         = 1,
                     DestinationID    = 1,
