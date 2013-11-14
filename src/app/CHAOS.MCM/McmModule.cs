@@ -1,4 +1,10 @@
-﻿namespace Chaos.Mcm
+﻿using Chaos.Portal.Core;
+using Chaos.Portal.Core.Exceptions;
+using Chaos.Portal.Core.Extension;
+using Chaos.Portal.Core.Indexing.Solr;
+using Chaos.Portal.Core.Indexing.View;
+
+namespace Chaos.Mcm
 {
     using System.Collections.Generic;
     using System.Configuration;
@@ -14,11 +20,6 @@
     using Permission.InMemory;
     using Permission.Specification;
     using View;
-    using Portal.Core;
-    using Portal.Core.Exceptions;
-    using Portal.Core.Extension;
-    using Portal.Core.Indexing.Solr;
-    using Portal.Core.Indexing.View;
 
     public class McmModule : IMcmModule
     {
