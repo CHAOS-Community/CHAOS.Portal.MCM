@@ -42,7 +42,7 @@
                 var list = folders as List<IFolder> ?? folders.ToList();
 
                 if (!list.Any()) throw new InsufficientPermissionsException("User does not have access to any folders");
-                
+
                 var folderQuery = string.Format("FolderAncestors:{0}", string.Join(" ", list.Select(item => item.ID)));
 
                 query.Query = string.Format("({0})AND({1})", query.Query, folderQuery);

@@ -107,7 +107,7 @@ namespace Chaos.Mcm.View
                     yield return new KeyValuePair<string, string>(string.Format("{0}_PubEnd", ap.AccessPointGuid), end.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
                 }
 
-            if (ObjectFolders != null)
+             if (ObjectFolders != null)
                 foreach (var objectFolder in ObjectFolders)
                 {
                     yield return new KeyValuePair<string, string>("FolderId", objectFolder.ID.ToString(CultureInfo.InvariantCulture));

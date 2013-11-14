@@ -88,7 +88,7 @@ namespace Chaos.Mcm
             return new ObjectView(PermissionManager);
         }
 
-        public IEnumerable<string> GetExtensionNames(Protocol version)
+        public virtual IEnumerable<string> GetExtensionNames(Protocol version)
         {
             yield return "Destination";
             yield return "File";
@@ -111,7 +111,7 @@ namespace Chaos.Mcm
             return GetExtension(version, typeof(TExtension).Name);
         }
 
-        public IExtension GetExtension(Protocol version, string name)
+        public virtual IExtension GetExtension(Protocol version, string name)
         {
             if (PortalApplication == null) throw new ConfigurationErrorsException("Load not call on module");
 
