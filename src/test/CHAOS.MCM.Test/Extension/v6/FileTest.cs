@@ -5,6 +5,11 @@ using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
 
 namespace Chaos.Mcm.Test.Extension.v6
 {
+    using System.Collections.Generic;
+    using Data.Dto.Standard;
+    using Moq;
+    using Portal.Core.Data.Model;
+
     [TestFixture]
     public class FileTest : TestBase
     {
@@ -13,10 +18,14 @@ namespace Chaos.Mcm.Test.Extension.v6
         {
             var extension = Make_FileExtension();
             var file      = Make_File();
-            SetupHasPermissionToObject(FolderPermission.CreateUpdateObjects);
+            PermissionManager.Setup(m => m.HasPermissionToObject(It.IsAny<Guid>(), 
+                                                                 It.IsAny<Guid>(), 
+                                                                 It.IsAny<IEnumerable<Guid>>(), 
+                                                                 It.IsAny<FolderPermission>())).Returns(true);
             McmRepository.Setup(m => m.FileCreate(file.ObjectGuid, file.ParentID, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath, file.FormatID)).Returns(file.Id);
             McmRepository.Setup(m => m.FileGet(file.Id)).Returns(file);
 
+            
             var result = extension.Create(file.ObjectGuid, file.ParentID, file.FormatID, file.DestinationID, file.Filename, file.OriginalFilename, file.FolderPath);
 
             Assert.AreEqual(file, result);
@@ -29,7 +38,10 @@ namespace Chaos.Mcm.Test.Extension.v6
         {
             var extension = Make_FileExtension();
             var file      = Make_File();
-            SetupHasPermissionToObject(FolderPermission.CreateUpdateObjects);
+            PermissionManager.Setup(m => m.HasPermissionToObject(It.IsAny<Guid>(),
+                                                                 It.IsAny<Guid>(),
+                                                                 It.IsAny<IEnumerable<Guid>>(),
+                                                                 It.IsAny<FolderPermission>())).Returns(true);
             McmRepository.Setup(m => m.FileDelete(file.Id)).Returns(1u);
             McmRepository.Setup(m => m.FileGet(file.Id)).Returns(file);
 

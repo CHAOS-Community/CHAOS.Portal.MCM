@@ -100,7 +100,6 @@
     <Compile Include="Data\Dto\Standard\Permission.cs" />
     <Compile Include="Data\Dto\UserProfile.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
-    <Compile Include="Data\IPermissionRepository.cs" />
     <Compile Include="Data\Mapping\AccessPointMapping.cs" />
     <Compile Include="Data\Mapping\AccesspointObjectJoinMapping.cs" />
     <Compile Include="Data\Mapping\DestinationInfoMapping.cs" />
@@ -118,7 +117,6 @@
     <Compile Include="Data\Mapping\ObjectRelationInfoMapping.cs" />
     <Compile Include="Data\Mapping\ObjectTypeMapping.cs" />
     <Compile Include="Data\McmRepository.cs" />
-    <Compile Include="Data\PermissionRepository.cs" />
     <Compile Include="EmailServiceExtensions.cs" />
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />

@@ -54,13 +54,10 @@ namespace Chaos.Mcm.Extension.v6
 
         public bool HasPermissionToObject(Guid objectGuid, FolderPermission permissions)
 	    {
-            //todo: look into using the folder returned from the database directly for the permission check
-            var folderGet  = McmRepository.FolderGet(null, null, objectGuid: objectGuid);
-            var folders    = folderGet.Select(item => PermissionManager.GetFolders(item.ID));
             var userGuid   = Request.User.Guid;
             var groupGuids = Request.Groups.Select(item => item.Guid);
        
-            return PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, permissions, folders);
+            return PermissionManager.HasPermissionToObject(objectGuid, userGuid, groupGuids, permissions);
 	    }
 
         #endregion

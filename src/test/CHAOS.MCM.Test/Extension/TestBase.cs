@@ -31,7 +31,6 @@ namespace Chaos.Mcm.Test.Extension
     {
         #region Fields
 
-        protected Mock<IMcmRepository>     McmRepository { get; set; }
         protected Mock<IPortalRequest>     PortalRequest { get; set; }
         protected Mock<ICache>             Cache { get; set; }
         
@@ -42,11 +41,12 @@ namespace Chaos.Mcm.Test.Extension
         [SetUp]
         public void SetUp()
         {
-            McmRepository = new Mock<IMcmRepository>();
+            
             PortalRequest = new Mock<IPortalRequest>();
             Cache         = new Mock<ICache>();
 
             McmRepository.Setup(m => m.WithConfiguration(It.IsAny<string>())).Returns(McmRepository.Object);
+            PortalRequest.SetupGet(p => p.User).Returns(Make_User());
         }
 
         protected Metadata Make_MetadataDto()
@@ -150,30 +150,6 @@ namespace Chaos.Mcm.Test.Extension
         #endregion
         #region Helpers
 
-        protected void SetupHasPermissionToObject(UserInfo userInfo, Group[] groups, Guid objectGuid, IList<Folder> folderDtos)
-        {
-            PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
-            PortalRequest.SetupGet(p => p.Session).Returns(Make_Session());
-            PortalRequest.SetupGet(p => p.User).Returns(userInfo);
-            PortalRequest.SetupGet(p => p.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
-            McmRepository.Setup(m => m.FolderGet(null, null, objectGuid)).Returns(folderDtos);
-            PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders( userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), FolderPermission.Read, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
-        }
-
-        protected void SetupHasPermissionToObject(FolderPermission permission)
-        {
-            var userInfo   = Make_User();
-            var groups     = new[] { new Group { Guid = new Guid("c0b231e9-7d98-4f52-885e-af4837faa352") } };
-            var folderDtos = new List<Folder> { new Folder { ID = 1 } };
-
-            PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
-            PortalRequest.SetupGet(p => p.Session).Returns(Make_Session());
-            PortalRequest.SetupGet(p => p.User).Returns(userInfo);
-            PortalRequest.SetupGet(p => p.Parameters).Returns(new Dictionary<string, string>() { { "sessionGUID", Make_Session().Guid.ToString() } });
-            this.McmRepository.Setup(m => m.FolderGet(null, null, It.IsAny<Guid>())).Returns(folderDtos);
-            this.PermissionManager.Setup(m => m.DoesUserOrGroupHavePermissionToFolders(userInfo.Guid, It.IsAny<IEnumerable<Guid>>(), permission, It.IsAny<IEnumerable<IFolder>>())).Returns(true);
-        }
-
 		protected UserInfo SetupUser()
 		{
 			var userInfo = Make_User();
@@ -260,11 +236,6 @@ namespace Chaos.Mcm.Test.Extension
         protected Mcm.Extension.v6.File Make_FileExtension()
         {
             return (Mcm.Extension.v6.File)new Mcm.Extension.v6.File(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
-        }
-
-        protected AMcmExtensionStub Make_AMcmExtension()
-        {
-            return (AMcmExtensionStub)new AMcmExtensionStub(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
 		protected UserManagement Make_UserManagementExtension()

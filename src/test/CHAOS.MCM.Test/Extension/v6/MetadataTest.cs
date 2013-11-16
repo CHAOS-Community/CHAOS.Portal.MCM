@@ -5,6 +5,8 @@ using NUnit.Framework;
 
 namespace Chaos.Mcm.Test.Extension.v6
 {
+    using System.Collections.Generic;
+
     [TestFixture]
     public class MetadataTest : TestBase
     {
@@ -15,7 +17,10 @@ namespace Chaos.Mcm.Test.Extension.v6
             var metadata   = Make_MetadataDto();
             var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
             PortalRequest.SetupGet(p => p.User).Returns(Make_User());
-            SetupHasPermissionToObject(FolderPermission.CreateUpdateObjects);
+            PermissionManager.Setup(m => m.HasPermissionToObject(It.IsAny<Guid>(),
+                                                     It.IsAny<Guid>(),
+                                                     It.IsAny<IEnumerable<Guid>>(),
+                                                     FolderPermission.CreateUpdateObjects)).Returns(true);
 
             extension.Set(objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
@@ -28,25 +33,15 @@ namespace Chaos.Mcm.Test.Extension.v6
             var extension = Make_MetadataExtension();
             var metadata = Make_MetadataDto();
             var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
-            SetupHasPermissionToObject( FolderPermission.CreateUpdateObjects );
+            PermissionManager.Setup(m => m.HasPermissionToObject(It.IsAny<Guid>(),
+                                                     It.IsAny<Guid>(),
+                                                     It.IsAny<IEnumerable<Guid>>(),
+                                                     FolderPermission.CreateUpdateObjects)).Returns(true);
 
             extension.Set(objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
             McmRepository.Verify(m => m.ObjectGet(objectGuid, true, false, false, true, true));
         }
-//
-//        [Test]
-//        public void Set_CallWithValidXml_ShouldCallIndexOnViewManager()
-//        {
-//            var extension = Make_MetadataExtension();
-//            var metadata = Make_MetadataDto();
-//            var objectGuid = new Guid("9b8f4e50-1dfd-45ba-b5e8-176bfe8a2fd7");
-//            CallContext.SetupGet(p => p.User).Returns(new UserInfo { Guid = new UUID("905c48db-5632-4c57-9a1a-a158deba6ab4") });
-//
-//            extension.Metadata_Set(CallContext.Object, objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
-//
-//            CallContext.Verify(m => m.ViewManager.Index());
-//        }
 
         #region Helpers
 

@@ -10,17 +10,21 @@ namespace Chaos.Mcm.Permission.InMemory
         #region Fields
 
         private IDictionary<uint, IFolder> _folders = new Dictionary<uint,IFolder>();
-        private IPermissionRepository      _permissionRepository;
+
+        private IMcmRepository McmRepository { get; set; }
 
         #endregion
-        #region Properties
+        #region Initialization
 
+        public InMemoryPermissionManager()
+        {
+            
+        }
 
-
-        #endregion
-        #region Construction
-
-
+        public InMemoryPermissionManager(IMcmRepository mcmRepository)
+        {
+            McmRepository = mcmRepository;
+        }
 
         #endregion
         #region Business logic
@@ -45,9 +49,9 @@ namespace Chaos.Mcm.Permission.InMemory
         #endregion
         #region Synchronization
 
-        public IPermissionManager WithSynchronization(IPermissionRepository repository, ISynchronizationSpecification synchronizationSpecification)
+        public IPermissionManager WithSynchronization(IMcmRepository repository, ISynchronizationSpecification synchronizationSpecification)
         {
-            _permissionRepository = repository;
+            McmRepository = repository;
             synchronizationSpecification.OnSynchronizationTrigger += Synchronize;
 
             return this;
@@ -58,7 +62,7 @@ namespace Chaos.Mcm.Permission.InMemory
             var tmp = new InMemoryPermissionManager();
             
             // FolderGet has to return folders ordered by ID, otherwise the parent won't be 
-            foreach (var folder in _permissionRepository.FolderGet())
+            foreach (var folder in McmRepository.FolderGet())
             {
                 var permissionFolder = new Folder
                                            {
@@ -73,7 +77,7 @@ namespace Chaos.Mcm.Permission.InMemory
                 tmp.AddFolder(permissionFolder);
             }
 
-            foreach (var permission in _permissionRepository.FolderPermissionGet())
+            foreach (var permission in McmRepository.FolderPermissionGet())
             {
                 foreach(var entityPermission in permission.UserPermissions)
                     tmp.GetFolders(permission.FolderID).AddUser(entityPermission);
@@ -133,6 +137,14 @@ namespace Chaos.Mcm.Permission.InMemory
         public bool DoesUserOrGroupHavePermissionToFolders(Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermission permission, IEnumerable<IFolder> folders)
         {
             return folders.Any(f => f.DoesUserOrGroupHavePermission(userGuid, groupGuids, permission));
+        }
+
+        public bool HasPermissionToObject(Guid objectGuid, Guid userGuid, IEnumerable<Guid> groupGuids, FolderPermission permissions)
+        {
+            var folderGet = McmRepository.FolderGet(null, null, objectGuid: objectGuid);
+            var folders = folderGet.Select(item => GetFolders(item.ID));
+
+            return DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, permissions, folders);
         }
 
         #endregion

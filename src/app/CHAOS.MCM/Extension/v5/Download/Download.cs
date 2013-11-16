@@ -42,15 +42,14 @@
         {
             foreach (var file in files)
             {
-                if (_downloadStrategies.ContainsKey(file.Token))
-                {
-                    var downloadStrategy = _downloadStrategies[file.Token];
+                if (!_downloadStrategies.ContainsKey(file.Token)) continue;
+                
+                var downloadStrategy = _downloadStrategies[file.Token];
 
-                    if (downloadStrategy.AllowsDownload())
-                        throw new ConfigurationErrorsException("Download via proxy is not enabled");
+                if (downloadStrategy.AllowsDownload())
+                    throw new ConfigurationErrorsException("Download via proxy is not enabled");
 
-                    return downloadStrategy.GetStream(file);
-                }
+                return downloadStrategy.GetStream(file);
             }
 
             throw new ConfigurationErrorsException("No Access Provider associated with this file allows download through proxy");

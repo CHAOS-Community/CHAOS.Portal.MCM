@@ -64,7 +64,6 @@
     <Compile Include="Extension\TestBase.cs" />
     <Compile Include="Extension\v5\DownloadTest.cs" />
     <Compile Include="Extension\v5\ObjectTest.cs" />
-    <Compile Include="Extension\v6\AMcmExtensionTest.cs" />
     <Compile Include="Extension\v6\DestinationTest.cs" />
     <Compile Include="Extension\v6\FileTest.cs" />
     <Compile Include="Extension\v6\FolderTest.cs" />

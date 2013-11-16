@@ -60,7 +60,7 @@
             McmModuleConfiguration = SerializerFactory.Get<XDocument>().Deserialize<McmModuleConfiguration>(configuration);
 
             McmRepository = new McmRepository().WithConfiguration(McmModuleConfiguration.ConnectionString);
-            PermissionManager = new InMemoryPermissionManager().WithSynchronization(new PermissionRepository(McmRepository), new IntervalSpecification(10000));
+            PermissionManager = new InMemoryPermissionManager().WithSynchronization(McmRepository, new IntervalSpecification(10000));
 
             var objectView = CreateObjectView();
             objectView.WithPortalApplication(PortalApplication);

@@ -3,6 +3,10 @@ using NUnit.Framework;
 
 namespace Chaos.Mcm.Test.Extension.v6
 {
+    using System;
+    using System.Collections.Generic;
+    using Moq;
+
     [TestFixture]
     public class LinkTest : TestBase
     {
@@ -12,7 +16,10 @@ namespace Chaos.Mcm.Test.Extension.v6
             var extension = Make_LinkExtension();
             var obj       = Make_Object();
             var folder    = Make_FolderInfo();
-            SetupHasPermissionToObject(FolderPermission.CreateLink);
+            PermissionManager.Setup(m => m.HasPermissionToObject(It.IsAny<Guid>(),
+                                                                 It.IsAny<Guid>(),
+                                                                 It.IsAny<IEnumerable<Guid>>(),
+                                                                 FolderPermission.CreateLink)).Returns(true);
             McmRepository.Setup(m => m.LinkCreate(obj.Guid, folder.ID, 2)).Returns(1);
 
             var result = extension.Create(obj.Guid, folder.ID);
@@ -28,7 +35,10 @@ namespace Chaos.Mcm.Test.Extension.v6
             var obj         = Make_Object();
             var folder      = Make_FolderInfo();
             var newFolderID = 2u;
-            SetupHasPermissionToObject(FolderPermission.CreateLink);
+            PermissionManager.Setup(m => m.HasPermissionToObject(It.IsAny<Guid>(),
+                                                                 It.IsAny<Guid>(),
+                                                                 It.IsAny<IEnumerable<Guid>>(),
+                                                                 FolderPermission.CreateLink)).Returns(true);
             McmRepository.Setup(m => m.LinkUpdate(obj.Guid, folder.ID, newFolderID)).Returns(1);
 
             var result = extension.Update(obj.Guid, folder.ID, newFolderID);
@@ -43,7 +53,10 @@ namespace Chaos.Mcm.Test.Extension.v6
             var extension   = Make_LinkExtension();
             var obj         = Make_Object();
             var folder      = Make_FolderInfo();
-            SetupHasPermissionToObject(FolderPermission.CreateLink);
+            PermissionManager.Setup(m => m.HasPermissionToObject(It.IsAny<Guid>(),
+                                                                 It.IsAny<Guid>(),
+                                                                 It.IsAny<IEnumerable<Guid>>(),
+                                                                 FolderPermission.CreateLink)).Returns(true);
             McmRepository.Setup(m => m.LinkDelete(obj.Guid, folder.ID)).Returns(1);
 
             var result = extension.Delete(obj.Guid, folder.ID);
