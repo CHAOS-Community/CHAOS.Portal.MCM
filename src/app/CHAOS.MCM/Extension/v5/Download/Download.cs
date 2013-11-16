@@ -2,8 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Configuration;
-    using System.
-    IO;
     using System.Linq;
     using Configuration;
     using Data;
@@ -46,8 +44,7 @@
                 
                 var downloadStrategy = _downloadStrategies[file.Token];
 
-                if (downloadStrategy.AllowsDownload())
-                    throw new ConfigurationErrorsException("Download via proxy is not enabled");
+                if (!downloadStrategy.AllowsDownload()) continue;
 
                 return downloadStrategy.GetStream(file);
             }

@@ -1,18 +1,10 @@
-﻿using System;
-using System.Globalization;
-using CHAOS.Serialization;
-using Chaos.Mcm.Data.Dto;
-
-namespace Chaos.Mcm.View
+﻿namespace Chaos.Mcm.View
 {
     using System.Collections.Generic;
-    using System.Linq;
-    using Chaos.Mcm.Permission;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Indexing.View;
-
-    using IFolder = Chaos.Mcm.Permission.IFolder;
-    using Object = Chaos.Mcm.Data.Dto.Object;
+    using Permission;
+    using Portal.Core.Data.Model;
+    using Portal.Core.Indexing.View;
+    using Object = Data.Dto.Object;
 
     public class ObjectView : AView
     {

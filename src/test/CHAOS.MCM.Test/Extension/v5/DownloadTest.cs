@@ -28,6 +28,7 @@
                                                                             FileName = fileinfo.OriginalFilename,
                                                                             Stream = data
                                                                         });
+            DownloadStrategy.Setup(m => m.AllowsDownload()).Returns(true);
 
             var result = extension.Get(file.Id);
 
