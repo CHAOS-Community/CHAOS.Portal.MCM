@@ -1,4 +1,6 @@
-﻿namespace Chaos.Mcm.Configuration
+﻿using Chaos.Mcm.Data.Configuration;
+
+namespace Chaos.Mcm.Configuration
 {
     using System;
     using CHAOS.Serialization;
@@ -15,6 +17,9 @@
 
         [Serialize("AWS")]
         public AwsConfiguration Aws { get; set; }
+
+		[Serialize]
+		public UserManagementConfiguration UserManagement { get; set; }
 
         public bool HasAwsConfiguration()
         {

@@ -4,14 +4,13 @@ using System.Linq;
 using System.Xml.Linq;
 using CHAOS.Extensions;
 using Chaos.Mcm.Data;
-using Chaos.Mcm.Data.Configuration;
 using Chaos.Mcm.Permission;
 using Chaos.Portal.Core;
 using Chaos.Portal.Core.Data.Model;
 
 namespace Chaos.Mcm.Extension.v6
 {
-	public class UserProfile : AMcmExtensionWithConfiguration<UserProfileConfiguration>
+	public class UserProfile : AMcmExtension
 	{
 		public UserProfile(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
 		{
@@ -40,7 +39,7 @@ namespace Chaos.Mcm.Extension.v6
 		}
 
 		#endregion
-		#region Get
+		#region Set
 
 		public ScalarResult Set(Guid metadataSchemaGuid, XDocument metadata, Guid? userGuid = null)
 		{

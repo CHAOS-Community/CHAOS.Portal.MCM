@@ -8,12 +8,15 @@ using Chaos.Portal.Core;
 
 namespace Chaos.Mcm.Extension.v6
 {
-	public class UserManagement : AMcmExtensionWithConfiguration<UserManagementConfiguration>
+	public class UserManagement : AMcmExtension
 	{
+		private readonly UserManagementConfiguration _configuration;
+
 		#region Constructor
 
-		public UserManagement(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
+		public UserManagement(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager, UserManagementConfiguration configuration) : base(portalApplication, mcmRepository, permissionManager)
 		{
+			_configuration = configuration;
 		}
 
 		#endregion
@@ -24,16 +27,16 @@ namespace Chaos.Mcm.Extension.v6
 			if (!userGuid.HasValue)
 				userGuid = Request.User.Guid;
 
-			var userFolder = GetFolderFromPath(false, Configuration.UsersFolderName, userGuid.ToString());
+			var userFolder = GetFolderFromPath(false, _configuration.UsersFolderName, userGuid.ToString());
 
 			if (userFolder != null)
 				return new List<Data.Dto.Standard.Folder>{userFolder};
 			if(!createIfMissing)
 				return new List<Data.Dto.Standard.Folder>();
 
-			var usersFolder = GetFolderFromPath(false, Configuration.UsersFolderName);
+			var usersFolder = GetFolderFromPath(false, _configuration.UsersFolderName);
 
-			var userFolderId = McmRepository.FolderCreate(Request.User.Guid, null, userGuid.ToString(), usersFolder.ID, Configuration.UserFolderTypeId);
+			var userFolderId = McmRepository.FolderCreate(Request.User.Guid, null, userGuid.ToString(), usersFolder.ID, _configuration.UserFolderTypeId);
 
 			return McmRepository.FolderGet(userFolderId);
 		}
@@ -55,7 +58,7 @@ namespace Chaos.Mcm.Extension.v6
 
 			var userFolder = GetUserFolder(userGuid).First();
 
-			if (McmRepository.ObjectCreate(userGuid.Value, Configuration.UserObjectTypeId, userFolder.ID) != 1)
+			if (McmRepository.ObjectCreate(userGuid.Value, _configuration.UserObjectTypeId, userFolder.ID) != 1)
 				throw new System.Exception("Failed to create user object");
 
 			return new List<Data.Dto.Object> {McmRepository.ObjectGet(userGuid.Value, includeMetata, includeFiles)};

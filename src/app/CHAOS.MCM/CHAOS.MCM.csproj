@@ -62,7 +62,6 @@
     <Compile Include="Configuration\AwsConfiguration.cs" />
     <Compile Include="Configuration\McmModuleConfiguration.cs" />
     <Compile Include="Data\Configuration\UserManagementConfiguration.cs" />
-    <Compile Include="Data\Configuration\UserProfileConfiguration.cs" />
     <Compile Include="Data\Dto\AccessPoint.cs" />
     <Compile Include="Data\Dto\DestinationInfo.cs" />
     <Compile Include="Data\Dto\EmailTemplate.cs" />
@@ -128,7 +127,6 @@
     <Compile Include="Extension\v5\Download\S3DownloadStrategy.cs" />
     <Compile Include="Extension\v5\Object.cs" />
     <Compile Include="Extension\v6\AMcmExtension.cs" />
-    <Compile Include="Extension\v6\AMcmExtensionWithConfiguration.cs" />
     <Compile Include="Extension\v6\Destination.cs" />
     <Compile Include="Extension\v6\File.cs" />
     <Compile Include="Extension\v6\Folder.cs" />

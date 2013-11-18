@@ -139,7 +139,7 @@ namespace Chaos.Mcm
                     case "UserProfile":
                         return new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager);
 					case "UserManagement":
-                        return new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"1\" UserObjectTypeId=\"11\" />");
+						return new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, McmModuleConfiguration.UserManagement);
                     default:
                         throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
                 }
@@ -174,7 +174,7 @@ namespace Chaos.Mcm
 					case "UserProfile":
                         return new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager);
 					case "UserManagement":
-                        return new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"1\" UserObjectTypeId=\"11\" />");
+						return new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, McmModuleConfiguration.UserManagement);
                     default:
                         throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
                 }
