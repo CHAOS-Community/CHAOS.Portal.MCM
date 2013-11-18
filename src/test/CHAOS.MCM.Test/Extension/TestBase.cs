@@ -1,3 +1,4 @@
+using Chaos.Mcm.Data.Configuration;
 using Chaos.Mcm.Extension.v6;
 using Chaos.Mcm.Test.Extension.v6;
 
@@ -240,12 +241,12 @@ namespace Chaos.Mcm.Test.Extension
 
 		protected UserManagement Make_UserManagementExtension()
 		{
-			return (UserManagement)new UserManagement(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserManagementConfiguration UsersFolderName=\"Users\" UserFolderTypeId=\"0\" UserObjectTypeId=\"0\" />").WithPortalRequest(PortalRequest.Object);
+			return (UserManagement)new UserManagement(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, new UserManagementConfiguration { UsersFolderName = "Users", UserFolderTypeId = 0, UserObjectTypeId = 0}).WithPortalRequest(PortalRequest.Object);
 		}
 
 	    protected Mcm.Extension.v6.UserProfile Make_UserProfileExtension()
 	    {
-			return (Mcm.Extension.v6.UserProfile)new Mcm.Extension.v6.UserProfile(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithConfiguration("<UserProfileConfiguration />").WithPortalRequest(PortalRequest.Object);
+			return (Mcm.Extension.v6.UserProfile)new Mcm.Extension.v6.UserProfile(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
 	    }
     }
 }
