@@ -133,6 +133,26 @@ namespace CHAOS.MCM.Data.Dto.Standard
                         #region DKA
                         DateTime dtFirstPublishedDate;
 
+
+                        #region DKA Tag
+                        case "00000000-0000-0000-0000-000067c30000":
+                            XNamespace nsDKATag = "http://www.danskkulturarv.dk/DKA-Crowd-Tag.xsd";
+
+                            var dtTagCreated = DateTime.MinValue;
+
+                            if (metadata.MetadataXML.Root.Attribute("created") != null)
+                                if (DateTime.TryParse(metadata.MetadataXML.Root.Attribute("created").Value, out dtTagCreated))
+                                    yield return new KeyValuePair<string, string>("DKA-Crowd-Tag-Created_date", dtTagCreated.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
+
+                            if (metadata.MetadataXML.Root.Attribute("status") != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Tag-Status_string", metadata.MetadataXML.Root.Attribute("status").Value);
+
+                            if(metadata.MetadataXML.Descendants(nsDKATag + "Tag").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Crowd-Tag-Value_string", metadata.MetadataXML.Descendants(nsDKATag + "Tag").First().Value);
+
+                            break;
+                        #endregion
+
                         #region DKA Crowd
                         case "a37167e0-e13b-4d29-8a41-b0ffbaa1fe5f":
                             XNamespace nsDKAC = "http://www.danskkulturarv.dk/DKA-Crowd.xsd";
@@ -254,6 +274,26 @@ namespace CHAOS.MCM.Data.Dto.Standard
 
                         #endregion
 
+                        #region DKA Collection
+                        case "00000000-0000-0000-0000-000065c30000":
+
+                            yield return new KeyValuePair<string, string>("DKA-Collection-Test", "Test");
+
+                            XNamespace nsDKACollection = "http://www.danskkulturarv.dk/DKA-Collection.xsd";
+
+                            if (metadata.MetadataXML.Descendants(nsDKACollection + "Title").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Collection-Title_string", metadata.MetadataXML.Descendants(nsDKACollection + "Title").First().Value);
+
+                            if (metadata.MetadataXML.Descendants(nsDKACollection + "Type").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Collection-Type_string", metadata.MetadataXML.Descendants(nsDKACollection + "Type").First().Value);
+
+                            if (metadata.MetadataXML.Descendants(nsDKACollection + "Status").FirstOrDefault() != null)
+                                yield return new KeyValuePair<string, string>("DKA-Collection-Status_string", metadata.MetadataXML.Descendants(nsDKACollection + "Status").First().Value);
+
+                            break;
+
+                        #endregion
+
                         // DKA
                         // TODO: Remember to add namespace to DKA fields when DKA is replaced by DKA2
                         case "00000000-0000-0000-0000-000063c30000":
@@ -277,6 +317,7 @@ namespace CHAOS.MCM.Data.Dto.Standard
                             if (metadata.MetadataXML.Descendants("ID").FirstOrDefault() != null)
                                 yield return new KeyValuePair<string, string>("DKA-DFI-ID", metadata.MetadataXML.Root.Element("ID").Value);
                             break;
+
                         case "1fd4e56e-3f3a-4f25-ba3e-3d9f80d5d49e":
                             if (metadata.MetadataXML.Root.Element("Name") != null)
                                 yield return new KeyValuePair<string, string>("CHAOS-Profile-Name", metadata.MetadataXML.Root.Element("Name").Value);
