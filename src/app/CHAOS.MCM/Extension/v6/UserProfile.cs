@@ -10,10 +10,15 @@ using Chaos.Portal.Core.Data.Model;
 
 namespace Chaos.Mcm.Extension.v6
 {
-	public class UserProfile : AMcmExtension
+    using Domain;
+
+    public class UserProfile : AMcmExtension
 	{
+        private UserProfileController UserProfileController { get; set; }
+
 		public UserProfile(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
 		{
+            UserProfileController = new UserProfileController(mcmRepository);
 		}
 
 		#region Get
@@ -46,17 +51,7 @@ namespace Chaos.Mcm.Extension.v6
 			if (!userGuid.HasValue)
 				userGuid = Request.User.Guid;
 
-			var userObject = McmRepository.ObjectGet(userGuid.Value, true);
-
-			if(userObject == null)
-				throw new NotImplementedException("User does not have an user object");
-
-			var existingMetadata = userObject.Metadatas.DoIfIsNotNull( ms => Enumerable.FirstOrDefault<Data.Dto.Metadata>(ms, m => m.MetadataSchemaGuid == metadataSchemaGuid));
-			var metadataGuid = existingMetadata == null ? Guid.NewGuid() : existingMetadata.Guid;
-			var revision = existingMetadata == null ? 0 : existingMetadata.RevisionID;
-
-			if(McmRepository.MetadataSet(userObject.Guid, metadataGuid, metadataSchemaGuid, null, revision, metadata, Request.User.Guid) != 1)
-				throw new System.Exception("Failed to set user profile");
+            UserProfileController.Set(userGuid.Value, metadataSchemaGuid, metadata, Request.User.Guid);
 
 			return new ScalarResult(1);
 		}

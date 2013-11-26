@@ -120,7 +120,9 @@
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
+    <Compile Include="Extension\Domain\UserManagementController.cs" />
     <Compile Include="Extension\Domain\ObjectExtensions.cs" />
+    <Compile Include="Extension\Domain\UserProfileController.cs" />
     <Compile Include="Extension\v5\Download\BucketInfo.cs" />
     <Compile Include="Extension\v5\Download\Download.cs" />
     <Compile Include="Extension\v5\Download\IDownloadStrategy.cs" />
