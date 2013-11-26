@@ -1,5 +1,6 @@
 _ReSharper*
 
+deploy-db.bat
 bin
 !/tools/*/bin
 !/bin
