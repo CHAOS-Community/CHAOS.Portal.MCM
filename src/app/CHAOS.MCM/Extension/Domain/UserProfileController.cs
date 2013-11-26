@@ -1,13 +1,14 @@
 ﻿namespace Chaos.Mcm.Extension.Domain
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
     using CHAOS.Extensions;
     using Data;
     using Object = Data.Dto.Object;
 
-    public class UserProfileController
+    public class UserProfileController : IUserProfileController
     {
         public IMcmRepository McmRepository { get; set; }
 
@@ -25,6 +26,23 @@
 
             if (McmRepository.MetadataSet(userObject.Guid, metadataGuid, metadataSchemaGuid, null, revision, metadata, requestingUsersGuid) != 1)
                 throw new Exception("Failed to set user profile");
+        }
+
+        public IList<Data.Dto.UserProfile> Get(Guid userGuid, Guid metadataSchemaGuid)
+        {
+            var userObject = McmRepository.ObjectGet(userGuid, true);
+
+            var result = new List<Data.Dto.UserProfile>();
+
+            if (userObject == null || userObject.Metadatas == null)
+                return result;
+
+            var metadata = userObject.Metadatas.FirstOrDefault(m => m.MetadataSchemaGuid == metadataSchemaGuid);
+
+            if (metadata != null)
+                result.Add(new Data.Dto.UserProfile(metadata));
+
+            return result;
         }
 
         private Object GetUserProfileObject(Guid userGuid)

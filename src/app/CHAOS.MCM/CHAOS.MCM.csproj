@@ -120,6 +120,8 @@
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
+    <Compile Include="Extension\Domain\IUserManagementController.cs" />
+    <Compile Include="Extension\Domain\IUserProfileController.cs" />
     <Compile Include="Extension\Domain\UserManagementController.cs" />
     <Compile Include="Extension\Domain\ObjectExtensions.cs" />
     <Compile Include="Extension\Domain\UserProfileController.cs" />

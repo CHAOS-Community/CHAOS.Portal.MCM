@@ -5,7 +5,7 @@
     using System.Linq;
     using Data;
 
-    public class UserManagementController
+    public class UserManagementController : IUserManagementController
     {
         public IMcmRepository McmRepository { get; set; }
         public string UsersFolderName { get; set; }
@@ -22,14 +22,9 @@
 
         #region GetFolderFromPath
 
-        public Data.Dto.Standard.Folder GetFolderFromPath(bool failWhenMissing, string path)
+        public IList<Data.Dto.Object> GetUserObject(Guid userGuid, Guid requestingUsersGuid, bool createIfMissing = true, bool includeMetadata = false, bool includeFiles = false)
         {
-            return GetFolderFromPath(failWhenMissing, path.Split('/'));
-        }
-
-        public IList<Data.Dto.Object> GetUserObject(Guid userGuid, Guid requestingUsersGuid, bool createIfMissing = true, bool includeMetata = false, bool includeFiles = false)
-        {
-            var @object = McmRepository.ObjectGet(userGuid, includeMetata, includeFiles);
+            var @object = McmRepository.ObjectGet(userGuid, includeMetadata, includeFiles);
 
             if (@object != null)
                 return new List<Data.Dto.Object> { @object };
@@ -41,7 +36,7 @@
             if (McmRepository.ObjectCreate(userGuid, UserObjectTypeId, userFolder.ID) != 1)
                 throw new System.Exception("Failed to create user object");
 
-            return new List<Data.Dto.Object> { McmRepository.ObjectGet(userGuid, includeMetata, includeFiles) };
+            return new List<Data.Dto.Object> { McmRepository.ObjectGet(userGuid, includeMetadata, includeFiles) };
         }
 
         public IList<Data.Dto.Standard.Folder> GetUserFolder(Guid userGuid, Guid requestingUsersGuid, bool createIfMissing = true)
@@ -93,6 +88,11 @@
             }
 
             return null;
+        }
+
+        private Data.Dto.Standard.Folder GetFolderFromPath(bool failWhenMissing, string path)
+        {
+            return GetFolderFromPath(failWhenMissing, path.Split('/'));
         }
 
         #endregion

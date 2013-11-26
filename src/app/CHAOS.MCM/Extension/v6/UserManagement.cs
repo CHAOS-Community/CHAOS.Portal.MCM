@@ -12,7 +12,7 @@ namespace Chaos.Mcm.Extension.v6
     public class UserManagement : AMcmExtension
 	{
 		private readonly UserManagementConfiguration _configuration;
-        private UserManagementController UserManagementController { get; set; }
+        private IUserManagementController UserManagementController { get; set; }
 
 		#region Constructor
 
