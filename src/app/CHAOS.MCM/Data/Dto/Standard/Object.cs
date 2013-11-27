@@ -276,9 +276,6 @@ namespace CHAOS.MCM.Data.Dto.Standard
 
                         #region DKA Collection
                         case "00000000-0000-0000-0000-000065c30000":
-
-                            yield return new KeyValuePair<string, string>("DKA-Collection-Test", "Test");
-
                             XNamespace nsDKACollection = "http://www.danskkulturarv.dk/DKA-Collection.xsd";
 
                             if (metadata.MetadataXML.Descendants(nsDKACollection + "Title").FirstOrDefault() != null)
