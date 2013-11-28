@@ -15,3 +15,4 @@ App.Config
 *.ncrunchsolution
 *.ncrunchproject
 _NCrunch*
+deploy-db.bat
