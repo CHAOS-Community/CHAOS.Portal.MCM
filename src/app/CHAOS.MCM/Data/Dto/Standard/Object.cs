@@ -469,8 +469,8 @@ namespace CHAOS.MCM.Data.Dto.Standard
                 var start = ap.StartDate.HasValue ? ap.StartDate.Value : DateTime.MaxValue;
                 var end   = ap.EndDate.HasValue ? ap.EndDate.Value : DateTime.MaxValue;
 
-                yield return new KeyValuePair<string, string>(string.Format("{0}_PubStart", ap.AccessPointGUID), start.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
-                yield return new KeyValuePair<string, string>(string.Format("{0}_PubEnd", ap.AccessPointGUID), end.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
+                yield return new KeyValuePair<string, string>(string.Format("ap{0}_PubStart", ap.AccessPointGUID), start.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
+                yield return new KeyValuePair<string, string>(string.Format("ap{0}_PubEnd", ap.AccessPointGUID), end.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"));
             }
         }
 
