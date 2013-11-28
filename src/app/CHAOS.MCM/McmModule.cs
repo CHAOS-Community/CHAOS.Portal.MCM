@@ -48,7 +48,7 @@ namespace Chaos.Mcm
         public IPermissionManager PermissionManager { get; private set; }
         public IPortalApplication PortalApplication { get; private set; }
 
-        private McmModuleConfiguration McmModuleConfiguration { get; set; }
+        public McmModuleConfiguration McmModuleConfiguration { get; set; }
 
         #endregion
         #region Implementation of IModule

@@ -4,20 +4,17 @@
     using System.Collections.Generic;
     using System.Linq;
     using Data;
+    using Data.Configuration;
 
     public class UserManagementController : IUserManagementController
     {
         public IMcmRepository McmRepository { get; set; }
-        public string UsersFolderName { get; set; }
-        public uint UserFolderTypeId { get; set; }
-        public uint UserObjectTypeId { get; set; }
+        public UserManagementConfiguration Configuration { get; set; }
 
-        public UserManagementController(IMcmRepository mcmRepository, string usersFolderName, uint userFolderTypeId, uint userObjectTypeId)
+        public UserManagementController(IMcmRepository mcmRepository, UserManagementConfiguration configuration)
         {
             McmRepository = mcmRepository;
-            UsersFolderName = usersFolderName;
-            UserFolderTypeId = userFolderTypeId;
-            UserObjectTypeId = userObjectTypeId;
+            Configuration = configuration;
         }
 
         #region GetFolderFromPath
@@ -33,7 +30,7 @@
 
             var userFolder = GetUserFolder(userGuid, requestingUsersGuid).First();
 
-            if (McmRepository.ObjectCreate(userGuid, UserObjectTypeId, userFolder.ID) != 1)
+            if (McmRepository.ObjectCreate(userGuid, Configuration.UserObjectTypeId, userFolder.ID) != 1)
                 throw new System.Exception("Failed to create user object");
 
             return new List<Data.Dto.Object> { McmRepository.ObjectGet(userGuid, includeMetadata, includeFiles) };
@@ -41,7 +38,7 @@
 
         public IList<Data.Dto.Standard.Folder> GetUserFolder(Guid userGuid, Guid requestingUsersGuid, bool createIfMissing = true)
         {
-            var userFolder = GetFolderFromPath(false, UsersFolderName, userGuid.ToString());
+            var userFolder = GetFolderFromPath(false, Configuration.UsersFolderName, userGuid.ToString());
 
             if (userFolder != null)
                 return new List<Data.Dto.Standard.Folder> { userFolder };
@@ -49,9 +46,9 @@
             if (!createIfMissing)
                 return new List<Data.Dto.Standard.Folder>();
 
-            var usersFolder = GetFolderFromPath(false, UsersFolderName);
+            var usersFolder = GetFolderFromPath(false, Configuration.UsersFolderName);
 
-            var userFolderId = McmRepository.FolderCreate(requestingUsersGuid, null, userGuid.ToString(), usersFolder.ID, UserFolderTypeId);
+            var userFolderId = McmRepository.FolderCreate(requestingUsersGuid, null, userGuid.ToString(), usersFolder.ID, Configuration.UserFolderTypeId);
 
             return McmRepository.FolderGet(userFolderId);
         }

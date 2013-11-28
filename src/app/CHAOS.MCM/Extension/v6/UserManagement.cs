@@ -19,7 +19,7 @@ namespace Chaos.Mcm.Extension.v6
 		public UserManagement(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager, UserManagementConfiguration configuration) : base(portalApplication, mcmRepository, permissionManager)
 		{
 			_configuration = configuration;
-            UserManagementController = new UserManagementController(mcmRepository, _configuration.UsersFolderName, configuration.UserFolderTypeId, configuration.UserObjectTypeId);
+            UserManagementController = new UserManagementController(mcmRepository, configuration);
 		}
 
 		#endregion
