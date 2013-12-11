@@ -9,17 +9,17 @@ namespace Chaos.Mcm.Data
     using CHAOS.Data.MySql;
     using CHAOS.Extensions;
 
-    using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Data.Dto.Standard;
-    using Chaos.Mcm.Data.Mapping;
-    using Chaos.Mcm.Exception;
-    using Chaos.Mcm.Permission;
-    using Chaos.Portal.Core.Exceptions;
+    using Dto;
+    using Dto.Standard;
+    using Mapping;
+    using Exception;
+    using Permission;
+    using Portal.Core.Exceptions;
 
     using MySql.Data.MySqlClient;
 
-    using FolderPermission = Chaos.Mcm.Data.Dto.FolderPermission;
-    using Object = Chaos.Mcm.Data.Dto.Object;
+    using FolderPermission = Dto.FolderPermission;
+    using Object = Dto.Object;
 
     // todo: Remove dependency to MySql
     public class McmRepository : IMcmRepository
@@ -192,7 +192,7 @@ namespace Chaos.Mcm.Data
 
         public Object ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
         {
-            return this.ObjectGet(new[] { objectGuid }, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints).FirstOrDefault();
+            return ObjectGet(new[] { objectGuid }, includeMetadata, includeFiles, includeObjectRelations, includeFolders, includeAccessPoints).FirstOrDefault();
         }
 
         public IList<Object> ObjectGet(IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)

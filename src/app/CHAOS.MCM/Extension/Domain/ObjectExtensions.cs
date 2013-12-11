@@ -45,10 +45,11 @@
 
                 var folderQuery = string.Format("FolderAncestors:{0}", string.Join(" ", list.Select(item => item.ID)));
 
+                // todo user Filter instead of query for permission
                 query.Query = string.Format("({0})AND({1})", query.Query, folderQuery);
             }
             else
-                query.Query = string.Format("({0})AND({1}_PubStart:[* TO NOW] AND {1}_PubEnd:[NOW TO *])", query.Query, accessPointGuid);
+                query.Query = string.Format("({0})AND({1}_PubStart:[* TO NOW] AND {1}_PubEnd:[NOW TO *])", query.Query, accessPointGuid); // todo user Filter instead of query for permission
 
             // todo remove metadata schemas the user doesnt have permission to read
             return manager.GetView(ObjectViewName).Query(query);

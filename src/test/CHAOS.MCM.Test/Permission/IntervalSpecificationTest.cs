@@ -14,7 +14,7 @@ namespace Chaos.Mcm.Test.Permission
 
             spec.OnSynchronizationTrigger += (sender, args) => { wasRun = true; };
 
-            System.Threading.Thread.Sleep(100);
+            System.Threading.Thread.Sleep(200);
 
             Assert.IsTrue(wasRun);
         }

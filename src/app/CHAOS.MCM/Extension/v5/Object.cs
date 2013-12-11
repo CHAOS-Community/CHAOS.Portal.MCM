@@ -3,15 +3,15 @@
 namespace Chaos.Mcm.Extension.v5
 {
     using System;
-
+    using System.Linq;
     using CHAOS;
 
-    using Chaos.Mcm.Data;
-    using Chaos.Mcm.Extension.Domain;
-    using Chaos.Mcm.Permission;
-    using Chaos.Portal.Core;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Indexing;
+    using Data;
+    using Domain;
+    using Permission;
+    using Portal.Core;
+    using Portal.Core.Data.Model;
+    using Portal.Core.Indexing;
 
     public class Object : AMcmExtension
     {
@@ -35,14 +35,16 @@ namespace Chaos.Mcm.Extension.v5
             query.Query = query.Query.Replace("GUID:", "Id:");
             query.Query = query.Query.Replace("ObjectTypeID:", "ObjectTypeId:");
             
-            var pagedResult = ViewManager.GetObjects(query, accesspointGuid, GetFoldersWithAccess(), includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations);
+            var result = ViewManager.GetObjects(query, accesspointGuid, GetFoldersWithAccess(), includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations);
 
             // todo map to v5 object
-
+            var page = new PagedResult<Data.Dto.v5.Object>(result.FoundCount,
+                                                           result.StartIndex,
+                                                           result.Results.Select(item => Data.Dto.v5.Object.Create((Data.Dto.Object) item)));
 
             // todo filter based on include parameters
 
-            return pagedResult;
+            return page;
         }
 
         #endregion

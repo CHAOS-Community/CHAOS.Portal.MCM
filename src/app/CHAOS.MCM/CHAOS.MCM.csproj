@@ -98,6 +98,7 @@
     <Compile Include="Data\Dto\Standard\ObjectRelationType.cs" />
     <Compile Include="Data\Dto\Standard\Permission.cs" />
     <Compile Include="Data\Dto\UserProfile.cs" />
+    <Compile Include="Data\Dto\v5\Object.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
     <Compile Include="Data\Mapping\AccessPointMapping.cs" />
     <Compile Include="Data\Mapping\AccesspointObjectJoinMapping.cs" />
