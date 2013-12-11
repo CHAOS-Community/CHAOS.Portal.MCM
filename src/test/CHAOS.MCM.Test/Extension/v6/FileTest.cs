@@ -6,9 +6,7 @@ using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
 namespace Chaos.Mcm.Test.Extension.v6
 {
     using System.Collections.Generic;
-    using Data.Dto.Standard;
     using Moq;
-    using Portal.Core.Data.Model;
 
     [TestFixture]
     public class FileTest : TestBase

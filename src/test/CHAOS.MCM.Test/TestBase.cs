@@ -1,11 +1,11 @@
 ﻿namespace Chaos.Mcm.Test
 {
+    using Mcm.Data;
     using Mcm.Permission;
     using Portal.Core;
     using Portal.Core.Data;
     using Portal.Core.Indexing.View;
     using Configuration;
-    using Data;
     using Mcm.Extension.v5.Download;
     using Moq;
 

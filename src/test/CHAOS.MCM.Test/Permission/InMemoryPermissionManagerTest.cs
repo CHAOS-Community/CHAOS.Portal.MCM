@@ -168,7 +168,7 @@ namespace Chaos.Mcm.Test.Permission
             var permissionManager = new InMemoryPermissionManager(McmRepository.Object);
             var objectGuid = new Guid("af40f5e3-2cbf-944f-b833-6c444ad760e1");
             var userGuid = new Guid("10000000-0000-0000-0000-000000000001");
-            var folderDtos = new[] { new Data.Dto.Standard.Folder{ ID = 1 } };
+            var folderDtos = new[] { new Mcm.Data.Dto.Standard.Folder { ID = 1 } };
             McmRepository.Setup(m => m.FolderGet(null, null, objectGuid)).Returns(folderDtos);
             permissionManager.AddFolder(new Folder
             {
@@ -247,8 +247,8 @@ namespace Chaos.Mcm.Test.Permission
             var syncSpecification = new Mock<ISynchronizationSpecification>();
             entity.SetupProperty(p => p.Guid, new Guid("c86a1cfc-10de-4a51-8d7b-6ba8f985e273"))
                   .SetupProperty(p => p.Permission, FolderPermission.Read);
-            mcmRepository.Setup(repo => repo.FolderGet(null, null, null)).Returns(new[] { new Data.Dto.Standard.Folder { ID = 1 } });
-            mcmRepository.Setup(repo => repo.FolderPermissionGet()).Returns(new[] { new Data.Dto.FolderPermission { FolderID = 1, UserPermissions = new List<IEntityPermission> { entity.Object }, GroupPermissions = new List<IEntityPermission> { entity.Object } } });
+            mcmRepository.Setup(repo => repo.FolderGet(null, null, null)).Returns(new[] { new Mcm.Data.Dto.Standard.Folder { ID = 1 } });
+            mcmRepository.Setup(repo => repo.FolderPermissionGet()).Returns(new[] { new Mcm.Data.Dto.FolderPermission { FolderID = 1, UserPermissions = new List<IEntityPermission> { entity.Object }, GroupPermissions = new List<IEntityPermission> { entity.Object } } });
 
             permissionManager.WithSynchronization(mcmRepository.Object, syncSpecification.Object);
 

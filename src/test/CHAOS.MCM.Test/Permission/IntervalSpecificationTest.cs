@@ -14,7 +14,10 @@ namespace Chaos.Mcm.Test.Permission
 
             spec.OnSynchronizationTrigger += (sender, args) => { wasRun = true; };
 
-            System.Threading.Thread.Sleep(200);
+            for (var i = 0; i < 100; i++)
+            {
+                System.Threading.Thread.Sleep(10);
+            }
 
             Assert.IsTrue(wasRun);
         }

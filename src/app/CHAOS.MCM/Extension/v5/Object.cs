@@ -37,10 +37,9 @@ namespace Chaos.Mcm.Extension.v5
             
             var result = ViewManager.GetObjects(query, accesspointGuid, GetFoldersWithAccess(), includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations);
 
-            // todo map to v5 object
-            var page = new PagedResult<Data.Dto.v5.Object>(result.FoundCount,
-                                                           result.StartIndex,
-                                                           result.Results.Select(item => Data.Dto.v5.Object.Create((Data.Dto.Object) item)));
+            var page = new PagedResult<IResult>(result.FoundCount,
+                                                result.StartIndex,
+                                                result.Results.Select(item => Data.Dto.v5.Object.Create((Data.Dto.Object) item)));
 
             // todo filter based on include parameters
 

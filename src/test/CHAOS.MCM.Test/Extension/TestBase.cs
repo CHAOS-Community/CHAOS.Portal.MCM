@@ -208,9 +208,9 @@ namespace Chaos.Mcm.Test.Extension
             return new MetadataSchema(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object) as MetadataSchema;
         }
 
-        protected static Data.Dto.MetadataSchema Make_MetadataSchema()
+        protected static Mcm.Data.Dto.MetadataSchema Make_MetadataSchema()
         {
-            return new Data.Dto.MetadataSchema
+            return new Mcm.Data.Dto.MetadataSchema
                 {
                     Guid        = new Guid("463c7500-a154-5a46-b11b-f96f9b3df920"),
                     Name        = "some name",
