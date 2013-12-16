@@ -2,11 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using CHAOS;
     using CHAOS.Extensions;
     using CHAOS.Serialization;
+    using CHAOS.Serialization.XML;
     using Portal.Core.Data.Model;
 
+    [Serialize("Result")]
     public class Object : IResult
     {
         [Serialize("GUID")]
@@ -30,21 +33,24 @@
         [Serialize]
         public IList<ObjectAccessPoint> AccessPoints { get; set; }
 
+        [SerializeXML(true)]
+        [Serialize("FullName")]
         public string Fullname { get; private set; }
         
         public static Object Create(Dto.Object obj)
         {
             return new Object
-                {
-                    Guid = obj.Guid.ToUUID(),
-                    ObjectTypeId = obj.ObjectTypeID,
-                    DateCreated = obj.DateCreated
-                };
+            {
+                Guid = obj.Guid.ToUUID(),
+                ObjectTypeId = obj.ObjectTypeID,
+                DateCreated = obj.DateCreated,
+                Metadatas = obj.Metadatas.Select(item => Metadata.Create(item)).ToList()
+            };
         }
 
         public Object()
         {
-            Fullname = "CHAOS.MCM.Data.Dto.Standard.Object";
+            Fullname = "CHAOS.MCM.Data.DTO.Object";
             Metadatas = new List<Metadata>();
             ObjectRelationInfos = new List<ObjectRelationInfo>();
             Files = new List<FileInfo>();
