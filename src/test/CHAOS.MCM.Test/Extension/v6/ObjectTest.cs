@@ -131,7 +131,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
             var result = extension.SetPublishSettings(obj.Guid, accesspoint.Guid, startDate, endDate);
 
-            Assert.AreEqual(1, result.Value);
+            Assert.AreEqual(1, result);
             ViewManager.Verify(m => m.Index(obj));
         }
 

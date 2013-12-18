@@ -24,14 +24,16 @@ namespace Chaos.Mcm.Extension.v5
                    mcmRepository, 
                    permissionManager,
                    new ObjectCreate(mcmRepository, permissionManager, portalApplication.ViewManager),
-                   new ObjectDelete(mcmRepository, permissionManager, portalApplication.ViewManager))
+                   new ObjectDelete(mcmRepository, permissionManager, portalApplication.ViewManager),
+                   new ObjectSetPublishSettings(mcmRepository, permissionManager, portalApplication.ViewManager))
         {
         }
 
-        public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager, IObjectCreate objectCreate, IObjectDelete objectDelete) : base(portalApplication, mcmRepository, permissionManager)
+        public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager, IObjectCreate objectCreate, IObjectDelete objectDelete, IObjectSetPublishSettings objectSetPublishSettings) : base(portalApplication, mcmRepository, permissionManager)
         {
             ObjectCreate = objectCreate;
             ObjectDelete = objectDelete;
+            ObjectSetPublishSettings = objectSetPublishSettings;
         }
 
         #endregion
@@ -39,6 +41,7 @@ namespace Chaos.Mcm.Extension.v5
 
         public IObjectCreate ObjectCreate { get; set; }
         public IObjectDelete ObjectDelete { get; set; }
+        public IObjectSetPublishSettings ObjectSetPublishSettings { get; set; }
 
         #endregion
         #region Business Logic
@@ -77,8 +80,14 @@ namespace Chaos.Mcm.Extension.v5
             return ObjectDelete.Delete(GUID.ToGuid(), userId, groupIds);
         }
 
-        #endregion
+        public uint SetPublishSettings(UUID objectGUID, UUID accessPointGUID, DateTime? startDate, DateTime? endDate)
+        {
+            var userId = Request.User.Guid;
+            var groupIds = Request.Groups.Select(group => group.Guid);
 
-        
+            return ObjectSetPublishSettings.SetPublishSettings(objectGUID.ToGuid(), accessPointGUID.ToGuid(), startDate, endDate, userId, groupIds);
+        }
+
+        #endregion
     }
 }

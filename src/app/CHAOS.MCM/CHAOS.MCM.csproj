@@ -133,6 +133,7 @@
     <Compile Include="Extension\Domain\IUserProfileController.cs" />
     <Compile Include="Extension\Domain\Object\ObjectCreate.cs" />
     <Compile Include="Extension\Domain\Object\ObjectDelete.cs" />
+    <Compile Include="Extension\Domain\Object\ObjectSetPublishSettings.cs" />
     <Compile Include="Extension\Domain\UserManagementController.cs" />
     <Compile Include="Extension\Domain\ObjectExtensions.cs" />
     <Compile Include="Extension\Domain\UserProfileController.cs" />

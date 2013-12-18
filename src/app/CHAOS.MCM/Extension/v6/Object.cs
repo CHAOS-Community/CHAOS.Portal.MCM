@@ -9,7 +9,6 @@ namespace Chaos.Mcm.Extension.v6
     using Permission;
     using Portal.Core;
     using Portal.Core.Data.Model;
-    using Portal.Core.Exceptions;
     using Portal.Core.Indexing.Solr.Request;
 
     public class Object : AMcmExtension
@@ -18,6 +17,7 @@ namespace Chaos.Mcm.Extension.v6
 
         private IObjectCreate ObjectCreate { get; set; }
         private IObjectDelete ObjectDelete { get; set; }
+        private IObjectSetPublishSettings ObjectSetPublishSettings { get; set; }
 
         #endregion
         #region Initialization
@@ -26,6 +26,7 @@ namespace Chaos.Mcm.Extension.v6
         {
             ObjectCreate = new ObjectCreate(mcmRepository, permissionManager, portalApplication.ViewManager);
             ObjectDelete = new ObjectDelete(mcmRepository, permissionManager, portalApplication.ViewManager);
+            ObjectSetPublishSettings = new ObjectSetPublishSettings(mcmRepository, permissionManager, portalApplication.ViewManager);
         }
 
         #endregion
@@ -38,24 +39,12 @@ namespace Chaos.Mcm.Extension.v6
             return ObjectCreate.Create(guid, objectTypeID, folderID, userId, groupIds);
 		}
 
-        public ScalarResult SetPublishSettings(Guid objectGuid, Guid accessPointGuid, DateTime? startDate, DateTime? endDate)
+        public uint SetPublishSettings(Guid objectGuid, Guid accessPointGuid, DateTime? startDate, DateTime? endDate)
         {
-            var userGuid   = Request.User.Guid;
-            var groupGuids = Request.Groups.Select(item => item.Guid);
+            var userId   = Request.User.Guid;
+            var groupIds = Request.Groups.Select(item => item.Guid);
 
-            if (McmRepository.AccessPointGet(accessPointGuid, userGuid, groupGuids, (uint) AccessPointPermission.Write).FirstOrDefault() == null)
-                throw new InsufficientPermissionsException( "User does not have permission to set publish settings for object in accessPoint" );
-
-            var result = McmRepository.AccessPointPublishSettingsSet(accessPointGuid, objectGuid, startDate, endDate);
-
-            if (result == 1)
-            {
-                var obj = McmRepository.ObjectGet(objectGuid, true, true, true, true, true);
-
-                ViewManager.Index(obj);
-            }
-
-            return new ScalarResult( (int) result );
+            return ObjectSetPublishSettings.SetPublishSettings(objectGuid, accessPointGuid, startDate, endDate, userId, groupIds);
         }
 
         public uint Delete( Guid guid )
