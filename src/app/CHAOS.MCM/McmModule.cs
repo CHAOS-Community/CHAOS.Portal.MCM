@@ -16,6 +16,7 @@ namespace Chaos.Mcm
     using Data;
     using Extension.Domain;
     using Extension.v5.Download;
+    using Extension.v6;
     using Permission;
     using Permission.InMemory;
     using Permission.Specification;
@@ -164,7 +165,7 @@ namespace Chaos.Mcm
                     case "MetadataSchema":
                         return new Extension.v6.MetadataSchema(PortalApplication, McmRepository, PermissionManager);
                     case "Object":
-                        return new Extension.v6.Object(PortalApplication, McmRepository, PermissionManager);
+                        return new Object(PortalApplication, McmRepository, PermissionManager);
                     case "ObjectRelation":
                         return new Extension.v6.ObjectRelation(PortalApplication, McmRepository, PermissionManager);
                     case "ObjectType":

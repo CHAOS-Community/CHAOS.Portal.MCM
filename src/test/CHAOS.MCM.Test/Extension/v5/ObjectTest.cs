@@ -2,8 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using Mcm.Permission;
+    using CHAOS;
+    using Mcm.Data.Dto;
+    using Mcm.Extension.Domain.Object;
     using Mcm.Permission.InMemory;
     using Portal.Core.Data.Model;
     using Portal.Core.Indexing;
@@ -11,6 +12,8 @@
     using Moq;
 
     using NUnit.Framework;
+    using FolderPermission = Mcm.Permission.FolderPermission;
+    using Object = Mcm.Data.Dto.Object;
 
     [TestFixture]
     public class ObjectTest : TestBase
@@ -45,6 +48,18 @@
             extension.Get(query, null, true, true, true, true);
 
             ViewManager.VerifyAll();
+        }
+
+        [Test]
+        public void Create_Default_CallObjectCreator()
+        {
+            var objectCreator = new Mock<IObjectCreator>();
+            var extension = Make_ObjectV5Extension(objectCreator.Object);
+            objectCreator.Setup(m => m.Create(It.IsAny<Guid?>(), It.IsAny<uint>(), It.IsAny<uint>(), It.IsAny<Guid>(), It.IsAny<IEnumerable<Guid>>())).Returns(new Object());
+
+            extension.Create(new UUID("10000000-0000-0000-0000-000000000001"), 1, 1);
+
+            objectCreator.VerifyAll();
         }
     }
 }

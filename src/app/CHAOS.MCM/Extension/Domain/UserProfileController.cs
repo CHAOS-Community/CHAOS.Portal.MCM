@@ -45,7 +45,7 @@
             return result;
         }
 
-        private Object GetUserProfileObject(Guid userGuid)
+        private Data.Dto.Object GetUserProfileObject(Guid userGuid)
         {
             var userObject = McmRepository.ObjectGet(userGuid, true);
 

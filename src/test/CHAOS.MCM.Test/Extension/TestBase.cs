@@ -14,7 +14,7 @@ namespace Chaos.Mcm.Test.Extension
     using Chaos.Portal.Core.Cache;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Request;
-
+    using Mcm.Extension.Domain.Object;
     using Moq;
 
     using NUnit.Framework;
@@ -183,9 +183,14 @@ namespace Chaos.Mcm.Test.Extension
                 };
         }
 
-        protected Chaos.Mcm.Extension.v5.Object Make_ObjectV5Extension()
+        protected Mcm.Extension.v5.Object Make_ObjectV5Extension()
         {
-            return (Chaos.Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+        }
+
+        protected Mcm.Extension.v5.Object Make_ObjectV5Extension(IObjectCreator objectCreator)
+        {
+            return (Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, objectCreator).WithPortalRequest(PortalRequest.Object);
         }
 
         protected Mcm.Extension.v6.Object Make_ObjectV6Extension()

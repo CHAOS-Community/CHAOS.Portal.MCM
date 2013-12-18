@@ -129,6 +129,7 @@
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
     <Compile Include="Extension\Domain\IUserManagementController.cs" />
     <Compile Include="Extension\Domain\IUserProfileController.cs" />
+    <Compile Include="Extension\Domain\Object\ObjectCreator.cs" />
     <Compile Include="Extension\Domain\UserManagementController.cs" />
     <Compile Include="Extension\Domain\ObjectExtensions.cs" />
     <Compile Include="Extension\Domain\UserProfileController.cs" />

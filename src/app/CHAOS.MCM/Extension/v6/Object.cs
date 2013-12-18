@@ -1,43 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Chaos.Mcm.Data;
-using Chaos.Mcm.Extension.Domain;
-using Chaos.Mcm.Permission;
-using Chaos.Portal.Core;
-using Chaos.Portal.Core.Data.Model;
-using Chaos.Portal.Core.Exceptions;
-using Chaos.Portal.Core.Indexing.Solr.Request;
-
 namespace Chaos.Mcm.Extension.v6
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Data;
+    using Domain;
+    using Domain.Object;
+    using Permission;
+    using Portal.Core;
+    using Portal.Core.Data.Model;
+    using Portal.Core.Exceptions;
+    using Portal.Core.Indexing.Solr.Request;
+
     public class Object : AMcmExtension
     {
+        #region Properties
+
+        private IObjectCreator ObjectCreator { get; set; }
+
+        #endregion
         #region Initialization
 
         public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
         {
+            ObjectCreator = new ObjectCreator(mcmRepository, permissionManager, portalApplication.ViewManager);
         }
 
         #endregion
 
 		public Data.Dto.Object Create(Guid? guid, uint objectTypeID, uint folderID )
 		{
-            var userGuid   = Request.User.Guid;
-            var groupGuids = Request.Groups.Select(group => group.Guid);
+            var userId   = Request.User.Guid;
+            var groupIds = Request.Groups.Select(group => group.Guid);
 
-            if (!PermissionManager.GetFolders(folderID).DoesUserOrGroupHavePermission(userGuid, groupGuids, FolderPermission.CreateUpdateObjects)) 
-                throw new InsufficientPermissionsException("User does not have permissions to create object");
-
-		    guid = guid.HasValue ? guid : Guid.NewGuid();
-
-		    McmRepository.ObjectCreate(guid.Value, objectTypeID, folderID);
-
-		    var result = McmRepository.ObjectGet(guid.Value);
-            
-            ViewManager.Index(result);
-
-		    return result;
+            return ObjectCreator.Create(guid, objectTypeID, folderID, userId, groupIds);
 		}
 
         public ScalarResult SetPublishSettings(Guid objectGuid, Guid accessPointGuid, DateTime? startDate, DateTime? endDate)
