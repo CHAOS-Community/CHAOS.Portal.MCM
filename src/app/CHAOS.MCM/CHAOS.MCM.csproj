@@ -105,6 +105,7 @@
     <Compile Include="Data\Dto\v5\FileInfo.cs" />
     <Compile Include="Data\Dto\v5\Metadata.cs" />
     <Compile Include="Data\Dto\v5\Object.cs" />
+    <Compile Include="Data\Dto\v5\ObjectAccessPoint.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
     <Compile Include="Data\Mapping\AccessPointMapping.cs" />
     <Compile Include="Data\Mapping\AccesspointObjectJoinMapping.cs" />
@@ -129,7 +130,8 @@
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
     <Compile Include="Extension\Domain\IUserManagementController.cs" />
     <Compile Include="Extension\Domain\IUserProfileController.cs" />
-    <Compile Include="Extension\Domain\Object\ObjectCreator.cs" />
+    <Compile Include="Extension\Domain\Object\ObjectCreate.cs" />
+    <Compile Include="Extension\Domain\Object\ObjectDelete.cs" />
     <Compile Include="Extension\Domain\UserManagementController.cs" />
     <Compile Include="Extension\Domain\ObjectExtensions.cs" />
     <Compile Include="Extension\Domain\UserProfileController.cs" />

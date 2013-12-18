@@ -7,17 +7,10 @@ namespace Chaos.Mcm.Extension.Domain.Object
     using Portal.Core.Exceptions;
     using Portal.Core.Indexing.View;
 
-    class ObjectCreator : IObjectCreator
+    public class ObjectCreate : ExtensionHelperBase, IObjectCreate
     {
-        private IMcmRepository McmRepository { get; set; }
-        private IPermissionManager PermissionManager { get; set; }
-        private IViewManager ViewManager { get; set; }
-
-        public ObjectCreator(IMcmRepository mcmRepository, IPermissionManager permissionManager, IViewManager viewManager)
+        public ObjectCreate(IMcmRepository mcmRepository, IPermissionManager permissionManager, IViewManager viewManager) : base(mcmRepository, permissionManager, viewManager)
         {
-            McmRepository = mcmRepository;
-            PermissionManager = permissionManager;
-            ViewManager = viewManager;
         }
 
         public Data.Dto.Object Create(Guid? guid, uint objectTypeID, uint folderID, Guid userId, IEnumerable<Guid> groupIds)
@@ -37,7 +30,7 @@ namespace Chaos.Mcm.Extension.Domain.Object
         } 
     }
 
-    public interface IObjectCreator
+    public interface IObjectCreate
     {
         Data.Dto.Object Create(Guid? guid, uint objectTypeID, uint folderID, Guid userId, IEnumerable<Guid> groupIds);
     }

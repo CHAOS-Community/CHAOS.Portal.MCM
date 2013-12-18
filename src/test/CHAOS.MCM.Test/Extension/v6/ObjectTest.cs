@@ -110,7 +110,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
             var result = extension.Delete(expected.Guid);
 
-            Assert.AreEqual(1, result.Value);
+            Assert.AreEqual(1, result);
             McmRepository.Verify(m => m.ObjectDelete(expected.Guid));
             ViewManager.Verify(m => m.Delete("Id:" + expected.Guid));
         }

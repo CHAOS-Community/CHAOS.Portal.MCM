@@ -188,9 +188,9 @@ namespace Chaos.Mcm.Test.Extension
             return (Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
-        protected Mcm.Extension.v5.Object Make_ObjectV5Extension(IObjectCreator objectCreator)
+        protected Mcm.Extension.v5.Object Make_ObjectV5Extension(IObjectCreate objectCreate)
         {
-            return (Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, objectCreator).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, objectCreate).WithPortalRequest(PortalRequest.Object);
         }
 
         protected Mcm.Extension.v6.Object Make_ObjectV6Extension()

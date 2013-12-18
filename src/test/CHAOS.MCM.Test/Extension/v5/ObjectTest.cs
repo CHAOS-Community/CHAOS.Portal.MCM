@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using CHAOS;
-    using Mcm.Data.Dto;
     using Mcm.Extension.Domain.Object;
     using Mcm.Permission.InMemory;
     using Portal.Core.Data.Model;
@@ -53,7 +52,7 @@
         [Test]
         public void Create_Default_CallObjectCreator()
         {
-            var objectCreator = new Mock<IObjectCreator>();
+            var objectCreator = new Mock<IObjectCreate>();
             var extension = Make_ObjectV5Extension(objectCreator.Object);
             objectCreator.Setup(m => m.Create(It.IsAny<Guid?>(), It.IsAny<uint>(), It.IsAny<uint>(), It.IsAny<Guid>(), It.IsAny<IEnumerable<Guid>>())).Returns(new Object());
 

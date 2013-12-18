@@ -20,26 +20,26 @@ namespace Chaos.Mcm.Extension.v5
         #region Initialization
 
         public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager)
-            : this(portalApplication, mcmRepository, permissionManager, new ObjectCreator(mcmRepository, permissionManager, portalApplication.ViewManager))
+            : this(portalApplication, mcmRepository, permissionManager, new ObjectCreate(mcmRepository, permissionManager, portalApplication.ViewManager))
         {
         }
 
-        public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager, IObjectCreator objectCreator) : base(portalApplication, mcmRepository, permissionManager)
+        public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager, IObjectCreate objectCreate) : base(portalApplication, mcmRepository, permissionManager)
         {
-            ObjectCreator = objectCreator;
+            ObjectCreate = objectCreate;
         }
 
         #endregion
         #region Properties
 
-        public IObjectCreator ObjectCreator { get; set; }
+        public IObjectCreate ObjectCreate { get; set; }
 
         #endregion
         #region Business Logic
 
         public IPagedResult<Data.Dto.v5.Object> Get(IQuery query, UUID accessPointGUID, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeAccessPoints = false)
         {
-            var accesspointGuid = accessPointGUID != null ? CHAOS.Extensions.GuidExtensions.ToGuid(accessPointGUID) : (Guid?)null;
+            var accesspointGuid = accessPointGUID != null ? accessPointGUID.ToGuid() : (Guid?)null;
 
             query.Query = query.Query.Replace("GUID:", "Id:");
             query.Query = query.Query.Replace("ObjectTypeID:", "ObjectTypeId:");
@@ -53,18 +53,16 @@ namespace Chaos.Mcm.Extension.v5
             return page;
         }
 
-
-
-        #endregion
-
         public Data.Dto.v5.Object Create(UUID GUID, uint objectTypeID, uint folderID)
         {
             var userId = Request.User.Guid;
             var groupIds = Request.Groups.Select(group => group.Guid);
 
-            var result = ObjectCreator.Create(GUID.ToGuid(), objectTypeID, folderID, userId, groupIds);
+            var result = ObjectCreate.Create(GUID.ToGuid(), objectTypeID, folderID, userId, groupIds);
 
             return Data.Dto.v5.Object.Create(result);
         }
+
+        #endregion
     }
 }

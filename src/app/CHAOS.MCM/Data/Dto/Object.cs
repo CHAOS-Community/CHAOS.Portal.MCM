@@ -5,7 +5,7 @@
 
     using CHAOS.Serialization;
 
-    using Chaos.Portal.Core.Data.Model;
+    using Portal.Core.Data.Model;
     
     public class Object : AResult
     {

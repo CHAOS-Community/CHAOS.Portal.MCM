@@ -16,14 +16,16 @@ namespace Chaos.Mcm.Extension.v6
     {
         #region Properties
 
-        private IObjectCreator ObjectCreator { get; set; }
+        private IObjectCreate ObjectCreate { get; set; }
+        private IObjectDelete ObjectDelete { get; set; }
 
         #endregion
         #region Initialization
 
         public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager) : base(portalApplication, mcmRepository, permissionManager)
         {
-            ObjectCreator = new ObjectCreator(mcmRepository, permissionManager, portalApplication.ViewManager);
+            ObjectCreate = new ObjectCreate(mcmRepository, permissionManager, portalApplication.ViewManager);
+            ObjectDelete = new ObjectDelete(mcmRepository, permissionManager, portalApplication.ViewManager);
         }
 
         #endregion
@@ -33,7 +35,7 @@ namespace Chaos.Mcm.Extension.v6
             var userId   = Request.User.Guid;
             var groupIds = Request.Groups.Select(group => group.Guid);
 
-            return ObjectCreator.Create(guid, objectTypeID, folderID, userId, groupIds);
+            return ObjectCreate.Create(guid, objectTypeID, folderID, userId, groupIds);
 		}
 
         public ScalarResult SetPublishSettings(Guid objectGuid, Guid accessPointGuid, DateTime? startDate, DateTime? endDate)
@@ -56,22 +58,12 @@ namespace Chaos.Mcm.Extension.v6
             return new ScalarResult( (int) result );
         }
 
-        public ScalarResult Delete( Guid guid )
+        public uint Delete( Guid guid )
         {
-            var objToDel   = McmRepository.ObjectGet(guid, includeFolders: true);
             var userGuid   = Request.User.Guid;
             var groupGuids = Request.Groups.Select(group => group.Guid);
-            var folders    = objToDel.ObjectFolders.Select(folder => PermissionManager.GetFolders(folder.ID));
 
-            if (!PermissionManager.DoesUserOrGroupHavePermissionToFolders(userGuid, groupGuids, FolderPermission.DeleteObject, folders))
-                throw new InsufficientPermissionsException("User does not have permissions to remove object");
-
-            var result = McmRepository.ObjectDelete(guid);
-
-            if(result == 1) 
-                ViewManager.Delete(string.Format("Id:{0}", guid));
-
-            return new ScalarResult((int)result);
+            return ObjectDelete.Delete(guid, userGuid, groupGuids);
         }
 
         public IPagedResult<IResult> Get(IEnumerable<Guid> objectGuids, Guid? accessPointGuid, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, uint pageSize = 10, uint pageIndex = 0)
