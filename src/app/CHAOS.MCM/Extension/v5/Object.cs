@@ -12,6 +12,7 @@ namespace Chaos.Mcm.Extension.v5
     using Portal.Core;
     using Portal.Core.Data.Model;
     using Portal.Core.Indexing;
+    using View;
 
     public class Object : AMcmExtension
     {
@@ -39,9 +40,7 @@ namespace Chaos.Mcm.Extension.v5
 
             var page = new PagedResult<IResult>(result.FoundCount,
                                                 result.StartIndex,
-                                                result.Results.Select(item => Data.Dto.v5.Object.Create((Data.Dto.Object) item)));
-
-            // todo filter based on include parameters
+                                                result.Results.Select(item => Data.Dto.v5.Object.Create(((ObjectViewData) item).Object)));
 
             return page;
         }

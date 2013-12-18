@@ -25,7 +25,7 @@
         public IList<Metadata> Metadatas { get; set; }
 
         [Serialize("ObjectRelations")]
-        public IList<ObjectRelationInfo> ObjectRelationInfos { get; set; }
+        public IList<ObjectRelation> ObjectRelations { get; set; }
 
         [Serialize]
         public IList<FileInfo> Files { get; set; }
@@ -44,7 +44,10 @@
                 Guid = obj.Guid.ToUUID(),
                 ObjectTypeId = obj.ObjectTypeID,
                 DateCreated = obj.DateCreated,
-                Metadatas = obj.Metadatas.Select(item => Metadata.Create(item)).ToList()
+                Metadatas = obj.Metadatas.Select(item => Metadata.Create(item)).ToList(),
+                ObjectRelations = obj.ObjectRealtionInfos.Select(item => ObjectRelation.Create(item)).ToList(),
+                Files = obj.Files.Select(item => FileInfo.Create(item)).ToList(),
+                AccessPoints = obj.AccessPoints.Select(item => ObjectAccessPoint.Create(item)).ToList()
             };
         }
 
@@ -52,9 +55,53 @@
         {
             Fullname = "CHAOS.MCM.Data.DTO.Object";
             Metadatas = new List<Metadata>();
-            ObjectRelationInfos = new List<ObjectRelationInfo>();
+            ObjectRelations = new List<ObjectRelation>();
             Files = new List<FileInfo>();
             AccessPoints = new List<ObjectAccessPoint>();
+        }
+    }
+
+    [Serialize("AccessPoint_Object_Join")]
+    public class ObjectAccessPoint : IResult
+    {
+        [SerializeXML(true)]
+        [Serialize("FullName")]
+        public string Fullname { get; private set; }
+
+        [Serialize("AccessPointGUID")]
+        public UUID AccessPointGuid { get; set; }
+
+        [Serialize("ObjectGUID")]
+        public UUID ObjectGuid { get; set; }
+
+        [Serialize("StartDate")]
+        public DateTime? StartDate { get; set; }
+
+        [Serialize("EndDate")]
+        public DateTime? EndDate { get; set; }
+
+        [Serialize("DateCreated")]
+        public DateTime? DateCreated { get; set; }
+
+        [Serialize("DateModified")]
+        public DateTime? DateModified { get; set; }
+
+        public ObjectAccessPoint()
+        {
+            Fullname = "Chaos.Mcm.Data.Dto.v5.ObjectAccessPoint";
+        }
+
+        public static ObjectAccessPoint Create(Dto.ObjectAccessPoint item)
+        {
+            return new ObjectAccessPoint
+            {
+                AccessPointGuid = item.AccessPointGuid.ToUUID(),
+                ObjectGuid = item.ObjectGuid.ToUUID(),
+                StartDate = item.StartDate,
+                EndDate = item.EndDate,
+                DateCreated = item.DateCreated,
+                DateModified = item.DateModified
+            };
         }
     }
 }

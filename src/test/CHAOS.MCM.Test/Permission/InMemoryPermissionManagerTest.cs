@@ -13,7 +13,6 @@ using IFolder = Chaos.Mcm.Permission.IFolder;
 namespace Chaos.Mcm.Test.Permission
 {
     using System.Collections.Generic;
-    using Amazon.SimpleNotificationService.Model;
 
     [TestFixture]
     public class InMemoryPermissionManagerTest : TestBase

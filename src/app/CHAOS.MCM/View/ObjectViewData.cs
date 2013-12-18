@@ -10,9 +10,18 @@ using Object = Chaos.Mcm.Data.Dto.Object;
 
 namespace Chaos.Mcm.View
 {
+    using Newtonsoft.Json;
+
     public class ObjectViewData : AResult, IViewData
     {
+        private IPermissionManager _permissionManager;
+
         #region Initialization
+
+        public ObjectViewData(Object obj)
+        {
+            Object = obj;
+        }
 
         public ObjectViewData(Object obj, IPermissionManager permissionManager)
         {
@@ -28,9 +37,20 @@ namespace Chaos.Mcm.View
         #endregion
         #region Properties
 
-        protected Object Object { get; set; }
+        public Object Object { get; set; }
 
-        protected IPermissionManager PermissionManager { get; set; }
+        [JsonIgnore]
+        protected IPermissionManager PermissionManager
+        {
+            get
+            {
+                if (_permissionManager == null)
+                    throw new NullReferenceException("PermissionManager is not initialized in ObjectViewData");
+
+                return _permissionManager;
+            }
+            set { _permissionManager = value; }
+        }
 
         public KeyValuePair<string, string> UniqueIdentifier { get { return new KeyValuePair<string, string>("Id", Object.Guid.ToString()); } }
 
@@ -74,13 +94,17 @@ namespace Chaos.Mcm.View
         }
 
         [Serialize]
-        public IList<Metadata> Metadatas { get { return Object.Metadatas; } }
+        public IList<Metadata> Metadatas
+        {
+            get { return Object.Metadatas; }
+            set { throw new NotImplementedException(); }
+        }
 
         [Serialize]
         public IList<ObjectFolder> ObjectFolders { get { return Object.ObjectFolders; } }
         
         [Serialize]
-        public IList<ObjectRelationInfo> ObjectRelationInfos { get { return Object.ObjectRelationInfos; } }
+        public IList<ObjectRelationInfo> ObjectRelationInfos { get { return Object.ObjectRealtionInfos; } }
 
         [Serialize]
         public IList<FileInfo> Files { get { return Object.Files; } }

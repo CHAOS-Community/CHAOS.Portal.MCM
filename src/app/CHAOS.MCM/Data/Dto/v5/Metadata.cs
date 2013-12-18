@@ -6,8 +6,10 @@
     using CHAOS.Extensions;
     using CHAOS.Serialization;
     using CHAOS.Serialization.XML;
+    using Portal.Core.Data.Model;
 
-    public class Metadata
+    [Serialize("Result")]
+    public class Metadata : IResult
     {
         [Serialize("GUID")]
         public UUID Guid { get; set; }
@@ -33,6 +35,11 @@
         [Serialize("DateCreated")]
         public DateTime DateCreated { get; set; }
 
+        public Metadata()
+        {
+            Fullname = "CHAOS.MCM.Data.DTO.Metadata";
+        }
+
         public static Metadata Create(Dto.Metadata item)
         {
             return new Metadata
@@ -45,5 +52,9 @@
                 DateCreated = item.DateCreated
             };
         }
+
+        [SerializeXML(true)]
+        [Serialize("FullName")]
+        public string Fullname { get; private set; }
     }
 }

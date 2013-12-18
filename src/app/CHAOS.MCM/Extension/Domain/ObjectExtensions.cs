@@ -9,6 +9,7 @@
     using Portal.Core.Exceptions;
     using Portal.Core.Indexing;
     using Portal.Core.Indexing.View;
+    using View;
 
     public static class ObjectExtensions
     {
@@ -52,7 +53,23 @@
                 query.Query = string.Format("({0})AND({1}_PubStart:[* TO NOW] AND {1}_PubEnd:[NOW TO *])", query.Query, accessPointGuid); // todo user Filter instead of query for permission
 
             // todo remove metadata schemas the user doesnt have permission to read
-            return manager.GetView(ObjectViewName).Query(query);
-        } 
+            var page = manager.GetView(ObjectViewName).Query(query);
+            
+            FilterIncludes(page, includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations, includeFolders);
+
+            return page;
+        }
+
+        private static void FilterIncludes(IPagedResult<IResult> page, bool includeAccessPoints, bool includeMetadata, bool includeFiles, bool includeObjectRelations, bool includeFolders)
+        {
+            foreach (ObjectViewData obj in page.Results)
+            {
+                if (!includeMetadata) obj.Object.Metadatas = null;
+                if (!includeAccessPoints) obj.Object.AccessPoints = null;
+                if (!includeFiles) obj.Object.Files = null;
+                if (!includeObjectRelations) obj.Object.ObjectRealtionInfos = null;
+                if (!includeFolders) obj.Object.ObjectFolders = null;
+            }
+        }
     }
 }

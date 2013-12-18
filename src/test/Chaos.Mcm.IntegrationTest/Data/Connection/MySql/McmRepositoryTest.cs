@@ -84,6 +84,17 @@
             Assert.AreEqual(expectedObjectRelation.Sequence, resultObjectRealtionInfo.First().Sequence);
         }
 
+        private ObjectRelationInfo Make_ObjectRelation()
+        {
+            return new ObjectRelationInfo
+            {
+                Object1Guid = new Guid("50000000-0000-0000-0000-000000000005"),
+                Object2Guid = new Guid("60000000-0000-0000-0000-000000000006"),
+                Sequence = null,
+                ObjectRelationTypeID = 1
+            };
+        }
+
         [Test]
         public void ObjectRelationSet_IncludingMetadata_CreateRelationAndMetadataInDatabaseAndReturnOne()
         {
@@ -290,13 +301,13 @@
             Assert.AreEqual(objectGuid, result.Guid);
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
-            Assert.AreEqual( expectedObjectRelationInfo.Object1Guid, result.ObjectRelationInfos[0].Object1Guid );
-            Assert.AreEqual( expectedObjectRelationInfo.Object2Guid, result.ObjectRelationInfos[0].Object2Guid );
-            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRelationInfos[0].ObjectRelationTypeID );
-            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationType, result.ObjectRelationInfos[0].ObjectRelationType );
-            Assert.AreEqual( expectedObjectRelationInfo.MetadataGuid, result.ObjectRelationInfos[0].MetadataGuid );
-            Assert.AreEqual( expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRelationInfos[0].MetadataSchemaGuid );
-            Assert.AreEqual( expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRelationInfos[0].MetadataXml.ToString() );
+            Assert.AreEqual( expectedObjectRelationInfo.Object1Guid, result.ObjectRealtionInfos[0].Object1Guid );
+            Assert.AreEqual( expectedObjectRelationInfo.Object2Guid, result.ObjectRealtionInfos[0].Object2Guid );
+            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRealtionInfos[0].ObjectRelationTypeID );
+            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationType, result.ObjectRealtionInfos[0].ObjectRelationType );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataGuid, result.ObjectRealtionInfos[0].MetadataGuid );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRealtionInfos[0].MetadataSchemaGuid );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRealtionInfos[0].MetadataXml.ToString() );
         }
 
         [Test]
@@ -439,13 +450,13 @@
             Assert.AreEqual(objectGuid, result.Guid);
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
-            Assert.AreEqual(expectedObjectRelationInfo.Object1Guid, result.ObjectRelationInfos[0].Object1Guid);
-            Assert.AreEqual(expectedObjectRelationInfo.Object2Guid, result.ObjectRelationInfos[0].Object2Guid);
-            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRelationInfos[0].ObjectRelationTypeID);
-            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationType, result.ObjectRelationInfos[0].ObjectRelationType);
-            Assert.AreEqual(expectedObjectRelationInfo.MetadataGuid, result.ObjectRelationInfos[0].MetadataGuid);
-            Assert.AreEqual(expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRelationInfos[0].MetadataSchemaGuid);
-            Assert.AreEqual(expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRelationInfos[0].MetadataXml.ToString());
+            Assert.AreEqual(expectedObjectRelationInfo.Object1Guid, result.ObjectRealtionInfos[0].Object1Guid);
+            Assert.AreEqual(expectedObjectRelationInfo.Object2Guid, result.ObjectRealtionInfos[0].Object2Guid);
+            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRealtionInfos[0].ObjectRelationTypeID);
+            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationType, result.ObjectRealtionInfos[0].ObjectRelationType);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataGuid, result.ObjectRealtionInfos[0].MetadataGuid);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRealtionInfos[0].MetadataSchemaGuid);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRealtionInfos[0].MetadataXml.ToString());
         }
 
         [Test]
@@ -1102,18 +1113,6 @@
         private McmRepository Make_McmRepository()
         {
             return (McmRepository)new McmRepository().WithConfiguration(this._connectionString);
-        }
-
-        private ObjectRelation Make_ObjectRelation()
-        {
-            return new ObjectRelation
-            {
-                Object1Guid          = new Guid("00000000-0000-0000-0000-000000000003"),
-                Object2Guid          = new Guid("00000000-0000-0000-0000-000000000002"),
-                MetadataGuid         = null,
-                Sequence             = null,
-                ObjectRelationTypeID = 1
-            };
         }
 
         private static ObjectRelationInfo Make_ObjectRelationInfoNonExistent()
