@@ -20,19 +20,25 @@ namespace Chaos.Mcm.Extension.v5
         #region Initialization
 
         public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager)
-            : this(portalApplication, mcmRepository, permissionManager, new ObjectCreate(mcmRepository, permissionManager, portalApplication.ViewManager))
+            : this(portalApplication, 
+                   mcmRepository, 
+                   permissionManager,
+                   new ObjectCreate(mcmRepository, permissionManager, portalApplication.ViewManager),
+                   new ObjectDelete(mcmRepository, permissionManager, portalApplication.ViewManager))
         {
         }
 
-        public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager, IObjectCreate objectCreate) : base(portalApplication, mcmRepository, permissionManager)
+        public Object(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager, IObjectCreate objectCreate, IObjectDelete objectDelete) : base(portalApplication, mcmRepository, permissionManager)
         {
             ObjectCreate = objectCreate;
+            ObjectDelete = objectDelete;
         }
 
         #endregion
         #region Properties
 
         public IObjectCreate ObjectCreate { get; set; }
+        public IObjectDelete ObjectDelete { get; set; }
 
         #endregion
         #region Business Logic
@@ -63,6 +69,16 @@ namespace Chaos.Mcm.Extension.v5
             return Data.Dto.v5.Object.Create(result);
         }
 
+        public uint Delete(UUID GUID)
+        {
+            var userId = Request.User.Guid;
+            var groupIds = Request.Groups.Select(group => group.Guid);
+
+            return ObjectDelete.Delete(GUID.ToGuid(), userId, groupIds);
+        }
+
         #endregion
+
+        
     }
 }

@@ -50,7 +50,7 @@
         }
 
         [Test]
-        public void Create_Default_CallObjectCreator()
+        public void Create_Default_CallObjectCreate()
         {
             var objectCreator = new Mock<IObjectCreate>();
             var extension = Make_ObjectV5Extension(objectCreator.Object);
@@ -59,6 +59,17 @@
             extension.Create(new UUID("10000000-0000-0000-0000-000000000001"), 1, 1);
 
             objectCreator.VerifyAll();
+        }
+
+        [Test]
+        public void Delete_Default_CallObjectDelete()
+        {
+            var objectDelete = new Mock<IObjectDelete>();
+            var extension = Make_ObjectV5Extension(objectDelete.Object);
+            
+            extension.Delete(new UUID("10000000-0000-0000-0000-000000000001"));
+
+            objectDelete.Verify(m => m.Delete(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<IEnumerable<Guid>>()), Times.Once());
         }
     }
 }

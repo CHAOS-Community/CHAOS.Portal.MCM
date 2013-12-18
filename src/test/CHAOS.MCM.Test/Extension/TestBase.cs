@@ -1,16 +1,12 @@
 using Chaos.Mcm.Data.Configuration;
 using Chaos.Mcm.Extension.v6;
-using Chaos.Mcm.Test.Extension.v6;
 
 namespace Chaos.Mcm.Test.Extension
 {
     using System;
     using System.Collections.Generic;
     using System.Xml.Linq;
-
-    using Chaos.Mcm.Data;
     using Chaos.Mcm.Data.Dto;
-    using Chaos.Mcm.Extension;
     using Chaos.Portal.Core.Cache;
     using Chaos.Portal.Core.Data.Model;
     using Chaos.Portal.Core.Request;
@@ -18,10 +14,6 @@ namespace Chaos.Mcm.Test.Extension
     using Moq;
 
     using NUnit.Framework;
-
-    using Folder = Chaos.Mcm.Data.Dto.Standard.Folder;
-    using FolderPermission = Chaos.Mcm.Permission.FolderPermission;
-    using IFolder = Chaos.Mcm.Permission.IFolder;
     using Metadata = Chaos.Mcm.Data.Dto.Metadata;
     using MetadataSchema = MetadataSchema;
     using Object = Chaos.Mcm.Data.Dto.Object;
@@ -185,12 +177,17 @@ namespace Chaos.Mcm.Test.Extension
 
         protected Mcm.Extension.v5.Object Make_ObjectV5Extension()
         {
-            return (Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v5.Object)new Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object).WithPortalRequest(PortalRequest.Object);
         }
 
         protected Mcm.Extension.v5.Object Make_ObjectV5Extension(IObjectCreate objectCreate)
         {
-            return (Mcm.Extension.v5.Object)new Chaos.Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, objectCreate).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v5.Object)new Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, objectCreate, null).WithPortalRequest(PortalRequest.Object);
+        }
+
+        protected Mcm.Extension.v5.Object Make_ObjectV5Extension(IObjectDelete objectDelete)
+        {
+            return (Mcm.Extension.v5.Object)new Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, null, objectDelete).WithPortalRequest(PortalRequest.Object);
         }
 
         protected Mcm.Extension.v6.Object Make_ObjectV6Extension()
