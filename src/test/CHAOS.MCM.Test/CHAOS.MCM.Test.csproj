@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Index\DKAIndexableFieldsTest.cs" />
+    <Compile Include="Index\LARMIndexTest.cs" />
     <Compile Include="Module\FolderModuleTest.cs" />
     <Compile Include="Permission\InMemoryPermissionManagerTest.cs" />
     <Compile Include="Permission\IntervalSpecificationTest.cs" />

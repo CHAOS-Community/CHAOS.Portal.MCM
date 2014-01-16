@@ -428,7 +428,24 @@ namespace CHAOS.MCM.Data.Dto.Standard
                                 yield return new KeyValuePair<string, string>("LARM-Program-Contain", "LARMMetadata");
 
                             break;
-                            #endregion
+                        #endregion
+
+                        case "7e08dbc3-c60c-4b42-bcd8-8d0ed8dbba36":
+                            if (metadata.MetadataXML.Root.Element("tags") != null)
+                            {
+                                if (metadata.MetadataXML.Root.Element("tags").Elements("tag") != null)
+                                {
+                                    foreach (var tag in metadata.MetadataXML.Root.Element("tags").Elements("tag"))
+                                    {
+                                        yield return new KeyValuePair<string, string>("LARM-radio-udsendelse_tags_stringmv", tag.Value);
+                                    }
+                                }
+
+                            }
+                                
+
+                        break;
+
                         #endregion
                         #region KulturarvNord
                         case "bb615cd5-4470-ce4a-9207-b18e8ae33880":
