@@ -67,7 +67,7 @@
                 if (!includeMetadata) obj.Object.Metadatas = null;
                 if (!includeAccessPoints) obj.Object.AccessPoints = null;
                 if (!includeFiles) obj.Object.Files = null;
-                if (!includeObjectRelations) obj.Object.ObjectRealtionInfos = null;
+                if (!includeObjectRelations) obj.Object.ObjectRelationInfos = null;
                 if (!includeFolders) obj.Object.ObjectFolders = null;
             }
         }

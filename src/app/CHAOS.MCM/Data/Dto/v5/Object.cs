@@ -45,7 +45,7 @@
                 ObjectTypeId = obj.ObjectTypeID,
                 DateCreated = obj.DateCreated,
                 Metadatas = obj.Metadatas.Select(item => Metadata.Create(item)).ToList(),
-                ObjectRelations = obj.ObjectRealtionInfos.Select(item => ObjectRelation.Create(item)).ToList(),
+                ObjectRelations = obj.ObjectRelationInfos.Select(item => ObjectRelation.Create(item)).ToList(),
                 Files = obj.Files.Select(item => FileInfo.Create(item)).ToList(),
                 AccessPoints = obj.AccessPoints.Select(item => ObjectAccessPoint.Create(item)).ToList()
             };

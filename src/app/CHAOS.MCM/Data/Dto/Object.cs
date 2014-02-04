@@ -24,7 +24,7 @@
         public IList<Metadata> Metadatas { get; set; }
 
         [Serialize]
-        public IList<ObjectRelationInfo> ObjectRealtionInfos { get; set; }
+        public IList<ObjectRelationInfo> ObjectRelationInfos { get; set; }
 
         [Serialize]
         public IList<FileInfo> Files { get; set; }
@@ -41,7 +41,7 @@
         public Object()
         {
             Metadatas           = new List<Metadata>();
-            ObjectRealtionInfos = new List<ObjectRelationInfo>();
+            ObjectRelationInfos = new List<ObjectRelationInfo>();
             Files               = new List<FileInfo>();
             AccessPoints        = new List<ObjectAccessPoint>();
             ObjectFolders       = new List<ObjectFolder>();

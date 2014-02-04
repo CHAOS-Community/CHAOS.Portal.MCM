@@ -104,7 +104,7 @@ namespace Chaos.Mcm.View
         public IList<ObjectFolder> ObjectFolders { get { return Object.ObjectFolders; } }
         
         [Serialize]
-        public IList<ObjectRelationInfo> ObjectRelationInfos { get { return Object.ObjectRealtionInfos; } }
+        public IList<ObjectRelationInfo> ObjectRelationInfos { get { return Object.ObjectRelationInfos; } }
 
         [Serialize]
         public IList<FileInfo> Files { get { return Object.Files; } }

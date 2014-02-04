@@ -301,13 +301,13 @@
             Assert.AreEqual(objectGuid, result.Guid);
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
-            Assert.AreEqual( expectedObjectRelationInfo.Object1Guid, result.ObjectRealtionInfos[0].Object1Guid );
-            Assert.AreEqual( expectedObjectRelationInfo.Object2Guid, result.ObjectRealtionInfos[0].Object2Guid );
-            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRealtionInfos[0].ObjectRelationTypeID );
-            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationType, result.ObjectRealtionInfos[0].ObjectRelationType );
-            Assert.AreEqual( expectedObjectRelationInfo.MetadataGuid, result.ObjectRealtionInfos[0].MetadataGuid );
-            Assert.AreEqual( expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRealtionInfos[0].MetadataSchemaGuid );
-            Assert.AreEqual( expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRealtionInfos[0].MetadataXml.ToString() );
+            Assert.AreEqual( expectedObjectRelationInfo.Object1Guid, result.ObjectRelationInfos[0].Object1Guid );
+            Assert.AreEqual( expectedObjectRelationInfo.Object2Guid, result.ObjectRelationInfos[0].Object2Guid );
+            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRelationInfos[0].ObjectRelationTypeID );
+            Assert.AreEqual( expectedObjectRelationInfo.ObjectRelationType, result.ObjectRelationInfos[0].ObjectRelationType );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataGuid, result.ObjectRelationInfos[0].MetadataGuid );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRelationInfos[0].MetadataSchemaGuid );
+            Assert.AreEqual( expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRelationInfos[0].MetadataXml.ToString() );
         }
 
         [Test]
@@ -450,13 +450,13 @@
             Assert.AreEqual(objectGuid, result.Guid);
             Assert.AreEqual(1, result.ObjectTypeID);
             Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
-            Assert.AreEqual(expectedObjectRelationInfo.Object1Guid, result.ObjectRealtionInfos[0].Object1Guid);
-            Assert.AreEqual(expectedObjectRelationInfo.Object2Guid, result.ObjectRealtionInfos[0].Object2Guid);
-            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRealtionInfos[0].ObjectRelationTypeID);
-            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationType, result.ObjectRealtionInfos[0].ObjectRelationType);
-            Assert.AreEqual(expectedObjectRelationInfo.MetadataGuid, result.ObjectRealtionInfos[0].MetadataGuid);
-            Assert.AreEqual(expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRealtionInfos[0].MetadataSchemaGuid);
-            Assert.AreEqual(expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRealtionInfos[0].MetadataXml.ToString());
+            Assert.AreEqual(expectedObjectRelationInfo.Object1Guid, result.ObjectRelationInfos[0].Object1Guid);
+            Assert.AreEqual(expectedObjectRelationInfo.Object2Guid, result.ObjectRelationInfos[0].Object2Guid);
+            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationTypeID, result.ObjectRelationInfos[0].ObjectRelationTypeID);
+            Assert.AreEqual(expectedObjectRelationInfo.ObjectRelationType, result.ObjectRelationInfos[0].ObjectRelationType);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataGuid, result.ObjectRelationInfos[0].MetadataGuid);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataSchemaGuid, result.ObjectRelationInfos[0].MetadataSchemaGuid);
+            Assert.AreEqual(expectedObjectRelationInfo.MetadataXml.ToString(), result.ObjectRelationInfos[0].MetadataXml.ToString());
         }
 
         [Test]

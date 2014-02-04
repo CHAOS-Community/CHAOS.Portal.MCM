@@ -257,7 +257,7 @@
                                 {
                                     new FileInfo()
                                 },
-                                ObjectRealtionInfos = new List<ObjectRelationInfo>()
+                                ObjectRelationInfos = new List<ObjectRelationInfo>()
                                     {
                                         new ObjectRelationInfo()
                                     }

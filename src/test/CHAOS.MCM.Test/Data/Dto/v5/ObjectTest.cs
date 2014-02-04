@@ -70,7 +70,7 @@
                         BasePath = "http://some.url"
                     }
                 },
-                ObjectRealtionInfos = new []
+                ObjectRelationInfos = new []
                 {
                     new ObjectRelationInfo 
                     {
