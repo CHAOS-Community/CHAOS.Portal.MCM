@@ -26,7 +26,7 @@ namespace Chaos.Mcm.Extension.v6
             var userGuid     = Request.User.Guid;
 
             var result  = McmRepository.MetadataSet(objectGuid, metadataGuid, metadataSchemaGuid, languageCode, revisionID, metadataXml, userGuid);
-            var objects = McmRepository.ObjectGet(objectGuid, true, false, false, true, true);
+            var objects = McmRepository.ObjectGet(objectGuid, true, true, true, true, true);
             
             ViewManager.Index(objects);
 
