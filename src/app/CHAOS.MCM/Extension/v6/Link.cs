@@ -25,6 +25,10 @@ namespace Chaos.Mcm.Extension.v6
 
             // TODO: Manage magical number better (ObjectFolderTypeID:2 is link by default)
             var result = McmRepository.LinkCreate(objectGuid, folderID, 2);
+
+            var objects = McmRepository.ObjectGet(objectGuid, true, true, true, true, true);
+
+            ViewManager.Index(objects);
                             
 //          PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGuid , true, true, true, true, true ).ToDto().ToList() );
 
@@ -38,7 +42,11 @@ namespace Chaos.Mcm.Extension.v6
 //          PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGuid , true, true, true, true, true ).ToDto().ToList() );
 
             var result = McmRepository.LinkUpdate(objectGuid, folderID, newFolderID);
-            
+
+            var objects = McmRepository.ObjectGet(objectGuid, true, true, true, true, true);
+
+            ViewManager.Index(objects);
+
             return new ScalarResult((int)result);
         }
 
@@ -47,6 +55,10 @@ namespace Chaos.Mcm.Extension.v6
             if (!HasPermissionToObject(objectGuid, FolderPermission.CreateLink)) throw new InsufficientPermissionsException("User does not have permission to delete link");
 
             var result = McmRepository.LinkDelete(objectGuid, folderID);
+
+            var objects = McmRepository.ObjectGet(objectGuid, true, true, true, true, true);
+
+            ViewManager.Index(objects);
 
 //                PutObjectInIndex( callContext.IndexManager.GetIndex<Mcm>(), db.Object_Get( objectGuid , true, true, true, true, true ).ToDto().ToList() );
           
