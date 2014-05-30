@@ -46,7 +46,7 @@
         public IPermissionManager PermissionManager { get; private set; }
         public IPortalApplication PortalApplication { get; private set; }
 
-        public McmModuleConfiguration McmModuleConfiguration { get; set; }
+        public McmModuleConfiguration Configuration { get; set; }
 
         #endregion
         #region Implementation of IModule
@@ -57,13 +57,13 @@
 
             LoadModuleConfiguration();
 
-            McmRepository = new McmRepository().WithConfiguration(McmModuleConfiguration.ConnectionString);
+            McmRepository = new McmRepository().WithConfiguration(Configuration.ConnectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(McmRepository, new IntervalSpecification(10000));
 
             var objectView = CreateObjectView();
             ObjectExtensions.ObjectViewName = objectView.Name;
-            
-            portalApplication.AddView(objectView, McmModuleConfiguration.ObjectCoreName);
+
+            portalApplication.AddView(objectView, Configuration.ObjectCoreName);
             
             PortalApplication.MapRoute("/v5/Destination", () => new Extension.v6.Destination(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/File", () => new Extension.v6.File(PortalApplication, McmRepository, PermissionManager));
@@ -76,9 +76,9 @@
             PortalApplication.MapRoute("/v5/ObjectRelation", () => new Extension.v6.ObjectRelation(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/ObjectType", () => new Extension.v6.ObjectType(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/Mcm", () => new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager));
-            PortalApplication.MapRoute("/v5/Download", () => new Download(PortalApplication, McmRepository, McmModuleConfiguration));
+            PortalApplication.MapRoute("/v5/Download", () => new Download(PortalApplication, McmRepository, Configuration));
             PortalApplication.MapRoute("/v5/UserProfile", () => new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager));
-            PortalApplication.MapRoute("/v5/UserManagement", () => new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, McmModuleConfiguration.UserManagement));
+            PortalApplication.MapRoute("/v5/UserManagement", () => new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, Configuration.UserManagement));
             
             PortalApplication.MapRoute("/v6/Destination", () => new Extension.v6.Destination(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v6/File", () => new Extension.v6.File(PortalApplication, McmRepository, PermissionManager));
@@ -92,7 +92,7 @@
             PortalApplication.MapRoute("/v6/ObjectType", () => new Extension.v6.ObjectType(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v6/Mcm", () => new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v6/UserProfile", () => new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager));
-            PortalApplication.MapRoute("/v6/UserManagement", () => new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, McmModuleConfiguration.UserManagement));
+            PortalApplication.MapRoute("/v6/UserManagement", () => new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, Configuration.UserManagement));
         }
 
         private void LoadModuleConfiguration()
@@ -102,9 +102,9 @@
                 var module = PortalApplication.PortalRepository.Module.Get(ConfigurationName);
                 var configuration = XDocument.Parse(module.Configuration);
 
-                McmModuleConfiguration = SerializerFactory.Get<XDocument>().Deserialize<McmModuleConfiguration>(configuration);
+                Configuration = SerializerFactory.Get<XDocument>().Deserialize<McmModuleConfiguration>(configuration);
 
-                if (string.IsNullOrEmpty(McmModuleConfiguration.ConnectionString))
+                if (string.IsNullOrEmpty(Configuration.ConnectionString) || string.IsNullOrEmpty(Configuration.ObjectCoreName))
                     throw new ModuleConfigurationMissingException("MCM configuration is invalid.");
             }
             catch (ArgumentException e)

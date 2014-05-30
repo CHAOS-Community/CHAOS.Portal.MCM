@@ -10,6 +10,6 @@
         IMcmRepository McmRepository { get; }
 
         IPermissionManager PermissionManager { get; }
-        McmModuleConfiguration McmModuleConfiguration { get; set; }
+        McmModuleConfiguration Configuration { get; set; }
     }
 }
