@@ -1,11 +1,11 @@
 ﻿namespace Chaos.Mcm
 {
-    using Chaos.Mcm.Data;
-    using Chaos.Mcm.Permission;
-    using Chaos.Portal.Core.Module;
+    using Data;
+    using Permission;
+    using Portal.Core.Module;
     using Configuration;
 
-    public interface IMcmModule : IModule
+    public interface IMcmModule : IModuleConfig
     {
         IMcmRepository McmRepository { get; }
 

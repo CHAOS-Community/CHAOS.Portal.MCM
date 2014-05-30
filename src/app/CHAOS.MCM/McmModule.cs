@@ -1,25 +1,22 @@
-﻿using Chaos.Portal.Core;
-using Chaos.Portal.Core.Exceptions;
-using Chaos.Portal.Core.Extension;
-using Chaos.Portal.Core.Indexing.Solr;
-using Chaos.Portal.Core.Indexing.View;
-
-namespace Chaos.Mcm
+﻿namespace Chaos.Mcm
 {
-    using System.Collections.Generic;
-    using System.Configuration;
+    using System;
+    using System.Linq;
     using System.Xml.Linq;
 
-    using CHAOS.Net;
     using CHAOS.Serialization.Standard;
     using Configuration;
     using Data;
+    using Data.Configuration;
     using Extension.Domain;
     using Extension.v5.Download;
-    using Extension.v6;
     using Permission;
     using Permission.InMemory;
     using Permission.Specification;
+    using Portal.Core;
+    using Portal.Core.Data.Model;
+    using Portal.Core.Exceptions;
+    using Portal.Core.Indexing.View;
     using View;
 
     public class McmModule : IMcmModule
@@ -57,131 +54,93 @@ namespace Chaos.Mcm
         public virtual void Load(IPortalApplication portalApplication)
         {
             PortalApplication = portalApplication;
-            
-            var configuration = XDocument.Parse(PortalApplication.PortalRepository.ModuleGet(ConfigurationName).Configuration);
-            McmModuleConfiguration = SerializerFactory.Get<XDocument>().Deserialize<McmModuleConfiguration>(configuration);
+
+            LoadModuleConfiguration();
 
             McmRepository = new McmRepository().WithConfiguration(McmModuleConfiguration.ConnectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(McmRepository, new IntervalSpecification(10000));
 
             var objectView = CreateObjectView();
-            objectView.WithPortalApplication(PortalApplication);
-            objectView.WithCache(PortalApplication.Cache);
-            objectView.WithIndex(new SolrCore(new HttpConnection(ConfigurationManager.AppSettings["SOLR_URL"]), McmModuleConfiguration.ObjectCoreName));
-
             ObjectExtensions.ObjectViewName = objectView.Name;
+            
+            portalApplication.AddView(objectView, McmModuleConfiguration.ObjectCoreName);
+            
+            PortalApplication.MapRoute("/v5/Destination", () => new Extension.v6.Destination(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/File", () => new Extension.v6.File(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/Folder", () => new Extension.v6.Folder(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/Format", () => new Extension.v6.Format(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/Link", () => new Extension.v6.Link(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/Metadata", () => new Extension.v6.Metadata(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/MetadataSchema", () => new Extension.v6.MetadataSchema(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/Object", () => new Extension.v5.Object(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/ObjectRelation", () => new Extension.v6.ObjectRelation(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/ObjectType", () => new Extension.v6.ObjectType(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/Mcm", () => new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/Download", () => new Download(PortalApplication, McmRepository, McmModuleConfiguration));
+            PortalApplication.MapRoute("/v5/UserProfile", () => new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v5/UserManagement", () => new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, McmModuleConfiguration.UserManagement));
+            
+            PortalApplication.MapRoute("/v6/Destination", () => new Extension.v6.Destination(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/File", () => new Extension.v6.File(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/Folder", () => new Extension.v6.Folder(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/Format", () => new Extension.v6.Format(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/Link", () => new Extension.v6.Link(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/Metadata", () => new Extension.v6.Metadata(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/MetadataSchema", () => new Extension.v6.MetadataSchema(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/Object", () => new Extension.v6.Object(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/ObjectRelation", () => new Extension.v6.ObjectRelation(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/ObjectType", () => new Extension.v6.ObjectType(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/Mcm", () => new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/UserProfile", () => new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager));
+            PortalApplication.MapRoute("/v6/UserManagement", () => new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, McmModuleConfiguration.UserManagement));
+        }
 
-            portalApplication.ViewManager.AddView(objectView);
+        private void LoadModuleConfiguration()
+        {
+            try
+            {
+                var module = PortalApplication.PortalRepository.Module.Get(ConfigurationName);
+                var configuration = XDocument.Parse(module.Configuration);
+
+                if (configuration.Descendants("ConnectionString").Any(item => string.IsNullOrEmpty(item.Value)))
+                    throw new ModuleConfigurationMissingException("MCM configuration is invalid.");
+
+                McmModuleConfiguration = SerializerFactory.Get<XDocument>().Deserialize<McmModuleConfiguration>(configuration);
+            }
+            catch (ArgumentException e)
+            {
+                var dummyConfig = new McmModuleConfiguration
+                    {
+                        Aws = new AwsConfiguration
+                            {
+                                AccessKey = "",
+                                SecretKey = ""
+                            },
+                        UserManagement = new UserManagementConfiguration
+                            {
+                                UserFolderTypeId = 0,
+                                UserObjectTypeId = 0,
+                                UsersFolderName = ""
+                            },
+                        ConnectionString = "",
+                        ObjectCoreName = ""
+                    };
+
+                var moduleTemplate = new Module
+                    {
+                        Name = "MCM",
+                        Configuration = SerializerFactory.XMLSerializer.Serialize(dummyConfig).ToString()
+                    };
+
+                PortalApplication.PortalRepository.Module.Set(moduleTemplate);
+
+                throw new ModuleConfigurationMissingException("MCM configuration was missing, a template was created in the database", e);
+            }
         }
 
         protected virtual IView CreateObjectView()
         {
             return new ObjectView(PermissionManager);
-        }
-
-        public virtual IEnumerable<string> GetExtensionNames(Protocol version)
-        {
-            yield return "Destination";
-            yield return "File";
-            yield return "Folder";
-            yield return "Format";
-            yield return "Link";
-            yield return "Metadata";
-            yield return "MetadataSchema";
-            yield return "Object";
-            yield return "ObjectRelation";
-            yield return "ObjectType";
-            yield return "Mcm";
-			yield return "UserProfile";
-            yield return "UserManagement";
-            
-            if(version == Protocol.V5)
-                yield return "Download";
-
-        }
-
-        public IExtension GetExtension<TExtension>(Protocol version) where TExtension : IExtension
-        {
-            return GetExtension(version, typeof(TExtension).Name);
-        }
-
-        public virtual IExtension GetExtension(Protocol version, string name)
-        {
-            if (PortalApplication == null) throw new ConfigurationErrorsException("Load not call on module");
-
-            if (version == Protocol.V5)
-            {
-                switch (name)
-                {
-                    case "Destination": 
-                        return new Extension.v6.Destination(PortalApplication, McmRepository, PermissionManager);
-                    case "File":
-                        return new Extension.v6.File(PortalApplication, McmRepository, PermissionManager);
-                    case "Folder":
-                        return new Extension.v6.Folder(PortalApplication, McmRepository, PermissionManager);
-                    case "Format":
-                        return new Extension.v6.Format(PortalApplication, McmRepository, PermissionManager);
-                    case "Link":
-                        return new Extension.v6.Link(PortalApplication, McmRepository, PermissionManager);
-                    case "Metadata":
-                        return new Extension.v6.Metadata(PortalApplication, McmRepository, PermissionManager);
-                    case "MetadataSchema":
-                        return new Extension.v6.MetadataSchema(PortalApplication, McmRepository, PermissionManager);
-                    case "Object": 
-                        return new Extension.v5.Object(PortalApplication, McmRepository, PermissionManager);
-                    case "ObjectRelation":
-                        return new Extension.v6.ObjectRelation(PortalApplication, McmRepository, PermissionManager);
-                    case "ObjectType":
-                        return new Extension.v6.ObjectType(PortalApplication, McmRepository, PermissionManager);
-                    case "Mcm": 
-                        return new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager);
-					case "Download":
-                        return new Download(PortalApplication, McmRepository, McmModuleConfiguration);
-                    case "UserProfile":
-                        return new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager);
-					case "UserManagement":
-						return new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, McmModuleConfiguration.UserManagement);
-                    default:
-                        throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
-                }
-            }
-
-            if (version == Protocol.V6)
-            {
-                switch (name)
-                {
-                    case "Destination":
-                        return new Extension.v6.Destination(PortalApplication, McmRepository, PermissionManager);
-                    case "File":
-                        return new Extension.v6.File(PortalApplication, McmRepository, PermissionManager);
-                    case "Folder":
-                        return new Extension.v6.Folder(PortalApplication, McmRepository, PermissionManager);
-                    case "Format":
-                        return new Extension.v6.Format(PortalApplication, McmRepository, PermissionManager);
-                    case "Link":
-                        return new Extension.v6.Link(PortalApplication, McmRepository, PermissionManager);
-                    case "Metadata":
-                        return new Extension.v6.Metadata(PortalApplication, McmRepository, PermissionManager);
-                    case "MetadataSchema":
-                        return new Extension.v6.MetadataSchema(PortalApplication, McmRepository, PermissionManager);
-                    case "Object":
-                        return new Object(PortalApplication, McmRepository, PermissionManager);
-                    case "ObjectRelation":
-                        return new Extension.v6.ObjectRelation(PortalApplication, McmRepository, PermissionManager);
-                    case "ObjectType":
-                        return new Extension.v6.ObjectType(PortalApplication, McmRepository, PermissionManager);
-                    case "Mcm": 
-                        return new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager);
-					case "UserProfile":
-                        return new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager);
-					case "UserManagement":
-						return new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, McmModuleConfiguration.UserManagement);
-                    default:
-                        throw new ExtensionMissingException(string.Format("No extension by the name {0}, found on the Portal Module", name));
-                }
-            }
-
-            throw new ProtocolVersionException();
         }
 
         #endregion
