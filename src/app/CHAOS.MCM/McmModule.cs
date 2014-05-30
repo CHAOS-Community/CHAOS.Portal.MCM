@@ -102,10 +102,10 @@
                 var module = PortalApplication.PortalRepository.Module.Get(ConfigurationName);
                 var configuration = XDocument.Parse(module.Configuration);
 
-                if (configuration.Descendants("ConnectionString").Any(item => string.IsNullOrEmpty(item.Value)))
-                    throw new ModuleConfigurationMissingException("MCM configuration is invalid.");
-
                 McmModuleConfiguration = SerializerFactory.Get<XDocument>().Deserialize<McmModuleConfiguration>(configuration);
+
+                if (string.IsNullOrEmpty(McmModuleConfiguration.ConnectionString))
+                    throw new ModuleConfigurationMissingException("MCM configuration is invalid.");
             }
             catch (ArgumentException e)
             {
