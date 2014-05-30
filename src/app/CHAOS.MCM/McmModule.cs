@@ -60,10 +60,16 @@
             McmRepository = new McmRepository().WithConfiguration(Configuration.ConnectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(McmRepository, new IntervalSpecification(10000));
 
-            var objectView = CreateObjectView();
-            ObjectExtensions.ObjectViewName = objectView.Name;
+            if (!string.IsNullOrEmpty(Configuration.ObjectCoreName))
+            {
+                var objectView = CreateObjectView();
+                ObjectExtensions.ObjectViewName = objectView.Name;
 
-            portalApplication.AddView(objectView, Configuration.ObjectCoreName);
+                portalApplication.AddView(objectView, Configuration.ObjectCoreName);
+
+                PortalApplication.MapRoute("/v5/Object", () => new Extension.v5.Object(PortalApplication, McmRepository, PermissionManager));
+                PortalApplication.MapRoute("/v6/Object", () => new Extension.v6.Object(PortalApplication, McmRepository, PermissionManager));
+            }
             
             PortalApplication.MapRoute("/v5/Destination", () => new Extension.v6.Destination(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/File", () => new Extension.v6.File(PortalApplication, McmRepository, PermissionManager));
@@ -72,7 +78,6 @@
             PortalApplication.MapRoute("/v5/Link", () => new Extension.v6.Link(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/Metadata", () => new Extension.v6.Metadata(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/MetadataSchema", () => new Extension.v6.MetadataSchema(PortalApplication, McmRepository, PermissionManager));
-            PortalApplication.MapRoute("/v5/Object", () => new Extension.v5.Object(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/ObjectRelation", () => new Extension.v6.ObjectRelation(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/ObjectType", () => new Extension.v6.ObjectType(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v5/Mcm", () => new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager));
@@ -87,7 +92,6 @@
             PortalApplication.MapRoute("/v6/Link", () => new Extension.v6.Link(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v6/Metadata", () => new Extension.v6.Metadata(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v6/MetadataSchema", () => new Extension.v6.MetadataSchema(PortalApplication, McmRepository, PermissionManager));
-            PortalApplication.MapRoute("/v6/Object", () => new Extension.v6.Object(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v6/ObjectRelation", () => new Extension.v6.ObjectRelation(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v6/ObjectType", () => new Extension.v6.ObjectType(PortalApplication, McmRepository, PermissionManager));
             PortalApplication.MapRoute("/v6/Mcm", () => new Extension.v6.Mcm(PortalApplication, McmRepository, PermissionManager));
@@ -104,7 +108,7 @@
 
                 Configuration = SerializerFactory.Get<XDocument>().Deserialize<McmModuleConfiguration>(configuration);
 
-                if (string.IsNullOrEmpty(Configuration.ConnectionString) || string.IsNullOrEmpty(Configuration.ObjectCoreName))
+                if (string.IsNullOrEmpty(Configuration.ConnectionString))
                     throw new ModuleConfigurationMissingException("MCM configuration is invalid.");
             }
             catch (ArgumentException e)
