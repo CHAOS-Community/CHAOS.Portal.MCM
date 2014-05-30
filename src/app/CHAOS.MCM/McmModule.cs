@@ -128,7 +128,7 @@
 
                 var moduleTemplate = new Module
                     {
-                        Name = "MCM",
+                        Name = ConfigurationName,
                         Configuration = SerializerFactory.XMLSerializer.Serialize(dummyConfig).ToString()
                     };
 
