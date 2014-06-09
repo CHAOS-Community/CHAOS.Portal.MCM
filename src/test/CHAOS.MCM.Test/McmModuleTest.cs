@@ -18,7 +18,7 @@
 
             module.Load(PortalApplication.Object);
 
-            ViewManager.Verify(p => p.AddView(It.IsAny<ObjectView>()));
+            ViewManager.Verify(p => p.AddView(It.IsAny<ObjectView>(), false));
         } 
     }
 }
