@@ -11,7 +11,7 @@ namespace Chaos.Mcm.Test.Extension.v6
         public void Index_AllObjects_CallMcmRepositoryToRetriveAllObjectsAndSendThemToViewManager()
         {
             var mcm         = Make_McmExtension();
-            McmRepository.Setup(m => m.ObjectGet(null, It.IsAny<uint>(), It.IsAny<uint>(), true, true, true, true, true)).Returns(new Mcm.Data.Dto.Object[0]);
+            McmRepository.Setup(m => m.ObjectGet(null, It.IsAny<uint>(), It.IsAny<uint>(), true, true, true, true, true, null)).Returns(new Mcm.Data.Dto.Object[0]);
 
             mcm.Index(null, null, true);
 

@@ -175,11 +175,12 @@ namespace Chaos.Mcm.Data
             return (uint)result;
         }
 
-        public IList<Object> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
+        public IList<Object> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false, uint? objectTypeId = null)
         {
-            return this.Gateway.ExecuteQuery<Object>("Object_GetByFolderID", new[]
+            return Gateway.ExecuteQuery<Object>("Object_GetByFolderID", new[]
                 {
                     new MySqlParameter("FolderID", folderID),
+                    new MySqlParameter("ObjectTypeId", objectTypeId),
                     new MySqlParameter("PageIndex", pageIndex),
                     new MySqlParameter("PageSize", pageSize),
                     new MySqlParameter("IncludeMetadata", includeMetadata),

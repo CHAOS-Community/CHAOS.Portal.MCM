@@ -198,7 +198,7 @@
         }
 
         [Test, ExpectedException(typeof(ArgumentException), ExpectedMessage = "Guid already exist")]
-        public void UnitUnderTest_Scenario_ExpectedBehavior()
+        public void ObjectCreate_ObjectAlreadyExist_Throw()
         {
             var repository      = Make_McmRepository();
             var objThatExist    = Make_ObjectWithNoRelations();
@@ -213,7 +213,7 @@
             var repository     = Make_McmRepository();
             var objToCreate    = Make_ObjectTheDoesntExist();
             var existingFolder = Make_FolderThatExist();
-            objToCreate.Guid   = new Guid( "10000000-0000-0000-0000-000000000000" ); // set guid with values in the most secnificant end of the string
+            objToCreate.Guid   = new Guid( "10000000-0000-0000-0000-000000000000" ); // set guid with values in the most significant end of the string
 
             var result = repository.ObjectCreate(objToCreate.Guid, objToCreate.ObjectTypeID, existingFolder.ID);
 
@@ -376,6 +376,19 @@
             var folderID   = (uint?) 1;
 
             var result = repository.ObjectGet(folderID).First();
+
+            Assert.AreEqual(objectGuid, result.Guid);
+            Assert.AreEqual(1, result.ObjectTypeID);
+            Assert.AreEqual(new DateTime(1990, 10, 01, 23, 59, 59), result.DateCreated);
+        }
+
+        [Test]
+        public void ObjectGet_ByObjectTypeId_ReturnObjectsWithObjectType()
+        {
+            var repository = Make_McmRepository();
+            var objectGuid = new Guid("00000000-0000-0000-0000-000000000002");
+
+            var result = repository.ObjectGet(objectTypeId:1).First();
 
             Assert.AreEqual(objectGuid, result.Guid);
             Assert.AreEqual(1, result.ObjectTypeID);
