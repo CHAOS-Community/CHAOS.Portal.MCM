@@ -25,7 +25,7 @@
             var user       = Make_User();
             var query      = new SolrQuery {Query = "GUID:00000000-0000-0000-0000-000000000001"};
             PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null)); 
-            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001)AND(FolderAncestors:1)"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
+            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001)AND((FolderAncestors:1))"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
             PortalRequest.SetupGet(p => p.User).Returns(user);
             PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
 
@@ -42,7 +42,7 @@
             var user       = Make_User();
             var query      = new SolrQuery {Query = "ObjectTypeID:1"};
             PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null)); 
-            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(ObjectTypeId:1)AND(FolderAncestors:1)"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
+            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(ObjectTypeId:1)AND((FolderAncestors:1))"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
             PortalRequest.SetupGet(p => p.User).Returns(user);
             PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
 
