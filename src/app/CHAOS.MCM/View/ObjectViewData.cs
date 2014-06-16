@@ -54,6 +54,7 @@ namespace Chaos.Mcm.View
 
         public KeyValuePair<string, string> UniqueIdentifier { get { return new KeyValuePair<string, string>("Id", Object.Guid.ToString()); } }
 
+        [JsonIgnore]
         [Serialize]
         public string Id
         {
@@ -67,6 +68,7 @@ namespace Chaos.Mcm.View
             }
         }
 
+        [JsonIgnore]
         [Serialize]
         public uint ObjectTypeId
         {
@@ -80,6 +82,7 @@ namespace Chaos.Mcm.View
             }
         }
 
+        [JsonIgnore]
         [Serialize]
         public DateTime DateCreated
         {
@@ -93,22 +96,26 @@ namespace Chaos.Mcm.View
             }
         }
 
+        [JsonIgnore]
         [Serialize]
         public IList<Metadata> Metadatas
         {
             get { return Object.Metadatas; }
-            set { throw new NotImplementedException(); }
         }
 
+        [JsonIgnore]
         [Serialize]
         public IList<ObjectFolder> ObjectFolders { get { return Object.ObjectFolders; } }
-        
+
+        [JsonIgnore]
         [Serialize]
         public IList<ObjectRelationInfo> ObjectRelationInfos { get { return Object.ObjectRelationInfos; } }
 
+        [JsonIgnore]
         [Serialize]
         public IList<FileInfo> Files { get { return Object.Files; } }
 
+        [JsonIgnore]
         [Serialize]
         public IList<ObjectAccessPoint> AccessPoints { get { return Object.AccessPoints; } }
 

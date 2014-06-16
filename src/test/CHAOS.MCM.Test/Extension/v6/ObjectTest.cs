@@ -27,7 +27,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
             PortalRequest.SetupGet(p => p.User).Returns(user);
             PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
-            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001)AND(FolderAncestors:1)"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
+            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001)AND((FolderAncestors:1))"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
 
             extension.Get(objectGuid);
 
@@ -44,7 +44,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
             PortalRequest.SetupGet(p => p.User).Returns(user);
             PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
-            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001 00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(FolderAncestors:1)"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
+            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001 00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND((FolderAncestors:1))"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
 
             extension.Get(objectGuid);
 
@@ -67,6 +67,22 @@ namespace Chaos.Mcm.Test.Extension.v6
         }
         
         [Test]
+        public void Get_WithMultipleFolders_OrFoldersInQuery()
+        {
+            var extension       = Make_ObjectV6Extension();
+            var user            = Make_User();
+            var folders = new[] { new Folder { ID = 1 }, new Folder { ID = 2 } };
+            PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
+            PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(folders);
+            PortalRequest.SetupGet(p => p.User).Returns(user);
+            ViewManager.Setup(m => m.GetView("Object").Query(It.IsAny<IQuery>())).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
+
+            extension.Get(new List<Guid>());
+
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(*:*)AND((FolderAncestors:1)(FolderAncestors:2))")));
+        }
+        
+        [Test]
         public void Get_WithFolderFilter_FilterFoldersWithAccess()
         {
             var extension       = Make_ObjectV6Extension();
@@ -79,7 +95,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
             extension.Get(new List<Guid>(), folderId: 1);
 
-            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(FolderAncestors:1)")));
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(*:*)AND((FolderAncestors:1))")));
         }
         
         [Test]

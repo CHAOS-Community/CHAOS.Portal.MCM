@@ -30,7 +30,7 @@ namespace Chaos.Mcm.Extension.Domain
 
                 if (!list.Any()) throw new InsufficientPermissionsException("User does not have access to any folders");
 
-                var folderQuery = String.Format("FolderAncestors:{0}", String.Join(" ", list.Select(item => item.ID)));
+                var folderQuery = String.Format("{0}", String.Join("", list.Select(item => "(FolderAncestors:"+item.ID+")")));
 
                 // todo user Filter instead of query for permission
                 query.Query = String.Format("({0})AND({1})", query.Query, folderQuery);
