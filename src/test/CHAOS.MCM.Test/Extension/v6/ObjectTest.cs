@@ -24,6 +24,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             var objectGuid = new List<Guid>{new Guid("00000000-0000-0000-0000-000000000001")};
             var folder     = new Folder{ID = 1};
             var user       = Make_User();
+            PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
             PortalRequest.SetupGet(p => p.User).Returns(user);
             PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
             ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001)AND(FolderAncestors:1)"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
@@ -40,6 +41,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             var objectGuid = new List<Guid> { new Guid("00000000-0000-0000-0000-000000000001"), new Guid("00000000-0000-0000-0000-000000000002"), new Guid("00000000-0000-0000-0000-000000000003") };
             var folder     = new Folder{ID = 1};
             var user       = Make_User();
+            PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
             PortalRequest.SetupGet(p => p.User).Returns(user);
             PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
             ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001 00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(FolderAncestors:1)"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
@@ -55,6 +57,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             var extension       = Make_ObjectV6Extension();
             var accessPointGuid = new Guid("00000000-0000-0000-0000-000000000001");
             var user            = Make_User();
+            PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
             PortalRequest.SetupGet(p => p.User).Returns(user);
             ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(00000000-0000-0000-0000-000000000001_PubStart:[* TO NOW] AND 00000000-0000-0000-0000-000000000001_PubEnd:[NOW TO *])"))).Returns(new PagedResult<IResult>(0,0,new IResult[0]));
 
@@ -68,14 +71,15 @@ namespace Chaos.Mcm.Test.Extension.v6
         {
             var extension       = Make_ObjectV6Extension();
             var user            = Make_User();
-            var folder          = new Folder{ID = 1};
-            PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(new[] { folder });
+            var folders = new[] { new Folder { ID = 1 }, new Folder { ID = 2 } };
+            PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
+            PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(folders);
             PortalRequest.SetupGet(p => p.User).Returns(user);
-            ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(AND(FolderAncestors:1))"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
+            ViewManager.Setup(m => m.GetView("Object").Query(It.IsAny<IQuery>())).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
 
             extension.Get(new List<Guid>(), folderId: 1);
 
-            ViewManager.VerifyAll();
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(FolderAncestors:1)")));
         }
         
         [Test]
@@ -85,6 +89,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             var accessPointGuid = new Guid("00000000-0000-0000-0000-000000000001");
             var objectGuids     = new List<Guid> { new Guid("00000000-0000-0000-0000-000000000002"), new Guid("00000000-0000-0000-0000-000000000003") };
             var user            = Make_User();
+            PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
             PortalRequest.SetupGet(p => p.User).Returns(user);
             ViewManager.Setup(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(00000000-0000-0000-0000-000000000001_PubStart:[* TO NOW] AND 00000000-0000-0000-0000-000000000001_PubEnd:[NOW TO *])"))).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
 

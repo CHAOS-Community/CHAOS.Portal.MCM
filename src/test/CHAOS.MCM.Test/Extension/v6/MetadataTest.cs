@@ -40,7 +40,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
             extension.Set(objectGuid, metadata.MetadataSchemaGuid, metadata.LanguageCode, metadata.RevisionID, metadata.MetadataXml);
 
-            McmRepository.Verify(m => m.ObjectGet(objectGuid, true, false, false, true, true));
+            McmRepository.Verify(m => m.ObjectGet(objectGuid, true, true, true, true, true));
         }
 
         #region Helpers

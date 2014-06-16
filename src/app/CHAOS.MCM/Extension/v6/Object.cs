@@ -19,6 +19,7 @@ namespace Chaos.Mcm.Extension.v6
         private IObjectCreate ObjectCreate { get; set; }
         private IObjectDelete ObjectDelete { get; set; }
         private IObjectSetPublishSettings ObjectSetPublishSettings { get; set; }
+        private ObjectQueryHelper ObjectQueryHelper { get; set; }
 
         #endregion
         #region Initialization
@@ -28,6 +29,7 @@ namespace Chaos.Mcm.Extension.v6
             ObjectCreate = new ObjectCreate(mcmRepository, permissionManager, portalApplication.ViewManager);
             ObjectDelete = new ObjectDelete(mcmRepository, permissionManager, portalApplication.ViewManager);
             ObjectSetPublishSettings = new ObjectSetPublishSettings(mcmRepository, permissionManager, portalApplication.ViewManager);
+            ObjectQueryHelper = new ObjectQueryHelper(portalApplication);
         }
 
         #endregion
@@ -67,18 +69,14 @@ namespace Chaos.Mcm.Extension.v6
 
             if (objectGuids.Any()) query.Query = string.Format("Id:{0}", string.Join(" ", objectGuids));
 
-            var foldersWithAccess = GetFoldersWithAccess();
+            var folderFilter = GetFoldersWithAccess(folderId);
 
-            if(accessPointGuid == null && !foldersWithAccess.Any()) throw new InsufficientPermissionsException("");
+            if(accessPointGuid == null && !folderFilter.Any()) throw new InsufficientPermissionsException("No folders with access");
 
-            return ViewManager.GetObjects( query,
-                                           accessPointGuid,
-                                           foldersWithAccess,
-                                           includeAccessPoints,
-                                           includeMetadata,
-                                           includeFiles,
-                                           includeObjectRelations,
-                                           includeFolders);
+            return ObjectQueryHelper.GetObjects(query, accessPointGuid, folderFilter,
+                                                                       includeAccessPoints, includeMetadata,
+                                                                       includeFiles, includeObjectRelations,
+                                                                       includeFolders);
         }
     }
 }

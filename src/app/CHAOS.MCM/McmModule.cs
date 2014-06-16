@@ -55,7 +55,7 @@
         {
             PortalApplication = portalApplication;
 
-            LoadModuleConfiguration();
+            Configuration = PortalApplication.GetSettings<McmModuleConfiguration>(ConfigurationName);
 
             McmRepository = new McmRepository().WithConfiguration(Configuration.ConnectionString);
             PermissionManager = new InMemoryPermissionManager().WithSynchronization(McmRepository, new IntervalSpecification(10000));
@@ -64,8 +64,7 @@
             {
                 if (!string.IsNullOrEmpty(Configuration.ObjectCoreName))
                 {
-                    var objectView = CreateObjectView();
-                    ObjectExtensions.ObjectViewName = objectView.Name;
+                    var objectView = new ObjectView(PermissionManager);
 
                     portalApplication.AddView(objectView, Configuration.ObjectCoreName);
 
@@ -104,54 +103,6 @@
             {
                 // Another module already added these
             }
-        }
-
-        private void LoadModuleConfiguration()
-        {
-            try
-            {
-                var module = PortalApplication.PortalRepository.Module.Get(ConfigurationName);
-                var configuration = XDocument.Parse(module.Configuration);
-
-                Configuration = SerializerFactory.Get<XDocument>().Deserialize<McmModuleConfiguration>(configuration);
-
-                if (string.IsNullOrEmpty(Configuration.ConnectionString))
-                    throw new ModuleConfigurationMissingException("MCM configuration is invalid.");
-            }
-            catch (ArgumentException e)
-            {
-                var dummyConfig = new McmModuleConfiguration
-                    {
-                        Aws = new AwsConfiguration
-                            {
-                                AccessKey = "",
-                                SecretKey = ""
-                            },
-                        UserManagement = new UserManagementConfiguration
-                            {
-                                UserFolderTypeId = 0,
-                                UserObjectTypeId = 0,
-                                UsersFolderName = ""
-                            },
-                        ConnectionString = "",
-                        ObjectCoreName = ""
-                    };
-
-                var moduleTemplate = new Module
-                    {
-                        Name = ConfigurationName,
-                        Configuration = SerializerFactory.XMLSerializer.Serialize(dummyConfig).ToString()
-                    };
-
-                PortalApplication.PortalRepository.Module.Set(moduleTemplate);
-
-                throw new ModuleConfigurationMissingException("MCM configuration was missing, a template was created in the database", e);
-            }
-        }
-
-        protected virtual IView CreateObjectView()
-        {
-            return new ObjectView(PermissionManager);
         }
 
         #endregion

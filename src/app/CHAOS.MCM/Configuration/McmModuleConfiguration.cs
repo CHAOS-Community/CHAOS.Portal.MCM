@@ -5,9 +5,10 @@ namespace Chaos.Mcm.Configuration
     using System;
     using CHAOS.Serialization;
     using CHAOS.Serialization.XML;
+    using Portal.Core.Module;
 
     [Serialize("Settings")]
-    public class McmModuleConfiguration
+    public class McmModuleConfiguration : IModuleSettings
     {
         [SerializeXML(true)]
         public String ConnectionString { get; set; }
@@ -24,6 +25,11 @@ namespace Chaos.Mcm.Configuration
         public bool HasAwsConfiguration()
         {
             return Aws != null;
+        }
+
+        public bool IsValid()
+        {
+            return !string.IsNullOrEmpty(ConnectionString);
         }
     }
 }

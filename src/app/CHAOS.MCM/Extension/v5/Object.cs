@@ -34,6 +34,7 @@ namespace Chaos.Mcm.Extension.v5
             ObjectCreate = objectCreate;
             ObjectDelete = objectDelete;
             ObjectSetPublishSettings = objectSetPublishSettings;
+            ObjectQueryHelper = new ObjectQueryHelper(portalApplication);
         }
 
         #endregion
@@ -42,6 +43,7 @@ namespace Chaos.Mcm.Extension.v5
         public IObjectCreate ObjectCreate { get; set; }
         public IObjectDelete ObjectDelete { get; set; }
         public IObjectSetPublishSettings ObjectSetPublishSettings { get; set; }
+        protected ObjectQueryHelper ObjectQueryHelper { get; set; }
 
         #endregion
         #region Business Logic
@@ -53,7 +55,7 @@ namespace Chaos.Mcm.Extension.v5
             query.Query = query.Query.Replace("GUID:", "Id:");
             query.Query = query.Query.Replace("ObjectTypeID:", "ObjectTypeId:");
             
-            var result = ViewManager.GetObjects(query, accesspointGuid, GetFoldersWithAccess(), includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations);
+            var result = ObjectQueryHelper.GetObjects(query, accesspointGuid, GetFoldersWithAccess(), includeAccessPoints, includeMetadata, includeFiles, includeObjectRelations);
 
             var page = new PagedResult<Data.Dto.v5.Object>(result.FoundCount,
                                                            result.StartIndex,

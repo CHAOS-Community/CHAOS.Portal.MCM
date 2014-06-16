@@ -62,14 +62,15 @@ namespace Chaos.Mcm.Extension.v6
 
         #endregion
 
-        public IEnumerable<IFolder> GetFoldersWithAccess()
+        public IEnumerable<IFolder> GetFoldersWithAccess(uint? folderFilter = null)
         {
             if(Request.IsAnonymousUser) return new List<IFolder>();
 
-            var userGuid   = Request.User.Guid;
+            var userGuid = Request.User.Guid;
             var groupGuids = Request.Groups.Select(group => @group.Guid).ToList();
-            
-            return PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
+            var folders = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).Where(folder => folderFilter == null || folder.ID == folderFilter).ToList();
+
+            return folders;
         }
     }
 }

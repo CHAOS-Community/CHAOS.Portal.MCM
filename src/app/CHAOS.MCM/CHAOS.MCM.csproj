@@ -130,11 +130,11 @@
     <Compile Include="Extension\Domain\ExtensionHelperBase.cs" />
     <Compile Include="Extension\Domain\IUserManagementController.cs" />
     <Compile Include="Extension\Domain\IUserProfileController.cs" />
+    <Compile Include="Extension\Domain\ObjectQueryHelper.cs" />
     <Compile Include="Extension\Domain\Object\ObjectCreate.cs" />
     <Compile Include="Extension\Domain\Object\ObjectDelete.cs" />
     <Compile Include="Extension\Domain\Object\ObjectSetPublishSettings.cs" />
     <Compile Include="Extension\Domain\UserManagementController.cs" />
-    <Compile Include="Extension\Domain\ObjectExtensions.cs" />
     <Compile Include="Extension\Domain\UserProfileController.cs" />
     <Compile Include="Extension\v5\Download\BucketInfo.cs" />
     <Compile Include="Extension\v5\Download\Download.cs" />
