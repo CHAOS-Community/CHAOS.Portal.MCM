@@ -9,6 +9,7 @@ namespace Chaos.Mcm.Extension.v6
     using Permission;
     using Portal.Core;
     using Portal.Core.Data.Model;
+    using Portal.Core.Exceptions;
     using Portal.Core.Indexing.Solr.Request;
 
     public class Object : AMcmExtension
@@ -55,18 +56,24 @@ namespace Chaos.Mcm.Extension.v6
             return ObjectDelete.Delete(guid, userGuid, groupGuids);
         }
 
-        public IPagedResult<IResult> Get(IEnumerable<Guid> objectGuids, Guid? accessPointGuid, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, uint pageSize = 10, uint pageIndex = 0)
+        public IPagedResult<IResult> Get(IEnumerable<Guid> objectGuids, uint? folderId = null, Guid? accessPointGuid = null, bool includeAccessPoints = false, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, uint pageSize = 10, uint pageIndex = 0)
         {
-            var query = new SolrQuery{Query = "*:*"};
-
-            query.PageIndex = pageIndex;
-            query.PageSize  = pageSize;
+            var query = new SolrQuery
+                {
+                    Query = "*:*", 
+                    PageIndex = pageIndex, 
+                    PageSize = pageSize
+                };
 
             if (objectGuids.Any()) query.Query = string.Format("Id:{0}", string.Join(" ", objectGuids));
 
+            var foldersWithAccess = GetFoldersWithAccess();
+
+            if(accessPointGuid == null && !foldersWithAccess.Any()) throw new InsufficientPermissionsException("");
+
             return ViewManager.GetObjects( query,
                                            accessPointGuid,
-                                           GetFoldersWithAccess(),
+                                           foldersWithAccess,
                                            includeAccessPoints,
                                            includeMetadata,
                                            includeFiles,

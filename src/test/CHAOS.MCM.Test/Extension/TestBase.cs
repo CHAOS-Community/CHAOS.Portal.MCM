@@ -182,12 +182,12 @@ namespace Chaos.Mcm.Test.Extension
 
         protected Mcm.Extension.v5.Object Make_ObjectV5Extension(IObjectCreate objectCreate)
         {
-            return (Mcm.Extension.v5.Object)new Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, objectCreate, null, TODO).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v5.Object)new Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, objectCreate, null, null).WithPortalRequest(PortalRequest.Object);
         }
 
         protected Mcm.Extension.v5.Object Make_ObjectV5Extension(IObjectDelete objectDelete)
         {
-            return (Mcm.Extension.v5.Object)new Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, null, objectDelete, TODO).WithPortalRequest(PortalRequest.Object);
+            return (Mcm.Extension.v5.Object)new Mcm.Extension.v5.Object(PortalApplication.Object, McmRepository.Object, PermissionManager.Object, null, objectDelete, null).WithPortalRequest(PortalRequest.Object);
         }
 
         protected Mcm.Extension.v6.Object Make_ObjectV6Extension()
