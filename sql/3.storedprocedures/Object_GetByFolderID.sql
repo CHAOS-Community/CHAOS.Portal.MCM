@@ -1,6 +1,7 @@
 CREATE PROCEDURE Object_GetByFolderID
 (
     FolderID                INT UNSIGNED,
+    ObjectTypeId			INT UNSIGNED,
     IncludeMetadata         BOOLEAN,
     IncludeFiles			BOOLEAN,
     IncludeObjectRelations  BOOLEAN,
@@ -22,17 +23,34 @@ BEGIN
     
     SET Offset = PageIndex * PageSize;
     
-    INSERT INTO ObjectGUID_Table
-		SELECT  
-			OFJ.ObjectGUID
-		FROM  
-			Object_Folder_Join AS OFJ
-		WHERE  
-				OFJ.ObjectFolderTypeID = 1
-			AND	(FolderID IS NULL OR OFJ.FolderID = FolderID)
-		LIMIT  
-			Offset, PageSize;
-     
+	IF(FolderID IS NULL) THEN
+	
+		INSERT INTO ObjectGUID_Table
+			SELECT  
+				O.GUID
+			FROM
+				Object AS O
+			WHERE  
+					(ObjectTypeId IS NULL OR O.ObjectTypeID = ObjectTypeId)
+			LIMIT  
+				Offset, PageSize;
+		
+	ELSE 
+
+		INSERT INTO ObjectGUID_Table
+			SELECT  
+				O.GUID
+			FROM
+				Object AS O
+				INNER JOIN Object_Folder_Join AS OFJ ON O.GUID = OFJ.ObjectGUID
+			WHERE  
+					(FolderID IS NULL OR (OFJ.FolderID = FolderID AND OFJ.ObjectFolderTypeID = 1))
+				AND	(ObjectTypeId IS NULL OR O.ObjectTypeID = ObjectTypeId)
+			LIMIT  
+				Offset, PageSize;
+
+	END IF;
+
     SELECT  Object.*
       FROM  ObjectGUID_Table AS GT
             INNER JOIN Object ON Object.GUID = GT.GUID;

@@ -14,7 +14,7 @@ namespace Chaos.Mcm.Extension.v6
 
         #endregion
 
-        public Trace Index(string view, uint? folderId, bool cleanIndex = false)
+        public Trace Index(string view, uint? folderId, bool cleanIndex = false, uint? objectTypeId = null)
         {
             var deleteStopwatch    = new System.Diagnostics.Stopwatch();
             var objectGetStopwatch = new System.Diagnostics.Stopwatch();
@@ -37,7 +37,7 @@ namespace Chaos.Mcm.Extension.v6
             for (uint i = 0; ; i++)
             {
                 objectGetStopwatch.Start();
-                var objects = McmRepository.ObjectGet(folderId, i, PageSize, true, true, true, true, true);
+                var objects = McmRepository.ObjectGet(folderId, i, PageSize, true, true, true, true, true, objectTypeId);
                 objectGetStopwatch.Stop();
 
                 indexStopwatch.Start();

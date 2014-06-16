@@ -1,5 +1,5 @@
 -- Create join between object and metadata
-CREATE  TABLE Object_Metadata_Join
+CREATE TABLE IF NOT EXIST  Object_Metadata_Join
 (
 	ObjectGuid		BINARY(16) NOT NULL,
 	MetadataGuid	BINARY(16) NOT NULL,
@@ -65,18 +65,3 @@ ALTER TABLE `Object_Object_Join` CHANGE COLUMN `Object1GUID` `Object1Guid` BINAR
 , DROP INDEX `FK_Object_GUID_Object_Object_Join_Object2GUID` 
 
 , ADD INDEX `fk_Object_GUID_Object_Object_Join_Object2Guid` (`Object2Guid` ASC) ;
-
--- Version
-CREATE TABLE `Version` (
-  `ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `Major` varchar(8) NOT NULL,
-  `Minor` varchar(8) NOT NULL,
-  `Release` varchar(32) NOT NULL,
-  `ScriptName` varchar(255) NOT NULL,
-  `DateCreated` datetime NOT NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE KEY `uq_ID` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
-INSERT INTO `Version`(`Major`,`Minor`,`Release`,`ScriptName`,`DateCreated`)
-VALUES ('06','00','0001','06.00.0001.sql',NOW());

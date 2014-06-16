@@ -1,0 +1,1 @@
+ALTER TABLE `Metadata` CHANGE COLUMN `MetadataXML` `MetadataXML` MEDIUMTEXT NOT NULL  ;
