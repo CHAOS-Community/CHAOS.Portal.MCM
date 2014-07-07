@@ -198,9 +198,9 @@ namespace Chaos.Mcm.Data
 
         public IList<Object> ObjectGet(IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false)
         {
-            var guids = String.Join(",", objectGuids.Select(item => item.ToUUID().ToString().Replace("-", "")));
+            var guids = GuidListToString(objectGuids);
 
-            return this.Gateway.ExecuteQuery<Object>("Object_GetByGUIDs", new[]
+            return Gateway.ExecuteQuery<Object>("Object_GetByGUIDs", new[]
                 {
                     new MySqlParameter("GUIDs", guids),
                     new MySqlParameter("IncludeMetadata", includeMetadata),
@@ -209,6 +209,12 @@ namespace Chaos.Mcm.Data
                     new MySqlParameter("IncludeFolders", includeFolders),
                     new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
                 });
+        }
+
+        private static string GuidListToString(IEnumerable<Guid> objectGuids)
+        {
+            var guids = String.Join(",", objectGuids.Select(item => item.ToUUID().ToString().Replace("-", "")));
+            return guids;
         }
 
         #endregion
@@ -424,13 +430,13 @@ namespace Chaos.Mcm.Data
 
         public IList<AccessPoint> AccessPointGet(Guid accessPointGuid, Guid userGuid, IEnumerable<Guid> groupGuids, uint permission)
         {
-            var groupGuidsString = String.Join(",", groupGuids.Select(item => item.ToString().Replace("-", "")));
+            var guids = GuidListToString(groupGuids);
 
             return Gateway.ExecuteQuery<AccessPoint>("AccessPoint_Get", new[]
                 {
                     new MySqlParameter("AccessPointGuid", accessPointGuid.ToByteArray()), 
                     new MySqlParameter("UserGuid", userGuid.ToByteArray()), 
-                    new MySqlParameter("GroupGuids", groupGuidsString), 
+                    new MySqlParameter("GroupGuids", guids), 
                     new MySqlParameter("Permission", permission) 
                 });
         }
