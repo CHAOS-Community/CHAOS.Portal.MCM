@@ -32,7 +32,7 @@ namespace Chaos.Mcm.Extension.v6
             
             deleteStopwatch.Stop();
 
-            const uint PageSize = 500;
+            const uint PageSize = 100;
             
             for (uint i = 0; ; i++)
             {

@@ -168,13 +168,29 @@ namespace Chaos.Mcm.Test.Extension.v6
             var userInfo = Make_UserInfo();
             PortalRequest.SetupGet(p => p.User).Returns(userInfo);
             PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
-            folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.None)).Returns(true);
+            folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.Max)).Returns(true);
             McmRepository.Setup(m => m.FolderUserJoinSet(userGuid, folder.Object.ID, (uint)FolderPermission.None)).Returns(1);
             var module = Make_FolderExtension();
 
             var result = module.SetPermission(userGuid, null, folder.Object.ID, (uint)FolderPermission.None);
 
             Assert.AreEqual(1, result.Value);
+        }
+
+        [Test]
+        public void SetPermission_RemoveOwnAccess_NoNeedToCheckPermission()
+        {
+            var folder   = new Mock<IFolder>().SetupProperty(p => p.ID, (uint)100);
+            var userInfo = Make_UserInfo();
+            PortalRequest.SetupGet(p => p.User).Returns(userInfo);
+            PermissionManager.Setup(m => m.GetFolders(folder.Object.ID)).Returns(folder.Object);
+            McmRepository.Setup(m => m.FolderUserJoinSet(userInfo.Guid, folder.Object.ID, (uint)FolderPermission.None)).Returns(1);
+            var module = Make_FolderExtension();
+
+            var result = module.SetPermission(userInfo.Guid, null, folder.Object.ID, (uint)FolderPermission.None);
+
+            Assert.AreEqual(1, result.Value);
+            folder.Verify(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], It.IsAny<FolderPermission>()), Times.Never());
         }
 
         [Test]

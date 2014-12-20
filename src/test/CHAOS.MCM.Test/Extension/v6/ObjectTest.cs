@@ -87,9 +87,8 @@ namespace Chaos.Mcm.Test.Extension.v6
         {
             var extension       = Make_ObjectV6Extension();
             var user            = Make_User();
-            var folders = new[] { new Folder { ID = 1 }, new Folder { ID = 2 } };
             PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), null));
-            PermissionManager.Setup(m => m.GetFolders(FolderPermission.Read, user.Guid, It.IsAny<IEnumerable<Guid>>())).Returns(folders);
+            PermissionManager.Setup(m => m.GetFolders(1)).Returns(new Folder{ID = 1, UserPermissions = new Dictionary<Guid, FolderPermission>(){{user.Guid, FolderPermission.Max}}});
             PortalRequest.SetupGet(p => p.User).Returns(user);
             ViewManager.Setup(m => m.GetView("Object").Query(It.IsAny<IQuery>())).Returns(new PagedResult<IResult>(0, 0, new IResult[0]));
 
@@ -125,7 +124,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             PortalRequest.SetupGet(p => p.User).Returns(userInfo);
             PermissionManager.Setup(m => m.GetFolders(folderID)).Returns(folder.Object);
             folder.Setup(m => m.DoesUserOrGroupHavePermission(userInfo.Guid, new Guid[0], FolderPermission.CreateUpdateObjects)).Returns(true);
-            McmRepository.Setup(m => m.ObjectGet(expected.Guid, false, false,false,false,false)).Returns(expected);
+            McmRepository.Setup(m => m.ObjectGet(expected.Guid, true, true, true, true, true)).Returns(expected);
 
             var result = extension.Create(expected.Guid, expected.ObjectTypeID, folderID);
 

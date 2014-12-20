@@ -22,7 +22,7 @@ namespace Chaos.Mcm.Extension.Domain.Object
 
             McmRepository.ObjectCreate(guid.Value, objectTypeID, folderID);
 
-            var result = McmRepository.ObjectGet(guid.Value);
+            var result = McmRepository.ObjectGet(guid.Value, true, true, true, true, true);
 
             ViewManager.Index(result);
 

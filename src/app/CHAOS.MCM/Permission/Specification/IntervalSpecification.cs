@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Threading;
 
 namespace Chaos.Mcm.Permission.Specification
 {
+    using System.Timers;
+
     public class IntervalSpecification : ISynchronizationSpecification
     {
         #region Fields
 
-        private Timer _timer;
+        private readonly Timer _timer;
 
         #endregion
 
@@ -21,16 +22,21 @@ namespace Chaos.Mcm.Permission.Specification
         /// <param name="period">the interval in milliseconds</param>
         public IntervalSpecification(int period)
         {
-            _timer = new Timer(Callback, null, 0, period);
+            _timer = new Timer(period);
+            _timer.Elapsed += Callback;
+            _timer.AutoReset = false;
+            _timer.Enabled = true;
         }
 
         #endregion
         #region Business Logic
 
-        private void Callback(object state)
+        void Callback(object sender, ElapsedEventArgs e)
         {
             if (OnSynchronizationTrigger != null)
-                OnSynchronizationTrigger(this,new EventArgs());
+                OnSynchronizationTrigger(this, new EventArgs());
+
+            _timer.Enabled = true;
         }
 
         #endregion

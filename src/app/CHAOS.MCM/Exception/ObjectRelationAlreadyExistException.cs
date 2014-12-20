@@ -2,6 +2,9 @@
 
 namespace Chaos.Mcm.Exception
 {
+  using System;
+
+  [Serializable] 
     public class ObjectRelationAlreadyExistException : System.Exception
     {
         public ObjectRelationAlreadyExistException()

@@ -55,7 +55,7 @@ namespace Chaos.Mcm.View
         public KeyValuePair<string, string> UniqueIdentifier { get { return new KeyValuePair<string, string>("Id", Object.Guid.ToString()); } }
 
         [JsonIgnore]
-        [Serialize]
+        [Serialize("Id")]
         public string Id
         {
             get

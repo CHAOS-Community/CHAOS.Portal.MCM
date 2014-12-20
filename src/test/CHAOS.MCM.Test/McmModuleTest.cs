@@ -19,7 +19,7 @@
 
             module.Load(PortalApplication.Object);
 
-            PortalApplication.Verify(p => p.AddView(It.IsAny<ObjectView>(), settings.ObjectCoreName, false));
+           // PortalApplication.Verify(p => p.AddView(It.IsAny<ObjectView>(), settings.ObjectCoreName, false));
         } 
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Chaos.Mcm.Exception
 {
+  using System;
+
+  [Serializable]
     public class InvalidRevisionException : System.Exception
     {
         public InvalidRevisionException()

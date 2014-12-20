@@ -1,6 +1,7 @@
 CREATE PROCEDURE File_Get
 (
-    ID  INT
+    ID  INT,
+	ParentId INT
 )
 BEGIN
 
@@ -9,6 +10,7 @@ BEGIN
 	FROM  
 		File
 	WHERE  
-		File.ID = ID;
+			(ID IS NULL OR File.ID = ID) 
+		AND (ParentId IS NULL OR File.ParentID = ParentId);
 
 END

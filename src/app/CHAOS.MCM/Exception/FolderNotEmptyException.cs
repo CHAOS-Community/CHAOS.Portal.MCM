@@ -1,7 +1,9 @@
-﻿using System.Runtime.Serialization;
-
-namespace Chaos.Mcm.Exception
+﻿namespace Chaos.Mcm.Exception
 {
+  using System;
+  using System.Runtime.Serialization;
+
+  [Serializable]
     public class FolderNotEmptyException : System.Exception
     {
         public FolderNotEmptyException()

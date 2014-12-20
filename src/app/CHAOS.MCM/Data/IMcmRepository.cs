@@ -30,6 +30,17 @@
 
         uint ObjectDelete(Guid guid);
         uint ObjectCreate(Guid guid, uint objectTypeID, uint folderID);
+
+        /// <summary>
+        /// Get Object by objectGuid
+        /// </summary>
+        /// <param name="objectGuid"></param>
+        /// <param name="includeMetadata"></param>
+        /// <param name="includeFiles"></param>
+        /// <param name="includeObjectRelations"></param>
+        /// <param name="includeFolders"></param>
+        /// <param name="includeAccessPoints"></param>
+        /// <returns>The matching Object, if there is no Object by that objectGuid, null is returned</returns>
         Object ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
         IList<Object> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false );
         IList<Object> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false, uint? objectTypeId = null);
@@ -51,6 +62,7 @@
 
         uint FileDelete(uint id);
         uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID);
+        IEnumerable<File> FileGet(uint? id = null, uint? parentId = null);
         File FileGet(uint id);
 
         uint MetadataSchemaUpdate(string name, XDocument schemaXml, Guid userGuid, Guid guid);

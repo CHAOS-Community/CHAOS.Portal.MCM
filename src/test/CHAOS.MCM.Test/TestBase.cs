@@ -34,6 +34,7 @@
 
             PortalApplication.SetupGet(p => p.ViewManager).Returns(ViewManager.Object);
             PortalApplication.SetupGet(p => p.PortalRepository).Returns(PortalRepository.Object);
+            PortalApplication.Setup(m => m.Log.Debug(It.IsAny<string>(), It.IsAny<System.Exception>()));
         }
 
         protected McmModuleConfiguration Make_McmModuleConfiguration()

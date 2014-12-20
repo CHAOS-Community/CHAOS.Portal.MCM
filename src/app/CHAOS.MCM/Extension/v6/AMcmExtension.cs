@@ -8,28 +8,31 @@ using Chaos.Portal.Core.Extension;
 
 namespace Chaos.Mcm.Extension.v6
 {
-    public abstract class AMcmExtension : AExtension
+  public abstract class AMcmExtension : AExtension
+  {
+    #region Properties
+
+    private static string ConnectionString { get; set; }
+
+    protected static IPermissionManager PermissionManager { get; set; }
+
+    protected IMcmRepository McmRepository { get; set; }
+
+    #endregion
+
+    #region Construction
+
+    protected AMcmExtension(IPortalApplication portalApplication, IMcmRepository mcmRepository,
+                            IPermissionManager permissionManager)
+      : base(portalApplication)
     {
-        #region Properties
+      McmRepository = mcmRepository;
+      PermissionManager = permissionManager;
+    }
 
-        private static string ConnectionString { get; set; }
+    #endregion
 
-        protected static IPermissionManager PermissionManager { get; set; }
-
-        protected IMcmRepository McmRepository { get; set; }
-
-        #endregion
-        #region Construction
-
-        protected AMcmExtension(IPortalApplication portalApplication, IMcmRepository mcmRepository, IPermissionManager permissionManager)
-            : base(portalApplication)
-        {
-            McmRepository     = mcmRepository;
-            PermissionManager = permissionManager;
-        }
-
-        #endregion
-        #region Business Logic
+    #region Business Logic
 
 //        protected void PutObjectInIndex( IIndex index, IEnumerable<Data.Dto.Standard.Object> newObject )
 //        {
@@ -52,25 +55,32 @@ namespace Chaos.Mcm.Extension.v6
 //            index.Remove( delObject, false );
 //        }
 
-        public bool HasPermissionToObject(Guid objectGuid, FolderPermission permissions)
-	    {
-            var userGuid   = Request.User.Guid;
-            var groupGuids = Request.Groups.Select(item => item.Guid);
-       
-            return PermissionManager.HasPermissionToObject(objectGuid, userGuid, groupGuids, permissions);
-	    }
+    public bool HasPermissionToObject(Guid objectGuid, FolderPermission permissions)
+    {
+      var userGuid = Request.User.Guid;
+      var groupGuids = Request.Groups.Select(item => item.Guid);
 
-        #endregion
-
-        public IEnumerable<IFolder> GetFoldersWithAccess(uint? folderFilter = null)
-        {
-            if(Request.IsAnonymousUser) return new List<IFolder>();
-
-            var userGuid = Request.User.Guid;
-            var groupGuids = Request.Groups.Select(group => @group.Guid).ToList();
-            var folders = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).Where(folder => folderFilter == null || folder.ID == folderFilter).ToList();
-
-            return folders;
-        }
+      return PermissionManager.HasPermissionToObject(objectGuid, userGuid, groupGuids, permissions);
     }
+
+    #endregion
+
+    public IEnumerable<IFolder> GetFoldersWithAccess(uint? folderFilter = null)
+    {
+      if (Request.IsAnonymousUser) return new List<IFolder>();
+
+      var userGuid = Request.User.Guid;
+      var groupGuids = Request.Groups.Select(group => @group.Guid).ToList();
+      //var folders = PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).Where(folder => folderFilter == null || folder.ID == folderFilter).ToList();
+
+      if(folderFilter.HasValue)
+      {
+        var folder = PermissionManager.GetFolders(folderFilter.Value);
+        if (folder.DoesUserOrGroupHavePermission(userGuid, groupGuids, FolderPermission.Read))
+          return new[] {folder};
+      }
+
+      return PermissionManager.GetFolders(FolderPermission.Read, userGuid, groupGuids).ToList();
+    }
+  }
 }

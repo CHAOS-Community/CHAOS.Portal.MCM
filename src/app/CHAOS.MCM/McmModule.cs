@@ -1,22 +1,13 @@
 ﻿namespace Chaos.Mcm
 {
-    using System;
-    using System.Linq;
-    using System.Xml.Linq;
-
-    using CHAOS.Serialization.Standard;
     using Configuration;
     using Data;
-    using Data.Configuration;
-    using Extension.Domain;
     using Extension.v5.Download;
     using Permission;
     using Permission.InMemory;
     using Permission.Specification;
     using Portal.Core;
-    using Portal.Core.Data.Model;
     using Portal.Core.Exceptions;
-    using Portal.Core.Indexing.View;
     using View;
 
     public class McmModule : IMcmModule
@@ -99,7 +90,7 @@
                 PortalApplication.MapRoute("/v6/UserProfile", () => new Extension.v6.UserProfile(PortalApplication, McmRepository, PermissionManager));
                 PortalApplication.MapRoute("/v6/UserManagement", () => new Extension.v6.UserManagement(PortalApplication, McmRepository, PermissionManager, Configuration.UserManagement));
             }
-            catch (DuplicateEndpointException)
+            catch (System.Exception)
             {
                 // Another module already added these
             }

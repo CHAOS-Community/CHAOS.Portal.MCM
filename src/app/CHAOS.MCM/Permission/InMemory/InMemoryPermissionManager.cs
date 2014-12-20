@@ -60,7 +60,7 @@ namespace Chaos.Mcm.Permission.InMemory
         private void Synchronize(object sender, EventArgs e)
         {
             var tmp = new InMemoryPermissionManager();
-            
+
             // FolderGet has to return folders ordered by ID, otherwise the parent won't be 
             foreach (var folder in McmRepository.FolderGet())
             {
