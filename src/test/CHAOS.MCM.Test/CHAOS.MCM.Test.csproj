@@ -90,7 +90,6 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="App.Config.sample" />
-    <None Include="App.Config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\CHAOS.MCM\Chaos.Mcm.csproj">
