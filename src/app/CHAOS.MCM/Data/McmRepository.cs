@@ -582,7 +582,7 @@ namespace Chaos.Mcm.Data
     public IEnumerable<File> FileGet(uint? id = null, uint? parentId = null)
     {
       var result = Gateway.ExecuteQuery<File>("File_Get", new MySqlParameter("ID", id),
-                                              new MySqlParameter("ParentId", id));
+                                              new MySqlParameter("ParentId", parentId));
 
       return result;
     }
