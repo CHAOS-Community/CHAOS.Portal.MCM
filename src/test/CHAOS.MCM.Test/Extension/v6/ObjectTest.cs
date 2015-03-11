@@ -31,7 +31,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
             extension.Get(objectGuid);
 
-            ViewManager.VerifyAll();
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001)AND((FolderAncestors:1))")));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
             extension.Get(objectGuid);
 
-            ViewManager.VerifyAll();
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001 00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND((FolderAncestors:1))")));
         }
         
         [Test]
@@ -63,7 +63,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
             extension.Get(new List<Guid>(), accessPointGuid: accessPointGuid);
 
-            ViewManager.VerifyAll();
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(*:*)AND(00000000-0000-0000-0000-000000000001_PubStart:[* TO NOW] AND 00000000-0000-0000-0000-000000000001_PubEnd:[NOW TO *])")));
         }
         
         [Test]
@@ -110,7 +110,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
             extension.Get(objectGuids, accessPointGuid: accessPointGuid);
 
-            ViewManager.VerifyAll();
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000002 00000000-0000-0000-0000-000000000003)AND(00000000-0000-0000-0000-000000000001_PubStart:[* TO NOW] AND 00000000-0000-0000-0000-000000000001_PubEnd:[NOW TO *])")));
         }
 
         [Test]

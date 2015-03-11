@@ -22,9 +22,11 @@
             {
                 try
                 {
-                    var request = new Amazon.S3.Model.GetObjectRequest().WithBucketName(bucketInfo.Bucketname)
-                                                                        .WithKey(bucketInfo.Key);
-
+                  var request = new Amazon.S3.Model.GetObjectRequest
+                    {
+                      BucketName = bucketInfo.Bucketname,
+                      Key = bucketInfo.Key
+                    };
                     var response = client.GetObject(request);
 
                     return new Attachment

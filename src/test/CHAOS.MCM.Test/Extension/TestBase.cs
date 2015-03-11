@@ -6,10 +6,10 @@ namespace Chaos.Mcm.Test.Extension
     using System;
     using System.Collections.Generic;
     using System.Xml.Linq;
-    using Chaos.Mcm.Data.Dto;
-    using Chaos.Portal.Core.Cache;
-    using Chaos.Portal.Core.Data.Model;
-    using Chaos.Portal.Core.Request;
+    using Mcm.Data.Dto;
+    using Portal.Core.Cache;
+    using Portal.Core.Data.Model;
+    using Portal.Core.Request;
     using Mcm.Extension.Domain.Object;
     using Moq;
 
@@ -32,9 +32,10 @@ namespace Chaos.Mcm.Test.Extension
         #region Initialization
 
         [SetUp]
-        public void SetUp()
+        public new void SetUp()
         {
-            
+          base.SetUp();
+
             PortalRequest = new Mock<IPortalRequest>();
             Cache         = new Mock<ICache>();
 

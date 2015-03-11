@@ -31,7 +31,7 @@
 
             extension.Get(query, null, true, true, true, true);
 
-            ViewManager.VerifyAll();
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(Id:00000000-0000-0000-0000-000000000001)AND((FolderAncestors:1))")));
         }
 
         [Test]
@@ -48,7 +48,7 @@
 
             extension.Get(query, null, true, true, true, true);
 
-            ViewManager.VerifyAll();
+            ViewManager.Verify(m => m.GetView("Object").Query(It.Is<IQuery>(q => q.Query == "(ObjectTypeId:1)AND((FolderAncestors:1))")));
         }
 
         [Test]
