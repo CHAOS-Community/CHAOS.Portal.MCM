@@ -27,9 +27,7 @@ asmver_files :assembly_info do |a|
 end
 
 task :prepare_compile => [:clean] do
-  #FileUtils.cp 'src/app/Chaos.Portal.Authentication/App.config.sample', 'src/app/Chaos.Portal.Authentication/App.config'
-  #FileUtils.cp 'src/test/Chaos.Portal.Authentication.IntegrationTests/App.config.sample', 'src/test/Chaos.Portal.Authentication.IntegrationTests/App.config'
-  #FileUtils.cp 'src/test/Chaos.Portal.Authentication.Tests/App.config.sample', 'src/test/Chaos.Portal.Authentication.Tests/App.config'
+  FileUtils.cp 'src/app/Chaos.Mcm.Indexer/App.config.sample', 'src/app/Chaos.Mcm.Indexer/App.config'
 end
 
 desc 'Perform fast build (warn: doesn\'t d/l deps)'
