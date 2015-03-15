@@ -57,7 +57,7 @@
             var file = McmRepository.FileGet(fileId);
             var obj = McmRepository.ObjectGet(file.ObjectGuid, false, true);
 
-            var result = obj.Files.Where(item => item.Id == fileId);            
+            var result = obj.Files.Where(item => item.Identifier == fileId);            
 
             return result;
         }

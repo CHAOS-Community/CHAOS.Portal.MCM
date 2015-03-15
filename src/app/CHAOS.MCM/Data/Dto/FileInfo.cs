@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Chaos.Mcm.Data.Dto
 {
     using System;
@@ -12,7 +14,8 @@ namespace Chaos.Mcm.Data.Dto
 		#region Properties
 
 		[Serialize("ID")]
-		public uint Id { get; set; }
+      [JsonProperty("Id")]
+		public uint Identifier { get; set; }
 
 		[Serialize]
 		public uint? ParentID { get; set; }
@@ -76,7 +79,7 @@ namespace Chaos.Mcm.Data.Dto
 
         public FileInfo( uint fileId, Guid objectGUID, uint? parentId, uint destinationId, string fileName, string originalFileName, string folderPath, DateTime fileDateCreated, string basePath, string stringFormat, DateTime accessProviderDateCreated, string token, uint formatId, string formatName, string formatXML, string mimeType, uint formatCategoryId, string formatCategoryName, uint formatTypeId, string formatTypeName )
         {
-            Id                     = fileId;
+            Identifier                     = fileId;
             ParentID               = parentId;
             ObjectGuid             = objectGUID;
             Filename               = fileName;

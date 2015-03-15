@@ -50,7 +50,7 @@
         {
             return new FileInfo
                 {
-                    Id = item.Id,
+                    Id = item.Identifier,
                     ParentID = item.ParentID,
                     Filename = item.Filename,
                     OriginalFilename = item.OriginalFilename,

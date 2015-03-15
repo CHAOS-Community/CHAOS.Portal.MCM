@@ -15,7 +15,7 @@ namespace Chaos.Mcm.Data.Mapping
             {
                 yield return new FileInfo
                     {
-                        Id                        = reader.GetUint32("FileID"),
+                        Identifier                        = reader.GetUint32("FileID"),
                         ObjectGuid                = reader.GetGuid("ObjectGuid"),
                         ParentID                  = reader.GetUint32Nullable("ParentID"),
                         DestinationID             = reader.GetUint32("DestinationID"),

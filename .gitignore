@@ -1,6 +1,7 @@
 _ReSharper*
 
 deploy-db.bat
+
 bin
 !/tools/*/bin
 !/bin
@@ -26,5 +27,7 @@ Thumbs.db
 *.ncrunchsolution
 *.ncrunchproject
 _NCrunch*
-deploy-db.bat
 App.Config
+*.lock
+build
+tests

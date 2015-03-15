@@ -85,7 +85,7 @@ namespace Chaos.Mcm.Test.Extension
 
             return new FileInfo
             {
-                Id = file.Id,
+                Identifier = file.Id,
                 Filename = file.Filename,
                 OriginalFilename = file.OriginalFilename,
                 ObjectGuid = file.ObjectGuid,

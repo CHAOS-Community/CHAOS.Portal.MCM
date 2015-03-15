@@ -13,8 +13,11 @@ BEGIN
 
     START TRANSACTION;
 
-		DELETE FROM
-			Object_Metadata_Join
+		DELETE
+			Metadata, Object_Metadata_Join
+		FROM
+			Metadata
+			INNER JOIN Object_Metadata_Join ON Metadata.GUID = Object_Metadata_Join.MetadataGuid
 		WHERE
 			Object_Metadata_Join.ObjectGuid = Guid;
 
@@ -29,10 +32,14 @@ BEGIN
         DELETE FROM File
         WHERE  
             File.ObjectGUID = Guid;
-         
-        DELETE FROM Object_Object_Join
-        WHERE 
-                Object_Object_Join.Object1GUID = Guid
+        
+		DELETE
+			Metadata, Object_Object_Join
+		FROM
+			Metadata
+			INNER JOIN Object_Object_Join ON Metadata.GUID = Object_Object_Join.MetadataGuid
+		WHERE
+				Object_Object_Join.Object1GUID = Guid
             OR  Object_Object_Join.Object2GUID = Guid;
         
         DELETE FROM Object

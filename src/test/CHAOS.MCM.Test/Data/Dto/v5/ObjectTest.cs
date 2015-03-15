@@ -57,7 +57,7 @@
                 {
                     new FileInfo
                     {
-                        Id = 1,
+                        Identifier = 1,
                         FormatID = 1,
                         Filename = "file.ext",
                         OriginalFilename = "Some original filename",

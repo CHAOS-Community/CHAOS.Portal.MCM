@@ -1,6 +1,7 @@
 ﻿using Chaos.Mcm.Data;
 using Chaos.Mcm.Permission;
 using Chaos.Portal.Core;
+using Chaos.Portal.Core.Exceptions;
 
 namespace Chaos.Mcm.Extension.v6
 {
@@ -16,6 +17,8 @@ namespace Chaos.Mcm.Extension.v6
 
         public Trace Index(string view, uint? folderId, bool cleanIndex = false, uint? objectTypeId = null)
         {
+          if(Request.IsAnonymousUser) throw new InsufficientPermissionsException();
+
             var deleteStopwatch    = new System.Diagnostics.Stopwatch();
             var objectGetStopwatch = new System.Diagnostics.Stopwatch();
             var indexStopwatch     = new System.Diagnostics.Stopwatch();
