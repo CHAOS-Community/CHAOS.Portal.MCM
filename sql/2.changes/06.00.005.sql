@@ -1,0 +1,8 @@
+ALTER TABLE `File` 
+DROP FOREIGN KEY `FK_File_ID_File_ParentID`;
+
+ALTER TABLE `File` 
+ADD CONSTRAINT `FK_File_ID_File_ParentID`
+  FOREIGN KEY (`ParentID`)
+  REFERENCES `File` (`ID`)
+  ON DELETE CASCADE;
