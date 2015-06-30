@@ -135,10 +135,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tables", "tables", "{CD79B7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.changes", "2.changes", "{3218B79C-AF33-40C5-8C3F-9BA125D66706}"
 	ProjectSection(SolutionItems) = preProject
-		sql\2.changes\06.00.00.0003.sql = sql\2.changes\06.00.00.0003.sql
-		sql\2.changes\06.00.00.0004.sql = sql\2.changes\06.00.00.0004.sql
-		sql\2.changes\06.00.0001.sql = sql\2.changes\06.00.0001.sql
-		sql\2.changes\06.00.0002.sql = sql\2.changes\06.00.0002.sql
+		sql\2.changes\06.00.001.sql = sql\2.changes\06.00.001.sql
+		sql\2.changes\06.00.002.sql = sql\2.changes\06.00.002.sql
+		sql\2.changes\06.00.003.sql = sql\2.changes\06.00.003.sql
+		sql\2.changes\06.00.004.sql = sql\2.changes\06.00.004.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.data", "6.data", "{ACF921D6-5711-49C8-B563-8B08FDF7BD1B}"
