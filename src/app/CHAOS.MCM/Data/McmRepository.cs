@@ -1,3 +1,5 @@
+using Amazon.CodeDeploy.Model;
+
 namespace Chaos.Mcm.Data
 {
   using System;
@@ -147,6 +149,7 @@ namespace Chaos.Mcm.Data
         });
 
       if (result == -200) throw new UnhandledException("Metadata set failed on the database and was rolled back");
+      if (result == -201) throw new InvalidRevisionException("The provided Revision ID does not match the latest in the database");
 
       return (uint) result;
     }
