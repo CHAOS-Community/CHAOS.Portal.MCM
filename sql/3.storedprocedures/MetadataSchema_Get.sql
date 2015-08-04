@@ -1,9 +1,9 @@
 CREATE PROCEDURE MetadataSchema_Get
 (
-    IN  UserGuid            BINARY(16),
-    IN  GroupGuids          VARCHAR(21845),
-    IN  MetadataSchemaGuid  BINARY(16),
-    IN  PermissionRequired  INTEGER UNSIGNED
+    UserGuid            BINARY(16),
+    GroupGuids          VARCHAR(21845),
+    MetadataSchemaGuid  BINARY(16),
+    PermissionRequired  INTEGER UNSIGNED
 )
 BEGIN
     

@@ -379,9 +379,16 @@ namespace Chaos.Mcm.Data
         {
           new MySqlParameter("UserGuid", userGuid.ToByteArray()),
           new MySqlParameter("GroupGuids", guids),
-          new MySqlParameter("MetadataSchemaGuid",
-                             metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null),
+          new MySqlParameter("MetadataSchemaGuid", metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null),
           new MySqlParameter("PermissionRequired", (int?) permission),
+        });
+    }
+    
+    public IList<MetadataSchema> MetadataSchemaGet(Guid? metadataSchemaGuid)
+    {
+      return Gateway.ExecuteQuery<MetadataSchema>("MetadataSchema_Get", new[]
+        {
+          new MySqlParameter("MetadataSchemaGuid", metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null)
         });
     }
 
