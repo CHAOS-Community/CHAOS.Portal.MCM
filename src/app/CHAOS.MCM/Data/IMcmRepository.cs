@@ -69,7 +69,7 @@
     uint MetadataSchemaCreate(string name, XDocument schemaXml, Guid userGuid, Guid guid);
     uint MetadataSchemaDelete(Guid guid);
     IList<MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission);
-    IList<MetadataSchema> MetadataSchemaGet(Guid? metadataSchemaGuid);
+    IList<MetadataSchema> MetadataSchemaGet(Guid? metadataSchemaGuid = null);
 
     uint LinkCreate(Guid objectGuid, uint folderID, int objectFolderTypeID);
     uint LinkUpdate(Guid objectGuid, uint folderID, uint newFolderID);
