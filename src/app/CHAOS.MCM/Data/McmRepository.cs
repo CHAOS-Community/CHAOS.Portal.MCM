@@ -370,8 +370,7 @@ namespace Chaos.Mcm.Data
 
     #region Metadata Schema
 
-    public IList<MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid,
-                                                   MetadataSchemaPermission permission)
+    public IList<MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission)
     {
       var guids = String.Join(",", groupGuids.Select(item => item.ToString().Replace("-", "")));
 
@@ -384,11 +383,14 @@ namespace Chaos.Mcm.Data
         });
     }
     
-    public IList<MetadataSchema> MetadataSchemaGet(Guid? metadataSchemaGuid)
+    public IList<MetadataSchema> MetadataSchemaGet(Guid? metadataSchemaGuid = null)
     {
       return Gateway.ExecuteQuery<MetadataSchema>("MetadataSchema_Get", new[]
         {
-          new MySqlParameter("MetadataSchemaGuid", metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null)
+          new MySqlParameter("UserGuid", null),
+          new MySqlParameter("GroupGuids", null),
+          new MySqlParameter("MetadataSchemaGuid", metadataSchemaGuid.HasValue ? metadataSchemaGuid.Value.ToByteArray() : null),
+          new MySqlParameter("PermissionRequired", null),
         });
     }
 
