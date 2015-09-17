@@ -105,6 +105,7 @@
     <Compile Include="Data\Dto\v5\Metadata.cs" />
     <Compile Include="Data\Dto\v5\Object.cs" />
     <Compile Include="Data\Dto\v5\ObjectAccessPoint.cs" />
+    <Compile Include="Data\IFileRepository.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
     <Compile Include="Data\Mapping\AccessPointMapping.cs" />
     <Compile Include="Data\Mapping\AccesspointObjectJoinMapping.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Data\Mapping\ObjectRelationInfoMapping.cs" />
     <Compile Include="Data\Mapping\ObjectTypeMapping.cs" />
     <Compile Include="Data\McmRepository.cs" />
+    <Compile Include="Data\MySql\FileRepository.cs" />
     <Compile Include="EmailServiceExtensions.cs" />
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />

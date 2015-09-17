@@ -1,4 +1,6 @@
-﻿namespace Chaos.Mcm.Data.Dto.v5
+﻿using Newtonsoft.Json;
+
+namespace Chaos.Mcm.Data.Dto.v5
 {
     using CHAOS.Serialization;
     using CHAOS.Serialization.XML;
@@ -7,7 +9,7 @@
     [Serialize("Result")]
     public class FileInfo : IResult
     {
-        [Serialize("ID")]
+        [Serialize("ID"), JsonProperty("ID")]
         public uint Id { get; set; }
 
         [Serialize]

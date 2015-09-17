@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Chaos.Mcm.Data.Dto
 {
     using System;
@@ -10,7 +12,7 @@ namespace Chaos.Mcm.Data.Dto
 	{
 		#region Properties
 
-		[Serialize]
+		[Serialize, JsonProperty("Id")]
 		public uint Id { get; set; }
 
 		[Serialize]

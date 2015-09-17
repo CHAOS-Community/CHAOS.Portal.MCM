@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.storedprocedures", "3.sto
 		sql\3.storedprocedures\File_Create.sql = sql\3.storedprocedures\File_Create.sql
 		sql\3.storedprocedures\File_Delete.sql = sql\3.storedprocedures\File_Delete.sql
 		sql\3.storedprocedures\File_Get.sql = sql\3.storedprocedures\File_Get.sql
+		sql\3.storedprocedures\File_Set.sql = sql\3.storedprocedures\File_Set.sql
 		sql\3.storedprocedures\Folder_Create.sql = sql\3.storedprocedures\Folder_Create.sql
 		sql\3.storedprocedures\Folder_Delete.sql = sql\3.storedprocedures\Folder_Delete.sql
 		sql\3.storedprocedures\Folder_Get.sql = sql\3.storedprocedures\Folder_Get.sql

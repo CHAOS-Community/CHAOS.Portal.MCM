@@ -76,5 +76,6 @@
     uint LinkDelete(Guid objectGuid, uint folderID);
 
     IList<DestinationInfo> DestinationGet(uint? id);
+    IFileRepository File { get; set; }
   }
 }

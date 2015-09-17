@@ -1,4 +1,6 @@
 using Amazon.CodeDeploy.Model;
+using Chaos.Mcm.Data.MySql;
+using MySql.Data.MySqlClient;
 
 namespace Chaos.Mcm.Data
 {
@@ -15,24 +17,14 @@ namespace Chaos.Mcm.Data
   using Exception;
   using Permission;
   using Portal.Core.Exceptions;
-  using MySql.Data.MySqlClient;
   using FolderPermission = Dto.FolderPermission;
   using Object = Dto.Object;
 
   // todo: Remove dependency to MySql
   public class McmRepository : IMcmRepository
   {
-    #region Fields
-
-    #endregion
-
-    #region Properties
-
     private Gateway Gateway { get; set; }
-
-    #endregion
-
-    #region Construction
+    public IFileRepository File { get; set; }
 
     static McmRepository()
     {
@@ -57,10 +49,10 @@ namespace Chaos.Mcm.Data
     public IMcmRepository WithConfiguration(string connectionString)
     {
       Gateway = new Gateway(connectionString);
+
+      File = new FileRepository(Gateway);
       return this;
     }
-
-    #endregion
 
     #region Business Logic
 
@@ -557,46 +549,28 @@ namespace Chaos.Mcm.Data
 
     public uint FileDelete(uint id)
     {
-      var result = Gateway.ExecuteNonQuery("File_Delete", new MySqlParameter("ID", id));
-
-      return (uint) result;
+      return File.Delete(id);
     }
 
     public uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename,
                            string folderPath, uint formatID)
     {
-      var result = Gateway.ExecuteNonQuery("File_Create", new[]
-        {
-          new MySqlParameter("ObjectGuid", objectGuid.ToByteArray()),
-          new MySqlParameter("ParentFileID", parentID),
-          new MySqlParameter("FormatID", formatID),
-          new MySqlParameter("DestinationID", destinationID),
-          new MySqlParameter("Filename", filename),
-          new MySqlParameter("OriginalFilename", originalFilename),
-          new MySqlParameter("FolderPath", folderPath)
-        });
+      return File.Create(objectGuid, parentID, destinationID, filename, originalFilename, folderPath, formatID);
+    }
 
-      return (uint) result;
+    public uint FileSet(File file)
+    {
+      return File.Set(file);
     }
 
     public File FileGet(uint id)
     {
-      var result =
-        Gateway.ExecuteQuery<File>("File_Get", new MySqlParameter("ID", id), new MySqlParameter("ParentId", null))
-               .FirstOrDefault();
-
-      if (result == null)
-        throw new ChaosDatabaseException("No File by that Id");
-
-      return result;
+      return File.Get(id);
     }
 
     public IEnumerable<File> FileGet(uint? id = null, uint? parentId = null)
     {
-      var result = Gateway.ExecuteQuery<File>("File_Get", new MySqlParameter("ID", id),
-                                              new MySqlParameter("ParentId", parentId));
-
-      return result;
+      return File.Get(id, parentId);
     }
 
     #endregion
