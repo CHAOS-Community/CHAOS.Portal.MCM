@@ -1,29 +1,14 @@
 require 'bundler/setup'
-require 'fileutils'
 
 require 'albacore'
-require 'albacore/tasks/versionizer'
 
 Configuration = ENV['CONFIGURATION'] || 'Release'
 
-Albacore::Tasks::Versionizer.new :versioning
+desc 'package nugets - finds all projects and package them'
 
 task :clean do
   FileUtils.rmtree 'tests'
   FileUtils.rmtree 'build'
-end
-
-desc 'create assembly infos'
-asmver_files :assembly_info do |a|
-  a.files = FileList['**/*proj'] # optional, will find all projects recursively by default
-
-  a.attributes assembly_description: 'TODO',
-               assembly_configuration: Configuration,
-               assembly_company: 'CHAOS APS',
-               assembly_copyright: "(c) 2015 by CHAOS APS",
-               assembly_version: ENV['LONG_VERSION'],
-               assembly_file_version: ENV['LONG_VERSION'],
-               assembly_informational_version: ENV['BUILD_VERSION']
 end
 
 task :prepare_compile => [:clean] do
@@ -82,3 +67,4 @@ task :package => [:tests] do
 end
 
 task :default => :package
+
