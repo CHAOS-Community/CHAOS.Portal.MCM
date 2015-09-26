@@ -7,7 +7,6 @@
     using Permission.InMemory;
     using Permission.Specification;
     using Portal.Core;
-    using Portal.Core.Exceptions;
     using View;
 
     public class McmModule : IMcmModule
