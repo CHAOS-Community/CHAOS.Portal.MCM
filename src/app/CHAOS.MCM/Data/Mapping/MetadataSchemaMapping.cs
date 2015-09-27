@@ -5,7 +5,7 @@ namespace Chaos.Mcm.Data.Mapping
 
     using CHAOS.Data;
 
-    using Chaos.Mcm.Data.Dto;
+    using Dto;
 
     public class MetadataSchemaMapping : IReaderMapping<MetadataSchema>
     {
@@ -17,7 +17,7 @@ namespace Chaos.Mcm.Data.Mapping
                     {
                         Guid        = reader.GetGuid("GUID"),
                         Name        = reader.GetString("Name"),
-                        SchemaXml   = reader.GetXDocument("SchemaXML"),
+                        Schema      = reader.GetString("SchemaXML"),
                         DateCreated = reader.GetDateTime("DateCreated"),
                     };
             }

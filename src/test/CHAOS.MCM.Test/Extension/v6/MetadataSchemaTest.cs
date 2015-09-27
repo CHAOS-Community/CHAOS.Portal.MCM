@@ -39,7 +39,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             PortalRequest.SetupGet(p => p.User).Returns(userInfo);
             McmRepository.Setup(m => m.MetadataSchemaGet(userInfo.Guid, groupGuids, schema.Guid, MetadataSchemaPermission.Read)).Returns(new[] { schema });
 
-            var result = extension.Create(schema.Name, schema.SchemaXml, schema.Guid);
+            var result = extension.Create(schema.Name, schema.Schema, schema.Guid);
 
             Assert.AreEqual(schema, result);
         }
@@ -58,7 +58,7 @@ namespace Chaos.Mcm.Test.Extension.v6
             PortalRequest.SetupGet(p => p.User).Returns(userInfo);
             McmRepository.Setup( m => m.MetadataSchemaGet( userInfo.Guid, groupGuids, It.Is<Guid?>( item => item.HasValue ), MetadataSchemaPermission.Read ) ).Returns( new[] { schema } );
 
-            var result = extension.Create(schema.Name, schema.SchemaXml, null);
+            var result = extension.Create(schema.Name, schema.Schema, null);
 
             Assert.AreEqual(schema, result);
             McmRepository.Verify( m => m.MetadataSchemaGet( userInfo.Guid, groupGuids, It.Is<Guid?>( item => item.HasValue ), MetadataSchemaPermission.Read ) );
@@ -89,9 +89,9 @@ namespace Chaos.Mcm.Test.Extension.v6
             var groupGuids = new Guid[0];
             PortalRequest.SetupGet(p => p.User).Returns(user);
             McmRepository.Setup(m => m.MetadataSchemaGet(user.Guid, groupGuids, schema.Guid, It.IsAny<MetadataSchemaPermission>())).Returns(new []{schema});
-            McmRepository.Setup(m => m.MetadataSchemaUpdate(schema.Name, schema.SchemaXml, user.Guid, schema.Guid)).Returns(1);
+            McmRepository.Setup(m => m.MetadataSchemaUpdate(schema.Name, schema.Schema, user.Guid, schema.Guid)).Returns(1);
 
-            var result = extension.Update(schema.Name, schema.SchemaXml, schema.Guid);
+            var result = extension.Update(schema.Name, schema.Schema, schema.Guid);
 
             Assert.AreEqual(schema, result);
         }

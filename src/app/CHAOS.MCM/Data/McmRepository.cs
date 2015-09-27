@@ -1,4 +1,3 @@
-using Amazon.CodeDeploy.Model;
 using Chaos.Mcm.Data.MySql;
 using MySql.Data.MySqlClient;
 
@@ -386,34 +385,44 @@ namespace Chaos.Mcm.Data
         });
     }
 
-    public uint MetadataSchemaUpdate(string name, XDocument schemaXml, Guid userGuid, Guid guid)
+    public uint MetadataSchemaUpdate(string name, string schema, Guid userGuid, Guid guid)
+    {
+      return MetadataSchemaUpdate(new MetadataSchema {Guid = guid, Name = name, Schema = schema});
+    }
+
+    public uint MetadataSchemaUpdate(MetadataSchema schema)
     {
       var result = Gateway.ExecuteNonQuery("MetadataSchema_Update", new[]
         {
-          new MySqlParameter("Guid", guid.ToByteArray()),
-          new MySqlParameter("Name", name),
-          new MySqlParameter("SchemaXml", schemaXml)
+          new MySqlParameter("Guid", schema.Guid.ToByteArray()),
+          new MySqlParameter("Name", schema.Name),
+          new MySqlParameter("SchemaXml", schema.Schema)
         });
 
-      return (uint) result;
+      return (uint)result;
     }
 
-    public uint MetadataSchemaCreate(string name, XDocument schemaXml, Guid userGuid, Guid guid)
+    public uint MetadataSchemaCreate(string name, string schema, Guid userGuid, Guid guid)
+    {
+      return MetadataSchemaCreate(new MetadataSchema {Guid = guid, Name = name, Schema = schema}, userGuid);
+    }
+
+    public uint MetadataSchemaCreate(MetadataSchema schema, Guid userGuid)
     {
       var result = Gateway.ExecuteNonQuery("MetadataSchema_Create", new[]
         {
-          new MySqlParameter("Guid", guid.ToByteArray()),
-          new MySqlParameter("Name", name),
-          new MySqlParameter("SchemaXml", schemaXml),
+          new MySqlParameter("Guid", schema.Guid.ToByteArray()),
+          new MySqlParameter("Name", schema.Name),
+          new MySqlParameter("SchemaXml", schema.Schema),
           new MySqlParameter("UserGuid", userGuid.ToByteArray())
         });
 
       if (result == -200)
         throw new UnhandledException("MetadataSchema_Create failed on the database, and was rolled back");
 
-      return (uint) result;
+      return (uint)result;
     }
-
+    
     public uint MetadataSchemaDelete(Guid guid)
     {
       var result = Gateway.ExecuteNonQuery("MetadataSchema_Delete", new MySqlParameter("Guid", guid.ToByteArray()));

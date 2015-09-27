@@ -49,9 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CHAOS.MCM\Chaos.Mcm.csproj">
       <Project>{461ef48b-bbeb-4a4c-9968-66ace8d3d43d}</Project>
       <Name>Chaos.Mcm</Name>

@@ -726,7 +726,7 @@
             var groupGuids = new Guid[0];
             var expected   = Make_MetadataSchemaThatDoesntExist();
 
-            var result = repository.MetadataSchemaCreate(expected.Name, expected.SchemaXml, userGuid, expected.Guid);
+            var result = repository.MetadataSchemaCreate(expected.Name, expected.Schema, userGuid, expected.Guid);
 
             Assert.AreEqual(1, result);
             var actual = repository.MetadataSchemaGet(userGuid, groupGuids, expected.Guid, MetadataSchemaPermission.Read);
@@ -743,7 +743,7 @@
             var expected      = Make_MetadataSchemaThatExist();
             var exptectedName = "new name";
 
-            var result = repository.MetadataSchemaUpdate(exptectedName, expected.SchemaXml, userGuid, expected.Guid);
+            var result = repository.MetadataSchemaUpdate(exptectedName, expected.Schema, userGuid, expected.Guid);
 
             Assert.AreEqual(1, result);
             var actual = repository.MetadataSchemaGet(userGuid, groupGuids, expected.Guid, MetadataSchemaPermission.Read);
@@ -936,7 +936,7 @@
             {
                 Guid = new Guid("00000000-0000-0000-0000-000000000200"),
                 Name = "test schema",
-                SchemaXml = XDocument.Parse("<xml/>"),
+                Schema = "<xml/>",
                 DateCreated = new DateTime(1990, 10, 01, 23, 59, 59),
             };
         }
@@ -947,7 +947,7 @@
             {
                 Guid = new Guid("00000000-0000-0000-0000-000000000300"),
                 Name = "test schema 2",
-                SchemaXml = XDocument.Parse("<xml2/>"),
+                Schema = "<xml2/>",
                 DateCreated = new DateTime(1990, 10, 01, 23, 59, 59),
             };
         }

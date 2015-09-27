@@ -217,7 +217,7 @@ namespace Chaos.Mcm.Test.Extension
                 {
                     Guid        = new Guid("463c7500-a154-5a46-b11b-f96f9b3df920"),
                     Name        = "some name",
-                    SchemaXml   = XDocument.Parse("<xml />"),
+                    Schema      = "<xml />",
                     DateCreated = new DateTime(1990, 10, 01, 23, 59, 59)
                 };
         }

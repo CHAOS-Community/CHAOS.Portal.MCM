@@ -107,6 +107,7 @@
     <Compile Include="Data\Dto\v5\ObjectAccessPoint.cs" />
     <Compile Include="Data\IFileRepository.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
+    <Compile Include="Data\IMetadataSchemaGateway.cs" />
     <Compile Include="Data\Mapping\AccessPointMapping.cs" />
     <Compile Include="Data\Mapping\AccesspointObjectJoinMapping.cs" />
     <Compile Include="Data\Mapping\DestinationInfoMapping.cs" />

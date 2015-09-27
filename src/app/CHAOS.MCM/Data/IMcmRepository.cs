@@ -1,17 +1,13 @@
-﻿namespace Chaos.Mcm.Data
+﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
+using Chaos.Mcm.Data.Dto;
+using Chaos.Mcm.Data.Dto.Standard;
+using Object = System.Object;
+
+namespace Chaos.Mcm.Data
 {
-  using System;
-  using System.Xml.Linq;
-  using System.Collections.Generic;
-    
-  using Chaos.Mcm.Data.Dto;
-  using Chaos.Mcm.Data.Dto.Standard;
-  using Chaos.Mcm.Permission;
-
-  using FolderPermission = Chaos.Mcm.Data.Dto.FolderPermission;
-  using Object = Chaos.Mcm.Data.Dto.Object;
-
-  public interface IMcmRepository
+  public interface IMcmRepository : IMetadataSchemaGateway
   {
     IMcmRepository WithConfiguration(string connectionString);
 
@@ -41,9 +37,9 @@
     /// <param name="includeFolders"></param>
     /// <param name="includeAccessPoints"></param>
     /// <returns>The matching Object, if there is no Object by that objectGuid, null is returned</returns>
-    Object ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
-    IList<Object> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false );
-    IList<Object> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false, uint? objectTypeId = null);
+    Dto.Object ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false);
+    IList<Dto.Object> ObjectGet( IEnumerable<Guid> objectGuids, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false );
+    IList<Dto.Object> ObjectGet(uint? folderID = null, uint pageIndex = 0, uint pageSize = 5, bool includeMetadata = false, bool includeFiles = false, bool includeObjectRelations = false, bool includeFolders = false, bool includeAccessPoints = false, uint? objectTypeId = null);
 
     uint ObjectRelationDelete(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID);
     uint ObjectRelationSet(Guid object1Guid, Guid object2Guid, uint objectRelationTypeID, int? sequence);
@@ -64,12 +60,6 @@
     uint FileCreate(Guid objectGuid, uint? parentID, uint destinationID, string filename, string originalFilename, string folderPath, uint formatID);
     IEnumerable<File> FileGet(uint? id = null, uint? parentId = null);
     File FileGet(uint id);
-
-    uint MetadataSchemaUpdate(string name, XDocument schemaXml, Guid userGuid, Guid guid);
-    uint MetadataSchemaCreate(string name, XDocument schemaXml, Guid userGuid, Guid guid);
-    uint MetadataSchemaDelete(Guid guid);
-    IList<MetadataSchema> MetadataSchemaGet(Guid userGuid, IEnumerable<Guid> groupGuids, Guid? metadataSchemaGuid, MetadataSchemaPermission permission);
-    IList<MetadataSchema> MetadataSchemaGet(Guid? metadataSchemaGuid = null);
 
     uint LinkCreate(Guid objectGuid, uint folderID, int objectFolderTypeID);
     uint LinkUpdate(Guid objectGuid, uint folderID, uint newFolderID);

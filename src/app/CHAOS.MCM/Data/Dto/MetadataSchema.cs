@@ -1,46 +1,49 @@
+using Newtonsoft.Json;
+
 namespace Chaos.Mcm.Data.Dto
 {
-    using System;
-    using System.Xml.Linq;
+  using System;
+  using System.Xml.Linq;
+  using CHAOS.Serialization;
+  using CHAOS.Serialization.XML;
+  using Portal.Core.Data.Model;
 
-    using CHAOS.Serialization;
-    using CHAOS.Serialization.XML;
+  public class MetadataSchema : AResult
+  {
+    [Serialize("Guid")]
+    public Guid Guid { get; set; }
 
-    using Chaos.Portal.Core.Data.Model;
+    [Serialize("Name")]
+    public string Name { get; set; }
 
-    public class MetadataSchema : AResult
-	{
-		#region Properties
+    public XDocument SchemaXmls
+    {
+      get { return XDocument.Parse(Schema); }
+      set { Schema = value.ToString(SaveOptions.DisableFormatting); }
+    }
 
-		[Serialize("Guid")]
-		public Guid Guid { get; set; }
+    [SerializeXML(false, true)]
+    [Serialize("Schema")]
+    public string Schema { get; set; }
 
-		[Serialize("Name")]
-		public string Name { get; set; }
+    [Serialize("DateCreated")]
+    public DateTime DateCreated { get; set; }
 
-		[SerializeXML(false, true)]
-		[Serialize("SchemaXml")]
-		public XDocument SchemaXml { get; set; }
+    public MetadataSchema(Guid guid, string name, string schema, DateTime dateCreated)
+    {
+      Guid = guid;
+      Name = name;
+      Schema = schema;
+      DateCreated = dateCreated;
+    }
 
-		[Serialize("DateCreated")]
-		public DateTime DateCreated { get; set; }
+    public MetadataSchema()
+    {
+    }
 
-		#endregion
-		#region Constructors
-
-		public MetadataSchema( Guid guid, string name, string schemaXML, DateTime dateCreated) 
-		{
-			this.Guid        = guid;
-			this.Name        = name;
-			this.SchemaXml   = XDocument.Parse( schemaXML );
-			this.DateCreated = dateCreated;
-		}
-
-		public MetadataSchema()
-		{
-			
-		}
-
-		#endregion
-	}
+    public T GetSchema<T>()
+    {
+      return JsonConvert.DeserializeObject<T>(Schema);
+    }
+  }
 }

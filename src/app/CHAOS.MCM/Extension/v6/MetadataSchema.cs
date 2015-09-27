@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using Chaos.Mcm.Data;
 using Chaos.Mcm.Permission;
 using Chaos.Portal.Core;
@@ -29,7 +28,7 @@ namespace Chaos.Mcm.Extension.v6
 		    return McmRepository.MetadataSchemaGet(userGuid, groupGuids, guid, MetadataSchemaPermission.Read);
 		}
 
-        public Data.Dto.MetadataSchema Create(string name, XDocument schemaXml, Guid? guid = null)
+        public Data.Dto.MetadataSchema Create(string name, string schemaXml, Guid? guid = null)
 		{
             if (!Request.User.SystemPermissonsEnum.HasFlag(SystemPermissons.Manage)) throw new InsufficientPermissionsException("System Permissions was:" + Request.User.SystemPermissonsEnum + ", but Manage is required");
 
@@ -40,7 +39,7 @@ namespace Chaos.Mcm.Extension.v6
             return Get(guid).First();
 		}
 
-        public Data.Dto.MetadataSchema Update(string name, XDocument schemaXml, Guid guid)
+        public Data.Dto.MetadataSchema Update(string name, string schemaXml, Guid guid)
         {
             if (HasPermissionToMetadataSchema(guid, MetadataSchemaPermission.Write)) throw new InsufficientPermissionsException("User does not have permission to delete MetadataSchema");
 
