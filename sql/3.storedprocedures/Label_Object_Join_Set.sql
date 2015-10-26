@@ -5,7 +5,7 @@ CREATE PROCEDURE `Label_Object_Join_Set`
 )
 BEGIN
 	
-    insert into
+    insert ignore into
 		Label_Object_Join
         (`LabelId`, `ObjectId`, `DateCreated`)
 	values
