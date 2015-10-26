@@ -8,7 +8,7 @@ namespace Chaos.Mcm.Data
 	{
 		bool AssociationWithProject(uint id, Guid objectId);
 		bool DisassociationWithProject(uint id, Guid objectId);
-		IEnumerable<Label> Get(uint projectId);
+		IEnumerable<Label> Get(uint? projectId = null, Guid? objectId = null);
 		Label Set(uint projectId, Label label);
 	}
 }

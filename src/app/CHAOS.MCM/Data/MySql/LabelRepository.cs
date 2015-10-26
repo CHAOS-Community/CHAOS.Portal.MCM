@@ -31,9 +31,10 @@ namespace Chaos.Mcm.Data.MySql
 			return result == 1;
 		}
 
-		public IEnumerable<Label> Get(uint projectId)
+		public IEnumerable<Label> Get(uint? projectId = null, Guid? objectId = null)
 		{
-			var results = Gateway.ExecuteQuery("Label_Get", new MySqlParameter("ProjectId", projectId));
+			var results = Gateway.ExecuteQuery("Label_Get", new MySqlParameter("ProjectId", projectId),
+			                                   new MySqlParameter("ObjectId", objectId.HasValue ? objectId.Value.ToByteArray() : null));
 
 			foreach (var result in results)
 			{
