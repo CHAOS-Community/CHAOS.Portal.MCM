@@ -24,6 +24,8 @@ namespace Chaos.Mcm.Data
   {
     private Gateway Gateway { get; set; }
     public IFileRepository File { get; set; }
+    public IProjectRepository Project { get; set; }
+		public ILabelRepository Label { get; set; }
 
     static McmRepository()
     {
@@ -50,6 +52,8 @@ namespace Chaos.Mcm.Data
       Gateway = new Gateway(connectionString);
 
       File = new FileRepository(Gateway);
+	    Label = new LabelRepository(Gateway);
+	    Project = new ProjectRepository(Gateway, Label);
       return this;
     }
 

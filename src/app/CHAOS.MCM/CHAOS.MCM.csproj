@@ -43,6 +43,7 @@
     <Reference Include="Chaos.Portal">
       <HintPath>..\..\..\lib\Chaos.Portal.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MySql.Data.dll</HintPath>
@@ -73,6 +74,7 @@
     <Compile Include="Data\Dto\FolderInfo.cs" />
     <Compile Include="Data\Dto\FolderPermission.cs" />
     <Compile Include="Data\Dto\Format.cs" />
+    <Compile Include="Data\Dto\Label.cs" />
     <Compile Include="Data\Dto\MetadataIdentifier.cs" />
     <Compile Include="Data\Dto\MetadataSchema.cs" />
     <Compile Include="Data\Dto\ObjectAccessPoint.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Data\Dto\ObjectRelation.cs" />
     <Compile Include="Data\Dto\ObjectRelationInfo.cs" />
     <Compile Include="Data\Dto\ObjectType.cs" />
+    <Compile Include="Data\Dto\Project.cs" />
     <Compile Include="Data\Dto\Standard\MetadataSchemaInfo.cs" />
     <Compile Include="Data\Dto\Standard\Folder.cs" />
     <Compile Include="Data\Dto\Standard\FolderGroupJoin.cs" />
@@ -106,8 +109,10 @@
     <Compile Include="Data\Dto\v5\Object.cs" />
     <Compile Include="Data\Dto\v5\ObjectAccessPoint.cs" />
     <Compile Include="Data\IFileRepository.cs" />
+    <Compile Include="Data\ILabelRepository.cs" />
     <Compile Include="Data\IMcmRepository.cs" />
     <Compile Include="Data\IMetadataSchemaGateway.cs" />
+    <Compile Include="Data\IProjectRepository.cs" />
     <Compile Include="Data\Mapping\AccessPointMapping.cs" />
     <Compile Include="Data\Mapping\AccesspointObjectJoinMapping.cs" />
     <Compile Include="Data\Mapping\DestinationInfoMapping.cs" />
@@ -126,6 +131,8 @@
     <Compile Include="Data\Mapping\ObjectTypeMapping.cs" />
     <Compile Include="Data\McmRepository.cs" />
     <Compile Include="Data\MySql\FileRepository.cs" />
+    <Compile Include="Data\MySql\LabelRepository.cs" />
+    <Compile Include="Data\MySql\ProjectRepository.cs" />
     <Compile Include="EmailServiceExtensions.cs" />
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />

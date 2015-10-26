@@ -67,5 +67,7 @@ namespace Chaos.Mcm.Data
 
     IList<DestinationInfo> DestinationGet(uint? id);
     IFileRepository File { get; set; }
+	  IProjectRepository Project { get; set; }
+	  ILabelRepository Label { get; set; }
   }
 }
