@@ -48,6 +48,13 @@ namespace Chaos.Mcm.Data.MySql
 					};
 		}
 
+		public bool Delete(uint id)
+		{
+			var result = Gateway.ExecuteNonQuery("Project_Delete", new MySqlParameter("Id", id));
+
+			return result > 0;
+		}
+
 		public bool AddUser(uint id, Guid userId)
 		{
 			var result = Gateway.ExecuteNonQuery("Project_User_Join_Set",

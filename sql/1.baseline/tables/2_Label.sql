@@ -7,5 +7,5 @@ CREATE TABLE `Label`
 
   PRIMARY KEY (`Id`),
   KEY FK_Project_Id_Label_ProjectId (`ProjectId`),
-  CONSTRAINT FK_Project_Id_Label_ProjectId FOREIGN KEY (`ProjectId`) REFERENCES `Project` (`Id`)
+  CONSTRAINT FK_Project_Id_Label_ProjectId FOREIGN KEY (`ProjectId`) REFERENCES `Project` (`Id`) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB;

@@ -10,5 +10,6 @@ namespace Chaos.Mcm.Data
 		IEnumerable<Project> Get(uint? id = null, Guid? userId = null, uint? labelId = null);
 		bool AddUser(uint id, Guid userId);
 		bool RemoveUser(uint id, Guid userId);
+		bool Delete(uint id);
 	}
 }

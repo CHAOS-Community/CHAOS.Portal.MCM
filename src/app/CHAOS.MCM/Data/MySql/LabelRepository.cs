@@ -56,5 +56,12 @@ namespace Chaos.Mcm.Data.MySql
 
 			return label;
 		}
+
+		public bool Delete(uint id)
+		{
+			var result = Gateway.ExecuteNonQuery("Label_Delete", new MySqlParameter("Id", id));
+
+			return result > 0;
+		}
 	}
 }

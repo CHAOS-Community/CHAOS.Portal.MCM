@@ -143,6 +143,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tables", "tables", "{CD79B7
 		sql\1.baseline\tables\3.Metadata.sql = sql\1.baseline\tables\3.Metadata.sql
 		sql\1.baseline\tables\3.Object_Folder_Join.sql = sql\1.baseline\tables\3.Object_Folder_Join.sql
 		sql\1.baseline\tables\3.Object_Object_Join.sql = sql\1.baseline\tables\3.Object_Object_Join.sql
+		sql\1.baseline\tables\3_Label_Object_Join.sql = sql\1.baseline\tables\3_Label_Object_Join.sql
 		sql\1.baseline\tables\4.File.sql = sql\1.baseline\tables\4.File.sql
 		sql\1.baseline\tables\4.Object_Metadata_Join.sql = sql\1.baseline\tables\4.Object_Metadata_Join.sql
 	EndProjectSection

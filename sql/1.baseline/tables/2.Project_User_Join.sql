@@ -9,5 +9,5 @@ CREATE TABLE `Project_User_Join` (
   CONSTRAINT `fk_PUJ_ProjectId_P_Id`
     FOREIGN KEY (`ProjectId`)
     REFERENCES `Project` (`Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+    ON DELETE CASCADE
+    ON UPDATE CASCADE);
