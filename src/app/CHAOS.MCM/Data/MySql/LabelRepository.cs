@@ -15,7 +15,7 @@ namespace Chaos.Mcm.Data.MySql
 			Gateway = gateway;
 		}
 
-		public bool AssociationWithProject(uint id, Guid objectId)
+		public bool AssociationWithObject(uint id, Guid objectId)
 		{
 			var result = Gateway.ExecuteNonQuery("Label_Object_Join_Set", new MySqlParameter("LabelId", id),
 																					 new MySqlParameter("ObjectId", objectId.ToByteArray()));
@@ -23,7 +23,7 @@ namespace Chaos.Mcm.Data.MySql
 			return result == 1;
 		}
 
-		public bool DisassociationWithProject(uint id, Guid objectId)
+		public bool DisassociationWithObject(uint id, Guid objectId)
 		{
 			var result = Gateway.ExecuteNonQuery("Label_Object_Join_Delete", new MySqlParameter("LabelId", id),
 			                                     new MySqlParameter("ObjectId", objectId.ToByteArray()));

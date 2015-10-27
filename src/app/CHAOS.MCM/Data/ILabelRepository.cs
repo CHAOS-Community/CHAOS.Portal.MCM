@@ -6,8 +6,8 @@ namespace Chaos.Mcm.Data
 {
 	public interface ILabelRepository
 	{
-		bool AssociationWithProject(uint id, Guid objectId);
-		bool DisassociationWithProject(uint id, Guid objectId);
+		bool AssociationWithObject(uint id, Guid objectId);
+		bool DisassociationWithObject(uint id, Guid objectId);
 		IEnumerable<Label> Get(uint? projectId = null, Guid? objectId = null);
 		Label Set(uint projectId, Label label);
 		bool Delete(uint id);
