@@ -1,3 +1,5 @@
+using System.Xml.Linq;
+
 namespace Chaos.Mcm.Data.Mapping
 {
   using System.Collections.Generic;
@@ -11,12 +13,23 @@ namespace Chaos.Mcm.Data.Mapping
     {
       while (reader.Read())
       {
-        yield return new Metadata
+	      XDocument metadataXml;
+
+	      try
+	      {
+					metadataXml = reader.GetXDocument("MetadataXML");
+	      }
+				catch (System.Xml.XmlException)
+	      {
+		      continue;
+	      }
+
+	      yield return new Metadata
           {
             Guid = reader.GetGuid("Guid"),
             MetadataSchemaGuid = reader.GetGuid("MetadataSchemaGUID"),
             RevisionID = reader.GetUint32("RevisionID"),
-            MetadataXml = reader.GetXDocument("MetadataXML"),
+            MetadataXml = metadataXml,
             DateCreated = reader.GetDateTime("DateCreated"),
             EditingUserGuid = reader.GetGuid("EditingUserGUID"),
             LanguageCode = reader.GetString("LanguageCode"),
