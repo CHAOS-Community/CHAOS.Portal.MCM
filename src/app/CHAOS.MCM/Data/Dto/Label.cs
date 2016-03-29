@@ -4,5 +4,6 @@
 	{
 		public uint? Identifier { get; set; }
 		public string Name { get; set; }
+		public uint ProjectId { get; set; }
 	}
 }

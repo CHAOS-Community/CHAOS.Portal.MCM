@@ -12,15 +12,13 @@
 
     using NUnit.Framework;
 
-    using Newtonsoft.Json;
-
     using FileInfo = Chaos.Mcm.Data.Dto.FileInfo;
 
     [TestFixture]
     public class ObjectIndexTest : Test.TestBase
     {
         [SetUp]
-        public void SetUp()
+        public new void SetUp()
         {
             var folder = new Folder();
             PermissionManager.Setup(m => m.GetFolders(It.IsAny<uint>())).Returns(folder);
