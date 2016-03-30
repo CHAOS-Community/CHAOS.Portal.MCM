@@ -129,6 +129,7 @@
     <Compile Include="Data\Mapping\ObjectMetadataMapping.cs" />
     <Compile Include="Data\Mapping\ObjectRelationInfoMapping.cs" />
     <Compile Include="Data\Mapping\ObjectTypeMapping.cs" />
+    <Compile Include="Data\Mapping\ProjectMapping.cs" />
     <Compile Include="Data\McmRepository.cs" />
     <Compile Include="Data\MySql\FileRepository.cs" />
     <Compile Include="Data\MySql\LabelRepository.cs" />

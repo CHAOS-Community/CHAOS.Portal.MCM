@@ -7,8 +7,8 @@ namespace Chaos.Mcm.Data.Dto
 	{
 		public uint? Identifier { get; set; }
 		public string Name { get; set; }
-		public IList<Guid> UserIds { get; set; }
 		public IList<Label> Labels { get; set; }
+		public IList<Guid> UserIds { get; set; }
 
 		public Project()
 		{
