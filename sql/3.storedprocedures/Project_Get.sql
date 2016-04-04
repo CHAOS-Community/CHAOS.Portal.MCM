@@ -1,19 +1,18 @@
-CREATE PROCEDURE `Project_Get` 
-(
+CREATE PROCEDURE `Project_Get`(
 	Id		INT UNSIGNED,
     LabelId	INT UNSIGNED,
 	UserId	BINARY(16)
 )
 BEGIN
 
-	CREATE TEMPORARY TABLE IF NOT EXISTS ObjectGUID_Table 
+	CREATE TEMPORARY TABLE IF NOT EXISTS ProjectGet_Table 
     (
         Id    INT UNSIGNED NOT NULL
     );
 
-    DELETE FROM ObjectGUID_Table;
+    DELETE FROM ProjectGet_Table;
 
-	INSERT INTO ObjectGUID_Table
+	INSERT INTO ProjectGet_Table
 		SELECT DISTINCT
 			P.Id
 		FROM
@@ -28,18 +27,18 @@ BEGIN
 	SELECT
 		P.*
 	FROM
-		ObjectGUID_Table
-		INNER JOIN Project AS P ON P.Id = ObjectGUID_Table.Id;
+		ProjectGet_Table
+		INNER JOIN Project AS P ON P.Id = ProjectGet_Table.Id;
 
 	SELECT
 		L.*
 	FROM
-		ObjectGUID_Table
-		INNER JOIN Label AS L ON L.ProjectId = ObjectGUID_Table.Id;
+		ProjectGet_Table
+		INNER JOIN Label AS L ON L.ProjectId = ProjectGet_Table.Id;
 
 	SELECT
 		PUJ.*
 	FROM
-		ObjectGUID_Table
-		INNER JOIN Project_User_Join AS PUJ ON PUJ.ProjectId = ObjectGUID_Table.Id;
+		ProjectGet_Table
+		INNER JOIN Project_User_Join AS PUJ ON PUJ.ProjectId = ProjectGet_Table.Id;
 END
