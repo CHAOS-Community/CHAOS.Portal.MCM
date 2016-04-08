@@ -41,6 +41,7 @@ namespace Chaos.Mcm.Data.Dto
                 url.Replace( "{BASE_PATH}", this.BasePath ?? "{BASE_PATH_MISSING}" );
                 url.Replace( "{FOLDER_PATH}", string.IsNullOrEmpty( System.IO.Path.GetPathRoot( this.BasePath ) ) ? this.FolderPath.Replace( "\\", "/" ) : this.FolderPath.Replace( "/", "\\" ) );
                 url.Replace( "{FILENAME}", this.Filename ?? "{FILENAME_MISSING}");
+                url.Replace( "{FILE_ID}", this.Identifier.ToString() ?? "{FILE_ID_MISSING}");
                 url.Replace( "{SESSION_GUID}", this.SessionGUID == null ? "{SESSION_GUID_MISSING}" : this.SessionGUID.ToString() );
                 url.Replace( "{OBJECT_GUID}", this.ObjectGuid == null ? "{OBJECT_GUID_MISSING}" : this.ObjectGuid.ToString() );
 

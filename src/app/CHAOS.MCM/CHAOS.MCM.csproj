@@ -138,6 +138,7 @@
     <Compile Include="Exception\FolderNotEmptyException.cs" />
     <Compile Include="Exception\InvalidRevisionException.cs" />
     <Compile Include="Exception\ObjectRelationAlreadyExistException.cs" />
+    <Compile Include="Extension\BucketInfo.cs" />
     <Compile Include="Extension\Domain\ExtensionHelperBase.cs" />
     <Compile Include="Extension\Domain\IUserManagementController.cs" />
     <Compile Include="Extension\Domain\IUserProfileController.cs" />
@@ -147,13 +148,13 @@
     <Compile Include="Extension\Domain\Object\ObjectSetPublishSettings.cs" />
     <Compile Include="Extension\Domain\UserManagementController.cs" />
     <Compile Include="Extension\Domain\UserProfileController.cs" />
-    <Compile Include="Extension\v5\Download\BucketInfo.cs" />
+    <Compile Include="Extension\IDownloadStrategy.cs" />
+    <Compile Include="Extension\S3DownloadStrategy.cs" />
     <Compile Include="Extension\v5\Download\Download.cs" />
-    <Compile Include="Extension\v5\Download\IDownloadStrategy.cs" />
-    <Compile Include="Extension\v5\Download\S3DownloadStrategy.cs" />
     <Compile Include="Extension\v5\Object.cs" />
     <Compile Include="Extension\v6\AMcmExtension.cs" />
     <Compile Include="Extension\v6\Destination.cs" />
+    <Compile Include="Extension\v6\Download.cs" />
     <Compile Include="Extension\v6\File.cs" />
     <Compile Include="Extension\v6\Folder.cs" />
     <Compile Include="Extension\v6\Format.cs" />

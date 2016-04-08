@@ -1,4 +1,6 @@
-﻿namespace Chaos.Mcm.Test
+﻿using Chaos.Mcm.Extension;
+
+namespace Chaos.Mcm.Test
 {
     using Mcm.Data;
     using Mcm.Permission;
