@@ -43,17 +43,15 @@ namespace Chaos.Mcm.Data.MySql
 
     public uint Set(File file)
     {
-      var result = Gateway.ExecuteNonQuery("File_Set", new[]
-        {
-          new MySqlParameter("Id", file.Id),
+      var result = Gateway.ExecuteNonQuery("File_Set", 
+          new MySqlParameter("Id", file.Id == 0 ? (uint?) null : file.Id),
           new MySqlParameter("ObjectId", file.ObjectGuid.ToByteArray()),
           new MySqlParameter("ParentFileId", file.ParentID),
           new MySqlParameter("FormatId", file.FormatID),
           new MySqlParameter("DestinationId", file.DestinationID),
           new MySqlParameter("Filename", file.Filename),
           new MySqlParameter("OriginalFilename", file.OriginalFilename),
-          new MySqlParameter("FolderPath", file.FolderPath)
-        });
+          new MySqlParameter("FolderPath", file.FolderPath));
 
       return (uint)result;
     }

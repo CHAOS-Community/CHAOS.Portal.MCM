@@ -52,7 +52,7 @@ namespace Chaos.Mcm.Test.Extension.v6
 
         #region Helpers
 
-        private static File Make_File()
+        private new static File Make_File()
         {
             return new File
                 {

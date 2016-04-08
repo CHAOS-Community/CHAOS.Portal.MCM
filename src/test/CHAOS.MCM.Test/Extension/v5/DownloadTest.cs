@@ -1,4 +1,6 @@
-﻿namespace Chaos.Mcm.Test.Extension.v5
+﻿using Chaos.Mcm.Extension;
+
+namespace Chaos.Mcm.Test.Extension.v5
 {
     using System.Collections.Generic;
     using System.IO;

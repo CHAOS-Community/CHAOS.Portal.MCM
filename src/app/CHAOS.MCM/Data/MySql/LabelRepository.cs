@@ -41,7 +41,8 @@ namespace Chaos.Mcm.Data.MySql
 				yield return new Label
 					{
 						Identifier = (uint) result.Id,
-						Name = result.Name
+						Name = result.Name,
+						ProjectId = (uint) result.ProjectId
 					};
 			}
 		}

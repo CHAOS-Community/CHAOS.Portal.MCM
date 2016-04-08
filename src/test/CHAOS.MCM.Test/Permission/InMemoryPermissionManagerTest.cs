@@ -17,12 +17,6 @@ namespace Chaos.Mcm.Test.Permission
     [TestFixture]
     public class InMemoryPermissionManagerTest : TestBase
     {
-        [SetUp]
-        public void SetUp()
-        {
-
-        }
-
         [Test]
         public void Should_add_folder_to_manager()
         {
