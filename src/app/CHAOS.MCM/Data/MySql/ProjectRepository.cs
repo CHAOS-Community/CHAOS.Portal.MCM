@@ -35,7 +35,7 @@ namespace Chaos.Mcm.Data.MySql
 		public IEnumerable<Project> Get(uint? id = null, Guid? userId = null, uint? labelId = null)
 		{
 			var results = Gateway.ExecuteQuery("Project_Get",
-			                                   new MySqlParameter("Id", id),
+			                                   new MySqlParameter("Id", id.HasValue ? id.Value.ToString() : null),
 			                                   new MySqlParameter("LabelId", labelId),
 			                                   new MySqlParameter("UserId", userId.HasValue ? userId.Value.ToByteArray() : null));
 
