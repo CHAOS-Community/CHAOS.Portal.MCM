@@ -491,20 +491,12 @@ namespace CHAOS.MCM.Data.Dto.Standard
             }
         }
 
-	    private static string GetXmlContent( XContainer xml )
+		private static string GetXmlContent2(XContainer xml)
 		{
-			var sb = new StringBuilder( );
-
-			foreach( var node in xml.Descendants( ) )
-			{
-				if( !node.HasElements )
-					sb.AppendLine(node.Value );
-			}
-
-			return sb.ToString( );
+			return string.Join("\r\n", xml.Descendants().SelectMany(element => element.Nodes().OfType<XText>().Select(n => n.Value.Trim())));
 		}
 
-        private static bool DoDKA2Exist(IEnumerable<Metadata> metadatas)
+		private static bool DoDKA2Exist(IEnumerable<Metadata> metadatas)
         {
             return metadatas.Any(metadata => metadata.MetadataSchemaGUID.ToString().ToLower() == "5906a41b-feae-48db-bfb7-714b3e105396");
         }
