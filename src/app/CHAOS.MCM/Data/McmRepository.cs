@@ -1,3 +1,4 @@
+using System.Threading;
 using Chaos.Mcm.Data.MySql;
 using MySql.Data.MySqlClient;
 
@@ -185,21 +186,35 @@ namespace Chaos.Mcm.Data
                                    bool includeObjectRelations = false, bool includeFolders = false,
                                    bool includeAccessPoints = false, uint? objectTypeId = null)
     {
-      return Gateway.ExecuteQuery<Object>("Object_GetByFolderID", new[]
-        {
-          new MySqlParameter("FolderID", folderID),
-          new MySqlParameter("ObjectTypeId", objectTypeId),
-          new MySqlParameter("PageIndex", pageIndex),
-          new MySqlParameter("PageSize", pageSize),
-          new MySqlParameter("IncludeMetadata", includeMetadata),
-          new MySqlParameter("IncludeFiles", includeFiles),
-          new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
-          new MySqlParameter("IncludeFolders", includeFolders),
-          new MySqlParameter("IncludeAccessPoints", includeAccessPoints)
-        });
+				return TryExecute<Object>("Object_GetByFolderID", 10,
+					new MySqlParameter("FolderID", folderID),
+					new MySqlParameter("ObjectTypeId", objectTypeId),
+					new MySqlParameter("PageIndex", pageIndex),
+					new MySqlParameter("PageSize", pageSize),
+					new MySqlParameter("IncludeMetadata", includeMetadata),
+					new MySqlParameter("IncludeFiles", includeFiles),
+					new MySqlParameter("IncludeObjectRelations", includeObjectRelations),
+					new MySqlParameter("IncludeFolders", includeFolders),
+					new MySqlParameter("IncludeAccessPoints", includeAccessPoints));
     }
 
-    public Object ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false,
+		public IList<T> TryExecute<T>(string sp, uint retries, params MySqlParameter[] parameters)
+		{
+			try
+			{
+				return Gateway.ExecuteQuery<T>(sp, parameters);
+			}
+			catch (Exception)
+			{
+				if (retries <= 0) throw; 
+
+				Thread.Sleep(100);
+
+				return TryExecute<T>(sp, --retries, parameters);
+			}
+		}
+
+		public Object ObjectGet(Guid objectGuid, bool includeMetadata = false, bool includeFiles = false,
                             bool includeObjectRelations = false, bool includeFolders = false,
                             bool includeAccessPoints = false)
     {
