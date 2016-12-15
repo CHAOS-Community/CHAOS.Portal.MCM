@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="RIDER_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$/../..">
+      <sourceFolder url="file://$MODULE_DIR$/../../build/Media-Content-Manager.build" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../doc/notes.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.AccessPoint.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.Destination.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.FolderType.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.FormatType.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.Language.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.MetadataSchema.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.ObjectFolderType.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.ObjectRelationType.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.ObjectType.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1.Version.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/1_Project.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.AccessPoint_Group_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.AccessPoint_User_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.AccessProvider.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.Folder.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.FormatCategory.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.MetadataSchema_Group_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.MetadataSchema_User_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.Object.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2.Project_User_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/2_Label.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/3.AccessPoint_Object_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/3.Folder_Group_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/3.Folder_User_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/3.Format.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/3.Metadata.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/3.Object_Folder_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/3.Object_Object_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/3_Label_Object_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/4.File.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/1.baseline/tables/4.Object_Metadata_Join.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/2.changes/06.00.001.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/2.changes/06.00.002.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/2.changes/06.00.003.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/2.changes/06.00.004.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/AccessPoint_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/AccessPoint_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/AccessPoint_Object_Join_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/AccessPoint_User_Join_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/AccessProvider_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/DestinationInfo_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/DestinationInfo_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/File_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/File_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/File_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/File_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Folder_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Folder_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Folder_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Folder_Get_DirectFolderAssociations.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Folder_Group_Join_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Folder_Update.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Folder_User_Join_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FolderInfo_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FolderPermission_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FolderType_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FolderType_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FolderType_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FolderType_Update.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Format_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Format_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FormatCategory_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FormatCategory_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FormatType_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FormatType_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FormatType_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/FormatType_Update.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Label_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Label_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Label_Object_Join_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Label_Object_Join_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Label_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Language_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Language_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Language_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Language_Update.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Metadata_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Metadata_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/MetadataSchema_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/MetadataSchema_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/MetadataSchema_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/MetadataSchema_Update.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Object_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Object_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Object_Folder_Join_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Object_Folder_Join_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Object_Folder_Join_Update.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Object_GetByFolderID.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Object_GetByGUIDs.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Object_GetByRelatedObjectGUID.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectFolderType_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectRelation_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectRelation_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectRelation_SetMetadata.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectRelationInfo_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectRelationType_Create.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectRelationType_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectRelationType_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectRelationType_Update.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectType_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectType_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/ObjectType_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Project_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Project_Get.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Project_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Project_User_Join_Delete.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/3.storedprocedures/Project_User_Join_Set.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/4.views/1.DestinationInfo.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/4.views/1.FileInfo.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/4.views/1.FolderInfo.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/4.views/1.ObjectFolder.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/4.views/1.ObjectMetadata.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/4.views/1.ObjectRelationInfo.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/5.Triggers/metadata_create_set_revisionid" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/6.data/initial.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../sql/6.data/optional_types.sql" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../src/app/CHAOS.MCM" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../src/app/Chaos.Mcm.Indexer" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../src/test/Chaos.Mcm.IntegrationTest" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/../../src/test/CHAOS.MCM.Test" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../../packages" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/app/CHAOS.MCM/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/app/CHAOS.MCM/obj" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/app/Chaos.Mcm.Indexer/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/app/Chaos.Mcm.Indexer/obj" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/test/CHAOS.MCM.Test/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/test/CHAOS.MCM.Test/obj" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/test/Chaos.Mcm.IntegrationTest/bin" />
+      <excludeFolder url="file://$MODULE_DIR$/../../src/test/Chaos.Mcm.IntegrationTest/obj" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
