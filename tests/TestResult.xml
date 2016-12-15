@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\Users\jfk\Desktop\Repository\CHAOS.Portal.MCM\tests\Chaos.Portal.Mcm.Test.dll" total="79" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2016-04-08" time="15:15:02">
+  <environment nunit-version="2.6.0.12051" clr-version="2.0.50727.8670" os-version="Microsoft Windows NT 6.2.9200.0" platform="Win32NT" cwd="C:\Users\jfk\Desktop\Repository\CHAOS.Portal.MCM\tests" machine-name="DESKTOP-LTNMGFC" user="jfk" user-domain="DESKTOP-LTNMGFC" />
+  <culture-info current-culture="en-GB" current-uiculture="en-GB" />
+  <test-suite type="Assembly" name="C:\Users\jfk\Desktop\Repository\CHAOS.Portal.MCM\tests\Chaos.Portal.Mcm.Test.dll" executed="True" result="Success" success="True" time="4.290" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="Chaos" executed="True" result="Success" success="True" time="4.281" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="Mcm" executed="True" result="Success" success="True" time="4.281" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Test" executed="True" result="Success" success="True" time="4.280" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Data" executed="True" result="Success" success="True" time="0.845" asserts="0">
+                    <results>
+                      <test-suite type="Namespace" name="Dto" executed="True" result="Success" success="True" time="0.844" asserts="0">
+                        <results>
+                          <test-suite type="Namespace" name="v5" executed="True" result="Success" success="True" time="0.844" asserts="0">
+                            <results>
+                              <test-suite type="TestFixture" name="ObjectTest" executed="True" result="Success" success="True" time="0.842" asserts="0">
+                                <results>
+                                  <test-case name="Chaos.Mcm.Test.Data.Dto.v5.ObjectTest.Create_GivenObjectModel_ReturnV5VersionOfObject" executed="True" result="Success" success="True" time="0.834" asserts="1" />
+                                </results>
+                              </test-suite>
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="EmailServiceExtensionsTest" executed="True" result="Success" success="True" time="1.596" asserts="0">
+                    <results>
+                      <test-case name="Chaos.Mcm.Test.EmailServiceExtensionsTest.SendTemplate_GivenValidEmailTemplate_SendMail" executed="True" result="Success" success="True" time="1.583" asserts="2" />
+                      <test-case name="Chaos.Mcm.Test.EmailServiceExtensionsTest.SendTemplate_GivenValidSimpleTemplate_SendMail" executed="True" result="Success" success="True" time="0.013" asserts="2" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="Namespace" name="Extension" executed="True" result="Success" success="True" time="1.511" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="TestBase" executed="True" result="Inconclusive" success="False" time="0.001" asserts="0" />
+                      <test-suite type="Namespace" name="v5" executed="True" result="Success" success="True" time="0.249" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="DownloadTest" executed="True" result="Success" success="True" time="0.075" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v5.DownloadTest.Get_FileHasTokenThatSupportDownload_CallS3AdapterAndReturnAttachmentWithFileStream" executed="True" result="Success" success="True" time="0.075" asserts="3" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="ObjectTest" executed="True" result="Success" success="True" time="0.172" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v5.ObjectTest.Create_Default_CallObjectCreate" executed="True" result="Success" success="True" time="0.038" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v5.ObjectTest.Delete_Default_CallObjectDelete" executed="True" result="Success" success="True" time="0.019" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v5.ObjectTest.Get_WithGuidQuery_ShouldQueryViewWithIdAndFolders" executed="True" result="Success" success="True" time="0.084" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v5.ObjectTest.Get_WithObjectTypeQuery_ShouldQueryViewWithObjectTypeIdAndFolders" executed="True" result="Success" success="True" time="0.028" asserts="0" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                      <test-suite type="Namespace" name="v6" executed="True" result="Success" success="True" time="1.257" asserts="0">
+                        <results>
+                          <test-suite type="TestFixture" name="DestinationTest" executed="True" result="Success" success="True" time="0.017" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.DestinationTest.Get_All_CallMcmRepositoryAndReturnResults" executed="True" result="Success" success="True" time="0.017" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="FileTest" executed="True" result="Success" success="True" time="0.070" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FileTest.Delete_UserHasPermission_CallMcmRepositoryReturnsOne" executed="True" result="Success" success="True" time="0.031" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FileTest.Set_UserHasPermission_CallMcmRepositoryToCreateAndRetrieveUsingId" executed="True" result="Success" success="True" time="0.038" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="FolderTest" executed="True" result="Success" success="True" time="0.328" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.SetPermission_RemoveOwnAccess_NoNeedToCheckPermission" executed="True" result="Success" success="True" time="0.062" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_Create_Sub_Folder" executed="True" result="Success" success="True" time="0.040" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_Create_Top_Folder" executed="True" result="Success" success="True" time="0.026" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_Delete_Folder" executed="True" result="Success" success="True" time="0.026" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_Get_folder_by_ID" executed="True" result="Success" success="True" time="0.030" asserts="2" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_Get_folders_by_parentID" executed="True" result="Success" success="True" time="0.037" asserts="2" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_Get_folders_by_parentID_permission_through_group" executed="True" result="Success" success="True" time="0.025" asserts="2" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_Get_Users_and_Groups_with_permission_to_a_folder" executed="True" result="Success" success="True" time="0.023" asserts="4" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_set_users_permission_to_folder" executed="True" result="Success" success="True" time="0.025" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FolderTest.Should_set_zero_users_permission_to_folder" executed="True" result="Success" success="True" time="0.023" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="FormatTest" executed="True" result="Success" success="True" time="0.034" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FormatTest.Create_GivenMandatoryParameters_CallMcmRepositoryAndReturnIfOfCreatedFormat" executed="True" result="Success" success="True" time="0.022" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.FormatTest.Get_All_CallMcmRepositoryAndReturnAListOfFormats" executed="True" result="Success" success="True" time="0.010" asserts="2" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="LinkTest" executed="True" result="Success" success="True" time="0.080" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.LinkTest.Create_WithPermission_CallMcmRepositoryReturnOne" executed="True" result="Success" success="True" time="0.034" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.LinkTest.Delete_WithPermission_CallMcmRepositoryReturnOne" executed="True" result="Success" success="True" time="0.020" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.LinkTest.Update_WithPermission_CallMcmRepositoryReturnOne" executed="True" result="Success" success="True" time="0.023" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="McmTest" executed="True" result="Success" success="True" time="0.021" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.McmTest.Index_AllObjects_CallMcmRepositoryToRetriveAllObjectsAndSendThemToViewManager" executed="True" result="Success" success="True" time="0.020" asserts="0" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="MetadataSchemaTest" executed="True" result="Success" success="True" time="0.107" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.MetadataSchemaTest.Create_WithPermission_CallMcmRepositoryAndReturnTheSchema" executed="True" result="Success" success="True" time="0.021" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.MetadataSchemaTest.Create_WithPermissionAndWithoutGuid_CallMcmRepositoryWithAGuid" executed="True" result="Success" success="True" time="0.021" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.MetadataSchemaTest.Delete_WithPermission_CallMcmRepositoryAndReturnOne" executed="True" result="Success" success="True" time="0.023" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.MetadataSchemaTest.Get_All_CallMcmRepositoryAndReturnResults" executed="True" result="Success" success="True" time="0.015" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.MetadataSchemaTest.Update_WithPermission_CallMcmRepositoryAndReturnOne" executed="True" result="Success" success="True" time="0.023" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="MetadataTest" executed="True" result="Success" success="True" time="0.043" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.MetadataTest.MetadataSet_CallWithValidXml_ShouldCallMetadataSetOnMcmRepository" executed="True" result="Success" success="True" time="0.026" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.MetadataTest.MetadataSet_CallWithValidXml_ShouldCallObjectGetOnMcmRepository" executed="True" result="Success" success="True" time="0.016" asserts="0" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="ObjectRelationTest" executed="True" result="Success" success="True" time="0.105" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectRelationTest.Delete_WithPermission_CallMcmRepositoryReturnOne" executed="True" result="Success" success="True" time="0.017" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectRelationTest.Set_WithMetadata_ShouldCallMcmRepository" executed="True" result="Success" success="True" time="0.037" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectRelationTest.Set_WithoutMetadata_ShouldCallMcmRepository" executed="True" result="Success" success="True" time="0.018" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectRelationTest.Set_WithoutMetadataGuid_ShouldCallMcmRepository" executed="True" result="Success" success="True" time="0.030" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="ObjectTest" executed="True" result="Success" success="True" time="0.207" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.Create_WithPermissionToFolder_CallMcmRepositoryAndReturnTheObject" executed="True" result="Success" success="True" time="0.024" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.Delete_WithPermissions_CallMcmRepositoryAndReturnOne" executed="True" result="Success" success="True" time="0.026" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.Get_WithAccessPointGuid_ShouldAddAccessPointToQuery" executed="True" result="Success" success="True" time="0.021" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.Get_WithAccessPointGuidAndMultipleIds_ShouldAddAccessPointToQuery" executed="True" result="Success" success="True" time="0.019" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.Get_WithFolderFilter_FilterFoldersWithAccess" executed="True" result="Success" success="True" time="0.022" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.Get_WithMultipleFolders_OrFoldersInQuery" executed="True" result="Success" success="True" time="0.018" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.Get_WithMultipleGuids_ShouldQueryViewWithIdsAndFolders" executed="True" result="Success" success="True" time="0.017" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.Get_WithSingleGuid_ShouldQueryViewWithIdAndFolders" executed="True" result="Success" success="True" time="0.023" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTest.SetPublishSettings_WithPermission_CallMcmRepositoryAndReturnOne" executed="True" result="Success" success="True" time="0.029" asserts="1" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="ObjectTypeTest" executed="True" result="Success" success="True" time="0.079" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTypeTest.Delete_GivenID_CallMcmRepositoryWithIdAndReturnOneWhenSuccessful" executed="True" result="Success" success="True" time="0.013" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTypeTest.Delete_WithoutPermission_ThrowException" executed="True" result="Success" success="True" time="0.023" asserts="0" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTypeTest.Get_GivenNoParameters_CallMcmRepositoryAndReturnTheListOfObjectTypesReceived" executed="True" result="Success" success="True" time="0.011" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTypeTest.Set_GivenName_CallMcmRepositoryAndReturnIdAndCallMcmRepositoryAgainToRetrieveTheDto" executed="True" result="Success" success="True" time="0.016" asserts="2" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.ObjectTypeTest.Set_WithoutPermission_ThrowException" executed="True" result="Success" success="True" time="0.012" asserts="0" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="UserManagementTest" executed="True" result="Success" success="True" time="0.054" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.UserManagementTest.GetUserFolder_UserDoesNotHaveFolder_CreateAndReturnFolder" executed="True" result="Success" success="True" time="0.029" asserts="2" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.UserManagementTest.GetUserFolder_UserDoesNotHaveFolderDontCreate_ReturnEmptyList" executed="True" result="Success" success="True" time="0.012" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.UserManagementTest.GetUserFolder_UserHasFolder_ReturnFolder" executed="True" result="Success" success="True" time="0.010" asserts="2" />
+                            </results>
+                          </test-suite>
+                          <test-suite type="TestFixture" name="UserProfileTest" executed="True" result="Success" success="True" time="0.095" asserts="0">
+                            <results>
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.UserProfileTest.Get_UserDoesNotHaveProfile_ReturnEmpty" executed="True" result="Success" success="True" time="0.016" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.UserProfileTest.Get_UserHasProfile_ReturnProfile" executed="True" result="Success" success="True" time="0.014" asserts="2" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.UserProfileTest.Set_UserHasUserObjectAndMetadata_SetUserMetadata" executed="True" result="Success" success="True" time="0.035" asserts="1" />
+                              <test-case name="Chaos.Mcm.Test.Extension.v6.UserProfileTest.Set_UserHasUserObjectButNoMetadata_SetUserMetadata" executed="True" result="Success" success="True" time="0.027" asserts="1" />
+                            </results>
+                          </test-suite>
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="McmModuleTest" executed="True" result="Success" success="True" time="0.036" asserts="0">
+                    <results>
+                      <test-case name="Chaos.Mcm.Test.McmModuleTest.Load_Default_ObjectViewShouldBeLoaded" executed="True" result="Success" success="True" time="0.036" asserts="0" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="Namespace" name="Permission" executed="True" result="Success" success="True" time="0.209" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="InMemoryPermissionManagerTest" executed="True" result="Success" success="True" time="0.155" asserts="0">
+                        <results>
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.HasPermissionToObject_GivenObjectGuidWithPermission_ReturnTrue" executed="True" result="Success" success="True" time="0.011" asserts="1" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_add_folder_to_manager" executed="True" result="Success" success="True" time="0.003" asserts="0" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_Add_User_to_folder_with_permission" executed="True" result="Success" success="True" time="0.027" asserts="1" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_assocociate_inherit_userpermissions_when_adding_subfolder" executed="True" result="Success" success="True" time="0.008" asserts="3" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_assocociate_subfolders_with_parent_on_addfolder" executed="True" result="Success" success="True" time="0.004" asserts="1" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_get_folder_by_ids" executed="True" result="Success" success="True" time="0.010" asserts="4" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_Get_SubFolders_With_Permission_Through_Group" executed="True" result="Success" success="True" time="0.014" asserts="2" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_Get_TopFolders" executed="True" result="Success" success="True" time="0.017" asserts="3" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_Get_TopFolders_With_Group_Permission" executed="True" result="Success" success="True" time="0.011" asserts="3" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_propagate_grouppermissions_to_subfolders_when_adding_a_group" executed="True" result="Success" success="True" time="0.007" asserts="2" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_propagate_userpermissions_to_subfolders_when_adding_a_user" executed="True" result="Success" success="True" time="0.008" asserts="2" />
+                          <test-case name="Chaos.Mcm.Test.Permission.InMemoryPermissionManagerTest.Should_synchronize_with_permission_repository" executed="True" result="Success" success="True" time="0.026" asserts="2" />
+                        </results>
+                      </test-suite>
+                      <test-suite type="TestFixture" name="IntervalSpecificationTest" executed="True" result="Success" success="True" time="0.052" asserts="0">
+                        <results>
+                          <test-case name="Chaos.Mcm.Test.Permission.IntervalSpecificationTest.Should_synchronize_on_interval" executed="True" result="Success" success="True" time="0.051" asserts="1" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="TestBase" executed="True" result="Inconclusive" success="False" time="0.000" asserts="0" />
+                  <test-suite type="Namespace" name="View" executed="True" result="Success" success="True" time="0.052" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="ObjectIndexTest" executed="True" result="Success" success="True" time="0.052" asserts="0">
+                        <results>
+                          <test-case name="Chaos.Mcm.Test.View.ObjectIndexTest.GetIndexableFields_GivenObject_ReturnObjectTypeId" executed="True" result="Success" success="True" time="0.017" asserts="1" />
+                          <test-case name="Chaos.Mcm.Test.View.ObjectIndexTest.GetIndexableFields_GivenObjectWithAccessPoints_ReturnPublishStartAndEndDates" executed="True" result="Success" success="True" time="0.006" asserts="2" />
+                          <test-case name="Chaos.Mcm.Test.View.ObjectIndexTest.GetIndexableFields_GivenObjectWithFiles_ReturnFileCount" executed="True" result="Success" success="True" time="0.005" asserts="1" />
+                          <test-case name="Chaos.Mcm.Test.View.ObjectIndexTest.GetIndexableFields_GivenObjectWithFolders_ReturnFolders" executed="True" result="Success" success="True" time="0.005" asserts="2" />
+                          <test-case name="Chaos.Mcm.Test.View.ObjectIndexTest.GetIndexableFields_GivenObjectWithObjectRelations_ReturnRelationCount" executed="True" result="Success" success="True" time="0.006" asserts="1" />
+                          <test-case name="Chaos.Mcm.Test.View.ObjectIndexTest.Index_GivenObject_ReturnObjectViewData" executed="True" result="Success" success="True" time="0.006" asserts="6" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
