@@ -20,7 +20,8 @@ namespace Chaos.Mcm.Data.Dto
         
         [Serialize]
         public Guid EditingUserGuid { get; set; }
-        
+
+        [Serialize]
         public uint RevisionID { get; set; }    
 
         [Serialize]
