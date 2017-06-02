@@ -50,7 +50,8 @@ namespace Chaos.Mcm.Extension.v6
 
       var result = McmRepository.MetadataSet(objectGuid, metadataGuid, metadataSchemaGuid, languageCode, revisionID,
                                              metadataXml, userGuid);
-      //var objects = McmRepository.ObjectGet(objectGuid, true, true, true, true, true);
+
+      objects = McmRepository.ObjectGet(objectGuid, true, true, true, true, true);
 
       ViewManager.Index(objects);
 
