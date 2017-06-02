@@ -39,8 +39,6 @@
             return Query<ObjectViewData>(query);
         }
 
-        
-        
         #endregion
     }
 }
